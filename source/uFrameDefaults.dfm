@@ -1,23 +1,31 @@
 object frameDefaults: TframeDefaults
   Left = 0
   Top = 0
-  Width = 330
-  Height = 156
+  Width = 338
+  Height = 152
   ParentBackground = False
   TabOrder = 0
+  OnResize = FrameResize
+  DesignSize = (
+    338
+    152)
   object Label9: TLabel
     Left = 4
     Top = 4
     Width = 74
     Height = 13
     Caption = '&E-Mail Program:'
+    Color = clBtnFace
     FocusControl = edProgram
+    ParentColor = False
+    Transparent = False
   end
   object btnEdProgram: TSpeedButton
-    Left = 225
+    Left = 236
     Top = 20
     Width = 19
     Height = 21
+    Anchors = [akTop, akRight]
     Glyph.Data = {
       96000000424D960000000000000076000000280000000A000000040000000100
       040000000000200000000000000000000000100000000000000000000000FFFF
@@ -28,11 +36,12 @@ object frameDefaults: TframeDefaults
     OnMouseDown = HelpMouseDown
   end
   object btnTest: TSpeedButton
-    Left = 251
+    Left = 265
     Top = 20
     Width = 65
     Height = 21
     Hint = 'Test to run the e-mail program'
+    Anchors = [akTop, akRight]
     Caption = 'Test'
     ParentShowHint = False
     ShowHint = True
@@ -48,10 +57,11 @@ object frameDefaults: TframeDefaults
     FocusControl = edDefSound
   end
   object btnEdDefSound: TSpeedButton
-    Left = 225
+    Left = 236
     Top = 68
     Width = 19
     Height = 21
+    Anchors = [akTop, akRight]
     Glyph.Data = {
       96000000424D960000000000000076000000280000000A000000040000000100
       040000000000200000000000000000000000100000000000000000000000FFFF
@@ -62,11 +72,12 @@ object frameDefaults: TframeDefaults
     OnMouseDown = HelpMouseDown
   end
   object btnSndTest: TSpeedButton
-    Left = 251
+    Left = 265
     Top = 68
     Width = 65
     Height = 21
     Hint = 'Test the sound file'
+    Anchors = [akTop, akRight]
     Caption = 'Test'
     Glyph.Data = {
       F6000000424DF600000000000000760000002800000010000000100000000100
@@ -90,11 +101,12 @@ object frameDefaults: TframeDefaults
     Caption = 'Language:'
   end
   object btnLanguageRefresh: TSpeedButton
-    Left = 226
+    Left = 232
     Top = 120
-    Width = 90
+    Width = 100
     Height = 21
     Hint = 'Refresh the list of languages'
+    Anchors = [akTop, akRight]
     Caption = 'Refresh'
     Glyph.Data = {
       F6000000424DF600000000000000760000002800000010000000100000000100
@@ -133,7 +145,7 @@ object frameDefaults: TframeDefaults
   object cmbLanguage: TComboBox
     Left = 4
     Top = 120
-    Width = 217
+    Width = 221
     Height = 21
     Style = csDropDownList
     ItemHeight = 13

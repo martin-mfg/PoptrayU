@@ -51,6 +51,7 @@ type
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -136,6 +137,11 @@ procedure TframeAdvancedInterface.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+end;
+
+procedure TframeAdvancedInterface.FrameResize(Sender: TObject);
+begin
+    Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 end.

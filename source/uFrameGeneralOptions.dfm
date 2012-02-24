@@ -4,6 +4,7 @@ object frameGeneralOptions: TframeGeneralOptions
   Width = 251
   Height = 210
   TabOrder = 0
+  OnResize = FrameResize
   object lblFirstWait: TLabel
     Left = 36
     Top = 23

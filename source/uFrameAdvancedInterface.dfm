@@ -4,6 +4,7 @@ object frameAdvancedInterface: TframeAdvancedInterface
   Width = 304
   Height = 252
   TabOrder = 0
+  OnResize = FrameResize
   object lblTrayIcon: TLabel
     Left = 24
     Top = 8
