@@ -68,6 +68,7 @@ end;
 procedure TframeWhiteBlack.FrameResize(Sender: TObject);
 begin
   memWhiteList.Height := (Self.Height - lblWhiteList.Height - lblBlackList.Height - spltWhiteBlack.Height) div 2;
+  Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 procedure TframeWhiteBlack.memListChange(Sender: TObject);

@@ -4,6 +4,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   Width = 383
   Height = 232
   TabOrder = 0
+  OnResize = FrameResize
   object lblTimeOut: TLabel
     Left = 28
     Top = 6

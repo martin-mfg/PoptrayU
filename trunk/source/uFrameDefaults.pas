@@ -50,7 +50,8 @@ type
     procedure btnSndTestClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+                            Shift: TShiftState; X, Y: Integer);
+    procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,6 +77,7 @@ begin
   btnTest.Glyph.Assign(frmPopMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
+  self.Repaint;
 end;
 
 procedure TframeDefaults.ShowLanguages;
@@ -175,6 +177,7 @@ procedure TframeDefaults.btnLanguageRefreshClick(Sender: TObject);
 begin
   frmPopMain.RefreshLanguages;
   ShowLanguages;
+  Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 procedure TframeDefaults.btnTestClick(Sender: TObject);
@@ -194,5 +197,13 @@ begin
   frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
+
+procedure TframeDefaults.FrameResize(Sender: TObject);
+begin
+    cmbLanguage.Width := Self.ClientWidth - btnLanguageRefresh.Width - 20;
+    edProgram.Width   := Self.ClientWidth - btnLanguageRefresh.Width - 20;
+    edDefSound.Width  := Self.ClientWidth - btnLanguageRefresh.Width - 20;
+    Self.Refresh; //refresh to make labels not disappear in Vista
+end;
 
 end.
