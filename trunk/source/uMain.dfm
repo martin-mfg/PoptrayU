@@ -3964,7 +3964,7 @@ object frmPopMain: TfrmPopMain
             Width = 111
             Height = 13
             Cursor = crHandPoint
-            Caption = 'http://www.poptray.org'
+            Caption = 'http://'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlue
             Font.Height = -11
@@ -3982,7 +3982,7 @@ object frmPopMain: TfrmPopMain
             Width = 113
             Height = 13
             Cursor = crHandPoint
-            Caption = 'http://forum.poptray.org'
+            Caption = 'http://'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlue
             Font.Height = -11
@@ -4483,5 +4483,14 @@ object frmPopMain: TfrmPopMain
       ShortCut = 16463
       OnExecute = actOpenMessageExecute
     end
+  end
+  object IdDecoderQuotedPrintable: TIdDecoderQuotedPrintable
+    Left = 432
+    Top = 128
+  end
+  object IdDecoderMIME1: TIdDecoderMIME
+    FillChar = '='
+    Left = 431
+    Top = 100
   end
 end
