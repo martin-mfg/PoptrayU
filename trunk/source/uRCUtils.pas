@@ -10,7 +10,7 @@ interface
 
 uses
   Windows, SysUtils, Graphics, Forms, Buttons, StdCtrls, Controls, Types,
-  Classes, Dialogs, TypInfo;
+  Classes, Dialogs, TypInfo, TntForms;
 
 type
   TSetOfChar = set of char;
@@ -43,7 +43,7 @@ function ExpandWidth(st : string; width : integer) : string;
 function ReduceWidth(st : string; width : integer) : string;
 function ForceWidth(st : string; width : integer) : string;
 function WindowsVersion : string;
-function WindowAt(Form : TForm; Left,Top : integer) : boolean;
+function WindowAt(Form : TTntForm; Left,Top : integer) : boolean;
 function IsWinXP : boolean;
 procedure SwapOutMemory;
 procedure EnableControl(Edit : TWinControl; Enabled : boolean);
@@ -381,9 +381,9 @@ end;
 
 procedure ShowMemo(ACaption,AMsg : string; AWidth : integer = 400; AHeight : integer = 300);
 var
-  frm : TForm;
+  frm : TTntForm;
 begin
-  frm := TForm.CreateNew(Application);
+  frm := TTntForm.CreateNew(Application);
   with frm do
   begin
     Caption := ACaption;
@@ -559,7 +559,7 @@ begin
   result := 'Windows '+strVersion + ' ' + strAdditional + ' '+strBuild;
 end;
 
-function WindowAt(Form : TForm; Left,Top : integer) : boolean;
+function WindowAt(Form : TTntForm; Left,Top : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // See if there is a window at the specified location
 var
@@ -571,8 +571,8 @@ begin
     if Application.Components[i] is Form.ClassType then
     begin
       if (Application.Components[i] <> Form) and
-         ((Application.Components[i] as TForm).Left = Left) and
-         ((Application.Components[i] as TForm).Top = Top) then
+         ((Application.Components[i] as TTntForm).Left = Left) and
+         ((Application.Components[i] as TTntForm).Top = Top) then
       begin
         Result := True;
         Break;
