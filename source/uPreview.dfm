@@ -1,7 +1,7 @@
 object frmPreview: TfrmPreview
-  Left = 358
-  Top = 104
-  Width = 592
+  Left = 302
+  Top = 251
+  Width = 484
   Height = 449
   Caption = 'Preview Message - PopTray'
   Color = clBtnFace
@@ -25,8 +25,8 @@ object frmPreview: TfrmPreview
   TextHeight = 13
   object spltAttachemnts: TSplitter
     Left = 0
-    Top = 291
-    Width = 584
+    Top = 282
+    Width = 468
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -35,16 +35,16 @@ object frmPreview: TfrmPreview
   object imgPreview: TImage
     Left = 0
     Top = 126
-    Width = 584
-    Height = 165
+    Width = 468
+    Height = 156
     Align = alClient
     Visible = False
   end
   object memMail: TRichEdit
     Left = 0
     Top = 126
-    Width = 584
-    Height = 165
+    Width = 468
+    Height = 156
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -59,8 +59,8 @@ object frmPreview: TfrmPreview
   end
   object panOK: TPanel
     Left = 0
-    Top = 366
-    Width = 584
+    Top = 357
+    Width = 468
     Height = 56
     Align = alBottom
     BevelOuter = bvNone
@@ -99,7 +99,7 @@ object frmPreview: TfrmPreview
     object tsMessageParts: TTabSet
       Left = 0
       Top = 0
-      Width = 584
+      Width = 468
       Height = 21
       Align = alTop
       DitherBackground = False
@@ -110,6 +110,7 @@ object frmPreview: TfrmPreview
       Font.Style = []
       Tabs.Strings = (
         'Body'
+        'HTML View'
         'Raw Message')
       TabIndex = 0
       OnChange = tsMessagePartsChange
@@ -118,13 +119,13 @@ object frmPreview: TfrmPreview
   object panPreviewFrom: TPanel
     Left = 0
     Top = 36
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     DesignSize = (
-      584
+      468
       15)
     object Label1: TLabel
       Left = 0
@@ -145,7 +146,7 @@ object frmPreview: TfrmPreview
     object edFrom: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -161,8 +162,8 @@ object frmPreview: TfrmPreview
   end
   object lvAttachments: TListView
     Left = 0
-    Top = 294
-    Width = 584
+    Top = 285
+    Width = 468
     Height = 72
     Align = alBottom
     Columns = <>
@@ -178,13 +179,13 @@ object frmPreview: TfrmPreview
   object toolbarPreview: TActionToolBar
     Left = 0
     Top = 0
-    Width = 584
+    Width = 468
     Height = 36
     ActionManager = ActionManagerPreview
     Caption = 'Preview'
-    ColorMap.HighlightColor = 14410210
+    ColorMap.HighlightColor = clWhite
     ColorMap.BtnSelectedColor = clBtnFace
-    ColorMap.UnusedColor = 14410210
+    ColorMap.UnusedColor = clWhite
     EdgeBorders = [ebBottom]
     EdgeOuter = esLowered
     HorzMargin = 4
@@ -246,13 +247,13 @@ object frmPreview: TfrmPreview
   object panPreviewTo: TPanel
     Left = 0
     Top = 51
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     DesignSize = (
-      584
+      468
       15)
     object Label2: TLabel
       Left = 0
@@ -273,7 +274,7 @@ object frmPreview: TfrmPreview
     object edTo: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -290,13 +291,13 @@ object frmPreview: TfrmPreview
   object panPreviewDate: TPanel
     Left = 0
     Top = 81
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 3
     DesignSize = (
-      584
+      468
       15)
     object Label4: TLabel
       Left = 0
@@ -317,7 +318,7 @@ object frmPreview: TfrmPreview
     object edDate: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -334,13 +335,13 @@ object frmPreview: TfrmPreview
   object panPreviewSubject: TPanel
     Left = 0
     Top = 96
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 4
     DesignSize = (
-      584
+      468
       15)
     object Label3: TLabel
       Left = 0
@@ -361,7 +362,7 @@ object frmPreview: TfrmPreview
     object edSubject: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -378,14 +379,14 @@ object frmPreview: TfrmPreview
   object panPreviewXMailer: TPanel
     Left = 0
     Top = 111
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 5
     Visible = False
     DesignSize = (
-      584
+      468
       15)
     object Label5: TLabel
       Left = 0
@@ -406,7 +407,7 @@ object frmPreview: TfrmPreview
     object edXMailer: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
@@ -423,14 +424,14 @@ object frmPreview: TfrmPreview
   object panPreviewCC: TPanel
     Left = 0
     Top = 66
-    Width = 584
+    Width = 468
     Height = 15
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
     DesignSize = (
-      584
+      468
       15)
     object Label6: TLabel
       Left = 0
@@ -451,7 +452,7 @@ object frmPreview: TfrmPreview
     object edCC: TEdit
       Left = 72
       Top = 1
-      Width = 500
+      Width = 392
       Height = 13
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
