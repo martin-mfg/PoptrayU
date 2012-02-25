@@ -34,6 +34,7 @@ uses
   IdMessageClient, IdMessage, IdException, IdAntiFreezeBase, IdAntiFreeze,
   ActnList, ActnMan, ActnCtrls, ActnPopupCtrl, XPStyleActnCtrls,
   CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uObjects, Grids,
+  uHeaderDecoder, IdCoder3to4, IdCoderMIME, IdCoder, IdCoderQuotedPrintable,
   TntComCtrls, TntForms, TntDialogs;
 
 const
@@ -3065,6 +3066,7 @@ var
   MailItem : TMailItem;
   ret : boolean;
   split : cardinal;
+  encodedSubject : AnsiString;
 begin
   MsgHeader.Clear;
   // check for stop
@@ -3135,6 +3137,7 @@ begin
     MsgHeader.Headers.Text := RemoveBlankLines(MsgHeader.Headers.Text);
   end;
   Accounts[num-1].Prot.FreePChar(pHeader);
+  encodedSubject := MsgHeader.Headers.Values['Subject'];
   try
     MsgHeader.ProcessHeaders;
   except
@@ -3148,7 +3151,6 @@ begin
     begin
       // ignore Indy '$?i' is not a valid integer value
       MsgHeader.From.Name := MsgHeader.Headers.Values['From'];
-      MsgHeader.Subject := MsgHeader.Headers.Values['Subject'];
       MsgHeader.Recipients.EMailAddresses := MsgHeader.Headers.Values['To'];
       MsgHeader.Date := GMTToLocalDateTime(MsgHeader.Headers.Values['Date']);
     end;
@@ -3161,7 +3163,6 @@ begin
         Exit;
       end;
       MsgHeader.From.Name := MsgHeader.Headers.Values['From'];
-      MsgHeader.Subject := MsgHeader.Headers.Values['Subject'];
     end;
   end;
 
@@ -3178,7 +3179,7 @@ begin
   if MsgHeader.ReplyTo.Count>0 then
     MailItem.ReplyTo := MsgHeader.ReplyTo[0].Address;
   MailItem.MailTo := MsgHeader.Recipients.EMailAddresses;
-  MailItem.Subject := MsgHeader.Subject;
+  MailItem.Subject := DecodeHeader(encodedSubject);
   MailItem.Date := MsgHeader.Date;
   if int(MsgHeader.Date)=0 then
     MailItem.DateStr := Copy(MsgHeader.Headers.Values['Date'],1,16)
