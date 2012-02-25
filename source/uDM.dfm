@@ -2,6 +2,8 @@ object dm: Tdm
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
+  Left = 177
+  Top = 253
   Height = 322
   Width = 395
   object imlActions: TImageList
