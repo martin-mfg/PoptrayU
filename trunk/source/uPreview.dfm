@@ -40,6 +40,20 @@ object frmPreview: TfrmPreview
     Align = alClient
     Visible = False
   end
+  object WebBrowser1: TWebBrowser
+    Left = 0
+    Top = 126
+    Width = 468
+    Height = 156
+    Align = alClient
+    TabOrder = 11
+    ControlData = {
+      4C0000005F300000201000000000000000000000000000000000000000000000
+      000000004C000000000000000000000001000000E0D057007335CF11AE690800
+      2B2E126200000000000000004C0000000114020000000000C000000000000046
+      8000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000100000000000000000000000000000000000000}
+  end
   object memMail: TRichEdit
     Left = 0
     Top = 126
@@ -202,7 +216,7 @@ object frmPreview: TfrmPreview
     Alignment = taLeftJustify
     BevelWidth = 2
     Constraints.MinWidth = 250
-    TabOrder = 10
+    TabOrder = 9
     Visible = False
     DesignSize = (
       285

@@ -1,8 +1,9 @@
 unit uPreview;
 
 {-------------------------------------------------------------------------------
-POPTRAY
+POPTRAYU
 Copyright (C) 2001-2005  Renier Crause
+Copyright (C) 2012 Jessica Brown
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -29,7 +30,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
-  ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit;
+  ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw;
 
 type
   TfrmPreview = class(TForm)
@@ -103,6 +105,7 @@ type
     imgPreview: TImage;
     memMail: TRichEdit;
     actOpenMessage: TAction;
+    WebBrowser1: TWebBrowser;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -133,6 +136,7 @@ type
     procedure edMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure actOpenMessageExecute(Sender: TObject);
+    procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -156,6 +160,7 @@ type
     FReplyTo : string;
     FRawMsg : string;
     FBody : string;
+    FHtml : string;
     FProtected : boolean;
     procedure GetINI;
     procedure SaveINI;
@@ -445,7 +450,7 @@ procedure TfrmPreview.ShowMsg;
 ////////////////////////////////////////////////////////////////////////////////
 // Show the Message in the preview form
 var
-  i : integer;
+  i, strLen : integer;
   aname,mimetype : string;
 begin
   try
@@ -493,14 +498,37 @@ begin
       // attachments
       for i := 0 to Msg.MessageParts.Count-1 do
       begin
-        mimetype := LowerCase(Copy(Msg.MessageParts.Items[i].ContentType,1,Pos(';',Msg.MessageParts.Items[i].ContentType)-1));
+        strLen := Pos(';',Msg.MessageParts.Items[i].ContentType) - 1;
+        if strLen < 0 then
+          strLen := Length(Msg.MessageParts.Items[i].ContentType);
+        mimetype := LowerCase(Copy(Msg.MessageParts.Items[i].ContentType,1,strLen));
+        { Bug-fix: Some emails do not have a semicolon after the content-type
+          because they do not specify the charset in the Content-Type header.
+          Previously this would cause the attachment to be treated as plaintext
+          even if it was not. An example of the variation in the MIME section
+          headers that cause this would be the second of the following two
+          examples. The first is the typical case, the second is the erroneous
+          case.
+
+          Content-Type: text/html; charset=utf-8
+          Content-Transfer-Encoding: quoted-printable
+
+          Content-Transfer-Encoding: 8bit
+          Content-Type: text/html
+        }
+
+
         if mimetype <> 'multipart/alternative' then
         begin
           if (Msg.MessageParts.Items[i] is TIdAttachment) then
             aname := TIdAttachment(Msg.MessageParts.Items[i]).FileName
           else begin
             if i = 0 then aname := 'Body' else aname := 'Text';
-            if mimetype = 'text/html' then aname := 'Message.htm';
+            if mimetype = 'text/html' then
+            begin
+              aname := 'Message.htm';
+              FHtml := TidText(Msg.MessageParts.Items[i]).Body.Text;
+            end;
           end;
           with lvAttachments.Items.Add do
           begin
@@ -516,23 +544,54 @@ begin
     else begin
       // no attachments
       if Msg.NoDecode then
-        FBody := Msg.Body.Text
+        begin
+          FBody := Msg.Body.Text;
+          FHtml := '<pre>' + Msg.Body.Text + '</pre>';
+        end
       else begin
         try
           FBody := FBody + Msg.Body.Text;
           if (Msg.MessageParts.Count>0) then
           begin
+            FHtml := TidText(Msg.MessageParts.Items[0]).Body.Text;
             if (Msg.MessageParts.Items[0] is TidText) then
             begin
               if TidText(Msg.MessageParts.Items[0]).Body <> Msg.Body then
+              begin
+                // This case happens both for plain text and html messages with
+                // only one part and no attachments
                 FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
+                if (NOT AnsiContainsStr(Msg.ContentType, 'text/html')) then
+                  FHtml := ''; //empty string = show plain-text view on HTML pane
+              end;
             end
             else
+            begin
               FBody := FBody + frmPopMain.Translate('Attachment:')+' ['+
                                 TidAttachment(Msg.MessageParts.Items[0]).FileName+']';
+              FHtml := Msg.Body.Text; //TODO: display attachment in HTML view?
+            end;
           end
           else begin
             FBody := Msg.Body.Text;
+
+            {parse out mime type for message}
+            strLen := Pos(';',Msg.ContentType) - 1;
+            if (strLen < 0) then
+            begin
+              strLen := Length(Msg.ContentType);
+            end;
+            mimetype := LowerCase(Copy(Msg.ContentType,1,strLen));
+
+            if (mimetype = 'text/plain') then
+            begin
+              {Message only has plain text, no HTML, treat as pre-formatted}
+              FHtml := '';//'<pre>' + Msg.Body.Text + '</pre>';
+            end
+            else begin
+              {otherwise, presume it's HTML, leave as is}
+              FHtml := Msg.Body.Text;
+            end;
           end;
         except
           FBody := Msg.Body.Text;
@@ -631,7 +690,7 @@ end;
 
 procedure TfrmPreview.tsMessagePartsChange(Sender: TObject; NewTab: Integer; var AllowChange: Boolean);
 begin
-  if NewTab = tsMessageParts.Tabs.Count-1 then
+  if NewTab = 2 then
   begin
     if (btnOK.Enabled) then btnOK.SetFocus;
     memMail.Visible := True;
@@ -639,6 +698,42 @@ begin
     memMail.Lines.Add(FRawMsg);
     lvAttachments.Hide;
     spltAttachemnts.Hide;
+    WebBrowser1.Hide;
+  end
+  else if NewTab = 1 then
+  begin
+    if (btnOK.Enabled) then btnOK.SetFocus;
+    if (FHtml = '') then
+    begin
+      //email is not HTML, so display email as text on HTML tab
+      if (btnOK.Enabled) then btnOK.SetFocus;
+      memMail.Visible := True;
+      memMail.Lines.Clear;
+      memMail.Lines.Add(FBody);
+      if lvAttachments.Items.Count > 0 then
+      begin
+        lvAttachments.Show;
+        spltAttachemnts.Show;
+      end;
+    end
+    else begin
+      // display email as HTML
+      memMail.Visible := False; //hide plain-text message component
+      spltAttachemnts.Hide;
+      WebBrowser1.Show;
+      LoadHtmlIntoBrowser(WebBrowser1, FHtml);
+
+      //show attachments, if any (treat 2 as a special case, no attachments
+      //because most emails show up with text and HTML as two sections)
+      if (lvAttachments.Items.Count <> 2) AND (lvAttachments.Items.Count > 0) then begin
+        lvAttachments.Show;
+        spltAttachemnts.Show;
+      end
+      else begin
+        lvAttachments.Hide;
+        spltAttachemnts.Hide;
+      end;
+    end;
   end
   else if NewTab = 0 then
   begin
@@ -651,7 +746,39 @@ begin
       lvAttachments.Show;
       spltAttachemnts.Show;
     end;
+    WebBrowser1.Hide;
   end;
+end;
+
+
+procedure TfrmPreview.LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
+////////////////////////////////////////////////////////////////////////////////
+// Loads static HTML into a web browser component.
+var
+   sl: TStringList;
+   ms: TMemoryStream;
+begin
+   BrowserComponent.Navigate('about:blank') ;
+   while BrowserComponent.ReadyState < READYSTATE_INTERACTIVE do
+     Application.ProcessMessages;
+
+   if Assigned(BrowserComponent.Document) then
+   begin
+     sl := TStringList.Create;
+     try
+       ms := TMemoryStream.Create;
+       try
+         sl.Text := RawHtml;
+         sl.SaveToStream(ms);
+         ms.Seek(0, 0);
+         (BrowserComponent.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms)) ;
+       finally
+         ms.Free;
+       end;
+     finally
+       sl.Free;
+     end;
+   end;
 end;
 
 procedure TfrmPreview.actSaveExecute(Sender: TObject);
