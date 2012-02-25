@@ -1,0 +1,903 @@
+PopTray Version History
+-----------------------
+
+ (+) New feature
+ (*) Changed feature
+ (-) Bug fixed
+
+3.2 2006-09-16
+	(+) Released !!
+
+3.2 (beta 5) RC1	2006-05-06
+	(+) Switch off Auto-Check when PC is going into Suspend/Standby.
+	(*) Ask confirmation to delete protected message from Preview.
+	(-) Fixed Access Violation when adding and deleting blank accounts.
+	(-) Only scroll to newest message if list not sorted.
+	(-) Max Line Length increased to 64kb.
+
+3.2 (beta 4)	2006-01-23
+	(-) Installer: Downgraded to NSIS 2.12
+
+3.2 (beta 3)	2006-01-22
+	(*) Installer: Updated to NSIS 2.13
+	(*) When adding a new row in a rule, scroll to it.
+	(*) Scroll to last message in view while checking.
+	(-) Access Violation when decoding some subject lines.
+	(-) Preview fixed when message has no date in header.
+	(-) Ignore second "Uneven size in DecodeToStream" error.
+
+3.2 (beta 2)	2005-10-15
+	(+) Added Open Message command to customizable toolbar actions.
+	(+) Added Open Message command to preview toolbar.
+	(+) Translation Added: Frisian
+	(*) Reverted back to Indy 9.0.18
+	(*) Installer: Updated to NSIS 2.07
+	(*) Show plugin options on double-click.
+	(-) Minimize to Tray when clicking icon in TaskBar.
+	(-) Small bug with floating-point timer intervals fixed.
+	(-) Access Violation fixed when dragging a newly created account.
+	(-) Ignore Indy "'$?i' is not a valid integer value" error.
+
+3.2 (beta 1)	2005-07-02
+	(+) Customizable glyphs (skin). (see http://forum.poptray.org/)
+	(+) Added new rules exe macro: %FROMADDRESS%
+	(+) Translations Added: Greek, Valencian
+	(*) Updated to Indy 10.0.52
+	(*) Installer: Updated to NSIS 2.05
+	(*) Allow floating-point numbers for timer intervals (half minutes).
+	(-) Fixed bug where notify plugin was called unnecessary.
+	(-) Plugins were not initialized after a plugin Refresh. (thanks Attila)
+
+3.1 		2005-01-03
+	(+) Released !!
+
+3.1 (beta 8) RC2	2004-12-16
+	(+) Translation Added: Lithuanian
+	(-) Disable "Delete Account" and "Test Account" when no accounts defined.
+	(-) After deleting account you could get "List index out of bounds" error.
+
+3.1 (beta 7) RC1	2004-09-05
+	(*) Changed History.txt to latest version at the top.
+	(*) Added extra method to plug-in interface for ScreenSaver example.
+	(-) Advanced Info looked blank (column widths were 0).
+	(-) Possibly fixed bug with ToolBar height being wrong on startup.
+
+3.1 (beta 6)	2004-06-20
+	(-) AccessViolation when blank lines in header.
+	(-) NOT part of a rule row transfered to other rules during rule edit.
+	(-) Didn't delete hidden messages (when delete on next check on).
+	(-) Don't count ignored messages as spam.
+	(-) Allow blank "From (address)" to be marked as spam.
+	(-) Invalid Response in POP3 header when clicking stop. (don't send QUIT).
+
+3.1 (beta 5)	2004-04-24
+	(+) New Option: "Extra Confirmation when Deleting Protected Messages".
+	(-) Ignore Indy "@ Outside Address" error (when not retrieving body).
+	(-) Fixed bug with Date Sorting and some date formats.
+	(-) Fixed some minor bugs with No Sort option.
+	(-) Show Spam marked messages in new mail.
+	(-) Show 1.x K in statusbar when more than 999 messages.
+	(-) Show "Still busy checking" if click preview while checking.
+
+3.1 (beta 4)	2004-03-28
+	(+) New Option: "Show Messages while Checking".
+	(+) Translation Added: Galician
+	(*) Faster screen updates when using new option (experimental).
+	(*) Sort "Spam Last" also sorts deleted last.
+	(*) Rule loading/importing code re-structuring.
+	(*) Protect existing messages when right-click Add to WhiteList.
+	(*) StatusBar changed to show message count next to a status icon.
+	(-) Rule rows were copied to wrong rule when row>1 was selected.
+	(-) Some minor bugs introduced in beta 3 now fixed.
+	(-) Accounts drag-and-drop using left mouse button again.
+	(-) During check, show checking trayicon after deleting.
+	(-) Don't reset TrayIcon while busy checking and click ShowMessages.
+	(-) Error during delete switched off Safe Delete for account.
+	(-) Don't show deleted and spam messages in tray and info.
+	(-) Continue with checking when Delete fails.
+	(-) Fixed false "TimeOut" when previewing quoted-printable messages.
+	(-) Wait for +OK from POP3 server when sending QUIT command.
+	(-) Some fields were not reset when creating a new rule.
+
+3.1 (beta 3)	2004-03-08
+	(-) Fixed bug with adding rules.
+
+3.1 (beta 2)	2004-03-07
+	(+) New Option: "Delete Mail only on Next Check".
+	(+) Undelete added.
+	(+) Add Rule from right-click according to Subject.
+	(*) Right-Click Add Rule now creates single rule on multi-selection.
+	(*) Improved method for deleting from Preview window.
+	(*) Changed Rule drag-and-drop to Right Mouse Button (more stable).
+	(*) Added Up/Down buttons to move rules.
+	(*) Minor AboutBox changes.
+	(-) Status Rule Row with a Not was not working.
+	(-) Editing rule row would show previously selected row info.
+	(-) Adding new rule kept the previous TrayColor selection.
+	(-) Adding a Rule without first clicking a rule.
+	(-) Adding a Rule showed previous rule's number of rows.
+	(-) Showed numeric status value in rule row instead of description.
+	(-) Deleting Rule Row could delete wrong row.
+	(-) Rule rows were not always translated.
+	(-) Rule Operator (Any Row/All Rows) was not translated.
+
+3.1 (beta 1)	2004-03-03
+	(+) Regular Expressions in Rules
+	(+) Multiple Rule Rows with boolean operator.
+	(+) New Rule Action: Change Tray Color.
+	(+) New Rule Area: Message Status.
+	(+) Translation Added: Croation	
+
+3.0.3		2004-02-29
+	(+) "Spam Last" sort option (thanks to Rob Hulswit).
+	(+) New mouse action: "Stop Checking".
+	(+) "Stop Checking" added to right-click menu and toolbar customize.
+	(*) Stop button stops all accounts.
+	(*) Reset Global Timer when clicking "Check All".
+	(*) Messages keyboard selectable using Ctrl and Space.
+	(*) Pressing Enter on a Message shows preview.
+	(-) Ignore Indy "@ Outside Address" error.
+	(-) Preview body was terminated after a only "." on a line.
+	(-) Advanced Info was blank when new messages and msgs deleted by rules.
+	(-) "Show window on notify" marked messages as viewed while PT open.
+
+3.0.2		2003-12-07
+	(*) Removed "Donation" button.
+	(*) UM_PROCESS_MESSAGE for non-Delphi plug-ins.
+
+3.0.1		2003-11-15
+	(+) Translations Added: Serbian, Estonian.
+	(*) Changed "Reset Tray" option wording.
+	(*) Preview: Hide attachments when viewing Raw Message.
+	(*) Preview: Remember Body/Raw tab.
+	(-) Empty From (Address) was white listed when blank line in WhiteList.
+	(-) Replace Tab character with space when writing subject to Rules.log.
+	(-) Translate "NoName" and "Rule".
+
+3.0			2003-10-13
+	(+) Released !!
+
+3.0 (beta 16) RC4	2003-10-08
+	(*) Shortcut keys for Mark/Unmark Spam.
+	(*) Swap direction of sort arrows (same as Windows Explorer).
+	(-) "Don't Check between" didn't work across midnight.
+	(-) First Rule on WinNT gave "List index out of bounds (-1)".
+	(-) Clean-up unused terms in blank translation file.
+	(-) Translate Languages in About.
+	(-) Size column stay right-aligned when sorted.
+	(-) Unmark as Spam when selecting to add to WhiteList.
+	(-) Double-height toolbar.
+	(-) Minor visual fixes.
+
+3.0 (beta 15) RC3	2003-09-28
+	(+) Added "LastErrorMsg" to Protocol Plug-ins interface for C++.
+	(*) Moved languages and sounds to a sub-directory.
+	(*) Disable Server and Port box when plug-in doesn't supply port.
+	(-) Better enabling and disabling of account settings.
+	(-) Always Refresh plug-ins when viewing them in options.
+	(-) Ignore when plug-in not found.
+	(-) ProcessHeader exceptions ignored when "Ignore Retrieve Errors" set.
+	(-) Error while deleting didn't update icon and statusbar.
+	(-) Minor display glitches on WinXP fixed.
+
+3.0 (beta 14) RC2	2003-09-21
+	(+) Added APOP to POP3SSL plug-in.
+	(+) Send MsgHeader and MsgBody to Notify plugins.
+	(*) Use TrueColor icons on tabs in Win9x/Win2000 too.
+	(*) All Files filter in account email client open dialog.
+	(-) About tab visual bugs fixed.
+	(-) Translate Advanced Info form.
+	(-) Translate "KB".
+	(-) Show only new messages in important balloon.
+	(-) Don't count ignored messages if hidden.
+
+3.0 (beta 13) RC1	2003-09-14
+	(*) Set "Quick Checking" and "Safe Delete" on by default.
+	(*) Remember if account supports UIDL between checks.
+	(*) Warning when deleting and account doesn't support UIDL.
+	(*) Sort Image on column instead of +/- on caption.
+	(*) Subject sorting ignores "Re:", "Fwd:", etc.
+	(*) Changed PopTray logo on About tab.
+	(*) Split French translation into "French" and "French (Canada)".
+	(-) Message had no icon when invalid priority.
+	(-) Change cursor to HourGlass while "Test Account".
+	(-) "Incompatible Plugin" messages set to "Stay On Top".
+	(-) Mark message as spam when right-click add to blacklist.
+	(-) Read Timeout implemented when no response from server after connect.
+	(-) Close preview window after retrieve error.
+	(-) Fixed accelerator keys.
+	(-) Delete White/Black list file when list empty.
+
+3.0 (beta 12)		2003-09-07
+	(+) Test Account (show server software and UIDL response).
+	(*) Changed plugin interface to "stdcall" for C++ compatibility.
+	(*) Changed execute program restore mode from SW_SHOW to SW_NORMAL.
+	(*) Different tab icon when account has unviewed messages.
+	(-) KeyboardLights: Switch off scroll-lock when running email client.
+	(-) Bug in Indy message processing when body contains "--" on a line.
+	(-) Wrong message icon in Advanced Info.
+	(-) Kept adding body to rule criteria when switching option (translated).
+
+3.0 (beta 11)		2003-08-31
+	(+) Retrieve body if message smaller than a specified size (option).
+	(*) Removed viewed icon, and replaced with bold/normal text.
+	(-) "No Sort" resorts messages into order on the server.
+	(-) Translate Column popup menu.
+	(-) Untranslatable term fixed in Advanced Options.
+	(-) Two important rules fired, showed message twice in balloon.
+	(-) Important Balloon: Didn't show from address if no name.
+	(-) Important messages not marked as spam.
+	(-) Reply with MAPI was sometimes just ignored.
+
+3.0 (beta 10)		2003-08-24
+	(+) Retrieve body while checking (option).
+	(+) Rules can look in body if above option ticked.
+	(+) New Spam DropDown button.
+	(+) New rule action to Protect messages from auto-delete/spam-mark.
+	(+) Started an FAQ in the help file and on the website.
+	(*) "Del" key press in rule list will delete rule.
+	(*) Better handling of balloon info on Win9x.
+	(*) Status icon for Protected/WhiteList messages.
+	(-) Sort direction wasn't saved correctly.
+	(-) Only save customize file if toolbar customize dialog opened.
+	(-) Strip comments and blank lines when loading translation files.
+	(-) Quit even if saving to PopTray.ini fails.
+	(-) Save preview font style and charset.
+	(-) Balloon on Win9x while minimized.
+	(-) QuickHelp showed behind form when "Stay on Top" was ticked.
+	(-) "Stay on Top" flash to rules tab, when checking, removed.
+	(-) Info column width saving was wrong.
+	(-) Remove rules from PopTray.ini when creating Rules.ini.
+
+3.0 (beta 9)		2003-07-27
+	(+) Sort by Message Status (message icon).
+	(+) Translation Added: Spanish (Chile).
+	(*) Sort menu moved to column Right-Click.
+	(*) Replaced "Don't Show Error Dialogs" with "Ignore Connection Errors".
+	(*) Scroll rules list while dragging.
+	(-) Enable "Del Spam" button when adding spam rule.
+	(-) Options heading didn't translate correctly in non-Latin languages.
+	(-) Account fields disabled when no accounts defined.
+	(-) When re-ordering accounts, timer intervals weren't swapped.
+
+3.0 (beta 8)		2003-07-13
+	(+) Installer: Get possible PopTray 2.x installed directory.
+	(*) AutoSize option checkboxes.
+	(*) Save Info window column widths.
+	(-) AccessViolation when blank lines in header.
+	(-) Delete Rule didn't refresh details display.
+	(-) Don't minimize when Execute Program fails.
+	(-) Don't show error dialogs in Win9x while minimized.
+	(-) Translate "All Accounts" in rules criteria.
+	(-) Bug when translation file missing.
+
+3.0 (beta 7)		2003-06-29
+	(+) Installer: Close running PopTray before installation.
+	(+) Installer: Remember sections selected.
+	(+) Installer: Option to uninstall configuration files.
+	(+) Shift-Click mouse actions.
+	(+) New mouse actions: "Mark as Viewed", "Check First Account".
+	(+) Added Command-line option /QUIT.
+	(*) Mark selected messages as spam when creating delete/spam rule.
+	(*) Select all text on From,To,Subject in Preview.
+	(-) Scroll-bars when window too small to show account details.
+	(-) Clicking delete while still busy checking.
+	(-) Space-bar on message shows preview.
+
+3.0 (beta 6)		2003-06-22
+	(+) Allow wildcards in White/Black List.
+	(+) Added "Delete Spam" mouse action.
+	(*) Only show enabled accounts in Info summary.
+	(*) Ctrl-Tab switch tabs on Preview.
+	(*) Updated help file.
+	(-) AccessViolation when canceling options.
+	(-) Save/Cancel buttons enabled when showing plug-ins.
+	(-) Canceling the adding of a new account.
+	(-) Selecting rules with keyboard didn't work.
+
+3.0 (beta 5)		2003-06-16
+	(+) Command-line Options to execute Actions.
+	(+) New mouse action: "Toggle Sound".
+	(*) Shift-Click on "Check" will not do a QuickCheck.
+	(*) Ask to overwrite when saving and already exists.
+	(-) Incorrect handle on "Run E-Mail Program" displayed random window.
+	(-) Default extension (.eml, .txt, .msg) when saving.
+	(-) Prevent false dragging when slow in redrawing.
+
+3.0 (beta 4)		2003-06-01
+	(+) Drag-and-Drop re-ordering of accounts.
+	(+) Drag-and-Drop re-ordering of rules.
+	(+) Suspend Sound toggle on right-click menu.
+	(*) Internal: Changed Accounts from dynamic array to collection.
+	(*) Internal: Changed Rules from dynamic array to collection.
+	(*) Proportional resize of three buttons on mail tab.
+	(*) Combination mail status icons possible.
+	(-) Progress meter mis-aligned.
+	(-) Advanced Info didn't close after specified interval.
+	(-) Deleting account could corrupt rule account criteria.
+	(-) Unregister hot-key when selecting "None";
+
+3.0 (beta 3.1)		2003-05-26
+	(-) Access Violation when translating popup menu.
+
+3.0 (beta 3)		2003-05-25
+	(+) Translations Added (Chinese).
+	(*) Play only one notification when new mail in multiple accounts.
+	(*) Advanced Info with drop shadow (on WinXP).
+	(*) Changed setup bitmaps.
+	(-) Time Separator forced to ":".
+	(-) Info Balloon didn't popup on a per account timer.
+	(-) Disable "Del Spam" button when no spam messages.
+	(-) Mail context-menu popup after Column context-menu popup.
+	(-) Don't mark as Spam when in White List.
+	(-) Mark BlackList messages as ignored.
+	(-) Showing Info before accounts loaded caused AccessViolation.
+
+3.0 (beta 2)		2003-05-18
+	(+) Restrict checking times (option).
+	(*) Switched URLs to poptray.org
+	(*) Switched to Nullsoft Installer instead of Inno Setup.
+	(*) Save Option/Rules list width.
+	(-) AccessViolation with Advanced Info and Balloon Notification.
+	(-) Translate "To:" when printing an email.
+	(-) Disable protocol when no accounts defined.
+	(-) AccessViolation on "Run E-Mail Client" whn no accounts defined.
+	(-) Hint blank when using "Rotate TrayIcon" option.
+	(-) Wrong account count in hint.
+	(-) Esc didn't close Preview window when mailbody had focus.
+	(-) Rule Save button enabled when adding new rule.
+	(-) AV sometimes when AdvancedInfo "Mark as Viewed" clicked.
+
+3.0 (beta 1)		2003-04-28
+	(+) Customizable XP-look Toolbars.
+	(+) Remember Viewed Messages.
+	(+) Save/Open Attachments.
+	(+) XP Theme Support.
+	(+) Preview Attachment icons.
+	(+) White List & Black List.
+	(+) Plug-ins (Notify,Protocol).
+	(+) IMAP4 plug-in.
+	(+) POP3 over SSL plug-in.
+	(+) Quick-Checking only retrieves new message headers.
+	(+) Preview Top n lines only (option).
+	(+) First wait x seconds before first check (option).
+	(+) Snap to Screen Edges.
+	(+) Preview shows Decoded and Raw message.
+	(+) Save Preview window position (with multiple window support).
+	(+) Font Customizable in Preview.
+	(+) Preview Read-Only (option).
+	(+) TrayIcon indicating busy with Delete.
+	(+) Hide Viewed Messages (option + button).
+	(+) Import Rules.
+	(+) Log Rule Action.
+	(+) Multiple selection right-click add to rules.
+	(+) Clickable URL links in Preview.
+	(+) Right-click add to white/black list.
+	(+) Mark as Spam & Delete Spam.
+	(+) BlackList mark as Spam (option).
+	(+) Info winodow to show new messages and account summary.
+	(+) Macros in Rules Execute File (e.g. %SUBJECT%).
+	(+) Translations Added (Arabic,Portuguese,Spanish Latin America,Turkish)
+	(*) New Look (Icon-Tree) Options.
+	(*) New Look Rules.
+	(*) New Look Preview (with CC,X-Mailer too).
+	(*) Moved rules to different INI file.
+	(*) TrueColor TrayIcons on WinXP.
+	(*) Account Color on TrayIcon during checking.
+	(*) Animated TrayIcon during checking (option).
+	(*) From preview, reply with selected body text.
+	(*) Removed MixColors option.
+	(*) Internal: Changed .mail from dynamic array to collection.
+	(-) Sort Languages drop-down.
+	(-) Increased mailto: reply to 2000 chars.
+	(-) HelpFile when path specified on Command-line.
+	(-) Add Account didn't update accounts dropdown in rules.
+	(-) Prevent duplicate accounts in Queue.
+	(-) After deleting bottom rule, it was still active.
+	(-) Use Reply-To header when exists.
+
+2.1			2002-12-05
+	(+) Released !!
+
+2.1 (beta 13) RC4	2002-12-03
+	(-) Tab still showing message count after all msgs deleted.
+
+2.1 (beta 12) RC3	2002-12-01
+	(+) Added a What's New section in the Help file.
+	(+) Translations added (Korean).
+	(*) Removed version history from Help file.
+	(*) Window height back to beta 9 size.
+	(-) Translate msgs on info balloon.
+	(-) Error to retrieve message on Preview, OK grayed out.
+	(-) Access Violation after deleting from Preview.
+	(-) "Failed to set tab at index -1" after deleting from Preview.
+	(-) Set New Messages = 0 when Quick Checking.
+
+2.1 (beta 11) RC2	2002-11-18
+	(*) Quick Help color changed to default hint color.
+	(-) Translate Password Window.
+	(-) Alt-A for Check All didn't work on all PCs.
+	(-) Multi-line Tabs cutoff bottom on Accounts screen.
+	(-) Better transparency handling of e-mail program icons.
+	(-) Reply with body using mailto: with Outlook (450 chars).
+	(-) Reply with body using MAPI with Outlook Express.
+	(-) Viewed icon when message has no Message-ID.
+
+2.1 (beta 10) RC1	2002-11-11
+	(+) Quick Help on Options screen.
+	(+) Ctrl-F6 switches Account tabs.
+	(+) Translations added (Norwegian,Ukranian).
+	(*) Order Advanced Options into groups.
+	(-) Options buttons disappeared when small window size.
+	(-) Close Preview window while busy retrieving.
+	(-) Decode Charset in "To:" column.
+	(-) Switching tabs while checking, after deleting.
+	(-) Delete from Preview when tabs have changed.
+
+2.1 (beta 9)		2002-10-06
+	(-) Error when previewing last message (introduced in beta 8).
+	(-) Didn't delete when "Safe Delete" option off.
+
+2.1 (beta 8)		2002-10-04
+	(+) New "Safe Delete" option using POP3 UIDL command.
+	(+) Delete button on Preview window.
+	(+) Translations added (Taiwan).
+
+2.1 (beta 7)		2002-09-07
+	(+) Added "NOT Contains" in rules.
+	(+) Translations Added (Afrikaans,Slovene)
+	(*) Show less columns in Rules list.
+	(-) Clear Error when Quick Checking.
+	(-) Ignore UIDL Errors.
+	(-) Only show accounts with messages on balloon notification.
+	(-) Translate languages drop down.
+
+2.1 (beta 6)		2002-08-28
+	(*) Changed QuickCheck to an option.
+	(-) Quick Checking didn't set the last check time.
+	(-) Don't show balloon errors when "No Error" option checked.
+
+2.1 (beta 5)		2002-08-19
+	(+) Quick Checking (using UIDL).
+	(+) Translations added (Romanian,Slovak).
+	(*) Re-compiled using released Indy 9.0.10 components.
+	(-) Right-Click Add Rule was broken in beta 4.
+
+2.1 (beta 4)		2002-06-24
+	(+) Balloon Notification (Win2000+).
+	(+) Important Messages (Rule Action Ballon Pop-Up).
+	(+) Rule apply only to new messages (option).
+	(+) Specify account in Rule (option).
+	(+) Log which account a rule fired on.
+	(+) Translations added (Czech).
+	(*) Allow upto 999 minute intervals.
+	(*) All Files filter in open EXE dialog.
+	(*) Different Tab Icon for Disabled Accounts.
+	(-) Saving message with a quote (") in the subject.
+	(-) Host:Port settings for Delete/Preview.
+	(-) No Languages broke Accelerator Keys.
+	(-) Changing to English did not change Rules Drop-Downs.
+	(-) Multi-line tabs break accounts "timer interval".
+
+2.1 (beta 3)		2002-05-10
+	(+) Translations added (Bulgarian,Hebrew,Hungarian,Polish).
+	(+) Translations added (Russian,Spanish,Swedish).
+	(*) Changed the "Disabled" icon.  (Thanks Curtz)
+	(-) Saving message with a /,\,*,<,> in the subject.
+	(-) Translate window caption.
+	(-) Translate "Still busy checking".
+	(-) Port settings for Delete/Preview.
+
+2.1 (beta 2)		2002-04-01
+	(+) Translatable into other languages.
+	(+) Translations Added (Catalan,Danish,Dutch,Finnish,French)
+	(+) Translations Added (German,Italian,Portuguese-Brazil)
+	(+) Multi-line account tabs (option).
+	(+) Check only while Minimized (option).
+	(+) Mouse/HotKey Action for New Message.
+	(+) Print from Preview window.
+	(+) User-defined Connection TimeOut.
+	(+) Command-line option for multiple instances (/MULTIPLE).
+	(*) Changed About Box (added Translators).
+	(*) Show Date on Preview.
+	(-) Swapped [Default Sound] and [Default Program].
+	(-) Wrong hint text on Accounts Test E-Mail button.
+	(-) Increased Maximum Line Length
+	(-) Save Window Position when shutdown.
+	(-) Delete and Wav action in one rule.
+
+2.1 (beta 1)		2002-02-01
+	(+) Specify E-Mail Program per Account.
+	(+) Include some sample Sound Files (thanks Nelinha).
+	(+) Specify POP3 port using syntax "server:port".
+	(+) Option to use MAPI instead of "mailto:".
+	(+) Reply on Preview (with body).
+	(+) Mouse Action to toggle AutoCheck.
+	(*) Change Icon when AutoCheck disabled.
+	(*) Show "[Use Default Sound]" when no account sound.
+	(*) Account Test Sound button plays default sound.
+	(*) Better Enable/Disable of Account Save/Cancel buttons.
+	(-) Background color of Mail Client icon in menu.
+	(-) "Still Busy Deleting" error when failure to connect.
+	(-) Don't hide seleced message when losing focus.
+	(-) Tray Hint show incorrect "checked" time.
+	(-) Password without "Start Minimized".
+
+2.0		2002-01-11
+	(+) Released !!
+
+1.5 (beta 25)	2002-01-11
+	(+) Not released.
+	(-) Interval checking stopped working.
+
+1.5 (beta 24)	2002-01-10
+	(+) Option to ignore Retrieve Errors.
+	(-) Cancel Account wanted to delete account.
+	(-) Account Timer interval went to -1.
+	(-) Better Interval UpDown support.
+	(-) AutoCheck enabled didn't work for multiple timers.
+	(-) Mark all accounts Viewed when running e-mail client.
+	(-) Decode Preview of message with -- on one line.
+
+1.5 (beta 23)	2002-01-09
+	(*) Update List only when the active tab is being checked.
+	(-) Timer interval went to -1.
+	(-) Never button and interval UpDown went out of sync.
+	(-) Minimun width increased to include Stop button.
+	(-) Right-click add rule "Equal" -> "Equals".
+
+1.5 (beta 22)	2002-01-05
+	(-) Acounts Save/Cancel/Help buttons fixed position.
+	(-) Check when No Accounts defined.
+	(-) Minimize/Restore when No Accounts defined.
+	(-) Delete Account when No Accounts defined.
+	(-) Changing right-hand tabs when Account not saved.
+	(-) Minimum FormSize increased for Accounts buttons.
+
+1.5 (beta 21)	2002-01-05
+	(+) Stop button to disconnect while checking.
+	(*) Some cosmetic changes.
+	(*) Changed to 4 generic HotKeys.
+	(*) Cancel button for Saving Accounts.
+	(-) Error in retrieving showed empty headers.
+
+1.5 (beta 20)	2002-01-04
+	(*) Test Sound buttons on Accounts and Rules.
+	(*) Faster loading of rules.
+	(-) Delete Confirmation showed incorrect Subject.
+	(-) "To:" address without space between name and address.
+	(-) Vertical Tab Captions on Win95.
+	(-) Invalid Dates: show original text.
+	(-) E-Mail Client Icon when in Quotes.
+
+1.5 (beta 19)	2002-01-02
+	(+) Hot-Keys for mouse actions.
+	(*) Changed default save format to *.EML
+	(*) Changed text: Animated for Accounts to Rotating Icon.
+	(-) Date Sorting fixed (broken in beta 18).
+	(-) SystemHotKey with Stay On Top fixed.
+	(-) Animated, Rotating TrayIcon with only one account.
+	(-) Delete Rule still showed the deleted message.
+	(-) Delete Rule gave error "Still Busy Checking".
+
+1.5 (beta 18)	2001-12-31
+	(+) New "To" column.
+	(+) Show/Hide columns (right-click the column header).
+	(*) Don't allow to check while busy checking.
+	(*) Better Large Fonts support.
+	(-) Animation fixed for only one account (broken in beta 17).
+
+1.5 (beta 17)	2001-12-28
+	(+) Animate TrayIcon to display messages in each Account.
+	(+) Show New Messages.
+	(+) Ctrl-A select all messages.
+	(*) Better detection of new messages.
+	(*) Better detection of viewed messages (per account).
+	(-) Show Info dialog to the front.
+
+1.5 (beta 16)	2001-12-20
+	(+) Right-Click add rule.
+	(+) Show different icon for MIME attachemnts.
+	(+) Compare methods in rules (Contains,Equals,Empty,Wildcard).
+	(+) Wildcards allowed in the rules (*,?).
+	(+) More search areas rules (CC,FromName,FromAddress).
+	(+) "Toggle Message Window" mouse action added.
+	(+) Save Message as Outlook Express (*.EML)
+	(+) Enable/Disable AutoCheck from Tray Menu.
+	(+) Different Icon if you viewed a message (option).
+	(*) Rules Save button Enabled/Disabled as needed.
+	(-) Reset Deleting Flag when Connection Error.
+	(-) Notify without Tray Icon when Reset Tray option on.
+
+1.5 (beta 15)	2001-11-22	
+	(+) Password protection.
+	(+) Show MailBox size.
+	(+) Info Mouse Action.
+	(*) WindowsXP 48x48 icon.
+	(-) Prevent saving window position outside screen.
+	(-) Prevent deleting while busy deleting.	
+	(-) Balloon Hint errors sometimes wrong.
+	(-) Invalid date errors.
+
+1.5 (beta 14)	2001-11-06
+	(+) Mouse Buttons now customizable.
+	(+) "Check and Show" Mouse action added.
+	(+) Option for "Double-Click delay on Click".
+	(+) Ctrl-A selects entire Preview message.
+	(*) Faster saving of Rules under NT/2000/XP.
+	(*) Updated Help with new Options/Features.
+	(*) Removed "Single-Click Check" option.
+	(-) Show default option tab on start-up.
+	(-) Balloon Error only if not showing error dialog.
+	(-) Run E-Mail client twice.
+	(-) Rules try to delete the same message twice.
+
+1.5 (beta 13)	2001-10-26
+	(+) Middle-Click checks for mail.
+	(+) TrayIcon now survives explorer.exe kill.
+	(+) "Don't Show Error Dialogs" option added.
+	(+) Balloon hint on connect error (Win2000+).
+	(*) True-Color shaded glyphs for buttons.
+	(*) Double-Click no longer show-window/hide-window.
+	(*) Options split into Tabs.
+	(*) Switched to Indy 9 (beta).
+	(*) Changed to CoolTrayIcon component.
+	(-) "Check if On-line" code fixed.
+	(-) Fixed bugs that came with Indy 9.
+
+1.5 (beta 12)	2001-09-28
+	(+) Rule to Execute a file.
+	(-) Shutdown (bug in TrayIcon component).
+
+1.5 (beta 11)	2001-09-27
+	(+) System Hot-Key to check for messages.
+	(+) Allow only one instance running.
+	(+) Added "New Message" to TrayMenu.
+	(+) Option to Check for Mail on Single Click.
+	(*) Removed the 20 accounts limit.
+	(*) Changed to Jedi-TaskBarIcon component.
+	(*) Removed RXLib (smaller exe, less memory).
+	(*) Changed MAPI code not to look in Registry.
+	(*) Show "Already Connected" error in StatusBar.
+	(*) Minimize when clicking "New" button.
+	(*) Don't change "To-Tray" button to "Quit" button.
+	(-) Check for Update with beta > 9.
+
+1.5 (beta 10)	2001-09-21
+	(+) Drag and Drop files to create attachments.
+	(+) Minimize to Tray option.
+	(+) Save Preview window size.
+	(+) Save Preview window maximized state.
+	(*) Setup has a new picture.
+	(-) Setup sets short-cut Start-In directory.
+	(-) Show Help file from PopTray directory.
+	(-) Negative count when "Reset Tray" option.
+
+1.5 (beta 9)	2001-09-05
+	(+) Show from e-mail address in ToolTip.
+	(+) Forum on my website http://forum.crause.co.za
+	(*) Click on attachments (preview) to get a list.
+	(-) Blank password decryption.
+	(-) Stop on Preview broke MailCheck.
+
+1.5 (beta 8)	2001-08-27
+	(+) New domain http://poptray.crause.co.za
+	(+) New contact email address renier@crause.co.za
+	(*) Update about for new web address.
+	(*) Update about for new email address.
+	(*) Update help for new web address.
+	(*) Update help for new email address.
+	(-) Show Form on Notification shows mail list.
+
+1.5 (beta 7)	2001-08-24	
+	(+) Detailed HTML Help.
+	(+) F1 for Help Contents.
+	(+) Shift-F1 for Context-Sensitive Help.
+	(-) Don't Reset TrayIcon when viewing options.
+	(-) Fixed Tab-Order on Accounts page.
+
+1.5 (beta 6)	2001-08-22
+	(+) "Check if On-Line" option (untested).
+	(*) F5 short-cut key to refresh current account.
+	(-) Some beta 5's called themselves beta 6.
+
+1.5 (beta 5)	2001-08-21
+	(+) Check for Update on website.
+	(-) Right-Click menu didn't work in NT 4.
+	(-) Some passwords decrypted incorrectly.
+	(-) About in tray menu went to Rules tab.
+	(-) Options in tray menu went to Accounts tab.
+	(-) Access Violation with "Reset TrayIcon" option.
+
+1.5 (beta 4)	2001-08-17
+	(+) "New Mail Message" button.
+	(+) Option to Reset Tray when viewing list.
+	(+) Help on Options (using tool tips).
+
+1.5 (beta 3)	2001-08-14
+	(+) New look web site.
+	(+) Mailing List for new version.
+	(+) List attachment filenames in Preview hint.
+	(-) Access Violation with empty password.
+	(-) Delete Files I created in TempDir.
+	(-) Preview with no body (only attachments).
+
+1.5 (beta 2)	2001-08-10
+	(+) Installation Options: Desktop Icon, Startup.
+	(*) Switched to Inno Setup 2.0
+	(*) Accounts buttons on ToolBar.
+	(*) Allow window to be resized smaller.
+	(*) Auto Scrollbars for Option screens.
+	(*) Keep users regional DateFormat.
+	(-) Access Violation when no accounts configured.
+	(-) Always-on-Top startup position not saved.
+	(-) Always-on-Top Preview was behind main window.
+	(-) Preview message that doesn't exist.
+
+1.5 (beta 1)	2001-07-23	
+	(+) Timer Interval per account (option).
+	(+) Get Default E-Mail client when none specified.
+	(+) Multiple Preview windows.
+	(+) Save Preview Message (TXT or MSG).
+	(+) Stop Button during Preview download.
+	(+) Option for Delete Confirmation.
+	(+) Indicate New/Changed features and bugs in ReadMe.
+	(*) Moved Accounts to new tab.
+	(*) New Color Select box.
+	(*) Progress on Preview screen.
+	(*) Hot Keys for Preview & Delete (Space & Del).
+	(*) Default Start-Up Position in Lower-Right corner.
+	(*) Changed text on "Run E-Mail Client" button.
+	(*) Show same account in Accounts as in Mail.
+	(*) Give Error when no E-Mail Client specified.
+	(-) Allow Command-Line params in E-Mail Program.
+
+1.2.9	2001-04-24
+	(-) Saving form position when "X Minimizes" option on.
+	(-) Fixed Large Font support (buttons disappeared).
+
+1.2.8	2001-04-23
+	(*) ESC key disconnects or minimizes form.
+	(*) More stable saving of form position.
+	(*) Better date sorting.
+	(-) Shutdown bug fixed.
+
+1.2.7	2001-04-10
+	(+) "X" Close Button minimize (option).
+	(+) Never Check button.
+	(*) Shortcut Keys on Options.
+	(*) Reduced memory usage (used extra mem since 1.2.3).
+	(*) Filters on Open WAV file.
+
+1.2.6	2001-03-16
+	(+) Added StatusBar for each account.
+	(+) Show Connect-Error Icon.
+	(+) Show Form on Notification (option).
+	(*) Large Font compatible.
+	(-) Fixed HandPoint cursor on About links.
+
+1.2.5	2001-03-13
+	(+) New Rule to Ignore message (don't notify).
+	(+) Reply to message using mailto:
+	(*) Ignored messages will not be included in TrayIcon count.
+
+1.2.4	2001-03-02
+	(*) Better Password Encryption.
+	(*) Store Password using printable ASCII only.
+	(*) Multi-Line Hint on Win2000 only.
+	(*) Save Sort Column.
+	(*) Indicate Sort Column.
+
+1.2.3	2001-02-26
+	(+) Added "Always on Top" option.
+	(*) Different way of hiding/showing form.
+
+1.2.2	2001-01-24
+	(+) Added Ability to give path for INI files on commandline.
+	(*) Increased number of accounts to 20 (on request).
+	(-) Possible HourGlass cursor when connection fails.
+
+1.2.1	2001-01-22
+	(+) RightClick menu for Preview & Delete.
+	(+) Added E-Mail address to About Box.
+	(*) Save Account button only enabled if Info changed.
+	(*) HourGlass when checking for Mail and Previewing.
+	(*) Preview & Delete only enabled when Msg selected.
+	(-) Preview Disconnect from Server after Msg retrieved.
+	(-) Preview window OK button resize bug fixed.
+
+1.2	2001-01-19
+	(+) Added custom color TrayIcon per Account.
+	(+) Optional Logging of rules (Tab separated file).
+	(+) Mix Colors if multiple accounts.
+	(+) Show Last Checked Time in Tray Hint.
+	(*) Moved Account Info to Options screen.
+	(*) Check if Account Info is saved when going to another.
+	(*) Use rectangle in TrayIcon when more than 9 e-mails.
+	(*) Minimum window size.
+
+1.1.2	2001-01-11
+	(+) Option to switch off decoding of Preview Message.
+
+1.1.1	2001-01-08
+	(-) Fixed bug with Interval Option not Saved.
+
+1.1	2000-12-14
+	(+) Released into the Wild.
+	(*) Changed name from PopCheck to PopTray.
+
+1.0.2	2000-10-23
+	(+) Enable/Disable of accounts.
+
+1.0.1	2000-10-20
+	(+) Beta of Wav/Delete Rules implemented.
+
+1.0	2000-10-18
+	(+) First (non-beta) Release!
+
+0.95.3	2000-10-13
+	(-) Options Save and Cancel buttons align to bottom.
+
+0.95.2	2000-10-11
+	(-) Preview and Delete work correctly after sort.
+
+0.95.1	2000-10-10
+	(*) Sort descending when clicking column again.
+
+0.95	2000-10-09
+	(+) Preview Progress meter.
+	(+) Sort messages when clicking on column headers.
+	(*) Disable account fields until "Add" pressed.
+	(-) Show only current message headers in preview.
+
+0.94.2	2000-09-27
+	(-) Removed debug messages on shutdown.
+
+0.94.1	2000-09-26
+	(+) Show icon for Priority.
+
+0.94	2000-09-22
+	(+) Delete an Account
+	(-) TrayIcon reset when e-mail run (animated too).
+
+0.93.1	2000-09-21
+	(*) Better error-handling (no msgs while minimized).
+
+0.93	2000-09-21
+	(*) Switched to Indy POP3 component.
+	(*) Show name only in From field.
+	(*) Uses less memory.
+	(-) Fixed bug with Windows not shutting down.
+
+
+0.92.3	2000-08-30
+	(+) Hint changed while checking for mail.
+	(+) Program Icon on PopUp menu.
+	(*) TrayIcon reset when e-mail program run.
+	(-) Fixed bug with WAV not always played.
+
+0.92.2	2000-08-30
+	(+) Hint show which account the new mail is in.
+
+0.92.1	2000-08-28
+	(+) ProgressBar while checking mail.
+	(*) Use a little bit less memory.
+
+0.92	2000-08-25
+	(+) Check for Mail on Startup.
+	(+) Minimize when Starting Mail Program.
+	(+) Multiple Delete added.
+	(+) Simple password encryption added.
+
+0.91.1	2000-08-25
+	(+) Added hints in Tray.
+	(+) Tray blue when messages from multiple accounts.
+	(*) Close button renamed to "To Tray".
+	(-) Delete with no message selected fixed.
+	(-) From column Read-Only.
+
+0.91	2000-08-25
+	(-) Fixed Notify with no-mail bug.
+
+0.90	2000-08-25	
+	(+) First Beta release.
