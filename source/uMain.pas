@@ -56,7 +56,22 @@ const
   UseDefaultProgram = '[Use Default Program]';
   NOSORT = -1;
   RULE_NOT = '  X';
-
+  
+const
+  PBT_APMQUERYSUSPEND       = $0000;
+  PBT_APMQUERYSTANDBY       = $0001;
+  PBT_APMQUERYSUSPENDFAILED = $0002;
+  PBT_APMQUERYSTANDBYFAILED = $0003;
+  PBT_APMSUSPEND            = $0004;
+  PBT_APMSTANDBY            = $0005;
+  PBT_APMRESUMECRITICAL     = $0006;
+  PBT_APMRESUMESUSPEND      = $0007;
+  PBT_APMRESUMESTANDBY      = $0008;
+  PBTF_APMRESUMEFROMFAILURE = $00000001;
+  PBT_APMBATTERYLOW         = $0009;
+  PBT_APMPOWERSTATUSCHANGE  = $000A;
+  PBT_APMOEMEVENT           = $000B;
+  PBT_APMRESUMEAUTOMATIC    = $0012;
 type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
 
@@ -1702,7 +1717,7 @@ begin
         gAutoOnWhenSuspend := actAutoCheck.Checked;
         if gAutoOnWhenSuspend then DoCommand(cmdAutoCheckOff);
       end;
-    PBT_APMRESUMESUSPEND, PBT_APMRESUMESTANDBY, PBT_APMRESUMEAUTOMATIC, PBT_APMRESUMECRITICAL :
+      PBT_APMRESUMESUSPEND, PBT_APMRESUMESTANDBY, PBT_APMRESUMEAUTOMATIC, PBT_APMRESUMECRITICAL :
       begin
         if gAutoOnWhenSuspend then DoCommand(cmdAutoCheckOn);
       end;
