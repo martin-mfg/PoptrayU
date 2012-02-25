@@ -83,7 +83,7 @@ type
 
   TWhiteBlack = (wbWhite, wbBlack);
 
-  TfrmPopMain = class(TTntForm)
+  TfrmPopUMain = class(TTntForm)
     PageControl: TPageControl;
     tsMail: TTabSheet;
     tsOptions: TTabSheet;
@@ -635,7 +635,7 @@ type
   end;
 
 var
-  frmPopMain: TfrmPopMain;
+  frmPopMain: TfrmPopUMain;
   Accounts : TAccountItems;
 
 implementation
@@ -859,7 +859,7 @@ end;
 // Public
 //------------------------------------------------------------------------------
 
-procedure TfrmPopMain.ShowForm(MarkAsViewed : boolean = true);
+procedure TfrmPopUMain.ShowForm(MarkAsViewed : boolean = true);
 ////////////////////////////////////////////////////////////////////////////////
 // Show the main form
 begin
@@ -894,7 +894,7 @@ begin
     MarkViewed;
 end;
 
-procedure TfrmPopMain.HideForm;
+procedure TfrmPopUMain.HideForm;
 ////////////////////////////////////////////////////////////////////////////////
 // Hide the main form
 begin
@@ -907,7 +907,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowIcon(num: integer; IconType : TIconType);
+procedure TfrmPopUMain.ShowIcon(num: integer; IconType : TIconType);
 ////////////////////////////////////////////////////////////////////////////////
 // Show the correct icon in tabs and tray
 var
@@ -986,7 +986,7 @@ begin
   Application.ProcessMessages;
 end;
 
-function TfrmPopMain.ExecuteProgram(num : integer = -1) : boolean;
+function TfrmPopUMain.ExecuteProgram(num : integer = -1) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Run the e-mail client
 var
@@ -1013,7 +1013,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.CheckAllMail;
+procedure TfrmPopUMain.CheckAllMail;
 ////////////////////////////////////////////////////////////////////////////////
 // Check all accounts for mail
 var
@@ -1053,7 +1053,7 @@ begin
     ShowInfo(True);
 end;
 
-function TfrmPopMain.CheckMail(num : integer; Notify : boolean; ShowIt : boolean) : integer;
+function TfrmPopUMain.CheckMail(num : integer; Notify : boolean; ShowIt : boolean) : integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Check for mail on 1 account
 var
@@ -1300,7 +1300,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowMailMessage(num,i : integer);
+procedure TfrmPopUMain.ShowMailMessage(num,i : integer);
 begin
   if not( Options.HideViewed and Accounts[num-1].Mail[i].Viewed ) then
   begin
@@ -1324,7 +1324,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowMail(num: integer; ClearIt : boolean);
+procedure TfrmPopUMain.ShowMail(num: integer; ClearIt : boolean);
 ////////////////////////////////////////////////////////////////////////////////
 // Show mail stored in array on the list view
 var
@@ -1372,7 +1372,7 @@ begin
     MarkViewed;
 end;
 
-procedure TfrmPopMain.SendMail(const ToAddress, Subject, Body: string);
+procedure TfrmPopUMain.SendMail(const ToAddress, Subject, Body: string);
 ////////////////////////////////////////////////////////////////////////////////
 // Send EMAIL using either MAPI or "mailto:"
 const
@@ -1418,7 +1418,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.TranslateToEnglish(phrase: string): string;
+function TfrmPopUMain.TranslateToEnglish(phrase: string): string;
 var
   i,P : integer;
   S : string;
@@ -1438,7 +1438,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.Translate(english: string): string;
+function TfrmPopUMain.Translate(english: string): string;
 var
   lookup : string;
 begin
@@ -1459,7 +1459,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TranslateFrame(frame : TFrame);
+procedure TfrmPopUMain.TranslateFrame(frame : TFrame);
 begin
   if FLastLanguage <> 0 then
     TranslateFrameDir(frame,ToEnglish);
@@ -1470,7 +1470,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TranslateForm(form : TTntForm);
+procedure TfrmPopUMain.TranslateForm(form : TTntForm);
 begin
   if (FLastLanguage <> Options.Language) or (form <> Self) then
   begin
@@ -1484,7 +1484,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TranslateForm(form : TForm);
+procedure TfrmPopUMain.TranslateForm(form : TForm);
 begin
   if (FLastLanguage <> Options.Language) or (form <> Self) then
   begin
@@ -1498,7 +1498,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
+function TfrmPopUMain.TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
                                   Buttons: TMsgDlgButtons; HelpCtx: Integer): Integer;
 var
   dlg : TForm;
@@ -1518,7 +1518,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
+function TfrmPopUMain.TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
                                   Buttons: TMsgDlgButtons; HelpCtx: Integer) : TTntForm;
 ////////////////////////////////////////////////////////////////////////////////
 // Non-Modal message.
@@ -1542,7 +1542,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.DeleteMail(num, msgnum: integer; UID : string='') : boolean;
+function TfrmPopUMain.DeleteMail(num, msgnum: integer; UID : string='') : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Delete one message
 var
@@ -1564,7 +1564,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.RefreshLanguages;
+procedure TfrmPopUMain.RefreshLanguages;
 begin
   GetLanguages;
   // translate it
@@ -1572,7 +1572,7 @@ begin
   TranslateForm(self);
 end;
 
-procedure TfrmPopMain.QuickHelp(Sender: TObject;
+procedure TfrmPopUMain.QuickHelp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
   P : TPoint;
@@ -1597,7 +1597,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.RefreshProtocols;
+procedure TfrmPopUMain.RefreshProtocols;
 var
   sl : TStringList;
   st : string;
@@ -1644,7 +1644,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.AllowAutoCheck: boolean;
+function TfrmPopUMain.AllowAutoCheck: boolean;
 begin
   Result := dm.mnuAutoCheck.Checked and
             (not Options.CheckWhileMinimized or
@@ -1656,7 +1656,7 @@ begin
 end;
 
 
-procedure TfrmPopMain.SetSortColumn(ColNum : integer);
+procedure TfrmPopUMain.SetSortColumn(ColNum : integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Set the column to sort by
 begin
@@ -1685,7 +1685,7 @@ end;
 
 //------------------------------------------------- windows message handlers ---
 
-procedure TfrmPopMain.WMQueryEndSession(var Message: TWMQueryEndSession);
+procedure TfrmPopUMain.WMQueryEndSession(var Message: TWMQueryEndSession);
 ////////////////////////////////////////////////////////////////////////////////
 // Save stuff when shutdown
 begin
@@ -1696,7 +1696,7 @@ begin
   inherited;
 end;
 
-procedure TfrmPopMain.WMSYSCommand(var m: TMessage);
+procedure TfrmPopUMain.WMSYSCommand(var m: TMessage);
 ////////////////////////////////////////////////////////////////////////////////
 // Hide instead of Minimize
 begin
@@ -1706,7 +1706,7 @@ begin
     HideForm;
 end;
 
-procedure TfrmPopMain.WMDropFiles(var msg: TWMDROPFILES);
+procedure TfrmPopUMain.WMDropFiles(var msg: TWMDROPFILES);
 ////////////////////////////////////////////////////////////////////////////////
 // When you drop a file, open MAPI client with file attached
 var
@@ -1725,14 +1725,14 @@ begin
   DragFinish(msg.Drop);
 end;
 
-procedure TfrmPopMain.WMHotkey(var msg: TWMHotkey);
+procedure TfrmPopUMain.WMHotkey(var msg: TWMHotkey);
 begin
   DoHKCommand(msg.HotKey);
 end;
 
 var
   gAutoOnWhenSuspend : boolean = true;
-procedure TfrmPopMain.WMPowerBroadcast(var msg: TWMPower);
+procedure TfrmPopUMain.WMPowerBroadcast(var msg: TWMPower);
 begin
   case msg.PowerEvt of
     PBT_APMSUSPEND, PBT_APMSTANDBY :
@@ -1749,17 +1749,17 @@ begin
 end;
 
 
-procedure TfrmPopMain.UMActivate(var msg: TMessage );
+procedure TfrmPopUMain.UMActivate(var msg: TMessage );
 begin
   ShowForm;
 end;
 
-procedure TfrmPopMain.UMAction(var msg: TMessage );
+procedure TfrmPopUMain.UMAction(var msg: TMessage );
 begin
   DoCommand(TCommand(msg.WParam));
 end;
 
-procedure TfrmPopMain.UMQuit(var msg: TMessage);
+procedure TfrmPopUMain.UMQuit(var msg: TMessage);
 ////////////////////////////////////////////////////////////////////////////////
 // Quit Message from installer
 begin
@@ -1768,14 +1768,14 @@ begin
   Application.Terminate;
 end;
 
-procedure TfrmPopMain.UMProcessMessages(var msg: TMessage);
+procedure TfrmPopUMain.UMProcessMessages(var msg: TMessage);
 ////////////////////////////////////////////////////////////////////////////////
 // Do Events
 begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmPopMain.StatusWindowProc(var Message: TMessage);
+procedure TfrmPopUMain.StatusWindowProc(var Message: TMessage);
 ////////////////////////////////////////////////////////////////////////////////
 // Override the StatusBar WindowProc to repaint the icons
 const
@@ -1799,7 +1799,7 @@ end;
 
 //---------------------------------------------------------------- ini files ---
 
-procedure TfrmPopMain.LoadOptionsINI;
+procedure TfrmPopUMain.LoadOptionsINI;
 ////////////////////////////////////////////////////////////////////////////////
 // Read options from INI file
 var
@@ -2007,7 +2007,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmPopMain.SaveOptionsINI;
+procedure TfrmPopUMain.SaveOptionsINI;
 var
   Ini : TIniFile;
   i : integer;
@@ -2136,7 +2136,7 @@ begin
   btnCancel.Enabled := False;
 end;
 
-function TfrmPopMain.LoadAccountINI(num : integer) : boolean;
+function TfrmPopUMain.LoadAccountINI(num : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Get 1 account from INI
 var
@@ -2175,7 +2175,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SaveAccountINI(num : integer);
+procedure TfrmPopUMain.SaveAccountINI(num : integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Save 1 account to INI
 var
@@ -2204,7 +2204,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SaveAccountNum(num : integer);
+procedure TfrmPopUMain.SaveAccountNum(num : integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Save Account info to array
 begin
@@ -2239,7 +2239,7 @@ begin
   SwitchTimer;
 end;
 
-procedure TfrmPopMain.ShowAccount(num: integer);
+procedure TfrmPopUMain.ShowAccount(num: integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Show the account info in the edit boxes
 begin
@@ -2311,7 +2311,7 @@ begin
   else Result := raHeader;
 end;
 
-procedure TfrmPopMain.LoadRulesINI;
+procedure TfrmPopUMain.LoadRulesINI;
 ////////////////////////////////////////////////////////////////////////////////
 // Get the rules from INI file.
 // If Rules.ini doesn't exist read from PopTray.ini
@@ -2398,7 +2398,7 @@ begin
   btnCancelRule.Enabled := not NewRules;
 end;
 
-procedure TfrmPopMain.SaveRulesINI;
+procedure TfrmPopUMain.SaveRulesINI;
 ////////////////////////////////////////////////////////////////////////////////
 // Save all the rules to INI file
 var
@@ -2459,7 +2459,7 @@ begin
   btnCancelRule.Enabled := False;
 end;
 
-procedure TfrmPopMain.LoadPosINI;
+procedure TfrmPopUMain.LoadPosINI;
 ////////////////////////////////////////////////////////////////////////////////
 // Get window position,window size adn column widths from INI
 var
@@ -2515,7 +2515,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SavePosINI;
+procedure TfrmPopUMain.SavePosINI;
 ////////////////////////////////////////////////////////////////////////////////
 // Save window position,window size adn column widths to INI
 var
@@ -2556,7 +2556,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.LoadViewedMessageIDs(num : integer);
+procedure TfrmPopUMain.LoadViewedMessageIDs(num : integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Load viewed message ids from file
 var
@@ -2570,7 +2570,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SaveViewedMessageIDs;
+procedure TfrmPopUMain.SaveViewedMessageIDs;
 ////////////////////////////////////////////////////////////////////////////////
 // Save viewed message ids to file
 var
@@ -2592,7 +2592,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.AccountChanged(tab: integer): boolean;
+function TfrmPopUMain.AccountChanged(tab: integer): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Check if any of the fields have changed since last save
 var
@@ -2625,7 +2625,7 @@ end;
 
 // ----------------------------------------------------------- mail messages ---
 
-procedure TfrmPopMain.Preview(num: integer);
+procedure TfrmPopUMain.Preview(num: integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Open preview window and download the message
 var
@@ -2791,7 +2791,7 @@ begin
 end;
 
 
-procedure TfrmPopMain.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
+procedure TfrmPopUMain.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
 var
   MessageClient : TIdMessageClient;
 begin
@@ -2805,7 +2805,7 @@ begin
 end;
 
 
-function TfrmPopMain.DeleteMails(num: integer; var DelCount : integer) : boolean;
+function TfrmPopUMain.DeleteMails(num: integer; var DelCount : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Delete all mail marked as 'ToDelete'
 var
@@ -2845,7 +2845,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.GetUIDs(num: integer; var UIDLs : TStringList): boolean;
+function TfrmPopUMain.GetUIDs(num: integer; var UIDLs : TStringList): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Get list of UIDS. Must be connected.
 var
@@ -2869,7 +2869,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.GetUID(num,msgnum: integer): string;
+function TfrmPopUMain.GetUID(num,msgnum: integer): string;
 ////////////////////////////////////////////////////////////////////////////////
 // Get UID from server.  Must be connected
 var
@@ -2902,7 +2902,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.CheckUID(num, msgnum: integer; UID : string=''): boolean;
+function TfrmPopUMain.CheckUID(num, msgnum: integer; UID : string=''): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Check if current UID and stored UID is the same.  Must be connected
 var
@@ -2921,7 +2921,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.MarkViewed(num : integer = -1);
+procedure TfrmPopUMain.MarkViewed(num : integer = -1);
 ////////////////////////////////////////////////////////////////////////////////
 // Mark all messages as viewed
 var
@@ -2945,13 +2945,13 @@ begin
   if changed then CallNotifyPlugins;
 end;
 
-function TfrmPopMain.HasAttachment : boolean;
+function TfrmPopUMain.HasAttachment : boolean;
 begin
    Result := AnsiContainsText(MsgHeader.ContentType,'multipart/mixed') or
              AnsiContainsText(MsgHeader.ContentType,'multipart/related');
 end;
 
-function TfrmPopMain.CountUnviewed(num: integer): integer;
+function TfrmPopUMain.CountUnviewed(num: integer): integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count unviewed message from the specified account
 var
@@ -2966,7 +2966,7 @@ begin
       Inc(Result);
 end;
 
-function TfrmPopMain.CountNew(num: integer): integer;
+function TfrmPopUMain.CountNew(num: integer): integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count new messages from specified account
 var
@@ -2980,7 +2980,7 @@ begin
       Inc(Result);
 end;
 
-function TfrmPopMain.CountAllNew: integer;
+function TfrmPopUMain.CountAllNew: integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count new messages from all accounts
 var
@@ -2991,7 +2991,7 @@ begin
     Result := Result + CountNew(num);
 end;
 
-function TfrmPopMain.CountAll(Unviewed: boolean): integer;
+function TfrmPopUMain.CountAll(Unviewed: boolean): integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count message from all accounts
 var
@@ -3008,7 +3008,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.CountStatus(statusses : TMailItemStatusSet; num: integer): integer;
+function TfrmPopUMain.CountStatus(statusses : TMailItemStatusSet; num: integer): integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count messages of the specified status
 var
@@ -3031,7 +3031,7 @@ begin
 end;
 
 
-function TfrmPopMain.SelectedMailItem(Item : TListItem = nil): TMailItem;
+function TfrmPopUMain.SelectedMailItem(Item : TListItem = nil): TMailItem;
 begin
   if Item = nil then Item := lvMail.Selected;
   if Item = nil then
@@ -3040,7 +3040,7 @@ begin
     Result := Accounts[tabMail.TabIndex].Mail.FindMessage(StrToInt(Item.SubItems[colID]));
 end;
 
-procedure TfrmPopMain.RunMessage(num, msgnum: integer);
+procedure TfrmPopUMain.RunMessage(num, msgnum: integer);
 var
   pMsg : PChar;
   f : TextFile;
@@ -3062,7 +3062,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.GetMessageHeader(num, msgnum: integer) : boolean;
+function TfrmPopUMain.GetMessageHeader(num, msgnum: integer) : boolean;
 var
   MsgSize : integer;
   MsgID : string;
@@ -3222,7 +3222,7 @@ begin
   Result := True;
 end;
 
-procedure TfrmPopMain.RefreshAccountStatus(num: integer);
+procedure TfrmPopUMain.RefreshAccountStatus(num: integer);
 var
   i : integer;
 begin
@@ -3239,7 +3239,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SetSelectedMailItemStatus(Statusses: TMailItemStatusSet; SetIt: boolean);
+procedure TfrmPopUMain.SetSelectedMailItemStatus(Statusses: TMailItemStatusSet; SetIt: boolean);
 ////////////////////////////////////////////////////////////////////////////////
 // Set the specified Statusses on all the selected messages
 var
@@ -3264,7 +3264,7 @@ begin
   ShowStatusBar(tabMail.TabIndex+1);
 end;
 
-function TfrmPopMain.CountSelectedMailItemStatus(Statusses: TMailItemStatusSet) : integer;
+function TfrmPopUMain.CountSelectedMailItemStatus(Statusses: TMailItemStatusSet) : integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Count the selected message with satus
 var
@@ -3290,7 +3290,7 @@ end;
 
 //------------------------------------------------------------------- visual ---
 
-function TfrmPopMain.GetTrayColor(num : integer) : TColor;
+function TfrmPopUMain.GetTrayColor(num : integer) : TColor;
 ////////////////////////////////////////////////////////////////////////////////
 // See if a message contains a color, otherwise use the account color
 var
@@ -3308,7 +3308,7 @@ begin
   Result := StringToColorDef2(Accounts[num-1].Color,clGray)
 end;
 
-procedure TfrmPopMain.UpdateTrayIcon;
+procedure TfrmPopUMain.UpdateTrayIcon;
 ////////////////////////////////////////////////////////////////////////////////
 // Calc number of messages and show in in the tray
 var
@@ -3460,7 +3460,7 @@ begin
   TrayIcon.Refresh;
 end;
 
-procedure TfrmPopMain.ClearTrayIcon;
+procedure TfrmPopUMain.ClearTrayIcon;
 ////////////////////////////////////////////////////////////////////////////////
 // Clear the number of messages in the tray icon
 begin
@@ -3471,7 +3471,7 @@ begin
   TrayIcon.Refresh;
 end;
 
-procedure TfrmPopMain.PlayNotify(num: integer);
+procedure TfrmPopUMain.PlayNotify(num: integer);
 begin
   if (Accounts[num-1].Mail.Count > Accounts[num-1].IgnoreCount) and
      not(actSuspendSound.Checked) then
@@ -3495,7 +3495,7 @@ begin
   FNotified := True;
 end;
 
-procedure TfrmPopMain.EnableFields(EnableIt: Boolean);
+procedure TfrmPopUMain.EnableFields(EnableIt: Boolean);
 ////////////////////////////////////////////////////////////////////////////////
 // Enable / Disable the fields
 begin
@@ -3513,7 +3513,7 @@ begin
   actDeleteAccount.Enabled := EnableIt;
 end;
 
-procedure TfrmPopMain.SetColumnMenuCheckMarks;
+procedure TfrmPopUMain.SetColumnMenuCheckMarks;
 begin
   // visible columns
   dm.mnuColFrom.Checked := lvMail.Columns[0].Width <> 0;
@@ -3532,7 +3532,7 @@ begin
   actNoSort.Checked := FSortColumn = -1;
 end;
 
-procedure TfrmPopMain.Balloon(head,info: string; IconType : TBalloonHintIcon; TimeoutSecs : integer);
+procedure TfrmPopUMain.Balloon(head,info: string; IconType : TBalloonHintIcon; TimeoutSecs : integer);
 begin
   if (Win32MajorVersion >= 5)  // win2000 & winXP
      or ((Win32Platform <> VER_PLATFORM_WIN32_NT) and (Win32MajorVersion = 4) and (Win32MinorVersion >= 90))  // winME
@@ -3558,7 +3558,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowInfo(ShowOnlyWithMail : boolean = False);
+procedure TfrmPopUMain.ShowInfo(ShowOnlyWithMail : boolean = False);
 var
   info : string;
   num,i : integer;
@@ -3647,13 +3647,13 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowMessages;
+procedure TfrmPopUMain.ShowMessages;
 begin
   PageControl.ActivePageIndex := 0;
   ShowForm;
 end;
 
-procedure TfrmPopMain.DrawTheIcon(NewCount: integer; CircleColor: TColor);
+procedure TfrmPopUMain.DrawTheIcon(NewCount: integer; CircleColor: TColor);
 var
   i : integer;
 begin
@@ -3688,7 +3688,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.DrawCheckingIcon(num : integer);
+procedure TfrmPopUMain.DrawCheckingIcon(num : integer);
 var
   CircleColor,TransColor : TColor;
   bmp : TBitmap;
@@ -3751,7 +3751,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ResetToolbar;
+procedure TfrmPopUMain.ResetToolbar;
 var
   i : integer;
 begin
@@ -3760,7 +3760,7 @@ begin
       MailToolBar.ActionClient.Items[i].Control.Perform(CM_MOUSELEAVE, 0, 0);
 end;
 
-function TfrmPopMain.GetStatusIcon(MailItem: TMailItem): integer;
+function TfrmPopUMain.GetStatusIcon(MailItem: TMailItem): integer;
 begin
   Result := Ord(MailItem.Priority);
   if MailItem.HasAttachment then Result := mAttachment;
@@ -3784,7 +3784,7 @@ begin
   if MailItem.ToDelete then Result := mToDelete;
 end;
 
-procedure TfrmPopMain.ErrorMsg(num: integer; Heading,Msg: string; IgnoreError : boolean);
+procedure TfrmPopUMain.ErrorMsg(num: integer; Heading,Msg: string; IgnoreError : boolean);
 begin
   Accounts[num-1].Error := True;
   Accounts[num-1].Status := Translate(Heading)+' '+Trim(Msg)+HintSep+DateTimeToStr(Now);
@@ -3810,7 +3810,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowStatusBar(num : integer);
+procedure TfrmPopUMain.ShowStatusBar(num : integer);
 var
   mailcount : integer;
 begin
@@ -3832,7 +3832,7 @@ begin
   StatusBar.Panels[4].Text := IntTostr(Accounts[num-1].Size) + ' ' + FKB;
 end;
 
-procedure TfrmPopMain.LoadSkin;
+procedure TfrmPopUMain.LoadSkin;
 var
   skinname : string;
   skin,bmp : TBitmap;
@@ -3890,7 +3890,7 @@ end;
 
 //-------------------------------------------------------------------- rules ---
 
-procedure TfrmPopMain.CreateRegExpr;
+procedure TfrmPopUMain.CreateRegExpr;
 begin
   if not Assigned(FRegExpr) then
   begin
@@ -3901,7 +3901,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.CheckRegExpr(area : string; text : string) : boolean;
+function TfrmPopUMain.CheckRegExpr(area : string; text : string) : boolean;
 begin
   CreateRegExpr;
   try
@@ -3916,7 +3916,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TestRegExpr(text : string);
+procedure TfrmPopUMain.TestRegExpr(text : string);
 begin
   CreateRegExpr;
   try
@@ -3931,7 +3931,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.CheckRuleRow(area : string; comp : TRuleCompare; text : string; rulenot : boolean) : boolean;
+function TfrmPopUMain.CheckRuleRow(area : string; comp : TRuleCompare; text : string; rulenot : boolean) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 //  Check if a specific rule compares
 begin
@@ -3948,7 +3948,7 @@ begin
     Result := not Result;
 end;
 
-function TfrmPopMain.GetRuleAreaText(RuleArea : TRuleArea) : string;
+function TfrmPopUMain.GetRuleAreaText(RuleArea : TRuleArea) : string;
 begin
   case RuleArea of
       raFrom        : Result := MsgHeader.From.Text;
@@ -3963,7 +3963,7 @@ begin
     end;
 end;
 
-function TfrmPopMain.CheckRule(rulenum : integer; MailItem : TMailItem) : boolean;
+function TfrmPopUMain.CheckRule(rulenum : integer; MailItem : TMailItem) : boolean;
 var
   i : integer;
 begin
@@ -4018,7 +4018,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.CheckRules(num,msgnum : integer);
+procedure TfrmPopUMain.CheckRules(num,msgnum : integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Check all the rules and perform action
 var
@@ -4162,7 +4162,7 @@ const
   COL_TEXT = 2;
   COL_NOT = 3;
 
-procedure TfrmPopMain.SetupRuleGrid;
+procedure TfrmPopUMain.SetupRuleGrid;
 begin
   with grdRule do
   begin
@@ -4180,7 +4180,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowRuleEdit(ACol,ARow : integer);
+procedure TfrmPopUMain.ShowRuleEdit(ACol,ARow : integer);
 var
   isstatus : boolean;
 begin
@@ -4221,7 +4221,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ShowRule(selected: integer);
+procedure TfrmPopUMain.ShowRule(selected: integer);
 var
   i : integer;
   isstatus : boolean;
@@ -4301,7 +4301,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.DeleteRule(rulenum: integer);
+procedure TfrmPopUMain.DeleteRule(rulenum: integer);
 begin
   Rules.Delete(rulenum);
   // list box
@@ -4313,7 +4313,7 @@ begin
   ShowRule(lstRules.ItemIndex);
 end;
 
-procedure TfrmPopMain.LogRule(Action,Name,From,Subject,Account : string);
+procedure TfrmPopUMain.LogRule(Action,Name,From,Subject,Account : string);
 ////////////////////////////////////////////////////////////////////////////////
 // Write the log action to a tab-delimited file
 var
@@ -4334,7 +4334,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.EnableRuleButtons;
+procedure TfrmPopUMain.EnableRuleButtons;
 begin
   if FRuleChanged then
   begin
@@ -4343,7 +4343,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.FillRuleAccounts;
+procedure TfrmPopUMain.FillRuleAccounts;
 var
   num,save : integer;
 begin
@@ -4355,7 +4355,7 @@ begin
   cmbRuleAccount.ItemIndex := save;
 end;
 
-function TfrmPopMain.AddToWhiteBlackList(WhiteBlack: TWhiteBlack) : boolean;
+function TfrmPopUMain.AddToWhiteBlackList(WhiteBlack: TWhiteBlack) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Add selected from addresses to White List
 var
@@ -4409,7 +4409,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.InWhiteBlackList(WhiteBlack: TWhiteBlack; email: string): boolean;
+function TfrmPopUMain.InWhiteBlackList(WhiteBlack: TWhiteBlack; email: string): boolean;
 var
   list : TStringList;
   i : integer;
@@ -4429,7 +4429,7 @@ begin
   Result := False;
 end;
 
-procedure TfrmPopMain.MoveRule(old, new: integer);
+procedure TfrmPopUMain.MoveRule(old, new: integer);
 begin
   if (old <> new) and (Screen.Cursor <> crHourGlass) and
      (new >= 0) and (new <= lstRules.Count-1) and
@@ -4452,7 +4452,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.AddRule(rulename: string): TRuleItem;
+function TfrmPopUMain.AddRule(rulename: string): TRuleItem;
 begin
   // add to rules
   Result := Rules.Add;
@@ -4478,7 +4478,7 @@ begin
   lstRules.Checked[Rules.Count-1] := True;
 end;
 
-procedure TfrmPopMain.GetSelectedMails(area: TRuleArea; List: TStringList);
+procedure TfrmPopUMain.GetSelectedMails(area: TRuleArea; List: TStringList);
 ////////////////////////////////////////////////////////////////////////////////
 // Put the specified area of the selected mails in a StringList
 // Multi-select code by Victor
@@ -4507,14 +4507,14 @@ end;
 
 //--------------------------------------------------------------- procedural ---
 
-procedure TfrmPopMain.Quit;
+procedure TfrmPopUMain.Quit;
 begin
   SavePosINI;
   SaveViewedMessageIDs;
   Application.Terminate;
 end;
 
-procedure TfrmPopMain.ConnectAccount(num: integer);
+procedure TfrmPopUMain.ConnectAccount(num: integer);
 var
   aHost,aProtocol : string;
   aUsername,aPassword : string;
@@ -4537,7 +4537,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.GetDefaultEmail: string;
+function TfrmPopUMain.GetDefaultEmail: string;
 ////////////////////////////////////////////////////////////////////////////////
 // Get the default e-mail program from registry
 var
@@ -4562,7 +4562,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SwitchTimer;
+procedure TfrmPopUMain.SwitchTimer;
 var
   num : integer;
 begin
@@ -4595,7 +4595,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.RunQueue;
+procedure TfrmPopUMain.RunQueue;
 var
   acc : integer;
 begin
@@ -4623,7 +4623,7 @@ begin
   //if (HotKey and sc) = scShift then Result := Result or MOD_WIN;
 end;
 
-procedure TfrmPopMain.RegisterTheHotKeys;
+procedure TfrmPopUMain.RegisterTheHotKeys;
 begin
   // hot-keys
   if Options.HotKey1 <> 0 then
@@ -4636,7 +4636,7 @@ begin
     RegisterHotKey(Self.Handle,4,ConvertModifiers(Options.HotKey4),Options.HotKey4 and not (scShift + scCtrl + scAlt));
 end;
 
-procedure TfrmPopMain.UnRegisterTheHotKeys;
+procedure TfrmPopUMain.UnRegisterTheHotKeys;
 var
   i : integer;
 begin
@@ -4644,7 +4644,7 @@ begin
     UnregisterHotKey(Self.Handle,i);
 end;
 
-procedure TfrmPopMain.DoMouseCommand(MouseCommand: TMouseCommand);
+procedure TfrmPopUMain.DoMouseCommand(MouseCommand: TMouseCommand);
 var
   tmp : integer;
   command : TCommand;
@@ -4679,7 +4679,7 @@ begin
     DoCommand(command);
 end;
 
-procedure TfrmPopMain.DoHKCommand(HotKeyNum : integer);
+procedure TfrmPopUMain.DoHKCommand(HotKeyNum : integer);
 var
   command : TCommand;
 begin
@@ -4694,7 +4694,7 @@ begin
   DoCommand(command);
 end;
 
-procedure TfrmPopMain.DoCommand(Command: TCommand);
+procedure TfrmPopUMain.DoCommand(Command: TCommand);
 var
   num : integer;
 begin
@@ -4732,20 +4732,20 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.CheckAndShow;
+procedure TfrmPopUMain.CheckAndShow;
 begin
   CheckAllMail;
   if CountAllNew > 0 then
     ShowMessages;
 end;
 
-procedure TfrmPopMain.CheckAndInfo;
+procedure TfrmPopUMain.CheckAndInfo;
 begin
   CheckAllMail;
   if CountAllNew > 0 then ShowInfo;
 end;
 
-procedure TfrmPopMain.PopupAtCursor;
+procedure TfrmPopUMain.PopupAtCursor;
 var
   CursorPos: TPoint;
 begin
@@ -4760,7 +4760,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.DeleteAccount(num: integer);
+procedure TfrmPopUMain.DeleteAccount(num: integer);
 var
   i : integer;
 begin
@@ -4807,7 +4807,7 @@ begin
   end;
 end;
 
-function TfrmPopMain.FirstAccountWithError: integer;
+function TfrmPopUMain.FirstAccountWithError: integer;
 var
   num : integer;
 begin
@@ -4820,7 +4820,7 @@ begin
     end;
 end;
 
-procedure TfrmPopMain.DeleteSpam(num: integer; confirm: boolean);
+procedure TfrmPopUMain.DeleteSpam(num: integer; confirm: boolean);
 var
   i : integer;
   spamcount : integer;
@@ -4855,7 +4855,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.SetSpamAction(act: TAction);
+procedure TfrmPopUMain.SetSpamAction(act: TAction);
 begin
   FSpamAction := act;
   actSpam.Caption := act.Caption;
@@ -4864,7 +4864,7 @@ begin
   MailToolBar.AutoSizing := True;
 end;
 
-procedure TfrmPopMain.StopAll;
+procedure TfrmPopUMain.StopAll;
 var
   num : integer;
 begin
@@ -4889,7 +4889,7 @@ begin
   cmb.ItemIndex := tmp;
 end;
 
-function TfrmPopMain.TranslateDir(st : string; LangDirection : TLangDirection) : string;
+function TfrmPopUMain.TranslateDir(st : string; LangDirection : TLangDirection) : string;
 begin
   if LangDirection = ToEnglish then
     Result := TranslateToEnglish(st)
@@ -4897,7 +4897,7 @@ begin
     Result := Translate(st);
 end;
 
-procedure TfrmPopMain.TranslateFormDir(form : TTntForm; LangDirection : TLangDirection);
+procedure TfrmPopUMain.TranslateFormDir(form : TTntForm; LangDirection : TLangDirection);
 var
   i,j,k : integer;
   TransToEnglish : boolean;
@@ -4981,7 +4981,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TranslateFormDir(form : TForm; LangDirection : TLangDirection);
+procedure TfrmPopUMain.TranslateFormDir(form : TForm; LangDirection : TLangDirection);
 var
   i,j,k : integer;
   TransToEnglish : boolean;
@@ -5065,7 +5065,8 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
+
+procedure TfrmPopUMain.TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
 var
   i,j : integer;
   TransToEnglish : boolean;
@@ -5085,7 +5086,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.ReadTranslateStrings;
+procedure TfrmPopUMain.ReadTranslateStrings;
 var
   fname : string;
   i : integer;
@@ -5113,7 +5114,7 @@ begin
   FLastLanguage := Options.Language;
 end;
 
-procedure TfrmPopMain.SetProp(obj: TObject; PropName: string; ToEnglish : boolean=False);
+procedure TfrmPopUMain.SetProp(obj: TObject; PropName: string; ToEnglish : boolean=False);
 var
   pi,pi2 : PPropInfo;
   cap,newcap : string;
@@ -5140,7 +5141,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.GetLanguages;
+procedure TfrmPopUMain.GetLanguages;
 var
   sr : TSearchRec;
   res,i : integer;
@@ -5172,7 +5173,7 @@ end;
 
 //----------------------------------------------------------------- plug-ins ---
 
-procedure TfrmPopMain.CallNotifyPlugins;
+procedure TfrmPopUMain.CallNotifyPlugins;
 var
   NewCount : integer;
   MailCount,UnviewedCount : integer;
@@ -5194,7 +5195,7 @@ begin
   NotifyPluginExecute(MailCount, UnviewedCount, NewCount, Options.ResetTray);
 end;
 
-procedure TfrmPopMain.SetProtocol(num: integer);
+procedure TfrmPopUMain.SetProtocol(num: integer);
 var
   i,found : integer;
 begin
@@ -5211,7 +5212,7 @@ begin
   Accounts[num-1].Prot.SetOnWork(OnProtWork);
 end;
 
-procedure TfrmPopMain.NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+procedure TfrmPopUMain.NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
 var
   i : integer;
 begin
@@ -5225,7 +5226,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+procedure TfrmPopUMain.NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
 var
   i : integer;
 begin
@@ -5242,7 +5243,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.NotifyPluginMessage(MsgFrom, MsgTo, MsgSubject: string;
+procedure TfrmPopUMain.NotifyPluginMessage(MsgFrom, MsgTo, MsgSubject: string;
                                           MsgDate : TDateTime;
                                           Viewed, New, Important, Spam: boolean);
 var
@@ -5260,7 +5261,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.NotifyPluginMsgBody(MsgHeader, MsgBody: string);
+procedure TfrmPopUMain.NotifyPluginMsgBody(MsgHeader, MsgBody: string);
 var
   i : integer;
 begin
@@ -5277,7 +5278,7 @@ end;
 
 //----------------------------------------------------------- private events ---
 
-procedure TfrmPopMain.OnAccountTimer(Sender: TObject);
+procedure TfrmPopUMain.OnAccountTimer(Sender: TObject);
 begin
   if AllowAutoCheck then
   begin
@@ -5286,14 +5287,14 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.OnFirstWait(Sender: TObject);
+procedure TfrmPopUMain.OnFirstWait(Sender: TObject);
 begin
   FFirstWaitTimer.Enabled := False;
   if AllowAutoCheck then
     CheckAllMail;
 end;
 
-procedure TfrmPopMain.OnHint(Sender: TObject);
+procedure TfrmPopUMain.OnHint(Sender: TObject);
 begin
   if Assigned(FHintWindow) then
   begin
@@ -5301,7 +5302,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.OnProtWork(const AWorkCount: Integer);
+procedure TfrmPopUMain.OnProtWork(const AWorkCount: Integer);
 begin
   if FPreview and not(FMinimized) and Assigned(frmPreview) then
   begin
@@ -5317,23 +5318,23 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
 begin
   OnProtWork(AWorkCount);
 end;
 
-procedure TfrmPopMain.OnCloseFree(Sender: TObject; var Action: TCloseAction);
+procedure TfrmPopUMain.OnCloseFree(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
   FInfoForm := nil;
 end;
 
-procedure TfrmPopMain.OnClickClose(Sender: TObject);
+procedure TfrmPopUMain.OnClickClose(Sender: TObject);
 begin
   ((Sender as TControl).Parent as TTntForm).Close;
 end;
 
-procedure TfrmPopMain.OnMinimize(Sender: TObject);
+procedure TfrmPopUMain.OnMinimize(Sender: TObject);
 begin
   HideForm;
 end;
@@ -5343,7 +5344,7 @@ end;
 // Events
 //------------------------------------------------------------------------------
 
-procedure TfrmPopMain.FormCreate(Sender: TObject);
+procedure TfrmPopUMain.FormCreate(Sender: TObject);
 ///-----------------------------------------------------------------------------
 // Init  -----------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -5532,7 +5533,7 @@ begin
   SwapOutMemory;
 end;
 
-procedure TfrmPopMain.FormDestroy(Sender: TObject);
+procedure TfrmPopUMain.FormDestroy(Sender: TObject);
 var
   num : integer;
 begin
@@ -5557,23 +5558,23 @@ begin
   UnRegisterTheHotKeys;
 end;
 
-procedure TfrmPopMain.lblHomepageMouseEnter(Sender: TObject);
+procedure TfrmPopUMain.lblHomepageMouseEnter(Sender: TObject);
 begin
   (Sender as TLabel).Font.Style := [fsUnderline];
 end;
 
-procedure TfrmPopMain.lblHomepageMouseLeave(Sender: TObject);
+procedure TfrmPopUMain.lblHomepageMouseLeave(Sender: TObject);
 begin
   (Sender as TLabel).Font.Style := [];
 end;
 
-procedure TfrmPopMain.lblHomepageClick(Sender: TObject);
+procedure TfrmPopUMain.lblHomepageClick(Sender: TObject);
 begin
   //TODO: Commented out because it's not up to date yet.
   //ExecuteFile('http://www.poptray.org','','',SW_RESTORE);
 end;
 
-procedure TfrmPopMain.btnSaveOptionsClick(Sender: TObject);
+procedure TfrmPopUMain.btnSaveOptionsClick(Sender: TObject);
 begin
   SaveOptionsINI;
   GetBitmapFromFileIcon(Options.MailProgram,btnStartProgram.Glyph,True);
@@ -5581,17 +5582,17 @@ begin
   dm.Timer.Interval := round(Options.Interval * 60000);
 end;
 
-procedure TfrmPopMain.btnCancelClick(Sender: TObject);
+procedure TfrmPopUMain.btnCancelClick(Sender: TObject);
 begin
   LoadOptionsINI;
 end;
 
-procedure TfrmPopMain.tabMailChange(Sender: TObject);
+procedure TfrmPopUMain.tabMailChange(Sender: TObject);
 begin
   ShowMail(tabMail.TabIndex+1,True);
 end;
 
-procedure TfrmPopMain.btnSaveClick(Sender: TObject);
+procedure TfrmPopUMain.btnSaveClick(Sender: TObject);
 begin
   SaveAccountNum(tabAccounts.TabIndex+1);
   SaveAccountINI(tabAccounts.TabIndex+1);
@@ -5603,18 +5604,18 @@ begin
   btnCancelAccount.Enabled := False;
 end;
 
-procedure TfrmPopMain.lvMailDblClick(Sender: TObject);
+procedure TfrmPopUMain.lvMailDblClick(Sender: TObject);
 begin
   actPreview.Execute;
 end;
 
-procedure TfrmPopMain.OptionsChange(Sender: TObject);
+procedure TfrmPopUMain.OptionsChange(Sender: TObject);
 begin
   btnSaveOptions.Enabled := True;
   btnCancel.Enabled := True;
 end;
 
-procedure TfrmPopMain.lvMailColumnClick(Sender: TObject; Column: TListColumn);
+procedure TfrmPopUMain.lvMailColumnClick(Sender: TObject; Column: TListColumn);
 begin
   // direction
   if FSortColumn = Column.Index then
@@ -5626,7 +5627,7 @@ begin
   SetColumnMenuCheckMarks;
 end;
 
-procedure TfrmPopMain.lvMailCompare(Sender: TObject; Item1, Item2: TListItem;
+procedure TfrmPopUMain.lvMailCompare(Sender: TObject; Item1, Item2: TListItem;
   Data: Integer; var Compare: Integer);
 begin
   // SpamLast (Rob Hulswit)
@@ -5659,7 +5660,7 @@ begin
   Compare := FSortDirection * Compare;
 end;
 
-procedure TfrmPopMain.chkRuleWavClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleWavClick(Sender: TObject);
 begin
   edRuleWav.Text := '';
   edRuleWav.Visible := chkRuleWav.Checked;
@@ -5667,7 +5668,7 @@ begin
   btnRuleSoundTest.Visible := chkRuleWav.Checked;
 end;
 
-procedure TfrmPopMain.edRuleNameChange(Sender: TObject);
+procedure TfrmPopUMain.edRuleNameChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -5679,12 +5680,12 @@ begin
 
 end;
 
-procedure TfrmPopMain.lstRulesClick(Sender: TObject);
+procedure TfrmPopUMain.lstRulesClick(Sender: TObject);
 begin
   ShowRule(lstRules.ItemIndex)
 end;
 
-procedure TfrmPopMain.chkRuleEnabledClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleEnabledClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -5694,7 +5695,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.cmbRuleAreaChange(Sender: TObject);
+procedure TfrmPopUMain.cmbRuleAreaChange(Sender: TObject);
 begin
   if Sender<>nil then EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -5720,7 +5721,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.cmbRuleCompChange(Sender: TObject);
+procedure TfrmPopUMain.cmbRuleCompChange(Sender: TObject);
 begin
   if Sender<>nil then EnableRuleButtons;
   if (lstRules.ItemIndex > -1) and (cmbRuleComp.ItemIndex > -1) then
@@ -5751,21 +5752,21 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.cmbRuleAccountChange(Sender: TObject);
+procedure TfrmPopUMain.cmbRuleAccountChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Account := cmbRuleAccount.ItemIndex;
 end;
 
-procedure TfrmPopMain.chkRuleNewClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleNewClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].New := chkRuleNew.Checked;
 end;
 
-procedure TfrmPopMain.edRuleTextChange(Sender: TObject);
+procedure TfrmPopUMain.edRuleTextChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -5775,56 +5776,56 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.edRuleWavChange(Sender: TObject);
+procedure TfrmPopUMain.edRuleWavChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Wav := edRulewav.Text;
 end;
 
-procedure TfrmPopMain.chkRuleDeleteClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleDeleteClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Delete := chkRuleDelete.Checked;
 end;
 
-procedure TfrmPopMain.chkRuleIgnoreClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleIgnoreClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Ignore := chkRuleIgnore.Checked;
 end;
 
-procedure TfrmPopMain.chkRuleImportantClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleImportantClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Important := chkRuleImportant.Checked;
 end;
 
-procedure TfrmPopMain.chkRuleLogClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleLogClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Log := chkRuleLog.Checked;
 end;
 
-procedure TfrmPopMain.edRuleEXEChange(Sender: TObject);
+procedure TfrmPopUMain.edRuleEXEChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].EXE := edRuleEXE.Text;
 end;
 
-procedure TfrmPopMain.chkRuleEXEClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleEXEClick(Sender: TObject);
 begin
   edRuleEXE.Text := '';
   edRuleEXE.Visible := chkRuleEXE.Checked;
   btnEdRuleEXE.Visible := chkRuleEXE.Checked;
 end;
 
-procedure TfrmPopMain.btnEdRuleEXEClick(Sender: TObject);
+procedure TfrmPopUMain.btnEdRuleEXEClick(Sender: TObject);
 var
   dlgOpen : TOpenDialog;
 begin
@@ -5842,12 +5843,12 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnSaveRulesClick(Sender: TObject);
+procedure TfrmPopUMain.btnSaveRulesClick(Sender: TObject);
 begin
   SaveRulesINI;
 end;
 
-procedure TfrmPopMain.btnCancelRuleClick(Sender: TObject);
+procedure TfrmPopUMain.btnCancelRuleClick(Sender: TObject);
 begin
   LoadRulesINI;
   lstRules.ItemIndex := -1;
@@ -5857,20 +5858,20 @@ begin
   btnRuleUp.Enabled := False;
 end;
 
-procedure TfrmPopMain.tabAccountsChange(Sender: TObject);
+procedure TfrmPopUMain.tabAccountsChange(Sender: TObject);
 begin
   ShowAccount(tabAccounts.TabIndex+1);
   actDeleteAccount.Enabled := True;
 end;
 
-procedure TfrmPopMain.edAccChange(Sender: TObject);
+procedure TfrmPopUMain.edAccChange(Sender: TObject);
 begin
   FAccChanged := AccountChanged(tabAccounts.TabIndex) or FNewAccount;
   btnSave.Enabled := FAccChanged;
   btnCancelAccount.Enabled := FAccChanged;
 end;
 
-procedure TfrmPopMain.tabAccountsChanging(Sender: TObject; var AllowChange: Boolean);
+procedure TfrmPopUMain.tabAccountsChanging(Sender: TObject; var AllowChange: Boolean);
 begin
   if FAccChanged then
   begin
@@ -5897,7 +5898,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TfrmPopUMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 begin
   if lvMail.Selected = nil then
   begin
@@ -5931,7 +5932,7 @@ begin
   actSpam.Enabled := actDeleteSpam.Enabled or actMarkSpam.Enabled or actUnmarkSpam.Enabled;
 end;
 
-procedure TfrmPopMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TfrmPopUMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if (Options.CloseMinimize) and not FShutDown then
   begin
@@ -5940,7 +5941,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.FormKeyPress(Sender: TObject; var Key: Char);
+procedure TfrmPopUMain.FormKeyPress(Sender: TObject; var Key: Char);
 var
   num : integer;
   SomethingConnected : boolean;
@@ -5963,13 +5964,13 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmPopUMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SavePosINI;
   SaveViewedMessageIDs;
 end;
 
-procedure TfrmPopMain.PageControlChange(Sender: TObject);
+procedure TfrmPopUMain.PageControlChange(Sender: TObject);
 begin
   // mail page
   if (PageControl.ActivePageIndex = 0) then
@@ -5982,7 +5983,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.chkTimerAccountClick(Sender: TObject);
+procedure TfrmPopUMain.chkTimerAccountClick(Sender: TObject);
 begin
   SwitchTimer;
   panIntervalAccount.Visible := Options.TimerAccount;
@@ -5990,12 +5991,12 @@ begin
   btnCancel.Enabled := True;
 end;
 
-procedure TfrmPopMain.btnNeverAccountClick(Sender: TObject);
+procedure TfrmPopUMain.btnNeverAccountClick(Sender: TObject);
 begin
   UpDownAccount.Position := 0;
 end;
 
-procedure TfrmPopMain.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmPopUMain.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   // help
   if Key = VK_F1 then
@@ -6055,27 +6056,27 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnHelpRulesClick(Sender: TObject);
+procedure TfrmPopUMain.btnHelpRulesClick(Sender: TObject);
 begin
   HtmlHelp(0, HelpFileName+'::/rules.htm', HH_DISPLAY_TOPIC, 0);
 end;
 
-procedure TfrmPopMain.btnHelpOptionsClick(Sender: TObject);
+procedure TfrmPopUMain.btnHelpOptionsClick(Sender: TObject);
 begin
   HtmlHelp(0, HelpFileName+'::/options.htm', HH_DISPLAY_TOPIC, 0);
 end;
 
-procedure TfrmPopMain.btnHelpAccountsClick(Sender: TObject);
+procedure TfrmPopUMain.btnHelpAccountsClick(Sender: TObject);
 begin
   HtmlHelp(0, HelpFileName+'::/accounts.htm', HH_DISPLAY_TOPIC, 0);
 end;
 
-procedure TfrmPopMain.btnHelpClick(Sender: TObject);
+procedure TfrmPopUMain.btnHelpClick(Sender: TObject);
 begin
   HtmlHelp(0, HelpFileName, HH_DISPLAY_TOC, 0);
 end;
 
-procedure TfrmPopMain.lvMailInfoTip(Sender: TObject; Item: TListItem; var InfoTip: String);
+procedure TfrmPopUMain.lvMailInfoTip(Sender: TObject; Item: TListItem; var InfoTip: String);
 var
   MailItem : TMailItem;
 begin
@@ -6088,13 +6089,13 @@ begin
   end
 end;
 
-procedure TfrmPopMain.lblForumClick(Sender: TObject);
+procedure TfrmPopUMain.lblForumClick(Sender: TObject);
 begin
   // TODO: update or remove this.
   //ExecuteFile('http://forum.poptray.org','','',SW_RESTORE);
 end;
 
-procedure TfrmPopMain.btnEdSoundClick(Sender: TObject);
+procedure TfrmPopUMain.btnEdSoundClick(Sender: TObject);
 var
   dlgOpen : TOpenDialog;
 begin
@@ -6114,7 +6115,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnEdRuleWavClick(Sender: TObject);
+procedure TfrmPopUMain.btnEdRuleWavClick(Sender: TObject);
 var
   dlgOpen : TOpenDialog;
 begin
@@ -6133,18 +6134,18 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.TrayIconClick(Sender: TObject);
+procedure TfrmPopUMain.TrayIconClick(Sender: TObject);
 begin
   if Options.DoubleClickDelay then DoMouseCommand(mcClick);
 end;
 
-procedure TfrmPopMain.TrayIconDblClick(Sender: TObject);
+procedure TfrmPopUMain.TrayIconDblClick(Sender: TObject);
 begin
   FDoubleClicked := True;
   DoMouseCommand(mcDblClick);
 end;
 
-procedure TfrmPopMain.TrayIconMouseUp(Sender: TObject;
+procedure TfrmPopUMain.TrayIconMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   case Button of
@@ -6154,7 +6155,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.StatusBarResize(Sender: TObject);
+procedure TfrmPopUMain.StatusBarResize(Sender: TObject);
 begin
   StatusBar.Panels[1].Width := 44;
   StatusBar.Panels[2].Width := 44;
@@ -6165,7 +6166,7 @@ begin
                                StatusBar.Panels[3].Width - StatusBar.Panels[4].Width;
 end;
 
-procedure TfrmPopMain.lvMailColumnRightClick(Sender: TObject;
+procedure TfrmPopUMain.lvMailColumnRightClick(Sender: TObject;
   Column: TListColumn; Point: TPoint);
 begin
   SetColumnMenuCheckMarks;
@@ -6174,7 +6175,7 @@ begin
   Abort;
 end;
 
-procedure TfrmPopMain.btnAccountSoundTestClick(Sender: TObject);
+procedure TfrmPopUMain.btnAccountSoundTestClick(Sender: TObject);
 begin
   if (edSound.Text = Translate(UseDefaultSound)) or (edSound.Text = '') then
     PlayWav(Options.DefSound)
@@ -6182,17 +6183,17 @@ begin
     PlayWav(edSound.Text);
 end;
 
-procedure TfrmPopMain.btnRuleSoundTestClick(Sender: TObject);
+procedure TfrmPopUMain.btnRuleSoundTestClick(Sender: TObject);
 begin
   PlayWav(edRuleWav.Text);
 end;
 
-procedure TfrmPopMain.btnStopClick(Sender: TObject);
+procedure TfrmPopUMain.btnStopClick(Sender: TObject);
 begin
   StopAll;
 end;
 
-procedure TfrmPopMain.btnCancelAccountClick(Sender: TObject);
+procedure TfrmPopUMain.btnCancelAccountClick(Sender: TObject);
 begin
   if FNewAccount then
   begin
@@ -6214,7 +6215,7 @@ begin
   btnCancelAccount.Enabled := False;
 end;
 
-procedure TfrmPopMain.PageControlChanging(Sender: TObject;
+procedure TfrmPopUMain.PageControlChanging(Sender: TObject;
   var AllowChange: Boolean);
 begin
   if (PageControl.ActivePage=tsAccounts) and FAccChanged then
@@ -6242,7 +6243,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.edSoundEnter(Sender: TObject);
+procedure TfrmPopUMain.edSoundEnter(Sender: TObject);
 begin
   if edSound.Text = Translate(UseDefaultSound) then
   begin
@@ -6251,7 +6252,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.edSoundExit(Sender: TObject);
+procedure TfrmPopUMain.edSoundExit(Sender: TObject);
 begin
   if edSound.Text = '' then
   begin
@@ -6260,7 +6261,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnEdAccountProgramClick(Sender: TObject);
+procedure TfrmPopUMain.btnEdAccountProgramClick(Sender: TObject);
 var
   dlgOpen : TOpenDialog;
 begin
@@ -6279,12 +6280,12 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnAccountProgramTestClick(Sender: TObject);
+procedure TfrmPopUMain.btnAccountProgramTestClick(Sender: TObject);
 begin
   ExecuteProgram(tabAccounts.TabIndex+1);
 end;
 
-procedure TfrmPopMain.edAccountProgramEnter(Sender: TObject);
+procedure TfrmPopUMain.edAccountProgramEnter(Sender: TObject);
 begin
   if edAccountProgram.Text = Translate(UseDefaultProgram) then
   begin
@@ -6293,7 +6294,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.edAccountProgramExit(Sender: TObject);
+procedure TfrmPopUMain.edAccountProgramExit(Sender: TObject);
 begin
   if edAccountProgram.Text = '' then
   begin
@@ -6302,12 +6303,12 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnHintHelpClick(Sender: TObject);
+procedure TfrmPopUMain.btnHintHelpClick(Sender: TObject);
 begin
   Screen.Cursor := crHelp;
 end;
 
-procedure TfrmPopMain.actDeleteExecute(Sender: TObject);
+procedure TfrmPopUMain.actDeleteExecute(Sender: TObject);
 var
   SaveTab,cnt : integer;
   warning : string;
@@ -6370,7 +6371,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actPreviewExecute(Sender: TObject);
+procedure TfrmPopUMain.actPreviewExecute(Sender: TObject);
 begin
   if lvMail.Selected = nil then
     TranslateDlg(Translate('No message selected.'), mtError, [mbOK], 0)
@@ -6378,13 +6379,13 @@ begin
     Preview(tabMail.TabIndex+1);
 end;
 
-procedure TfrmPopMain.actNewMailExecute(Sender: TObject);
+procedure TfrmPopUMain.actNewMailExecute(Sender: TObject);
 begin
   SendMail('','','');
   HideForm;
 end;
 
-procedure TfrmPopMain.tvOptionsChange(Sender: TObject; Node: TTreeNode);
+procedure TfrmPopUMain.tvOptionsChange(Sender: TObject; Node: TTreeNode);
 begin
   // free any frames created
   if Assigned(frame) then FreeAndNil(frame);
@@ -6423,13 +6424,13 @@ begin
   frame.Refresh; //fix missing labels when using Vista Aero theme
 end;
 
-procedure TfrmPopMain.HelpMouseDown(Sender: TObject;
+procedure TfrmPopUMain.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
-procedure TfrmPopMain.actReplyExecute(Sender: TObject);
+procedure TfrmPopUMain.actReplyExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Reply to message using default mail client
 var
@@ -6449,7 +6450,7 @@ begin
   SendMail(email,subject,'');
 end;
 
-procedure TfrmPopMain.actRuleQuickAddExecute(Sender: TObject);
+procedure TfrmPopUMain.actRuleQuickAddExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Create rule to delete selected emails
 var
@@ -6540,14 +6541,14 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actNoSortExecute(Sender: TObject);
+procedure TfrmPopUMain.actNoSortExecute(Sender: TObject);
 begin
   FSortDirection := sdAsc;
   SetSortColumn(NOSORT);
   SetColumnMenuCheckMarks;
 end;
 
-procedure TfrmPopMain.actCheckExecute(Sender: TObject);
+procedure TfrmPopUMain.actCheckExecute(Sender: TObject);
 begin
   FShiftClick := GetKeyState(VK_SHIFT) < 0;
   if tabMail.TabIndex >= 0 then
@@ -6557,7 +6558,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actAddAccountExecute(Sender: TObject);
+procedure TfrmPopUMain.actAddAccountExecute(Sender: TObject);
 var
   NoName : string;
 begin
@@ -6604,7 +6605,7 @@ begin
   lvMail.Items.Clear;
 end;
 
-procedure TfrmPopMain.actDeleteAccountExecute(Sender: TObject);
+procedure TfrmPopUMain.actDeleteAccountExecute(Sender: TObject);
 begin
   if FNewAccount then
   begin
@@ -6620,7 +6621,7 @@ begin
     DeleteAccount(tabAccounts.TabIndex+1);
 end;
 
-procedure TfrmPopMain.actRuleAddExecute(Sender: TObject);
+procedure TfrmPopUMain.actRuleAddExecute(Sender: TObject);
 var
   RuleStr : string;
   NewRule : TRuleItem;
@@ -6671,7 +6672,7 @@ begin
   EnableRuleButtons;
 end;
 
-procedure TfrmPopMain.actRuleDeleteExecute(Sender: TObject);
+procedure TfrmPopUMain.actRuleDeleteExecute(Sender: TObject);
 begin
   if lstRules.ItemIndex > -1 then
   begin
@@ -6688,17 +6689,17 @@ begin
   btnCancelRule.Enabled := True;
 end;
 
-procedure TfrmPopMain.actShowMessagesExecute(Sender: TObject);
+procedure TfrmPopUMain.actShowMessagesExecute(Sender: TObject);
 begin
   ShowMessages;
 end;
 
-procedure TfrmPopMain.actCheckAllExecute(Sender: TObject);
+procedure TfrmPopUMain.actCheckAllExecute(Sender: TObject);
 begin
   CheckAllMail;
 end;
 
-procedure TfrmPopMain.actStartProgramExecute(Sender: TObject);
+procedure TfrmPopUMain.actStartProgramExecute(Sender: TObject);
 var
   i : integer;
   res : boolean;
@@ -6715,51 +6716,51 @@ begin
   if not Options.ResetTray then ClearTrayIcon;
 end;
 
-procedure TfrmPopMain.actAutoCheckExecute(Sender: TObject);
+procedure TfrmPopUMain.actAutoCheckExecute(Sender: TObject);
 begin
   UpdateTrayIcon;
 end;
 
-procedure TfrmPopMain.actOptionsExecute(Sender: TObject);
+procedure TfrmPopUMain.actOptionsExecute(Sender: TObject);
 begin
   PageControl.ActivePageIndex := 2;
   ShowForm;
 end;
 
-procedure TfrmPopMain.actRulesExecute(Sender: TObject);
+procedure TfrmPopUMain.actRulesExecute(Sender: TObject);
 begin
   PageControl.ActivePageIndex := 3;
   ShowForm;
 end;
 
-procedure TfrmPopMain.actAboutExecute(Sender: TObject);
+procedure TfrmPopUMain.actAboutExecute(Sender: TObject);
 begin
   PageControl.ActivePageIndex := 4;
   ShowForm;
 end;
 
-procedure TfrmPopMain.actHelpExecute(Sender: TObject);
+procedure TfrmPopUMain.actHelpExecute(Sender: TObject);
 begin
   HtmlHelp(0, HelpFileName, HH_DISPLAY_TOC, 0);
 end;
 
-procedure TfrmPopMain.actToTrayExecute(Sender: TObject);
+procedure TfrmPopUMain.actToTrayExecute(Sender: TObject);
 begin
   HideForm;
 end;
 
-procedure TfrmPopMain.actQuitExecute(Sender: TObject);
+procedure TfrmPopUMain.actQuitExecute(Sender: TObject);
 begin
   Quit;
 end;
 
-procedure TfrmPopMain.actCustomizeExecute(Sender: TObject);
+procedure TfrmPopUMain.actCustomizeExecute(Sender: TObject);
 begin
   ActionManager.FileName := ToolbarName;
   dm.ShowCustomizeDlg(ActionManager,True);
 end;
 
-procedure TfrmPopMain.lstRulesClickCheck(Sender: TObject);
+procedure TfrmPopUMain.lstRulesClickCheck(Sender: TObject);
 begin
   if lstRules.ItemIndex > -1 then
   begin
@@ -6771,7 +6772,7 @@ begin
 end;
 
 
-procedure TfrmPopMain.actRulesImportExecute(Sender: TObject);
+procedure TfrmPopUMain.actRulesImportExecute(Sender: TObject);
 var
   OpenDialog : TOpenDialog;
   Ini : TIniFile;
@@ -6836,13 +6837,13 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.lvAdvancedOptionsSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TfrmPopUMain.lvAdvancedOptionsSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 begin
   Item.Selected := False;
   tvOptions.Items[Item.Index+4].Selected := True;
 end;
 
-procedure TfrmPopMain.lvOptionsSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TfrmPopUMain.lvOptionsSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 begin
   Item.Selected := False;
   if Item.Index >= 4 then
@@ -6851,13 +6852,13 @@ begin
     tvOptions.Items[Item.Index].Selected := True;
 end;
 
-procedure TfrmPopMain.actHideViewedExecute(Sender: TObject);
+procedure TfrmPopUMain.actHideViewedExecute(Sender: TObject);
 begin
   Options.HideViewed := actHideViewed.Checked;
   ShowMail(tabMail.TabIndex+1,True);
 end;
 
-procedure TfrmPopMain.cmbProtocolChange(Sender: TObject);
+procedure TfrmPopUMain.cmbProtocolChange(Sender: TObject);
 begin
   if length(Protocols)-1 < cmbProtocol.ItemIndex then Exit;
   // port
@@ -6880,7 +6881,7 @@ begin
   btnCancelAccount.Enabled := FAccChanged;
 end;
 
-procedure TfrmPopMain.actAddWhiteListExecute(Sender: TObject);
+procedure TfrmPopUMain.actAddWhiteListExecute(Sender: TObject);
 var
   i : integer;
   MailItem : TMailItem;
@@ -6902,13 +6903,13 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actAddBlackListExecute(Sender: TObject);
+procedure TfrmPopUMain.actAddBlackListExecute(Sender: TObject);
 begin
   if AddToWhiteBlackList(wbBlack) and Options.BlackListSpam then
      actMarkSpam.Execute;
 end;
 
-procedure TfrmPopMain.actMarkViewedExecute(Sender: TObject);
+procedure TfrmPopUMain.actMarkViewedExecute(Sender: TObject);
 var
   i : integer;
 begin
@@ -6920,7 +6921,7 @@ begin
     ShowMail(tabMail.TabIndex+1,True);
 end;
 
-procedure TfrmPopMain.actMarkSpamExecute(Sender: TObject);
+procedure TfrmPopUMain.actMarkSpamExecute(Sender: TObject);
 begin
   // mark as spam
   SetSelectedMailItemStatus([misSpam],True);
@@ -6931,7 +6932,7 @@ begin
   //SetSpamAction(actMarkSpam);
 end;
 
-procedure TfrmPopMain.actUnmarkSpamExecute(Sender: TObject);
+procedure TfrmPopUMain.actUnmarkSpamExecute(Sender: TObject);
 begin
   // unmark as spam
   SetSelectedMailItemStatus([misSpam],False);
@@ -6942,7 +6943,7 @@ begin
   //SetSpamAction(actUnmarkSpam);
 end;
 
-procedure TfrmPopMain.actDeleteSpamExecute(Sender: TObject);
+procedure TfrmPopUMain.actDeleteSpamExecute(Sender: TObject);
 var
   SaveTab : integer;
 begin
@@ -6953,19 +6954,19 @@ begin
   //SetSpamAction(actDeleteSpam);
 end;
 
-procedure TfrmPopMain.MouseMoveReset(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+procedure TfrmPopUMain.MouseMoveReset(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
   ResetToolbar;
 end;
 
-procedure TfrmPopMain.chkRuleSpamClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleSpamClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Spam := chkRuleSpam.Checked;
 end;
 
-procedure TfrmPopMain.lvMailKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmPopUMain.lvMailKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case key of
@@ -6974,7 +6975,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actSelectSpamExecute(Sender: TObject);
+procedure TfrmPopUMain.actSelectSpamExecute(Sender: TObject);
 var
   i : integer;
   MailItem : TMailItem;
@@ -6987,12 +6988,12 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.imgLogoClick(Sender: TObject);
+procedure TfrmPopUMain.imgLogoClick(Sender: TObject);
 begin
   SwapOutMemory;
 end;
 
-procedure TfrmPopMain.tvOptionsMouseDown(Sender: TObject;
+procedure TfrmPopUMain.tvOptionsMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbRight then
@@ -7001,14 +7002,14 @@ begin
     QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
-procedure TfrmPopMain.lvMailMouseDown(Sender: TObject;
+procedure TfrmPopUMain.lvMailMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbRight then
     dm.mnuMail.Popup(lvMail.ClientToScreen(Point(X,Y)).X,lvMail.ClientToScreen(Point(X,Y)).Y);
 end;
 
-procedure TfrmPopMain.DragMouseDown(Sender: TObject;
+procedure TfrmPopUMain.DragMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
  if (Button = mbLeft) and (Screen.Cursor <> crHourGlass) and
@@ -7019,7 +7020,7 @@ begin
  end;
 end;
 
-procedure TfrmPopMain.tabDragDrop(Sender, Source: TObject; X,  Y: Integer);
+procedure TfrmPopUMain.tabDragDrop(Sender, Source: TObject; X,  Y: Integer);
 var
   i,num,new,old : integer;
   map : array of integer;
@@ -7065,7 +7066,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.lstRulesDragDrop(Sender, Source: TObject; X, Y: Integer);
+procedure TfrmPopUMain.lstRulesDragDrop(Sender, Source: TObject; X, Y: Integer);
 var
   new,old : integer;
 begin
@@ -7076,12 +7077,12 @@ begin
   MoveRule(old,new);
 end;
 
-procedure TfrmPopMain.actSuspendSoundExecute(Sender: TObject);
+procedure TfrmPopUMain.actSuspendSoundExecute(Sender: TObject);
 begin
   UpdateTrayIcon;
 end;
 
-procedure TfrmPopMain.panMailButtonsResize(Sender: TObject);
+procedure TfrmPopUMain.panMailButtonsResize(Sender: TObject);
 var
   newwidth : integer;
 begin
@@ -7094,13 +7095,13 @@ begin
   btnToTray.Left := panMailButtons.Width - btnToTray.Width - 5;
 end;
 
-procedure TfrmPopMain.tabMailDragOver(Sender, Source: TObject; X,
+procedure TfrmPopUMain.tabMailDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 begin
   Accept := (Sender = Source);
 end;
 
-procedure TfrmPopMain.lstRulesDragOver(Sender, Source: TObject; X,
+procedure TfrmPopUMain.lstRulesDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 var
   save : integer;
@@ -7136,12 +7137,12 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.lstRulesKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmPopUMain.lstRulesKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   ShowRule(lstRules.ItemIndex);
 end;
 
-procedure TfrmPopMain.actSpamExecute(Sender: TObject);
+procedure TfrmPopUMain.actSpamExecute(Sender: TObject);
 //var
 //  i : integer;
 begin
@@ -7162,7 +7163,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.MailToolBarGetControlClass(Sender: TCustomActionBar;
+procedure TfrmPopUMain.MailToolBarGetControlClass(Sender: TCustomActionBar;
   AnItem: TActionClient; var ControlClass: TCustomActionControlClass);
 begin
   if (Sender.ActionClient.Items[AnItem.Index].Action = actSpam) and
@@ -7176,20 +7177,20 @@ begin
   ControlClass := MailToolbar.Style.GetControlClass(Sender,Sender.ActionClient.Items[AnItem.Index]);
 end;
 
-procedure TfrmPopMain.lstRulesKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmPopUMain.lstRulesKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_DELETE then actRuleDelete.Execute;
 end;
 
-procedure TfrmPopMain.chkRuleProtectClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleProtectClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Protect := chkRuleProtect.Checked;
 end;
 
-procedure TfrmPopMain.lvMailCustomDrawItem(Sender: TCustomListView;
+procedure TfrmPopUMain.lvMailCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
 begin
   if Options.ShowViewed then
@@ -7224,7 +7225,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.actTestAccountExecute(Sender: TObject);
+procedure TfrmPopUMain.actTestAccountExecute(Sender: TObject);
 var
   msgcount,num : integer;
   info,st : string;
@@ -7277,29 +7278,29 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.tabMailChanging(Sender: TObject;
+procedure TfrmPopUMain.tabMailChanging(Sender: TObject;
   var AllowChange: Boolean);
 begin
   ShowIcon(tabMail.TabIndex+1,itNormal);
 end;
 
-procedure TfrmPopMain.lvVolunteersChange(Sender: TObject; Item: TListItem; Change: TItemChange);
+procedure TfrmPopUMain.lvVolunteersChange(Sender: TObject; Item: TListItem; Change: TItemChange);
 begin
   // language volunteers translate
   Item.Caption := Translate(Item.Caption);
 end;
 
-procedure TfrmPopMain.actStopCheckingExecute(Sender: TObject);
+procedure TfrmPopUMain.actStopCheckingExecute(Sender: TObject);
 begin
   StopAll;
 end;
 
-procedure TfrmPopMain.btnTestRegExprClick(Sender: TObject);
+procedure TfrmPopUMain.btnTestRegExprClick(Sender: TObject);
 begin
   TestRegExpr(edRuleText.Text);
 end;
 
-procedure TfrmPopMain.grdRuleTopLeftChanged(Sender: TObject);
+procedure TfrmPopUMain.grdRuleTopLeftChanged(Sender: TObject);
 begin
   if grdRule.CellRect(0,grdRule.Row).Top > 10 then
     ShowRuleEdit(0,grdRule.Row)
@@ -7307,13 +7308,13 @@ begin
     panRuleEdit.Hide;
 end;
 
-procedure TfrmPopMain.grdRuleSelectCell(Sender: TObject; ACol,
+procedure TfrmPopUMain.grdRuleSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
   ShowRuleEdit(ACol,ARow);
 end;
 
-procedure TfrmPopMain.panRuleDetailResize(Sender: TObject);
+procedure TfrmPopUMain.panRuleDetailResize(Sender: TObject);
 begin
   panRuleEdit.Width := grdRule.Width - 17;
   grdRule.ColWidths[COL_TEXT] := grdRule.Width - grdRule.ColWidths[COL_AREA] -
@@ -7327,14 +7328,14 @@ begin
   chkRuleNot.Left := edRuleText.Left + grdRule.ColWidths[COL_TEXT] + 8;
 end;
 
-procedure TfrmPopMain.cmbRuleOperatorChange(Sender: TObject);
+procedure TfrmPopUMain.cmbRuleOperatorChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].Operator := TRuleOperator(cmbRuleOperator.ItemIndex);
 end;
 
-procedure TfrmPopMain.chkRuleNotClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleNotClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -7347,7 +7348,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnRuleAddRowClick(Sender: TObject);
+procedure TfrmPopUMain.btnRuleAddRowClick(Sender: TObject);
 var
   toprow : integer;
 begin
@@ -7367,7 +7368,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.btnRuleDeleteRowClick(Sender: TObject);
+procedure TfrmPopUMain.btnRuleDeleteRowClick(Sender: TObject);
 var
   i : integer;
 begin
@@ -7385,7 +7386,7 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.chkRuleTrayColorClick(Sender: TObject);
+procedure TfrmPopUMain.chkRuleTrayColorClick(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -7398,14 +7399,14 @@ begin
   end;
 end;
 
-procedure TfrmPopMain.colRuleTrayColorChange(Sender: TObject);
+procedure TfrmPopUMain.colRuleTrayColorChange(Sender: TObject);
 begin
   EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
     Rules[lstRules.ItemIndex].TrayColor := colRuleTrayColor.Selected;
 end;
 
-procedure TfrmPopMain.cmbRuleStatusChange(Sender: TObject);
+procedure TfrmPopUMain.cmbRuleStatusChange(Sender: TObject);
 begin
   if Sender<>nil then EnableRuleButtons;
   if lstRules.ItemIndex > -1 then
@@ -7416,37 +7417,37 @@ begin
 
 end;
 
-procedure TfrmPopMain.btnRuleDownClick(Sender: TObject);
+procedure TfrmPopUMain.btnRuleDownClick(Sender: TObject);
 begin
   MoveRule(lstRules.ItemIndex,lstRules.ItemIndex+1);
 end;
 
-procedure TfrmPopMain.btnRuleUpClick(Sender: TObject);
+procedure TfrmPopUMain.btnRuleUpClick(Sender: TObject);
 begin
   MoveRule(lstRules.ItemIndex,lstRules.ItemIndex-1);
 end;
 
-procedure TfrmPopMain.panRuleListButtonsResize(Sender: TObject);
+procedure TfrmPopUMain.panRuleListButtonsResize(Sender: TObject);
 begin
   btnRuleDown.Width := panRuleListButtons.Width div 2 - 5;
   btnRuleUp.Left := panRuleListButtons.Width div 2 + 1;
   btnRuleUp.Width := panRuleListButtons.Width div 2 - 5;
 end;
 
-procedure TfrmPopMain.actUndeleteExecute(Sender: TObject);
+procedure TfrmPopUMain.actUndeleteExecute(Sender: TObject);
 begin
   // remove mark to delete
   SetSelectedMailItemStatus([misToBeDeleted],False);
 end;
 
-procedure TfrmPopMain.btnCheckUpdateClick(Sender: TObject);
+procedure TfrmPopUMain.btnCheckUpdateClick(Sender: TObject);
 begin
   //ExecuteFile('http://www.poptray.org/checkupdate.php?major='+
   //            MajorVersion+'&minor='+MinorVersion+'&release='+ReleaseVersion+
   //            '&beta='+BetaVersion,'','',SW_RESTORE);
 end;
 
-procedure TfrmPopMain.lstRulesMouseDown(Sender: TObject;
+procedure TfrmPopUMain.lstRulesMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
  if (Button = mbRight) and (Screen.Cursor <> crHourGlass) and
@@ -7457,7 +7458,7 @@ begin
  end;
 end;
 
-procedure TfrmPopMain.StatusBarDrawPanel(StatusBar: TStatusBar;
+procedure TfrmPopUMain.StatusBarDrawPanel(StatusBar: TStatusBar;
   Panel: TStatusPanel; const Rect: TRect);
 const
   icons : array[1..4] of integer = (mNormal,mIgnored,mSpam,mToDelete);
@@ -7473,13 +7474,13 @@ begin
     dm.imlListView.Draw(StatusBar.Canvas, Rect.Left,Rect.Top-1, icons[Panel.Index], dsTransparent,itImage);
 end;
 
-procedure TfrmPopMain.actOpenMessageExecute(Sender: TObject);
+procedure TfrmPopUMain.actOpenMessageExecute(Sender: TObject);
 begin
   RunMessage(tabMail.TabIndex+1,StrToInt(lvMail.Selected.SubItems[colID]));
 end;
 
 
-procedure TfrmPopMain.lvVolunteersResize(Sender: TObject);
+procedure TfrmPopUMain.lvVolunteersResize(Sender: TObject);
 begin
   lvVolunteers.Column[1].Width := lvVolunteers.Width - lvVolunteers.Column[0].Width - 24;
 end;
