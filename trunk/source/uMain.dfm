@@ -3,7 +3,7 @@ object frmPopMain: TfrmPopMain
   Top = 95
   Width = 558
   Height = 415
-  Caption = 'PopTray'
+  Caption = 'PopTrayU'
   Color = clBtnFace
   Constraints.MinHeight = 340
   Constraints.MinWidth = 418
@@ -92,7 +92,7 @@ object frmPopMain: TfrmPopMain
           VertMargin = 4
           OnGetControlClass = MailToolBarGetControlClass
         end
-        object lvMail: TListView
+        object lvMail: TTntListView
           Left = 4
           Top = 35
           Width = 499
@@ -3881,9 +3881,7 @@ object frmPopMain: TfrmPopMain
           Width = 172
           Height = 26
           Alignment = taCenter
-          Caption = 
-            'Copyright '#169'2001-2005 - Renier Crause'#13#10'FREEWARE and OPEN-SOURCE !' +
-            '!'
+          Caption = 'Copyright '#169'2012 - Jessica Brown'#13#10'FREEWARE and OPEN-SOURCE !!'
           Transparent = True
         end
         object GroupBox2: TGroupBox
@@ -4002,6 +4000,7 @@ object frmPopMain: TfrmPopMain
             Height = 25
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Check on-line if newer version available.'
+            Enabled = False
             TabOrder = 0
             OnClick = btnCheckUpdateClick
           end
@@ -4049,6 +4048,27 @@ object frmPopMain: TfrmPopMain
               FFFFFFFFFFFFFFFBFFFFFBFFF7F7F7F7F3F7F7F3EFEFEFEFB57D73E7B694D6A2
               84FFFFFFFFFFFFFFFFFFFFFFFFE7B28CDEAA84DEAA84DEAA84DEAA84DEAA84DE
               AA84DEAA84DEAA84B57D73DEAA84FFFFFFFFFFFFFFFFFFFFFFFF}
+          end
+        end
+        object GroupBox1: TGroupBox
+          Left = 4
+          Top = 104
+          Width = 510
+          Height = 81
+          Anchors = [akLeft, akTop, akRight]
+          Caption = 'Contributors'
+          TabOrder = 3
+          object Label9: TLabel
+            Left = 2
+            Top = 15
+            Width = 506
+            Height = 64
+            Align = alClient
+            Caption = 
+              'PoptrayU is a derivative work of PopTray 3.2 *** PopTray is Copy' +
+              'right 2001-2005 Renier Crause. *** Many thanks to Renier for his' +
+              ' hard work that has make this program possible.'
+            WordWrap = True
           end
         end
       end
