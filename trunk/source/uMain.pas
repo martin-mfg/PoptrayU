@@ -1,8 +1,9 @@
 unit uMain;
 
 {-------------------------------------------------------------------------------
-POPTRAY
+POPTRAYU
 Copyright (C) 2001-2005  Renier Crause
+Copyright (C) 2012 Jessica Brown
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -37,10 +38,10 @@ uses
 
 const
   // --- version info ---
-  MajorVersion = '3';
-  MinorVersion = '2';
+  MajorVersion = '4';
+  MinorVersion = '0';
   ReleaseVersion = '0';
-  BetaVersion = '0';
+  BetaVersion = '1';
   ReleaseCandidate = '';
 
 const
@@ -860,7 +861,7 @@ begin
     // if already a password window then focus that one
     if Assigned(frmPassword) then
     begin
-      SetForegroundWindow(FindWindow(nil,'PopTray - Password'));
+      SetForegroundWindow(FindWindow(nil,'PopTrayU - Password'));
       Exit;
     end;
     // ask for password
@@ -1016,7 +1017,7 @@ begin
   if FBusy then
   begin
     if not Options.NoError then
-      Balloon('PopTray',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
+      Balloon('PopTrayU',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
     Exit;
   end;
   // reset timer
@@ -2616,7 +2617,7 @@ begin
   if FBusy then
   begin
     if not Options.NoError then
-      Balloon('PopTray',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
+      Balloon('PopTrayU',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
     Exit;
   end;
   // selected message
@@ -2653,7 +2654,7 @@ begin
       if Options.OnTop then
         frmPreview.FormStyle := fsStayOnTop;
       TranslateForm(frmPreview);
-      frmPreview.Caption := Translate('Preview') + ' - PopTray';
+      frmPreview.Caption := Translate('Preview') + ' - PopTrayU';
       frmPreview.Show;
       Application.ProcessMessages;
       // progress
@@ -3306,7 +3307,7 @@ begin
     dm.AddBitmap(dm.imlTray, dm.imlPop,popDisabled);
     dm.imlTray.GetIcon(0,TrayIcon.Icon);
     TrayIcon.CycleIcons := False;
-    TrayIcon.Hint := 'PopTray '+Translate('AutoCheck disabled');
+    TrayIcon.Hint := 'PopTrayU '+Translate('AutoCheck disabled');
     TrayIcon.Refresh;
     Exit;
   end;
@@ -3517,10 +3518,10 @@ begin
   begin
     // balloon info
     if length(info) > 255 then info := copy(info,1,250) + ' ...';
-    if Copy(head,1,7)='PopTray' then
+    if Copy(head,1,8)='PopTrayU' then
       head := Translate(head)
     else
-      head := 'PopTray - '+Translate(head);
+      head := 'PopTrayU - '+Translate(head);
     TrayIcon.ShowBalloonHint(head,info,IconType,TimeoutSecs);
   end
   else begin
@@ -5344,7 +5345,7 @@ begin
   end;
   if ReleaseCandidate <> '' then
     lblVersion.Caption := lblVersion.Caption + '  ' + ReleaseCandidate;
-  Self.Caption := 'PopTray - '+lblVersion.Caption;
+  Self.Caption := 'PopTrayU - '+lblVersion.Caption;
   // disables
   btnSaveOptions.Enabled := False;
   btnCancel.Enabled := False;
@@ -6311,6 +6312,7 @@ begin
   imgOptionTitle.Canvas.Brush.Color := clWindow;
   imgOptionTitle.Canvas.FillRect(imgOptionTitle.Canvas.ClipRect);
   dm.imlOptions.Draw(imgOptionTitle.Canvas,2,0,Node.ImageIndex);
+  frame.Refresh; //fix missing labels when using Vista Aero theme
 end;
 
 procedure TfrmPopMain.HelpMouseDown(Sender: TObject;
