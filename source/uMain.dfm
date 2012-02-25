@@ -1,7 +1,7 @@
 object frmPopMain: TfrmPopMain
-  Left = 235
-  Top = 104
-  Width = 512
+  Left = 223
+  Top = 156
+  Width = 540
   Height = 412
   Caption = 'PopTray'
   Color = clBtnFace
@@ -27,8 +27,8 @@ object frmPopMain: TfrmPopMain
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 504
-    Height = 385
+    Width = 524
+    Height = 376
     ActivePage = tsMail
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
@@ -53,8 +53,8 @@ object frmPopMain: TfrmPopMain
       object tabMail: TTabControl
         Left = 3
         Top = 0
-        Width = 469
-        Height = 344
+        Width = 489
+        Height = 335
         Align = alClient
         Images = dm.imlTabs
         TabOrder = 0
@@ -64,18 +64,18 @@ object frmPopMain: TfrmPopMain
         OnDragOver = tabMailDragOver
         OnMouseDown = DragMouseDown
         DesignSize = (
-          469
-          344)
+          489
+          335)
         object MailToolBar: TActionToolBar
           Left = 4
           Top = 6
-          Width = 461
+          Width = 481
           Height = 32
           ActionManager = ActionManager
           Caption = 'Mail'
-          ColorMap.HighlightColor = 14410210
+          ColorMap.HighlightColor = clWhite
           ColorMap.BtnSelectedColor = clBtnFace
-          ColorMap.UnusedColor = 14410210
+          ColorMap.UnusedColor = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -95,8 +95,8 @@ object frmPopMain: TfrmPopMain
         object lvMail: TListView
           Left = 4
           Top = 38
-          Width = 461
-          Height = 283
+          Width = 481
+          Height = 274
           Align = alClient
           Columns = <
             item
@@ -147,8 +147,8 @@ object frmPopMain: TfrmPopMain
         end
         object StatusBar: TStatusBar
           Left = 4
-          Top = 321
-          Width = 461
+          Top = 312
+          Width = 481
           Height = 19
           AutoHint = True
           Panels = <
@@ -177,7 +177,7 @@ object frmPopMain: TfrmPopMain
           OnResize = StatusBarResize
         end
         object panProgress: TPanel
-          Left = 285
+          Left = 313
           Top = 322
           Width = 180
           Height = 18
@@ -229,8 +229,8 @@ object frmPopMain: TfrmPopMain
       end
       object panMailButtons: TPanel
         Left = 0
-        Top = 344
-        Width = 477
+        Top = 335
+        Width = 497
         Height = 33
         Align = alBottom
         BevelOuter = bvNone
@@ -345,16 +345,16 @@ object frmPopMain: TfrmPopMain
         Left = 0
         Top = 0
         Width = 3
-        Height = 344
+        Height = 335
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 2
       end
       object panMailRightSpacer: TPanel
-        Left = 472
+        Left = 492
         Top = 0
         Width = 5
-        Height = 344
+        Height = 335
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 3
@@ -372,8 +372,8 @@ object frmPopMain: TfrmPopMain
       object panAccounts: TPanel
         Left = 0
         Top = 0
-        Width = 477
-        Height = 377
+        Width = 497
+        Height = 368
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
@@ -381,8 +381,8 @@ object frmPopMain: TfrmPopMain
         object tabAccounts: TTabControl
           Left = 4
           Top = 38
-          Width = 469
-          Height = 306
+          Width = 489
+          Height = 297
           Align = alClient
           Images = dm.imlTabs
           MultiLine = True
@@ -395,8 +395,8 @@ object frmPopMain: TfrmPopMain
           object ScrollBox2: TScrollBox
             Left = 4
             Top = 6
-            Width = 461
-            Height = 296
+            Width = 481
+            Height = 287
             Align = alClient
             BevelEdges = []
             BevelInner = bvNone
@@ -737,14 +737,14 @@ object frmPopMain: TfrmPopMain
         end
         object panAccountsButtons: TPanel
           Left = 4
-          Top = 344
-          Width = 469
+          Top = 335
+          Width = 489
           Height = 29
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
           DesignSize = (
-            469
+            489
             29)
           object btnHelpAccounts: TBitBtn
             Left = 4
@@ -783,7 +783,7 @@ object frmPopMain: TfrmPopMain
               AA84DEAA84DEAA84B57D73DEAA84FFFFFFFFFFFFFFFFFFFFFFFF}
           end
           object btnSave: TBitBtn
-            Left = 270
+            Left = 298
             Top = 4
             Width = 113
             Height = 25
@@ -847,7 +847,7 @@ object frmPopMain: TfrmPopMain
             NumGlyphs = 2
           end
           object btnCancelAccount: TBitBtn
-            Left = 392
+            Left = 420
             Top = 4
             Width = 75
             Height = 25
@@ -914,13 +914,13 @@ object frmPopMain: TfrmPopMain
         object AccountsToolbar: TActionToolBar
           Left = 4
           Top = 4
-          Width = 469
+          Width = 489
           Height = 34
           ActionManager = ActionManager
           Caption = 'Accounts'
-          ColorMap.HighlightColor = 14410210
+          ColorMap.HighlightColor = clWhite
           ColorMap.BtnSelectedColor = clBtnFace
-          ColorMap.UnusedColor = 14410210
+          ColorMap.UnusedColor = clWhite
           EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
           EdgeInner = esLowered
           Font.Charset = DEFAULT_CHARSET
@@ -949,8 +949,8 @@ object frmPopMain: TfrmPopMain
       ParentFont = False
       object panOptionButtons: TPanel
         Left = 0
-        Top = 345
-        Width = 477
+        Top = 336
+        Width = 497
         Height = 32
         Align = alBottom
         BevelOuter = bvNone
@@ -976,7 +976,7 @@ object frmPopMain: TfrmPopMain
           OnClick = btnHintHelpClick
         end
         object panOptionButtonsRight: TPanel
-          Left = 268
+          Left = 288
           Top = 2
           Width = 207
           Height = 28
@@ -1148,8 +1148,8 @@ object frmPopMain: TfrmPopMain
       object panOptionPage: TPanel
         Left = 0
         Top = 0
-        Width = 477
-        Height = 345
+        Width = 497
+        Height = 336
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
@@ -1159,14 +1159,14 @@ object frmPopMain: TfrmPopMain
           Left = 149
           Top = 4
           Width = 6
-          Height = 337
+          Height = 328
           ResizeStyle = rsUpdate
         end
         object tvOptions: TTreeView
           Left = 4
           Top = 4
           Width = 145
-          Height = 337
+          Height = 328
           Hint = 'Select the option screen to show.'
           Align = alLeft
           HideSelection = False
@@ -1177,37 +1177,33 @@ object frmPopMain: TfrmPopMain
           TabOrder = 0
           OnChange = tvOptionsChange
           OnMouseDown = tvOptionsMouseDown
-          Items.NodeData = {
-            0108000000290000000000000000000000FFFFFFFFFFFFFFFF00000000000000
-            000849006E00740065007200760061006C00290000000100000001000000FFFF
-            FFFFFFFFFFFF000000000000000008440065006600610075006C007400730037
-            0000000200000002000000FFFFFFFFFFFFFFFF00000000000000000F47006500
-            6E006500720061006C0020004F007000740069006F006E007300390000000300
-            000003000000FFFFFFFFFFFFFFFF00000000020000001041006400760061006E
-            0063006500640020004F007000740069006F006E007300350000000400000004
-            000000FFFFFFFFFFFFFFFF00000000000000000E550073006500720020004900
-            6E007400650072006600610063006500330000000600000006000000FFFFFFFF
-            FFFFFFFF00000000000000000D4D0069007300630065006C006C0061006E0065
-            006F0075007300330000000700000007000000FFFFFFFFFFFFFFFF0000000000
-            0000000D4D006F00750073006500200042007500740074006F006E0073002900
-            00000800000008000000FFFFFFFFFFFFFFFF00000000000000000848006F0074
-            002D004B006500790073003D0000000900000009000000FFFFFFFFFFFFFFFF00
-            00000000000000125700680069007400650020002F00200042006C0061006300
-            6B0020004C00690073007400290000000A0000000A000000FFFFFFFFFFFFFFFF
-            00000000000000000850006C00750067002D0069006E007300}
+          Items.Data = {
+            08000000210000000000000000000000FFFFFFFFFFFFFFFF0000000000000000
+            08496E74657276616C210000000100000001000000FFFFFFFFFFFFFFFF000000
+            00000000000844656661756C7473280000000200000002000000FFFFFFFFFFFF
+            FFFF00000000000000000F47656E6572616C204F7074696F6E73290000000300
+            000003000000FFFFFFFFFFFFFFFF000000000200000010416476616E63656420
+            4F7074696F6E73270000000400000004000000FFFFFFFFFFFFFFFF0000000000
+            0000000E5573657220496E746572666163651D0000000600000006000000FFFF
+            FFFFFFFFFFFF0000000000000000044D697363260000000700000007000000FF
+            FFFFFFFFFFFFFF00000000000000000D4D6F75736520427574746F6E73210000
+            000800000008000000FFFFFFFFFFFFFFFF000000000000000008486F742D4B65
+            79732B0000000900000009000000FFFFFFFFFFFFFFFF00000000000000001257
+            68697465202F20426C61636B204C697374210000000A0000000A000000FFFFFF
+            FFFFFFFFFF000000000000000008506C75672D496E73}
         end
         object panOptions: TPanel
           Left = 155
           Top = 4
-          Width = 318
-          Height = 337
+          Width = 338
+          Height = 328
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           object panOptSpacer: TPanel
             Left = 0
             Top = 30
-            Width = 318
+            Width = 338
             Height = 4
             Align = alTop
             BevelOuter = bvNone
@@ -1216,7 +1212,7 @@ object frmPopMain: TfrmPopMain
           object panOptionsTitle: TPanel
             Left = 0
             Top = 0
-            Width = 318
+            Width = 338
             Height = 30
             Align = alTop
             BevelInner = bvRaised
@@ -1225,7 +1221,7 @@ object frmPopMain: TfrmPopMain
             ParentBackground = False
             TabOrder = 1
             DesignSize = (
-              318
+              338
               30)
             object imgOptionTitle: TImage
               Left = 2
@@ -1238,7 +1234,7 @@ object frmPopMain: TfrmPopMain
             object lblOptionTitle: TLabel
               Left = 32
               Top = 8
-              Width = 281
+              Width = 301
               Height = 14
               Alignment = taCenter
               Anchors = [akLeft, akTop, akRight]
@@ -1260,8 +1256,8 @@ object frmPopMain: TfrmPopMain
       ParentFont = False
       object panRulesButtons: TPanel
         Left = 0
-        Top = 345
-        Width = 477
+        Top = 336
+        Width = 497
         Height = 32
         Align = alBottom
         BevelOuter = bvNone
@@ -1441,8 +1437,8 @@ object frmPopMain: TfrmPopMain
       object panRulesTop: TPanel
         Left = 0
         Top = 0
-        Width = 477
-        Height = 345
+        Width = 497
+        Height = 336
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
@@ -1451,19 +1447,19 @@ object frmPopMain: TfrmPopMain
           Left = 104
           Top = 38
           Width = 5
-          Height = 303
+          Height = 294
           ResizeStyle = rsUpdate
         end
         object RulesToolbar: TActionToolBar
           Left = 4
           Top = 4
-          Width = 469
+          Width = 489
           Height = 34
           ActionManager = ActionManager
           Caption = 'Rules'
-          ColorMap.HighlightColor = 14410210
+          ColorMap.HighlightColor = clWhite
           ColorMap.BtnSelectedColor = clBtnFace
-          ColorMap.UnusedColor = 14410210
+          ColorMap.UnusedColor = clWhite
           EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
           EdgeInner = esLowered
           Font.Charset = DEFAULT_CHARSET
@@ -1482,8 +1478,8 @@ object frmPopMain: TfrmPopMain
         object ScrollBox1: TScrollBox
           Left = 109
           Top = 38
-          Width = 364
-          Height = 303
+          Width = 384
+          Height = 294
           Align = alClient
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -1492,7 +1488,7 @@ object frmPopMain: TfrmPopMain
           object panRuleDetail: TPanel
             Left = 0
             Top = 0
-            Width = 364
+            Width = 384
             Height = 291
             Align = alTop
             BevelOuter = bvNone
@@ -1503,16 +1499,16 @@ object frmPopMain: TfrmPopMain
             object gbActions: TGroupBox
               Left = 4
               Top = 167
-              Width = 356
+              Width = 376
               Height = 124
               Align = alTop
               Caption = 'Actions'
               TabOrder = 1
               DesignSize = (
-                356
+                376
                 124)
               object btnEdRuleWav: TSpeedButton
-                Left = 306
+                Left = 334
                 Top = 13
                 Width = 21
                 Height = 21
@@ -1527,7 +1523,7 @@ object frmPopMain: TfrmPopMain
                 OnClick = btnEdRuleWavClick
               end
               object btnEdRuleEXE: TSpeedButton
-                Left = 331
+                Left = 359
                 Top = 38
                 Width = 19
                 Height = 19
@@ -1542,7 +1538,7 @@ object frmPopMain: TfrmPopMain
                 OnClick = btnEdRuleEXEClick
               end
               object btnRuleSoundTest: TSpeedButton
-                Left = 329
+                Left = 357
                 Top = 13
                 Width = 21
                 Height = 21
@@ -1592,7 +1588,7 @@ object frmPopMain: TfrmPopMain
               object edRuleWav: TEdit
                 Left = 236
                 Top = 13
-                Width = 69
+                Width = 97
                 Height = 21
                 Anchors = [akLeft, akTop, akRight]
                 TabOrder = 2
@@ -1611,7 +1607,7 @@ object frmPopMain: TfrmPopMain
               object edRuleEXE: TEdit
                 Left = 236
                 Top = 37
-                Width = 94
+                Width = 122
                 Height = 21
                 Anchors = [akLeft, akTop, akRight]
                 TabOrder = 5
@@ -1679,7 +1675,7 @@ object frmPopMain: TfrmPopMain
             object gbRule: TGroupBox
               Left = 4
               Top = 4
-              Width = 356
+              Width = 376
               Height = 163
               Align = alTop
               Caption = 'Rule'
@@ -1714,7 +1710,7 @@ object frmPopMain: TfrmPopMain
               object grdRule: TStringGrid
                 Left = 2
                 Top = 83
-                Width = 352
+                Width = 372
                 Height = 78
                 Align = alBottom
                 BorderStyle = bsNone
@@ -1907,7 +1903,7 @@ object frmPopMain: TfrmPopMain
           Left = 4
           Top = 38
           Width = 100
-          Height = 303
+          Height = 294
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 2
@@ -1929,7 +1925,7 @@ object frmPopMain: TfrmPopMain
           end
           object panRuleListButtons: TPanel
             Left = 0
-            Top = 281
+            Top = 272
             Width = 100
             Height = 22
             Align = alBottom
@@ -2040,8 +2036,8 @@ object frmPopMain: TfrmPopMain
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          477
-          377)
+          497
+          368)
         object imgTray: TImage
           Left = 426
           Top = 284
@@ -3893,14 +3889,14 @@ object frmPopMain: TfrmPopMain
         object GroupBox2: TGroupBox
           Left = 4
           Top = 108
-          Width = 467
-          Height = 226
+          Width = 487
+          Height = 217
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Translations'
           TabOrder = 0
           DesignSize = (
-            467
-            226)
+            487
+            217)
           object Label27: TLabel
             Left = 8
             Top = 15
@@ -3913,8 +3909,8 @@ object frmPopMain: TfrmPopMain
           object lvVolunteers: TListView
             Left = 6
             Top = 32
-            Width = 443
-            Height = 188
+            Width = 463
+            Height = 179
             Anchors = [akLeft, akTop, akRight, akBottom]
             Columns = <
               item
@@ -3926,102 +3922,6 @@ object frmPopMain: TfrmPopMain
                 Width = 100
               end>
             HideSelection = False
-            Items.ItemData = {
-              01F30B00002700000000000000FFFFFFFFFFFFFFFF0100000000000000094100
-              6600720069006B00610061006E0073000D520065006E00690065007200200043
-              007200610075007300650000000000FFFFFFFFFFFFFFFF010000000000000006
-              4100720061006200690063000D410068006D006100640020004D006F00730074
-              0061006600610000000000FFFFFFFFFFFFFFFF01000000000000000942007500
-              6C00670061007200690061006E00104E0069006B006F006C0061006900200054
-              0073007600650074006B006F00760000000000FFFFFFFFFFFFFFFF0100000000
-              0000000743006100740061006C0061006E000E58006100760069006500720020
-              005300E1006E006300680065007A0000000000FFFFFFFFFFFFFFFF0100000000
-              000000074300680069006E006500730065000A590061006E004A0075006E002E
-              004C006900750000000000FFFFFFFFFFFFFFFF01000000000000000843007200
-              6F0061007400690061006E00154F007A00720065006E0020004E0065006E006F
-              0020005000610076006C0069006E006F0076006900630000000000FFFFFFFFFF
-              FFFFFF01000000000000000543007A006500630068000C42006F007200690073
-              00200046006F0072006D0061006E0000000000FFFFFFFFFFFFFFFF0100000000
-              00000006440061006E006900730068000C4B00610061007200650020004A0065
-              006E00730065006E0000000000FFFFFFFFFFFFFFFF0100000000000000054400
-              750074006300680010510075006F007300650067006F002C0020005000610074
-              007200690063006B0000000000FFFFFFFFFFFFFFFF0100000000000000084500
-              730074006F006E00690061006E000E54006F006F006D0061007300200054006F
-              006D00620065007200670000000000FFFFFFFFFFFFFFFF010000000000000007
-              460069006E006E00690073006800094A0061006E00690020005200E400740079
-              0000000000FFFFFFFFFFFFFFFF0100000000000000064600720065006E006300
-              68000741006E0074006F0069006E00650000000000FFFFFFFFFFFFFFFF010000
-              00000000000F4600720065006E006300680020002800430061006E0061006400
-              610029000C4200720075006E006F0020004700690072006F0075007800000000
-              00FFFFFFFFFFFFFFFF0100000000000000074600720069007300690061006E00
-              0C42006500720065006E00640020005900740073006D00610000000000FFFFFF
-              FFFFFFFFFF010000000000000008470061006C0069006300690061006E001B4A
-              006F007300E900200041006E0074006F006E0069006F00200043006900640072
-              0065002000420061007200640065006C00E100730000000000FFFFFFFFFFFFFF
-              FF0100000000000000064700650072006D0061006E00364D0069006300680061
-              0065006C00200042006100610073002C0020004A006F006300680065006E0020
-              005700610063006B006500720073006800610075007300650072002C0020004D
-              00690063006800610065006C0020004D006F00740079006C006500770073006B
-              00690000000000FFFFFFFFFFFFFFFF0100000000000000054700720065006500
-              6B001257006100730069006C006900730020004D0061006E0064007200610074
-              007A006900730000000000FFFFFFFFFFFFFFFF01000000000000000648006500
-              62007200650077000A41006D0069007200200041006E00610076007900000000
-              00FFFFFFFFFFFFFFFF010000000000000009480075006E006700610072006900
-              61006E00144A006F007A007300650066002000540061006D0061007300200048
-              006500720063007A006500670000000000FFFFFFFFFFFFFFFF01000000000000
-              00074900740061006C00690061006E001141006C00690065006E002000700072
-              006F00640075006300740069006F006E00730000000000FFFFFFFFFFFFFFFF01
-              000000000000000A4C00690074006800750061006E00690061006E00124B0065
-              0073007400750074006900730020004300650074007600650072006700610073
-              0000000000FFFFFFFFFFFFFFFF0100000000000000094E006F00720077006500
-              6700690061006E000D540068006F006D006100730020004D0065006C00620079
-              00650000000000FFFFFFFFFFFFFFFF01000000000000000650006F006C006900
-              730068001B4A006100630065006B0020004D0069006300680065006C002C0020
-              004A0061006B007500620020004700F3007200650063006B00690000000000FF
-              FFFFFFFFFFFFFF01000000000000000A50006F00720074007500670075006500
-              730065001541006E007400F3006E0069006F0020004100750067007500730074
-              006F0020004C006F0070006500730000000000FFFFFFFFFFFFFFFF0100000000
-              0000001350006F00720074007500670075006500730065002000280042007200
-              61007A0069006C00290023440065006E00690073002C00200041006C00650078
-              0020004D0065006E006400650073002C00200052006F0064007200690067006F
-              002000520065007A0065006E006400650000000000FFFFFFFFFFFFFFFF010000
-              00000000000852006F006D0061006E00690061006E000B500075006900750020
-              00540061006E0061007300650000000000FFFFFFFFFFFFFFFF01000000000000
-              00075200750073007300690061006E002350006100760065006C00200041002E
-              0020004200610075006C0069006E002C00200041006C00650078006500790020
-              004B0068006F006D007500740073006B0069007900200000000000FFFFFFFFFF
-              FFFFFF0100000000000000075300650072006200690061006E001441006C0065
-              006B00730061006E0064006100720020004B006F007600610063006500760069
-              00630000000000FFFFFFFFFFFFFFFF01000000000000000653006C006F007600
-              61006B001942006F00720069007300200046006F0072006D0061006E002C0020
-              004B00610072006F006C00200044006F00760061006C0000000000FFFFFFFFFF
-              FFFFFF01000000000000000753006C006F00760065006E006500065300680069
-              006E006300610000000000FFFFFFFFFFFFFFFF01000000000000000753007000
-              61006E00690073006800204F0072006C0061006E0064006F002000560061006C
-              00690065006E00740065002C0020004D0061006E00750065006C002000500065
-              0072006900610067006F0000000000FFFFFFFFFFFFFFFF01000000000000000F
-              5300700061006E00690073006800200028004300680069006C00650029000D56
-              006900630074006F007200200050006100720061006400610000000000FFFFFF
-              FFFFFFFFFF01000000000000001A5300700061006E0069007300680020002800
-              480069007300700061006E0069006300200041006D0065007200690063006100
-              29001541006C0065006A0061006E00640072006F0020004D007500F1006F007A
-              0020005500720069006200650000000000FFFFFFFFFFFFFFFF01000000000000
-              000753007700650064006900730068001D4D0061007400730020004E0079006D
-              0061006E002C002000430068007200690073007400690061006E002000480065
-              006400620065007200670000000000FFFFFFFFFFFFFFFF010000000000000006
-              540061006900770061006E00084B006F006B006F003500310036003800000000
-              00FFFFFFFFFFFFFFFF0100000000000000075400750072006B00690073006800
-              184D006500740069006E0020004F007A006D0065006E00650072002C00200045
-              007600720065006E00200045004600450000000000FFFFFFFFFFFFFFFF010000
-              00000000000855006B00720061006E00690061006E001241006C006500780065
-              00790020004B0068006F006D007500740073006B0069007900200000000000FF
-              FFFFFFFFFFFFFF010000000000000009560061006C0065006E00630069006100
-              6E001153006F006600740077006100720065002000560061006C0065006E0063
-              006900E00000000000FFFFFFFFFFFFFFFF010000000000000009410066007200
-              69006B00610061006E0073000D520065006E0069006500720020004300720061
-              00750073006500FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF
-              00FF00FF00FFFFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF
-              00FF00FF00FF00FF00FF00FF00FF00FF00FF00FFFF}
             ReadOnly = True
             ParentColor = True
             ShowColumnHeaders = False
@@ -4035,13 +3935,13 @@ object frmPopMain: TfrmPopMain
         object GroupBox5: TGroupBox
           Left = 240
           Top = 4
-          Width = 231
+          Width = 251
           Height = 97
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Contact Info'
           TabOrder = 1
           DesignSize = (
-            231
+            251
             97)
           object Label12: TLabel
             Left = 38
@@ -4098,7 +3998,7 @@ object frmPopMain: TfrmPopMain
           object btnCheckUpdate: TButton
             Left = 7
             Top = 64
-            Width = 217
+            Width = 237
             Height = 25
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Check on-line if newer version available.'
@@ -4108,8 +4008,8 @@ object frmPopMain: TfrmPopMain
         end
         object panAboutBottom: TPanel
           Left = 0
-          Top = 345
-          Width = 477
+          Top = 336
+          Width = 497
           Height = 32
           Align = alBottom
           BevelOuter = bvNone
