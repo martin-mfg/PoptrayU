@@ -7226,32 +7226,42 @@ begin
     num := tabAccounts.TabIndex+1;
     if num<=0 then Exit;
     SaveAccountNum(num);
-    ConnectAccount(num);
     try
-      msgcount := Accounts[num-1].Prot.CheckMessages;
-      info := Translate('Login OK') + #13#10;
-      info := info + Translate('Message Count:')+' ' +IntToStr(msgcount) + #13#10#13#10;
-      sl := TStringList.Create;
+      ConnectAccount(num);
       try
-        if GetUIDs(num,sl) then
-        begin
-          st := Translate('Supported');
-          if (msgcount>0) and (sl.Text='') then st := st + ' (' + Translate('Empty') + ')';
-        end
-        else begin
-          st := Translate('NOT Supported');
-        end;
+        msgcount := Accounts[num-1].Prot.CheckMessages;
+        info := Translate('Login OK') + sLineBreak;
+        info := info + Translate('Message Count:')+' ' +IntToStr(msgcount) + sLineBreak + sLineBreak;
+        sl := TStringList.Create;
+        try
+          if GetUIDs(num,sl) then
+          begin
+            st := Translate('Supported');
+            if (msgcount>0) and (sl.Text='') then st := st + ' (' + Translate('Empty') + ')';
+          end
+          else begin
+            st := Translate('NOT Supported');
+          end;
 
-        info := info + Translate('Quick Checking and Safe Delete (UIDL):')+' '+st;
+          info := info + Translate('Quick Checking and Safe Delete (UIDL):')+' '+st;
+        finally
+          sl.Free;
+        end;
       finally
-        sl.Free;
+        Accounts[num-1].Prot.DisconnectWithQuit;
+        if Accounts[num-1].Port in [110,143] then
+          info := GetWelcomeMessage(Accounts[num-1].Server,Accounts[num-1].Port) + sLineBreak + info;
+        Screen.Cursor := crDefault;
+        ShowMemo(Translate('Connection Info'),info,450,250);
       end;
-    finally
-      Accounts[num-1].Prot.DisconnectWithQuit;
-      if Accounts[num-1].Port in [110,143] then
-        info := GetWelcomeMessage(Accounts[num-1].Server,Accounts[num-1].Port) + #13#10 + info;
-      Screen.Cursor := crDefault;
-      ShowMemo(Translate('Connection Info'),info,450,250);
+    except
+      on e: EIdSocketError do
+      begin
+        // TODO: Translate this.
+        info := 'Failure connecting to server.' + sLineBreak + e.Message;
+        if ( e.LastError = 11004 ) then info := info + 'Server found, but is not a mail server.';
+        ShowMemo(Translate('Connection Info'),info,450,250);
+      end;
     end;
   finally
     Screen.Cursor := crDefault;
