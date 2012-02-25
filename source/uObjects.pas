@@ -49,7 +49,7 @@ type
     MailTo : string;
     Address : string;
     ReplyTo : string;
-    Subject : string;
+    Subject : WideString;
     Date : TDateTime;
     DateStr : string;
     Size : integer;
