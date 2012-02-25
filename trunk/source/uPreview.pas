@@ -31,7 +31,7 @@ uses
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
-  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw,
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, TntForms,
   TntStdCtrls;
 
 type
