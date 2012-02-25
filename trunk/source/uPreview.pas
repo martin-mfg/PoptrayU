@@ -547,7 +547,7 @@ begin
       if Msg.NoDecode then
         begin
           FBody := Msg.Body.Text;
-          FHtml := '<pre>' + Msg.Body.Text + '</pre>';
+          FHtml := '';//'<pre>' + Msg.Body.Text + '</pre>';
         end
       else begin
         try
