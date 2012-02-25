@@ -31,15 +31,16 @@ uses
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
-  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw;
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw,
+  TntStdCtrls;
 
 type
-  TfrmPreview = class(TForm)
+  TfrmPreview = class(TTntForm)
     panOK: TPanel;
     panPreviewFrom: TPanel;
     btnOK: TBitBtn;
-    Label1: TLabel;
-    edFrom: TEdit;
+    Label1: TTntLabel;
+    edFrom: TTntEdit;
     tsMessageParts: TTabSet;
     lvAttachments: TListView;
     spltAttachemnts: TSplitter;
@@ -54,7 +55,7 @@ type
     panProgress: TPanel;
     btnStop: TSpeedButton;
     Progress: TProgressBar;
-    lblProgress: TLabel;
+    lblProgress: TTntLabel;
     mnuPreviewToolbar: TPopupActionBarEx;
     Customize1: TMenuItem;
     Msg: TIdMessage;
@@ -88,20 +89,20 @@ type
     ReadOnly1: TMenuItem;
     actCustomize: TAction;
     panPreviewTo: TPanel;
-    Label2: TLabel;
-    edTo: TEdit;
+    Label2: TTntLabel;
+    edTo: TTntEdit;
     panPreviewDate: TPanel;
-    Label4: TLabel;
-    edDate: TEdit;
+    Label4: TTntLabel;
+    edDate: TTntEdit;
     panPreviewSubject: TPanel;
-    Label3: TLabel;
-    edSubject: TEdit;
+    Label3: TTntLabel;
+    edSubject: TTntEdit;
     panPreviewXMailer: TPanel;
-    Label5: TLabel;
-    edXMailer: TEdit;
+    Label5: TTntLabel;
+    edXMailer: TTntEdit;
     panPreviewCC: TPanel;
-    Label6: TLabel;
-    edCC: TEdit;
+    Label6: TTntLabel;
+    edCC: TTntEdit;
     imgPreview: TImage;
     memMail: TRichEdit;
     actOpenMessage: TAction;
@@ -1096,7 +1097,7 @@ end;
 
 procedure TfrmPreview.edEnter(Sender: TObject);
 begin
-  (Sender as TEdit).SelectAll;
+  (Sender as TTntEdit).SelectAll;
   FEnter := True;
 end;
 
@@ -1105,7 +1106,7 @@ procedure TfrmPreview.edMouseDown(Sender: TObject;
 begin
   if FEnter then
   begin
-   (Sender as TEdit).SelectAll;
+   (Sender as TTntEdit).SelectAll;
    FEnter := False;
   end;
 end;
