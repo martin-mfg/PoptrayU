@@ -1,0 +1,306 @@
+#-----------------------------------------------------------------------
+# PopTray 2.1 (and later) translation file
+#-----------------------------------------------------------------------
+# 2002-10-02  PopTray 2.1 (beta 8)
+#-----------------------------------------------------------------------
+
+Yes=예
+No=아니오
+OK=확인
+Nothing=없음
+Show Messages=메시지 보기
+Pop-Up Menu=팝업 메뉴
+Check for Mail=메일 확인
+Run E-Mail Client=메일 프로그램 실행
+Check and Show=확인 후 보기
+Show Info=정보 보기
+Check and Info=확인 & 정보
+Toggle Message Window=메시지 윈도우 토글
+Toggle AutoCheck=메일 자동 확인 토글
+[Use Default Sound]=[기본 사운드 사용]
+[Use Default Program]=[기본 프로그램 사용]
+
+
+Checking=확인중..
+Not On-Line=오프라인 상태
+Error:=오류발생:
+Still busy checking=아직 메시지 확인중..
+Already Connected=연결 상태임
+User Aborted.=취소하였습니다.
+Unable to Retrieve Message=메시지를 받을 수 없습니다
+Connect Error:=접속 오류:
+Error=오류
+msg.=개.
+msgs.=개.
+ignored=무시
+message.=메시지.
+messages.=메시지들.
+1 message deleted.=1개 메시지가 삭제됨.
+message(s) deleted.=메시지(들)가 삭제됨.
+Attachment:=첨부파일:
+Attachment(s)=첨부파일(들)
+AutoCheck disabled=자동 확인 해제
+messages=메시지들
+in=in
+accounts.=메일계정들.
+No new mail=새로운 메시지 없음
+Checked:=확인됨:
+No E-Mail Client specified=지정한 이메일 클라이언트가 없음
+Mail Info=메일 정보
+EXE files=실행파일들
+WAV files=WAV 파일들
+No message selected.=선택된 메시지 없음.
+Account Info changed.~Do you want to save it?=메일계정이 변경되었습니다.~저장하시겠습니까?
+Still busy deleting other messages.=다른 메시지들을 삭제하고 있습니다.
+Delete Message from Server?=서버의 메시지를 삭제하시겠습니까?
+Delete Messages from Server?=서버의 메시지들을 삭제하시겠습니까?
+Number of selected messages:=선택된 메시지 개수:
+This will delete all these selected messages.=선택된 모든 메시지들을 삭제합니다.
+Cannot delete last Account=마지막 메일계정은 삭제할 수 없습니다.
+Delete Account:=메일계정 삭제:
+Delete Rule:=규칙 삭제:
+Are you sure?=계속하시겠습니까?
+No rule selected=선택된 규칙이 없습니다.
+This will create a rule to delete all future e-mails from=이 규칙은 앞으로 이 메일계정으로 오는 메시지를 삭제하는 것입니다.
+
+
+Header=헤더
+From=보낸사람
+Subject=제목
+To=받는사람
+CC=참조(CC)
+From (name)=작성자(이름)
+From (address)=작성자(주소)
+Contains=포함
+Equals=같다
+Wildcard=와일드카드
+Empty=없음
+
+
+About ...=대하여..
+About=대하여
+Accounts=메일계정
+Action:=실행:
+Actions=실행
+Add Account=메일계정 추가
+Add Rule to Delete all mail from Sender=특정인으로부터 오는 모든 메일을 삭제하는 규칙을 추가한다
+Add Rule=규칙 추가
+Add new rule=새로운 규칙 추가
+Advanced Options=고급 설정
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=메일을 받았을때 트레이의 아이콘이 바뀝니다.~ 움직이지 아이콘을 사용하면 메일 수신시 잘 확인할 수 있습니다.
+Animated Tray Icon=움직이는 트레이 아이콘
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=이메일을 삭제할 때 확인합니다.~ 이 옵션은 삭제 버튼을 사용할 때만 적용되고,~ 규칙에 의한 자동삭제시에는 적용되지 않습니다.
+AutoCheck Enabled=자동체크 사용
+Body=내용
+Cancel=취소
+Check All=모든 계정 확인
+Check Interval=확인 주기
+Check Now=지금 확인
+Check current account for New Mail=현재 메일계정의 새로운 메일 확인
+Check for New Mail on Startup=프로그램 시작시 새로운 메일 확인
+Check for new mail every = 새로운 메일 확인 주기
+Check if On-Line=온라인 상태 확인
+Check on-line if newer version available.=새로운 버전이 발표되었는지 확인
+Check=확인
+Color:=색상:
+Criteria=조건
+Date=날짜
+Decode preview message=미리보기 메시지를 디코딩
+Default sound:=기본 사운드:
+Defaults=기본값
+Delay on a SingleClick to wait and see if a DoubleClick is coming.=마우스 1번 클릭후 더블클릭인지 체크하기 위해 기다리는 시간
+Delete Account=메일 계정 삭제
+Delete Rule=규칙 삭제
+Delete account=메일계정 삭제
+Delete current message=현재 메일 삭제
+Delete from server=서버에서 삭제
+Delete selected rule=선택된 규칙 삭제
+Delete=삭제
+Deletion Confirmation=삭제시 확인
+Different Icon for Viewed Messages=확인한 메일은 다른 아이콘 사용
+Don't show Error Dialogs=에러 메시지를 표시하지 않음
+Double Click delay on Click=더블클릭시 delay
+Double Click:=더블클릭
+Downloading...=다운로드중...
+E-Mail Program:=이메일 프로그램:
+E-Mail:=이메일:
+Enabled=사용
+First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=메일을 확인하기전에 온라인 상태를 확인한다.
+General Options=일반 설정
+Headers=헤더
+Help=도움말
+Homepage:=홈페이지:
+Hot-Key:=단축키:
+Hot-Keys=단축키들
+Ignore (don't notify)=무시함(알림 없음)
+Ignore Retrieve Errors=메일 수신 에러를 무시
+Ignore errors that occurs while retrieving the header info.=메일 헤더정보 수신시 발생 오류를 무시함.
+Immediately check for mail when PopTray starts.=PopTray 시작시 새로운 메일을 체크한다.
+Info=정보
+Left Click:=왼쪽 클릭:
+Log Rules=규칙 로그
+Login:=로그인:
+MAPI instead of mailto:=mailto: 대신 MAPI 사용
+Mail=메일
+Middle Click:=가운데 클릭:
+Minimize PopTray to the System Tray instead of the Taskbar.=시스템 트레이로 최소화된다.
+Minimize to Tray=트레이로 최소화
+minutes.=분.
+Mix Colors=색상 혼합
+Mouse Action:=마우스 클릭:
+Mouse Buttons=마우스 버튼
+Name:=이름:
+Name=이름
+Never=안함
+New Message=새 메일
+New message using default mail client=기본 메일 클라이언트로 새 메일 작성
+New=신규
+No Sort=정렬안함
+Options ...=옵션들...
+Options=옵션들
+POP3 Server:=POP3 서버
+Password Protect=암호 보호
+Password:=암호:
+Play different wav=다른 wav 사용
+Please enter the password to open Poptray=PopTray를 사용하려면, 암호를 입력하십시오.
+PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTray는 최소화상태로 시작합니다.~ 윈도우는 표시되지 않고 트레이 아이콘만 표시된다.
+Preview the Message=메일 미리보기
+Preview=미리보기
+Quit=종료
+Reply using default mail client=기본 메일 클라이언트로 답장작성
+Reply=답장
+Reset Mail Count in Tray when Viewing=메일 확인시 트레이 아이콘 초기화
+Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=PopTray 윈도우를 띄우면, 트레이아이콘에 표시되는 메일 개수를 초기화한다.
+Right Click:=오른쪽 클릭
+Rotate Icon for each Account=각 메일계정에 대해 아이콘 Rotate
+Rotate Icon to show messages in each account=각 메일 계정의 메일 보기의 아이콘 Rotate
+Rule=규칙
+Rules=규칙들
+Run EXE File=EXE파일 실행
+Save=저정
+Save Account=메일 계정 저장
+Save Captions=캡션 저장
+Save Message=메일 저장
+Save Options=옵션 저장
+Save Rules=규칙 저장
+Show Messages ...=메일 보기...
+Show Window on Notification=메일 알림시 윈도우 표시
+Show the PopTray window always on top of other windows.=항상 PopTray 윈도우를 맨위에 표시.
+Show the PopTray window when new mail arrives.=새로운 메일이 도착할때 PopTray 윈도우를 표시.
+Size=크기
+Sound:=소리:
+Start Minimized=최소화상태로 시작
+Stay on Top=윈도우 항상위로
+Stop and disconnect.=중지하고 연결끊음
+Support Forum:=지원 포럼:
+Test the sound file=사운드파일 테스트
+Test to run the e-mail program=이메일 프로그램 실행 테스트
+Test=테스트
+The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=우측상단의 X 버튼을 누르면, PopTray가 종료되지 않고~트레이로 최소화된다. 종료하려면 "종료"버튼을 누른다.
+Timer Interval per Account=각 메일계정에 대한 확인 간격
+To Tray=트레이로
+Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=메일 계정에 메일이 도착하면, 색상을 혼합하여 표시한다.~윈도우가 트레이에서 16칼라만 지원하기 때문에 색상이 혼합되지 않을 수 있다.
+Use MAPI=MAPI사용
+Viewed Messages Icon=읽은 메일 아이콘
+When a connect error occurs, PopTray will dsiplay an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=접속 오류가 발생하면, 오류 메시지를 표시한다.
+When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=MIME Part가 있는 메일을 미리보기할때, 디코딩한다.
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=규칙 실행을 PopTray 디렉토리에 RULES.LOG파일에 남긴다.
+X Button Minimizes=X 버튼 최소화로 사용
+
+
+# ---------- Added PopTray 2.1 (beta 1.2) ----------
+Language:=언어:
+Refresh=다시읽기
+Refresh the list of languages=언어 리스트를 다시읽기
+Thanks to the following volunteers who helped with the translation:=번역을 도운 사람들
+Copyright=저작권
+Translations=번역
+Contact Info=제작자 정보
+
+
+# ---------- Added PopTray 2.1 (beta 1.4) ----------
+Confirm=확인
+No.=번호
+
+
+# ---------- Added PopTray 2.1 (beta 2) ----------
+On=사용
+Area=영역
+Comp=비교
+Text=문자
+Wav=소리
+Del=삭제
+Ign=무시
+EXE=실행
+message=메일
+Multi-line Account Tabs=메일계정 탭에 여러 줄 사용
+AutoCheck only while Minimized=최소화되어 있을 때만 자동 메일 확인
+Print=인쇄
+Print the message to your default printer=기본 프린터로 메일 인쇄
+Connection TimeOut:=연결 시간 초과:
+seconds=초
+
+# ---------- Added PopTray 2.1 (beta 2) ----------
+version=버전
+
+# ---------- Added PopTray 2.1 (beta 4) ----------
+Info Balloon on Notification=메일 알림시 풍선 표시
+Important (Balloon Pop-Up)=중요(풍선 팝업)
+New Messages Only=새로운 메일만
+All Files=모든 파일
+All Accounts=모든 메일계정
+Execute File=실행 파일
+Account=메일계정
+
+# ---------- Added PopTray 2.1 (beta 6) ----------
+Enable Quick Checking=빠른 메시지 확인 사용
+
+# ---------- Added PopTray 2.1 (beta 7) ----------
+Quick Checked:=빠른 메시지 확인:
+NOT Contains=포함 안함
+
+English=
+Afrikaans=
+Bulgarian=
+Catalan=
+Czech=
+Danish=
+Dutch=
+Finnish=
+French=
+German=
+Hebrew=
+Hungarian=
+Italian=
+Polish=
+Portuguese (Brazil)=
+Romanian=
+Russian=
+Slovak=
+Slovene=
+Spanish=
+Swedish=
+Korean=
+
+# ---------- Added PopTray 2.1 (beta 8) ----------
+Delete this message from server=서버의 메일 삭제
+Delete Button only available when using Safe Delete option=안전한 메일 삭제 옵션을 사용할 때만 삭제버튼이 표시됨
+Safe Delete (using UIDL)=안전한 삭제(UIDL사용)
+Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=메일 번호가 맞지 않습니다.~안전한 삭제 옵션을 사용하기 때문에 이 메일은 삭제할 수 없습니다.
+
+# ---------- Added for Eclipse (locus@nextel.co.kr) -----------
+Eclipse=이클립스
+Add Eclipse=이클립스 추가
+Delete Eclipse=이클립스 삭제
+Eclipse Add=이클립스 선택
+Workspace Add=Workspace 추가
+Workspace Remove=Workspace 삭제
+RUN Eclipse=이클립스 실행
+Eclipse Location:=실행할 이클립스 위치:
+Eclipse Workspaces:=이클립스 Workspace 위치:
+Eclipse Launcher=이클립스 실행기
+
+# ---------- Added for RegExp (locus@nextel.co.kr) -----------
+RegExp=정규식
+Compare=비교
+Korean Version Contact Info=한국어버전 제작자 정보
