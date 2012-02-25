@@ -264,6 +264,10 @@ type
     actRuleSubjectSpam: TAction;
     btnCheckUpdate: TButton;
     actOpenMessage: TAction;
+    IdDecoderQuotedPrintable: TIdDecoderQuotedPrintable;
+    IdDecoderMIME1: TIdDecoderMIME;
+    GroupBox1: TGroupBox;
+    Label9: TLabel;
     procedure lvVolunteersResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
@@ -1309,8 +1313,8 @@ begin
       else
         StateIndex := 1;
       // listview info
-      Caption := Accounts[num-1].Mail[i].From;
-      SubItems.Add(Accounts[num-1].Mail[i].MailTo);
+      Caption := DecodeHeader(Accounts[num-1].Mail[i].From);
+      SubItems.Add(DecodeHeader(Accounts[num-1].Mail[i].MailTo));
       SubItems.Add(Accounts[num-1].Mail[i].Subject);
       SubItems.Add(Accounts[num-1].Mail[i].DateStr);
       SubItems.Add(IntToStr(Accounts[num-1].Mail[i].Size) + ' ' + FKB);
