@@ -1,4 +1,4 @@
-program PopTray;
+program PopTrayU;
 
 {-------------------------------------------------------------------------------
 POPTRAY
@@ -30,7 +30,7 @@ uses
   Forms,
   Windows,
   SysUtils,
-  uMain in 'uMain.pas' {frmPopMain},
+  uMain in 'uMain.pas' {frmPopUMain},
   uPreview in 'uPreview.pas' {frmPreview},
   uRCUtils in 'uRCUtils.pas',
   uPassword in 'uPassword.pas' {frmPassword},
@@ -50,7 +50,9 @@ uses
   uGlobal in 'uGlobal.pas',
   uPOP3 in 'uPOP3.pas',
   uObjects in 'uObjects.pas',
-  RegExpr in 'RegExpr.pas';
+  RegExpr in 'RegExpr.pas',
+  uHeaderDecoder in 'uHeaderDecoder.pas',
+  uCodePageConverter in 'uCodePageConverter.pas';
 
 {$R *.RES}
 
@@ -63,7 +65,7 @@ begin
   if not ParamSwitch('MULTIPLE') then
   begin
     // check for previous instance
-    hFirstWin := FindWindow('TfrmPopMain', nil);
+    hFirstWin := FindWindow('TfrmPopUMain', nil);
     if hFirstWin <> 0 then
     begin
       // get window caption
@@ -71,7 +73,7 @@ begin
       GetWindowText(hFirstWin,pchar(WindowCaption),100);
       SetLength(WindowCaption,Pos(#0,WindowCaption)-1);
       // not in IDE?
-      if WindowCaption <> 'PopTray' then
+      if WindowCaption <> 'PopTrayU' then
       begin
         param := ParamSwitchIndex('ACTION');
         if param > 0 then
@@ -95,8 +97,8 @@ begin
   end;
   Application.Initialize;
   Application.ShowMainForm := False;
-  Application.Title := 'PopTray';
+  Application.Title := 'PopTrayU'; //App Title on Windows Taskbar
   Application.CreateForm(Tdm, dm);
-  Application.CreateForm(TfrmPopMain, frmPopMain);
+  Application.CreateForm(TfrmPopUMain, frmPopMain);
   Application.Run;
 end.
