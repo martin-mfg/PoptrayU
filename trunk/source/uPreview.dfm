@@ -141,7 +141,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label1: TLabel
+    object Label1: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -157,7 +157,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edFrom: TEdit
+    object edFrom: TTntEdit
       Left = 72
       Top = 1
       Width = 392
@@ -239,7 +239,7 @@ object frmPreview: TfrmPreview
         9917771999999999917777719999999917777777111111117777}
       OnClick = btnStopClick
     end
-    object lblProgress: TLabel
+    object lblProgress: TTntLabel
       Left = 92
       Top = 12
       Width = 164
@@ -269,7 +269,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label2: TLabel
+    object Label2: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -285,7 +285,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edTo: TEdit
+    object edTo: TTntEdit
       Left = 72
       Top = 1
       Width = 392
@@ -313,7 +313,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label4: TLabel
+    object Label4: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -329,7 +329,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edDate: TEdit
+    object edDate: TTntEdit
       Left = 72
       Top = 1
       Width = 392
@@ -357,7 +357,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label3: TLabel
+    object Label3: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -373,7 +373,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edSubject: TEdit
+    object edSubject: TTntEdit
       Left = 72
       Top = 1
       Width = 392
@@ -402,7 +402,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label5: TLabel
+    object Label5: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -418,7 +418,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edXMailer: TEdit
+    object edXMailer: TTntEdit
       Left = 72
       Top = 1
       Width = 392
@@ -447,7 +447,7 @@ object frmPreview: TfrmPreview
     DesignSize = (
       468
       15)
-    object Label6: TLabel
+    object Label6: TTntLabel
       Left = 0
       Top = 0
       Width = 65
@@ -463,7 +463,7 @@ object frmPreview: TfrmPreview
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object edCC: TEdit
+    object edCC: TTntEdit
       Left = 72
       Top = 1
       Width = 392
