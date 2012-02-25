@@ -1,8 +1,8 @@
 object frmPopMain: TfrmPopMain
-  Left = 223
-  Top = 156
-  Width = 540
-  Height = 412
+  Left = 340
+  Top = 95
+  Width = 558
+  Height = 415
   Caption = 'PopTray'
   Color = clBtnFace
   Constraints.MinHeight = 340
@@ -27,8 +27,8 @@ object frmPopMain: TfrmPopMain
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 524
-    Height = 376
+    Width = 542
+    Height = 379
     ActivePage = tsMail
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
@@ -53,8 +53,8 @@ object frmPopMain: TfrmPopMain
       object tabMail: TTabControl
         Left = 3
         Top = 0
-        Width = 489
-        Height = 335
+        Width = 507
+        Height = 338
         Align = alClient
         Images = dm.imlTabs
         TabOrder = 0
@@ -64,13 +64,13 @@ object frmPopMain: TfrmPopMain
         OnDragOver = tabMailDragOver
         OnMouseDown = DragMouseDown
         DesignSize = (
-          489
-          335)
+          507
+          338)
         object MailToolBar: TActionToolBar
           Left = 4
           Top = 6
-          Width = 481
-          Height = 32
+          Width = 499
+          Height = 29
           ActionManager = ActionManager
           Caption = 'Mail'
           ColorMap.HighlightColor = clWhite
@@ -94,9 +94,9 @@ object frmPopMain: TfrmPopMain
         end
         object lvMail: TListView
           Left = 4
-          Top = 38
-          Width = 481
-          Height = 274
+          Top = 35
+          Width = 499
+          Height = 280
           Align = alClient
           Columns = <
             item
@@ -147,8 +147,8 @@ object frmPopMain: TfrmPopMain
         end
         object StatusBar: TStatusBar
           Left = 4
-          Top = 312
-          Width = 481
+          Top = 315
+          Width = 499
           Height = 19
           AutoHint = True
           Panels = <
@@ -177,9 +177,9 @@ object frmPopMain: TfrmPopMain
           OnResize = StatusBarResize
         end
         object panProgress: TPanel
-          Left = 313
-          Top = 322
-          Width = 180
+          Left = 298
+          Top = 317
+          Width = 205
           Height = 18
           Anchors = [akRight, akBottom]
           BevelOuter = bvNone
@@ -187,7 +187,7 @@ object frmPopMain: TfrmPopMain
           TabOrder = 3
           Visible = False
           DesignSize = (
-            180
+            205
             18)
           object btnStop: TSpeedButton
             Left = 5
@@ -220,7 +220,7 @@ object frmPopMain: TfrmPopMain
           object Progress: TProgressBar
             Left = 27
             Top = 1
-            Width = 153
+            Width = 178
             Height = 17
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
@@ -229,8 +229,8 @@ object frmPopMain: TfrmPopMain
       end
       object panMailButtons: TPanel
         Left = 0
-        Top = 335
-        Width = 497
+        Top = 338
+        Width = 515
         Height = 33
         Align = alBottom
         BevelOuter = bvNone
@@ -345,16 +345,16 @@ object frmPopMain: TfrmPopMain
         Left = 0
         Top = 0
         Width = 3
-        Height = 335
+        Height = 338
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 2
       end
       object panMailRightSpacer: TPanel
-        Left = 492
+        Left = 510
         Top = 0
         Width = 5
-        Height = 335
+        Height = 338
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 3
@@ -372,17 +372,17 @@ object frmPopMain: TfrmPopMain
       object panAccounts: TPanel
         Left = 0
         Top = 0
-        Width = 497
-        Height = 368
+        Width = 515
+        Height = 371
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
         TabOrder = 0
         object tabAccounts: TTabControl
           Left = 4
-          Top = 38
-          Width = 489
-          Height = 297
+          Top = 35
+          Width = 507
+          Height = 303
           Align = alClient
           Images = dm.imlTabs
           MultiLine = True
@@ -395,8 +395,8 @@ object frmPopMain: TfrmPopMain
           object ScrollBox2: TScrollBox
             Left = 4
             Top = 6
-            Width = 481
-            Height = 287
+            Width = 499
+            Height = 293
             Align = alClient
             BevelEdges = []
             BevelInner = bvNone
@@ -737,14 +737,14 @@ object frmPopMain: TfrmPopMain
         end
         object panAccountsButtons: TPanel
           Left = 4
-          Top = 335
-          Width = 489
+          Top = 338
+          Width = 507
           Height = 29
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 1
           DesignSize = (
-            489
+            507
             29)
           object btnHelpAccounts: TBitBtn
             Left = 4
@@ -783,7 +783,7 @@ object frmPopMain: TfrmPopMain
               AA84DEAA84DEAA84B57D73DEAA84FFFFFFFFFFFFFFFFFFFFFFFF}
           end
           object btnSave: TBitBtn
-            Left = 298
+            Left = 316
             Top = 4
             Width = 113
             Height = 25
@@ -847,7 +847,7 @@ object frmPopMain: TfrmPopMain
             NumGlyphs = 2
           end
           object btnCancelAccount: TBitBtn
-            Left = 420
+            Left = 438
             Top = 4
             Width = 75
             Height = 25
@@ -914,8 +914,8 @@ object frmPopMain: TfrmPopMain
         object AccountsToolbar: TActionToolBar
           Left = 4
           Top = 4
-          Width = 489
-          Height = 34
+          Width = 507
+          Height = 31
           ActionManager = ActionManager
           Caption = 'Accounts'
           ColorMap.HighlightColor = clWhite
@@ -949,8 +949,8 @@ object frmPopMain: TfrmPopMain
       ParentFont = False
       object panOptionButtons: TPanel
         Left = 0
-        Top = 336
-        Width = 497
+        Top = 339
+        Width = 515
         Height = 32
         Align = alBottom
         BevelOuter = bvNone
@@ -976,7 +976,7 @@ object frmPopMain: TfrmPopMain
           OnClick = btnHintHelpClick
         end
         object panOptionButtonsRight: TPanel
-          Left = 288
+          Left = 305
           Top = 2
           Width = 207
           Height = 28
@@ -1148,8 +1148,8 @@ object frmPopMain: TfrmPopMain
       object panOptionPage: TPanel
         Left = 0
         Top = 0
-        Width = 497
-        Height = 336
+        Width = 515
+        Height = 339
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
@@ -1159,14 +1159,14 @@ object frmPopMain: TfrmPopMain
           Left = 149
           Top = 4
           Width = 6
-          Height = 328
+          Height = 331
           ResizeStyle = rsUpdate
         end
         object tvOptions: TTreeView
           Left = 4
           Top = 4
           Width = 145
-          Height = 328
+          Height = 331
           Hint = 'Select the option screen to show.'
           Align = alLeft
           HideSelection = False
@@ -1195,15 +1195,15 @@ object frmPopMain: TfrmPopMain
         object panOptions: TPanel
           Left = 155
           Top = 4
-          Width = 338
-          Height = 328
+          Width = 356
+          Height = 331
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           object panOptSpacer: TPanel
             Left = 0
             Top = 30
-            Width = 338
+            Width = 356
             Height = 4
             Align = alTop
             BevelOuter = bvNone
@@ -1212,7 +1212,7 @@ object frmPopMain: TfrmPopMain
           object panOptionsTitle: TPanel
             Left = 0
             Top = 0
-            Width = 338
+            Width = 356
             Height = 30
             Align = alTop
             BevelInner = bvRaised
@@ -1221,7 +1221,7 @@ object frmPopMain: TfrmPopMain
             ParentBackground = False
             TabOrder = 1
             DesignSize = (
-              338
+              356
               30)
             object imgOptionTitle: TImage
               Left = 2
@@ -1234,7 +1234,7 @@ object frmPopMain: TfrmPopMain
             object lblOptionTitle: TLabel
               Left = 32
               Top = 8
-              Width = 301
+              Width = 319
               Height = 14
               Alignment = taCenter
               Anchors = [akLeft, akTop, akRight]
@@ -1256,8 +1256,8 @@ object frmPopMain: TfrmPopMain
       ParentFont = False
       object panRulesButtons: TPanel
         Left = 0
-        Top = 336
-        Width = 497
+        Top = 339
+        Width = 515
         Height = 32
         Align = alBottom
         BevelOuter = bvNone
@@ -1437,24 +1437,24 @@ object frmPopMain: TfrmPopMain
       object panRulesTop: TPanel
         Left = 0
         Top = 0
-        Width = 497
-        Height = 336
+        Width = 515
+        Height = 339
         Align = alClient
         BevelOuter = bvNone
         BorderWidth = 4
         TabOrder = 0
         object spltRules: TSplitter
           Left = 104
-          Top = 38
+          Top = 35
           Width = 5
-          Height = 294
+          Height = 300
           ResizeStyle = rsUpdate
         end
         object RulesToolbar: TActionToolBar
           Left = 4
           Top = 4
-          Width = 489
-          Height = 34
+          Width = 507
+          Height = 31
           ActionManager = ActionManager
           Caption = 'Rules'
           ColorMap.HighlightColor = clWhite
@@ -1477,9 +1477,9 @@ object frmPopMain: TfrmPopMain
         end
         object ScrollBox1: TScrollBox
           Left = 109
-          Top = 38
-          Width = 384
-          Height = 294
+          Top = 35
+          Width = 402
+          Height = 300
           Align = alClient
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -1488,7 +1488,7 @@ object frmPopMain: TfrmPopMain
           object panRuleDetail: TPanel
             Left = 0
             Top = 0
-            Width = 384
+            Width = 402
             Height = 291
             Align = alTop
             BevelOuter = bvNone
@@ -1499,16 +1499,16 @@ object frmPopMain: TfrmPopMain
             object gbActions: TGroupBox
               Left = 4
               Top = 167
-              Width = 376
+              Width = 394
               Height = 124
               Align = alTop
               Caption = 'Actions'
               TabOrder = 1
               DesignSize = (
-                376
+                394
                 124)
               object btnEdRuleWav: TSpeedButton
-                Left = 334
+                Left = 352
                 Top = 13
                 Width = 21
                 Height = 21
@@ -1523,7 +1523,7 @@ object frmPopMain: TfrmPopMain
                 OnClick = btnEdRuleWavClick
               end
               object btnEdRuleEXE: TSpeedButton
-                Left = 359
+                Left = 377
                 Top = 38
                 Width = 19
                 Height = 19
@@ -1538,7 +1538,7 @@ object frmPopMain: TfrmPopMain
                 OnClick = btnEdRuleEXEClick
               end
               object btnRuleSoundTest: TSpeedButton
-                Left = 357
+                Left = 375
                 Top = 13
                 Width = 21
                 Height = 21
@@ -1588,7 +1588,7 @@ object frmPopMain: TfrmPopMain
               object edRuleWav: TEdit
                 Left = 236
                 Top = 13
-                Width = 97
+                Width = 115
                 Height = 21
                 Anchors = [akLeft, akTop, akRight]
                 TabOrder = 2
@@ -1607,7 +1607,7 @@ object frmPopMain: TfrmPopMain
               object edRuleEXE: TEdit
                 Left = 236
                 Top = 37
-                Width = 122
+                Width = 140
                 Height = 21
                 Anchors = [akLeft, akTop, akRight]
                 TabOrder = 5
@@ -1675,7 +1675,7 @@ object frmPopMain: TfrmPopMain
             object gbRule: TGroupBox
               Left = 4
               Top = 4
-              Width = 376
+              Width = 394
               Height = 163
               Align = alTop
               Caption = 'Rule'
@@ -1710,7 +1710,7 @@ object frmPopMain: TfrmPopMain
               object grdRule: TStringGrid
                 Left = 2
                 Top = 83
-                Width = 372
+                Width = 390
                 Height = 78
                 Align = alBottom
                 BorderStyle = bsNone
@@ -1901,9 +1901,9 @@ object frmPopMain: TfrmPopMain
         end
         object panRuleList: TPanel
           Left = 4
-          Top = 38
+          Top = 35
           Width = 100
-          Height = 294
+          Height = 300
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 2
@@ -1911,7 +1911,7 @@ object frmPopMain: TfrmPopMain
             Left = 0
             Top = 0
             Width = 100
-            Height = 281
+            Height = 278
             OnClickCheck = lstRulesClickCheck
             Align = alClient
             ItemHeight = 13
@@ -1925,7 +1925,7 @@ object frmPopMain: TfrmPopMain
           end
           object panRuleListButtons: TPanel
             Left = 0
-            Top = 272
+            Top = 278
             Width = 100
             Height = 22
             Align = alBottom
@@ -2030,14 +2030,14 @@ object frmPopMain: TfrmPopMain
       object panAbout: TPanel
         Left = 0
         Top = 0
-        Width = 477
-        Height = 377
+        Width = 515
+        Height = 371
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          497
-          368)
+          515
+          371)
         object imgTray: TImage
           Left = 426
           Top = 284
@@ -3878,7 +3878,7 @@ object frmPopMain: TfrmPopMain
           Tag = 999
           Left = 32
           Top = 68
-          Width = 183
+          Width = 172
           Height = 26
           Alignment = taCenter
           Caption = 
@@ -3888,15 +3888,15 @@ object frmPopMain: TfrmPopMain
         end
         object GroupBox2: TGroupBox
           Left = 4
-          Top = 108
-          Width = 487
-          Height = 217
+          Top = 192
+          Width = 510
+          Height = 140
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 'Translations'
           TabOrder = 0
           DesignSize = (
-            487
-            217)
+            510
+            140)
           object Label27: TLabel
             Left = 8
             Top = 15
@@ -3909,8 +3909,8 @@ object frmPopMain: TfrmPopMain
           object lvVolunteers: TListView
             Left = 6
             Top = 32
-            Width = 463
-            Height = 179
+            Width = 486
+            Height = 102
             Anchors = [akLeft, akTop, akRight, akBottom]
             Columns = <
               item
@@ -3933,15 +3933,15 @@ object frmPopMain: TfrmPopMain
           end
         end
         object GroupBox5: TGroupBox
-          Left = 240
+          Left = 232
           Top = 4
-          Width = 251
+          Width = 281
           Height = 97
           Anchors = [akLeft, akTop, akRight]
           Caption = 'Contact Info'
           TabOrder = 1
           DesignSize = (
-            251
+            281
             97)
           object Label12: TLabel
             Left = 38
@@ -3998,7 +3998,7 @@ object frmPopMain: TfrmPopMain
           object btnCheckUpdate: TButton
             Left = 7
             Top = 64
-            Width = 237
+            Width = 267
             Height = 25
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Check on-line if newer version available.'
@@ -4008,8 +4008,8 @@ object frmPopMain: TfrmPopMain
         end
         object panAboutBottom: TPanel
           Left = 0
-          Top = 336
-          Width = 497
+          Top = 339
+          Width = 515
           Height = 32
           Align = alBottom
           BevelOuter = bvNone
