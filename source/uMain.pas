@@ -1084,7 +1084,8 @@ begin
   end;
   if not Assigned(Accounts[num-1].Prot) then
   begin
-    ErrorMsg(num,'Error:',Translate('No protocol defined for account')+' '+Accounts[num-1].Name,False);
+    ErrorMsg(num,'Error:',Translate('No protocol defined for account')+
+             ' '+Accounts[num-1].Name,False);
     Exit;
   end;
   FStop := False;
@@ -4947,6 +4948,7 @@ begin
       dm.mnuMail.Items[i].Caption := TranslateDir(dm.mnuMail.Items[i].Caption,LangDirection);
       if dm.mnuMail.Items[i].Count > 0 then
         for j := 0 to dm.mnuMail.Items[i].Count-1 do
+        begin
           dm.mnuMail.Items[i].Items[j].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Caption,LangDirection);
           if dm.mnuMail.Items[i].Items[j].Count > 0 then
             for k := 0 to dm.mnuMail.Items[i].Items[j].Count-1 do
@@ -5562,7 +5564,8 @@ end;
 
 procedure TfrmPopMain.lblHomepageClick(Sender: TObject);
 begin
-  ExecuteFile('http://www.poptray.org','','',SW_RESTORE);
+  //TODO: Commented out because it's not up to date yet.
+  //ExecuteFile('http://www.poptray.org','','',SW_RESTORE);
 end;
 
 procedure TfrmPopMain.btnSaveOptionsClick(Sender: TObject);
@@ -6082,7 +6085,8 @@ end;
 
 procedure TfrmPopMain.lblForumClick(Sender: TObject);
 begin
-  ExecuteFile('http://forum.poptray.org','','',SW_RESTORE);
+  // TODO: update or remove this.
+  //ExecuteFile('http://forum.poptray.org','','',SW_RESTORE);
 end;
 
 procedure TfrmPopMain.btnEdSoundClick(Sender: TObject);
@@ -7432,9 +7436,9 @@ end;
 
 procedure TfrmPopMain.btnCheckUpdateClick(Sender: TObject);
 begin
-  ExecuteFile('http://www.poptray.org/checkupdate.php?major='+
-              MajorVersion+'&minor='+MinorVersion+'&release='+ReleaseVersion+
-              '&beta='+BetaVersion,'','',SW_RESTORE);
+  //ExecuteFile('http://www.poptray.org/checkupdate.php?major='+
+  //            MajorVersion+'&minor='+MinorVersion+'&release='+ReleaseVersion+
+  //            '&beta='+BetaVersion,'','',SW_RESTORE);
 end;
 
 procedure TfrmPopMain.lstRulesMouseDown(Sender: TObject;
