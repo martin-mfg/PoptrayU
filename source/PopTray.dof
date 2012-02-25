@@ -90,14 +90,14 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=PopTrayU
 [Directories]
-OutputDir=
-UnitOutputDir=.\dcu
+OutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build
+UnitOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=
-Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5
+SearchPath=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx
 Conditionals=
-DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\
+DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 UsePackages=0
 [Parameters]
 RunParams=
@@ -135,15 +135,22 @@ ProductName=
 ProductVersion=4.0
 Comments=Freeware and Open-Source
 URL=TBD
+[Excluded Packages]
+c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Components
 [HistoryLists\hlDebugSourcePath]
 Count=1
-Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\
+Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=$(DELPHI)\Lib\Debug
+Count=3
+Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+Item1=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl
+Item2=C:\Program Files\Borland\Delphi7\cooltray
 [HistoryLists\hlUnitOutputDirectory]
 Count=1
-Item0=.\dcu
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build
