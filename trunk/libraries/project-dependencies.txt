@@ -1,0 +1,29 @@
+To Build PopTrayU you will need Delphi 7, Professional or Higher.
+
+To port to any version of Delphi newer than 2005 may require 
+significant changes. 
+
+To compile the source code you will also need:
+   
+Cool Tray Icon - Version 4.4.0
+--------------
+  http://www.subsimple.com/delphi.asp
+  
+TActionPopupMenu - Dated Fri, 18 May 2007
+----------------
+  ActionBand Popup Menu Component by Steve Trefethen
+  http://cc.embarcadero.com/item/18870
+  Note that the full ActionBand Update may work as well.
+  
+TRegExpr
+--------
+  Included in this source zip
+  http://www.regexpstudio.com/
+
+Indy 9 - Version 9.0.18
+-------
+  http://www.indyproject.org
+  
+TNT Unicode Controls - Version 2.3.0
+--------------------
+  See PopTrayU libraries repository
