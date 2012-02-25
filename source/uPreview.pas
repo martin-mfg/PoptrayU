@@ -31,7 +31,7 @@ uses
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
-  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, TntForms,
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder, TntForms,
   TntStdCtrls;
 
 type
@@ -451,19 +451,22 @@ procedure TfrmPreview.ShowMsg;
 ////////////////////////////////////////////////////////////////////////////////
 // Show the Message in the preview form
 var
-  i, strLen : integer;
-  aname,mimetype : string;
+  i, strLen: integer;
+  aname, mimetype: string;
+  decodedSubject: WideString;
 begin
   try
-    Self.Caption := Self.Caption + ' [' + Msg.Subject + ']';
+    decodedSubject := DecodeHeader(Msg.Subject);
+    if (Msg.Subject <> '') then
+      Self.Caption := decodedSubject;
     // fixed headers
-    edFrom.Text := Msg.From.Text;
+    edFrom.Text := DecodeHeader(Msg.From.Text);
     if Msg.ReplyTo.Count>0 then
-      FReplyTo := Msg.ReplyTo[0].Address
+      FReplyTo := DecodeHeader(Msg.ReplyTo[0].Address)
     else
-      FReplyTo := Msg.From.Address;
-    edTo.Text := Msg.Recipients.EMailAddresses;
-    edSubject.Text := Msg.Subject;
+      FReplyTo := DecodeHeader(Msg.From.Address);
+    edTo.Text := DecodeHeader(Msg.Recipients.EMailAddresses);
+    edSubject.Text := decodedSubject; 
     if (Msg.Date < 1 ) then
       edDate.Text := ''
     else
