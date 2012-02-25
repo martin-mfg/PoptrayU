@@ -1,11 +1,11 @@
 ;------------------------------------------------------------
-; PopTray 3.20 NSIS install script (NSIS 2.14 Modern UI 1.74)
+; PopTrayU 4.0 NSIS install script (NSIS 2.46 Modern UI 1.74)
 ;------------------------------------------------------------
 
-!define VER_MAJOR "3"
-!define VER_MINOR "20"
+!define VER_MAJOR "4"
+!define VER_MINOR "0"
 
-!define PRODUCT "PopTray"
+!define PRODUCT "PopTrayU"
 !define VERSION "${VER_MAJOR}.${VER_MINOR}"
 Name "${PRODUCT} ${VERSION}"
 
@@ -21,7 +21,7 @@ Name "${PRODUCT} ${VERSION}"
 
 ;------------------------------------------------------------------[ Configuration ]---
 
-OutFile "Deploy\PopTray${VER_MAJOR}${VER_MINOR}.exe"
+OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
 SetCompressor /SOLID lzma
 
 InstType "Full"
@@ -47,7 +47,7 @@ ShowUninstDetails show
 
   ; Text
   !define MUI_WELCOMEPAGE_TITLE "${PRODUCT} Setup Wizard"
-  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of PopTray\r\n\r\nPopTray is a full-featured, open-source, e-mail notifier with an easy to use interface.\r\n\r\n"
+  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of PopTrayU\r\n\r\nPopTrayU is a full-featured, open-source, e-mail notifier with an easy to use interface.\r\n\r\n"
   !define MUI_FINISHPAGE_SHOWREADME_TEXT "Show HISTORY.TXT"
 
   ; Pages
@@ -57,7 +57,7 @@ ShowUninstDetails show
   !insertmacro MUI_PAGE_INSTFILES
     
     !define MUI_FINISHPAGE_NOREBOOTSUPPORT
-    !define MUI_FINISHPAGE_RUN $INSTDIR\PopTray.exe
+    !define MUI_FINISHPAGE_RUN $INSTDIR\PopTrayU.exe
     !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\History.txt
     !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
   !insertmacro MUI_PAGE_FINISH
@@ -76,13 +76,13 @@ ShowUninstDetails show
   
 ;------------------------------------------------------------------[ Language Strings ]---
 
-  LangString DESC_SecPopTray ${LANG_ENGLISH} "Copy PopTray application files to the application folder."
-  LangString DESC_SecLang ${LANG_ENGLISH} "Install the Language files for multi-language PopTray."
+  LangString DESC_SecPopTrayU ${LANG_ENGLISH} "Copy PopTrayU application files to the application folder."
+  LangString DESC_SecLang ${LANG_ENGLISH} "Install the Language files for multi-language PopTrayU."
   LangString DESC_SecSound ${LANG_ENGLISH} "Install example notification sound files."
   LangString DESC_SecIcons ${LANG_ENGLISH} "Select the icons to create."
-  LangString DESC_SecStartMenu ${LANG_ENGLISH} "Create a PopTray group under the start menu with icons the the PopTray files."
-  LangString DESC_SecStartup ${LANG_ENGLISH} "Automatically start PopTray when Windows starts"
-  LangString DESC_SecDesktop ${LANG_ENGLISH} "Put PopTray icon on the Desktop"
+  LangString DESC_SecStartMenu ${LANG_ENGLISH} "Create a PopTrayU group under the start menu with icons the the PopTrayU files."
+  LangString DESC_SecStartup ${LANG_ENGLISH} "Automatically start PopTrayU when Windows starts"
+  LangString DESC_SecDesktop ${LANG_ENGLISH} "Put PopTrayU icon on the Desktop"
 
 ;------------------------------------------------------------------[ Reserve Files ]---
   
@@ -93,7 +93,7 @@ ShowUninstDetails show
 
 ;------------------------------------------------------------------[ Installer Sections ]---
 
-Section "PopTray (required)" SecPopTray
+Section "PopTrayU (required)" SecPopTrayU
   SectionIn 1 2
 
   SetOutPath "$INSTDIR"
@@ -101,35 +101,35 @@ Section "PopTray (required)" SecPopTray
   !define HWND $R0
   !define Count $R1
 
-  ; try copying EXE.  If it fails try killing the running PopTray upto 5 times
+  ; try copying EXE.  If it fails try killing the running PopTrayU upto 5 times
   SetOverwrite try
-  TryPoptray:
+  TryPoptrayU:
  	IntOp ${Count} ${Count} + 1
         ;DetailPrint ${Count}
   	IntCmp ${Count} 5 CantClose
   	ClearErrors
-  	File "PopTray.exe"
-  	IfErrors ClosePopTray OtherFiles
-  ClosePopTray:
-  	; close running PopTray
+  	File "PopTrayU.exe"
+  	IfErrors ClosePopTrayU OtherFiles
+  ClosePopTrayU:
+  	; close running PopTrayU
   	FindWindow ${HWND} "TfrmPopMain"
   	IntCmp ${Count} 1 Print Send Send
   Print:
-  	DetailPrint "Closing existing PopTray"
+  	DetailPrint "Closing existing PopTrayU"
   Send:
   	SendMessage ${HWND} 1036 0 0 ; UM_QUIT = 1036
   	;SendMessage ${HWND} ${WM_CLOSE} 0 0
   	Sleep 1000
-  	Goto TryPopTray
+  	Goto TryPopTrayU
   CantClose:
-  	DetailPrint "Can't close existing PopTray"
+  	DetailPrint "Can't close existing PopTrayU"
   	SetOverwrite on
-  	File "PopTray.exe"
+  	File "PopTrayU.exe"
   
   ; rest of the files
   OtherFiles:
   	SetOverwrite on
-  	File "PopTray.chm"
+  	File "PopTrayU.chm"
   	File "Readme.txt"
   	File "History.txt"
   	File "License.txt"
@@ -148,7 +148,7 @@ Section "PopTray (required)" SecPopTray
   WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "UninstallString" "$INSTDIR\Uninstall.exe"
   WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "DisplayName" "${PRODUCT} ${VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "DisplayIcon" "$INSTDIR\PopTray.exe,0"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "DisplayIcon" "$INSTDIR\PopTrayU.exe,0"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "DisplayVersion" "${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "VersionMajor" "${VER_MAJOR}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT}" "VersionMinor" "${VER_MINOR}"
@@ -160,7 +160,7 @@ Section "PopTray (required)" SecPopTray
   ; delete inno setup files
   Delete "$INSTDIR\unins000.dat"
   Delete "$INSTDIR\unins000.exe"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PopTray_is1"
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PopTrayU_is1"
   
   ; uninstaller
   Delete "$INSTDIR\Uninstall.exe"
@@ -172,24 +172,24 @@ SubSection "Icons" SecIcons
 Section "Start Menu Icons" SecStartMenu
   SectionIn 1 2
   WriteRegStr HKLM "Software\${PRODUCT}" "StartMenuIcons" 1
-  CreateDirectory $SMPROGRAMS\PopTray
-  CreateShortCut "$SMPROGRAMS\PopTray\PopTray.lnk" "$INSTDIR\PopTray.exe" ""
-  CreateShortCut "$SMPROGRAMS\PopTray\Uninstall.lnk" "$INSTDIR\Uninstall.exe" ""
-  CreateShortCut "$SMPROGRAMS\PopTray\PopTray Help.lnk" "$INSTDIR\PopTray.chm" ""
-  CreateShortCut "$SMPROGRAMS\PopTray\Read Me.lnk" "$INSTDIR\ReadMe.txt" ""
-  CreateShortCut "$SMPROGRAMS\PopTray\Version History.lnk" "$INSTDIR\History.txt" ""
+  CreateDirectory $SMPROGRAMS\PopTrayU
+  CreateShortCut "$SMPROGRAMS\PopTrayU\PopTrayU.lnk" "$INSTDIR\PopTrayU.exe" ""
+  CreateShortCut "$SMPROGRAMS\PopTrayU\Uninstall.lnk" "$INSTDIR\Uninstall.exe" ""
+  CreateShortCut "$SMPROGRAMS\PopTrayU\PopTrayU Help.lnk" "$INSTDIR\PopTrayU.chm" ""
+  CreateShortCut "$SMPROGRAMS\PopTrayU\Read Me.lnk" "$INSTDIR\ReadMe.txt" ""
+  CreateShortCut "$SMPROGRAMS\PopTrayU\Version History.lnk" "$INSTDIR\History.txt" ""
 SectionEnd
 
 Section "Startup Icon" SecStartup
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "StartupIcon" 1
-  CreateShortCut "$SMSTARTUP\PopTray.lnk" "$INSTDIR\PopTray.exe" ""
+  CreateShortCut "$SMSTARTUP\PopTrayU.lnk" "$INSTDIR\PopTrayU.exe" ""
 SectionEnd
 
 Section "Desktop Icon" SecDesktop
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "DesktopIcon" 1
-  CreateShortCut "$DESKTOP\PopTray.lnk" "$INSTDIR\PopTray.exe" ""
+  CreateShortCut "$DESKTOP\PopTrayU.lnk" "$INSTDIR\PopTrayU.exe" ""
 SectionEnd
 
 SubSectionEnd
@@ -265,7 +265,7 @@ SectionEnd
 ;------------------------------------------------------------------[ Descriptions ]---
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecPopTray} $(DESC_SecPopTray)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecPopTrayU} $(DESC_SecPopTrayU)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecLang} $(DESC_SecLang)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecSound} $(DESC_SecSound)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecIcons} $(DESC_SecIcons)
@@ -278,25 +278,25 @@ SectionEnd
 
 Section "Uninstall"
   ; application files
-  Delete "$INSTDIR\PopTray.exe"
+  Delete "$INSTDIR\PopTrayU.exe"
   Delete "$INSTDIR\Uninstall.exe"
-  Delete "$INSTDIR\PopTray.chm"
+  Delete "$INSTDIR\PopTrayU.chm"
   Delete "$INSTDIR\Readme.txt"
   Delete "$INSTDIR\History.txt"
   Delete "$INSTDIR\Beta.txt"
   
   ; start menu icons
-  Delete "$SMPROGRAMS\PopTray\PopTray.lnk"
-  Delete "$SMPROGRAMS\PopTray\Uninstall.lnk"
-  Delete "$SMPROGRAMS\PopTray\PopTray Help.lnk"
-  Delete "$SMPROGRAMS\PopTray\PopTray Help.lnk"
-  Delete "$SMPROGRAMS\PopTray\Read Me.lnk"
-  Delete "$SMPROGRAMS\PopTray\Version History.lnk"
-  Delete "$SMPROGRAMS\PopTray\Read Me (beta info).lnk"
+  Delete "$SMPROGRAMS\PopTrayU\PopTrayU.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\Uninstall.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\PopTrayU Help.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\PopTrayU Help.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\Read Me.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\Version History.lnk"
+  Delete "$SMPROGRAMS\PopTrayU\Read Me (beta info).lnk"
   
   ; other icons
-  Delete "$SMSTARTUP\PopTray.lnk"
-  Delete "$DESKTOP\PopTray.lnk"
+  Delete "$SMSTARTUP\PopTrayU.lnk"
+  Delete "$DESKTOP\PopTrayU.lnk"
   
   ; sounds
   Delete "$INSTDIR\Sounds\poptray_newmail_lo.wav"
@@ -353,9 +353,9 @@ Section "Uninstall"
   ; configuration files
   !insertmacro MUI_INSTALLOPTIONS_READ ${TEMP} "NSIS.ini" "Field 4" "State"
   StrCmp ${TEMP} "1" "" NoConfig
-    Delete "$INSTDIR\PopTray.ini"
+    Delete "$INSTDIR\PopTrayU.ini"
     Delete "$INSTDIR\Rules.ini"
-    Delete "$INSTDIR\PopTray.customize"
+    Delete "$INSTDIR\PopTrayU.customize"
     Delete "$INSTDIR\Preview.customize"
     Delete "$INSTDIR\WhiteList.ptdat"
     Delete "$INSTDIR\BlackList.ptdat"
@@ -367,7 +367,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\Languages"
   RMDir "$INSTDIR\Sounds"
   RMDir "$INSTDIR"
-  RMDir "$SMPROGRAMS\PopTray"
+  RMDir "$SMPROGRAMS\PopTrayU"
 
   ; registry
   DeleteRegKey HKCU "Software\${PRODUCT}"
@@ -380,7 +380,7 @@ SectionEnd
 ;------------------------------------------------------------------[ Functions ]---
 
 Function un.SetPage
-  !insertmacro MUI_HEADER_TEXT "Uninstall PopTray" "Remove PopTray from you computer."
+  !insertmacro MUI_HEADER_TEXT "Uninstall PopTrayU" "Remove PopTrayU from you computer."
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "NSIS.ini"
 FunctionEnd
 
@@ -397,7 +397,7 @@ Function .onInit
   StrCmp ${TEMP} "" +2
     Goto DirFound
   
-  ReadRegStr ${TEMP} HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PopTray_is1" "Inno Setup: App Path"
+  ReadRegStr ${TEMP} HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PopTrayU_is1" "Inno Setup: App Path"
   StrCmp ${TEMP} "" +2
     Goto DirFound
   
