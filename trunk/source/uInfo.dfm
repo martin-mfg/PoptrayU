@@ -1,6 +1,6 @@
 object frmInfo: TfrmInfo
-  Left = 438
-  Top = 109
+  Left = 178
+  Top = 315
   AlphaBlend = True
   BorderStyle = bsDialog
   Caption = 'frmInfo'
