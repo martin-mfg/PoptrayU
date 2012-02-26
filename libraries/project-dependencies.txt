@@ -1,9 +1,20 @@
-To Build PopTrayU you will need Delphi 7, Professional or Higher.
+********************************************************************
+DEVELOPMENT ENVIRONMENT
+
+To Build PopTrayU you will need Delphi 7, either Professional or 
+Enterprise edition. It will not compile with the Personal edition.
 
 To port to any version of Delphi newer than 2005 may require 
-significant changes. 
+significant changes. It may be able to compile with Delphi 2005, 
+however this has not been tested.
 
-To compile the source code you will also need:
+********************************************************************
+SOURCE CODE DEPENDENCIES
+
+To compile the source code, you will need the following additional
+open source/free libraries linked into your Delphi environment. 
+They may be obtained online or from the libraries area of the 
+source tree.
    
 Cool Tray Icon - Version 4.4.0
 --------------
@@ -27,3 +38,22 @@ Indy 9 - Version 9.0.18
 TNT Unicode Controls - Version 2.3.0
 --------------------
   See PopTrayU libraries repository
+
+********************************************************************
+INSTALLER DEPENDENCIES
+
+To package PopTrayU into an installer, you will need:
+
+NSIS - Version 2.46
+----
+  Nullsoft Scriptable Install System
+  http://nsis.sourceforge.net/
+  Uses the Modern UI included in newer versions.
+
+
+Replace Vista Icon
+------------------
+  Adds the Vista icon into the EXE.
+  http://www.rw-designer.com/compile-vista-icon
+
+********************************************************************
