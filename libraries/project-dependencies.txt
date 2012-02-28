@@ -1,4 +1,13 @@
 ********************************************************************
+PROJECT DEPENDENCIES
+
+This document describes the setup needed to build and release 
+PopTrayU from source code. Where listed, version numbers are what is 
+currently used to develop PopTrayU, however in some cases you may
+wish to use the latest version available if it does not cause any
+incompatibilities.
+
+********************************************************************
 DEVELOPMENT ENVIRONMENT
 
 To Build PopTrayU you will need Delphi 7, either Professional or 
@@ -6,7 +15,7 @@ Enterprise edition. It will not compile with the Personal edition.
 
 To port to any version of Delphi newer than 2005 may require 
 significant changes. It may be able to compile with Delphi 2005, 
-however this has not been tested.
+however this has not been tested recently.
 
 ********************************************************************
 SOURCE CODE DEPENDENCIES
@@ -46,14 +55,21 @@ To package PopTrayU into an installer, you will need:
 
 NSIS - Version 2.46
 ----
-  Nullsoft Scriptable Install System
+  Nullsoft Scriptable Install System. Creates the installer.
   http://nsis.sourceforge.net/
   Uses the Modern UI included in newer versions.
 
 
-Replace Vista Icon
+Replace Vista Icon - Version 1.0.0.1
 ------------------
   Adds the Vista icon into the EXE.
   http://www.rw-designer.com/compile-vista-icon
+
+Microsoft HTML Help Workshop - Version 4.74
+----------------------------
+  To create and edit the compiled help file (*.chm)
+  An older version can be obtained at:
+  http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=21138
+
 
 ********************************************************************
