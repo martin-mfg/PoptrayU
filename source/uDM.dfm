@@ -2275,28 +2275,28 @@ object dm: Tdm
       000000000000}
   end
   object mnuToolbar: TPopupActionBarEx
-    ActionManager = frmPopMain.ActionManager
+    ActionManager = frmPopUMain.ActionManager
     Left = 23
     Top = 75
     object Customize1: TMenuItem
-      Action = frmPopMain.actCustomize
+      Action = frmPopUMain.actCustomize
     end
   end
   object mnuMail: TPopupActionBarEx
-    ActionManager = frmPopMain.ActionManager
+    ActionManager = frmPopUMain.ActionManager
     Left = 155
     Top = 75
     object Preview1: TMenuItem
-      Action = frmPopMain.actPreview
+      Action = frmPopUMain.actPreview
     end
     object Delete1: TMenuItem
-      Action = frmPopMain.actDelete
+      Action = frmPopUMain.actDelete
     end
     object Undelete1: TMenuItem
-      Action = frmPopMain.actUndelete
+      Action = frmPopUMain.actUndelete
     end
     object Reply1: TMenuItem
-      Action = frmPopMain.actReply
+      Action = frmPopUMain.actReply
     end
     object N6: TMenuItem
       Caption = '-'
@@ -2304,16 +2304,16 @@ object dm: Tdm
     object Spam1: TMenuItem
       Caption = '&Spam'
       object MarkasSpam1: TMenuItem
-        Action = frmPopMain.actMarkSpam
+        Action = frmPopUMain.actMarkSpam
       end
       object UnmarkasSpam1: TMenuItem
-        Action = frmPopMain.actUnmarkSpam
+        Action = frmPopUMain.actUnmarkSpam
       end
       object N1: TMenuItem
         Caption = '-'
       end
       object SelectSpamMessages1: TMenuItem
-        Action = frmPopMain.actSelectSpam
+        Action = frmPopUMain.actSelectSpam
       end
     end
     object Rules1: TMenuItem
@@ -2321,29 +2321,29 @@ object dm: Tdm
       object AddruleformailfromSender1: TMenuItem
         Caption = 'Add Rule for mail from Sender'
         object mnuRuleFromDelete: TMenuItem
-          Action = frmPopMain.actRuleFromDelete
+          Action = frmPopUMain.actRuleFromDelete
         end
         object mnuRuleFromSpam: TMenuItem
-          Action = frmPopMain.actRuleFromSpam
+          Action = frmPopUMain.actRuleFromSpam
         end
       end
       object AddRuleformailwithSubject1: TMenuItem
         Caption = 'Add Rule for mail with Subject'
         object mnuRuleSubjectDelete: TMenuItem
-          Action = frmPopMain.actRuleSubjectDelete
+          Action = frmPopUMain.actRuleSubjectDelete
         end
         object mnuRuleSubjectSpam: TMenuItem
-          Action = frmPopMain.actRuleSubjectSpam
+          Action = frmPopUMain.actRuleSubjectSpam
         end
       end
     end
     object Lists1: TMenuItem
       Caption = '&Lists'
       object AddsendertoWhiteList1: TMenuItem
-        Action = frmPopMain.actAddWhiteList
+        Action = frmPopUMain.actAddWhiteList
       end
       object AddsendertoBlackList1: TMenuItem
-        Action = frmPopMain.actAddBlackList
+        Action = frmPopUMain.actAddBlackList
       end
     end
   end
@@ -2351,48 +2351,48 @@ object dm: Tdm
     Left = 283
     Top = 75
     object ShowMessages2: TMenuItem
-      Action = frmPopMain.actShowMessages
+      Action = frmPopUMain.actShowMessages
     end
     object Check1: TMenuItem
-      Action = frmPopMain.actCheckAll
+      Action = frmPopUMain.actCheckAll
     end
     object StopChecking1: TMenuItem
-      Action = frmPopMain.actStopChecking
+      Action = frmPopUMain.actStopChecking
     end
     object New1: TMenuItem
-      Action = frmPopMain.actNewMail
+      Action = frmPopUMain.actNewMail
     end
     object N4: TMenuItem
       Caption = '-'
     end
     object mnuStartProgram: TMenuItem
-      Action = frmPopMain.actStartProgram
+      Action = frmPopUMain.actStartProgram
     end
     object N5: TMenuItem
       Caption = '-'
     end
     object mnuAutoCheck: TMenuItem
-      Action = frmPopMain.actAutoCheck
+      Action = frmPopUMain.actAutoCheck
       AutoCheck = True
     end
     object mnuSuspendSound: TMenuItem
-      Action = frmPopMain.actSuspendSound
+      Action = frmPopUMain.actSuspendSound
       AutoCheck = True
     end
     object Options2: TMenuItem
-      Action = frmPopMain.actOptions
+      Action = frmPopUMain.actOptions
     end
     object About2: TMenuItem
-      Action = frmPopMain.actAbout
+      Action = frmPopUMain.actAbout
     end
     object Help2: TMenuItem
-      Action = frmPopMain.actHelp
+      Action = frmPopUMain.actHelp
     end
     object N8: TMenuItem
       Caption = '-'
     end
     object Quit2: TMenuItem
-      Action = frmPopMain.actQuit
+      Action = frmPopUMain.actQuit
     end
   end
   object imlPopTrueColor: TImageList
@@ -4364,7 +4364,7 @@ object dm: Tdm
       end
       object mnuSortNoSort: TMenuItem
         Tag = -1
-        Action = frmPopMain.actNoSort
+        Action = frmPopUMain.actNoSort
       end
       object N9: TMenuItem
         Caption = '-'

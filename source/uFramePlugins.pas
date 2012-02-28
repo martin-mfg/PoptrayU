@@ -102,7 +102,7 @@ end;
 constructor TframePlugins.Create(AOwner: TComponent);
 begin
   inherited;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   Refresh;
 end;
 
@@ -149,7 +149,7 @@ begin
       if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
       begin
         if GetProcAddress(hPlugin, 'PluginName') <> nil then
-          frmPopMain.TranslateMsg(frmPopMain.Translate('Incompatible Plugin:')+'  '+srec.Name,mtWarning,[mbOk],0);
+          frmPopUMain.TranslateMsg(frmPopUMain.Translate('Incompatible Plugin:')+'  '+srec.Name,mtWarning,[mbOk],0);
         FreeLibrary(hPlugin);
         res := FindNext(srec);
         Continue;
@@ -231,8 +231,8 @@ begin
     // buttons
     if  tmpPluginCount <> length(plugins) then
     begin
-      frmPopMain.btnSaveOptions.Enabled := True;
-      frmPopMain.btnCancel.Enabled := True;
+      frmPopUMain.btnSaveOptions.Enabled := True;
+      frmPopUMain.btnCancel.Enabled := True;
     end;
 
   finally
@@ -248,7 +248,7 @@ begin
   begin
     ShowOptions := GetProcAddress(Plugins[StrToInt(lvPlugins.Selected.SubItems[0])].hPlugin,'ShowOptions');
     if @ShowOptions <> nil then
-      ShowOptions(frmPopMain);
+      ShowOptions(frmPopUMain);
   end;
 end;
 
@@ -273,12 +273,12 @@ begin
           else
             Plugins[i].Unload;
           // buttons
-          frmPopMain.btnSaveOptions.Enabled := True;
-          frmPopMain.btnCancel.Enabled := True;
+          frmPopUMain.btnSaveOptions.Enabled := True;
+          frmPopUMain.btnCancel.Enabled := True;
         end;
       end;
       // refresh protocols
-      frmPopMain.RefreshProtocols;
+      frmPopUMain.RefreshProtocols;
     end;
   end;
 end;
@@ -312,7 +312,7 @@ end;
 procedure TframePlugins.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframePlugins.lvPluginsDblClick(Sender: TObject);

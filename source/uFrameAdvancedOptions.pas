@@ -71,7 +71,7 @@ constructor TframeAdvancedOptions.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // options to screen
   edTimeOut.Text := IntToStr(Options.TimeOut);
   chkQuickCheck.Checked := Options.QuickCheck;
@@ -143,23 +143,23 @@ begin
     // rules area
     if Options.GetBody then
     begin
-      if frmPopMain.TranslateToEnglish(frmPopMain.cmbRuleArea.Items[frmPopMain.cmbRuleArea.Items.Count-1]) <> 'Body' then
-        frmPopMain.cmbRuleArea.Items.Add(frmPopMain.Translate('Body'));
+      if frmPopUMain.TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) <> 'Body' then
+        frmPopUMain.cmbRuleArea.Items.Add(frmPopUMain.Translate('Body'));
     end
     else begin
-      if frmPopMain.TranslateToEnglish(frmPopMain.cmbRuleArea.Items[frmPopMain.cmbRuleArea.Items.Count-1]) = 'Body' then
-        frmPopMain.cmbRuleArea.Items.Delete(frmPopMain.cmbRuleArea.Items.Count-1);
+      if frmPopUMain.TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) = 'Body' then
+        frmPopUMain.cmbRuleArea.Items.Delete(frmPopUMain.cmbRuleArea.Items.Count-1);
     end;
     // enable buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
 procedure TframeAdvancedOptions.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeAdvancedOptions.FrameResize(Sender: TObject);

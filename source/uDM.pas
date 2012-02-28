@@ -175,7 +175,7 @@ procedure Tdm.mnuColumnsClick(Sender: TObject);
 var
   col : integer;
 begin
-  with frmPopMain do
+  with frmPopUMain do
   begin
     col := (Sender as TMenuItem).Tag;
     if not(Sender as TMenuItem).Checked then
@@ -265,8 +265,8 @@ begin
     if SetPosition then
     begin
       Position := poDesigned;
-      Left := frmPopMain.Left - Width;
-      Top := frmPopMain.Top;
+      Left := frmPopUMain.Left - Width;
+      Top := frmPopUMain.Top;
       if Left < 0 then
         Left := 0;
       if Top+Height > Screen.Height then
@@ -283,12 +283,12 @@ begin
     Label1.Hide;
     MenuAnimationStyles.Hide;
     // translate
-    frmPopMain.TranslateForm(CustomizeDlg.CustomizeForm);
-    Caption := frmPopMain.Translate(Caption);
+    frmPopUMain.TranslateForm(CustomizeDlg.CustomizeForm);
+    Caption := frmPopUMain.Translate(Caption);
     // translate dropdown
     old := CaptionOptionsCombo.ItemIndex;
     for i := 0 to CaptionOptionsCombo.Items.Count-1 do
-      CaptionOptionsCombo.Items[i] := frmPopMain.Translate(CaptionOptionsCombo.Items[i]);
+      CaptionOptionsCombo.Items[i] := frmPopUMain.Translate(CaptionOptionsCombo.Items[i]);
     CaptionOptionsCombo.ItemIndex := old;
     // move some labels
     Label2.Left := ActionBarList.Left + ActionBarList.Width - Label2.Width;
@@ -300,7 +300,7 @@ begin
     CatList.ItemIndex := 0;
     CatListClick(nil);
     for i := 0 to CatList.Count-1 do
-      CatList.Items[i] := frmPopMain.Translate(CatList.Items[i]);
+      CatList.Items[i] := frmPopUMain.Translate(CatList.Items[i]);
   end;
 end;
 
@@ -331,19 +331,19 @@ procedure Tdm.TimerTimer(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Check mail on timer event
 begin
-  if frmPopMain.AllowAutoCheck then
-    frmPopMain.CheckAllMail;
+  if frmPopUMain.AllowAutoCheck then
+    frmPopUMain.CheckAllMail;
 end;
 
 procedure Tdm.mnuSortClick(Sender: TObject);
 begin
-  frmPopMain.SetSortColumn((Sender as TMenuItem).Tag);
+  frmPopUMain.SetSortColumn((Sender as TMenuItem).Tag);
 end;
 
 procedure Tdm.mnuSpamLastClick(Sender: TObject);
 begin
   mnuSpamLast.Checked := not mnuSpamLast.Checked;
-  frmPopMain.lvMail.AlphaSort;
+  frmPopUMain.lvMail.AlphaSort;
 end;
 
 end.

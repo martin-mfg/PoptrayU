@@ -63,7 +63,7 @@ constructor TframeAdvancedMisc.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // screen to options
   chkUseMAPI.Checked := Options.UseMAPI;
   chkSafeDelete.Checked := Options.SafeDelete;
@@ -95,15 +95,15 @@ begin
     Options.DontCheckStart := dtStart.Time;
     Options.DontCheckEnd := dtEnd.Time;
     // buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
 procedure TframeAdvancedMisc.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeAdvancedMisc.chkDontCheckTimesClick(Sender: TObject);

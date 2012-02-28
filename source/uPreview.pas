@@ -194,7 +194,7 @@ const
 
 function Translate(english : string) : string;
 begin
-  Result := frmPopMain.Translate(english);
+  Result := frmPopUMain.Translate(english);
 end;
 
 procedure TfrmPreview.WndProc(var Message: TMessage);
@@ -491,7 +491,7 @@ begin
       if Msg.MessageParts.Items[0] is TidText then
         FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text
       else if Msg.MessageParts.Items[0] is TIdAttachment then
-        FBody := FBody + #13#10+frmPopMain.Translate('Attachment:')+' '+
+        FBody := FBody + #13#10+frmPopUMain.Translate('Attachment:')+' '+
                          TidAttachment(Msg.MessageParts.Items[0]).ContentType;
 
       if Msg.MessageParts.Items[1] is TidText then
@@ -571,7 +571,7 @@ begin
             end
             else
             begin
-              FBody := FBody + frmPopMain.Translate('Attachment:')+' ['+
+              FBody := FBody + frmPopUMain.Translate('Attachment:')+' ['+
                                 TidAttachment(Msg.MessageParts.Items[0]).FileName+']';
               FHtml := Msg.Body.Text; //TODO: display attachment in HTML view?
             end;
@@ -902,15 +902,15 @@ begin
     body := memMail.Text;
   body := #13#10'> ' + AnsiReplaceStr(body,#13#10,#13#10'> ');
   // send it
-  frmPopMain.SendMail(email,subject,body);
+  frmPopUMain.SendMail(email,subject,body);
 end;
 
 
 procedure TfrmPreview.actDeleteExecute(Sender: TObject);
 begin
   if not(Options.DeleteConfirm) or
-     (frmPopMain.TranslateDlg(
-      frmPopMain.Translate('Delete Message from Server?'),
+     (frmPopUMain.TranslateDlg(
+      frmPopUMain.Translate('Delete Message from Server?'),
       mtConfirmation,[mbYes,mbNo],0) = mrYes) then
   begin
     // ask again for protected messages
@@ -918,7 +918,7 @@ begin
     begin
       if FProtected then
       begin
-        if frmPopMain.TranslateDlg(Translate('You are trying to delete protected messages.') +#13#10#13#10+
+        if frmPopUMain.TranslateDlg(Translate('You are trying to delete protected messages.') +#13#10#13#10+
                                    Translate('Are you sure?'),
                                    mtConfirmation,[mbYes,mbNo],0) = mrNo then
         begin
@@ -927,16 +927,16 @@ begin
       end;
     end;
     // delete it
-    if frmPopMain.DeleteMail(FAccountNum,FMsgNum,FUID) then
+    if frmPopUMain.DeleteMail(FAccountNum,FMsgNum,FUID) then
     begin
       // first hide instead of close, or FAccountNum will get destroyed
       Self.Hide;
       // re-check (and delete)
       if not Options.DeleteNextCheck then
       begin
-        frmPopMain.ShowIcon(FAccountNum,itChecking);
-        if frmPopMain.CheckMail(FAccountNum,false,true) < 0 then
-          frmPopMain.lvMail.Clear;
+        frmPopUMain.ShowIcon(FAccountNum,itChecking);
+        if frmPopUMain.CheckMail(FAccountNum,false,true) < 0 then
+          frmPopUMain.lvMail.Clear;
       end;
     end;
     // now close (and free) window
@@ -972,7 +972,7 @@ begin
         if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName),
                         pchar(SaveDialog.FileName),false) then
         begin
-          MessageDlg(frmPopMain.Translate('Failed to Save Attachment.')+#13#10#13#10+
+          MessageDlg(frmPopUMain.Translate('Failed to Save Attachment.')+#13#10#13#10+
                      SaveDialog.FileName, mtError, [mbOK], 0);
         end;
       end
@@ -982,7 +982,7 @@ begin
           (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdText).Body.SaveToFile(SaveDialog.FileName);
         end
         else
-          MessageDlg(frmPopMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
+          MessageDlg(frmPopUMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
       end;
     end;
   finally
@@ -1000,7 +1000,7 @@ begin
   // check for malicious filetype
   if lvAttachments.Selected.ImageIndex in [iconEXE,iconWarning] then
   begin
-    MessageDlg(frmPopMain.Translate('Because of the Security Risk, PopTray doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
+    MessageDlg(frmPopUMain.Translate('Because of the Security Risk, PopTray doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
   end
   else begin
     if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
@@ -1015,7 +1015,7 @@ begin
         ExecuteFile(NewName,'','',SW_NORMAL);
       end
       else
-        MessageDlg(frmPopMain.Translate('Unable to Copy file.'), mtError, [mbOK], 0);
+        MessageDlg(frmPopUMain.Translate('Unable to Copy file.'), mtError, [mbOK], 0);
     end
     else begin
       if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdText then
@@ -1033,7 +1033,7 @@ begin
         end;
       end
       else
-        MessageDlg(frmPopMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
+        MessageDlg(frmPopUMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
     end;
   end;
 end;

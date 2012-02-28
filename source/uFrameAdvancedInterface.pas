@@ -71,9 +71,9 @@ var
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   for i := 0 to cmbCheckingIcon.Items.Count-1 do
-    cmbCheckingIcon.Items[i] := frmPopMain.Translate(cmbCheckingIcon.Items[i]);
+    cmbCheckingIcon.Items[i] := frmPopUMain.Translate(cmbCheckingIcon.Items[i]);
   // options to screen
   chkShowViewed.Checked := Options.ShowViewed;
   chkCloseMinimize.Checked := Options.CloseMinimize;
@@ -125,8 +125,8 @@ begin
     Options.CheckingIcon := cmbCheckingIcon.ItemIndex;
     Options.ShowWhileChecking := chkShowWhileChecking.Checked;
     // enable buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
     // focus password
     if (Sender = chkPasswordProtect) and edPassword.Enabled and Self.Visible then
       edPassword.SetFocus;
@@ -136,7 +136,7 @@ end;
 procedure TframeAdvancedInterface.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeAdvancedInterface.FrameResize(Sender: TObject);

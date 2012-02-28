@@ -55,7 +55,7 @@ uses uMain;
 procedure TfrmPassword.FormShow(Sender: TObject);
 begin
   SetForegroundWindow(Handle);
-  frmPopMain.HideForm;
+  frmPopUMain.HideForm;
 end;
 
 end.

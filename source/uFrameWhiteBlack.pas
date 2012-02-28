@@ -59,7 +59,7 @@ constructor TframeWhiteBlack.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   memWhiteList.Lines.Text := Options.WhiteList.Text;
   memBlackList.Lines.Text := Options.BlackList.Text;
   Options.Busy := False;
@@ -76,15 +76,15 @@ begin
   if not Options.Busy then
   begin
     // butons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
 procedure TframeWhiteBlack.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeWhiteBlack.memWhiteListExit(Sender: TObject);
