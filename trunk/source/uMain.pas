@@ -117,16 +117,9 @@ type
     btnHelpAccounts: TBitBtn;
     btnSave: TBitBtn;
     btnCancelAccount: TBitBtn;
-    GroupBox2: TGroupBox;
     Label27: TLabel;
-    GroupBox5: TGroupBox;
-    Label12: TLabel;
-    Label18: TLabel;
-    lblHomepage: TLabel;
-    lblForum: TLabel;
     panAboutBottom: TPanel;
     btnHelp: TBitBtn;
-    lvVolunteers: TListView;
     btnHintHelp: TSpeedButton;
     ActionManager: TActionManager;
     actPreview: TAction;
@@ -236,7 +229,6 @@ type
     actSpam: TAction;
     chkRuleProtect: TCheckBox;
     actTestAccount: TAction;
-    imgLogo: TImage;
     lblVersion: TLabel;
     Label11: TLabel;
     actStopChecking: TAction;
@@ -262,13 +254,18 @@ type
     actUndelete: TAction;
     actRuleSubjectDelete: TAction;
     actRuleSubjectSpam: TAction;
-    btnCheckUpdate: TButton;
     actOpenMessage: TAction;
     IdDecoderQuotedPrintable: TIdDecoderQuotedPrintable;
     IdDecoderMIME1: TIdDecoderMIME;
-    GroupBox1: TGroupBox;
     Label9: TLabel;
-    procedure lvVolunteersResize(Sender: TObject);
+    Image1: TImage;
+    labelAppName: TLabel;
+    lblHomepage: TLabel;
+    btnCheckUpdate: TButton;
+    ListView1: TListView;
+    lvVolunteers: TListView;
+    Label12: TLabel;
+    procedure lvVolunteers2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -415,7 +412,7 @@ type
       Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
     procedure actTestAccountExecute(Sender: TObject);
     procedure tabMailChanging(Sender: TObject; var AllowChange: Boolean);
-    procedure lvVolunteersChange(Sender: TObject; Item: TListItem;
+    procedure lvVolunteers2Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure actStopCheckingExecute(Sender: TObject);
     procedure btnTestRegExprClick(Sender: TObject);
@@ -5570,8 +5567,7 @@ end;
 
 procedure TfrmPopUMain.lblHomepageClick(Sender: TObject);
 begin
-  //TODO: Commented out because it's not up to date yet.
-  //ExecuteFile('http://www.poptray.org','','',SW_RESTORE);
+  ExecuteFile('http://sourceforge.net/projects/poptrayu/','','',SW_RESTORE);
 end;
 
 procedure TfrmPopUMain.btnSaveOptionsClick(Sender: TObject);
@@ -7284,7 +7280,7 @@ begin
   ShowIcon(tabMail.TabIndex+1,itNormal);
 end;
 
-procedure TfrmPopUMain.lvVolunteersChange(Sender: TObject; Item: TListItem; Change: TItemChange);
+procedure TfrmPopUMain.lvVolunteers2Change(Sender: TObject; Item: TListItem; Change: TItemChange);
 begin
   // language volunteers translate
   Item.Caption := Translate(Item.Caption);
@@ -7480,9 +7476,11 @@ begin
 end;
 
 
-procedure TfrmPopUMain.lvVolunteersResize(Sender: TObject);
+procedure TfrmPopUMain.lvVolunteers2Resize(Sender: TObject);
 begin
   lvVolunteers.Column[1].Width := lvVolunteers.Width - lvVolunteers.Column[0].Width - 24;
 end;
+
+
 
 end.
