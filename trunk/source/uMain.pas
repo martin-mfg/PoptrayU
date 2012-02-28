@@ -635,7 +635,7 @@ type
   end;
 
 var
-  frmPopMain: TfrmPopUMain;
+  frmPopUMain: TfrmPopUMain;
   Accounts : TAccountItems;
 
 implementation
@@ -1745,7 +1745,7 @@ begin
         if gAutoOnWhenSuspend then DoCommand(cmdAutoCheckOn);
       end;
   end;
-  //frmPopMain.Caption := frmPopMain.Caption + ' ' + IntToStr(msg.PowerEvt); //debug
+  //frmPopUMain.Caption := frmPopUMain.Caption + ' ' + IntToStr(msg.PowerEvt); //debug
 end;
 
 
@@ -1935,7 +1935,7 @@ begin
         fInterfaceVersion := GetProcAddress(Plugins[i].hPlugin, 'InterfaceVersion');
         if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
         begin
-          TranslateMsg(frmPopMain.Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
+          TranslateMsg(frmPopUMain.Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
           FreeLibrary(Plugins[i].hPlugin);
           Continue;
         end;

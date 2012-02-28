@@ -81,7 +81,7 @@ begin
   Timer := TSimpleTimer.Create;
   Timer.OnTimer := TimerCallback;
   pgInfo.ActivePageIndex := Options.InfoTab;
-  btnMailProgram.Glyph.Assign(frmPopMain.btnStartProgram.Glyph);
+  btnMailProgram.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   // column widths
   lvInfoNew.Column[0].Width := Options.InfoCol1;
   lvInfoNew.Column[1].Width := Options.InfoCol2;
@@ -92,7 +92,7 @@ end;
 procedure TfrmInfo.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Timer.Free;
-  frmPopMain.FShowingInfo := False;
+  frmPopUMain.FShowingInfo := False;
   Options.InfoCol1 := lvInfoNew.Column[0].Width;
   Options.InfoCol2 := lvInfoNew.Column[1].Width;
   Options.InfoCol3 := lvInfoNew.Column[2].Width;

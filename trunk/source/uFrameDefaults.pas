@@ -70,11 +70,11 @@ constructor TframeDefaults.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // options to screen
   edProgram.Text := Options.MailProgram;
   edDefSound.Text := Options.DefSound;
-  btnTest.Glyph.Assign(frmPopMain.btnStartProgram.Glyph);
+  btnTest.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
   self.Repaint;
@@ -89,11 +89,11 @@ begin
   try
     // copy languages from options to stringlist
     for i := Low(Options.Languages)+1 to High(Options.Languages) do
-      langs.Add(frmPopMain.Translate(Options.Languages[i]));
+      langs.Add(frmPopUMain.Translate(Options.Languages[i]));
 
     // sort it
     langs.Sort;
-    langs.Insert(0,frmPopMain.Translate(Options.Languages[0]));
+    langs.Insert(0,frmPopUMain.Translate(Options.Languages[0]));
 
     // copy from stringlist to combo-box
     cmbLanguage.Items.Assign(langs);
@@ -111,8 +111,8 @@ begin
     Options.MailProgram := edProgram.Text;
     Options.DefSound := edDefSound.Text;
     // buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
@@ -123,8 +123,8 @@ begin
   dlgOpen := TOpenDialog.Create(nil);
   try
     dlgOpen.InitialDir := ExtractFileDir(edProgram.Text);
-    dlgOpen.Filter := frmPopMain.Translate('EXE files')+' (*.exe)|*.exe|'+
-                      frmPopMain.Translate('All Files')+' (*.*)|*.*';
+    dlgOpen.Filter := frmPopUMain.Translate('EXE files')+' (*.exe)|*.exe|'+
+                      frmPopUMain.Translate('All Files')+' (*.*)|*.*';
     if dlgOpen.Execute then
     begin
       edProgram.Text := dlgOpen.FileName;
@@ -145,7 +145,7 @@ begin
     dlgOpen.InitialDir := ExtractFileDir(edDefSound.Text);
     if dlgOpen.InitialDir='' then
        dlgOpen.InitialDir := ExtractFilePath(Application.ExeName)+'Sounds';  
-    dlgOpen.Filter := frmPopMain.Translate('WAV files')+' (*.wav)|*.WAV';
+    dlgOpen.Filter := frmPopUMain.Translate('WAV files')+' (*.wav)|*.WAV';
     if dlgOpen.Execute then
     begin
       edDefSound.Text := dlgOpen.FileName;
@@ -169,20 +169,20 @@ begin
       Break;
     end;
   // butons
-  frmPopMain.btnSaveOptions.Enabled := True;
-  frmPopMain.btnCancel.Enabled := True;
+  frmPopUMain.btnSaveOptions.Enabled := True;
+  frmPopUMain.btnCancel.Enabled := True;
 end;
 
 procedure TframeDefaults.btnLanguageRefreshClick(Sender: TObject);
 begin
-  frmPopMain.RefreshLanguages;
+  frmPopUMain.RefreshLanguages;
   ShowLanguages;
   Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 procedure TframeDefaults.btnTestClick(Sender: TObject);
 begin
-  frmPopMain.ExecuteProgram;
+  frmPopUMain.ExecuteProgram;
 end;
 
 procedure TframeDefaults.btnSndTestClick(Sender: TObject);
@@ -194,7 +194,7 @@ end;
 procedure TframeDefaults.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 

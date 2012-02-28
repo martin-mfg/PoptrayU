@@ -99,6 +99,6 @@ begin
   Application.ShowMainForm := False;
   Application.Title := 'PopTrayU'; //App Title on Windows Taskbar
   Application.CreateForm(Tdm, dm);
-  Application.CreateForm(TfrmPopMain, frmPopMain);
+  Application.CreateForm(TfrmPopUMain, frmPopUMain);
   Application.Run;
 end.

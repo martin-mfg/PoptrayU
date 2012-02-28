@@ -66,7 +66,7 @@ constructor TframeGeneralOptions.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // options to screen
   chkStartUp.Checked := Options.StartUp;
   edFirstWait.Text := IntToStr(Options.FirstWait);
@@ -120,15 +120,15 @@ begin
     Options.DeleteNextCheck := chkDeleteNextCheck.Checked;
     ShowFirstWait;
     // buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
 procedure TframeGeneralOptions.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeGeneralOptions.FrameResize(Sender: TObject);

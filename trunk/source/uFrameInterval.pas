@@ -62,7 +62,7 @@ constructor TframeInterval.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   edTime.Tag := 1;
   // options to screen
   chkTimerAccount.Checked := Options.TimerAccount;
@@ -92,12 +92,12 @@ begin
       edTime.Tag := 0
     else
     begin
-      frmPopMain.btnSaveOptions.Enabled := True;
-      frmPopMain.btnCancel.Enabled := True;
+      frmPopUMain.btnSaveOptions.Enabled := True;
+      frmPopUMain.btnCancel.Enabled := True;
     end;
   end;
   panInterval.Visible := not Options.TimerAccount;
-  frmPopMain.panIntervalAccount.Visible := Options.TimerAccount;
+  frmPopUMain.panIntervalAccount.Visible := Options.TimerAccount;
 end;
 
 procedure TframeInterval.btnNeverClick(Sender: TObject);
@@ -111,7 +111,7 @@ end;
 procedure TframeInterval.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 procedure TframeInterval.UpDownClick(Sender: TObject; Button: TUDBtnType);

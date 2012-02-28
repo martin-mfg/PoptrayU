@@ -172,7 +172,7 @@ object frmInfo: TfrmInfo
         Top = 2
         Width = 115
         Height = 21
-        Action = frmPopMain.actMarkViewed
+        Action = frmPopUMain.actMarkViewed
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -220,7 +220,7 @@ object frmInfo: TfrmInfo
         Top = 2
         Width = 117
         Height = 21
-        Action = frmPopMain.actStartProgram
+        Action = frmPopUMain.actStartProgram
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -256,7 +256,7 @@ object frmInfo: TfrmInfo
         Top = 2
         Width = 126
         Height = 21
-        Action = frmPopMain.actShowMessages
+        Action = frmPopUMain.actShowMessages
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11

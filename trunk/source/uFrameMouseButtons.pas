@@ -70,11 +70,11 @@ var
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // fill action drop-downs
   for i := Low(Actions) to High(Actions) do
   begin
-    st := frmPopMain.Translate(Actions[i]);
+    st := frmPopUMain.Translate(Actions[i]);
     cmbLeftClick.Items.Add(st);
     cmbRightClick.Items.Add(st);
     cmbMiddleClick.Items.Add(st);
@@ -131,8 +131,8 @@ begin
     Options.ShiftRightClick := cmbShiftRightClick.ItemIndex;
     Options.ShiftMiddleClick := cmbShiftMiddleClick.ItemIndex;
     // buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 

@@ -1,4 +1,4 @@
-object frmPopMain: TfrmPopUMain
+object frmPopUMain: TfrmPopUMain
   Left = 392
   Top = 94
   Width = 558

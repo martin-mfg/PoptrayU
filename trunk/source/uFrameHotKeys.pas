@@ -66,11 +66,11 @@ var
 begin
   inherited;
   Options.Busy := True;
-  frmPopMain.TranslateFrame(self);
+  frmPopUMain.TranslateFrame(self);
   // fill action dropdowns
   for i := Low(Actions) to High(Actions) do
   begin
-    st := frmPopMain.Translate(Actions[i]);
+    st := frmPopUMain.Translate(Actions[i]);
     cmbAction1.Items.Add(st);
     cmbAction2.Items.Add(st);
     cmbAction3.Items.Add(st);
@@ -102,15 +102,15 @@ begin
     Options.HotKey3 := hkHotKey3.HotKey;
     Options.HotKey4 := hkHotKey4.HotKey;
     // buttons
-    frmPopMain.btnSaveOptions.Enabled := True;
-    frmPopMain.btnCancel.Enabled := True;
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
 procedure TframeHotKeys.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  frmPopMain.QuickHelp(Sender, Button, Shift, X, Y);
+  frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
 end.
