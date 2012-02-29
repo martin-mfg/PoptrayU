@@ -1,17 +1,17 @@
-var startcontent = '<table width="100%" cellspacing="0" cellpadding="0" border="0" class="header">'+
+var startcontent = '<table align="center" cellspacing="0" cellpadding="0" border="0" class="header">'+
 						'<tr>'+
-						'<td rowspan="2" align="center" width="120">'+
-						'<table cellspacing="4" cellpadding="0" border="0">'+
+						'<td rowspan="2" align="center" width="55">'+
+						'<table cellspacing="2" cellpadding="0" border="0">'+
 						'<tr>'+
-						'<td class="headerinset"><a href="poptray.htm"><img src="img/logo.png" border="0" alt="PopTrayU home" width="55" height="55"></a></td>'+
+						'<td class="headerinset"><a href="poptray.htm"><img src="img/logo.png" border="0" alt="PopTrayU home" width="48" height="48"></a></td>'+
 						'</tr>'+
 						'</table>'+
 						'</td>'+
 						'<td align="center" valing="bottom" class="head">PopTrayU</td>'+
-						'<td rowspan="2" align="center" width="120">'+
+						'<td rowspan="2" align="center">'+
 						'<table cellspacing="4" cellpadding="0" border="0">'+
 						'<tr>'+
-						'<td><img src="img/cleardot.gif" border="0" width="55" height="55"></td>'+
+						'<td><img src="img/cleardot.gif" border="0" width="48" height="48"></td>'+
 						'</tr>'+
 						'</table>'+
 						'</td>'+
