@@ -4,9 +4,11 @@
 
 !define VER_MAJOR "4"
 !define VER_MINOR "0"
+!define VER_BETA "1"
 
 !define PRODUCT "PopTrayU"
-!define VERSION "${VER_MAJOR}.${VER_MINOR}"
+;!define VERSION "${VER_MAJOR}.${VER_MINOR}
+!define VERSION "${VER_MAJOR}.${VER_MINOR} (beta ${VER_BETA})"
 Name "${PRODUCT} ${VERSION}"
 
 !include "MUI.nsh"
@@ -21,7 +23,8 @@ Name "${PRODUCT} ${VERSION}"
 
 ;------------------------------------------------------------------[ Configuration ]---
 
-OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
+;OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
+OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}_beta${VER_BETA}.exe"
 SetCompressor /SOLID lzma
 
 InstType "Full"
