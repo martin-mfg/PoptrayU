@@ -111,10 +111,10 @@ ProjectLang=$00001C09
 RootDir=
 [Version Info]
 IncludeVerInfo=1
-AutoIncBuild=0
+AutoIncBuild=1
 MajorVer=4
 MinorVer=0
-Release=0
+Release=2
 Build=1
 Debug=1
 PreRelease=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.0.1
+FileVersion=4.0.2.1
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
