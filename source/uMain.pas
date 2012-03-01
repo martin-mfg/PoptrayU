@@ -5402,7 +5402,7 @@ begin
   if Copy(IniPath,Length(IniPath),1) <> '\' then
     IniPath := IniPath + '\';
   // help file
-  HelpFileName := ExtractFilePath(Application.ExeName)+'PopTray.chm';
+  HelpFileName := ExtractFilePath(Application.ExeName)+'PopTrayU.chm';
   // POP3 protocol
   SetLength(Protocols,1);
   Protocols[0].Name := 'POP3';
