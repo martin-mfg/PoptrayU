@@ -60,16 +60,19 @@ NSIS - Version 2.46
   Uses the Modern UI included in newer versions.
 
 
-Replace Vista Icon - Version 1.0.0.1
+Replace Vista Icon - Version 1.0
 ------------------
   Adds the Vista icon into the EXE.
-  http://www.rw-designer.com/compile-vista-icon
+  http://www.codeproject.com/Articles/14010/Windows-Vista-Icons
+  License is: The Code Project Open License (CPOL) 1.02
 
-Microsoft HTML Help Workshop - Version 4.74
+Microsoft HTML Help Workshop - Version 1.0
 ----------------------------
   To create and edit the compiled help file (*.chm)
-  An older version can be obtained at:
   http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=21138
-
+  Note: If your computer is up to date on security patches, you may receive
+  an error message part-way through the install saying you already have a 
+  newer version. This message is in regards to the bundled help *viewer* 
+  that the workshop is attempting to install, not the help workshop itself.
 
 ********************************************************************
