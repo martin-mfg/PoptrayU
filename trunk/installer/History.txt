@@ -1,3 +1,26 @@
+PopTrayU Version History
+------------------------
+
+ (+) New feature
+ (*) Changed feature
+ (-) Bug fixed
+
+4.0 (beta 1) 2012-01-21
+	(+) Added HTML tab to preview window
+        (*) Changed title format for preview window: now title is just the email's subject
+        (*) Display more descriptive results than the socket error number when testing 
+            an account with invalid server selected
+	(+) Text boxes on "Defaults" options screen resize if window is resized
+        (-) Options screens now correctly redraws missing labels/buttons on create and resize 
+        (-) UTF-8 encoded email subjects and headers are now decoded and not shown as gibberish
+        (-) Replaced message list on main window with Unicode-enabled version
+            Fix applies to: rendering of UTF-8 encoded subjects only at this time, characters
+            outside current code-page that are not encoded with UTF-8 still display incorrectly.
+
+PoptrayU was forked from PopTray 3.2 Released 2006-09-16
+
+
+
 PopTray Version History
 -----------------------
 
