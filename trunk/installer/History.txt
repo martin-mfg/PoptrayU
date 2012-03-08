@@ -5,6 +5,14 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 2)
+        (-) Fixed broken link to help file on accounts tab
+        (-) Fixed cancel button positioning on accounts tab
+        (+) When mail notification sound plays, send sound-sentry notification. 
+            Applies to: Vista or newer with system Accessibility Options enabled.
+        (*) Notification sounds play at system notification sound volume 
+            instead of shoing a separate volume control for PopTrayU in Vista+
+
 4.0 (beta 1) 2012-01-21
 	(+) Added HTML tab to preview window
         (*) Changed title format for preview window: now title is just the email's subject
