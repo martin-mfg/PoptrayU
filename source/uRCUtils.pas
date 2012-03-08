@@ -333,11 +333,14 @@ function PlaySound(pszSound: PChar; hmod: HMODULE; fdwSound: DWORD): BOOL; stdca
 
 procedure PlayWav(FileName : TFileName);
 const
-  SND_ASYNC           = $0001;  { play asynchronously }
-  SND_FILENAME        = $00020000;  { name is file name }
+  SND_ASYNC           = $00000001; { play asynchronously }
+  SND_FILENAME        = $00020000; { indicates first param to PlaySound is file name }
+  SND_SYSTEM          = $00200000; { play at system notification volume in Vista+ }
+  SND_SENTRY          = $00080000; { display visual cue for sound if accessibility mode set in Vista+ }
+  //SND_NODEFAULT       = $00000002; { if sound is not found, do not play windows default sound }
 begin
   if FileName <> '' then
-    PlaySound(pchar(FileName),0,SND_FILENAME or SND_ASYNC);
+    PlaySound(pchar(FileName),0,SND_FILENAME or SND_ASYNC or SND_SYSTEM or SND_SENTRY);
 end;
 
 procedure GetBitmapFromFileIcon(FileName : TFileName; bmp : TBitmap; SplitParams : boolean = False);
