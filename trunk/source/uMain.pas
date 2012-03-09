@@ -42,7 +42,7 @@ const
   MajorVersion = '4';
   MinorVersion = '0';
   ReleaseVersion = '0';
-  BetaVersion = '1';
+  BetaVersion = '2';
   ReleaseCandidate = '';
 
 const
