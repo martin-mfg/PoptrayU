@@ -12,6 +12,11 @@ PopTrayU Version History
             Applies to: Vista or newer with system Accessibility Options enabled.
         (*) Notification sounds play at system notification sound volume 
             instead of shoing a separate volume control for PopTrayU in Vista+
+        (-) Fixed installer to remove PopTray.ini and PopTray.customize on uninstall
+        (+) New registry setting to select where PopTray.ini should be stored to 
+            support Vista+ UAC permissions. Set by installer. Command line options
+            can be used to override this setting.
+        
 
 4.0 (beta 1) 2012-01-21
 	(+) Added HTML tab to preview window
