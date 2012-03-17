@@ -5,6 +5,9 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 3)
+        (-) Check for new version button fixed and re-enabled.
+
 4.0 (beta 2)
         (-) Fixed broken link to help file on accounts tab
         (-) Fixed cancel button positioning on accounts tab
