@@ -538,7 +538,7 @@ Function fnc_IniDialog_Create
   Pop $RadioProgramFiles_HWND
   
   ; === Label4 (type: Label) ===
-  ${NSD_CreateLabel} 8u 108u 271u 16u "\r\nThis setting is best for pro users who have UAC disabled, and wish to keep all of PopTrayU's files in one place. Windows 95 users should also select this option."
+  ${NSD_CreateLabel} 8u 108u 271u 16u "This setting is best for pro users who have UAC disabled, and wish to keep all of PopTrayU's files in one place. Windows 95 users should also select this option."
   Pop $IniDialog_HWND_Label4
   
 FunctionEnd
