@@ -7435,9 +7435,9 @@ end;
 
 procedure TfrmPopUMain.btnCheckUpdateClick(Sender: TObject);
 begin
-  //ExecuteFile('http://www.poptray.org/checkupdate.php?major='+
-  //            MajorVersion+'&minor='+MinorVersion+'&release='+ReleaseVersion+
-  //            '&beta='+BetaVersion,'','',SW_RESTORE);
+  ExecuteFile('http://poptrayu.sourceforge.net/checkupdate.php?major='+
+              MajorVersion+'&minor='+MinorVersion+'&release='+ReleaseVersion+
+              '&beta='+BetaVersion,'','',SW_RESTORE);
 end;
 
 procedure TfrmPopUMain.lstRulesMouseDown(Sender: TObject;
