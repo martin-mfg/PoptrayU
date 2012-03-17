@@ -92,11 +92,11 @@ begin
     try
       Registry := TRegistry.Create;
       Registry.RootKey := HKEY_LOCAL_MACHINE;
-      if Registry.OpenKeyReadOnly('SOFTWARE\PopTrayU\') then
+      if Registry.OpenKey('SOFTWARE\PopTrayU', false) then
       begin
-        if Registry.KeyExists('IniLocation') then
+        if Registry.ValueExists('IniPath') then
         begin
-          iniLocation := Registry.ReadInteger('IniLocation');
+          iniLocation := Registry.ReadInteger('IniPath');
           Registry.CloseKey;
           if (iniLocation = CSIDL_APPDATA) or (iniLocation = CSIDL_COMMON_APPDATA) then
             Result := GetSpecialFolderPath(iniLocation)+ '\PopTrayU\';
