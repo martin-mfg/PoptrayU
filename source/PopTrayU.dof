@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=4
 MinorVer=0
 Release=2
-Build=1
+Build=6
 Debug=1
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.2.1
+FileVersion=4.0.2.6
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
@@ -137,3 +137,24 @@ Comments=Freeware and Open-Source
 URL=TBD
 [Excluded Packages]
 c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Components
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
+[HistoryLists\hlUnitAliases]
+Count=1
+Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
+[HistoryLists\hlSearchPath]
+Count=1
+Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+[HistoryLists\hlUnitOutputDirectory]
+Count=1
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build
+[HistoryLists\hlBPLOutput]
+Count=1
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
+[HistoryLists\hlDCPOutput]
+Count=1
+Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
