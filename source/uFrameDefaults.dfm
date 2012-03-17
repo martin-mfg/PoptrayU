@@ -2,13 +2,13 @@ object frameDefaults: TframeDefaults
   Left = 0
   Top = 0
   Width = 338
-  Height = 152
+  Height = 211
   ParentBackground = False
   TabOrder = 0
   OnResize = FrameResize
   DesignSize = (
     338
-    152)
+    211)
   object Label9: TLabel
     Left = 4
     Top = 4
@@ -122,6 +122,29 @@ object frameDefaults: TframeDefaults
     OnClick = btnLanguageRefreshClick
     OnMouseDown = HelpMouseDown
   end
+  object Label1: TLabel
+    Left = 4
+    Top = 160
+    Width = 299
+    Height = 13
+    Caption = 'User Data Folder: (where PopTray.ini and Rules files are stored)'
+  end
+  object btnStorageLoc: TSpeedButton
+    Left = 312
+    Top = 176
+    Width = 19
+    Height = 21
+    Anchors = [akTop, akRight]
+    Enabled = False
+    Glyph.Data = {
+      96000000424D960000000000000076000000280000000A000000040000000100
+      040000000000200000000000000000000000100000000000000000000000FFFF
+      FF00000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000111111111100
+      0000001100110000000000110011000000001111111111000000}
+    OnClick = btnStorageLocClick
+    OnMouseDown = HelpMouseDown
+  end
   object edProgram: TEdit
     Left = 4
     Top = 20
@@ -151,5 +174,18 @@ object frameDefaults: TframeDefaults
     ItemHeight = 13
     TabOrder = 2
     OnChange = cmbLanguageChange
+  end
+  object edIniFolder: TEdit
+    Left = 4
+    Top = 176
+    Width = 301
+    Height = 21
+    Hint = 
+      'This setting can be changed via setup or a command line paramete' +
+      'r.'
+    ReadOnly = True
+    TabOrder = 3
+    OnChange = OptionsChange
+    OnMouseDown = HelpMouseDown
   end
 end

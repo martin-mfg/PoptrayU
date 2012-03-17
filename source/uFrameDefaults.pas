@@ -42,8 +42,12 @@ type
     edProgram: TEdit;
     edDefSound: TEdit;
     cmbLanguage: TComboBox;
+    Label1: TLabel;
+    edIniFolder: TEdit;
+    btnStorageLoc: TSpeedButton;
     procedure btnEdProgramClick(Sender: TObject);
     procedure btnEdDefSoundClick(Sender: TObject);
+    procedure btnStorageLocClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
     procedure btnLanguageRefreshClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
@@ -74,6 +78,7 @@ begin
   // options to screen
   edProgram.Text := Options.MailProgram;
   edDefSound.Text := Options.DefSound;
+  edIniFolder.Text := frmPopUMain.IniPath;
   btnTest.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
@@ -135,6 +140,10 @@ begin
   end;
 end;
 
+procedure TframeDefaults.btnStorageLocClick(Sender: TObject);
+begin
+
+end;
 
 procedure TframeDefaults.btnEdDefSoundClick(Sender: TObject);
 var
@@ -203,6 +212,7 @@ begin
     cmbLanguage.Width := Self.ClientWidth - btnLanguageRefresh.Width - 20;
     edProgram.Width   := Self.ClientWidth - btnLanguageRefresh.Width - 20;
     edDefSound.Width  := Self.ClientWidth - btnLanguageRefresh.Width - 20;
+    edIniFolder.Width := Self.ClientWidth - btnStorageLoc.Width - 20;
     Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 

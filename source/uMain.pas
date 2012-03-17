@@ -442,6 +442,7 @@ type
     FShowingInfo : boolean;
     FMinimized : Boolean;
     FHintWindow : THintWindow;
+    IniPath : TFileName;    
     procedure ShowForm(MarkAsViewed : boolean = true);
     procedure HideForm;
     procedure ShowIcon(num : integer; IconType : TIconType);
@@ -475,7 +476,6 @@ type
     HelpFileName : TFileName;
     LogRuleName : TFileName;
     ToolbarName : TFileName;
-    IniPath : TFileName;
     NumAccounts : integer;
     FMsgSize,FMsgRead : integer;
     FPreview : Boolean;
@@ -645,7 +645,7 @@ uses
   uFrameAdvancedInterface, uFrameAdvancedMisc,
   uFrameMouseButtons, uFrameHotKeys, uFrameWhiteBlack, uFramePlugins,
   IniFiles,  ShellAPI,  StrUtils, Types,
-  IdEMailAddress, IdResourceStrings;
+  IdEMailAddress, IdResourceStrings, uFSUtils;
 
 var
   frame : TFrame;
@@ -5394,13 +5394,10 @@ begin
   // if Win2000+ then set Hint Separator to CRLF
   if (Win32Platform = VER_PLATFORM_WIN32_NT) and (Win32MajorVersion >= 5) then
     HintSep := #13#10;
-  // get path from commandline
-  if (ParamNonSwitch(1) <> '') then
-    IniPath := ParamNonSwitch(1)
-  else
-    IniPath := ExtractFilePath(Application.ExeName);
-  if Copy(IniPath,Length(IniPath),1) <> '\' then
-    IniPath := IniPath + '\';
+
+  // Set User-Data storage folder (from command line option or registry)
+  IniPath := GetDataStoragePath(ParamNonSwitch(1));
+  
   // help file
   HelpFileName := ExtractFilePath(Application.ExeName)+'PopTrayU.chm';
   // POP3 protocol
