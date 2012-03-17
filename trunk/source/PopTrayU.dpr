@@ -52,7 +52,8 @@ uses
   uObjects in 'uObjects.pas',
   RegExpr in 'RegExpr.pas',
   uHeaderDecoder in 'uHeaderDecoder.pas',
-  uCodePageConverter in 'uCodePageConverter.pas';
+  uCodePageConverter in 'uCodePageConverter.pas',
+  uFSUtils in 'uFSUtils.pas';
 
 {$R *.RES}
 

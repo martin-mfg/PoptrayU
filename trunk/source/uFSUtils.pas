@@ -89,8 +89,9 @@ begin
   begin
     // If PopTrayU key exists in registry, use it to determine where the
     // poptray.ini file is located.
+
+    Registry := TRegistry.Create;
     try
-      Registry := TRegistry.Create;
       Registry.RootKey := HKEY_LOCAL_MACHINE;
       if Registry.OpenKey('SOFTWARE\PopTrayU', false) then
       begin
