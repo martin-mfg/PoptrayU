@@ -43,6 +43,7 @@ uses
   uFrameMouseButtons in 'uFrameMouseButtons.pas' {frameMouseButtons: TFrame},
   uFrameHotKeys in 'uFrameHotKeys.pas' {frameHotKeys: TFrame},
   uFramePlugins in 'uFramePlugins.pas' {framePlugins: TFrame},
+  uFrameVisualAppearance in 'uFrameVisualAppearance.pas' {frameVisualAppearance: TFrame},
   uDM in 'uDM.pas' {dm: TDataModule},
   uInfo in 'uInfo.pas' {frmInfo},
   uFrameWhiteBlack in 'uFrameWhiteBlack.pas' {frameWhiteBlack: TFrame},
@@ -54,7 +55,6 @@ uses
   uHeaderDecoder in 'uHeaderDecoder.pas',
   uCodePageConverter in 'uCodePageConverter.pas',
   uFSUtils in 'uFSUtils.pas';
-
 {$R *.RES}
 
 var

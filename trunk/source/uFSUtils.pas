@@ -54,7 +54,11 @@ All Rights Reserved.
 unit uFSUtils;
 
 interface
+  uses Graphics;
+
   function GetDataStoragePath( commandLinePath : string = '' ) : string;
+  function StringToFont( sFont : String ) : TFont;
+  function FontToString( Font : TFont ) : String;
 
 implementation
   uses SHFolder, Dialogs, Windows, Registry, SysUtils, Forms;
@@ -115,6 +119,81 @@ begin
 
   // make sure path ends in backslash
   if Copy(Result,Length(Result),1) <> '\' then Result := Result + '\';
+end;
+
+
+
+const
+  STR_BOLD    = '|Bold';
+  STR_ITALIC  = '|Italic';
+  STR_ULINE   = '|Underline';
+  STR_STIRKE  = '|Strikeout';
+
+{------------------------------------------------------------------------------}
+{ Helper function to convert a serialized representation of a font back into   }
+{ a font object.                                                               }
+{------------------------------------------------------------------------------}
+{ Input String Example: "Arial", 9, [Bold|Italic], [clBlack]                   }
+{------------------------------------------------------------------------------}
+function StringToFont( sFont : String ) : TFont;
+var
+  p : integer;
+  fontStyle : String;
+begin
+  Result := TFont.Create;
+
+  // font name
+  p    := Pos( ',', sFont );
+  Result.Name := Copy( sFont, 2, p-3 );
+  Delete( sFont, 1, p );
+
+  // font size
+  p    := Pos( ',', sFont );
+  Result.Size := StrToInt( Copy( sFont, 2, p-2 ) );
+  Delete( sFont, 1, p );
+
+  // font style
+  p      := Pos( ',', sFont );
+  fontStyle := '|' + Copy( sFont, 3, p-4 );
+  Delete( sFont, 1, p );
+
+  // font color
+  Result.Color := StringToColor( Copy( sFont, 3, Length( sFont ) - 3 ) );
+
+  // convert string to font style
+  Result.Style := [];
+  if( Pos(STR_BOLD, fontStyle) > 0 )then Result.Style := Result.Style + [ fsBold ];
+  if( Pos(STR_ITALIC, fontStyle) > 0 )then Result.Style := Result.Style + [ fsItalic ];
+  if( Pos(STR_ULINE, fontStyle) > 0 )then Result.Style := Result.Style + [ fsUnderline ];
+  if( Pos(STR_STIRKE, fontStyle) > 0 )then Result.Style := Result.Style + [ fsStrikeout ];
+
+end;
+
+
+{------------------------------------------------------------------------------}
+{ Helper function to convert TFont objects to a string representation for      }
+{ serialization via settings ini file.                                         }
+{------------------------------------------------------------------------------}
+{ Return Value Example: "Arial", 9, [Bold|Italic], [clBlack]                   }
+{------------------------------------------------------------------------------}
+function FontToString( Font : TFont ) : String;
+var
+  fontStyle : String;
+begin
+  fontStyle := '';
+  if (fsBold in Font.Style) then fontStyle := fontStyle + STR_BOLD;
+  if (fsItalic in Font.Style) then fontStyle := fontStyle + STR_ITALIC;
+  if (fsUnderline in Font.Style) then fontStyle := fontStyle + STR_ULINE;
+  if (fsStrikeout in Font.Style) then fontStyle := fontStyle + STR_STIRKE;
+
+  // if string starts with vbar "|" then strip the first character
+  if( ( Length( fontStyle ) > 0 ) and ( '|' = fontStyle[1] ) )then
+  begin
+    fontStyle := Copy( fontStyle, 2, Length( fontStyle ) - 1 );
+  end;
+
+  Result := Format( '"%s", %d, [%s], [%s]',
+    [ Font.Name, Font.Size, fontStyle, ColorToString( Font.Color ) ] );
 end;
 
 

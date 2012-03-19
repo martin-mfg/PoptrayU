@@ -25,7 +25,7 @@ The GNU GPL can be found at:
 
 interface
 
-uses Classes, ExtCtrls, Contnrs, SysUtils, uPlugins, uObjects;
+uses Classes, ExtCtrls, Contnrs, SysUtils, uPlugins, uObjects, Graphics;
 
 var
   Options : record
@@ -110,6 +110,9 @@ var
     InfoCol2 : integer;
     InfoCol3 : integer;
     InfoCol4 : integer;
+    // visual appearance
+    ListboxFont : TFont;
+    ListboxBg : TColor;
   end;
 
 const
@@ -129,6 +132,7 @@ const
   optHotKeys = 7;
   optWhiteBlackList = 8;
   optPlugins = 9;
+  optVisualAppearance = 10;
 
 
 type
