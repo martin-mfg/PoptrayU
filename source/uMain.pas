@@ -1974,6 +1974,8 @@ begin
     // Visual Appearance
     Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont','\"MS Sans Serif\", 8, , [clBlack]'));
     lvMail.Font := Options.ListboxFont;
+    Options.ListboxBg := StringToColor(Ini.ReadString('VisualOptions','ListboxBg','clWindow'));
+    lvMail.Color := Options.ListboxBg;
 
     // num accounts
     NumAccounts := Ini.ReadInteger('Options','NumAccounts',0);
@@ -2114,6 +2116,7 @@ begin
 
     // Visual appearance
     Ini.WriteString('VisualOptions', 'ListboxFont', FontToString(Options.ListboxFont));
+    Ini.WriteString('VisualOptions', 'ListboxBg',ColorToString(Options.ListboxBg));
 
   finally
      Ini.Free;

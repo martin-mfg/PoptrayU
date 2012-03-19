@@ -111,7 +111,7 @@ object frameVisualAppearance: TframeVisualAppearance
     ParentFont = False
     ParentShowHint = False
     ShowHint = True
-    OnClick = btnFontChangeClick
+    OnClick = resetListboxBtnClick
   end
   object listboxBgColorBox: TColorBox
     Left = 156
