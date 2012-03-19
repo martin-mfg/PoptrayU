@@ -401,6 +401,8 @@ Section "Uninstall"
     Delete "$APPDATA\PopTrayU\Rules.log"
     Delete "$APPDATA\PopTrayU\Account_*.ids"
 
+	RMDir "$APPDATA\PopTrayU"
+
   NoConfig:
 
   ; directories
@@ -585,8 +587,12 @@ Function writeIniDialogRegistrySetting
 
 	${If} $RadioLocalAppdata_State == ${BST_CHECKED}
 		WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" 0x0000001A
+		SetShellVarContext current
+		CreateDirectory "$APPDATA\PopTrayU"
 	${ElseIf} $RadioAllUserAppdata_State == ${BST_CHECKED}
 		WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" 0x00000023
+		SetShellVarContext all
+		CreateDirectory "$APPDATA\PopTrayU"
 	${ElseIf} $RadioProgramFiles_State == ${BST_CHECKED}
 		WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" 0x00000026
 	${EndIf}
