@@ -644,7 +644,7 @@ uses
   uFrameInterval, uFrameDefaults, uFrameGeneralOptions, uFrameAdvancedOptions,
   uFrameAdvancedInterface, uFrameAdvancedMisc,
   uFrameMouseButtons, uFrameHotKeys, uFrameWhiteBlack, uFramePlugins,
-  IniFiles,  ShellAPI,  StrUtils, Types,
+  uFrameVisualAppearance, IniFiles,  ShellAPI,  StrUtils, Types,
   IdEMailAddress, IdResourceStrings, uFSUtils;
 
 var
@@ -1971,6 +1971,10 @@ begin
     // load into array and combo
     RefreshProtocols;
 
+    // Visual Appearance
+    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont','\"MS Sans Serif\", 8, , [clBlack]'));
+    lvMail.Font := Options.ListboxFont;
+
     // num accounts
     NumAccounts := Ini.ReadInteger('Options','NumAccounts',0);
   finally
@@ -2107,6 +2111,10 @@ begin
       Ini.WriteBool('Plug-ins','PluginEnabled'+IntToStr(i+1),Plugins[i].Enabled);
       Ini.WriteInteger('Plug-ins','PluginType'+IntToStr(i+1),Integer(Plugins[i].PluginType));
     end;
+
+    // Visual appearance
+    Ini.WriteString('VisualOptions', 'ListboxFont', FontToString(Options.ListboxFont));
+
   finally
      Ini.Free;
   end;
@@ -6402,6 +6410,7 @@ begin
     optHotKeys            : frame := TframeHotKeys.Create(Self);
     optWhiteBlackList     : frame := TframeWhiteBlack.Create(Self);
     optPlugins            : frame := TframePlugins.Create(Self);
+    optVisualAppearance   : frame := TframeVisualAppearance.Create(Self);
   end;
   // show frame
   if Assigned(frame) then

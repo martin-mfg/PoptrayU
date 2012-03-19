@@ -1,6 +1,6 @@
 object frmPopUMain: TfrmPopUMain
-  Left = 256
-  Top = 307
+  Left = 255
+  Top = 168
   Width = 554
   Height = 407
   Caption = 'PopTrayU'
@@ -29,7 +29,7 @@ object frmPopUMain: TfrmPopUMain
     Top = 0
     Width = 538
     Height = 371
-    ActivePage = tsAbout
+    ActivePage = tsMail
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1178,7 +1178,7 @@ object frmPopUMain: TfrmPopUMain
           OnChange = tvOptionsChange
           OnMouseDown = tvOptionsMouseDown
           Items.Data = {
-            08000000210000000000000000000000FFFFFFFFFFFFFFFF0000000000000000
+            09000000210000000000000000000000FFFFFFFFFFFFFFFF0000000000000000
             08496E74657276616C210000000100000001000000FFFFFFFFFFFFFFFF000000
             00000000000844656661756C7473280000000200000002000000FFFFFFFFFFFF
             FFFF00000000000000000F47656E6572616C204F7074696F6E73290000000300
@@ -1190,7 +1190,9 @@ object frmPopUMain: TfrmPopUMain
             000800000008000000FFFFFFFFFFFFFFFF000000000000000008486F742D4B65
             79732B0000000900000009000000FFFFFFFFFFFFFFFF00000000000000001257
             68697465202F20426C61636B204C697374210000000A0000000A000000FFFFFF
-            FFFFFFFFFF000000000000000008506C75672D496E73}
+            FFFFFFFFFF000000000000000008506C75672D496E732A0000000B0000000B00
+            0000FFFFFFFFFFFFFFFF00000000000000001156697375616C20417070656172
+            616E6365}
         end
         object panOptions: TPanel
           Left = 155
@@ -2668,7 +2670,7 @@ object frmPopUMain: TfrmPopUMain
           Left = 0
           Top = 112
           Width = 137
-          Height = 121
+          Height = 117
           Caption = 
             'PoptrayU is a derivative work of Renier Crause'#39's PopTray 3.2 and' +
             ' much of the code in this application is thus Copyright 2001-200' +
@@ -2749,7 +2751,6 @@ object frmPopUMain: TfrmPopUMain
             Height = 25
             Anchors = [akLeft, akTop, akRight, akBottom]
             Caption = 'Check on-line if newer version available.'
-            Enabled = False
             TabOrder = 1
             OnClick = btnCheckUpdateClick
           end
