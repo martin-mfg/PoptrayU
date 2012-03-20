@@ -41,8 +41,8 @@ const
   // --- version info ---
   MajorVersion = '4';
   MinorVersion = '0';
-  ReleaseVersion = '0';
-  BetaVersion = '2';
+  ReleaseVersion = '3';
+  BetaVersion = '0';
   ReleaseCandidate = '';
 
 const
