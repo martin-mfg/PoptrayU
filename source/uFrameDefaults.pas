@@ -47,7 +47,6 @@ type
     btnStorageLoc: TSpeedButton;
     procedure btnEdProgramClick(Sender: TObject);
     procedure btnEdDefSoundClick(Sender: TObject);
-    procedure btnStorageLocClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
     procedure btnLanguageRefreshClick(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
@@ -138,11 +137,6 @@ begin
   finally
     dlgOpen.Free;
   end;
-end;
-
-procedure TframeDefaults.btnStorageLocClick(Sender: TObject);
-begin
-
 end;
 
 procedure TframeDefaults.btnEdDefSoundClick(Sender: TObject);
