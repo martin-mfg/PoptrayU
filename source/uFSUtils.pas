@@ -144,7 +144,7 @@ begin
 
   // font name
   p    := Pos( ',', sFont );
-  Result.Name := Copy( sFont, 2, p-3 );
+  Result.Name := Copy( sFont, 1, p-1 );
   Delete( sFont, 1, p );
 
   // font size
@@ -192,7 +192,7 @@ begin
     fontStyle := Copy( fontStyle, 2, Length( fontStyle ) - 1 );
   end;
 
-  Result := Format( '"%s", %d, [%s], [%s]',
+  Result := Format( '%s, %d, [%s], [%s]',
     [ Font.Name, Font.Size, fontStyle, ColorToString( Font.Color ) ] );
 end;
 
