@@ -1,6 +1,6 @@
 object frmPopUMain: TfrmPopUMain
-  Left = 255
-  Top = 168
+  Left = 169
+  Top = 152
   Width = 554
   Height = 407
   Caption = 'PopTrayU'
@@ -29,7 +29,7 @@ object frmPopUMain: TfrmPopUMain
     Top = 0
     Width = 538
     Height = 371
-    ActivePage = tsMail
+    ActivePage = tsOptions
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -70,7 +70,7 @@ object frmPopUMain: TfrmPopUMain
           Left = 4
           Top = 6
           Width = 495
-          Height = 32
+          Height = 29
           ActionManager = ActionManager
           Caption = 'Mail'
           ColorMap.HighlightColor = clWhite
@@ -94,9 +94,9 @@ object frmPopUMain: TfrmPopUMain
         end
         object lvMail: TTntListView
           Left = 4
-          Top = 38
+          Top = 35
           Width = 495
-          Height = 269
+          Height = 272
           Align = alClient
           Columns = <
             item
@@ -380,9 +380,9 @@ object frmPopUMain: TfrmPopUMain
         TabOrder = 0
         object tabAccounts: TTabControl
           Left = 4
-          Top = 38
+          Top = 35
           Width = 503
-          Height = 292
+          Height = 295
           Align = alClient
           Images = dm.imlTabs
           MultiLine = True
@@ -396,7 +396,7 @@ object frmPopUMain: TfrmPopUMain
             Left = 4
             Top = 6
             Width = 495
-            Height = 282
+            Height = 285
             Align = alClient
             BevelEdges = []
             BevelInner = bvNone
@@ -915,7 +915,7 @@ object frmPopUMain: TfrmPopUMain
           Left = 4
           Top = 4
           Width = 503
-          Height = 34
+          Height = 31
           ActionManager = ActionManager
           Caption = 'Accounts'
           ColorMap.HighlightColor = clWhite
@@ -1447,16 +1447,16 @@ object frmPopUMain: TfrmPopUMain
         TabOrder = 0
         object spltRules: TSplitter
           Left = 104
-          Top = 38
+          Top = 35
           Width = 5
-          Height = 289
+          Height = 292
           ResizeStyle = rsUpdate
         end
         object RulesToolbar: TActionToolBar
           Left = 4
           Top = 4
           Width = 503
-          Height = 34
+          Height = 31
           ActionManager = ActionManager
           Caption = 'Rules'
           ColorMap.HighlightColor = clWhite
@@ -1479,9 +1479,9 @@ object frmPopUMain: TfrmPopUMain
         end
         object ScrollBox1: TScrollBox
           Left = 109
-          Top = 38
+          Top = 35
           Width = 398
-          Height = 289
+          Height = 292
           Align = alClient
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -1903,9 +1903,9 @@ object frmPopUMain: TfrmPopUMain
         end
         object panRuleList: TPanel
           Left = 4
-          Top = 38
+          Top = 35
           Width = 100
-          Height = 289
+          Height = 292
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 2
@@ -1913,7 +1913,7 @@ object frmPopUMain: TfrmPopUMain
             Left = 0
             Top = 0
             Width = 100
-            Height = 267
+            Height = 270
             OnClickCheck = lstRulesClickCheck
             Align = alClient
             ItemHeight = 13
@@ -1927,7 +1927,7 @@ object frmPopUMain: TfrmPopUMain
           end
           object panRuleListButtons: TPanel
             Left = 0
-            Top = 267
+            Top = 270
             Width = 100
             Height = 22
             Align = alBottom
@@ -2775,7 +2775,7 @@ object frmPopUMain: TfrmPopUMain
             end>
           HideSelection = False
           Items.Data = {
-            810100000600000000000000FFFFFFFFFFFFFFFF020000000000000007506F70
+            BD0100000700000000000000FFFFFFFFFFFFFFFF020000000000000007506F70
             5472617903332E320D52656E6965722043726175736500000000FFFFFFFFFFFF
             FFFF0200000000000000105452656745787072204C6962726172790011416E64
             72657920562E20536F726F6B696E00000000FFFFFFFFFFFFFFFF020000000000
@@ -2786,8 +2786,9 @@ object frmPopUMain: TfrmPopUMain
             696F6E506F7075704D656E75000F53746576652054726566657468656E000000
             00FFFFFFFFFFFFFFFF020000000000000004496E647906392E302E31382B4368
             6164205A2E20486F77657220284B75647A752920616E642074686520496E6479
-            205069742043726577FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FF}
+            20506974204372657700000000FFFFFFFFFFFFFFFF02000000000000000E4875
+            6D616E206F322049636F6E7305312E312E350E4F6C69766572205363686F6C74
+            7AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
           ReadOnly = True
           RowSelect = True
           ParentColor = True

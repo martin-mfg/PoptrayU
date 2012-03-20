@@ -67,8 +67,6 @@ type
     listboxBgBtn: TSpeedButton;
     listboxBgColorBox: TColorBox;
     listboxFgColorBox: TColorBox;
-    Label2: TLabel;
-    Label3: TLabel;
     listboxFgBtn: TSpeedButton;
     resetListboxBtn: TSpeedButton;
     procedure btnFontChangeClick(Sender: TObject);
@@ -200,7 +198,11 @@ procedure TframeVisualAppearance.resetListboxBtnClick(Sender: TObject);
 begin
   lblListboxFontSample.Color := Graphics.clWindow;
   lblListboxFontSample.Font.Color := Graphics.clWindowText;
-  //TODO lblListboxFontSample.Font
+  lblListboxFontSample.Font.Name := 'MS Sans Serif';
+  lblListboxFontSample.Font.Style := [];
+  lblListboxFontSample.Font.Size := 8;
+  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
+
   OptionsChange(resetListboxBtn);
 end;
 
