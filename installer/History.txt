@@ -6,7 +6,12 @@ PopTrayU Version History
  (-) Bug fixed
 
 4.0 (beta 3)
-        (-) Check for new version button fixed and re-enabled.
+        (-) Check for new version of PopTrayU re-enabled
+        (-) Installer correctly creates directory for PopTray.ini
+        (+) Visual Appearance dialog in options allows users to customize the font
+            and colors used by the main window listbox showing new mail. saved to
+            PopTray.ini and restored on startup. Custom skin template has been 
+            modified to add this new icon.
 
 4.0 (beta 2)
         (-) Fixed broken link to help file on accounts tab
