@@ -5,6 +5,9 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 4)
+        (-) Fixed sounds not playing on Windows Vista since beta 2.
+
 4.0 (beta 3)
         (-) Check for new version of PopTrayU re-enabled
         (-) Installer correctly creates directory for PopTray.ini
