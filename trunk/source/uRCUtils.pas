@@ -45,6 +45,7 @@ function ForceWidth(st : string; width : integer) : string;
 function WindowsVersion : string;
 function WindowAt(Form : TTntForm; Left,Top : integer) : boolean;
 function IsWinXP : boolean;
+function IsWinVista : boolean;
 procedure SwapOutMemory;
 procedure EnableControl(Edit : TWinControl; Enabled : boolean);
 
@@ -340,7 +341,10 @@ const
   //SND_NODEFAULT       = $00000002; { if sound is not found, do not play windows default sound }
 begin
   if FileName <> '' then
-    PlaySound(pchar(FileName),0,SND_FILENAME or SND_ASYNC or SND_SYSTEM or SND_SENTRY);
+    if IsWinVista then
+      PlaySound(pchar(FileName),0,SND_FILENAME or SND_ASYNC or SND_SYSTEM or SND_SENTRY)
+    else
+      PlaySound(pchar(FileName),0,SND_FILENAME or SND_ASYNC);
 end;
 
 procedure GetBitmapFromFileIcon(FileName : TFileName; bmp : TBitmap; SplitParams : boolean = False);
@@ -589,6 +593,13 @@ begin
   Result := (Win32Platform  = VER_PLATFORM_WIN32_NT) and
             (((Win32MajorVersion = 5) and (Win32MinorVersion >= 1)) or
             (Win32MajorVersion > 5));
+end;
+
+function IsWinVista : boolean;
+begin
+  Result := (Win32Platform  = VER_PLATFORM_WIN32_NT) and
+            (((Win32MajorVersion = 6) and (Win32MinorVersion >= 0)) or
+            (Win32MajorVersion > 6));
 end;
 
 procedure SwapOutMemory;
