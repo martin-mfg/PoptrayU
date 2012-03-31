@@ -117,7 +117,7 @@ type
     btnHelpAccounts: TBitBtn;
     btnSave: TBitBtn;
     btnCancelAccount: TBitBtn;
-    Label27: TLabel;
+    lblTranslateCaption: TLabel;
     panAboutBottom: TPanel;
     btnHelp: TBitBtn;
     btnHintHelp: TSpeedButton;
@@ -257,12 +257,12 @@ type
     actOpenMessage: TAction;
     IdDecoderQuotedPrintable: TIdDecoderQuotedPrintable;
     IdDecoderMIME1: TIdDecoderMIME;
-    Label9: TLabel;
+    lblDerivative: TLabel;
     Image1: TImage;
     labelAppName: TLabel;
     lblHomepage: TLabel;
     btnCheckUpdate: TButton;
-    ListView1: TListView;
+    lvCredits: TListView;
     lvVolunteers: TListView;
     Label12: TLabel;
     procedure lvVolunteers2Resize(Sender: TObject);
@@ -1972,7 +1972,7 @@ begin
     RefreshProtocols;
 
     // Visual Appearance
-    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont','\"MS Sans Serif\", 8, , [clBlack]'));
+    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont','MS Sans Serif, 8, , [clBlack]'));
     lvMail.Font := Options.ListboxFont;
     Options.ListboxBg := StringToColor(Ini.ReadString('VisualOptions','ListboxBg','clWindow'));
     lvMail.Color := Options.ListboxBg;
@@ -4948,6 +4948,12 @@ begin
     for i := 0 to tvOptions.Items.Count-1 do
       tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);
     tvOptions.Refresh;
+    // Translate column headers for Volunteer Translators Listview (on about page)
+    for i := 0 to lvVolunteers.Columns.Count-1 do
+      lvVolunteers.Columns[i].Caption :=  TranslateDir(lvVolunteers.Columns[i].Caption, LangDirection);
+    // Translate column headers for Component Credits Listview (on about page)
+    for i := 0 to lvCredits.Columns.Count-1 do
+      lvCredits.Columns[i].Caption :=  TranslateDir(lvCredits.Columns[i].Caption, LangDirection);
     // active frame
     if Assigned(frame) then
     begin
@@ -7272,9 +7278,8 @@ begin
     except
       on e: EIdSocketError do
       begin
-        // TODO: Translate this.
-        info := 'Failure connecting to server.' + sLineBreak + e.Message;
-        if ( e.LastError = 11004 ) then info := info + 'Server found, but is not a mail server.';
+        info := Translate('Failure connecting to server.') + sLineBreak + e.Message;
+        if ( e.LastError = 11004 ) then info := info + Translate('Server found, but is not a mail server.');
         ShowMemo(Translate('Connection Info'),info,450,250);
       end;
     end;
