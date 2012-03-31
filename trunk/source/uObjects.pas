@@ -200,6 +200,7 @@ type
   function RuleCompareToStr(rulecompare : TRuleCompare) : string;
   function StrToRuleCompare(st : string) : TRuleCompare;
   function RuleAreaToStr(rulearea : TRuleArea) : string; //uses uObjects
+  function StrToRuleArea(st : string) : TRuleArea;
 
 implementation
 
@@ -580,6 +581,22 @@ begin
   else
     Result := '';
   end;
+end;
+
+
+function StrToRuleArea(st : string) : TRuleArea;
+begin
+  st := LowerCase(st);
+  if st = 'header' then Result := raHeader
+  else if st = 'from' then Result := raFrom
+  else if st = 'subject' then Result := raSubject
+  else if st = 'to' then Result := raTo
+  else if st = 'cc' then Result := raCC
+  else if st = 'from (name)' then Result := raFromName
+  else if st = 'from (address)' then Result := raFromAddress
+  else if st = 'body' then Result := raBody
+  else if st = 'status' then Result := raStatus
+  else Result := raHeader;
 end;
 
 
