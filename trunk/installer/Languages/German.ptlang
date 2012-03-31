@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------
-# PopTray - German Translation
+# PopTrayU - German Translation
 # ----------------------------
 # by / von Michael Motylewski
 #
@@ -8,7 +8,7 @@
 # Michael Baas and Jochen Wackershauser
 #
 #-----------------------------------------------------------------------
-# 2006-08-15  PopTray 3.2
+# 2012-03-31 PopTrayU 4.0.5
 #-----------------------------------------------------------------------
 
 (All Actions)=(Alle Aktionen)
@@ -80,7 +80,6 @@ Check for Mail=Nachrichteneingang prüfen
 Check for new mail every =Nachrichteneingang prüfen alle
 Check for New Mail on Startup=Nachrichteneingang beim Programmstart prüfen
 Check if On-Line=Online-Verbindung prüfen
-Check on-line if newer version available.=Online prüfen, ob eine aktuellere Version von PopTray verfügbar ist.
 Check=Prüfen
 Checked:=Geprüft:
 Checking=Prüfung läuft
@@ -447,3 +446,20 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=X-Schaltfläche minimiert
 Yes=Ja
 You are trying to delete protected messages.=Sie versuchen gerade, geschützte Nachrichten zu löschen.
+Visual Appearance=Optik
+Main Window Listbox Font=Hauptfenster Listenfeld Schriftart
+Change the main window listbox background=Ändern Sie das Hauptfenster Listenfeld Hintergrund
+Change the main window listbox foreground=Ändern Sie das Hauptfenster listbox Vordergrund
+Failure connecting to server.=Ausfall der Verbindung zum Server.
+Server found, but is not a mail server.=Server gefunden, aber nicht ein Mail-Server.
+Change the Main Window Listbox Font=Ändern Sie das Hauptfenster Listenfeld Schriftart
+Clear all customizations=Deaktivieren Sie Sie alle Anpassungen
+HTML View=HTML-Ansicht
+Thanks to the following volunteers who helped translate this software:=Dank an die folgenden Freiwilligen, die mitgeholfen haben diese Software übersetzen
+Language=Sprache
+Translator=Übersetzer
+Component=Komponente
+Author=Autor
+Credits:=Danksagung:
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU ist eine Abwandlung von Renier Crause die PopTray 3,2 und ein Großteil der Code in dieser Anwendung ist somit Copyright 2001-2005 Renier Crause. Vielen Dank an für die Entwicklung PopTray Renier, und für die Unterstützung seiner Dienstleistungen.
+Check online for newer version=Online überprüfen nach einer neueren Version
