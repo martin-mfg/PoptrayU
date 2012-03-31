@@ -10,7 +10,7 @@ interface
 
 uses
   Windows, SysUtils, Graphics, Forms, Buttons, StdCtrls, Controls, Types,
-  Classes, Dialogs, TypInfo, TntForms;
+  Classes, Dialogs, TypInfo, TntForms, TntComCtrls, ActnCtrls, CommCtrl;
 
 type
   TSetOfChar = set of char;
@@ -102,6 +102,20 @@ function ParamSwitchValue(index : integer) : string;
 // visual
 procedure AutoSizeCheckBox(chkBox : TCheckBox);
 procedure AutoSizeAllCheckBox(Control : TWinControl);
+
+// misc. from uMain
+function NumOnly(st : string) : integer;
+function CompareInt(st1,st2 : string) : integer;
+function CompareDate(st1,st2 : string) : integer;
+function StripSubjectPrefix(const st : string) : string;
+function StringToColorDef(st : string; DefColor : TColor) : TColor;
+function StringToColorDef2(st : string; DefColor : TColor) : TColor;
+function ColorToString2(Color : TColor) : string;
+function DarkColor(col : TColor) : Boolean;
+function MixColors(col1,col2 : TColor) : TColor;
+procedure ClearImpairedCode(var str : string);
+procedure SetColumnImage(lv : TTntListView; ColumnIndex,ImageIndex : integer);
+procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word);
 
 const
   HH_DISPLAY_TOPIC = $0000;
@@ -1177,6 +1191,170 @@ begin
     if (Control.Controls[i] is TCheckBox) then
       AutoSizeCheckBox(Control.Controls[i] as TCheckBox);
 end;
+
+
+function NumOnly(st : string) : integer;
+var
+  i : integer;
+  s : string;
+begin
+  s := '';
+  for i := 1 to Length(st) do
+    if st[i] in ['0'..'9'] then
+      s := s + st[i];
+  Result := StrToInt(s);
+end;
+
+function CompareInt(st1,st2 : string) : integer;
+begin
+  if NumOnly(st1) = NumOnly(st2) then
+    Result := 0
+  else begin
+    if NumOnly(st1) > NumOnly(st2) then
+      Result := 1
+    else
+      Result := -1;
+  end;
+end;
+
+function CompareDate(st1,st2 : string) : integer;
+var
+  date1,date2 : TDateTime;
+begin
+  date1 := StrToFloat(st1);
+  date2 := StrToFloat(st2);
+  if date1 = date2 then
+    Result := 0
+  else begin
+    if date1 > date2 then
+      Result := 1
+    else
+      Result := -1;
+  end;
+end;
+
+function StripSubjectPrefix(const st : string) : string;
+var
+  ipos : integer;
+begin
+  Result := st;
+  ipos := Pos(':',st);
+  if ipos in [3..4] then
+     Delete(Result,1,ipos+1);
+end;
+
+function StringToColorDef(st : string; DefColor : TColor) : TColor;
+begin
+  try
+    if st='' then
+      Result := DefColor
+    else
+      Result := StringToColor(st);
+  except
+    Result := DefColor;
+  end;
+end;
+
+function StringToColorDef2(st : string; DefColor : TColor) : TColor;
+begin
+  try
+    // fix bug with using clLime in tray
+    if st = 'clLime' then st := '$0000F900';
+    Result := StringToColor(st);
+  except
+    Result := DefColor;
+  end;
+end;
+
+function ColorToString2(Color : TColor) : string;
+begin
+  if Color = $0000F900 then // fix bug with using clLime in tray
+    Result := 'clLime'
+  else
+    Result := ColorToString(Color);
+end;
+
+function DarkColor(col : TColor) : Boolean;
+var
+  r,g,b : integer;
+begin
+  if (col = clBlack) or (col = clNavy) or (col = clBlue) or
+     (col = clMaroon) or (col = clRed) or (col = clGreen) or
+     (col = clPurple) or (col = clTeal) or (col = clGray) or
+     (col = clOlive) or (col = clFuchsia) then //dark colors
+  begin
+    Result := True;
+  end
+  else begin
+    if (col = clWhite) or (col = clYellow) or (col = clSilver) or
+       (col = clAqua) or (col = $0000F900) then // light colors
+    begin
+      Result := False
+    end
+    else begin
+      //try it with RGB
+      GetRGB(col,r,g,b);
+      Result := ((r+g+b) div 3) < 128;
+    end;
+  end;
+end;
+
+function MixColors(col1,col2 : TColor) : TColor;
+var
+  r,g,b : integer;
+  r1,g1,b1 : integer;
+  r2,g2,b2 : integer;
+begin
+  GetRGB(col1,r1,g1,b1);
+  GetRGB(col2,r2,g2,b2);
+  r := (r1+r2) div 2;
+  g := (g1+g2) div 2;
+  b := (b1+b2) div 2;
+  Result := (b shl 16) + (g shl 8) + r;
+end;
+
+
+procedure ClearImpairedCode(var str : string);
+////////////////////////////////////////////////////////////////////////////////
+// Clear half completed %hh values from end of string (BG: 12.09.2002)
+var
+   indLastPercent : integer;
+begin
+   indLastPercent := LastDelimiter('%', str);
+   if ( indLastPercent > 0 ) and ( Length(str) < indLastPercent + 2 ) then
+        str := LeftStr(str, indLastPercent - 1);
+end;
+
+
+
+procedure SetColumnImage(lv : TTntListView; ColumnIndex,ImageIndex : integer);
+var
+  Column : TLVColumn; //uses CommCtrl
+begin
+  // set image on right of text
+  with Column do
+  begin
+    mask := LVCF_FMT or LVCF_IMAGE;
+    fmt := LVCFMT_IMAGE or LVCFMT_BITMAP_ON_RIGHT or LVCFMT_COL_HAS_IMAGES;
+    if lv.Columns[ColumnIndex].Alignment = taRightJustify then
+      fmt := fmt or LVCFMT_RIGHT;
+    iImage := ImageIndex;
+  end;
+  lv.Columns[ColumnIndex].ImageIndex := ImageIndex;
+  if ImageIndex <> -1 then
+    ListView_SetColumn(lv.Handle, ColumnIndex, Column);
+end;
+
+procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word); //uses ActnCtrls
+var
+  i : integer;
+begin
+  if Assigned(ToolBar.ActionClient) then
+    for i := 0 to ToolBar.ActionClient.Items.Count-1 do
+      if IsAccel(Key,ToolBar.ActionClient.Items[i].Control.Caption) then
+        ToolBar.ActionClient.Items[i].Control.Action.Execute;
+end;
+
 
 end.
 

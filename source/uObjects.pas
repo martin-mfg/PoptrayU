@@ -196,7 +196,10 @@ type
     property Items[Index: Integer]: TRuleItem read GetItem write SetItem; default;
   end;
 
-
+  // Functions for converting Rules to Strings and vice versa
+  function RuleCompareToStr(rulecompare : TRuleCompare) : string;
+  function StrToRuleCompare(st : string) : TRuleCompare;
+  function RuleAreaToStr(rulearea : TRuleArea) : string; //uses uObjects
 
 implementation
 
@@ -535,6 +538,47 @@ begin
     finally
       EndUpdate;
     end;
+  end;
+end;
+
+function RuleAreaToStr(rulearea : TRuleArea) : string; //uses uObjects
+begin
+  case rulearea of
+    raHeader     : Result := 'Header';
+    raFrom       : Result := 'From';
+    raSubject    : Result := 'Subject';
+    raTo         : Result := 'To';
+    raCC         : Result := 'CC';
+    raFromName   : Result := 'From (name)';
+    raFromAddress: Result := 'From (address)';
+    raBody       : Result := 'Body';
+    raStatus     : Result := 'Status';
+  else
+    Result := '';
+  end;
+end;
+
+function StrToRuleCompare(st : string) : TRuleCompare;
+begin
+  st := LowerCase(st);
+  if st = 'contains' then Result := rcContains
+  else if st = 'equals' then Result := rcEquals
+  else if st = 'wildcard' then Result := rcWildcard
+  else if st = 'empty' then Result := rcEmpty
+  else if st = 'reg expr' then Result := rcRegExpr
+  else Result := rcContains;
+end;
+
+function RuleCompareToStr(rulecompare : TRuleCompare) : string;
+begin
+  case rulecompare of
+    rcContains    : Result := 'Contains';
+    rcEquals      : Result := 'Equals';
+    rcWildcard    : Result := 'Wildcard';
+    rcEmpty       : Result := 'Empty';
+    rcRegExpr     : Result := 'Reg Expr';
+  else
+    Result := '';
   end;
 end;
 
