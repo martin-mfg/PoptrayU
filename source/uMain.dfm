@@ -1,6 +1,6 @@
 object frmPopUMain: TfrmPopUMain
-  Left = 172
-  Top = 151
+  Left = 163
+  Top = 221
   Width = 549
   Height = 412
   Caption = 'PopTrayU'
