@@ -1311,7 +1311,7 @@ begin
       Position := poScreenCenter;
       TranslateForm(dlg);
       Caption := Translate(Caption);
-      Result := ShowModal;
+      Result := ShowModal();
     finally
       Free;
     end;
@@ -1643,6 +1643,7 @@ begin
       QuickCheck := Ini.ReadBool('Options','QuickCheck',TRUE);
       CheckWhileMinimized := Ini.ReadBool('Options','CheckWhileMinimized',FALSE);
       IgnoreRetrieveErrors := Ini.ReadBool('Options','IgnoreRetrieveErrors',FALSE);
+      ShowErrorsInBalloons := Ini.ReadBool('Options','ShowErrorsInBalloons',FALSE);
       Online := Ini.ReadBool('Options','CheckOnline',FALSE);
       TopLines := Ini.ReadInteger('Options','TopLines',0);
       GetBody := Ini.ReadBool('Options','GetBody',FALSE);
@@ -1845,6 +1846,7 @@ begin
       Ini.WriteBool('Options','QuickCheck',QuickCheck);
       Ini.WriteBool('Options','CheckWhileMinimized',CheckWhileMinimized);
       Ini.WriteBool('Options','IgnoreRetrieveErrors',IgnoreRetrieveErrors);
+      Ini.WriteBool('Options','ShowErrorsInBalloons',ShowErrorsInBalloons);
       Ini.WriteBool('Options','CheckOnline',Online);
       Ini.WriteInteger('Options','TopLines',TopLines);
       Ini.WriteBool('Options','GetBody',GetBody);
@@ -3579,16 +3581,21 @@ begin
   if MailItem.ToDelete then Result := mToDelete;
 end;
 
+////////////////////////////////////////////////////////////////////////////////
+// Show an Error Message Dialog (eg: Socket Error connecting to get mail
 procedure TfrmPopUMain.ErrorMsg(num: integer; Heading,Msg: string; IgnoreError : boolean);
 begin
   Accounts[num-1].Error := True;
   Accounts[num-1].Status := Translate(Heading)+' '+Trim(Msg)+HintSep+DateTimeToStr(Now);
   ShowIcon(num,itError);
+  // if the user has not opted through saved options to ignore error dialogs
   if not IgnoreError then
   begin
-    if not FMinimized then
+    if not FMinimized and not Options.ShowErrorsInBalloons then
+      // Show error message as a modal dialog
       TranslateDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0)
     else
+      // Show error message as a balloon popup on the tray icon
       Balloon(Translate(Heading),Trim(msg),bitError,15);
   end;
 end;

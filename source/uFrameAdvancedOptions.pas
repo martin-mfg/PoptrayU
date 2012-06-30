@@ -36,6 +36,7 @@ type
     chkOnline: TCheckBox;
     chkIgnoreRetrieveErrors: TCheckBox;
     chkCheckWhileMinimized: TCheckBox;
+    chkShowErrorsInBalloons: TCheckBox;
     edTimeOut: TEdit;
     chkQuickCheck: TCheckBox;
     chkRetrieveTop: TCheckBox;
@@ -78,6 +79,7 @@ begin
   chkNoError.Checked := Options.NoError;
   chkIgnoreRetrieveErrors.Checked := Options.IgnoreRetrieveErrors;
   chkCheckWhileMinimized.Checked := Options.CheckWhileMinimized;
+  chkShowErrorsInBalloons.Checked := Options.ShowErrorsInBalloons;
   chkOnline.Checked := Options.Online;
   chkRetrieveTop.Checked := Options.TopLines>0;
   if chkRetrieveTop.Checked then edTopLines.Text := IntToStr(Options.TopLines);
@@ -125,6 +127,7 @@ begin
     Options.QuickCheck := chkQuickCheck.Checked;
     Options.NoError := chkNoError.Checked;
     Options.IgnoreRetrieveErrors := chkIgnoreRetrieveErrors.Checked;
+    Options.ShowErrorsInBalloons := chkShowErrorsInBalloons.Checked;
     Options.CheckWhileMinimized := chkCheckWhileMinimized.Checked;
     Options.Online := chkOnline.Checked;
     Options.TopLines := StrToIntDef(edTopLines.Text,0);

@@ -5,6 +5,11 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 5)
+        (+) Added a new advanced option to prefer balloon popups instead of modal
+            dialogs, optionally giving the app the same behavior for error messages
+            when minimized and non-minimized.
+
 4.0 (beta 4)
         (-) Fixed sounds not playing on Windows Vista since beta 2.
 

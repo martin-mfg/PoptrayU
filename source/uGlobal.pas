@@ -53,6 +53,7 @@ var
     QuickCheck : boolean;
     CheckWhileMinimized : boolean;
     IgnoreRetrieveErrors : boolean;
+    ShowErrorsInBalloons : boolean;
     Online : boolean;
     TopLines : integer;
     GetBody : boolean;
