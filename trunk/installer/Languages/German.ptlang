@@ -8,7 +8,8 @@
 # Michael Baas and Jochen Wackershauser
 #
 #-----------------------------------------------------------------------
-# 2012-03-31 PopTrayU 4.0.5
+# 2012-03-29 PopTrayU 4.0.3
+# 2012-06-29 PopTrayU 4.0.5
 #-----------------------------------------------------------------------
 
 (All Actions)=(Alle Aktionen)
@@ -446,6 +447,10 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=X-Schaltfläche minimiert
 Yes=Ja
 You are trying to delete protected messages.=Sie versuchen gerade, geschützte Nachrichten zu löschen.
+
+#---------------------------------------------------------------------
+# New Strings for PopTrayU 4.x
+#---------------------------------------------------------------------
 Visual Appearance=Optik
 Main Window Listbox Font=Hauptfenster Listenfeld Schriftart
 Change the main window listbox background=Ändern Sie das Hauptfenster Listenfeld Hintergrund
@@ -463,3 +468,8 @@ Author=Autor
 Credits:=Danksagung:
 PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU ist eine Abwandlung von Renier Crause die PopTray 3,2 und ein Großteil der Code in dieser Anwendung ist somit Copyright 2001-2005 Renier Crause. Vielen Dank an für die Entwicklung PopTray Renier, und für die Unterstützung seiner Dienstleistungen.
 Check online for newer version=Online überprüfen nach einer neueren Version
+# New strings for 4.0.5
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Zeige Fehler auf Balloon Tipp (Anstelle von modaler Dialoge)
+Changes how errors are shown when the main window is visible.=Dies ändert, wie Fehler angezeigt werden, wenn das Hauptfenster sichtbar ist.
+Error checking=Fehler beim Prüfen
+#end

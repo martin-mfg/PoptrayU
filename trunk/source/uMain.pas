@@ -458,7 +458,8 @@ type
     procedure TranslateForm(form : TTntForm); overload;
     procedure TranslateForm(form : TForm); overload;
     function TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
-                          Buttons: TMsgDlgButtons; HelpCtx: Longint): Integer;
+                          Buttons: TMsgDlgButtons; HelpCtx: Longint;
+                          DialogCaption : string = ''): Integer;
     function TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
                           Buttons: TMsgDlgButtons; HelpCtx: Longint) : TTntForm;
     function DeleteMail(num,msgnum : integer; UID : string='') : boolean;
@@ -1068,6 +1069,8 @@ begin
           if FStop then
             Accounts[num-1].Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now)
           else
+            // This is where an error message is trapped if the account is
+            // unable to connect to the server on a routine check
             ErrorMsg(num,'Connect Error:',e.Message,Options.NoError);
           Accounts[num-1].Error := True;
           Result := -1;
@@ -1298,8 +1301,12 @@ begin
   end;
 end;
 
+////////////////////////////////////////////////////////////////////////////////
+// Creates and shows a modal dialog box (eg: for error messages) including
+// translating the caption
 function TfrmPopUMain.TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
-                                  Buttons: TMsgDlgButtons; HelpCtx: Integer): Integer;
+                                  Buttons: TMsgDlgButtons; HelpCtx: Integer;
+                                  DialogCaption : string = '' ): Integer;
 var
   dlg : TForm;
 begin
@@ -1310,7 +1317,12 @@ begin
       HelpContext := HelpCtx;
       Position := poScreenCenter;
       TranslateForm(dlg);
-      Caption := Translate(Caption);
+      // If a title for the dialog was passed in as a parameter, use it,
+      // otherwise, show the default dialog title for the specified dialog
+      // type (eg: "Error")
+      if (DialogCaption <> '')
+        then Caption := Translate(DialogCaption) //use provided dialog title
+        else Caption := Translate(Caption);
       Result := ShowModal();
     finally
       Free;
@@ -3593,10 +3605,10 @@ begin
   begin
     if not FMinimized and not Options.ShowErrorsInBalloons then
       // Show error message as a modal dialog
-      TranslateDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0)
+      TranslateDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+Accounts[num-1].Name)
     else
       // Show error message as a balloon popup on the tray icon
-      Balloon(Translate(Heading),Trim(msg),bitError,15);
+      Balloon(Translate(Heading)+' ('+ Accounts[num-1].Name+')',Trim(msg),bitError,15);
   end;
 end;
 
