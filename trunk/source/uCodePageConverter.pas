@@ -71,6 +71,7 @@ uses
 {******************************************************************************}
 implementation
 {******************************************************************************}
+uses uGlobal;
 
 var
   codePageMap: THashedStringList;
@@ -118,12 +119,22 @@ end; {AnsiStringToWideString}
 
 
 {:Determines the numeric code page id for a particular code page name.
-  @param   codePageName Code page to convert (expected to be lowercase)
+  @param   codePageName Code page to convert (expected to be lowercase and trimmed)
   @returns numeric code page id or 1252 (US Windows) if invalid codePageName
 }
 function GetCodePageId(const codePageName : AnsiString) : word;
 begin
-  Result := StrToInt(codePageMap.Values[codePageName]);
+  try
+    Result := StrToInt(codePageMap.Values[codePageName]);
+  except
+    on Exception : EConvertError do
+      if not Options.IgnoreRetrieveErrors then
+      begin
+        //ErrorMsg(num,'Retrieve Error:',e.Message,Options.IgnoreRetrieveErrors);
+        TranslateDlg(Translate('Code Page/Encoding Requested')+': '+codePageName+#13#10#13#10+Translate('Would you like to see this encoding added in future versions?')+#13#10#13#10+Translate('Report this at http://poptrayu.sourceforge.net'), mtError, [mbOK], 0,Translate('Unsupported Text Encoding');
+      end;
+      Result := 1252;
+    end;
   if Result = 0 then Result := 1252;
 end;
 
@@ -147,7 +158,17 @@ initialization
   codePageMap.Add ('asmo-708=708');
   codePageMap.Add ('big5=950');
   codePageMap.Add ('cp1025=21025');
+  codePageMap.Add ('cp1250=1250');
+  codePageMap.Add ('cp1251=1251');
+  codePageMap.Add ('cp1252=1252');
+  codePageMap.Add ('cp1253=1253');
+  codePageMap.Add ('cp1254=1254');
+  codePageMap.Add ('cp1255=1255');
+  codePageMap.Add ('cp1256=1256');
+  codePageMap.Add ('cp1257=1257');
+  codePageMap.Add ('cp1258=1258');
   codePageMap.Add ('cp866=866');
+  codePageMap.Add ('cp874=874');
   codePageMap.Add ('cp875=875');
   codePageMap.Add ('csiso2022jp=50221');
   codePageMap.Add ('dos-720=720');
