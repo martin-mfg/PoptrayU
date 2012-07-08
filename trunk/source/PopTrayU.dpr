@@ -67,15 +67,22 @@ begin
   begin
     // check for previous instance
     hFirstWin := FindWindow('TfrmPopUMain', nil);
-    if hFirstWin <> 0 then
+    if (hfirstWin = 0) then
     begin
-      // get window caption
-      SetLength(WindowCaption,100);
-      GetWindowText(hFirstWin,pchar(WindowCaption),100);
-      SetLength(WindowCaption,Pos(#0,WindowCaption)-1);
+      // If on a unicode platform, the class will have a different
+      // name because of TntControls.UNICODE_CLASS_EXT being added
+      hFirstWin := FindWindow('TfrmPopUMain.UnicodeClass', nil);
+    end;
+    //if existing instance found
+    if (hFirstWin <> 0) then
+    begin
+      //// get window caption
+      //SetLength(WindowCaption,100);
+      //GetWindowText(hFirstWin,pchar(WindowCaption),100);
+      //SetLength(WindowCaption,Pos(#0,WindowCaption)-1);
       // not in IDE?
-      if WindowCaption <> 'PopTrayU' then
-      begin
+      //if WindowCaption = 'PopTrayU' then
+      //begin
         param := ParamSwitchIndex('ACTION');
         if param > 0 then
         begin
@@ -91,7 +98,7 @@ begin
             PostMessage(hFirstWin, UM_ACTIVATE, 0, 0);
         end;
         Exit;
-      end;
+      //end;
     end;
     if ParamSwitch('QUIT') then
       Exit;
