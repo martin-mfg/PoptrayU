@@ -59,7 +59,6 @@ uses
 
 var
   hFirstWin : HWND;
-  WindowCaption : string;
   param : integer;
 
 begin
@@ -69,40 +68,43 @@ begin
     hFirstWin := FindWindow('TfrmPopUMain', nil);
     if (hfirstWin = 0) then
     begin
-      // If on a unicode platform, the class will have a different
-      // name because of TntControls.UNICODE_CLASS_EXT being added
+      // If on a unicode platform, the class will have a different name.
       hFirstWin := FindWindow('TfrmPopUMain.UnicodeClass', nil);
     end;
-    //if existing instance found
-    if (hFirstWin <> 0) then
+    //if existing instance found AND we are NOT running in the debugger
+    if (hFirstWin <> 0) AND (DebugHook = 0) then
     begin
-      //// get window caption
-      //SetLength(WindowCaption,100);
-      //GetWindowText(hFirstWin,pchar(WindowCaption),100);
-      //SetLength(WindowCaption,Pos(#0,WindowCaption)-1);
-      // not in IDE?
-      //if WindowCaption = 'PopTrayU' then
-      //begin
-        param := ParamSwitchIndex('ACTION');
-        if param > 0 then
-        begin
+      // If /ACTION specified on command line, execute actions, then quit
+      param := ParamSwitchIndex('ACTION');
+      if (param > 0) then
+      begin
           repeat
             PostMessage(hFirstWin, UM_ACTION, Integer(StrToAction(ParamSwitchValue(param))), 0);
             param := ParamSwitchIndex('ACTION',param);
           until param = 0;
-        end
-        else begin
-          if ParamSwitch('QUIT') then
-            PostMessage(hFirstWin, UM_QUIT, 0, 0)
-          else
-            PostMessage(hFirstWin, UM_ACTIVATE, 0, 0);
-        end;
-        Exit;
-      //end;
-    end;
-    if ParamSwitch('QUIT') then
+          Exit;
+      end;
+
+      // If /QUIT switch given, Kill other instance and then quit this one.
+      if ParamSwitch('QUIT') then
+      begin
+          PostMessage(hFirstWin, UM_QUIT, 0, 0);
+          Exit;
+      end;
+
+      // If user launches a second instance without /MULTIPLE switch,
+      // Give focus to existing instance rather than launching a second copy.
+      PostMessage(hFirstWin, UM_ACTIVATE, 0, 0);
       Exit;
+    end;
+    // If /QUIT specified but app isn't already running, just exit
+    if ParamSwitch('QUIT') then Exit;
   end;
+
+  // we expect to get here if the user specified /MULTIPLE, or if we've
+  // fallen through the previous cases because PopTrayU isn't already
+  // running, or if we are running in the debugger. In these cases, continue
+  // initialization and start our new instance of the App/UI/etc.
   Application.Initialize;
   Application.ShowMainForm := False;
   Application.Title := 'PopTrayU'; //App Title on Windows Taskbar

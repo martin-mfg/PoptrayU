@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=4
 MinorVer=0
 Release=5
-Build=4
+Build=6
 Debug=1
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.5.4
+FileVersion=4.0.5.6
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
@@ -134,7 +134,7 @@ OriginalFilename=
 ProductName=
 ProductVersion=4.0
 Comments=Freeware and Open-Source
-URL=TBD
+URL=poptrayu.sourceforge.net
 [Excluded Packages]
 c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Components
 [HistoryLists\hlDebugSourcePath]
