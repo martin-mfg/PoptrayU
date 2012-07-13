@@ -6,6 +6,8 @@ PopTrayU Version History
  (-) Bug fixed
 
 4.0 (beta 5)
+        (-) Running a second instance should bring the first instance to the front
+            unless /MULTIPLE is specified. Behavior fixed to match PopTray 3.2.
         (+) Added a new advanced option to prefer balloon popups instead of modal
             dialogs, optionally giving the app the same behavior for error messages
             when minimized and non-minimized.
