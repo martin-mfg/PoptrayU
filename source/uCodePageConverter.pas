@@ -71,7 +71,10 @@ uses
 {******************************************************************************}
 implementation
 {******************************************************************************}
-uses uGlobal;
+uses
+  uGlobal, (* for Options *)
+  uMain,   (* for Tranlate & TranslateDlg *)
+  Dialogs; (* for mtError *)
 
 var
   codePageMap: THashedStringList;
@@ -128,14 +131,29 @@ begin
     Result := StrToInt(codePageMap.Values[codePageName]);
   except
     on Exception : EConvertError do
+    begin
+      // show error message describing the error (unless disabled via options)
       if not Options.IgnoreRetrieveErrors then
       begin
-        //ErrorMsg(num,'Retrieve Error:',e.Message,Options.IgnoreRetrieveErrors);
-        TranslateDlg(Translate('Code Page/Encoding Requested')+': '+codePageName+#13#10#13#10+Translate('Would you like to see this encoding added in future versions?')+#13#10#13#10+Translate('Report this at http://poptrayu.sourceforge.net'), mtError, [mbOK], 0,Translate('Unsupported Text Encoding');
+      frmPopUMain.TranslateDlg(
+          frmPopUMain.Translate('Code Page/Encoding Requested')+
+          ': '+codePageName+#13#10#13#10+
+          frmPopUMain.Translate(
+            'Would you like to see this encoding added in future versions?')+
+          #13#10#13#10+
+          frmPopUMain.Translate(
+            'Report this at http://poptrayu.sourceforge.net'),
+          mtError, [mbOK], 0,
+          frmPopUMain.Translate('Unsupported Text Encoding'));
       end;
+
+      // Pick a (hopefully) reasonable default to fallback to
       Result := 1252;
     end;
-  if Result = 0 then Result := 1252;
+  end;
+
+  // Probably-unnecessary paranoid duplicate sanity check.
+  if (Result = 0) then Result := 1252;
 end;
 
 
