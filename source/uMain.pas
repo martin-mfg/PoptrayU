@@ -455,8 +455,7 @@ type
     function TranslateToEnglish(phrase : string) : string;
     function Translate(english : string) : string;
     procedure TranslateFrame(frame : TFrame);
-    procedure TranslateForm(form : TTntForm); overload;
-    procedure TranslateForm(form : TForm); overload;
+    procedure TranslateForm(form : TForm);
     function TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
                           Buttons: TMsgDlgButtons; HelpCtx: Longint;
                           DialogCaption : string = ''): Integer;
@@ -608,8 +607,7 @@ type
     procedure StopAll;
     // translation
     function TranslateDir(st : string; LangDirection : TLangDirection) : string;
-    procedure TranslateFormDir(form : TTntForm; LangDirection : TLangDirection); overload;
-    procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection); overload;
+    procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection);
     procedure TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
     procedure ReadTranslateStrings;
     procedure SetProp(obj : TObject; PropName : string; ToEnglish : boolean=False);
@@ -1270,20 +1268,6 @@ begin
   begin
     ReadTranslateStrings;
     TranslateFrameDir(frame,FromEnglish);
-  end;
-end;
-
-procedure TfrmPopUMain.TranslateForm(form : TTntForm);
-begin
-  if (FLastLanguage <> Options.Language) or (form <> Self) then
-  begin
-    if FLastLanguage <> 0 then
-      TranslateFormDir(form,ToEnglish);
-    if Options.Language <> 0 then
-    begin
-      ReadTranslateStrings;
-      TranslateFormDir(form,FromEnglish);
-    end;
   end;
 end;
 
@@ -4711,7 +4695,7 @@ begin
     Result := Translate(st);
 end;
 
-procedure TfrmPopUMain.TranslateFormDir(form : TTntForm; LangDirection : TLangDirection);
+procedure TfrmPopUMain.TranslateFormDir(form : TForm; LangDirection : TLangDirection);
 var
   i,j,k : integer;
   TransToEnglish : boolean;
@@ -4760,90 +4744,6 @@ begin
     // Translate column headers for Component Credits Listview (on about page)
     for i := 0 to lvCredits.Columns.Count-1 do
       lvCredits.Columns[i].Caption :=  TranslateDir(lvCredits.Columns[i].Caption, LangDirection);
-    // active frame
-    if Assigned(frame) then
-    begin
-      TranslateFrameDir(frame,LangDirection);
-      if (frame is TframeDefaults) then
-        (frame as TframeDefaults).ShowLanguages;
-    end;
-    // popup menus
-    for i := 0 to dm.mnuMail.Items.Count-1 do
-    begin
-      dm.mnuMail.Items[i].Caption := TranslateDir(dm.mnuMail.Items[i].Caption,LangDirection);
-      if dm.mnuMail.Items[i].Count > 0 then
-        for j := 0 to dm.mnuMail.Items[i].Count-1 do
-        begin
-          dm.mnuMail.Items[i].Items[j].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Caption,LangDirection);
-          if dm.mnuMail.Items[i].Items[j].Count > 0 then
-            for k := 0 to dm.mnuMail.Items[i].Items[j].Count-1 do
-              dm.mnuMail.Items[i].Items[j].Items[k].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Items[k].Caption,LangDirection);
-        end;
-    end;
-    for i := 0 to dm.mnuTray.Items.Count-1 do
-      dm.mnuTray.Items[i].Caption := TranslateDir(dm.mnuTray.Items[i].Caption,LangDirection);
-    for i := 0 to dm.mnuColumns.Items.Count-1 do
-    begin
-      dm.mnuColumns.Items[i].Caption := TranslateDir(dm.mnuColumns.Items[i].Caption,LangDirection);
-      if dm.mnuColumns.Items[i].Count > 0 then
-        for j := 0 to dm.mnuColumns.Items[i].Count-1 do
-          dm.mnuColumns.Items[i].Items[j].Caption := TranslateDir(dm.mnuColumns.Items[i].Items[j].Caption,LangDirection);
-    end;
-    // rules re-align
-    AutoSizeAllCheckBox(gbRule);
-    AutoSizeAllCheckBox(gbActions);
-    edRuleWav.Left := chkRuleWav.Left + chkRuleWav.Width + 4;
-    edRuleWav.Width := btnEdRuleWav.Left - edRuleWav.Left - 2;
-    edRuleEXE.Left := chkRuleEXE.Left + chkRuleEXE.Width + 4;
-    edRuleEXE.Width := btnEdRuleEXE.Left - edRuleEXE.Left - 2;
-    colRuleTrayColor.Left := chkRuleTrayColor.Left + chkRuleTrayColor.Width + 4;
-    colRuleTrayColor.Width := gbActions.Width - colRuleTrayColor.Left - 4;
-  end;
-end;
-
-procedure TfrmPopUMain.TranslateFormDir(form : TForm; LangDirection : TLangDirection);
-var
-  i,j,k : integer;
-  TransToEnglish : boolean;
-begin
-  TransToEnglish := LangDirection = ToEnglish;
-  for i := 0 to form.ComponentCount-1 do
-  begin
-    // all captions and hints
-    SetProp(form.Components[i],'Caption',TransToEnglish);
-    SetProp(form.Components[i],'Hint',TransToEnglish);
-    // list view headers
-    if form.Components[i] is TTntListView then
-    begin
-      for j := 0 to (form.Components[i] as TTntListView).Columns.Count-1 do
-        SetProp((form.Components[i] as TTntListView).Column[j],'Caption',TransToEnglish)
-    end;
-  end;
-  if form = Self then
-  begin
-    // constant strings
-    FKB := Translate(FKB);
-    // rule accounts
-    ChangeItem(cmbRuleAccount,0,TranslateDir(cmbRuleAccount.Items[0],LangDirection));
-    // rule areas
-    for i := 0 to cmbRuleArea.Items.Count-1 do
-      ChangeItem(cmbRuleArea,i,TranslateDir(cmbRuleArea.Items[i],LangDirection));
-    // rule compares
-    for i := 0 to cmbRuleComp.Items.Count-1 do
-      ChangeItem(cmbRuleComp,i,TranslateDir(cmbRuleComp.Items[i],LangDirection));
-    // rule status
-    for i := 0 to cmbRuleStatus.Items.Count-1 do
-      ChangeItem(cmbRuleStatus,i,TranslateDir(cmbRuleStatus.Items[i],LangDirection));
-    // rule operator
-    for i := 0 to cmbRuleOperator.Items.Count-1 do
-      ChangeItem(cmbRuleOperator,i,TranslateDir(cmbRuleOperator.Items[i],LangDirection));
-    // languages
-    for i := 0 to Length(Options.Languages)-1 do
-      Options.Languages[i] := TranslateDir(Options.Languages[i],LangDirection);
-    // options treeview
-    for i := 0 to tvOptions.Items.Count-1 do
-      tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);
-    tvOptions.Refresh;
     // active frame
     if Assigned(frame) then
     begin
