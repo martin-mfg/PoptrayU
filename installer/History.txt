@@ -8,9 +8,10 @@ PopTrayU Version History
 4.0 (beta 5)
         (-) Running a second instance should bring the first instance to the front
             unless /MULTIPLE is specified. Behavior fixed to match PopTray 3.2.
+        (-) Unexpected subject character page encodings should no longer cause
+            error: '' is not a valid integer value 
         (+) Added a new advanced option to prefer balloon popups instead of modal
-            dialogs, optionally giving the app the same behavior for error messages
-            when minimized and non-minimized.
+            dialogs (for error messages, when not minimized to tray)
 
 4.0 (beta 4)
         (-) Fixed sounds not playing on Windows Vista since beta 2.
