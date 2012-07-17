@@ -129,7 +129,7 @@ Section "PopTrayU (required)" SecPopTrayU
   	IfErrors ClosePopTrayU OtherFiles
   ClosePopTrayU:
   	; close running PopTrayU
-  	FindWindow ${HWND} "TfrmPopMain"
+  	FindWindow ${HWND} "TfrmPopUMain.UnicodeClass"
   	IntCmp ${Count} 1 Print Send Send
   Print:
   	DetailPrint "Closing existing PopTrayU"
