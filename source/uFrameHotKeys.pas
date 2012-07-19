@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TframeHotKeys = class(TFrame)
@@ -41,6 +41,9 @@ type
     hkHotKey2: THotKey;
     hkHotKey3: THotKey;
     hkHotKey4: THotKey;
+    imgInfo: TImage;
+    labelHotKeyInfo: TLabel;
+    Panel1: TPanel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);

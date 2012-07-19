@@ -32,7 +32,7 @@ uses
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
   SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder, TntForms,
-  TntStdCtrls;
+  TntStdCtrls, RegExpr;
 
 type
   TfrmPreview = class(TTntForm)
@@ -107,6 +107,7 @@ type
     memMail: TRichEdit;
     actOpenMessage: TAction;
     WebBrowser1: TWebBrowser;
+    ImageToggle: TAction;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -119,6 +120,7 @@ type
     procedure actPrintExecute(Sender: TObject);
     procedure actReplyExecute(Sender: TObject);
     procedure actDeleteExecute(Sender: TObject);
+    procedure actToggleImages(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAttachmentSaveExecute(Sender: TObject);
     procedure lvAttachmentsSelectItem(Sender: TObject; Item: TListItem;
@@ -138,6 +140,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure actOpenMessageExecute(Sender: TObject);
     procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
+    procedure ImageToggleExecute(Sender: TObject);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -147,6 +150,7 @@ type
     FCustomized : boolean;
     FEnter : boolean;
     FTab : integer;
+    HtmlImagesEnabled : boolean;
     procedure DeleteTempFiles;
     procedure AddFileToDelete(FileName : string);
     procedure LoadActionManager;
@@ -758,21 +762,53 @@ end;
 procedure TfrmPreview.LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
 ////////////////////////////////////////////////////////////////////////////////
 // Loads static HTML into a web browser component.
+const
+  imgTag = '(?i)<img[^>]+>';//'(?i)<img[^>]+/(img)?>';
+  mapTag = '(?i)</img[^>]+>';
 var
-   sl: TStringList;
-   ms: TMemoryStream;
+  sl: TStringList;
+  ms: TMemoryStream;
+  regex : TRegExpr;
+  cleanedtext : string;
+  cleanedtext2 : string;
 begin
-   BrowserComponent.Navigate('about:blank') ;
-   while BrowserComponent.ReadyState < READYSTATE_INTERACTIVE do
-     Application.ProcessMessages;
 
-   if Assigned(BrowserComponent.Document) then
-   begin
+  if (NOT HtmlImagesEnabled) then
+  begin
+
+  regex := TRegExpr.Create; // Create object
+  try // ensure memory release
+
+    // filter out IMG tags
+    regex.Expression := imgTag;
+    if regex.Exec(RawHtml)
+      then cleanedtext := regex.Substitute (RawHtml)
+      else cleanedtext := RawHtml;
+
+    // filter out MAP tags
+    regex.Expression := mapTag;
+    if regex.Exec(cleanedtext)
+      then cleanedtext2 := regex.Substitute(cleanedtext)
+      else cleanedtext2 := cleanedtext;
+
+
+    finally regex.Free;
+  end;
+
+  end
+  else cleanedtext2 := RawHtml;
+
+  BrowserComponent.Navigate('about:blank') ;
+  while BrowserComponent.ReadyState < READYSTATE_INTERACTIVE do
+    Application.ProcessMessages;
+
+  if Assigned(BrowserComponent.Document) then
+  begin
      sl := TStringList.Create;
      try
        ms := TMemoryStream.Create;
        try
-         sl.Text := RawHtml;
+         sl.Text := cleanedtext2;
          sl.SaveToStream(ms);
          ms.Seek(0, 0);
          (BrowserComponent.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms)) ;
@@ -782,7 +818,7 @@ begin
      finally
        sl.Free;
      end;
-   end;
+  end;
 end;
 
 procedure TfrmPreview.actSaveExecute(Sender: TObject);
@@ -831,6 +867,16 @@ begin
   finally
     SaveDialog.Free;
   end;
+end;
+
+
+
+procedure TfrmPreview.actToggleImages(Sender: TObject);
+////////////////////////////////////////////////////////////////////////////////
+// Print
+begin
+    //do stuff?
+
 end;
 
 
@@ -944,6 +990,7 @@ begin
   end;
 
 end;
+
 
 procedure TfrmPreview.lvAttachmentsSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 var
@@ -1130,6 +1177,15 @@ begin
   finally
     MsgLines.Free;
   end;
+end;
+
+
+procedure TfrmPreview.ImageToggleExecute(Sender: TObject);
+begin
+   HtmlImagesEnabled := NOT HtmlImagesEnabled;
+
+   // reload contents of HTML preview
+   LoadHtmlIntoBrowser(WebBrowser1, FHtml);
 end;
 
 end.
