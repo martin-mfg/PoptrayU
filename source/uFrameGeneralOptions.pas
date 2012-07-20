@@ -42,6 +42,9 @@ type
     edFirstWait: TEdit;
     lblSeconds: TLabel;
     chkDeleteNextCheck: TCheckBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);

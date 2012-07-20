@@ -31,18 +31,27 @@ uses
 
 type
   TframeInterval = class(TFrame)
-    chkTimerAccount: TCheckBox;
-    panInterval: TPanel;
-    btnNever: TSpeedButton;
     lblMinutes: TLabel;
-    lblCheckEvery: TLabel;
     edTime: TEdit;
     UpDown: TUpDown;
-    procedure btnNeverClick(Sender: TObject);
+    lblAnd: TLabel;
+    chkDontCheckTimes: TCheckBox;
+    dtStart: TDateTimePicker;
+    dtEnd: TDateTimePicker;
+    grpInterval: TGroupBox;
+    radioCheckEvery: TRadioButton;
+    radioNever: TRadioButton;
+    radioTimerAccount: TRadioButton;
+    chkOnline: TCheckBox;
+    grpExcept: TGroupBox;
+    chkCheckWhileMinimized: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure UpDownClick(Sender: TObject; Button: TUDBtnType);
+    procedure chkDontCheckTimesClick(Sender: TObject);
+    procedure radioNeverClick(Sender: TObject);
+    procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,14 +74,33 @@ begin
   frmPopUMain.TranslateFrame(self);
   edTime.Tag := 1;
   // options to screen
-  chkTimerAccount.Checked := Options.TimerAccount;
   edTime.Text := FloatToStr(Options.Interval);
+  radioTimerAccount.Checked := Options.TimerAccount;
+  if NOT radioTimerAccount.Checked then
+  begin
+    radioCheckEvery.Checked := Options.Interval > 0;
+    radioNever.Checked := Options.Interval <= 0;
+  end;
+  edTime.Enabled := radioCheckEvery.Checked;
+  UpDown.Enabled := radioCheckEvery.Checked;
+
+  chkOnline.Checked := Options.Online;
+
+  chkCheckWhileMinimized.Checked := Options.CheckWhileMinimized;
+
+  chkDontCheckTimes.Checked := Options.DontCheckTimes;
+  dtStart.Time := Options.DontCheckStart;
+  dtEnd.Time := Options.DontCheckEnd;
   // autosize
-  AutoSizeCheckBox(chkTimerAccount);
-  edTime.Left := lblCheckEvery.Left + lblCheckEvery.Width + 4;
+  AutoSizeCheckBox(radioCheckEvery);
+  edTime.Left := radioCheckEvery.Left + radioCheckEvery.Width + 4;
   UpDown.Left := edTime.Left + edTime.Width;
   lblMinutes.Left := UpDown.Left + UpDown.Width + 4;
-  btnNever.Left := edTime.Left + (edTime.Width+UpDown.Width) div 2 - (btnNever.Width div 2);
+
+  AutoSizeCheckBox(chkDontCheckTimes);
+  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
 
   Options.Busy := False;
 end;
@@ -86,7 +114,14 @@ begin
   begin
     // screen to options
     Options.Interval := StrToFloatDef(edTime.Text,5); //UpDown.Position;
-    Options.TimerAccount := chkTimerAccount.Checked;
+    Options.TimerAccount := radioTimerAccount.Checked;
+
+    Options.Online := chkOnline.Checked;
+    Options.CheckWhileMinimized := chkCheckWhileMinimized.Checked;
+    Options.DontCheckTimes := chkDontCheckTimes.Checked;
+    Options.DontCheckStart := dtStart.Time;
+    Options.DontCheckEnd := dtEnd.Time;
+
     // buttons
     if (Sender = edTime) and (edTime.Tag = 1) then
       edTime.Tag := 0
@@ -96,17 +131,10 @@ begin
       frmPopUMain.btnCancel.Enabled := True;
     end;
   end;
-  panInterval.Visible := not Options.TimerAccount;
-  frmPopUMain.panIntervalAccount.Visible := Options.TimerAccount;
-end;
 
-procedure TframeInterval.btnNeverClick(Sender: TObject);
-begin
-  UpDown.Position := 0;
-  UpDown.Associate := edTime;
-  OptionsChange(UpDown);
+  edTime.Enabled := radioCheckEvery.Checked;
+  UpDown.Enabled := radioCheckEvery.Checked;
 end;
-
 
 procedure TframeInterval.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -119,6 +147,27 @@ begin
   UpDown.Position := round(Options.Interval);
   UpDown.Associate := edTime;
   OptionsChange(UpDown);
+end;
+
+procedure TframeInterval.chkDontCheckTimesClick(Sender: TObject);
+begin
+  dtStart.Enabled := chkDontCheckTimes.Checked;
+  dtEnd.Enabled := chkDontCheckTimes.Checked;
+  OptionsChange(chkDontCheckTimes);
+end;
+
+
+procedure TframeInterval.radioNeverClick(Sender: TObject);
+begin
+  UpDown.Position := 0;
+  UpDown.Associate := edTime;
+  OptionsChange(UpDown);
+end;
+
+procedure TframeInterval.FrameResize(Sender: TObject);
+begin
+    Self.Refresh; //refresh to make labels not disappear in Vista
+  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
 end;
 
 end.
