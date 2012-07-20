@@ -33,17 +33,16 @@ type
   TframeAdvancedMisc = class(TFrame)
     chkLogRules: TCheckBox;
     chkUseMAPI: TCheckBox;
-    chkSafeDelete: TCheckBox;
-    chkRememberViewed: TCheckBox;
     chkBlackListSpam: TCheckBox;
-    chkDontCheckTimes: TCheckBox;
-    dtStart: TDateTimePicker;
-    lblAnd: TLabel;
-    dtEnd: TDateTimePicker;
+    Label2: TLabel;
+    Label3: TLabel;
+    chkDeleteConfirm: TCheckBox;
+    chkDeleteConfirmProtected: TCheckBox;
+    Label1: TLabel;
+    chkDeleteNextCheck: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure chkDontCheckTimesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,20 +63,18 @@ begin
   inherited;
   Options.Busy := True;
   frmPopUMain.TranslateFrame(self);
+
   // screen to options
+  chkDeleteConfirm.Checked := Options.DeleteConfirm;
+  chkDeleteConfirmProtected.Checked := Options.DeleteConfirmProtected;
+  chkDeleteNextCheck.Checked := Options.DeleteNextCheck;
+
   chkUseMAPI.Checked := Options.UseMAPI;
-  chkSafeDelete.Checked := Options.SafeDelete;
   chkLogRules.Checked := Options.LogRules;
-  chkRememberViewed.Checked := Options.RememberViewed;
   chkBlackListSpam.Checked := Options.BlackListSpam;
-  chkDontCheckTimes.Checked := Options.DontCheckTimes;
-  dtStart.Time := Options.DontCheckStart;
-  dtEnd.Time := Options.DontCheckEnd;
+
   // autosize
   AutoSizeAllCheckBox(Self);
-  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
-  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
-  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
   Options.Busy := False;
 end;
 
@@ -86,14 +83,14 @@ begin
   if not Options.Busy then
   begin
     // screen to options
+    Options.DeleteNextCheck := chkDeleteNextCheck.Checked;
+    Options.DeleteConfirm := chkDeleteConfirm.Checked;
+    Options.DeleteConfirmProtected := chkDeleteConfirmProtected.Checked;
+
     Options.UseMAPI := chkUseMAPI.Checked;
-    Options.SafeDelete := chkSafeDelete.Checked;
     Options.LogRules := chkLogRules.Checked;
-    Options.RememberViewed := chkRememberViewed.Checked;
     Options.BlackListSpam := chkBlackListSpam.Checked;
-    Options.DontCheckTimes := chkDontCheckTimes.Checked;
-    Options.DontCheckStart := dtStart.Time;
-    Options.DontCheckEnd := dtEnd.Time;
+
     // buttons
     frmPopUMain.btnSaveOptions.Enabled := True;
     frmPopUMain.btnCancel.Enabled := True;
@@ -104,13 +101,6 @@ procedure TframeAdvancedMisc.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
-end;
-
-procedure TframeAdvancedMisc.chkDontCheckTimesClick(Sender: TObject);
-begin
-  dtStart.Enabled := chkDontCheckTimes.Checked;
-  dtEnd.Enabled := chkDontCheckTimes.Checked;
-  OptionsChange(chkDontCheckTimes);
 end;
 
 end.

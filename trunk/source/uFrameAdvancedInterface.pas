@@ -32,7 +32,6 @@ uses
 type
   TframeAdvancedInterface = class(TFrame)
     chkOnTop: TCheckBox;
-    chkDeleteConfirm: TCheckBox;
     chkCloseMinimize: TCheckBox;
     chkDoubleClickDelay: TCheckBox;
     chkMinimizeTray: TCheckBox;
@@ -40,14 +39,11 @@ type
     edPassword: TEdit;
     chkShowViewed: TCheckBox;
     chkMultilineAccounts: TCheckBox;
-    chkAdvInfo: TCheckBox;
     chkHideViewed: TCheckBox;
-    lblTrayIcon: TLabel;
-    cmbCheckingIcon: TComboBox;
-    edAdvInfoDelay: TEdit;
-    lblAdvInfoDelay: TLabel;
     chkShowWhileChecking: TCheckBox;
-    chkDeleteConfirmProtected: TCheckBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    chkRememberViewed: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -66,36 +62,26 @@ uses uMain, uGlobal, uRCUtils;
 {$R *.dfm}
 
 constructor TframeAdvancedInterface.Create(AOwner: TComponent);
-var
-  i : integer;
 begin
   inherited;
   Options.Busy := True;
   frmPopUMain.TranslateFrame(self);
-  for i := 0 to cmbCheckingIcon.Items.Count-1 do
-    cmbCheckingIcon.Items[i] := frmPopUMain.Translate(cmbCheckingIcon.Items[i]);
   // options to screen
   chkShowViewed.Checked := Options.ShowViewed;
+  chkRememberViewed.Checked := Options.RememberViewed;
   chkCloseMinimize.Checked := Options.CloseMinimize;
   chkDoubleClickDelay.Checked := Options.DoubleClickDelay;
   chkMinimizeTray.Checked := Options.MinimizeTray;
   chkMultilineAccounts.Checked := Options.MultilineAccounts;
-  chkDeleteConfirm.Checked := Options.DeleteConfirm;
-  chkDeleteConfirmProtected.Checked := Options.DeleteConfirmProtected;
   chkPasswordProtect.Checked := Options.PasswordProtect;
   edPassword.Text := Options.Password;
   chkOnTop.Checked := Options.OnTop;
-  chkAdvInfo.Checked := Options.AdvInfo;
-  edAdvInfoDelay.Text := IntToStr(Options.AdvInfoDelay);
   chkHideViewed.Checked := Options.HideViewed;
-  cmbCheckingIcon.ItemIndex := Options.CheckingIcon;
   chkShowWhileChecking.Checked := Options.ShowWhileChecking;
+
   // autosize
   AutoSizeAllCheckBox(Self);
   edPassword.Left := chkPasswordProtect.Left + chkPasswordProtect.Width + 4;
-  edAdvInfoDelay.Left := chkAdvInfo.Left + chkAdvInfo.Width + 2;
-  lblAdvInfoDelay.Left := edAdvInfoDelay.Left + edAdvInfoDelay.Width + 2;
-  cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + 4;
 
   Options.Busy := False;
 end;
@@ -104,25 +90,20 @@ procedure TframeAdvancedInterface.OptionsChange(Sender: TObject);
 begin
   // show password box
   EnableControl(edPassword,chkPasswordProtect.Checked);
-  EnableControl(edAdvInfoDelay,chkAdvInfo.Checked);
-  lblAdvInfoDelay.Enabled := chkAdvInfo.Checked;
+
   if not Options.Busy then
   begin
     // screen to options
     Options.ShowViewed := chkShowViewed.Checked;
+    Options.RememberViewed := chkRememberViewed.Checked;
     Options.CloseMinimize := chkCloseMinimize.Checked;
     Options.DoubleClickDelay := chkDoubleClickDelay.Checked;
     Options.MinimizeTray := chkMinimizeTray.Checked;
     Options.MultilineAccounts := chkMultilineAccounts.Checked;
-    Options.DeleteConfirm := chkDeleteConfirm.Checked;
-    Options.DeleteConfirmProtected := chkDeleteConfirmProtected.Checked;
     Options.PasswordProtect := chkPasswordProtect.Checked;
     Options.Password := edPassword.Text;
     Options.OnTop := chkOnTop.Checked;
-    Options.AdvInfo := chkAdvInfo.Checked;
-    Options.AdvInfoDelay := StrToIntDef(edAdvInfoDelay.Text,0);
     Options.HideViewed := chkHideViewed.Checked;
-    Options.CheckingIcon := cmbCheckingIcon.ItemIndex;
     Options.ShowWhileChecking := chkShowWhileChecking.Checked;
     // enable buttons
     frmPopUMain.btnSaveOptions.Enabled := True;

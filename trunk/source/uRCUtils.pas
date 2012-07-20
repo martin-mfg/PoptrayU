@@ -100,7 +100,8 @@ function ParamNonSwitch(index : integer) : string;
 function ParamSwitchValue(index : integer) : string;
 
 // visual
-procedure AutoSizeCheckBox(chkBox : TCheckBox);
+procedure AutoSizeCheckBox(chkBox : TCheckBox); overload;
+procedure AutoSizeCheckBox(chkBox : TRadioButton); overload;
 procedure AutoSizeAllCheckBox(Control : TWinControl);
 
 // misc. from uMain
@@ -1166,7 +1167,24 @@ end;
 
 //------------------------------------------------------------------- Visual ---
 
-procedure AutoSizeCheckBox(chkBox : TCheckBox);
+procedure AutoSizeCheckBox(chkBox : TCheckBox); overload;
+var
+  Rect : TRect;
+  Canvas : TCanvas;
+begin
+  Rect := chkBox.ClientRect;
+  Canvas := TCanvas.Create;
+  try
+    Canvas.Font := chkBox.Font;
+    Canvas.Handle := GetDC(0);
+    DrawText(Canvas.Handle, PChar(chkBox.Caption), Length(chkBox.Caption), Rect, DT_CALCRECT);
+    chkBox.Width := Rect.Right - Rect.Left + 20;
+  finally
+    Canvas.Free;
+  end;
+end;
+
+procedure AutoSizeCheckBox(chkBox : TRadioButton);
 var
   Rect : TRect;
   Canvas : TCanvas;

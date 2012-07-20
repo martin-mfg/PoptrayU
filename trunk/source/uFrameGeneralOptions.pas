@@ -41,10 +41,15 @@ type
     lblFirstWait: TLabel;
     edFirstWait: TEdit;
     lblSeconds: TLabel;
-    chkDeleteNextCheck: TCheckBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    cmbCheckingIcon: TComboBox;
+    lblTrayIcon: TLabel;
+    lblAdvInfoDelay: TLabel;
+    chkAdvInfo: TCheckBox;
+    edAdvInfoDelay: TEdit;
+    lblAdvInfoShowFor: TLabel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -66,10 +71,14 @@ uses uMain, uGlobal, uRCUtils;
 { TframeGeneralOptions }
 
 constructor TframeGeneralOptions.Create(AOwner: TComponent);
+var
+  i : integer;
 begin
   inherited;
   Options.Busy := True;
   frmPopUMain.TranslateFrame(self);
+  for i := 0 to cmbCheckingIcon.Items.Count-1 do
+    cmbCheckingIcon.Items[i] := frmPopUMain.Translate(cmbCheckingIcon.Items[i]);
   // options to screen
   chkStartUp.Checked := Options.StartUp;
   edFirstWait.Text := IntToStr(Options.FirstWait);
@@ -77,13 +86,20 @@ begin
   chkAnimated.Checked := Options.Animated;
   chkResetTray.Checked := Options.ResetTray;
   chkRotateIcon.Checked := Options.RotateIcon;
+  cmbCheckingIcon.ItemIndex := Options.CheckingIcon;
   chkShowForm.Checked := Options.ShowForm;
   chkBalloon.Checked := Options.Balloon;
-  chkDeleteNextCheck.Checked := Options.DeleteNextCheck;
+  chkAdvInfo.Checked := Options.AdvInfo;
+  edAdvInfoDelay.Text := IntToStr(Options.AdvInfoDelay);
   // autosize
   AutoSizeAllCheckBox(Self);
   edFirstWait.Left := lblFirstWait.Left + lblFirstWait.Width + 4;
   lblSeconds.Left := edFirstWait.Left + edFirstWait.Width + 4;
+  cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + 4;
+
+  lblAdvInfoShowFor.Left := chkAdvInfo.Left + chkAdvInfo.Width + 2;
+  edAdvInfoDelay.Left := lblAdvInfoShowFor.Left + lblAdvInfoShowFor.Width + 2;
+  lblAdvInfoDelay.Left := edAdvInfoDelay.Left + edAdvInfoDelay.Width + 2;
 
   ShowFirstWait;
   Options.Busy := False;
@@ -109,6 +125,12 @@ end;
 
 procedure TframeGeneralOptions.OptionsChange(Sender: TObject);
 begin
+  // Enable/disable controls
+  EnableControl(chkAdvInfo, chkBalloon.Checked);
+  EnableControl(edAdvInfoDelay,chkAdvInfo.Checked AND chkBalloon.Checked);
+  lblAdvInfoShowFor.Enabled := chkAdvInfo.Checked AND chkBalloon.Checked;
+  lblAdvInfoDelay.Enabled := chkAdvInfo.Checked AND chkBalloon.Checked;
+
   if not Options.Busy then
   begin
     // screen to options
@@ -118,9 +140,11 @@ begin
     Options.Animated := chkAnimated.Checked;
     Options.ResetTray := chkResetTray.Checked;
     Options.RotateIcon := chkRotateIcon.Checked;
+    Options.CheckingIcon := cmbCheckingIcon.ItemIndex;
     Options.ShowForm := chkShowForm.Checked;
     Options.Balloon := chkBalloon.Checked;
-    Options.DeleteNextCheck := chkDeleteNextCheck.Checked;
+    Options.AdvInfo := chkAdvInfo.Checked;
+    Options.AdvInfoDelay := StrToIntDef(edAdvInfoDelay.Text,0);
     ShowFirstWait;
     // buttons
     frmPopUMain.btnSaveOptions.Enabled := True;

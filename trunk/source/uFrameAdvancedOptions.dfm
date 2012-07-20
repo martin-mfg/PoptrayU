@@ -2,43 +2,82 @@ object frameAdvancedOptions: TframeAdvancedOptions
   Left = 0
   Top = 0
   Width = 338
-  Height = 232
+  Height = 294
   TabOrder = 0
   OnResize = FrameResize
   DesignSize = (
     338
-    232)
+    294)
   object lblTimeOut: TLabel
     Left = 28
-    Top = 6
+    Top = 22
     Width = 100
     Height = 13
     Caption = 'Connection TimeOut:'
   end
   object lblSeconds: TLabel
     Left = 176
-    Top = 6
+    Top = 22
     Width = 40
     Height = 13
     Caption = 'seconds'
   end
   object lblGetBodyLines: TLabel
     Left = 204
-    Top = 178
+    Top = 262
     Width = 21
     Height = 13
     Caption = 'lines'
   end
   object lblGetBodySize: TLabel
-    Left = 224
-    Top = 154
+    Left = 232
+    Top = 242
     Width = 14
     Height = 13
     Caption = 'KB'
   end
+  object Label1: TLabel
+    Left = 8
+    Top = 96
+    Width = 82
+    Height = 13
+    Caption = 'Error Handling'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 4
+    Width = 137
+    Height = 13
+    Caption = 'Advanced POP Settings'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 184
+    Width = 292
+    Height = 13
+    Caption = 'Message Download (Enable to use advanced rules)'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object chkIgnoreRetrieveErrors: TCheckBox
     Left = 8
-    Top = 63
+    Top = 132
     Width = 141
     Height = 17
     Hint = 'Ignore errors that occurs while retrieving the header info.'
@@ -49,7 +88,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object edTimeOut: TEdit
     Left = 132
-    Top = 2
+    Top = 18
     Width = 41
     Height = 21
     Hint = 
@@ -61,7 +100,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkQuickCheck: TCheckBox
     Left = 8
-    Top = 28
+    Top = 42
     Width = 161
     Height = 17
     Hint = 
@@ -76,7 +115,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkRetrieveTop: TCheckBox
     Left = 8
-    Top = 116
+    Top = 202
     Width = 109
     Height = 17
     Hint = 
@@ -89,7 +128,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object edTopLines: TEdit
     Left = 120
-    Top = 113
+    Top = 199
     Width = 33
     Height = 21
     Hint = 'Number of message lines to preview.'
@@ -99,7 +138,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkNoError: TCheckBox
     Left = 8
-    Top = 45
+    Top = 112
     Width = 153
     Height = 17
     Hint = 
@@ -113,7 +152,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkGetBody: TCheckBox
     Left = 8
-    Top = 134
+    Top = 222
     Width = 169
     Height = 17
     Hint = 
@@ -127,7 +166,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object edGetBodyLines: TEdit
     Left = 168
-    Top = 174
+    Top = 260
     Width = 33
     Height = 21
     Hint = 'Maximum number of lines to download.'
@@ -137,7 +176,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkGetBodySize: TCheckBox
     Left = 24
-    Top = 152
+    Top = 242
     Width = 165
     Height = 17
     Hint = 
@@ -150,7 +189,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object edGetBodySize: TEdit
     Left = 188
-    Top = 150
+    Top = 238
     Width = 33
     Height = 21
     Hint = 
@@ -162,7 +201,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkGetBodyLines: TCheckBox
     Left = 24
-    Top = 176
+    Top = 262
     Width = 141
     Height = 17
     Hint = 'Maximum number of lines to download.'
@@ -173,13 +212,28 @@ object frameAdvancedOptions: TframeAdvancedOptions
   end
   object chkShowErrorsInBalloons: TCheckBox
     Left = 8
-    Top = 83
+    Top = 152
     Width = 325
     Height = 17
     Hint = 'Changes how errors are shown when the main window is visible.'
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Show Errors in Balloon Popups (Instead of Modal Dialogs)'
     TabOrder = 11
+    OnClick = OptionsChange
+    OnMouseDown = HelpMouseDown
+  end
+  object chkSafeDelete: TCheckBox
+    Left = 8
+    Top = 62
+    Width = 221
+    Height = 17
+    Hint = 
+      'Use the POP3 UIDL command to check that message is still the sam' +
+      'e'#13#10'before deleting it.'
+    Caption = '&Safe Delete (using UIDL)'
+    Checked = True
+    State = cbChecked
+    TabOrder = 12
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
