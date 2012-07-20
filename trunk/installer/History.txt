@@ -5,6 +5,15 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 6)
+        (+) Custom added to list of options for account colors.
+        (*) Options screens have been re-organized to be easier to navigate.
+            No options have been removed, but a few have been renamed or moved
+            to a different screen.
+        (*) Some of the images in the program have been updated to give the
+            program a more modern feel.
+
+
 4.0 (beta 5)
         (-) Running a second instance should bring the first instance to the front
             unless /MULTIPLE is specified. Behavior fixed to match PopTray 3.2.
