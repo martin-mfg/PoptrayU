@@ -1,27 +1,66 @@
 object frameGeneralOptions: TframeGeneralOptions
   Left = 0
   Top = 0
-  Width = 251
-  Height = 210
+  Width = 274
+  Height = 241
   TabOrder = 0
   OnResize = FrameResize
   object lblFirstWait: TLabel
     Left = 36
-    Top = 23
+    Top = 35
     Width = 44
     Height = 13
     Caption = 'First Wait'
   end
   object lblSeconds: TLabel
     Left = 116
-    Top = 23
+    Top = 35
     Width = 40
     Height = 13
     Caption = 'seconds'
   end
+  object Label1: TLabel
+    Left = 4
+    Top = 4
+    Width = 89
+    Height = 13
+    Caption = 'Startup Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 4
+    Top = 84
+    Width = 102
+    Height = 13
+    Caption = 'Tray Icon Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 4
+    Top = 156
+    Width = 113
+    Height = 13
+    Caption = 'Notification Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object chkMinimized: TCheckBox
     Left = 7
-    Top = 42
+    Top = 54
     Width = 220
     Height = 17
     Hint = 
@@ -34,7 +73,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkAnimated: TCheckBox
     Left = 7
-    Top = 60
+    Top = 96
     Width = 220
     Height = 17
     Hint = 
@@ -47,7 +86,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkResetTray: TCheckBox
     Left = 7
-    Top = 96
+    Top = 132
     Width = 220
     Height = 17
     Hint = 
@@ -61,7 +100,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkStartUp: TCheckBox
     Left = 7
-    Top = 4
+    Top = 16
     Width = 220
     Height = 17
     Hint = 'Immediately check for mail when PopTray starts.'
@@ -72,7 +111,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkShowForm: TCheckBox
     Left = 7
-    Top = 132
+    Top = 188
     Width = 220
     Height = 17
     Hint = 'Show the PopTray window when new mail arrives.'
@@ -83,9 +122,9 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkRotateIcon: TCheckBox
     Left = 7
-    Top = 78
-    Width = 220
-    Height = 17
+    Top = 114
+    Width = 222
+    Height = 15
     Hint = 'Rotate Icon to show messages in each account'
     Caption = '&Rotate Icon for each Account'
     TabOrder = 4
@@ -94,7 +133,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkBalloon: TCheckBox
     Left = 7
-    Top = 114
+    Top = 170
     Width = 220
     Height = 17
     Hint = 'Show Info Balloon or Advanced Info when new mail arrives.'
@@ -105,7 +144,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object edFirstWait: TEdit
     Left = 84
-    Top = 19
+    Top = 31
     Width = 29
     Height = 21
     Hint = 
@@ -118,7 +157,7 @@ object frameGeneralOptions: TframeGeneralOptions
   end
   object chkDeleteNextCheck: TCheckBox
     Left = 7
-    Top = 152
+    Top = 224
     Width = 220
     Height = 17
     Hint = 

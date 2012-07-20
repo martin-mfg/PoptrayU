@@ -33,9 +33,7 @@ type
   TframeAdvancedOptions = class(TFrame)
     lblTimeOut: TLabel;
     lblSeconds: TLabel;
-    chkOnline: TCheckBox;
     chkIgnoreRetrieveErrors: TCheckBox;
-    chkCheckWhileMinimized: TCheckBox;
     chkShowErrorsInBalloons: TCheckBox;
     edTimeOut: TEdit;
     chkQuickCheck: TCheckBox;
@@ -78,9 +76,7 @@ begin
   chkQuickCheck.Checked := Options.QuickCheck;
   chkNoError.Checked := Options.NoError;
   chkIgnoreRetrieveErrors.Checked := Options.IgnoreRetrieveErrors;
-  chkCheckWhileMinimized.Checked := Options.CheckWhileMinimized;
   chkShowErrorsInBalloons.Checked := Options.ShowErrorsInBalloons;
-  chkOnline.Checked := Options.Online;
   chkRetrieveTop.Checked := Options.TopLines>0;
   if chkRetrieveTop.Checked then edTopLines.Text := IntToStr(Options.TopLines);
   chkGetBody.Checked := Options.GetBody;
@@ -128,8 +124,7 @@ begin
     Options.NoError := chkNoError.Checked;
     Options.IgnoreRetrieveErrors := chkIgnoreRetrieveErrors.Checked;
     Options.ShowErrorsInBalloons := chkShowErrorsInBalloons.Checked;
-    Options.CheckWhileMinimized := chkCheckWhileMinimized.Checked;
-    Options.Online := chkOnline.Checked;
+
     Options.TopLines := StrToIntDef(edTopLines.Text,0);
     Options.GetBody := chkGetBody.Checked;
     Options.GetBodyLines := StrToIntDef(edGetBodyLines.Text,0);
