@@ -1,31 +1,31 @@
 object frameInterval: TframeInterval
   Left = 0
   Top = 0
-  Width = 305
+  Width = 299
   Height = 218
   TabOrder = 0
   TabStop = True
   DesignSize = (
-    305
+    299
     218)
   object grpInterval: TGroupBox
     Left = 4
     Top = 4
-    Width = 296
-    Height = 93
+    Width = 290
+    Height = 85
     Anchors = [akLeft, akTop, akRight]
     Caption = 'How often should PopTrayU check for new mail?'
     TabOrder = 0
     object lblMinutes: TLabel
       Left = 204
-      Top = 24
+      Top = 22
       Width = 39
       Height = 13
       Caption = 'minutes.'
     end
     object radioCheckEvery: TRadioButton
       Left = 8
-      Top = 22
+      Top = 20
       Width = 149
       Height = 17
       Caption = 'C&heck for new mail every'
@@ -34,8 +34,8 @@ object frameInterval: TframeInterval
     end
     object radioNever: TRadioButton
       Left = 8
-      Top = 45
-      Width = 341
+      Top = 40
+      Width = 253
       Height = 17
       Caption = 'Don'#39't automatically check for new messages'
       TabOrder = 1
@@ -43,8 +43,8 @@ object frameInterval: TframeInterval
     end
     object radioTimerAccount: TRadioButton
       Left = 8
-      Top = 68
-      Width = 345
+      Top = 60
+      Width = 265
       Height = 17
       Hint = 'Specify a different timer interval for each account.'
       Caption = 'Set &Interval per Account'
@@ -54,7 +54,7 @@ object frameInterval: TframeInterval
     end
     object edTime: TEdit
       Left = 152
-      Top = 20
+      Top = 18
       Width = 29
       Height = 21
       Hint = 
@@ -67,7 +67,7 @@ object frameInterval: TframeInterval
     end
     object UpDown: TUpDown
       Left = 181
-      Top = 20
+      Top = 18
       Width = 17
       Height = 21
       Max = 999
@@ -78,15 +78,15 @@ object frameInterval: TframeInterval
   end
   object grpExcept: TGroupBox
     Left = 4
-    Top = 108
-    Width = 296
+    Top = 100
+    Width = 290
     Height = 85
     Anchors = [akLeft, akTop, akRight]
-    Caption = 'Except'
+    Caption = 'Interval Check Conditions'
     TabOrder = 1
     object lblAnd: TLabel
       Left = 195
-      Top = 60
+      Top = 62
       Width = 18
       Height = 13
       Alignment = taCenter
@@ -94,7 +94,7 @@ object frameInterval: TframeInterval
     end
     object dtEnd: TDateTimePicker
       Left = 220
-      Top = 56
+      Top = 58
       Width = 57
       Height = 21
       Date = 37759.333333333340000000
@@ -107,7 +107,7 @@ object frameInterval: TframeInterval
     end
     object chkDontCheckTimes: TCheckBox
       Left = 8
-      Top = 58
+      Top = 60
       Width = 153
       Height = 17
       Hint = 
@@ -120,7 +120,7 @@ object frameInterval: TframeInterval
     end
     object dtStart: TDateTimePicker
       Left = 136
-      Top = 56
+      Top = 58
       Width = 57
       Height = 21
       Date = 37759.833333333340000000
@@ -133,7 +133,7 @@ object frameInterval: TframeInterval
     end
     object chkOnline: TCheckBox
       Left = 8
-      Top = 16
+      Top = 20
       Width = 269
       Height = 17
       Hint = 
@@ -147,7 +147,7 @@ object frameInterval: TframeInterval
     end
     object chkCheckWhileMinimized: TCheckBox
       Left = 8
-      Top = 36
+      Top = 40
       Width = 181
       Height = 17
       Hint = 

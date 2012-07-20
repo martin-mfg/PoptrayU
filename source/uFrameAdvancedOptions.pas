@@ -47,6 +47,10 @@ type
     edGetBodySize: TEdit;
     lblGetBodySize: TLabel;
     chkGetBodyLines: TCheckBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    chkSafeDelete: TCheckBox;
+    Label3: TLabel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -74,6 +78,7 @@ begin
   // options to screen
   edTimeOut.Text := IntToStr(Options.TimeOut);
   chkQuickCheck.Checked := Options.QuickCheck;
+  chkSafeDelete.Checked := Options.SafeDelete;
   chkNoError.Checked := Options.NoError;
   chkIgnoreRetrieveErrors.Checked := Options.IgnoreRetrieveErrors;
   chkShowErrorsInBalloons.Checked := Options.ShowErrorsInBalloons;
@@ -121,6 +126,8 @@ begin
     // screen to options
     Options.TimeOut := StrToIntDef(edTimeOut.Text,120);
     Options.QuickCheck := chkQuickCheck.Checked;
+    Options.SafeDelete := chkSafeDelete.Checked;
+
     Options.NoError := chkNoError.Checked;
     Options.IgnoreRetrieveErrors := chkIgnoreRetrieveErrors.Checked;
     Options.ShowErrorsInBalloons := chkShowErrorsInBalloons.Checked;

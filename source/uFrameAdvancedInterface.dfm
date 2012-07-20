@@ -1,69 +1,63 @@
 object frameAdvancedInterface: TframeAdvancedInterface
   Left = 0
   Top = 0
-  Width = 304
-  Height = 252
+  Width = 318
+  Height = 262
   TabOrder = 0
   OnResize = FrameResize
-  object lblTrayIcon: TLabel
-    Left = 24
-    Top = 8
-    Width = 117
+  object Label1: TLabel
+    Left = 8
+    Top = 4
+    Width = 155
     Height = 13
-    Hint = 'What to show on the TrayIcon'#13#10'while checking for new mail.'
-    Caption = 'TrayIcon while Checking'
-    OnMouseDown = HelpMouseDown
+    Caption = 'Main Window Message List'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
-  object lblAdvInfoDelay: TLabel
-    Left = 168
-    Top = 176
-    Width = 40
+  object Label2: TLabel
+    Left = 8
+    Top = 106
+    Width = 137
     Height = 13
-    Caption = 'seconds'
+    Caption = 'Main Window Behaviors'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object chkOnTop: TCheckBox
     Left = 8
-    Top = 156
+    Top = 122
     Width = 209
     Height = 17
     Hint = 'Show the PopTray window always on top of other windows.'
     Caption = 'Stay on &Top'
-    TabOrder = 9
-    OnClick = OptionsChange
-    OnMouseDown = HelpMouseDown
-  end
-  object chkDeleteConfirm: TCheckBox
-    Left = 8
-    Top = 46
-    Width = 225
-    Height = 17
-    Hint = 
-      'Ask for confirmation before deleting any e-mails.'#13#10'This only wor' +
-      'ks for the Delete button.  Deleting messages'#13#10'using rules will n' +
-      'ot ask for confirmation.'
-    Caption = 'Deletion C&onfirmation'
-    Checked = True
-    State = cbChecked
-    TabOrder = 2
+    TabOrder = 6
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkCloseMinimize: TCheckBox
     Left = 8
-    Top = 102
+    Top = 142
     Width = 209
     Height = 17
     Hint = 
       'The X close button in the top right-hand corner will minimize'#13#10'P' +
-      'opTray instead of closing it.'#13#10'To close use the "Quit" button.'
+      'opTrayU instead of closing it.'#13#10'To close use the "Quit" button.'
     Caption = 'X &Button Minimizes'
-    TabOrder = 6
+    TabOrder = 3
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkDoubleClickDelay: TCheckBox
     Left = 8
-    Top = 210
+    Top = 202
     Width = 209
     Height = 17
     Hint = 
@@ -72,141 +66,101 @@ object frameAdvancedInterface: TframeAdvancedInterface
     Caption = '&Double Click delay on Click'
     Checked = True
     State = cbChecked
-    TabOrder = 13
+    TabOrder = 8
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkMinimizeTray: TCheckBox
     Left = 8
-    Top = 120
+    Top = 162
     Width = 209
     Height = 17
-    Hint = 'Minimize PopTray to the System Tray instead of the Taskbar.'
+    Hint = 'Minimize PopTrayU to the System Tray instead of the Taskbar.'
     Caption = 'Minimi&ze to Tray'
     Checked = True
     State = cbChecked
-    TabOrder = 7
+    TabOrder = 4
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkPasswordProtect: TCheckBox
     Left = 8
-    Top = 84
+    Top = 222
     Width = 145
     Height = 17
     Hint = 'Requires that you enter the specified password to open PopTray.'
     Caption = '&Password Protect'
-    TabOrder = 4
+    TabOrder = 1
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object edPassword: TEdit
     Left = 152
-    Top = 82
+    Top = 220
     Width = 69
     Height = 21
     PasswordChar = '*'
-    TabOrder = 5
+    TabOrder = 2
     OnChange = OptionsChange
   end
   object chkShowViewed: TCheckBox
     Left = 8
-    Top = 28
+    Top = 20
     Width = 225
     Height = 17
     Hint = 'Unviewed messages will be shown in Bold.'
     Caption = '&Indicate Viewed and Unviewed Messages'
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 1
+    TabOrder = 0
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkMultilineAccounts: TCheckBox
     Left = 8
-    Top = 138
+    Top = 182
     Width = 209
     Height = 17
     Hint = 
       'Display the tabs for the different accounts in'#13#10'multiple lines i' +
       'nstead of one scrolling line.'
     Caption = '&Multi-line Account Tabs'
-    TabOrder = 8
-    OnClick = OptionsChange
-    OnMouseDown = HelpMouseDown
-  end
-  object chkAdvInfo: TCheckBox
-    Left = 8
-    Top = 174
-    Width = 121
-    Height = 17
-    Hint = 'Show Info dialog with message details and buttons.'
-    Caption = '&Advanced Show Info'
-    Checked = True
-    State = cbChecked
-    TabOrder = 10
+    TabOrder = 5
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkHideViewed: TCheckBox
     Left = 8
-    Top = 192
+    Top = 60
     Width = 209
     Height = 17
     Hint = 'Once a message has been viewed, don'#39't show it again.'
     Caption = 'Hide Viewed Messages'
-    TabOrder = 12
+    TabOrder = 7
     OnClick = OptionsChange
-    OnMouseDown = HelpMouseDown
-  end
-  object cmbCheckingIcon: TComboBox
-    Left = 144
-    Top = 4
-    Width = 109
-    Height = 21
-    Style = csDropDownList
-    ItemHeight = 13
-    ItemIndex = 3
-    TabOrder = 0
-    Text = 'Animated Star'
-    OnChange = OptionsChange
-    Items.Strings = (
-      'None'
-      'Lightning Bolt'
-      'Star'
-      'Animated Star')
-  end
-  object edAdvInfoDelay: TEdit
-    Left = 132
-    Top = 172
-    Width = 33
-    Height = 21
-    Hint = 'Number of seconds to display the Info window'#13#10'before closing it.'
-    TabOrder = 11
-    OnChange = OptionsChange
     OnMouseDown = HelpMouseDown
   end
   object chkShowWhileChecking: TCheckBox
     Left = 8
-    Top = 228
+    Top = 80
     Width = 209
     Height = 17
     Hint = 'While checking, show each message as it is downloaded.'
     Caption = '&Show Messages while Checking'
-    TabOrder = 14
+    TabOrder = 9
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end
-  object chkDeleteConfirmProtected: TCheckBox
+  object chkRememberViewed: TCheckBox
     Left = 8
-    Top = 64
-    Width = 285
+    Top = 40
+    Width = 221
     Height = 17
     Hint = 
-      'Extra confirmation when you try to delete messages'#13#10'protected by' +
-      ' rules or the WhiteList.'
-    Caption = '&Extra Confirmation when Deleting Protected Messages'
-    TabOrder = 3
+      'Remember which messages on the server has already been viewed'#13#10'e' +
+      'ven after closing PopTray.'
+    Caption = 'Remember &Viewed Messages'
+    TabOrder = 10
     OnClick = OptionsChange
     OnMouseDown = HelpMouseDown
   end

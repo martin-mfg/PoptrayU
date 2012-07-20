@@ -45,6 +45,7 @@ type
     chkOnline: TCheckBox;
     grpExcept: TGroupBox;
     chkCheckWhileMinimized: TCheckBox;
+    //procedure btnNeverClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
