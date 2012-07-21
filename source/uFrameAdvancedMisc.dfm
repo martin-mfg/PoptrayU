@@ -4,7 +4,7 @@ object frameAdvancedMisc: TframeAdvancedMisc
   Width = 305
   Height = 221
   TabOrder = 0
-  object Label2: TLabel
+  object lblMailClient: TLabel
     Left = 8
     Top = 88
     Width = 149
@@ -17,7 +17,7 @@ object frameAdvancedMisc: TframeAdvancedMisc
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label3: TLabel
+  object lblRules: TLabel
     Left = 8
     Top = 128
     Width = 87
@@ -30,7 +30,7 @@ object frameAdvancedMisc: TframeAdvancedMisc
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label1: TLabel
+  object lblMessageDeletion: TLabel
     Left = 8
     Top = 5
     Width = 102

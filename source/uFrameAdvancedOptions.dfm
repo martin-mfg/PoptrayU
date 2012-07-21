@@ -36,7 +36,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
     Height = 13
     Caption = 'KB'
   end
-  object Label1: TLabel
+  object lblError: TLabel
     Left = 8
     Top = 96
     Width = 82
@@ -49,7 +49,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object lblPop: TLabel
     Left = 8
     Top = 4
     Width = 137
@@ -62,7 +62,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label3: TLabel
+  object lblMsgDl: TLabel
     Left = 8
     Top = 184
     Width = 292

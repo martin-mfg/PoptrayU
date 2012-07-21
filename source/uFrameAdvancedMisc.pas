@@ -34,11 +34,11 @@ type
     chkLogRules: TCheckBox;
     chkUseMAPI: TCheckBox;
     chkBlackListSpam: TCheckBox;
-    Label2: TLabel;
-    Label3: TLabel;
+    lblMailClient: TLabel;
+    lblRules: TLabel;
     chkDeleteConfirm: TCheckBox;
     chkDeleteConfirmProtected: TCheckBox;
-    Label1: TLabel;
+    lblMessageDeletion: TLabel;
     chkDeleteNextCheck: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
@@ -74,8 +74,17 @@ begin
   chkBlackListSpam.Checked := Options.BlackListSpam;
 
   // autosize
+  self.Font := Options.GlobalFont;
   AutoSizeAllCheckBox(Self);
   Options.Busy := False;
+
+  lblMessageDeletion.Font := Options.GlobalFont;
+  lblMailClient.Font := Options.GlobalFont;
+  lblRules.Font := Options.GlobalFont;
+  lblMessageDeletion.Font.Style := lblMessageDeletion.Font.Style + [fsBold];
+  lblMailClient.Font.Style := lblMailClient.Font.Style + [fsBold];
+  lblRules.Font.Style := lblRules.Font.Style + [fsBold];
+
 end;
 
 procedure TframeAdvancedMisc.OptionsChange(Sender: TObject);

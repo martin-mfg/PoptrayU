@@ -63,6 +63,12 @@ begin
   memWhiteList.Lines.Text := Options.WhiteList.Text;
   memBlackList.Lines.Text := Options.BlackList.Text;
   Options.Busy := False;
+
+  lblWhiteList.Font := Options.GlobalFont;
+  lblBlackList.Font := Options.GlobalFont;
+
+  with lblWhiteList.Font do Style := Style + [fsBold];
+  with lblBlackList.Font do Style := Style + [fsBold];
 end;
 
 procedure TframeWhiteBlack.FrameResize(Sender: TObject);

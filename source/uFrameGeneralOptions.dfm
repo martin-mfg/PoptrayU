@@ -19,7 +19,7 @@ object frameGeneralOptions: TframeGeneralOptions
     Height = 13
     Caption = 'seconds'
   end
-  object Label1: TLabel
+  object lblStartup: TLabel
     Left = 8
     Top = 4
     Width = 42
@@ -32,7 +32,7 @@ object frameGeneralOptions: TframeGeneralOptions
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object lblTray: TLabel
     Left = 8
     Top = 84
     Width = 55
@@ -45,7 +45,7 @@ object frameGeneralOptions: TframeGeneralOptions
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label3: TLabel
+  object lblNewMsg: TLabel
     Left = 8
     Top = 170
     Width = 149
@@ -124,7 +124,7 @@ object frameGeneralOptions: TframeGeneralOptions
   object chkStartUp: TCheckBox
     Left = 8
     Top = 20
-    Width = 220
+    Width = 257
     Height = 17
     Hint = 'Immediately check for mail when PopTray starts.'
     Caption = 'Check for New Mail on Start&up'

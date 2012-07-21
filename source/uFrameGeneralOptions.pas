@@ -41,9 +41,9 @@ type
     lblFirstWait: TLabel;
     edFirstWait: TEdit;
     lblSeconds: TLabel;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
+    lblStartup: TLabel;
+    lblTray: TLabel;
+    lblNewMsg: TLabel;
     cmbCheckingIcon: TComboBox;
     lblTrayIcon: TLabel;
     lblAdvInfoDelay: TLabel;
@@ -91,8 +91,19 @@ begin
   chkBalloon.Checked := Options.Balloon;
   chkAdvInfo.Checked := Options.AdvInfo;
   edAdvInfoDelay.Text := IntToStr(Options.AdvInfoDelay);
+
+  // Fix non-cascadable fonts
+  lblStartup.Font := Options.GlobalFont;
+  lblTray.Font := Options.GlobalFont;
+  lblNewMsg.Font := Options.GlobalFont;
+  lblStartup.Font.Style := lblStartup.Font.Style + [fsBold];
+  lblTray.Font.Style := lblTray.Font.Style + [fsBold];
+  lblNewMsg.Font.Style := lblNewMsg.Font.Style + [fsBold];
+
   // autosize
+  self.Font := Options.GlobalFont;
   AutoSizeAllCheckBox(Self);
+
   edFirstWait.Left := lblFirstWait.Left + lblFirstWait.Width + 4;
   lblSeconds.Left := edFirstWait.Left + edFirstWait.Width + 4;
   cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + 4;

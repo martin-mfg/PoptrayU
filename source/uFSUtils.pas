@@ -57,7 +57,7 @@ interface
   uses Graphics;
 
   function GetDataStoragePath( commandLinePath : string = '' ) : string;
-  function StringToFont( sFont : String ) : TFont;
+  function StringToFont( sFont : String; defaultFont : String ) : TFont;
   function FontToString( Font : TFont ) : String;
 
 implementation
@@ -135,12 +135,13 @@ const
 {------------------------------------------------------------------------------}
 { Input String Example: "Arial", 9, [Bold|Italic], [clBlack]                   }
 {------------------------------------------------------------------------------}
-function StringToFont( sFont : String ) : TFont;
+function StringToFont( sFont : String; defaultFont : String ) : TFont;
 var
   p : integer;
   fontStyle : String;
 begin
   Result := TFont.Create;
+  if (sFont = '') then sFont := defaultFont;
 
   // font name
   p    := Pos( ',', sFont );
@@ -180,6 +181,9 @@ function FontToString( Font : TFont ) : String;
 var
   fontStyle : String;
 begin
+  // If font is not assigned, return an empty string and quit.
+  if Font = nil then begin Result := ''; Exit; end;
+
   fontStyle := '';
   if (fsBold in Font.Style) then fontStyle := fontStyle + STR_BOLD;
   if (fsItalic in Font.Style) then fontStyle := fontStyle + STR_ITALIC;

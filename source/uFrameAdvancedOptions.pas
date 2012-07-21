@@ -47,10 +47,10 @@ type
     edGetBodySize: TEdit;
     lblGetBodySize: TLabel;
     chkGetBodyLines: TCheckBox;
-    Label1: TLabel;
-    Label2: TLabel;
+    lblError: TLabel;
+    lblPop: TLabel;
     chkSafeDelete: TCheckBox;
-    Label3: TLabel;
+    lblMsgDl: TLabel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -89,8 +89,19 @@ begin
   if chkGetBodySize.Checked then edGetBodySize.Text := IntToStr(Options.GetBodySize);
   chkGetBodyLines.Checked := Options.GetBodyLines > 0;
   if chkGetBodyLines.Checked then edGetBodyLines.Text := IntToStr(Options.GetBodyLines);
+
+  // Fix fonts
+  lblPop.Font := Options.GlobalFont;
+  lblError.Font := Options.GlobalFont;
+  lblMsgDl.Font := Options.GlobalFont;
+  lblPop.Font.Style := lblPop.Font.Style + [fsBold];
+  lblError.Font.Style := lblError.Font.Style + [fsBold];
+  lblMsgDl.Font.Style := lblMsgDl.Font.Style + [fsBold];
+
   // autosize
+  self.Font := Options.GlobalFont;
   AutoSizeAllCheckBox(Self);
+
   edTopLines.Left := chkRetrieveTop.Left + chkRetrieveTop.Width + 4;
   edTimeOut.Left := lblTimeOut.Left + lblTimeOut.Width + 4;
   lblSeconds.Left := edTimeOut.Left + edTimeOut.Width + 4;
@@ -98,6 +109,8 @@ begin
   lblGetBodySize.Left := edGetBodySize.Left + edGetBodySize.Width + 4;
   edGetBodyLines.Left := chkGetBodyLines.Left + chkGetBodyLines.Width + 4;
   lblGetBodyLines.Left := edGetBodyLines.Left + edGetBodyLines.Width + 4;
+
+
 
   Options.Busy := False;
 end;

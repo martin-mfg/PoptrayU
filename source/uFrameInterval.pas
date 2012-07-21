@@ -135,6 +135,19 @@ begin
 
   edTime.Enabled := radioCheckEvery.Checked;
   UpDown.Enabled := radioCheckEvery.Checked;
+
+  // autosize
+  self.Font := Options.GlobalFont;
+  AutoSizeCheckBox(radioCheckEvery);
+  edTime.Left := radioCheckEvery.Left + radioCheckEvery.Width + 4;
+  UpDown.Left := edTime.Left + edTime.Width;
+  lblMinutes.Left := UpDown.Left + UpDown.Width + 4;
+
+  AutoSizeCheckBox(chkDontCheckTimes);
+  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+
 end;
 
 procedure TframeInterval.HelpMouseDown(Sender: TObject;
@@ -168,7 +181,7 @@ end;
 procedure TframeInterval.FrameResize(Sender: TObject);
 begin
     Self.Refresh; //refresh to make labels not disappear in Vista
-  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+  //lblAnd.Left := dtStart.Left + dtStart.Width + 6;
 end;
 
 end.

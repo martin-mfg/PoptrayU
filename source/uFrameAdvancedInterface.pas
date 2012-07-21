@@ -41,8 +41,8 @@ type
     chkMultilineAccounts: TCheckBox;
     chkHideViewed: TCheckBox;
     chkShowWhileChecking: TCheckBox;
-    Label1: TLabel;
-    Label2: TLabel;
+    lblMsgList: TLabel;
+    lblBehaviors: TLabel;
     chkRememberViewed: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
@@ -80,8 +80,15 @@ begin
   chkShowWhileChecking.Checked := Options.ShowWhileChecking;
 
   // autosize
+  self.Font := Options.GlobalFont;
   AutoSizeAllCheckBox(Self);
   edPassword.Left := chkPasswordProtect.Left + chkPasswordProtect.Width + 4;
+
+  lblMsgList.Font := Options.GlobalFont;
+  lblBehaviors.Font := Options.GlobalFont;
+
+  lblMsgList.Font.Style := lblMsgList.Font.Style + [fsBold];
+  lblBehaviors.Font.Style := lblBehaviors.Font.Style + [fsBold];
 
   Options.Busy := False;
 end;
