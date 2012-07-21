@@ -114,6 +114,9 @@ var
     // visual appearance
     ListboxFont : TFont;
     ListboxBg : TColor;
+    GlobalFont : TFont;
+    VerticalFont : TFont;
+    UseCustomFonts : boolean;
   end;
 
 const
@@ -196,10 +199,15 @@ end;
 initialization
   Options.WhiteList := TStringList.Create;
   Options.BlackList := TStringList.Create;
+  Options.GlobalFont := TFont.Create;
+  Options.VerticalFont := TFont.Create;
+  Options.ListboxFont := TFont.Create;
 
 finalization
   Options.WhiteList.Free;
   Options.BlackList.Free;
-
+  Options.GlobalFont.Free;
+  Options.VerticalFont.Free;
+  Options.ListboxFont.Free;
 
 end.

@@ -5,7 +5,7 @@ object frameAdvancedInterface: TframeAdvancedInterface
   Height = 262
   TabOrder = 0
   OnResize = FrameResize
-  object Label1: TLabel
+  object lblMsgList: TLabel
     Left = 8
     Top = 4
     Width = 155
@@ -18,7 +18,7 @@ object frameAdvancedInterface: TframeAdvancedInterface
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object lblBehaviors: TLabel
     Left = 8
     Top = 106
     Width = 137

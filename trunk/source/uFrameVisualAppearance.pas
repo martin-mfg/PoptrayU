@@ -64,19 +64,21 @@ type
     Label1: TLabel;
     lblListboxFontSample: TLabel;
     btnFontChange: TSpeedButton;
-    listboxBgBtn: TSpeedButton;
     listboxBgColorBox: TColorBox;
     listboxFgColorBox: TColorBox;
-    listboxFgBtn: TSpeedButton;
     resetListboxBtn: TSpeedButton;
+    Image1: TImage;
+    Image2: TImage;
+    btnGlobalFont: TSpeedButton;
+    btnVerticalTabFont: TSpeedButton;
+    lblVerticalTabsSample: TLabel;
+    lblGlobalSample: TLabel;
     procedure btnFontChangeClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure listboxBgBtnClick(Sender: TObject);
     procedure listboxBgColorBoxChange(Sender: TObject);
     procedure listboxFgColorBoxChange(Sender: TObject);
-    procedure listboxFgBtnClick(Sender: TObject);
     procedure resetListboxBtnClick(Sender: TObject);
   private
     { Private declarations }
@@ -89,7 +91,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal;
 
 {$R *.dfm}
 
@@ -97,10 +99,25 @@ constructor TframeVisualAppearance.Create(AOwner: TComponent);
 begin
   inherited;
   frmPopUMain.TranslateFrame(self);
-  lblListboxFontSample.Caption := frmPopUMain.lvMail.Font.Name;
-  lblListboxFontSample.Font := frmPopUMain.lvMail.Font;
+
+  // Options to screen
   lblListboxFontSample.Transparent := false;
   lblListboxFontSample.Color := frmPopUMain.lvMail.Color;
+
+  listboxFgColorBox.Selected := Options.ListboxBg;
+  listboxFgColorBox.Selected := Options.ListboxFont.Color;
+
+  self.Font := Options.GlobalFont;
+
+  lblListboxFontSample.Font := Options.ListboxFont;
+  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
+
+
+  lblGlobalSample.Font := Options.GlobalFont;
+  lblGlobalSample.Caption := lblGlobalSample.Font.Name;
+
+  lblVerticalTabsSample.Font := Options.VerticalFont;
+  lblVerticalTabsSample.Caption := lblVerticalTabsSample.Font.Name;
 
   Refresh;
 end;
@@ -111,11 +128,16 @@ begin
   if not Options.Busy then
   begin
     // screen to options
-    Options.ListboxFont := lblListboxFontSample.Font;
+    Options.ListboxFont.Assign(lblListboxFontSample.Font);
     Options.ListboxBg := lblListboxFontSample.Color;
 
     frmPopUMain.lvMail.Font := lblListboxFontSample.Font;
     frmPopUMain.lvMail.Color := lblListboxFontSample.Color;
+
+    Options.VerticalFont.Assign(lblVerticalTabsSample.Font);
+    Options.GlobalFont.Assign(lblGlobalSample.Font);
+
+    frmPopUMain.UpdateFonts();
 
     // buttons
     frmPopUMain.btnSaveOptions.Enabled := True;
@@ -135,63 +157,48 @@ var
 begin
   fntDlg := TFontDialog.Create(nil);
   try
-    fntDlg.Font := frmPopUMain.lvMail.Font;
+    fntDlg.Options := [];//not fdEffects
+
+    if      sender = btnFontChange      then fntDlg.Font := Options.ListboxFont
+    else if sender = btnGlobalFont      then fntDlg.Font := Options.GlobalFont
+    else if sender = btnVerticalTabFont then fntDlg.Font := Options.VerticalFont;
+
     if fntDlg.Execute then
     begin
-      lblListboxFontSample.Font := fntDlg.Font;
-      lblListboxFontSample.Caption := fntDlg.Font.Name;
-      OptionsChange(btnFontChange);
+      if sender = btnFontChange then
+      begin
+        lblListboxFontSample.Font := fntDlg.Font;
+        lblListboxFontSample.Caption := fntDlg.Font.Name;
+      end
+      else if sender = btnGlobalFont then
+      begin
+        lblGlobalSample.Font := fntDlg.Font;
+        lblGlobalSample.Caption := fntDlg.Font.Name;
+      end
+      else if sender = btnVerticalTabFont then
+      begin
+        lblVerticalTabsSample.Font := fntDlg.Font;
+        lblVerticalTabsSample.Caption := fntDlg.Font.Name;
+      end;
+
+      OptionsChange(Sender);
+      //frmPopUMain.UpdateFonts();
     end;
   finally
     fntDlg.Free;
   end;
 end;
 
-
-procedure TframeVisualAppearance.listboxBgBtnClick(Sender: TObject);
-var
-  colorDlg : TColorDialog;
-begin
-  colorDlg := TColorDialog.Create(nil);
-  try
-    if (colorDlg.Execute) then
-    begin
-      lblListboxFontSample.Transparent := False; //XP Manifest makes this needed
-      lblListboxFontSample.Color := colorDlg.Color;
-      OptionsChange(listboxBgBtn);
-    end;
-  finally
-    colorDlg.Free;
-  end;
-end;
-
 procedure TframeVisualAppearance.listboxBgColorBoxChange(Sender: TObject);
 begin
    lblListboxFontSample.Color := listboxBgColorBox.Selected;
-   OptionsChange(listboxBgBtn);
+   OptionsChange(listboxBgColorBox);
 end;
 
 procedure TframeVisualAppearance.listboxFgColorBoxChange(Sender: TObject);
 begin
     lblListboxFontSample.Font.Color := listboxFgColorBox.Selected;
-    OptionsChange(listboxBgBtn);
-end;
-
-procedure TframeVisualAppearance.listboxFgBtnClick(Sender: TObject);
-var
-  colorDlg : TColorDialog;
-begin
-  colorDlg := TColorDialog.Create(nil);
-  try
-    if (colorDlg.Execute) then
-    begin
-      lblListboxFontSample.Transparent := False; //XP Manifest makes this needed
-      lblListboxFontSample.Font.Color := colorDlg.Color;
-      OptionsChange(listboxBgBtn);
-    end;
-  finally
-    colorDlg.Free;
-  end;
+    OptionsChange(listboxFgColorBox);
 end;
 
 procedure TframeVisualAppearance.resetListboxBtnClick(Sender: TObject);

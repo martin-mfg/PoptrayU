@@ -1169,18 +1169,17 @@ end;
 
 procedure AutoSizeCheckBox(chkBox : TCheckBox); overload;
 var
-  Rect : TRect;
-  Canvas : TCanvas;
+  canvas2 : TControlCanvas;
 begin
-  Rect := chkBox.ClientRect;
-  Canvas := TCanvas.Create;
+  canvas2 := TControlCanvas.Create;
   try
-    Canvas.Font := chkBox.Font;
-    Canvas.Handle := GetDC(0);
-    DrawText(Canvas.Handle, PChar(chkBox.Caption), Length(chkBox.Caption), Rect, DT_CALCRECT);
-    chkBox.Width := Rect.Right - Rect.Left + 20;
+    canvas2.Control := chkBox;
+    canvas2.Font.Assign(chkBox.Font);
+    chkBox.Width := GetSystemMetrics(SM_CXMENUCHECK) +
+      GetSystemMetrics(SM_CXEDGE) + 
+      canvas2.TextWidth(chkBox.Caption);
   finally
-    Canvas.Free;
+    canvas2.Free;
   end;
 end;
 

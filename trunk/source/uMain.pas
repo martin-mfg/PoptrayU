@@ -74,6 +74,12 @@ const
   PBT_APMPOWERSTATUSCHANGE  = $000A;
   PBT_APMOEMEVENT           = $000B;
   PBT_APMRESUMEAUTOMATIC    = $0012;
+
+const
+  DEFAULT_FONT_XP : string = 'MS Sans Serif, 8, , [clWindowText]';
+  DEFAULT_FONT_VISTA : string = 'Segoe UI, 9, , [clWindowText]';
+  DEFAULT_FONT_VERTICAL : string = 'MS Sans Serif, 8, , [clWindowText]';
+
 type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
 
@@ -467,6 +473,7 @@ type
     procedure RefreshProtocols;
     function AllowAutoCheck : boolean;
     procedure SetSortColumn(ColNum : integer);
+    procedure UpdateFonts;
   private
     { Private declarations }
     FNotified : Boolean;
@@ -1592,7 +1599,6 @@ begin
   end;
 end;
 
-
 //---------------------------------------------------------------- ini files ---
 
 procedure TfrmPopUMain.LoadOptionsINI;
@@ -1605,6 +1611,7 @@ var
   langCount,pluginCount : integer;
   ThePluginType : TPluginType;
   fInterfaceVersion : function : integer; stdcall;
+  defaultFont : string;
 begin
   // load options from INI
   Ini := TIniFile.Create(IniName);
@@ -1772,10 +1779,14 @@ begin
     RefreshProtocols;
 
     // Visual Appearance
-    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont','MS Sans Serif, 8, , [clBlack]'));
-    lvMail.Font := Options.ListboxFont;
+    defaultFont := IfThen(IsWinVista(), DEFAULT_FONT_VISTA, DEFAULT_FONT_XP);
+    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont',defaultFont), defaultFont);
+
     Options.ListboxBg := StringToColor(Ini.ReadString('VisualOptions','ListboxBg','clWindow'));
-    lvMail.Color := Options.ListboxBg;
+    Options.GlobalFont := StringToFont(Ini.ReadString('VisualOptions', 'GlobalFont', defaultFont), defaultFont);
+    Options.VerticalFont := StringToFont(Ini.ReadString('VisualOptions', 'VerticalFont', DEFAULT_FONT_VERTICAL), DEFAULT_FONT_VERTICAL);
+
+    UpdateFonts();
 
     // num accounts
     NumAccounts := Ini.ReadInteger('Options','NumAccounts',0);
@@ -1918,6 +1929,8 @@ begin
     // Visual appearance
     Ini.WriteString('VisualOptions', 'ListboxFont', FontToString(Options.ListboxFont));
     Ini.WriteString('VisualOptions', 'ListboxBg',ColorToString(Options.ListboxBg));
+    Ini.WriteString('VisualOptions', 'GlobalFont', FontToString(Options.GlobalFont));
+    Ini.WriteString('VisualOptions', 'VerticalFont', FontToString(Options.VerticalFont));
 
   finally
      Ini.Free;
@@ -3082,6 +3095,47 @@ begin
 end;
 
 //------------------------------------------------------------------- visual ---
+
+procedure TfrmPopUMain.UpdateFonts();
+var
+  font : TFont;
+  color : TColor;
+begin
+  // Global Font - Because PageControl uses a different font for the vertical
+  // tabs, it's children are not set to inherit the font, so we have to
+  // manually update the font for each of it's children items.
+  font := Options.GlobalFont; // Use "Global" font pref
+  frmPopUMain.Font := font;
+  tsMail.Font := font;
+  tsAccounts.Font := font;
+  tsAbout.Font := font;
+  tsOptions.Font := font;
+  tsRules.Font := font;
+  panMailButtons.Font := font;
+  AccountsToolbar.Font := font;
+  MailToolBar.Font := font;
+  RulesToolbar.Font := font;
+
+  // Bolded Global Font Items
+  font.Style := font.Style + [fsBold];
+
+  //font.
+  lblOptionTitle.Font := font;
+
+  // Blue (Fake hyperlink) Global Font Items
+  font.Style := font.Style - [fsBold];
+  color := font.Color;
+  font.Color := clBlue;
+  lblHomepage.Font := font;
+  font.Color := color;
+
+  // Listbox Font
+  lvMail.Font := Options.ListboxFont;
+  lvMail.Color := Options.ListboxBg; //set bg color too
+
+  // Vertical Font
+  frmPopUMain.PageControl.Font := Options.VerticalFont;
+end;
 
 function TfrmPopUMain.GetTrayColor(num : integer) : TColor;
 ////////////////////////////////////////////////////////////////////////////////
