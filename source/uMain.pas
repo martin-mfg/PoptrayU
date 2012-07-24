@@ -3118,9 +3118,9 @@ begin
 
   // Bolded Global Font Items
   font.Style := font.Style + [fsBold];
-
-  //font.
+  font.Size := font.Size + 2;
   lblOptionTitle.Font := font;
+  font.Size := font.Size - 2;
 
   // Blue (Fake hyperlink) Global Font Items
   font.Style := font.Style - [fsBold];
