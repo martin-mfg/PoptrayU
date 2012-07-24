@@ -87,6 +87,8 @@ begin
   lvInfoNew.Column[1].Width := Options.InfoCol2;
   lvInfoNew.Column[2].Width := Options.InfoCol3;
   lvInfoNew.Column[3].Width := Options.InfoCol4;
+
+  self.Font := Options.GlobalFont;
 end;
 
 procedure TfrmInfo.FormClose(Sender: TObject; var Action: TCloseAction);

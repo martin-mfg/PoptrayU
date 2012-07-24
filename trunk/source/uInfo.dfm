@@ -40,7 +40,7 @@ object frmInfo: TfrmInfo
       Top = 9
       Width = 350
       Height = 167
-      ActivePage = tsSummary
+      ActivePage = tsNewMail
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnChange = pgInfoChange
@@ -173,11 +173,6 @@ object frmInfo: TfrmInfo
         Width = 115
         Height = 21
         Action = frmPopUMain.actMarkViewed
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -213,7 +208,6 @@ object frmInfo: TfrmInfo
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-        ParentFont = False
       end
       object btnMailProgram: TSpeedButton
         Left = 3
@@ -221,11 +215,6 @@ object frmInfo: TfrmInfo
         Width = 117
         Height = 21
         Action = frmPopUMain.actStartProgram
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
         Glyph.Data = {
           A6020000424DA6020000000000003600000028000000100000000D0000000100
           18000000000070020000230B0000230B00000000000000000000FFFFFF736B6B
@@ -249,7 +238,6 @@ object frmInfo: TfrmInfo
           F7FFFFF7F7F7EFF7F7EFEFEFE7EFE7DEE7E7E7E7BDB5B57B7373FFFFFFC6C6C6
           C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6C6
           C6C6C6C6CECECEFFFFFF}
-        ParentFont = False
       end
       object btnShowMessages: TSpeedButton
         Left = 122
@@ -257,11 +245,6 @@ object frmInfo: TfrmInfo
         Width = 126
         Height = 21
         Action = frmPopUMain.actShowMessages
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -297,7 +280,6 @@ object frmInfo: TfrmInfo
           8000808080008080800080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
-        ParentFont = False
       end
     end
   end
