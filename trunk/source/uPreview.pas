@@ -107,7 +107,10 @@ type
     memMail: TRichEdit;
     actOpenMessage: TAction;
     WebBrowser1: TWebBrowser;
-    ImageToggle: TAction;
+    actImageToggle: TAction;
+    ShowImages1: TMenuItem;
+    ShowImages2: TMenuItem;
+    N1: TMenuItem;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -120,7 +123,6 @@ type
     procedure actPrintExecute(Sender: TObject);
     procedure actReplyExecute(Sender: TObject);
     procedure actDeleteExecute(Sender: TObject);
-    procedure actToggleImages(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure actAttachmentSaveExecute(Sender: TObject);
     procedure lvAttachmentsSelectItem(Sender: TObject; Item: TListItem;
@@ -132,6 +134,7 @@ type
     procedure actEditFontBeforeExecute(Sender: TObject);
     procedure actEditReadOnlyExecute(Sender: TObject);
     procedure actCustomizeExecute(Sender: TObject);
+    procedure actShowImagesExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -140,7 +143,6 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure actOpenMessageExecute(Sender: TObject);
     procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
-    procedure ImageToggleExecute(Sender: TObject);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -172,7 +174,10 @@ type
     function AttachmentIcon(filename : string) : integer;
     procedure ShowMsg;
   end;
-
+  function RemoveAllTags(source : string) : string;
+  function RemoveImageTags(source : string) : string;
+  procedure WriteStringToStream(stream: TStream; const appendText: string);
+  procedure SantitizeHtml(source: string; outStream: TStream);
 var
   frmPreview: TfrmPreview;
 
@@ -340,6 +345,8 @@ begin
     // options
     memMail.ReadOnly := Ini.ReadBool('Preview','ReadOnly',True);
     actEditReadOnly.Checked := memMail.ReadOnly;
+    HtmlImagesEnabled := Ini.ReadBool('Preview','ShowImages',True);
+    actImageToggle.Checked := HtmlImagesEnabled;
     // pos/size
     Self.Width := Ini.ReadInteger('Preview','Width',Self.Width);
     Self.Height := Ini.ReadInteger('Preview','Height',Self.Height);
@@ -401,6 +408,7 @@ begin
   try
     // options
     Ini.WriteBool('Preview','ReadOnly',memMail.ReadOnly);
+    Ini.WriteBool('Preview', 'ShowImages', HtmlImagesEnabled);
     // pos/size
     Ini.WriteInteger('Preview','Left',Self.Left);
     Ini.WriteInteger('Preview','Top',Self.Top);
@@ -581,6 +589,8 @@ begin
             end;
           end
           else begin
+            // This case has been seen to happen when there is a html only
+            // email with no additional mime sections.
             FBody := Msg.Body.Text;
 
             {parse out mime type for message}
@@ -599,6 +609,7 @@ begin
             else begin
               {otherwise, presume it's HTML, leave as is}
               FHtml := Msg.Body.Text;
+              FBody := RemoveAllTags(Msg.Body.Text);
             end;
           end;
         except
@@ -655,6 +666,22 @@ begin
   // action manager
   FToolbarFileName := ExtractFilePath(Application.ExeName)+'Preview.customize';
   FCustomized := False;
+
+  self.Font := Options.GlobalFont;
+  tsMessageParts.Font := Options.GlobalFont;
+  Label1.Font := Options.GlobalFont;
+  Label2.Font := Options.GlobalFont;
+  Label3.Font := Options.GlobalFont;
+  Label4.Font := Options.GlobalFont;
+  Label5.Font := Options.GlobalFont;
+  Label6.Font := Options.GlobalFont;
+
+  with Label1.Font do Style := Style + [fsBold];
+  with Label2.Font do Style := Style + [fsBold];
+  with Label3.Font do Style := Style + [fsBold];
+  with Label4.Font do Style := Style + [fsBold];
+  with Label5.Font do Style := Style + [fsBold];
+  with Label6.Font do Style := Style + [fsBold];
 end;
 
 procedure TfrmPreview.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -768,56 +795,39 @@ const
 var
   sl: TStringList;
   ms: TMemoryStream;
-  regex : TRegExpr;
-  cleanedtext : string;
-  cleanedtext2 : string;
 begin
-
-  if (NOT HtmlImagesEnabled) then
-  begin
-
-  regex := TRegExpr.Create; // Create object
-  try // ensure memory release
-
-    // filter out IMG tags
-    regex.Expression := imgTag;
-    if regex.Exec(RawHtml)
-      then cleanedtext := regex.Substitute (RawHtml)
-      else cleanedtext := RawHtml;
-
-    // filter out MAP tags
-    regex.Expression := mapTag;
-    if regex.Exec(cleanedtext)
-      then cleanedtext2 := regex.Substitute(cleanedtext)
-      else cleanedtext2 := cleanedtext;
-
-
-    finally regex.Free;
-  end;
-
-  end
-  else cleanedtext2 := RawHtml;
-
   BrowserComponent.Navigate('about:blank') ;
   while BrowserComponent.ReadyState < READYSTATE_INTERACTIVE do
     Application.ProcessMessages;
 
   if Assigned(BrowserComponent.Document) then
   begin
-     sl := TStringList.Create;
-     try
-       ms := TMemoryStream.Create;
-       try
-         sl.Text := cleanedtext2;
-         sl.SaveToStream(ms);
-         ms.Seek(0, 0);
-         (BrowserComponent.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms)) ;
-       finally
-         ms.Free;
-       end;
-     finally
-       sl.Free;
-     end;
+    sl := TStringList.Create;
+    try
+      ms := TMemoryStream.Create;
+      try
+
+        if (NOT HtmlImagesEnabled) then
+          begin
+            //cleanedtext := RemoveImageTags(RawHtml);
+            //sl.Text := cleanedtext;
+            //sl.SaveToStream(ms);
+            SantitizeHtml(RawHtml, ms);
+        end
+        else begin
+          ms.WriteBuffer(Pointer(rawHtml)^, Length(rawHtml));
+        end;
+
+        //sl.Text := cleanedtext;
+        //sl.SaveToStream(ms);
+        ms.Seek(0, 0);
+        (BrowserComponent.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms)) ;
+      finally
+        ms.Free;
+      end;
+    finally
+      sl.Free;
+    end;
   end;
 end;
 
@@ -870,14 +880,6 @@ begin
 end;
 
 
-
-procedure TfrmPreview.actToggleImages(Sender: TObject);
-////////////////////////////////////////////////////////////////////////////////
-// Print
-begin
-    //do stuff?
-
-end;
 
 
 procedure TfrmPreview.actPrintExecute(Sender: TObject);
@@ -1121,6 +1123,13 @@ begin
   memMail.ReadOnly := actEditReadOnly.Checked;
 end;
 
+procedure TfrmPreview.actShowImagesExecute(Sender: TObject);
+begin
+  HtmlImagesEnabled := actImageToggle.Checked;
+  if (WebBrowser1.Visible) then
+    LoadHtmlIntoBrowser(WebBrowser1, FHtml);
+end;
+
 procedure TfrmPreview.actCustomizeExecute(Sender: TObject);
 begin
   FCustomized := True;
@@ -1160,7 +1169,7 @@ begin
    FEnter := False;
   end;
 end;
-
+              
 procedure TfrmPreview.actOpenMessageExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Save and execute
@@ -1179,13 +1188,199 @@ begin
   end;
 end;
 
-
-procedure TfrmPreview.ImageToggleExecute(Sender: TObject);
+function RemoveAllTags(source: string): string;
+var
+  TagBegin, TagEnd, TagLength: integer;
 begin
-   HtmlImagesEnabled := NOT HtmlImagesEnabled;
+  TagBegin := Pos( '<', source);      // search position of first <
 
-   // reload contents of HTML preview
-   LoadHtmlIntoBrowser(WebBrowser1, FHtml);
+  while (TagBegin > 0) do begin  // while there is a < in S
+    TagEnd := Pos('>', source);              // find the matching >
+    TagLength := TagEnd - TagBegin + 1;
+    Delete(source, TagBegin, TagLength);     // delete the tag
+    TagBegin:= Pos( '<', source);            // search for next <
+  end;
+
+  Result := source;                   // give the result
+end;
+
+// Input example: '<img src="img1.gif">' OR '</span>'
+
+function RemoveImageTags(source: string): string;
+var
+  TagBegin, TagEnd: integer;
+begin
+  // find position of first tag start
+  TagBegin := Pos( '<', source);
+
+  // no tags in entire string, return original string
+  if (TagBegin = 0) then begin
+    Result := source;
+    Exit;
+  end else begin
+    Result := Copy(source, 1, TagBegin-1);
+  end;
+
+  // loop through file while there are more tags
+  while (TagBegin > 0) do begin
+
+    // find matching close tag
+    TagEnd := PosEx('>', source, TagBegin);
+    //TagLength := TagEnd - TagBegin + 1;
+
+    if PosEx('img', source, TagBegin) = TagBegin + 1 then begin
+      // replace image start tag with placeholder/alt text
+      Result := Result + ' [image] ';
+    end else if PosEx('/img', source, TagBegin) = TagBegin + 1 then begin
+      //discard end image tag
+    end else begin
+      Result := Result + Copy(source, TagBegin, TagEnd-TagBegin+1);
+    end;
+
+    TagBegin:= PosEx( '<', source, TagEnd+1);
+
+
+    Result := Result + Copy(source, TagEnd+1, TagBegin-(TagEnd+1));
+
+
+  end;
+end;
+
+procedure WriteStringToStream(stream: TStream; const appendText: string);
+begin
+  // faster
+  stream.WriteBuffer(Pointer(appendText)^, Length(appendText)*SizeOf(Char));
+
+  // might be safer? do something like this (prevents memory corruption?)
+  //MemoryStream.ReadBuffer(SourceString[1], xxx);
+end;
+
+
+// Cleans up HTML to filter out spamy content items:
+// Removes the following tags: img, link, script
+procedure SantitizeHtml(source: string; outStream: TStream);
+var
+  TagBegin, TagEnd, TagLength: integer;
+  tagHandled : boolean;
+begin
+  // find position of first tag start
+  TagBegin := Pos( '<', source);
+
+  // no tags in entire string, return original string
+  if (TagBegin = 0) then begin
+    WriteStringToStream(outStream, source);
+    Exit;
+  end else begin
+    WriteStringToStream(outStream, Copy(source, 1, TagBegin-1));
+  end;
+
+  // loop through file while there are more tags
+  while (TagBegin > 0) do begin
+    // find matching close tag
+    TagEnd := PosEx('>', source, TagBegin);
+    TagLength := TagEnd - TagBegin + 1;
+
+    tagHandled := false;
+    case (source[TagBegin+1]) of
+      'i','I':
+          if TagLength >= 4 then
+          case source[TagBegin+2] of 'm','M':
+            case source[TagBegin+3] of 'g', 'G':
+              begin
+                WriteStringToStream(outStream, ' [img] ');
+                tagHandled := true;
+              end;
+            end;
+          end;
+      'l','L':
+        if TagLength >= 5 then
+        case source[TagBegin+2] of 'i','I':
+          case source[TagBegin+3] of 'n','N':
+            case source[TagBegin+4] of 'k','K':
+              tagHandled := true;
+            end;
+          end;
+        end;
+      'o','O':
+        if TagLength >= 7 then
+        case source[TagBegin+2] of 'b','B':
+          case source[TagBegin+3] of 'j','J':
+            case source[TagBegin+4] of 'e','E':
+              case source[TagBegin+5] of 'c','C':
+                case source[TagBegin+6] of 't','T':
+                  tagHandled := true;
+                end;
+              end;
+            end;
+          end;
+        end;
+      '/':
+        begin
+          if TagLength >= 4 then
+          case source[TagBegin+2] of
+          'i','I':
+            case source[TagBegin+3] of 'm','M':
+              case source[TagBegin+4] of 'g', 'G':
+                tagHandled := true;
+              end;
+            end;
+          'l','L':
+                if TagLength >= 6 then
+                case source[TagBegin+3] of 'i','I':
+                  case source[TagBegin+4] of 'n','N':
+                    case source[TagBegin+5] of 'k','K':
+                      tagHandled := true;
+                    end;
+                  end;
+                end;
+          'o','O':
+                if TagLength >= 8 then
+                case source[TagBegin+3] of 'b','B':
+                  case source[TagBegin+4] of 'j','J':
+                    case source[TagBegin+5] of 'e','E':
+                      case source[TagBegin+6] of 'c','C':
+                        case source[TagBegin+7] of 't','T':
+                          tagHandled := true;
+                        end;
+                      end;
+                    end;
+                  end;
+                end;
+          end;
+        end;
+      '>': tagHandled := true;
+    end;
+
+    if (NOT tagHandled) then begin
+      WriteStringToStream(outStream, Copy(source, TagBegin, TagEnd-TagBegin+1));
+    end;
+
+    {
+    if PosEx('img', source, TagBegin) = TagBegin + 1 then begin
+      // replace image start tag with placeholder/alt text
+      WriteStringToStream(outStream, ' [img] ');
+    end else if PosEx('/img', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else if PosEx('link', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag & close tag
+    end else if PosEx('/link', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else if PosEx('script', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else if PosEx('/script', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else if PosEx('object', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else if PosEx('/script', source, TagBegin) = TagBegin + 1 then begin
+      //discard tag
+    end else begin
+      //allowed tag
+      WriteStringToStream(outStream, Copy(source, TagBegin, TagEnd-TagBegin+1));
+    end;
+    }
+    TagBegin:= PosEx( '<', source, TagEnd+1);
+    WriteStringToStream(outStream, Copy(source, TagEnd+1, TagBegin-(TagEnd+1)));
+  end;
 end;
 
 end.
