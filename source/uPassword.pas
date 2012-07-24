@@ -48,12 +48,13 @@ var
 
 implementation
 
-uses uMain;
+uses uMain, uGlobal;
 
 {$R *.dfm}
 
 procedure TfrmPassword.FormShow(Sender: TObject);
 begin
+  self.Font := Options.GlobalFont;
   SetForegroundWindow(Handle);
   frmPopUMain.HideForm;
 end;
