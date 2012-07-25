@@ -6,7 +6,8 @@ PopTrayU Version History
  (-) Bug fixed
 
 4.0 (beta 6)
-        (+) Custom added to list of options for account colors.
+        (+) Custom is now an option in the list of choices for account colors.
+            No more being limited to VGA colors for tray icon colors.
         (*) Options screens have been re-organized to be easier to navigate.
             No options have been removed, but a few have been renamed or moved
             to a different screen.
@@ -21,7 +22,15 @@ PopTrayU Version History
         (+) When previewing emails marked as spam, automatically switches to the
             plaintext preview tab, to prevent accidentally downloading spam 
             tracker images.
-
+        (+) Default font for Windows Vista/7 changed to Segoe UI 9pt. Default font
+            for XP left as MS Sans Serif 8pt. This makes the app match the usual
+            OS UI.
+        (+) Visual appearance options added: Change default font for most PopTrayU 
+            UI items (global font), and vertical tabs (seperate font).
+        (+) Visual appearance Message List color selectors simplified. Custom added
+            to dropdowns instead of a seperate button, and now shows user-friendly
+            color names.
+        
 
 4.0 (beta 5)
         (-) Running a second instance should bring the first instance to the front
