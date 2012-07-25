@@ -17,8 +17,8 @@ M=0
 N=1
 O=1
 P=1
-Q=0
-R=0
+Q=1
+R=1
 S=0
 T=0
 U=0
@@ -80,7 +80,7 @@ UnsafeType=0
 UnsafeCode=0
 UnsafeCast=0
 [Linker]
-MapFile=0
+MapFile=3
 OutputObjs=0
 ConsoleApp=1
 DebugInfo=0
@@ -94,9 +94,9 @@ OutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build
 UnitOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
 PackageDLLOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
 PackageDCPOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
-SearchPath=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+SearchPath=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp
 Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx
-Conditionals=
+Conditionals=madExcept
 DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 UsePackages=0
 [Parameters]
@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=4
 MinorVer=0
 Release=6
-Build=7
+Build=12
 Debug=1
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.6.7
+FileVersion=4.0.6.12
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
@@ -144,8 +144,9 @@ Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\I
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+Count=2
+Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp
+Item1=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
 [HistoryLists\hlUnitOutputDirectory]
 Count=1
 Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu

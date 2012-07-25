@@ -26,7 +26,16 @@ The GNU GPL can be found at:
 {$R 'icons.res' 'icons.rc'}
 {$R 'PopTrayXP.res' 'PopTrayXP.rc'}
 
+// Since PopTrayU only runs on Windows, turn off warnings for platform
+// specific calls like DebugHook.
+{$WARN SYMBOL_PLATFORM OFF}
+
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Forms,
   Windows,
   SysUtils,
@@ -54,7 +63,9 @@ uses
   RegExpr in 'RegExpr.pas',
   uHeaderDecoder in 'uHeaderDecoder.pas',
   uCodePageConverter in 'uCodePageConverter.pas',
-  uFSUtils in 'uFSUtils.pas';
+  uFSUtils in 'uFSUtils.pas',
+  uHtmlDecoder in 'uHtmlDecoder.pas';
+
 {$R *.RES}
 
 var
