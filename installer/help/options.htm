@@ -80,6 +80,10 @@
 						Any volunteers who want to translate PopTrayU into other
 						languages are welcome to contact the project's developers.</td>
 				</tr>
+				<tr>
+					<td class="light" align="middle">User Data Folder </td>
+					<td class="light">Shows the location PopTrayU is getting the user settings from, such as poptray.ini and blacklist/rules files. This field is purely informational, and setup must be re-run or a command-line switch specified to change the value of this field. </td>
+				</tr>
 			</table>
 			<br>
 			<a name="general"></a>
@@ -206,6 +210,10 @@
 						you can specifiy a maximum size to download and you can also limit
 						the number of lines to download.</td>
 				</tr>
+				<tr>
+					<td class=light align=middle>Show Errors in Balloon Popups </td>
+					<td class=light>When checked, PopTrayU will display retrieve errors (eg: connection timeout/socket error) in a balloon popup instead of a modal dialog. This changes the behavior when the main window is showing to be the same as when the main window is minimized. Enable this option if you get annoyed by error dialogs getting hidden under the main window, but do not wish to completely suppress error notification. If ignore retrieve errors is specified in addition to this option, ignore retrieve errors will take precedence. </td>
+				</tr>
 			</table>
 			<br>
 			<img src="img/options_ui.gif" width="24" height="24">
@@ -324,8 +332,9 @@
 					<td class=light align=middle>Log Rules</td>
 					<td class=light>Write all rules actions to a log
 						file. On each rule is an action you can switch off
-						so that it doesn't get logged.<br><b>Note:</b> RULES.LOG is in
-						the same directory as the PopTray files unless the command-line
+						so that it doesn't get logged.<br>
+						<b>Note:</b> RULES.LOG is in
+						the same directory as the PopTray user files unless the command-line
 						options have been used to specify a different directory.</td>
 				</tr>
 				<tr>
