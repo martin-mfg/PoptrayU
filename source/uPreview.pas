@@ -142,7 +142,8 @@ type
     procedure edMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure actOpenMessageExecute(Sender: TObject);
-    procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
+    procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser;
+      RawHtml: string);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -151,7 +152,6 @@ type
     FToolbarFileName : string;
     FCustomized : boolean;
     FEnter : boolean;
-    FTab : integer;
     HtmlImagesEnabled : boolean;
     procedure DeleteTempFiles;
     procedure AddFileToDelete(FileName : string);
@@ -159,6 +159,7 @@ type
     procedure SaveActionManager;
   public
     { Public declarations }
+    FTab : integer;    
     FStop : Boolean;
     FDecoded : boolean;
     IniName : string;
@@ -174,10 +175,11 @@ type
     function AttachmentIcon(filename : string) : integer;
     procedure ShowMsg;
   end;
-  function RemoveAllTags(source : string) : string;
-  function RemoveImageTags(source : string) : string;
-  procedure WriteStringToStream(stream: TStream; const appendText: string);
-  procedure SantitizeHtml(source: string; outStream: TStream);
+
+const
+  BODY_TAB = 0;
+  HTML_TAB = 1;
+  RAW_TAB = 2;
 var
   frmPreview: TfrmPreview;
 
@@ -187,7 +189,7 @@ implementation
 
 uses
   uRCUtils, uMain, uDM, uGlobal,
-  IniFiles, ShellAPI, CommCtrl, TypInfo;
+  IniFiles, ShellAPI, CommCtrl, TypInfo, uCodePageConverter, uHtmlDecoder;
 
 const
   iconNone = 0;
@@ -391,7 +393,7 @@ begin
     SetSetProp(memMail.Font,'Style',Ini.ReadString('Preview','FontStyle',''));
     memMail.Font.Charset := Ini.ReadInteger('Preview','FontCharset',DEFAULT_CHARSET);
     // tab
-    FTab := Ini.ReadInteger('Preview','Tab',0);
+    FTab := Ini.ReadInteger('Preview','Tab',BODY_TAB);
   finally
      Ini.Free;
   end;
@@ -577,8 +579,15 @@ begin
                 // This case happens both for plain text and html messages with
                 // only one part and no attachments
                 FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
+
                 if (NOT AnsiContainsStr(Msg.ContentType, 'text/html')) then
-                  FHtml := ''; //empty string = show plain-text view on HTML pane
+                  FHtml := '' //empty string = show plain-text view on HTML pane
+                else begin
+                  //HTML only message, convert to plaintext
+                  FBody := ConvertHtmlToPlaintext(FBody);
+                  FBody := AnsiStringToWideString(FBody, Msg.CharSet);
+
+                end;
               end;
             end
             else
@@ -624,7 +633,7 @@ begin
       FDecoded := False;
     end;
     memMail.Lines.Clear;
-    if FTab = 0 then
+    if FTab = BODY_TAB then
       memMail.Lines.Add(FBody)
     else if (FTab < tsMessageParts.Tabs.Count) then
       tsMessageParts.TabIndex := FTab;
@@ -725,7 +734,7 @@ end;
 
 procedure TfrmPreview.tsMessagePartsChange(Sender: TObject; NewTab: Integer; var AllowChange: Boolean);
 begin
-  if NewTab = 2 then
+  if NewTab = RAW_TAB then
   begin
     if (btnOK.Enabled) then btnOK.SetFocus;
     memMail.Visible := True;
@@ -735,7 +744,7 @@ begin
     spltAttachemnts.Hide;
     WebBrowser1.Hide;
   end
-  else if NewTab = 1 then
+  else if NewTab = HTML_TAB then
   begin
     if (btnOK.Enabled) then btnOK.SetFocus;
     if (FHtml = '') then
@@ -770,7 +779,7 @@ begin
       end;
     end;
   end
-  else if NewTab = 0 then
+  else if NewTab = BODY_TAB then
   begin
     if (btnOK.Enabled) then btnOK.SetFocus;
     memMail.Visible := True;
@@ -1188,199 +1197,5 @@ begin
   end;
 end;
 
-function RemoveAllTags(source: string): string;
-var
-  TagBegin, TagEnd, TagLength: integer;
-begin
-  TagBegin := Pos( '<', source);      // search position of first <
-
-  while (TagBegin > 0) do begin  // while there is a < in S
-    TagEnd := Pos('>', source);              // find the matching >
-    TagLength := TagEnd - TagBegin + 1;
-    Delete(source, TagBegin, TagLength);     // delete the tag
-    TagBegin:= Pos( '<', source);            // search for next <
-  end;
-
-  Result := source;                   // give the result
-end;
-
-// Input example: '<img src="img1.gif">' OR '</span>'
-
-function RemoveImageTags(source: string): string;
-var
-  TagBegin, TagEnd: integer;
-begin
-  // find position of first tag start
-  TagBegin := Pos( '<', source);
-
-  // no tags in entire string, return original string
-  if (TagBegin = 0) then begin
-    Result := source;
-    Exit;
-  end else begin
-    Result := Copy(source, 1, TagBegin-1);
-  end;
-
-  // loop through file while there are more tags
-  while (TagBegin > 0) do begin
-
-    // find matching close tag
-    TagEnd := PosEx('>', source, TagBegin);
-    //TagLength := TagEnd - TagBegin + 1;
-
-    if PosEx('img', source, TagBegin) = TagBegin + 1 then begin
-      // replace image start tag with placeholder/alt text
-      Result := Result + ' [image] ';
-    end else if PosEx('/img', source, TagBegin) = TagBegin + 1 then begin
-      //discard end image tag
-    end else begin
-      Result := Result + Copy(source, TagBegin, TagEnd-TagBegin+1);
-    end;
-
-    TagBegin:= PosEx( '<', source, TagEnd+1);
-
-
-    Result := Result + Copy(source, TagEnd+1, TagBegin-(TagEnd+1));
-
-
-  end;
-end;
-
-procedure WriteStringToStream(stream: TStream; const appendText: string);
-begin
-  // faster
-  stream.WriteBuffer(Pointer(appendText)^, Length(appendText)*SizeOf(Char));
-
-  // might be safer? do something like this (prevents memory corruption?)
-  //MemoryStream.ReadBuffer(SourceString[1], xxx);
-end;
-
-
-// Cleans up HTML to filter out spamy content items:
-// Removes the following tags: img, link, script
-procedure SantitizeHtml(source: string; outStream: TStream);
-var
-  TagBegin, TagEnd, TagLength: integer;
-  tagHandled : boolean;
-begin
-  // find position of first tag start
-  TagBegin := Pos( '<', source);
-
-  // no tags in entire string, return original string
-  if (TagBegin = 0) then begin
-    WriteStringToStream(outStream, source);
-    Exit;
-  end else begin
-    WriteStringToStream(outStream, Copy(source, 1, TagBegin-1));
-  end;
-
-  // loop through file while there are more tags
-  while (TagBegin > 0) do begin
-    // find matching close tag
-    TagEnd := PosEx('>', source, TagBegin);
-    TagLength := TagEnd - TagBegin + 1;
-
-    tagHandled := false;
-    case (source[TagBegin+1]) of
-      'i','I':
-          if TagLength >= 4 then
-          case source[TagBegin+2] of 'm','M':
-            case source[TagBegin+3] of 'g', 'G':
-              begin
-                WriteStringToStream(outStream, ' [img] ');
-                tagHandled := true;
-              end;
-            end;
-          end;
-      'l','L':
-        if TagLength >= 5 then
-        case source[TagBegin+2] of 'i','I':
-          case source[TagBegin+3] of 'n','N':
-            case source[TagBegin+4] of 'k','K':
-              tagHandled := true;
-            end;
-          end;
-        end;
-      'o','O':
-        if TagLength >= 7 then
-        case source[TagBegin+2] of 'b','B':
-          case source[TagBegin+3] of 'j','J':
-            case source[TagBegin+4] of 'e','E':
-              case source[TagBegin+5] of 'c','C':
-                case source[TagBegin+6] of 't','T':
-                  tagHandled := true;
-                end;
-              end;
-            end;
-          end;
-        end;
-      '/':
-        begin
-          if TagLength >= 4 then
-          case source[TagBegin+2] of
-          'i','I':
-            case source[TagBegin+3] of 'm','M':
-              case source[TagBegin+4] of 'g', 'G':
-                tagHandled := true;
-              end;
-            end;
-          'l','L':
-                if TagLength >= 6 then
-                case source[TagBegin+3] of 'i','I':
-                  case source[TagBegin+4] of 'n','N':
-                    case source[TagBegin+5] of 'k','K':
-                      tagHandled := true;
-                    end;
-                  end;
-                end;
-          'o','O':
-                if TagLength >= 8 then
-                case source[TagBegin+3] of 'b','B':
-                  case source[TagBegin+4] of 'j','J':
-                    case source[TagBegin+5] of 'e','E':
-                      case source[TagBegin+6] of 'c','C':
-                        case source[TagBegin+7] of 't','T':
-                          tagHandled := true;
-                        end;
-                      end;
-                    end;
-                  end;
-                end;
-          end;
-        end;
-      '>': tagHandled := true;
-    end;
-
-    if (NOT tagHandled) then begin
-      WriteStringToStream(outStream, Copy(source, TagBegin, TagEnd-TagBegin+1));
-    end;
-
-    {
-    if PosEx('img', source, TagBegin) = TagBegin + 1 then begin
-      // replace image start tag with placeholder/alt text
-      WriteStringToStream(outStream, ' [img] ');
-    end else if PosEx('/img', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else if PosEx('link', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag & close tag
-    end else if PosEx('/link', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else if PosEx('script', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else if PosEx('/script', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else if PosEx('object', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else if PosEx('/script', source, TagBegin) = TagBegin + 1 then begin
-      //discard tag
-    end else begin
-      //allowed tag
-      WriteStringToStream(outStream, Copy(source, TagBegin, TagEnd-TagBegin+1));
-    end;
-    }
-    TagBegin:= PosEx( '<', source, TagEnd+1);
-    WriteStringToStream(outStream, Copy(source, TagEnd+1, TagBegin-(TagEnd+1)));
-  end;
-end;
 
 end.

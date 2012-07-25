@@ -2630,18 +2630,22 @@ object frmPreview: TfrmPreview
           item
             Action = actSave
             ImageIndex = 0
+            ShortCut = 16467
           end
           item
             Action = actPrint
             ImageIndex = 1
+            ShortCut = 16464
           end
           item
             Action = actReply
             ImageIndex = 2
+            ShortCut = 16466
           end
           item
             Action = actDelete
             ImageIndex = 3
+            ShortCut = 46
           end>
       end
       item
@@ -2649,18 +2653,22 @@ object frmPreview: TfrmPreview
           item
             Action = actSave
             ImageIndex = 0
+            ShortCut = 16467
           end
           item
             Action = actPrint
             ImageIndex = 1
+            ShortCut = 16464
           end
           item
             Action = actReply
             ImageIndex = 2
+            ShortCut = 16466
           end
           item
             Action = actDelete
             ImageIndex = 3
+            ShortCut = 46
           end
           item
             Action = actOpenMessage
@@ -2669,7 +2677,7 @@ object frmPreview: TfrmPreview
           end
           item
             Action = actImageToggle
-            ImageIndex = 5
+            ShortCut = 16457
           end>
         ActionBar = toolbarPreview
       end>
@@ -2681,24 +2689,28 @@ object frmPreview: TfrmPreview
       Category = 'Preview'
       Caption = '&Save'
       ImageIndex = 0
+      ShortCut = 16467
       OnExecute = actSaveExecute
     end
     object actPrint: TAction
       Category = 'Preview'
       Caption = '&Print'
       ImageIndex = 1
+      ShortCut = 16464
       OnExecute = actPrintExecute
     end
     object actReply: TAction
       Category = 'Preview'
       Caption = '&Reply'
       ImageIndex = 2
+      ShortCut = 16466
       OnExecute = actReplyExecute
     end
     object actDelete: TAction
       Category = 'Preview'
       Caption = '&Delete'
       ImageIndex = 3
+      ShortCut = 46
       OnExecute = actDeleteExecute
     end
     object actAttachmentOpen: TAction
@@ -2791,7 +2803,7 @@ object frmPreview: TfrmPreview
       AutoCheck = True
       Caption = 'Show &Images'
       Checked = True
-      ImageIndex = 5
+      ShortCut = 16457
       OnExecute = actShowImagesExecute
     end
   end
@@ -2801,7 +2813,7 @@ object frmPreview: TfrmPreview
     Left = 516
     Top = 224
     Bitmap = {
-      494C010106000900040018001800FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010106000900040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3696,7 +3708,8 @@ object frmPreview: TfrmPreview
       7FFE00FFC00001C0000380007FFC087FC00001C0000380007FF81C3FC00001E0
       000180007FF03E1FC00001E0000180007FE07F8FC00001F00000C000FFC0FFC7
       C00001FD8000FFFFFF81FFFFC00001FFC000FFFFFF83FFFFC00001FFC007FFFF
-      FF87FFFFFFFFFFFFE3FFFFFFFFFFFFFF}
+      FF87FFFFFFFFFFFFE3FFFFFFFFFFFFFF00000000000000000000000000000000
+      000000000000}
   end
   object mnuPreviewToolbar: TPopupActionBarEx
     ActionManager = ActionManagerPreview
