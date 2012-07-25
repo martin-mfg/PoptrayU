@@ -46,7 +46,12 @@ Indy 9 - Version 9.0.18
   
 TNT Unicode Controls - Version 2.3.0
 --------------------
+  Download website has been discontinued.
   See PopTrayU libraries repository
+
+Delphi Dom HTML Parser and Converter - Version 0.96
+------------------------------------
+  https://sourceforge.net/projects/htmlp/
 
 ********************************************************************
 INSTALLER DEPENDENCIES
