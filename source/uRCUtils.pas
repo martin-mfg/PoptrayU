@@ -762,16 +762,45 @@ begin
   end;
 end;
 
+// the multiplication of Key * C1 causes an integer overflow condition.
+// however, this is expected behavior, and not an unexpected error.
+// so we've set compiler options here to disable rangechecking and
+// overflow checking as they seem to be setting off false-positives.
+{$IFOPT Q+}
+  {$DEFINE OVERFLOW_ON}
+  {$Q-}
+{$ELSE}
+  {$UNDEF OVERFLOW_ON}
+{$ENDIF}
 function BorlandDecrypt(const S: String; Key: Word): String;
 var
-  I: byte;
+  I, si: byte;
 begin
   SetLength(Result,Length(S));
   for I := 1 to Length(S) do begin
     Result[I] := char(byte(S[I]) xor (Key shr 8));
-    Key := (byte(S[I]) + Key) * C1 + C2;
+    si := byte(S[I]);
+    {$IFOPT R+}
+      {$DEFINE RANGEON}
+      {$R-}
+    {$ELSE}
+      {$UNDEF RANGEON}
+    {$ENDIF}
+    Key := (si + Key) * C1 + C2;
+    {$IFDEF RANGEON}
+      {$R+}
+      {$UNDEF RANGEON}
+    {$ENDIF}
+
   end;
 end;
+
+{$IFDEF OVERFLOW_ON}
+  {$Q+}
+  {$UNDEF OVERFLOW_ON}
+{$ENDIF}
+
+
 
 function Encrypt(password : string) : string;
 begin
