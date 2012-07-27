@@ -2481,6 +2481,12 @@ begin
       end;
       if Options.OnTop then
         frmPreview.FormStyle := fsStayOnTop;
+
+      // NEW - force tab to plaintext for spam msgs
+      if (MailItem.Spam) then begin
+         frmPreview.FTab := 0;
+      end;
+
       TranslateForm(frmPreview);
       frmPreview.Caption := Translate('Preview') + ' - PopTrayU';
       frmPreview.Show;
@@ -2586,6 +2592,12 @@ begin
       // show contents
       try
         frmPreview.ShowMsg;
+        // Bug Workaround: once the form has set the subject override the
+        // displayed subject with the correct unicode version.
+        if (Msg.Subject <> '') then begin
+          frmPreview.Caption := MailItem.Subject;
+          frmPreview.edSubject.Text := MailItem.Subject;
+        end;
       finally
         FPreview := False;
       end;
