@@ -1,6 +1,6 @@
 object frmInfo: TfrmInfo
-  Left = 178
-  Top = 315
+  Left = 401
+  Top = 303
   AlphaBlend = True
   BorderStyle = bsDialog
   Caption = 'frmInfo'
@@ -29,7 +29,6 @@ object frmInfo: TfrmInfo
     Align = alClient
     BevelOuter = bvLowered
     BevelWidth = 2
-    Color = 16115430
     TabOrder = 0
     OnClick = FormClick
     DesignSize = (
@@ -46,7 +45,7 @@ object frmInfo: TfrmInfo
       OnChange = pgInfoChange
       object tsNewMail: TTabSheet
         Caption = 'New Mail'
-        object lvInfoNew: TListView
+        object lvInfoNew: TTntListView
           Left = 0
           Top = 0
           Width = 342
