@@ -2,7 +2,8 @@
 <head>
 	<title>What's New PopTrayU 4.0</title>
 	<link rel="stylesheet" href="poptray.css">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
 
 <body>
 
@@ -17,21 +18,31 @@
 		<br>
 		Some of the most significant changes are:
 			<ul>
-				<li><b>Better UTF-8 Support <br>
-				</b>				In particular, subjects sent in UTF-8 encoding are decoded into readable characters on the main screen and preview windows. In some (but not yet all) cases other encodings outside the current code page are also handled better. <br>
-				</li>
+				<li><b>Better Unicode &amp; UTF-8 Support <br>
+                	</b> It is becoming more and more common for emails to be sent encoded in UTF-8 even if they don't contain any international characters, and all the more common when they do. These messages are decoded into readable characters instead of displaying as gibberish or question-marks. Support for converting many other international encodings has also been added, and characters outside of the current OS code-page are supported for Unicode versions of Windows (XP/Vista/Win 7+). <br>
+                	</li>
 				<li><strong>HTML Email Preview </strong><br>
-					An additional tab on the preview window gives you the option of previewing HTML messages in HTML format, using Internet Explorer to render the HTML (Limitation: at this time attachments are not rendered in HTML view). <br> 
-				</li>
-				<li><b>Minor Changes</b></li>
-			    <br>
-					Some of the other changes:
-					<ul>
-						<li><b><i><font color="#CC6633">Resizable Options/Defaults Screen</font></i></b></li>
-					    <li><strong><em><font color="#CC6633">Less Missing Controls on Vista/Win 7 (Refresh Issue Partially Fixed)</font></em></strong></li>
-					    <li><em><strong><font color="#CC6633">Vista Sized Application Icon </font></strong></em></li>
-					</ul>
-			</ul>
+	An additional tab on the preview window gives you the option of previewing HTML messages in HTML format, using Internet Explorer to render the HTML (Limitation: at this time attachments are not rendered in HTML view). <br>
+                	</li>
+				<li><strong>Better Plain-Text Preview </strong><br>
+	Don't like reading your email in HTML? Emails being sent as HTML-only without a plain-text view are becoming increasingly more common, and now will be automatically converted from HTML to plain-text if you use the plain-text view. <br>
+                	</li>
+				<li><strong>More Compatible with Vista and Windows 7 </strong><br>
+	The application has a new program icon, which includes all of the expected image views for Vista and Windows 7. When you run setup, you are now prompted to select whether you'd rather to save user-preferences and settings in the AppData folder where Windows prefers such settings to be saved, or in the application folder (like classic PopTray). This prevents a host of issues with virtual program files folders being created, or having to run PopTrayU as administrator. The issues with controls not refreshing correctly have been fixed, as much as is possible with the program still compiled under a legacy version of Delphi. The application uses Segoe UI (The default font for Vista/Win 7 UI) as the font instead of MS Sans Serif to better match the UI of Vista and above.<br>
+                	</li>
+				<li><strong>Custom Fonts &amp; Colors</strong><br>
+	More customization options! You can now pick custom colors for each account tray icon, rather than a very limited choice of colors. The default font for the application selects automatically based on the OS version. Don't like that font? Pick your own favorite font for the application UI instead. Change the colors and fonts for the list of new messages, make things easier to read with a large font, or show more emails at a time with a smaller font. <br>
+                	</li>
+				<li><strong>Easier to Customize Settings </strong><br>
+	The options section of the application has been completely re-organized to make the amount of customizable settings less overwhelming, and more coherent. Items that affect the same aspect of the program can all be customized on the same UI page, and have headings to help quickly locate the settings you want to change.<br>
+                	</li>
+				<li><b>Additional Changes</b></li>
+				<ul>
+                	<li><b><i><font color="#CC6633">Resizable Options/Defaults Screen</font></i></b></li>
+                	<li><em><strong><font color="#CC6633">Modernized Images to give a more up-to-date look and feel </font></strong></em></li>
+                	<li><em><strong><font color="#CC6633">More Keyboard Hot-keys</font></strong></em></li>
+				</ul>
+				</ul>
 		    <p>For more details about PopTrayU changes, see the <i>History.txt</i>
 		in the PoptrayU directory.</p>
 		<p>&nbsp;</p>
