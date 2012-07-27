@@ -30,6 +30,8 @@ PopTrayU Version History
         (+) Visual appearance Message List color selectors simplified. Custom added
             to dropdowns instead of a seperate button, and now shows user-friendly
             color names.
+        (-) Advanced Info Preview Popup now shows international characters instead of 
+            question marks.
         
 
 4.0 (beta 5)
