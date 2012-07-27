@@ -38,16 +38,38 @@
 			<b>Interval:</b><br>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
 				<tr>
-					<td class=light align=middle>Interval</td>
+					<td colspan="2" align=middle class=light><strong>How Often Should PopTrayU check for New Mail? </strong></td>
+				</tr>
+				<tr>
+					<td class=light align=middle>Interval (Check for mail every...minutes) </td>
 					<td class=light>Global Timer for all accounts (in
 						minutes). No checking will happen if you disable
 						AutoCheck from the Tray Menu.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Timer Interval per Account</td>
+					<td class=light align=middle>Don't automatically check for new messages </td>
+					<td class=light>Causes PopTrayU not to check for new messages on a timer, but only when manually requested. Same as setting the interval to 0. This option replaces the &quot;never&quot; button in older versions.</td>
+				</tr>
+				<tr>
+					<td class=light align=middle>Set Interval per Account</td>
 					<td class=light>Checking the Interval per Account
 						buttons removes the global setting, and you must set the
 						interval in the <a href="accounts.htm">accounts screen</a>.</td>
+				</tr>
+				<tr>
+					<td colspan="2" align=middle class=light><strong>Interval Check Conditions </strong></td>
+				</tr>
+				<tr>
+					<td class=light align=middle>Only Check When Already Online </td>
+					<td class=light>First check if you are on-line before checking for e-mail. Used by dial-up users who don't want the dial-up dialog to pop-up when you are not connected. Makes connecting a little bit slower. Was called &quot;Check if on-line&quot; in older versions. </td>
+				Rep </tr>
+				<tr>
+					<td class=light align=middle>AutoCheck only when Minimized </td>
+					<td class=light>The automatic checking for mail will only happen while PopTrayU is minimized. This option is to prevent errors of your working with message (preview/delete) and PopTrayU checking at the same time, and thus giving lock errors. </td>
+				</tr>
+				<tr>
+					<td class=light align=middle>Don't Check Between </td>
+					<td class=light>This will suspend auto-checking for mail during the hours specified.</td>
 				</tr>
 			</table>
 			<br>
@@ -91,6 +113,9 @@
 			<b>General Options:</b>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
 				<tr>
+					<td colspan="2" align="middle" class="light"><strong>Startup</strong></td>
+				</tr>
+				<tr>
 					<td class="light" align="middle">Check for New Mail on Startup</td>
 					<td class="light">Immediately check
 						for mail when PopTrayU starts. Optionally you can
@@ -105,17 +130,14 @@
 						will be visible. </td>
 				</tr>
 				<tr>
-					<td class="light" align="middle">Animated Tray Icon</td>
-					<td class="light">Animate the <a href="tray.htm">Tray Icon</a>
-						when you receive new mail. This will produce a flashing
-						indicator instead of the normal static one.</td>
+					<td colspan="2" align=middle class=light><strong>Tray Icon </strong></td>
 				</tr>
 				<tr>
 					<td class=light align=middle>Rotate Icon for each Account</td>
 					<td class=light>Animated <a href="tray.htm">Tray
 						Icon</a> rotating to show the number of messages in each
-						account. The account the messages are in can be identified by the color of
-						the circle.</td>
+						account one at a time. The account the messages are in can be identified by the color of
+						the circle. When disabled, the total number of messages in all accounts will be shown and the color will be a blend between the colors of  accounts with new messages. </td>
 				</tr>
 				<tr>
 					<td class="light" align="middle">Reset Mail Count in Tray when Viewing</td>
@@ -125,23 +147,30 @@
 						last view will be shown. Messages are also marked as Viewed.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Info Balloon on Notification</td>
+					<td class="light" align="middle">Tray Icon While Checking </td>
+					<td class="light">Allows you to select which icon will be shown in the tray while PopTray is busy checking for new mail. (previously on advanced ui screen) </td>
+				</tr>
+				<tr>
+					<td colspan="2" align="middle" class="light"><strong>New Message Notification </strong></td>
+				</tr>
+				<tr>
+                	<td class="light" align="middle">Flash Tray Icon </td>
+                	<td class="light">Animate the <a href="tray.htm">Tray Icon</a> when you receive new mail. This will produce a flashing indicator instead of the normal static one. Option previously named &quot;Animated Tray Icon&quot; </td>
+				</tr>
+				<tr>
+					<td class=light align=middle>Show Balloon Notification</td>
 					<td class=light>On Win2000 and later, a balloon will
 						pop-up showing you the total number of messages in each
-						account. When the Advanced Show Info option is
-						checked, a window with more details will pop-up instead.</td>
+						account. When the &quot;Use Deluxe Balloon&quot; option is
+						checked, a window with more details will pop-up instead. Previously named &quot;Info Balloon on Notification&quot;</td>
 				</tr>
 				<tr>
-					<td class="light" align="middle">Show Window on Notification</td>
-					<td class="light">Show the PopTrayU Mail List window when new mail arrives.</td>
+					<td class="light" align="middle">Use Deluxe Balloon </td>
+					<td class="light">Show a pop-up window with new messages and account summary instead of the balloon info. The window will close automatically after the specified number of seconds. Setting the interval to 0 will cause the pop-up window to stay open indefinitely. Previously named &quot;Advanced Show Info&quot;. </td>
 				</tr>
 				<tr>
-					<td class="light" align="middle">Delete Mail on Next Check</td>
-					<td class="light">Allows PopTrayU to only mark messages for deletion instead
-						of deleting them immediately. This allows time to make changes to
-						the selections and also uses your internet connection more efficiently.
-						The next time after PopTrayU checks for new messages, PopTrayU will
-						finally delete the selected messages from the e-mail server.</td>
+					<td class="light" align="middle">Show Main Window </td>
+					<td class="light">Show the PopTrayU Mail List window when new mail arrives. Previously called &quot;Show Window on Notification&quot;. </td>
 				</tr>
 			</table>
 			<br>
@@ -150,6 +179,9 @@
 			<b>Advanced Options:</b>
 			<br>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
+				<tr>
+					<td colspan="2" align="middle" class="light"><strong>Advanced POP Settings </strong></td>
+				</tr>
 				<tr>
 					<td class="light" align="middle">Connection TimeOut</td>
 					<td class="light">The number of seconds to wait before giving
@@ -165,6 +197,13 @@
 						your mail server has problems with the UIDL command.</td>
 				</tr>
 				<tr>
+                	<td class=light align=middle>Safe Delete (using UIDL)</td>
+                	<td class=light>Whenever you want to delete a message, PopTray will use the POP3 UIDL command (if your server supports it) to get a unique identifier of the message. This is used to make sure that the message you are about to delete is still the same message on the server. (Previously on Advanced Misc Screen) </td>
+				</tr>
+				<tr>
+					<td colspan="2" align=middle class=light><strong>Error Handling </strong></td>
+				</tr>
+				<tr>
 					<td class=light align=middle>Ignore Connection Errors</td>
 					<td class=light>When an errors occurs while connecting
 						this option will supress the pop-up error dialog. See the account
@@ -177,19 +216,11 @@
 						getting "Unable to Retrieve Message" errors.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>AutoCheck only while Minimized</td>
-					<td class=light>The automatic checking for mail will
-						only happen while PopTrayU is minimized. This option is
-						to prevent errors of your working with message
-						(preview/delete) and PopTrayU checking at the same time,
-						and thus giving lock errors. </td>
+                	<td class=light align=middle>Show Errors in Balloon Popups </td>
+                	<td class=light>When checked, PopTrayU will display retrieve errors (eg: connection timeout/socket error) in a balloon popup instead of a modal dialog. This changes the behavior when the main window is showing to be the same as when the main window is minimized. Enable this option if you get annoyed by error dialogs getting hidden under the main window, but do not wish to completely suppress error notification. If ignore retrieve errors is specified in addition to this option, ignore retrieve errors will take precedence. </td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Check if On-Line</td>
-					<td class=light>First check if you are on-line before
-						checking for e-mail. Used by dial-up users who don't
-						want the dial-up dialog to pop-up when you are not
-						connected. Makes connecting a little bit slower.</td>
+					<td colspan="2" align=middle class=light><strong>Message Download</strong></td>
 				</tr>
 				<tr>
 					<td class=light align=middle>Preview Top Lines</td>
@@ -210,19 +241,13 @@
 						you can specifiy a maximum size to download and you can also limit
 						the number of lines to download.</td>
 				</tr>
-				<tr>
-					<td class=light align=middle>Show Errors in Balloon Popups </td>
-					<td class=light>When checked, PopTrayU will display retrieve errors (eg: connection timeout/socket error) in a balloon popup instead of a modal dialog. This changes the behavior when the main window is showing to be the same as when the main window is minimized. Enable this option if you get annoyed by error dialogs getting hidden under the main window, but do not wish to completely suppress error notification. If ignore retrieve errors is specified in addition to this option, ignore retrieve errors will take precedence. </td>
-				</tr>
 			</table>
 			<br>
 			<img src="img/options_ui.gif" width="24" height="24">
 			<b>Advanced Options - User Interface:</b>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
 				<tr>
-					<td class=light align=middle>Tray Icon while Checking</td>
-					<td class=light>Allows you to select which icon will be shown in the
-						tray while PopTray is busy checking for new mail.</td>
+					<td colspan="2" align=middle class=light><strong>Main Window Message List </strong></td>
 				</tr>
 				<tr>
 					<td class=light align=middle>Indicate Viewed and Unviewed Message</td>
@@ -230,23 +255,23 @@
 						messages will be in normal text.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Deletion Confirmation</td>
-					<td class=light>When using the <i>"Delete"</i> button, PopTrayU will
-						ask for confirmation before deleting any messages.
-						Deleting messages using rules will not ask for confirmation.</td>
+                	<td class=light align=middle>Remember Viewed Messages</td>
+                	<td class=light>The message IDs you have viewed will be saved to a file, so the next time you open PopTray it will remember which messages have been viewed. Previously on Advanced Misc page. </td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Extra Confirmation when Deleting Protected Messages</td>
-					<td class=light> If enabled, PopTrayU will require an extra confirmation
-						before deleting messages that have been protected.</td>
+                	<td class=light align=middle>Hide Viewed Messages</td>
+                	<td class=light>If enabled, once you've viewed a message in the Mail tab, the message will become hidden after subsequent checks. The <i>Hide</i> button, if enabled on the toolbar, can toggle the viewed messages as hidden or shown.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Password Protect</td>
-					<td class=light>PopTrayU will ask for a password before
-						showing the mail list screen. If you select this option a box
-						will appear where you should type the password you want.
-						Only use this option together with the <i>"Minimize to
-						Tray"</i> option.</td>
+                	<td class=light align=middle>Show Messages while Checking</td>
+                	<td class=light>PopTray will begin listing each message as it finds them on the mail server to the Mail List Screen instead of waiting for all of the messages to be read before listing them.</td>
+				</tr>
+				<tr>
+					<td colspan="2" align=middle class=light><strong>Main Window Behaviors </strong></td>
+				</tr>
+				<tr>
+                	<td class=light align=middle>Stay on Top</td>
+                	<td class=light>Always show the PopTray window on top of other windows. This setting requires a restart of PopTray to work.</td>
 				</tr>
 				<tr>
 					<td class=light align=middle>X Button Minimizes</td>
@@ -267,26 +292,6 @@
 						to multiple lines instead.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Stay on Top</td>
-					<td class=light>Always show the PopTray window on top of
-						other windows. This setting requires a restart of PopTray to work.</td>
-				</tr>
-				<tr>
-					<td class=light align=middle>Advanced Show Info</td>
-					<td class=light>Show a pop-up window with new
-						messages and account summary instead of the balloon
-						info. The window will close automatically after the
-						specified number of seconds. Setting the interval
-						to 0 will cause the pop-up window to stay open indefinitely.</td>
-				</tr>
-				<tr>
-					<td class=light align=middle>Hide Viewed Messages</td>
-					<td class=light>If enabled, once you've viewed a message in the Mail
-						tab, the message will become hidden after subsequent
-						checks. The <i>Hide</i> button, if enabled on the toolbar,
-						can toggle the viewed messages as hidden or shown.</td>
-				</tr>
-				<tr>
 					<td class=light align=middle>Double Click Delay on Click</td>
 					<td class=light>When you Click on the Tray Icon, a delay
 						will occur, to see if you are about to double-click,
@@ -299,10 +304,8 @@
 						executing the double-click action.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Show Messages while Checking</td>
-					<td class=light>PopTray will begin listing each message as it finds
-						them on the mail server to the Mail List Screen instead of waiting for
-						all of the messages to be read before listing them.</td>
+                	<td class=light align=middle>Password Protect</td>
+                	<td class=light>PopTrayU will ask for a password before showing the mail list screen. If you select this option a box will appear where you should type the password you want. Only use this option together with the <i>"Minimize to Tray"</i> option.</td>
 				</tr>
 			</table>
 			<br>
@@ -310,6 +313,24 @@
 			<b>Advanced Options - Miscellaneous:</b>
 			<br>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
+				<tr>
+					<td colspan="2" align=middle class=light><strong>Message Deletion </strong></td>
+				</tr>
+				<tr>
+                	<td class=light align=middle>Deletion Confirmation</td>
+                	<td class=light>When using the <i>"Delete"</i> button, PopTrayU will ask for confirmation before deleting any messages. Deleting messages using rules will not ask for confirmation. Previously on UI Tab. </td>
+				</tr>
+				<tr>
+                	<td class=light align=middle>Extra Confirmation when Deleting Protected Messages</td>
+                	<td class=light> If enabled, PopTrayU will require an extra confirmation before deleting messages that have been protected.</td>
+				</tr>
+				<tr>
+                	<td class="light" align="middle">Delete Mail only on Next Check</td>
+                	<td class="light">Allows PopTrayU to only mark messages for deletion instead of deleting them immediately. This allows time to make changes to the selections and also uses your internet connection more efficiently. The next time after PopTrayU checks for new messages, PopTrayU will finally delete the selected messages from the e-mail server. Previously on general tab. </td>
+				</tr>
+				<tr>
+					<td colspan="2" align=middle class=light><strong>Mail Client Communication </strong></td>
+				</tr>
 				<tr>
 					<td class=light align=middle>MAPI instead of mailto:</td>
 					<td class=light>By default PopTray uses a "mailto" URL
@@ -321,12 +342,7 @@
 						this will probably give more reliable results.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Safe Delete (using UIDL)</td>
-					<td class=light>Whenever you want to delete a message,
-						PopTray will use the POP3 UIDL command (if your server
-						supports it) to get a unique identifier of the message.
-						This is used to make sure that the message you are about
-						to delete is still the same message on the server.</td>
+					<td colspan="2" align=middle class=light><strong>Rules/Blacklist</strong></td>
 				</tr>
 				<tr>
 					<td class=light align=middle>Log Rules</td>
@@ -338,21 +354,10 @@
 						options have been used to specify a different directory.</td>
 				</tr>
 				<tr>
-					<td class=light align=middle>Remember Viewed Messages</td>
-					<td class=light>The message IDs you have viewed
-						will be saved to a file, so the next time you open
-						PopTray it will remember which messages have been viewed.</td>
-				</tr>
-				<tr>
 					<td class=light align=middle>Black List mark as Spam</td>
 					<td class=light>Normally all mail from anyone in the
 						black list will be deleted. With this option it
 						will be marked as spam instead of deleted.</td>
-				</tr>
-				<tr>
-					<td class=light align=middle>Don't Check between</td>
-					<td class=light>This will suspend auto-checking for mail
-						during the hours specified.</td>
 				</tr>
 			</table>
 			<br>
@@ -487,6 +492,26 @@
 						plug-in specific options.</p></td>
 				</tr>
 			</table>
+			<br>
+			<a name="visual"></a>
+			<img src="img/visual.gif" width="24" height="24">
+			<b>Visual Appearance:</b>
+			<br>
+			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
+				<tr>
+					<td class="light" align="middle">Most UI Items</td>
+					<td class="light">Change the font for most items displayed on PopTrayU's UI. The default font is either 8 pt MS Sans Serif (XP and before) or 9 pt Segoe UI (Vista and later). </td>
+				</tr>
+				<tr>
+					<td class="light" align="middle">Vertical Tabs </td>
+					<td class="light">Changes the font used for the vertical tabs on the side of the main window (mail, accounts, options, etc). Because many fonts do not look good displayed vertically, you can customize the font for these tabs seperately than other UI elements. Default: MS Sans Serif 8pt.</td>
+				</tr>
+				<tr>
+					<td class="light" align="middle">Message List </td>
+					<td class="light">Change the font as well as foreground (pencil icon) and background colors (paint can) for the list of new email messages in the main window. Many of the colors available are system UI colors, for coordination with the active Windows color scheme. The x button clears customizations to the font and colors for this item. </td>
+				</tr>
+			</table>
+
 		</td>
 	</tr>
 </table>
