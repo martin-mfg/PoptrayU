@@ -2594,7 +2594,7 @@ begin
         frmPreview.ShowMsg;
         // Bug Workaround: once the form has set the subject override the
         // displayed subject with the correct unicode version.
-        if (Msg.Subject <> '') then begin
+        if (MailItem.Subject <> '') then begin
           frmPreview.Caption := MailItem.Subject;
           frmPreview.edSubject.Text := MailItem.Subject;
         end;
