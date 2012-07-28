@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "4"
 !define VER_MINOR "0"
-!define VER_BETA "5"
+!define VER_BETA "6"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -454,7 +454,7 @@ Function .onInit
   ReadRegStr ${StartupIcon} HKLM "Software\${PRODUCT}" "StartupIcon"
   ReadRegStr ${DesktopIcon} HKLM "Software\${PRODUCT}" "DesktopIcon"
   ReadRegStr ${Language} HKLM "Software\${PRODUCT}" "Language"
-  ReadRegStr ${Sounds} HKLM "Software\${PRODUCT}" "Sounds"
+  ReadRegStr ${Sounds} HKLM "Software\${PRODUCT}" "Sounds" 
 
   ; set icons from registry values
   StrCmp ${StartMenuIcons} "0" "" +2
@@ -546,8 +546,11 @@ Function fnc_IniDialog_Create
 FunctionEnd
 
 
+var IniPath
+
 ; dialog show function
 Function fnc_IniDialog_Show
+
  	Call fnc_IniDialog_Create
 	
 	; Restore values of checkboxes
@@ -559,9 +562,35 @@ Function fnc_IniDialog_Show
 	${If} $RadioAllUserAppdata_State != ${BST_CHECKED}
 	${AndIf} $RadioProgramFiles_State != ${BST_CHECKED}
 		${NSD_Check} $RadioLocalAppdata_HWND
+		
+		
+		;;EXPERIMENTAL
+	  	;;WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" 0x00000026
+		ReadRegDWORD $IniPath HKCU "Software\${PRODUCT}" "IniPath"
+		;;MessageBox MB_OK "$$IniPath=$IniPath" 
+
+		;local appdata
+		${If} $IniPath == 0x0000001A
+			${NSD_Check} $RadioLocalAppdata_HWND
+		;all users
+		${ElseIf} $IniPath == 0x00000023
+			${NSD_Check} $RadioAllUserAppdata_HWND
+		;program files
+		${ElseIf} $IniPath == 0x00000026
+			${NSD_Check} $RadioProgramFiles_HWND
+		${EndIf}		
+		
+		
 	${EndIf}
+	
+
+
+	
+	
+	
 
 	nsDialogs::Show $IniDialog_HWND
+
 FunctionEnd
 
 Function fnc_IniDialog_Leave
@@ -582,7 +611,6 @@ FunctionEnd
 
 Function writeIniDialogRegistrySetting
   ; this would be better, but relies on broken code above
-  ;WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" $iniStorageLocation
 
 
 	${If} $RadioLocalAppdata_State == ${BST_CHECKED}
