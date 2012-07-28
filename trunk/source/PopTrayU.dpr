@@ -78,7 +78,7 @@ begin
       hFirstWin := FindWindow('TfrmPopUMain.UnicodeClass', nil);
     end;
     //if existing instance found AND we are NOT running in the debugger
-    if (hFirstWin <> 0) AND (DebugHook = 0) then
+    if (hFirstWin <> 0) {AND (DebugHook = 0)} then
     begin
       // If /ACTION specified on command line, execute actions, then quit
       param := ParamSwitchIndex('ACTION');
