@@ -40,6 +40,8 @@ PopTrayU Version History
         (-) Preview Window now displays the subject in international characters for
             the title bar and subject line (before only UTF-8 and messages in the
             current code page language displayed correctly).
+        (+) Installer improved to re-select previous user-settings folder for
+            upgrade installations from beta 2 or above.
         
 
 4.0 (beta 5)
