@@ -564,23 +564,35 @@ Function fnc_IniDialog_Show
 		${NSD_Check} $RadioLocalAppdata_HWND
 		
 		
-		;;EXPERIMENTAL
-	  	;;WriteRegDWORD HKLM "Software\${PRODUCT}" "IniPath" 0x00000026
-		ReadRegDWORD $IniPath HKCU "Software\${PRODUCT}" "IniPath"
-		;;MessageBox MB_OK "$$IniPath=$IniPath" 
+		; Check if Registry key exists for IniPath, if so, pick
+                ; same setting that was used previously.
+		ReadRegDWORD $IniPath HKLM "Software\${PRODUCT}" "IniPath"
 
-		;local appdata
-		${If} $IniPath == 0x0000001A
+		IntCmp $IniPath 0x0000001A localappdata
+		IntCmp $IniPath 0x00000023 alluserappdata
+		IntCmp $IniPath 0x00000026 progfiles
+
+		; if not found or not equal to any of these skip assignment
+		Goto donechecking
+
+		localappdata:	
 			${NSD_Check} $RadioLocalAppdata_HWND
-		;all users
-		${ElseIf} $IniPath == 0x00000023
+			${NSD_Uncheck} $RadioAllUserAppdata_HWND
+			${NSD_Uncheck} $RadioProgramFiles_HWND
+			Goto donechecking
+		alluserappdata:
+			${NSD_Uncheck} $RadioLocalAppdata_HWND
 			${NSD_Check} $RadioAllUserAppdata_HWND
-		;program files
-		${ElseIf} $IniPath == 0x00000026
+			${NSD_Uncheck} $RadioProgramFiles_HWND
+			Goto donechecking
+		progfiles:
+			${NSD_Uncheck} $RadioLocalAppdata_HWND
+			${NSD_Uncheck} $RadioAllUserAppdata_HWND
 			${NSD_Check} $RadioProgramFiles_HWND
-		${EndIf}		
+			Goto donechecking		
 		
-		
+		donechecking:
+
 	${EndIf}
 	
 
