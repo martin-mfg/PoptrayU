@@ -10,15 +10,20 @@ PopTrayU Version History
             No more being limited to VGA colors for tray icon colors.
         (*) Options screens have been re-organized to be easier to navigate.
             No options have been removed, but a few have been renamed or moved
-            to a different screen.
+            to a different screen. Locations in PopTray.ini remain unchanged
+            for these settings for backward compatibility.
+        (-) Some options strings renamed from PopTray to PopTrayU for 
+            correctness. (still todo: update translations to match)
         (*) Some of the images in the program have been updated to give the
             program a more modern feel.
         (+) New ability: Disable images on HTML Preview. When images
             are disabled, certain other tags are filtered as well (script,
-            object). At this time CSS is not filtered.
+            object). (Still todo: CSS is not filtered, so images can still
+            get through if they are in stylesheet).
         (+) Keyboard shortcuts on Preview window. Save: Ctrl-S. Print: Ctrl-P.
             Reply: Ctrl-R. Delete: Del. Open: Ctrl-O. Toggle Images: Ctrl-I.
         (+) HTML stripped from Plain-text view on HTML-only emails (eg: pinterest)
+            (Still todo: Does not yet remove style source code correctly).
         (+) When previewing emails marked as spam, automatically switches to the
             plaintext preview tab, to prevent accidentally downloading spam 
             tracker images.
@@ -31,7 +36,10 @@ PopTrayU Version History
             to dropdowns instead of a seperate button, and now shows user-friendly
             color names.
         (-) Advanced Info Preview Popup now shows international characters instead of 
-            question marks.
+            question marks like the main window.
+        (-) Preview Window now displays the subject in international characters for
+            the title bar and subject line (before only UTF-8 and messages in the
+            current code page language displayed correctly).
         
 
 4.0 (beta 5)
