@@ -144,6 +144,9 @@ type
     procedure actOpenMessageExecute(Sender: TObject);
     procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser;
       RawHtml: string);
+    procedure WebBrowser1BeforeNavigate2(Sender: TObject;
+      const pDisp: IDispatch; var URL, Flags, TargetFrameName, PostData,
+      Headers: OleVariant; var Cancel: WordBool);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -806,6 +809,7 @@ var
   ms: TMemoryStream;
 begin
   BrowserComponent.Navigate('about:blank') ;
+  BrowserComponent.Offline := true;
   while BrowserComponent.ReadyState < READYSTATE_INTERACTIVE do
     Application.ProcessMessages;
 
@@ -1197,5 +1201,16 @@ begin
   end;
 end;
 
+procedure TfrmPreview.WebBrowser1BeforeNavigate2(Sender: TObject;
+  const pDisp: IDispatch; var URL, Flags, TargetFrameName, PostData,
+  Headers: OleVariant; var Cancel: WordBool);
+begin
+  if (AnsiStartsStr('http://', URL)) then begin
+    // Open link in default browser instead of this window
+    Cancel := True;
+    WebBrowser1.Stop;
+    ShellExecute(0, nil, PChar(String(Url)), nil, nil, SW_SHOWNORMAL);
+  end;
+end;
 
 end.
