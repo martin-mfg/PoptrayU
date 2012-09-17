@@ -10,6 +10,8 @@ interface
   procedure SantitizeHtml(source: string; outStream: TStream);
   function HTMLDecode2(const AStr: String): String;
   function ConvertHtmlToPlaintext(S : string) : string;
+  function FilterCSS(const input : String) : String;
+
 
 implementation
   uses SysUtils, StrUtils,
@@ -137,8 +139,9 @@ end;
 // Removes the following tags: img, link, script
 procedure SantitizeHtml(source: string; outStream: TStream);
 var
-  TagBegin, TagEnd, TagLength: integer;
+  TagBegin, TagEnd, TagLength, CloseTagBegin: integer;
   tagHandled : boolean;
+  filteredCode : string;
 begin
   // find position of first tag start
   TagBegin := Pos( '<', source);
@@ -190,6 +193,23 @@ begin
               end;
             end;
           end;
+        end;
+      's','S':
+        if TagLength >= 7 then
+            case source[TagBegin+2] of 't','T':
+              case source[TagBegin+3] of 'y', 'Y':
+                case source[TagBegin+4] of 'l', 'L':
+                  case source[TagBegin+5] of 'e', 'E':
+                    begin
+                      CloseTagBegin := PosEx('</style', source, TagBegin);
+                      TagEnd := PosEx('>', source, CloseTagBegin);
+                      filteredCode := FilterCSS(Copy(source, TagBegin, TagEnd-TagBegin+1));
+                      WriteStringToStream(outStream, filteredCode);
+                      tagHandled := true;
+                    end;
+                  end;
+                end;
+              end;
         end;
       '/':
         begin
@@ -258,6 +278,24 @@ begin
     TagBegin:= PosEx( '<', source, TagEnd+1);
     WriteStringToStream(outStream, Copy(source, TagEnd+1, TagBegin-(TagEnd+1)));
   end;
+end;
+
+function FilterCSS(const input : String) : String;
+var
+  urlBegin, TagBegin, TagEnd, TagLength: integer;
+begin
+  Result := input;
+  urlBegin := Pos( 'url', Result);      // search position of first <
+  TagBegin := PosEx ( '(', Result, urlBegin );
+
+  while (TagBegin > 0) do begin  // while there is a < in S
+    TagEnd := PosEx(')', Result, TagBegin);
+    TagLength := TagEnd - TagBegin + 1;
+    //todo: taglength = 0
+    Delete(Result, TagBegin+1, TagLength-2); //leave 2 chars: ( and )
+    TagBegin:= PosEx( 'url', Result, TagBegin);
+  end;
+
 end;
 
 // This function is mostly the html decoder from HTTPApp.PAS (included w/ delphi)
