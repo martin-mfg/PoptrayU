@@ -42,6 +42,7 @@ PopTrayU Version History
             current code page language displayed correctly).
         (+) Installer improved to re-select previous user-settings folder for
             upgrade installations from beta 2 or above.
+        (*) Help-file updated to include new features and re-organized options screens.
         
 
 4.0 (beta 5)
