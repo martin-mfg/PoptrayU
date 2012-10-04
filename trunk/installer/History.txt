@@ -5,6 +5,10 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.0 (beta 7)
+        (-) Fixed bug where preview window would freeze loading html-only 
+            emails with invalid HTML including extraneous '>'s.
+
 4.0 (beta 6)
         (+) Custom is now an option in the list of choices for account colors.
             No more being limited to VGA colors for tray icon colors.
