@@ -50,7 +50,7 @@ begin
 
   while (TagBegin > 0) do
   begin  // while there is a < in S
-    TagEnd := Pos('>', source);              // find the matching >
+    TagEnd := PosEx('>', source, TagBegin);              // find the matching >
     TagLength := TagEnd - TagBegin + 1;
     tagStart := AnsiMidStr(source, TagBegin, Length(STYLE_TAG_START));
 
