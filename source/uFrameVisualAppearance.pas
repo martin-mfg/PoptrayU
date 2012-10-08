@@ -104,7 +104,7 @@ begin
   lblListboxFontSample.Transparent := false;
   lblListboxFontSample.Color := frmPopUMain.lvMail.Color;
 
-  listboxFgColorBox.Selected := Options.ListboxBg;
+  listboxBgColorBox.Selected := Options.ListboxBg;
   listboxFgColorBox.Selected := Options.ListboxFont.Color;
 
   self.Font := Options.GlobalFont;
