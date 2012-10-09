@@ -60,6 +60,9 @@ uses
   Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls;
 
 type
+
+  { TframeVisualAppearance }
+
   TframeVisualAppearance = class(TFrame)
     Label1: TLabel;
     lblListboxFontSample: TLabel;
@@ -91,7 +94,7 @@ type
 
 implementation
 
-uses uMain, uGlobal;
+uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils;
 
 {$R *.dfm}
 
@@ -101,25 +104,36 @@ begin
   frmPopUMain.TranslateFrame(self);
 
   // Options to screen
-  lblListboxFontSample.Transparent := false;
-  lblListboxFontSample.Color := frmPopUMain.lvMail.Color;
 
-  listboxBgColorBox.Selected := Options.ListboxBg;
-  listboxFgColorBox.Selected := Options.ListboxFont.Color;
-
-  self.Font := Options.GlobalFont;
-
-  lblListboxFontSample.Font := Options.ListboxFont;
-  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
-
-
-  lblGlobalSample.Font := Options.GlobalFont;
+  // Global Font
+  lblGlobalSample.Font.Assign(Options.GlobalFont);
   lblGlobalSample.Caption := lblGlobalSample.Font.Name;
+  
+  btnFontChange.Font.Assign(Options.GlobalFont);
+  btnGlobalFont.Font.Assign(Options.GlobalFont);
+  btnVerticalTabFont.Font.Assign(Options.GlobalFont);
+  resetListboxBtn.Font.Assign(Options.GlobalFont);
 
-  lblVerticalTabsSample.Font := Options.VerticalFont;
+  // Vertical Font
+  lblVerticalTabsSample.Font.Assign(Options.VerticalFont);
   lblVerticalTabsSample.Caption := lblVerticalTabsSample.Font.Name;
 
+  // Listbox Fonts/Colors
+  lblListboxFontSample.Font.Assign(Options.ListboxFont);
+  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
+  {$IFNDEF FPC}
+  // Setting the background to not-transparent is only needed for Delphi
+  // (not lazarus). Having this line execute in Lazarus causes the Font to
+  // be ignored. Could be a bug in Lazarus?
+  //lblListboxFontSample.Transparent := false;
+  {$ENDIF}
+  lblListboxFontSample.Color := Options.ListboxBg;
+  listboxFgColorBox.Selected := lblListboxFontSample.Font.Color;
+  listboxBgColorBox.Selected := lblListboxFontSample.Color;
+
+
   Refresh;
+
 end;
 
 
@@ -131,7 +145,7 @@ begin
     Options.ListboxFont.Assign(lblListboxFontSample.Font);
     Options.ListboxBg := lblListboxFontSample.Color;
 
-    frmPopUMain.lvMail.Font := lblListboxFontSample.Font;
+    frmPopUMain.lvMail.Font.Assign(lblListboxFontSample.Font);
     frmPopUMain.lvMail.Color := lblListboxFontSample.Color;
 
     Options.VerticalFont.Assign(lblVerticalTabsSample.Font);
@@ -182,7 +196,6 @@ begin
       end;
 
       OptionsChange(Sender);
-      //frmPopUMain.UpdateFonts();
     end;
   finally
     fntDlg.Free;
@@ -202,13 +215,28 @@ begin
 end;
 
 procedure TframeVisualAppearance.resetListboxBtnClick(Sender: TObject);
+var
+  defaultFont : string;
+  font : TFont;
 begin
   lblListboxFontSample.Color := Graphics.clWindow;
   lblListboxFontSample.Font.Color := Graphics.clWindowText;
-  lblListboxFontSample.Font.Name := 'MS Sans Serif';
-  lblListboxFontSample.Font.Style := [];
-  lblListboxFontSample.Font.Size := 8;
+  defaultFont := IfThen(IsWinVista(), DEFAULT_FONT_VISTA, DEFAULT_FONT_XP);
+
+  font := StringToFont(defaultFont);
+  lblListboxFontSample.Font.Assign(font);
   lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
+  //FreeAndNil(font);
+
+  //font := StringToFont(defaultFont);
+  lblGlobalSample.Font.Assign(font);
+  lblGlobalSample.Caption := lblGlobalSample.Font.Name;
+  FreeAndNil(font);
+
+  font := StringToFont(DEFAULT_FONT_VERTICAL);
+  lblVerticalTabsSample.Font.Assign(font);
+  lblVerticalTabsSample.Caption := lblVerticalTabsSample.Font.Name;
+  FreeAndNil(font);
 
   OptionsChange(resetListboxBtn);
 end;

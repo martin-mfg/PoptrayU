@@ -57,7 +57,8 @@ interface
   uses Graphics;
 
   function GetDataStoragePath( commandLinePath : string = '' ) : string;
-  function StringToFont( sFont : String; defaultFont : String ) : TFont;
+  function StringToFont( sFont : String ) : TFont; overload;
+  function StringToFont( persistedFont : String; const backupFont : String ) : TFont; overload;
   function FontToString( Font : TFont ) : String;
 
 implementation
@@ -132,42 +133,60 @@ const
 {------------------------------------------------------------------------------}
 { Helper function to convert a serialized representation of a font back into   }
 { a font object.                                                               }
+{ Caller is responsible for freeing memory of Return value!                    }
 {------------------------------------------------------------------------------}
 { Input String Example: "Arial", 9, [Bold|Italic], [clBlack]                   }
 {------------------------------------------------------------------------------}
-function StringToFont( sFont : String; defaultFont : String ) : TFont;
+function StringToFont( sFont : String ) : TFont;
 var
   p : integer;
   fontStyle : String;
 begin
-  Result := TFont.Create;
-  if (sFont = '') then sFont := defaultFont;
+    Result := TFont.Create();
 
-  // font name
-  p    := Pos( ',', sFont );
-  Result.Name := Copy( sFont, 1, p-1 );
-  Delete( sFont, 1, p );
+    // font name
+    p    := Pos( ',', sFont );
+    Result.Name := Copy( sFont, 1, p-1 );
+    Delete( sFont, 1, p );
 
-  // font size
-  p    := Pos( ',', sFont );
-  Result.Size := StrToInt( Copy( sFont, 2, p-2 ) );
-  Delete( sFont, 1, p );
+    // font size
+    p    := Pos( ',', sFont );
+    Result.Size := StrToInt( Copy( sFont, 2, p-2 ) );
+    Delete( sFont, 1, p );
 
-  // font style
-  p      := Pos( ',', sFont );
-  fontStyle := '|' + Copy( sFont, 3, p-4 );
-  Delete( sFont, 1, p );
+    // font style
+    p      := Pos( ',', sFont );
+    fontStyle := '|' + Copy( sFont, 3, p-4 );
+    Delete( sFont, 1, p );
 
-  // font color
-  Result.Color := StringToColor( Copy( sFont, 3, Length( sFont ) - 3 ) );
+    // font color
+    Result.Color := StringToColor( Copy( sFont, 3, Length( sFont ) - 3 ) );
 
-  // convert string to font style
-  Result.Style := [];
-  if( Pos(STR_BOLD, fontStyle) > 0 )then Result.Style := Result.Style + [ fsBold ];
-  if( Pos(STR_ITALIC, fontStyle) > 0 )then Result.Style := Result.Style + [ fsItalic ];
-  if( Pos(STR_ULINE, fontStyle) > 0 )then Result.Style := Result.Style + [ fsUnderline ];
-  if( Pos(STR_STIRKE, fontStyle) > 0 )then Result.Style := Result.Style + [ fsStrikeout ];
+    // convert string to font style
+    Result.Style := [];
+    if( Pos(STR_BOLD, fontStyle) > 0 ) then
+      Result.Style := Result.Style + [ fsBold ];
+    if( Pos(STR_ITALIC, fontStyle) > 0 ) then
+      Result.Style := Result.Style + [ fsItalic ];
+    if( Pos(STR_ULINE, fontStyle) > 0 ) then
+      Result.Style := Result.Style + [ fsUnderline ];
+    if( Pos(STR_STIRKE, fontStyle) > 0 ) then
+      Result.Style := Result.Style + [ fsStrikeout ];
 
+end;
+
+{------------------------------------------------------------------------------}
+{ Helper function to convert a serialized representation of a font back into   }
+{ a font object.                                                               }
+{------------------------------------------------------------------------------}
+{ Input String Example: "Arial", 9, [Bold|Italic], [clBlack]                   }
+{------------------------------------------------------------------------------}
+function StringToFont( persistedFont : String; const backupFont : String ) : TFont;
+begin
+  if (persistedFont = '') then
+    Result := StringToFont(backupFont)
+  else
+    Result := StringToFont(persistedFont);
 end;
 
 

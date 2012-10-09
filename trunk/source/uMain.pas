@@ -41,7 +41,7 @@ const
   // --- version info ---
   MajorVersion = '4';
   MinorVersion = '0';
-  ReleaseVersion = '6';
+  ReleaseVersion = '7';
   BetaVersion = '0';
   ReleaseCandidate = '';
 
@@ -1112,8 +1112,11 @@ begin
   end;
 end;
 
+// Adds an individual email message to the listview of new/read emails
 procedure TfrmPopUMain.ShowMailMessage(num,i : integer);
 begin
+  // Messages that have already been seen are hidden if "Hide Viewed Messages"
+  // is selected in options.
   if not( Options.HideViewed and Accounts[num-1].Mail[i].Viewed ) then
   begin
     with lvMail.Items.Add do
@@ -1616,6 +1619,7 @@ var
   ThePluginType : TPluginType;
   fInterfaceVersion : function : integer; stdcall;
   defaultFont : string;
+  font : TFont;
 begin
   // load options from INI
   Ini := TIniFile.Create(IniName);
@@ -1784,11 +1788,24 @@ begin
 
     // Visual Appearance
     defaultFont := IfThen(IsWinVista(), DEFAULT_FONT_VISTA, DEFAULT_FONT_XP);
-    Options.ListboxFont := StringToFont(Ini.ReadString('VisualOptions','ListboxFont',defaultFont), defaultFont);
 
-    Options.ListboxBg := StringToColor(Ini.ReadString('VisualOptions','ListboxBg','clWindow'));
-    Options.GlobalFont := StringToFont(Ini.ReadString('VisualOptions', 'GlobalFont', defaultFont), defaultFont);
-    Options.VerticalFont := StringToFont(Ini.ReadString('VisualOptions', 'VerticalFont', DEFAULT_FONT_VERTICAL), DEFAULT_FONT_VERTICAL);
+    font := StringToFont( Ini.ReadString('VisualOptions', 'ListboxFont',
+      defaultFont), defaultFont);
+    Options.ListboxFont.Assign(font);
+    FreeAndNil(font);
+
+    Options.ListboxBg := StringToColor( Ini.ReadString('VisualOptions',
+      'ListboxBg', 'clWindow'));
+
+    font := StringToFont( Ini.ReadString('VisualOptions', 'GlobalFont',
+      defaultFont), defaultFont);
+    Options.GlobalFont.Assign(font);
+    FreeAndNil(font);
+
+    font := StringToFont( Ini.ReadString('VisualOptions', 'VerticalFont',
+      DEFAULT_FONT_VERTICAL), DEFAULT_FONT_VERTICAL);
+    Options.VerticalFont.Assign(font);
+    FreeAndNil(font);
 
     UpdateFonts();
 
@@ -3623,6 +3640,8 @@ begin
       MailToolBar.ActionClient.Items[i].Control.Perform(CM_MOUSELEAVE, 0, 0);
 end;
 
+// picks the correct type of icon for the mail message based on the type of
+// message (eg: new, high priority, read, spam, etc)
 function TfrmPopUMain.GetStatusIcon(MailItem: TMailItem): integer;
 begin
   Result := Ord(MailItem.Priority);
