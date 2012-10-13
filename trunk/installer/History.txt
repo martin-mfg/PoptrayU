@@ -8,6 +8,14 @@ PopTrayU Version History
 4.0 (beta 7)
         (-) Fixed bug where preview window would freeze loading html-only 
             emails with invalid HTML including extraneous '>'s.
+        (-) Fixed minor memory leak setting fonts
+        (+) Now possible to reset all font/color customizations, not just 
+            the main listbox.
+        (-) Preview window, in plain text view, now supports a wider range
+            of international characters.
+        (-) Preview window, pressing "Reply" when the HTML tab is selected
+            now copies the plain-text version of the email into the reply
+            window instead of a blank message. 
 
 4.0 (beta 6)
         (+) Custom is now an option in the list of choices for account colors.
