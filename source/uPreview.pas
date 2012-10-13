@@ -32,7 +32,7 @@ uses
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
   SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder, TntForms,
-  TntStdCtrls, RegExpr;
+  TntStdCtrls, RegExpr, TntComCtrls;
 
 type
   TfrmPreview = class(TTntForm)
@@ -104,7 +104,7 @@ type
     Label6: TTntLabel;
     edCC: TTntEdit;
     imgPreview: TImage;
-    memMail: TRichEdit;
+    memMail: TTntRichEdit;
     actOpenMessage: TAction;
     WebBrowser1: TWebBrowser;
     actImageToggle: TAction;
@@ -170,7 +170,7 @@ type
     FUID : string;
     FReplyTo : string;
     FRawMsg : string;
-    FBody : string;
+    FBody : widestring;
     FHtml : string;
     FProtected : boolean;
     procedure GetINI;
@@ -468,9 +468,9 @@ procedure TfrmPreview.ShowMsg;
 ////////////////////////////////////////////////////////////////////////////////
 // Show the Message in the preview form
 var
-  i, strLen: integer;
-  aname, mimetype: string;
-  decodedSubject: WideString;
+  i, strLen, charsetPos: integer;
+  aname, mimetype, charsetStr, tempAnsi: string;
+  decodedSubject, tempWideStr: WideString;
 begin
   try
     decodedSubject := DecodeHeader(Msg.Subject);
@@ -502,17 +502,38 @@ begin
     Application.ProcessMessages;
     // body
     FBody := '';
-    if Msg.MessageParts.Count > 1 then
+    if Msg.MessageParts.Count > 1 then // Multi-part message
     begin
       // with attachments
       if Msg.MessageParts.Items[0] is TidText then
-        FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text
+      begin
+        charsetPos := Pos('charset=', Msg.MessageParts.Items[0].ContentType);
+        if charsetPos > 0 then
+        begin
+          charsetStr :=ExtractCharset(Msg.MessageParts.Items[0].ContentType);
+          tempAnsi := TidText(Msg.MessageParts.Items[0]).Body.Text;
+          tempWideStr := ConvertToWideString(tempAnsi, charsetStr);
+          FBody := FBody + tempWideStr;
+        end else
+          FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
+      end
       else if Msg.MessageParts.Items[0] is TIdAttachment then
         FBody := FBody + #13#10+frmPopUMain.Translate('Attachment:')+' '+
                          TidAttachment(Msg.MessageParts.Items[0]).ContentType;
 
       if Msg.MessageParts.Items[1] is TidText then
-        FBody := FBody + TidText(Msg.MessageParts.Items[1]).Body.Text;
+      begin
+        charsetPos := Pos('charset=',Msg.MessageParts.Items[1].ContentType);
+        if charsetPos > 0 then
+        begin
+          charsetStr :=ExtractCharset(Msg.MessageParts.Items[1].ContentType);
+          tempAnsi := TidText(Msg.MessageParts.Items[1]).Body.Text;
+          tempWideStr := ConvertToWideString(tempAnsi, charsetStr);
+          FBody := FBody + tempWideStr;
+        end
+        else
+          FBody := FBody + TidText(Msg.MessageParts.Items[1]).Body.Text;
+      end;
 
       lvAttachments.Show;
       spltAttachemnts.Show;
@@ -562,9 +583,8 @@ begin
       end;
       FDecoded := True;
     end
-    else begin
-      // no attachments
-      if Msg.NoDecode then
+    else begin //Single-part messsage
+      if Msg.NoDecode then // MessageParts property is empty
         begin
           FBody := Msg.Body.Text;
           FHtml := '';//'<pre>' + Msg.Body.Text + '</pre>';
@@ -637,7 +657,9 @@ begin
     end;
     memMail.Lines.Clear;
     if FTab = BODY_TAB then
+    begin
       memMail.Lines.Add(FBody)
+    end
     else if (FTab < tsMessageParts.Tabs.Count) then
       tsMessageParts.TabIndex := FTab;
     panProgress.Visible := False;
@@ -960,7 +982,7 @@ begin
   if memMail.SelLength > 1 then
     body := memMail.SelText
   else
-    body := memMail.Text;
+    body := FBody;//memMail.Text; - Changed so replying to HTML emails will work
   body := #13#10'> ' + AnsiReplaceStr(body,#13#10,#13#10'> ');
   // send it
   frmPopUMain.SendMail(email,subject,body);

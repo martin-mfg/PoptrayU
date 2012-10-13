@@ -59,9 +59,12 @@ interface
   function DecodeHeader(const encodedHeader : AnsiString) : WideString; //overload;
   //function DecodeHeader(const encodedHeader : string; const charset : string) : WideString; overload;
 
+  function ConvertToWideString(inputString : AnsiString; charEncoding: AnsiString) : WideString;
+  function ExtractCharSet(const contentTypeHeader: ansistring) : ansistring;
+
 implementation
   uses IdCoder, IdCoderQuotedPrintable, IdCoderMIME, IdCoder3to4, IdCoderHeader,
-  Dialogs, uCodePageConverter;
+  Dialogs, uCodePageConverter, IdGlobal;
 
 (*function DecodeHeader(const encodedHeader : string; const charset : string) : WideString;
 var
@@ -188,6 +191,33 @@ begin
 
 end;
 
+//Copied from Indy. Fetch is in IdGlobal
+function ExtractCharSet(const contentTypeHeader: ansistring) : ansistring;
+  var
+    s: string;
+  begin
+    s := LowerCase(contentTypeHeader);
+    Fetch(s, 'charset='); {do not localize}
+    if Copy(s, 1, 1) = '"' then begin {do not localize}
+      Delete(s, 1, 1);
+      Result := Fetch(s, '"'); {do not localize}
+    // Sometimes its not in quotes
+    end else begin
+      Result := Fetch(s, ';');
+    end;
+end;
 
+function ConvertToWideString(inputString : AnsiString; charEncoding: AnsiString) : WideString;
+begin
+  if (charEncoding = 'utf-8')
+  then begin
+    { Convert UTF-8 to WideChar }
+    Result := UTF8Decode(inputString);
+  end
+  else begin
+    { The header is not UTF-8, convert from the specified codepage to WideChar }
+    Result := AnsiStringToWideString(inputString, charEncoding);
+  end;
+end;
 
 end.
