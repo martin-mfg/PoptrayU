@@ -2636,7 +2636,7 @@ procedure TfrmPopUMain.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; 
 var
   MessageClient : TIdMessageClient;
 begin
-  MessageClient := TIdMessageClient.Create(Self);
+  MessageClient := TIdMessageClient.Create(Self);//nil);
   MessageClient.OnWork := OnProcessWork;
   try
     MessageClient.ProcessMessage(AMsg,AStream,AHeaderOnly);
@@ -5192,7 +5192,7 @@ begin
   // create objects
   Accounts := TAccountItems.Create;
   Rules := TRuleItems.Create;
-  MsgHeader := TIdMessage.Create(Self);
+  MsgHeader := TIdMessage.Create(Self);//nil);
   MsgHeader.NoDecode := True;
   FQueue := TUniqueQueue.Create;
   // menus with cpation different from action
@@ -5353,10 +5353,8 @@ begin
     Accounts[num-1].Mail.Free;
   end;
   Accounts.Free;
-  Rules.Free;
   if Assigned(FRegExpr) then FRegExpr.Free;
-  //for i := Low(Plugins) to High(Plugins) do   // causes AV
-  //  Plugins[i].Free;
+
 
   // unregister drag n drop
   DragAcceptFiles(Self.Handle, False);
@@ -5366,7 +5364,7 @@ end;
 
 destructor TfrmPopUMain.Destroy;
 var
-  i, j: Integer;
+  i: Integer;
 begin
   FreeAndNil(MsgHeader);
 
@@ -5378,18 +5376,14 @@ begin
 
   Protocols[0].Prot.Free;
   
-{  if (Rules <> nil) then
+  if (Rules <> nil) then
   begin
     for i := 0 to Rules.Count - 1 do
     begin
-      for j := 0 to Rules[i].Rows.Count-1 do
-      begin
-        Rules[i].Rows[j].Free;
-      end;
       Rules[i].Rows.Free;
-      Rules[i].Free;
     end;
-  end; }
+  end; 
+  FreeAndNil(Rules);
 
   // Always call the parent destructor after running your own code
   inherited;
