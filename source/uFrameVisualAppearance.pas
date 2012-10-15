@@ -125,7 +125,7 @@ begin
   // Setting the background to not-transparent is only needed for Delphi
   // (not lazarus). Having this line execute in Lazarus causes the Font to
   // be ignored. Could be a bug in Lazarus?
-  //lblListboxFontSample.Transparent := false;
+  lblListboxFontSample.Transparent := false;
   {$ENDIF}
   lblListboxFontSample.Color := Options.ListboxBg;
   listboxFgColorBox.Selected := lblListboxFontSample.Font.Color;
@@ -135,7 +135,6 @@ begin
   Refresh;
 
 end;
-
 
 procedure TframeVisualAppearance.OptionsChange(Sender: TObject);
 begin

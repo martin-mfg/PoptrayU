@@ -94,13 +94,13 @@ OutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build
 UnitOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
 PackageDLLOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
 PackageDCPOutputDir=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
-SearchPath=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp
+SearchPath=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp;C:\Program Files\Indy 9 for Delphi 6\Source
 Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx
 Conditionals=
 DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 UsePackages=0
 [Parameters]
-RunParams=
+RunParams=/MULTIPLE
 HostApplication=
 Launcher=
 UseLauncher=0
@@ -115,8 +115,8 @@ AutoIncBuild=1
 MajorVer=4
 MinorVer=0
 Release=7
-Build=1
-Debug=1
+Build=3
+Debug=0
 PreRelease=0
 Special=0
 Private=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.7.1
+FileVersion=4.0.7.3
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
@@ -140,13 +140,18 @@ c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Comp
 [HistoryLists\hlDebugSourcePath]
 Count=1
 Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
+[HistoryLists\hlConditionals]
+Count=2
+Item0=madExcept;LeakChecking
+Item1=madExcept
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=2
-Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp
-Item1=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
+Count=3
+Item0=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp;C:\Program Files\Indy 9 for Delphi 6\Source
+Item1=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source;C:\Users\Jessica\Documents\Borland Studio Projects\htmlp
+Item2=C:\Program Files\Borland\Delphi7\cooltray;C:\Program Files\Borland\Delphi7\Source\Vcl;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Delphi\d7;C:\Users\Jessica\Documents\code\TntUnicodeControls_2.3.0\Source
 [HistoryLists\hlUnitOutputDirectory]
 Count=1
 Item0=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\dcu
