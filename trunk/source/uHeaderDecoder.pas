@@ -166,6 +166,7 @@ begin
     decodedString := decoderStream.DataString;
   finally
     FreeAndNil(decoder);
+    FreeAndNil(decoderStream);
   end;
 
   if (charEncoding = 'utf-8')
