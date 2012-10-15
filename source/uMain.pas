@@ -639,6 +639,8 @@ type
     procedure OnCloseFree(Sender: TObject; var Action: TCloseAction);
     procedure OnClickClose(Sender: TObject);
     procedure OnMinimize(Sender: TObject);
+  published
+    Destructor  Destroy; override;
   end;
 
 var
@@ -2634,7 +2636,7 @@ procedure TfrmPopUMain.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; 
 var
   MessageClient : TIdMessageClient;
 begin
-  MessageClient := TIdMessageClient.Create(nil);
+  MessageClient := TIdMessageClient.Create(Self);
   MessageClient.OnWork := OnProcessWork;
   try
     MessageClient.ProcessMessage(AMsg,AStream,AHeaderOnly);
@@ -5190,7 +5192,7 @@ begin
   // create objects
   Accounts := TAccountItems.Create;
   Rules := TRuleItems.Create;
-  MsgHeader := TIdMessage.Create(nil);
+  MsgHeader := TIdMessage.Create(Self);
   MsgHeader.NoDecode := True;
   FQueue := TUniqueQueue.Create;
   // menus with cpation different from action
@@ -5343,9 +5345,7 @@ procedure TfrmPopUMain.FormDestroy(Sender: TObject);
 var
   num : integer;
 begin
-  // free stuff
-  //FreeAndNil(ActionManager);  // to prevent AV on destroy
-  //FreeAndNil(MsgHeader);
+
   FQueue.Free;
   for num := 1 to NumAccounts do
   begin
@@ -5362,6 +5362,37 @@ begin
   DragAcceptFiles(Self.Handle, False);
   // unregister hotkeys
   UnRegisterTheHotKeys;
+end;
+
+destructor TfrmPopUMain.Destroy;
+var
+  i, j: Integer;
+begin
+  FreeAndNil(MsgHeader);
+
+  if (Plugins <> nil) then
+  begin
+    for i := 0 to Length(Plugins) - 1 do
+      Plugins[i].Free;
+  end;
+
+  Protocols[0].Prot.Free;
+  
+{  if (Rules <> nil) then
+  begin
+    for i := 0 to Rules.Count - 1 do
+    begin
+      for j := 0 to Rules[i].Rows.Count-1 do
+      begin
+        Rules[i].Rows[j].Free;
+      end;
+      Rules[i].Rows.Free;
+      Rules[i].Free;
+    end;
+  end; }
+
+  // Always call the parent destructor after running your own code
+  inherited;
 end;
 
 procedure TfrmPopUMain.lblHomepageMouseEnter(Sender: TObject);

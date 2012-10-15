@@ -132,6 +132,7 @@ begin
         FreeLibrary(Plugins[i].hPlugin);
         Plugins[i].hPlugin := 0;
       end;
+      Plugins[i].Free; //Free up memory for plugin before reloading it
     end;
     // clear array and listview
     tmpPluginCount := length(Plugins);
@@ -214,6 +215,7 @@ begin
       // next
       res := FindNext(srec);
     end;
+    FindClose(srec); // free up resources used by successful FindFirst/Next calls
     // refresh listview
     lvPlugins.Items.Clear;
     for i := Low(Plugins) to High(Plugins) do
