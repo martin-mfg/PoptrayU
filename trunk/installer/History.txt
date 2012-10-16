@@ -17,6 +17,8 @@ PopTrayU Version History
         (-) Preview window, pressing "Reply" when the HTML tab is selected
             now copies the plain-text version of the email into the reply
             window instead of a blank message. 
+        (-) Links beginning with http:// are opened in the default browser
+            from HTML preview window.
 
 4.0 (beta 6)
         (+) Custom is now an option in the list of choices for account colors.
