@@ -9,6 +9,7 @@
 # have your translation included in the next version of PopTray.
 #-----------------------------------------------------------------------
 # 2005-10-15  PopTray 3.2 (beta 2)
+# 2012-10-19 Updated for PopTrayU 4.0.8
 #-----------------------------------------------------------------------
 
 (All Actions)=
@@ -463,4 +464,67 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=
 Yes=
 You are trying to delete protected messages.=
+
+Visual Appearance=
+Main Window Listbox Font=
+Change the main window listbox background=
+Change the main window listbox foreground=
+Failure connecting to server.=
+Server found, but is not a mail server.=
+Change the Main Window Listbox Font=
+Clear all customizations=
+HTML View=
+Thanks to the following volunteers who helped translate this software:=
+Language=
+Translator=
+Component=
+Author=
+About PopTrayU=
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=
+Check online for newer version=
+
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=
+Changes how errors are shown when the main window is visible.=
+Error checking=
+
+Component Credits=
+Translation Credits=
+Message Deletion=
+Mail Client Communication=
+Rules/Blacklist=
+Advanced POP Settings=
+Error Handling=
+Message Download (Enable to use advanced rules)=
+Startup=
+Tray Icon=
+New Message Notification=
+Plugins=
+How often should PopTrayU check for new mail?=	
+Interval Check Conditions=
+User Data Folder: (where PopTray.ini and Rules files are stored)=
+Misc=
+About PopTrayU=
+Version=
+Show Images=
+Reset Customizations=
+Most UI Items= 
+Vertical Tabs=
+Message List=
+
+Flash Tray Icon=
+Show Balloon Notification=
+Use Deluxe Balloon=
+(show for=
+seconds)=
+Show Main Window=
+Keyboard Lights=
+IMAP4=
+POP3 with SSL or APOP=
+Specify a different timer interval for each account.=
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=
+This setting can be changed via setup or a command line parameter.=
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not reccommended.=
+Don't automatically check for new messages=
+Set Interval per account=
+Only check when already online=
 
