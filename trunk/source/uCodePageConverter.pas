@@ -72,9 +72,9 @@ uses
 implementation
 {******************************************************************************}
 uses
-  uGlobal, (* for Options *)
-  uMain,   (* for Tranlate & TranslateDlg *)
-  Dialogs; (* for mtError *)
+  uGlobal,    (* for Options *)
+  uTranslate, (* for Translate & TranslateDlg *)
+  Dialogs;    (* for mtError *)
 
 var
   codePageMap: THashedStringList;
@@ -135,16 +135,16 @@ begin
       // show error message describing the error (unless disabled via options)
       if not Options.IgnoreRetrieveErrors then
       begin
-      frmPopUMain.TranslateDlg(
-          frmPopUMain.Translate('Code Page/Encoding Requested')+
+      ShowTranslatedDlg(
+          Translate('Code Page/Encoding Requested')+
           ': '+codePageName+#13#10#13#10+
-          frmPopUMain.Translate(
+          Translate(
             'Would you like to see this encoding added in future versions?')+
           #13#10#13#10+
-          frmPopUMain.Translate(
+          Translate(
             'Report this at http://poptrayu.sourceforge.net'),
           mtError, [mbOK], 0,
-          frmPopUMain.Translate('Unsupported Text Encoding'));
+          Translate('Unsupported Text Encoding'));
       end;
 
       // Pick a (hopefully) reasonable default to fallback to

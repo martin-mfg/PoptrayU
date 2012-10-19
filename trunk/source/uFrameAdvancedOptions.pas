@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, ExtCtrls;
+  Dialogs, StdCtrls, ExtCtrls, uTranslate;
 
 type
   TframeAdvancedOptions = class(TFrame)
@@ -74,7 +74,7 @@ constructor TframeAdvancedOptions.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  uTranslate.TranslateFrame(self);
   // options to screen
   edTimeOut.Text := IntToStr(Options.TimeOut);
   chkQuickCheck.Checked := Options.QuickCheck;
@@ -161,11 +161,11 @@ begin
     // rules area
     if Options.GetBody then
     begin
-      if frmPopUMain.TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) <> 'Body' then
-        frmPopUMain.cmbRuleArea.Items.Add(frmPopUMain.Translate('Body'));
+      if TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) <> 'Body' then
+        frmPopUMain.cmbRuleArea.Items.Add(uTranslate.Translate('Body'));
     end
     else begin
-      if frmPopUMain.TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) = 'Body' then
+      if TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) = 'Body' then
         frmPopUMain.cmbRuleArea.Items.Delete(frmPopUMain.cmbRuleArea.Items.Count-1);
     end;
     // enable buttons

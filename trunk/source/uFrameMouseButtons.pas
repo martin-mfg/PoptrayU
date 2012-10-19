@@ -56,7 +56,7 @@ type
 
 implementation
 
-uses uMain, uGlobal;
+uses uMain, uGlobal, uTranslate;
 
 {$R *.dfm}
 
@@ -70,11 +70,11 @@ var
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
   // fill action drop-downs
   for i := Low(Actions) to High(Actions) do
   begin
-    st := frmPopUMain.Translate(Actions[i]);
+    st := Translate(Actions[i]);
     cmbLeftClick.Items.Add(st);
     cmbRightClick.Items.Add(st);
     cmbMiddleClick.Items.Add(st);

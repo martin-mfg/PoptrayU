@@ -45,7 +45,6 @@ type
     chkOnline: TCheckBox;
     grpExcept: TGroupBox;
     chkCheckWhileMinimized: TCheckBox;
-    //procedure btnNeverClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -62,7 +61,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal, uRCUtils, uTranslate;
 
 {$R *.dfm}
 
@@ -72,7 +71,7 @@ constructor TframeInterval.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  uTranslate.TranslateFrame(self);
   edTime.Tag := 1;
   // options to screen
   edTime.Text := FloatToStr(Options.Interval);
@@ -148,6 +147,10 @@ begin
   lblAnd.Left := dtStart.Left + dtStart.Width + 6;
   dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
 
+  AutoSizeCheckBox(chkCheckWhileMinimized);
+  AutoSizeCheckBox(chkOnline);
+  AutoSizeCheckBox(radioNever);
+  AutoSizeCheckBox(radioTimerAccount);
 end;
 
 procedure TframeInterval.HelpMouseDown(Sender: TObject;

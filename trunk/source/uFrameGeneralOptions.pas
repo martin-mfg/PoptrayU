@@ -64,7 +64,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal, uRCUtils, uTranslate;
 
 {$R *.dfm}
 
@@ -76,9 +76,9 @@ var
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
   for i := 0 to cmbCheckingIcon.Items.Count-1 do
-    cmbCheckingIcon.Items[i] := frmPopUMain.Translate(cmbCheckingIcon.Items[i]);
+    cmbCheckingIcon.Items[i] := Translate(cmbCheckingIcon.Items[i]);
   // options to screen
   chkStartUp.Checked := Options.StartUp;
   edFirstWait.Text := IntToStr(Options.FirstWait);

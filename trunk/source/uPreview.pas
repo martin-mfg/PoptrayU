@@ -191,7 +191,7 @@ implementation
 {$R *.DFM}
 
 uses
-  uRCUtils, uMain, uDM, uGlobal,
+  uRCUtils, uMain, uDM, uGlobal, uTranslate,
   IniFiles, ShellAPI, CommCtrl, TypInfo, uCodePageConverter, uHtmlDecoder;
 
 const
@@ -208,7 +208,7 @@ const
 
 function Translate(english : string) : string;
 begin
-  Result := frmPopUMain.Translate(english);
+  Result := uTranslate.Translate(english);
 end;
 
 procedure TfrmPreview.WndProc(var Message: TMessage);
@@ -518,7 +518,7 @@ begin
           FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
       end
       else if Msg.MessageParts.Items[0] is TIdAttachment then
-        FBody := FBody + #13#10+frmPopUMain.Translate('Attachment:')+' '+
+        FBody := FBody + #13#10+uTranslate.Translate('Attachment:')+' '+
                          TidAttachment(Msg.MessageParts.Items[0]).ContentType;
 
       if Msg.MessageParts.Items[1] is TidText then
@@ -615,7 +615,7 @@ begin
             end
             else
             begin
-              FBody := FBody + frmPopUMain.Translate('Attachment:')+' ['+
+              FBody := FBody + uTranslate.Translate('Attachment:')+' ['+
                                 TidAttachment(Msg.MessageParts.Items[0]).FileName+']';
               FHtml := Msg.Body.Text; //TODO: display attachment in HTML view?
             end;
@@ -992,8 +992,7 @@ end;
 procedure TfrmPreview.actDeleteExecute(Sender: TObject);
 begin
   if not(Options.DeleteConfirm) or
-     (frmPopUMain.TranslateDlg(
-      frmPopUMain.Translate('Delete Message from Server?'),
+     (ShowTranslatedDlg(Translate('Delete Message from Server?'),
       mtConfirmation,[mbYes,mbNo],0) = mrYes) then
   begin
     // ask again for protected messages
@@ -1001,7 +1000,7 @@ begin
     begin
       if FProtected then
       begin
-        if frmPopUMain.TranslateDlg(Translate('You are trying to delete protected messages.') +#13#10#13#10+
+        if ShowTranslatedDlg(Translate('You are trying to delete protected messages.') +#13#10#13#10+
                                    Translate('Are you sure?'),
                                    mtConfirmation,[mbYes,mbNo],0) = mrNo then
         begin
@@ -1056,7 +1055,7 @@ begin
         if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName),
                         pchar(SaveDialog.FileName),false) then
         begin
-          MessageDlg(frmPopUMain.Translate('Failed to Save Attachment.')+#13#10#13#10+
+          MessageDlg(uTranslate.Translate('Failed to Save Attachment.')+#13#10#13#10+
                      SaveDialog.FileName, mtError, [mbOK], 0);
         end;
       end
@@ -1066,7 +1065,7 @@ begin
           (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdText).Body.SaveToFile(SaveDialog.FileName);
         end
         else
-          MessageDlg(frmPopUMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
+          MessageDlg(uTranslate.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
       end;
     end;
   finally
@@ -1084,7 +1083,7 @@ begin
   // check for malicious filetype
   if lvAttachments.Selected.ImageIndex in [iconEXE,iconWarning] then
   begin
-    MessageDlg(frmPopUMain.Translate('Because of the Security Risk, PopTray doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
+    MessageDlg(uTranslate.Translate('Because of the Security Risk, PopTray doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
   end
   else begin
     if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
@@ -1099,7 +1098,7 @@ begin
         ExecuteFile(NewName,'','',SW_NORMAL);
       end
       else
-        MessageDlg(frmPopUMain.Translate('Unable to Copy file.'), mtError, [mbOK], 0);
+        MessageDlg(uTranslate.Translate('Unable to Copy file.'), mtError, [mbOK], 0);
     end
     else begin
       if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdText then
@@ -1117,7 +1116,7 @@ begin
         end;
       end
       else
-        MessageDlg(frmPopUMain.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
+        MessageDlg(uTranslate.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
     end;
   end;
 end;
