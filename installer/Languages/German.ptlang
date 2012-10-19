@@ -8,8 +8,9 @@
 # Michael Baas and Jochen Wackershauser
 #
 #-----------------------------------------------------------------------
-# 2012-03-29 PopTrayU 4.0.3
-# 2012-06-29 PopTrayU 4.0.5
+# 2012-03-29 PopTrayU 4.0.3 - Jessica Brown
+# 2012-06-29 PopTrayU 4.0.5 - Jessica Brown
+# 2012-10-19 PopTrayU 4.0.8 - Jessica Brown
 #-----------------------------------------------------------------------
 
 (All Actions)=(Alle Aktionen)
@@ -394,10 +395,9 @@ This will create a rule to spam mark all future e-mails from=Neue Regel zur Kenn
 This will create a rule to spam mark all future e-mails with subject=Neue Regel zur Kennzeichnung aller Nachrichten als Spam mit dem Betreff
 This will delete all these messages.=Hierdurch werden alle Nachrichten gelöscht.
 This will delete all these selected messages.=Hierdurch werden alle ausgewählten Nachrichten gelöscht.
-Timer Interval per Account=Eigenes Prüfintervall für jedes Konto
 To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=Hinzufügen von Aktionen zur Anwendung per «Drag & Drop», indem Kategorien oder Aktionen mit der Maus auf eine vorhandene Aktionsleiste gezogen und dort losgelassen werden.
 To Be Deleted=Zum Löschen
-To Tray=In die Systemleiste minimieren
+To Tray=Minimieren
 To=An
 Toggle AutoCheck=Automatische Prüfung EIN-/AUSschalten
 Toggle Message Window=Nachrichtenfenster EIN-/AUSschalten
@@ -449,7 +449,7 @@ Yes=Ja
 You are trying to delete protected messages.=Sie versuchen gerade, geschützte Nachrichten zu löschen.
 
 #---------------------------------------------------------------------
-# New Strings for PopTrayU 4.x
+# New Strings for PopTrayU 4.0.3
 #---------------------------------------------------------------------
 Visual Appearance=Optik
 Main Window Listbox Font=Hauptfenster Listenfeld Schriftart
@@ -468,8 +468,57 @@ Author=Autor
 Credits:=Danksagung:
 PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU ist eine Abwandlung von Renier Crause die PopTray 3,2 und ein Großteil der Code in dieser Anwendung ist somit Copyright 2001-2005 Renier Crause. Vielen Dank an für die Entwicklung PopTray Renier, und für die Unterstützung seiner Dienstleistungen.
 Check online for newer version=Online überprüfen nach einer neueren Version
+
+#---------------------------------------------------------------------
 # New strings for 4.0.5
+#---------------------------------------------------------------------
 Show Errors in Balloon Popups (Instead of Modal Dialogs)=Zeige Fehler auf Balloon Tipp (Anstelle von modaler Dialoge)
 Changes how errors are shown when the main window is visible.=Dies ändert, wie Fehler angezeigt werden, wenn das Hauptfenster sichtbar ist.
 Error checking=Fehler beim Prüfen
-#end
+
+#---------------------------------------------------------------------
+# New Strings for 4.0.6 to 4.0.8
+#---------------------------------------------------------------------
+Component Credits=Komponente Danksagung
+Translation Credits=Übersetzung Danksagung
+Message Deletion=Löschen von Nachrichten
+Mail Client Communication=Mailprogramms Communication
+Rules/Blacklist=Regeln/Schwarze Liste
+Advanced POP Settings=Erweiterte POP Einstellungen
+Error Handling=Fehlerbehandlung
+Message Download (Enable to use advanced rules)=Nachricht Download (Aktivieren, um erweiterte Regeln verwenden) 
+Startup=Programmstart
+Tray Icon=Systemleistensymbol
+New Message Notification=Benachrichtigung bei neuer Meldung
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Wie oft sollte PopTrayU nach neuen Nachrichten schauen?	
+Interval Check Conditions=Prüfintervall Verhältnisse
+User Data Folder: (where PopTray.ini and Rules files are stored)=Benutzerdaten Folder: (wo PopTray.ini und Regeln Dateien gespeichert werden)
+Misc=Verschiedenes
+About PopTrayU=Über PopTrayU
+Version=Version
+Show Images=Bilder Anzeigen
+Reset Customizations=Zurücksetzen Anpassungen
+Most UI Items=Meisten UI-Elemente 
+Vertical Tabs=Vertical Registers
+Message List=Nachrichtenliste
+Flash Tray Icon=Blinkt das Taskleistensymbol
+Show Balloon Notification=Lassen Sie sich die Meldung in einem Ballon popup
+Use Deluxe Balloon=Verwenden Deluxe popup
+(show for=(zeigen für
+seconds)=Sekunden)
+Show Main Window=Zeigen das Hauptfenster
+Keyboard Lights=Keyboard Lichter
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 mit SSL oder APOP
+
+Specify a different timer interval for each account.=Geben Sie einen anderen Timer-Intervall für jedes Konto.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Wird von DFÜ-Benutzer, die nicht wollen,~dass die DFÜ-Dialog, um Pop-up, wenn Sie~nicht verbunden sind. Macht die Überprüfung~ein wenig langsamer.
+This setting can be changed via setup or a command line parameter.=Diese Einstellung kann über das Setup oder eine Kommandozeilen-Parameter geändert werden.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Keys sind systemweit. Verwenden Sie einen ungewöhnlichen hot-key anstatt ein die Sie häufig verwenden in anderen Anwendungen. Hot-Tasten wie Strg-C werden nicht empfohlen.
+Check for new mail every=Prüfen Sie, ob neue E-Mail alle
+Don't automatically check for new messages=Nicht automatisch nach neuen Nachrichten schauen
+Set Interval per account=Eigenes Prüfintervall für jedes Konto
+Only check when already online=Nur prüfen, wenn bereits online
+
+
