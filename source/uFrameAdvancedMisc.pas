@@ -52,7 +52,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal, uRCUtils, uTranslate;
 
 {$R *.dfm}
 
@@ -62,7 +62,7 @@ constructor TframeAdvancedMisc.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
 
   // screen to options
   chkDeleteConfirm.Checked := Options.DeleteConfirm;

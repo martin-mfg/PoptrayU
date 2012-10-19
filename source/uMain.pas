@@ -35,13 +35,14 @@ uses
   ActnList, ActnMan, ActnCtrls, ActnPopupCtrl, XPStyleActnCtrls,
   CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uObjects, Grids,
   uHeaderDecoder, IdCoder3to4, IdCoderMIME, IdCoder, IdCoderQuotedPrintable,
-  TntComCtrls, TntForms, TntDialogs;
+  TntComCtrls, TntForms, TntDialogs, TntClasses,
+  TntWideStrings;
 
 const
   // --- version info ---
   MajorVersion = '4';
   MinorVersion = '0';
-  ReleaseVersion = '8';
+  ReleaseVersion = '9';
   BetaVersion = '0';
   ReleaseCandidate = '';
 
@@ -82,8 +83,6 @@ const
 
 type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
-
-  TLangDirection = (ToEnglish,FromEnglish);
 
   TIconType = (itNormal,itChecking,itDeleting,itError);
 
@@ -462,22 +461,14 @@ type
     procedure ShowMailMessage(num,i : integer);
     procedure ShowMail(num : integer; ClearIt : boolean);
     procedure SendMail(const ToAddress,Subject,Body : string);
-    function TranslateToEnglish(phrase : string) : string;
-    function Translate(english : string) : string;
-    procedure TranslateFrame(frame : TFrame);
-    procedure TranslateForm(form : TForm);
-    function TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
-                          Buttons: TMsgDlgButtons; HelpCtx: Longint;
-                          DialogCaption : string = ''): Integer;
-    function TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
-                          Buttons: TMsgDlgButtons; HelpCtx: Longint) : TTntForm;
     function DeleteMail(num,msgnum : integer; UID : string='') : boolean;
-    procedure RefreshLanguages;
     procedure QuickHelp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure RefreshProtocols;
     function AllowAutoCheck : boolean;
     procedure SetSortColumn(ColNum : integer);
     procedure UpdateFonts;
+    procedure OnCloseFree(Sender: TObject; var Action: TCloseAction); //used to be private
+    procedure OnClickClose(Sender: TObject); //used to be private 
   private
     { Private declarations }
     FNotified : Boolean;
@@ -504,8 +495,6 @@ type
     FStop : boolean;
     FLastCheck : string;
     FAccountWithMail : integer;
-    FTranslateStrings : TStringList;
-    FLastLanguage : integer;
     FImportant : boolean;
     FFirstWaitTimer : TTimer;
     FShiftClick : boolean;
@@ -513,7 +502,6 @@ type
     FSpamAction : TAction;
     FInfoForm : TTntForm;
     FRegExpr : TRegExpr;
-    FKB : string;
     FStatusWindowProc : TWndMethod;
     // windows message handlers
     procedure WMQueryEndSession(var Message : TWMQueryEndSession); message WM_QUERYENDSESSION;
@@ -616,13 +604,6 @@ type
     procedure DeleteSpam(num : integer; confirm : boolean);
     procedure SetSpamAction(act : TAction);
     procedure StopAll;
-    // translation
-    function TranslateDir(st : string; LangDirection : TLangDirection) : string;
-    procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection);
-    procedure TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
-    procedure ReadTranslateStrings;
-    procedure SetProp(obj : TObject; PropName : string; ToEnglish : boolean=False);
-    procedure GetLanguages;
     // plug-ins
     procedure CallNotifyPlugins;
     procedure SetProtocol(num : integer);
@@ -636,9 +617,10 @@ type
     procedure OnHint(Sender : TObject);
     procedure OnProtWork(const AWorkCount: Integer);
     procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); virtual;
-    procedure OnCloseFree(Sender: TObject; var Action: TCloseAction);
-    procedure OnClickClose(Sender: TObject);
     procedure OnMinimize(Sender: TObject);
+  public
+    FKB : WideString; //UI label for kilobytes in the current language
+    frame : TFrame; //Frame currently shown in on the options page
   published
     Destructor  Destroy; override;
   end;
@@ -657,10 +639,9 @@ uses
   uFrameAdvancedInterface, uFrameAdvancedMisc,
   uFrameMouseButtons, uFrameHotKeys, uFrameWhiteBlack, uFramePlugins,
   uFrameVisualAppearance, IniFiles,  ShellAPI,  StrUtils, Types,
-  IdEMailAddress, IdResourceStrings, uFSUtils;
+  IdEMailAddress, IdResourceStrings, uFSUtils, uTranslate;
 
 var
-  frame : TFrame;
   Rules : TRuleItems;
   HintSep : string = ' -- ';
 
@@ -816,7 +797,7 @@ begin
   // run it
   if MailProgram = '' then
   begin
-    TranslateDlg(Translate('No E-Mail Client specified'),mtError,[mbOK],0);
+    ShowTranslatedDlg(Translate('No E-Mail Client specified'),mtError,[mbOK],0);
     Result := false;
   end
   else begin
@@ -1235,124 +1216,7 @@ begin
   end;
 end;
 
-function TfrmPopUMain.TranslateToEnglish(phrase: string): string;
-var
-  i,P : integer;
-  S : string;
-begin
-  phrase := AnsiReplaceStr(phrase,'&','');
-  Result := phrase;
-  if (phrase = '') or (not(Assigned(FTranslateStrings))) then Exit;
-  for i := 0 to FTranslateStrings.Count-1 do
-  begin
-    S := FTranslateStrings[i];
-    P := AnsiPos('=', S);
-    if (P <> 0) and (AnsiCompareText(Copy(S, P+1, Length(S)), phrase) = 0) then
-    begin
-      Result := FTranslateStrings.Names[i];
-      Exit;
-    end;
-  end;
-end;
 
-function TfrmPopUMain.Translate(english: string): string;
-var
-  lookup : string;
-begin
-  // if english then do nothing
-  if Options.Language = 0 then
-    Result := english
-  else begin
-    // otherwise translate it
-    if not Assigned(FTranslateStrings) or (english='') then
-      Result := english
-    else begin
-      lookup := AnsiReplaceStr(english,'&','');
-      lookup := AnsiReplaceStr(lookup,#13#10,'~');
-      Result := FTranslateStrings.Values[lookup];
-      Result := AnsiReplaceStr(Result,'~',#13#10);
-      if Result = '' then Result := english
-    end;
-  end;
-end;
-
-procedure TfrmPopUMain.TranslateFrame(frame : TFrame);
-begin
-  if FLastLanguage <> 0 then
-    TranslateFrameDir(frame,ToEnglish);
-  if Options.Language <> 0 then
-  begin
-    ReadTranslateStrings;
-    TranslateFrameDir(frame,FromEnglish);
-  end;
-end;
-
-procedure TfrmPopUMain.TranslateForm(form : TForm);
-begin
-  if (FLastLanguage <> Options.Language) or (form <> Self) then
-  begin
-    if FLastLanguage <> 0 then
-      TranslateFormDir(form,ToEnglish);
-    if Options.Language <> 0 then
-    begin
-      ReadTranslateStrings;
-      TranslateFormDir(form,FromEnglish);
-    end;
-  end;
-end;
-
-////////////////////////////////////////////////////////////////////////////////
-// Creates and shows a modal dialog box (eg: for error messages) including
-// translating the caption
-function TfrmPopUMain.TranslateDlg(const Msg: string; DlgType: TMsgDlgType;
-                                  Buttons: TMsgDlgButtons; HelpCtx: Integer;
-                                  DialogCaption : string = '' ): Integer;
-var
-  dlg : TForm;
-begin
-  dlg := CreateMessageDialog(Msg, DlgType, Buttons);
-  with dlg do
-  begin
-    try
-      HelpContext := HelpCtx;
-      Position := poScreenCenter;
-      TranslateForm(dlg);
-      // If a title for the dialog was passed in as a parameter, use it,
-      // otherwise, show the default dialog title for the specified dialog
-      // type (eg: "Error")
-      if (DialogCaption <> '')
-        then Caption := Translate(DialogCaption) //use provided dialog title
-        else Caption := Translate(Caption);
-      Result := ShowModal();
-    finally
-      Free;
-    end;
-  end;
-end;
-
-function TfrmPopUMain.TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
-                                  Buttons: TMsgDlgButtons; HelpCtx: Integer) : TTntForm;
-////////////////////////////////////////////////////////////////////////////////
-// Non-Modal message.
-var
-  i : integer;
-begin
-  Result := WideCreateMessageDialog(Msg, DlgType, Buttons);
-  with Result do
-  begin
-    HelpContext := HelpCtx;
-    Position := poScreenCenter;
-    FormStyle := fsStayOnTop;
-    TranslateForm(Result);
-    Caption := Translate(Caption);
-    OnClose := OnCloseFree;
-    for i := 0 to Result.ComponentCount-1 do
-      if (Result.Components[i] is TButton) then
-        (Result.Components[i] as TButton).OnClick := OnClickClose;
-    Show;
-    SetForegroundWindow(Handle);
-  end;
-end;
 
 function TfrmPopUMain.DeleteMail(num, msgnum: integer; UID : string='') : boolean;
 ////////////////////////////////////////////////////////////////////////////////
@@ -1376,13 +1240,7 @@ begin
   end;
 end;
 
-procedure TfrmPopUMain.RefreshLanguages;
-begin
-  GetLanguages;
-  // translate it
-  FLastLanguage := -1;
-  TranslateForm(self);
-end;
+
 
 procedure TfrmPopUMain.QuickHelp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -1749,7 +1607,7 @@ begin
         fInterfaceVersion := GetProcAddress(Plugins[i].hPlugin, 'InterfaceVersion');
         if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
         begin
-          TranslateMsg(frmPopUMain.Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
+          TranslateMsg(Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
           FreeLibrary(Plugins[i].hPlugin);
           Continue;
         end;
@@ -2576,7 +2434,7 @@ begin
                 end
                 else begin
                   if not (E is EAbort) and not Options.IgnoreRetrieveErrors  then
-                    TranslateDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
+                    ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
                                  Translate(E.Message), mtError, [mbOK], 0);
                 end;
               end;
@@ -2600,7 +2458,7 @@ begin
           else begin
             if not Options.IgnoreRetrieveErrors then
             begin
-              TranslateDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
+              ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
                            Translate(E.Message), mtError, [mbOK], 0);
               frmPreview.Close;
               FreeAndNil(frmPreview);
@@ -3680,7 +3538,7 @@ begin
   begin
     if not FMinimized and not Options.ShowErrorsInBalloons then
       // Show error message as a modal dialog
-      TranslateDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+Accounts[num-1].Name)
+      ShowTranslatedDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+Accounts[num-1].Name)
     else
       // Show error message as a balloon popup on the tray icon
       Balloon(Translate(Heading)+' ('+ Accounts[num-1].Name+')',Trim(msg),bitError,15);
@@ -3811,10 +3669,10 @@ begin
   try
     FRegExpr.Expression := text;
     FRegExpr.Compile;
-    TranslateDlg('Regular Expression Syntax OK',mtInformation,[mbOK],0);
+    ShowTranslatedDlg('Regular Expression Syntax OK',mtInformation,[mbOK],0);
   except
     on E : ERegExpr do
-      TranslateDlg(StrAfter(E.Message,': '),mtError,[mbOK],0);
+      ShowTranslatedDlg(StrAfter(E.Message,': '),mtError,[mbOK],0);
     else
       raise;
   end;
@@ -4253,7 +4111,7 @@ begin
   Result := false;
   if lvMail.Selected = nil then
   begin
-    TranslateDlg(Translate('No message selected.'), mtError, [mbOK], 0);
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0);
     Exit;
   end;
 
@@ -4274,11 +4132,11 @@ begin
         Options.WhiteList.SaveToFile(ExtractFilePath(IniName)+'WhiteList.ptdat');
         if Assigned(frame) and (frame is TframeWhiteBlack) then
           (frame as TframeWhiteBlack).memWhiteList.Lines.Text := Options.WhiteList.Text;
-        TranslateDlg(Translate('Added to the White List:')+#13#10+emails.Text,mtInformation,[mbOK],0);
+        ShowTranslatedDlg(Translate('Added to the White List:')+#13#10+emails.Text,mtInformation,[mbOK],0);
         Result := True;
       end
       else begin
-        if (TranslateDlg(Translate('This will add the following e-mails to the Black List:')
+        if (ShowTranslatedDlg(Translate('This will add the following e-mails to the Black List:')
             +#13#10+emails.Text+
             #13#10+Translate('Are you sure?'), mtConfirmation, [mbYes,mbNo], 0) = mrYes) then
         begin
@@ -4655,10 +4513,10 @@ var
 begin
   if NumAccounts=1 then
   begin
-    TranslateDlg(Translate('Cannot delete last Account'), mtError, [mbOK], 0);
+    ShowTranslatedDlg(Translate('Cannot delete last Account'), mtError, [mbOK], 0);
     Exit;
   end;
-  if TranslateDlg(Translate('Delete Account:')+' '+Accounts[num-1].Name+' ?',
+  if ShowTranslatedDlg(Translate('Delete Account:')+' '+Accounts[num-1].Name+' ?',
                 mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
     // stop timer
@@ -4718,7 +4576,7 @@ begin
   if spamcount > 0 then
   begin
     if not(confirm) or
-      (TranslateDlg(Translate('Delete Spam from Server?')+' '+#13#10#13#10+
+      (ShowTranslatedDlg(Translate('Delete Spam from Server?')+' '+#13#10#13#10+
                     Translate('Number of messages marked as Spam:')+' '+IntToStr(spamcount)+#13#10+
                     Translate('This will delete all these messages.'),
                     mtConfirmation,[mbYes,mbNo],0) = mrYes) then
@@ -4767,220 +4625,9 @@ begin
 end;
 
 
-//-------------------------------------------------------------- translation ---
-
-procedure ChangeItem(cmb : TComboBox; item : integer; st : string);
-var
-  tmp : integer;
-begin
-  tmp := cmb.ItemIndex;
-  cmb.Items[item] := st;
-  cmb.ItemIndex := tmp;
-end;
-
-function TfrmPopUMain.TranslateDir(st : string; LangDirection : TLangDirection) : string;
-begin
-  if LangDirection = ToEnglish then
-    Result := TranslateToEnglish(st)
-  else
-    Result := Translate(st);
-end;
-
-procedure TfrmPopUMain.TranslateFormDir(form : TForm; LangDirection : TLangDirection);
-var
-  i,j,k : integer;
-  TransToEnglish : boolean;
-begin
-  TransToEnglish := LangDirection = ToEnglish;
-  for i := 0 to form.ComponentCount-1 do
-  begin
-    // all captions and hints
-    SetProp(form.Components[i],'Caption',TransToEnglish);
-    SetProp(form.Components[i],'Hint',TransToEnglish);
-    // list view headers
-    if form.Components[i] is TTntListView then
-    begin
-      for j := 0 to (form.Components[i] as TTntListView).Columns.Count-1 do
-        SetProp((form.Components[i] as TTntListView).Column[j],'Caption',TransToEnglish)
-    end;
-  end;
-  if form = Self then
-  begin
-    // constant strings
-    FKB := Translate(FKB);
-    // rule accounts
-    ChangeItem(cmbRuleAccount,0,TranslateDir(cmbRuleAccount.Items[0],LangDirection));
-    // rule areas
-    for i := 0 to cmbRuleArea.Items.Count-1 do
-      ChangeItem(cmbRuleArea,i,TranslateDir(cmbRuleArea.Items[i],LangDirection));
-    // rule compares
-    for i := 0 to cmbRuleComp.Items.Count-1 do
-      ChangeItem(cmbRuleComp,i,TranslateDir(cmbRuleComp.Items[i],LangDirection));
-    // rule status
-    for i := 0 to cmbRuleStatus.Items.Count-1 do
-      ChangeItem(cmbRuleStatus,i,TranslateDir(cmbRuleStatus.Items[i],LangDirection));
-    // rule operator
-    for i := 0 to cmbRuleOperator.Items.Count-1 do
-      ChangeItem(cmbRuleOperator,i,TranslateDir(cmbRuleOperator.Items[i],LangDirection));
-    // languages
-    for i := 0 to Length(Options.Languages)-1 do
-      Options.Languages[i] := TranslateDir(Options.Languages[i],LangDirection);
-    // options treeview
-    for i := 0 to tvOptions.Items.Count-1 do
-      tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);
-    tvOptions.Refresh;
-    // Translate column headers for Volunteer Translators Listview (on about page)
-    for i := 0 to lvVolunteers.Columns.Count-1 do
-      lvVolunteers.Columns[i].Caption :=  TranslateDir(lvVolunteers.Columns[i].Caption, LangDirection);
-    // Translate column headers for Component Credits Listview (on about page)
-    for i := 0 to lvCredits.Columns.Count-1 do
-      lvCredits.Columns[i].Caption :=  TranslateDir(lvCredits.Columns[i].Caption, LangDirection);
-    // active frame
-    if Assigned(frame) then
-    begin
-      TranslateFrameDir(frame,LangDirection);
-      if (frame is TframeDefaults) then
-        (frame as TframeDefaults).ShowLanguages;
-    end;
-    // popup menus
-    for i := 0 to dm.mnuMail.Items.Count-1 do
-    begin
-      dm.mnuMail.Items[i].Caption := TranslateDir(dm.mnuMail.Items[i].Caption,LangDirection);
-      if dm.mnuMail.Items[i].Count > 0 then
-        for j := 0 to dm.mnuMail.Items[i].Count-1 do
-        begin
-          dm.mnuMail.Items[i].Items[j].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Caption,LangDirection);
-          if dm.mnuMail.Items[i].Items[j].Count > 0 then
-            for k := 0 to dm.mnuMail.Items[i].Items[j].Count-1 do
-              dm.mnuMail.Items[i].Items[j].Items[k].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Items[k].Caption,LangDirection);
-        end;
-    end;
-    for i := 0 to dm.mnuTray.Items.Count-1 do
-      dm.mnuTray.Items[i].Caption := TranslateDir(dm.mnuTray.Items[i].Caption,LangDirection);
-    for i := 0 to dm.mnuColumns.Items.Count-1 do
-    begin
-      dm.mnuColumns.Items[i].Caption := TranslateDir(dm.mnuColumns.Items[i].Caption,LangDirection);
-      if dm.mnuColumns.Items[i].Count > 0 then
-        for j := 0 to dm.mnuColumns.Items[i].Count-1 do
-          dm.mnuColumns.Items[i].Items[j].Caption := TranslateDir(dm.mnuColumns.Items[i].Items[j].Caption,LangDirection);
-    end;
-    // rules re-align
-    AutoSizeAllCheckBox(gbRule);
-    AutoSizeAllCheckBox(gbActions);
-    edRuleWav.Left := chkRuleWav.Left + chkRuleWav.Width + 4;
-    edRuleWav.Width := btnEdRuleWav.Left - edRuleWav.Left - 2;
-    edRuleEXE.Left := chkRuleEXE.Left + chkRuleEXE.Width + 4;
-    edRuleEXE.Width := btnEdRuleEXE.Left - edRuleEXE.Left - 2;
-    colRuleTrayColor.Left := chkRuleTrayColor.Left + chkRuleTrayColor.Width + 4;
-    colRuleTrayColor.Width := gbActions.Width - colRuleTrayColor.Left - 4;
-  end;
-end;
 
 
-procedure TfrmPopUMain.TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
-var
-  i,j : integer;
-  TransToEnglish : boolean;
-begin
-  TransToEnglish := LangDirection = ToEnglish;
-  for i := 0 to frame.ComponentCount-1 do
-  begin
-    // all captions and hints
-    SetProp(frame.Components[i],'Caption',TransToEnglish);
-    SetProp(frame.Components[i],'Hint',TransToEnglish);
-    // list view headers
-    if frame.Components[i] is TTntListView then
-    begin
-      for j := 0 to (frame.Components[i] as TTntListView).Columns.Count-1 do
-        SetProp((frame.Components[i] as TTntListView).Column[j],'Caption',TransToEnglish)
-    end;
-  end;
-end;
 
-procedure TfrmPopUMain.ReadTranslateStrings;
-var
-  fname : string;
-  i : integer;
-begin
-  if Options.Language <> 0 then
-  begin
-    if not assigned(FTranslateStrings) then
-      FTranslateStrings := TStringList.Create;
-    fname := ExtractFilePath(Application.ExeName)+'languages\'+
-             TranslateToEnglish(Options.Languages[Options.Language])+'.ptlang';
-    if FileExists(fname) then
-    begin
-      FTranslateStrings.LoadFromFile(fname);
-      // strip comments
-      i := 0;
-      while i <= FTranslateStrings.Count-1 do
-      begin
-        if (Copy(Trim(FTranslateStrings[i]),1,1)='#') or (Pos('=',FTranslateStrings[i]) = 0) then
-          FTranslateStrings.Delete(i)
-        else
-          Inc(i);
-      end;
-    end;
-  end;
-  FLastLanguage := Options.Language;
-end;
-
-procedure TfrmPopUMain.SetProp(obj: TObject; PropName: string; ToEnglish : boolean=False);
-var
-  pi,pi2 : PPropInfo;
-  cap,newcap : string;
-  tag1 : longint;
-begin
-  pi := GetPropInfo(obj.ClassInfo,PropName);
-  if Assigned(pi) then
-  begin
-    pi2 := GetPropInfo(obj.ClassInfo,'Tag');
-    tag1 := 0;
-    if Assigned(pi2) then
-     tag1 := GetOrdProp(obj,'Tag');
-    if (tag1 = 999) then
-       // ignore where tag=999
-    else begin
-      cap := GetStrProp(obj,PropName);
-      if ToEnglish then
-        newcap := TranslatetoEnglish(cap)
-      else
-        newcap := Translate(cap);
-      if newcap <> '' then
-        SetStrProp(obj,PropName,newcap);
-    end;
-  end;
-end;
-
-procedure TfrmPopUMain.GetLanguages;
-var
-  sr : TSearchRec;
-  res,i : integer;
-  fname,old : string;
-begin
-  // save selected language
-  if Options.Language < Length(Options.Languages) then
-    old := TranslateToEnglish(Options.Languages[Options.Language]);
-  SetLength(Options.Languages,1);
-  Options.Languages[0] := 'English';
-  // get ptlang files from PopTray directory
-  res := FindFirst(ExtractFilePath(Application.ExeName)+'languages\*.ptlang',faAnyFile,sr);
-  while res = 0 do
-  begin
-    fname := ChangeFileExt(sr.Name,'');
-    if (lowercase(fname) <> 'blank') and (lowercase(fname) <> 'language') then
-    begin
-      SetLength(Options.Languages,Length(Options.Languages)+1);
-      Options.Languages[Length(Options.Languages)-1] := fname;
-    end;
-    res := FindNext(sr);
-  end;
-  FindClose(sr);
-  // reset to selected language
-  for i := 0 to Length(Options.Languages)-1 do
-    if Options.Languages[i] = old then
-      Options.Language := i;
-end;
 
 //----------------------------------------------------------------- plug-ins ---
 
@@ -5174,7 +4821,6 @@ begin
   FSortDirection := sdAsc;
   FLastCheck := '';
   FAccountWithMail := -1;
-  FLastLanguage := 0;
   FKB := 'KB';
   FNewAccount := False;
   Application.OnHint := OnHint;
@@ -5705,7 +5351,7 @@ procedure TfrmPopUMain.tabAccountsChanging(Sender: TObject; var AllowChange: Boo
 begin
   if FAccChanged then
   begin
-    case TranslateDlg(Translate('Account Info changed.'+#13+#10+
+    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
                     'Do you want to save it?'), mtConfirmation,
                     [mbYes, mbNo, mbCancel], 0) of
       mrYes    : begin
@@ -6050,7 +5696,7 @@ procedure TfrmPopUMain.PageControlChanging(Sender: TObject;
 begin
   if (PageControl.ActivePage=tsAccounts) and FAccChanged then
   begin
-    case TranslateDlg(Translate('Account Info changed.'+#13+#10+
+    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
                     'Do you want to save it?'), mtConfirmation,
                     [mbYes, mbNo, mbCancel], 0) of
       mrYes    : begin
@@ -6145,7 +5791,7 @@ var
   confirmed : boolean;
 begin
   if lvMail.Selected = nil then
-    TranslateDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
   else begin
     if Options.SafeDelete and not Accounts[tabMail.TabIndex].UIDLSupported then
       warning := Translate('WARNING: This account does NOT support Safe Delete.')+ #13#10#13#10;
@@ -6155,7 +5801,7 @@ begin
     begin
       // one selected delete
       confirmed := not(Options.DeleteConfirm) or
-                   (TranslateDlg(
+                   (ShowTranslatedDlg(
                      warning +
                      Translate('Delete Message from Server?')+' '+#13#10#13#10+
                      Translate('From')+': '+lvMail.Selected.Caption+#13#10+
@@ -6165,7 +5811,7 @@ begin
     else begin
       // multi-select delete
       confirmed := not(Options.DeleteConfirm) or
-                   (TranslateDlg(
+                   (ShowTranslatedDlg(
                      warning +
                      Translate('Delete Messages from Server?')+' '+#13#10#13#10+
                      Translate('Number of selected messages:')+' '+IntToStr(lvMail.SelCount)+#13#10+
@@ -6177,7 +5823,7 @@ begin
       if Options.DeleteConfirmProtected then
       begin
         cnt := CountSelectedMailItemStatus([misProtected]);
-        if (cnt>0) and (TranslateDlg(Translate('You are trying to delete protected messages.')+
+        if (cnt>0) and (ShowTranslatedDlg(Translate('You are trying to delete protected messages.')+
                                      ' ('+IntToStr(cnt)+' '+Translate('messages')+') '+#13#10#13#10+
                                      Translate('Are you sure?'),
                                      mtConfirmation,[mbYes,mbNo],0) = mrNo) then
@@ -6204,7 +5850,7 @@ end;
 procedure TfrmPopUMain.actPreviewExecute(Sender: TObject);
 begin
   if lvMail.Selected = nil then
-    TranslateDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
   else
     Preview(tabMail.TabIndex+1);
 end;
@@ -6293,7 +5939,7 @@ var
 begin
   if lvMail.Selected = nil then
   begin
-    TranslateDlg(Translate('No message selected.'), mtError, [mbOK], 0);
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0);
     Exit;
   end;
 
@@ -6334,7 +5980,7 @@ begin
 
     // ask to create rule
     if (list.Count > 0) and
-       (TranslateDlg(Translate(askstring)
+       (ShowTranslatedDlg(Translate(askstring)
          +#13+#10+list.Text+
          #13+#10+Translate('Are you sure?'), mtConfirmation, [mbYes,mbNo], 0) = mrYes) then
     begin
@@ -6396,7 +6042,7 @@ begin
   // check if saved
   if FAccChanged then
   begin
-    case TranslateDlg(Translate('Account Info changed.'+#13+#10+
+    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
                     'Do you want to save it?'), mtConfirmation,
                     [mbYes, mbNo, mbCancel], 0) of
       mrYes    : btnSave.Click;
@@ -6507,14 +6153,14 @@ procedure TfrmPopUMain.actRuleDeleteExecute(Sender: TObject);
 begin
   if lstRules.ItemIndex > -1 then
   begin
-    if TranslateDlg(Translate('Delete Rule:')+' '+Rules[lstRules.ItemIndex].Name+#13#10+
+    if ShowTranslatedDlg(Translate('Delete Rule:')+' '+Rules[lstRules.ItemIndex].Name+#13#10+
                   Translate('Are you sure?'), mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       DeleteRule(lstRules.ItemIndex);
     end;
   end
   else begin
-    TranslateDlg(Translate('No rule selected'), mtError, [mbOK], 0);
+    ShowTranslatedDlg(Translate('No rule selected'), mtError, [mbOK], 0);
   end;
   btnSaveRules.Enabled := True;
   btnCancelRule.Enabled := True;

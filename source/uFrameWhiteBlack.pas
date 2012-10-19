@@ -51,7 +51,7 @@ type
 
 implementation
 
-uses uMain, uGlobal;
+uses uMain, uGlobal, uTranslate;
 
 {$R *.dfm}
 
@@ -59,7 +59,7 @@ constructor TframeWhiteBlack.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  uTranslate.TranslateFrame(self);
   memWhiteList.Lines.Text := Options.WhiteList.Text;
   memBlackList.Lines.Text := Options.BlackList.Text;
   Options.Busy := False;

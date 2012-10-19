@@ -94,14 +94,14 @@ type
 
 implementation
 
-uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils;
+uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils, uTranslate;
 
 {$R *.dfm}
 
 constructor TframeVisualAppearance.Create(AOwner: TComponent);
 begin
   inherited;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
 
   // Options to screen
 

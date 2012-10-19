@@ -57,7 +57,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal, uRCUtils, uTranslate;
 
 {$R *.dfm}
 
@@ -65,7 +65,7 @@ constructor TframeAdvancedInterface.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
   // options to screen
   chkShowViewed.Checked := Options.ShowViewed;
   chkRememberViewed.Checked := Options.RememberViewed;

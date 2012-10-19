@@ -58,7 +58,7 @@ type
 
 implementation
 
-uses uMain, uGlobal, uPlugins;
+uses uMain, uGlobal, uPlugins, uTranslate;
 
 {$R *.dfm}
 
@@ -102,7 +102,7 @@ end;
 constructor TframePlugins.Create(AOwner: TComponent);
 begin
   inherited;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
   Refresh;
 end;
 
@@ -150,7 +150,7 @@ begin
       if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
       begin
         if GetProcAddress(hPlugin, 'PluginName') <> nil then
-          frmPopUMain.TranslateMsg(frmPopUMain.Translate('Incompatible Plugin:')+'  '+srec.Name,mtWarning,[mbOk],0);
+          TranslateMsg(Translate('Incompatible Plugin:')+'  '+srec.Name,mtWarning,[mbOk],0);
         FreeLibrary(hPlugin);
         res := FindNext(srec);
         Continue;
@@ -222,7 +222,7 @@ begin
     begin
       with lvPlugins.Items.Add do
       begin
-        Caption := Plugins[i].Name;
+        Caption := {Translate(}Plugins[i].Name{)};
         ImageIndex := Integer(Plugins[i].PluginType);
         SubItems.Add(IntToStr(i));
         // re-enable the remembered plugins
@@ -266,7 +266,7 @@ begin
     begin
       for i := Low(Plugins) to High(Plugins) do
       begin
-        if (Plugins[i].Name = Item.Caption) and (Plugins[i].Enabled <> Item.Checked) then
+        if (Plugins[i].Name = {TranslateToEnglish(}Item.Caption{)}) and (Plugins[i].Enabled <> Item.Checked) then
         begin
           // enable it
           Plugins[i].Enabled := Item.Checked;

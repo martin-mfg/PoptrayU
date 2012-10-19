@@ -157,7 +157,7 @@ var
 
 implementation
 
-uses uMain, uPreview, uGlobal, StdCtrls;
+uses uMain, uPreview, uGlobal, StdCtrls, uTranslate;
 
 {$R *.dfm}
 
@@ -283,12 +283,12 @@ begin
     Label1.Hide;
     MenuAnimationStyles.Hide;
     // translate
-    frmPopUMain.TranslateForm(CustomizeDlg.CustomizeForm);
-    Caption := frmPopUMain.Translate(Caption);
+    TranslateForm(CustomizeDlg.CustomizeForm);
+    Caption := Translate(Caption);
     // translate dropdown
     old := CaptionOptionsCombo.ItemIndex;
     for i := 0 to CaptionOptionsCombo.Items.Count-1 do
-      CaptionOptionsCombo.Items[i] := frmPopUMain.Translate(CaptionOptionsCombo.Items[i]);
+      CaptionOptionsCombo.Items[i] := Translate(CaptionOptionsCombo.Items[i]);
     CaptionOptionsCombo.ItemIndex := old;
     // move some labels
     Label2.Left := ActionBarList.Left + ActionBarList.Width - Label2.Width;
@@ -300,7 +300,7 @@ begin
     CatList.ItemIndex := 0;
     CatListClick(nil);
     for i := 0 to CatList.Count-1 do
-      CatList.Items[i] := frmPopUMain.Translate(CatList.Items[i]);
+      CatList.Items[i] := Translate(CatList.Items[i]);
   end;
 end;
 

@@ -27,22 +27,22 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, Buttons;
+  Dialogs, StdCtrls, Buttons, TntStdCtrls;
 
 type
   TframeDefaults = class(TFrame)
-    Label9: TLabel;
+    Label9: TTntLabel;
     btnEdProgram: TSpeedButton;
     btnTest: TSpeedButton;
-    Label8: TLabel;
+    Label8: TTntLabel;
     btnEdDefSound: TSpeedButton;
     btnSndTest: TSpeedButton;
-    Label24: TLabel;
+    Label24: TTntLabel;
     btnLanguageRefresh: TSpeedButton;
     edProgram: TEdit;
     edDefSound: TEdit;
     cmbLanguage: TComboBox;
-    Label1: TLabel;
+    Label1: TTntLabel;
     edIniFolder: TEdit;
     btnStorageLoc: TSpeedButton;
     procedure btnEdProgramClick(Sender: TObject);
@@ -65,7 +65,7 @@ type
 
 implementation
 
-uses uMain, uRCUtils, uGlobal;
+uses uMain, uRCUtils, uGlobal, uTranslate;
 
 {$R *.dfm}
 
@@ -73,7 +73,7 @@ constructor TframeDefaults.Create(AOwner: TComponent);
 begin
   inherited;
   Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
   // options to screen
   edProgram.Text := Options.MailProgram;
   edDefSound.Text := Options.DefSound;
@@ -93,11 +93,11 @@ begin
   try
     // copy languages from options to stringlist
     for i := Low(Options.Languages)+1 to High(Options.Languages) do
-      langs.Add(frmPopUMain.Translate(Options.Languages[i]));
+      langs.Add(Translate(Options.Languages[i]));
 
     // sort it
     langs.Sort;
-    langs.Insert(0,frmPopUMain.Translate(Options.Languages[0]));
+    langs.Insert(0,Translate(Options.Languages[0]));
 
     // copy from stringlist to combo-box
     cmbLanguage.Items.Assign(langs);
@@ -127,8 +127,8 @@ begin
   dlgOpen := TOpenDialog.Create(nil);
   try
     dlgOpen.InitialDir := ExtractFileDir(edProgram.Text);
-    dlgOpen.Filter := frmPopUMain.Translate('EXE files')+' (*.exe)|*.exe|'+
-                      frmPopUMain.Translate('All Files')+' (*.*)|*.*';
+    dlgOpen.Filter := Translate('EXE files')+' (*.exe)|*.exe|'+
+                      Translate('All Files')+' (*.*)|*.*';
     if dlgOpen.Execute then
     begin
       edProgram.Text := dlgOpen.FileName;
@@ -148,7 +148,7 @@ begin
     dlgOpen.InitialDir := ExtractFileDir(edDefSound.Text);
     if dlgOpen.InitialDir='' then
        dlgOpen.InitialDir := ExtractFilePath(Application.ExeName)+'Sounds';  
-    dlgOpen.Filter := frmPopUMain.Translate('WAV files')+' (*.wav)|*.WAV';
+    dlgOpen.Filter := Translate('WAV files')+' (*.wav)|*.WAV';
     if dlgOpen.Execute then
     begin
       edDefSound.Text := dlgOpen.FileName;
@@ -178,7 +178,7 @@ end;
 
 procedure TframeDefaults.btnLanguageRefreshClick(Sender: TObject);
 begin
-  frmPopUMain.RefreshLanguages;
+  RefreshLanguages;
   ShowLanguages;
   Self.Refresh; //refresh to make labels not disappear in Vista
 end;

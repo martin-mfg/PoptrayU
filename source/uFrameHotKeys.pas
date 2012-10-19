@@ -43,7 +43,7 @@ type
     hkHotKey4: THotKey;
     imgInfo: TImage;
     labelHotKeyInfo: TLabel;
-    Panel1: TPanel;
+    InfoPanel: TPanel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -56,7 +56,7 @@ type
 
 implementation
 
-uses uMain, uGlobal;
+uses uMain, uGlobal, uTranslate;
 
 {$R *.dfm}
 
@@ -68,18 +68,19 @@ var
   st : string;
 begin
   inherited;
-  Options.Busy := True;
-  frmPopUMain.TranslateFrame(self);
+  TranslateFrame(self);
+
   // fill action dropdowns
   for i := Low(Actions) to High(Actions) do
   begin
-    st := frmPopUMain.Translate(Actions[i]);
+    st := Translate(Actions[i]);
     cmbAction1.Items.Add(st);
     cmbAction2.Items.Add(st);
     cmbAction3.Items.Add(st);
     cmbAction4.Items.Add(st);
   end;
   // options to screen
+  Options.Busy := True;
   cmbAction1.ItemIndex := Options.Action1;
   cmbAction2.ItemIndex := Options.Action2;
   cmbAction3.ItemIndex := Options.Action3;
@@ -89,6 +90,8 @@ begin
   hkHotKey3.HotKey := Options.HotKey3;
   hkHotKey4.HotKey := Options.HotKey4;
   Options.Busy := False;
+
+  //TODO: autosize info panel... InfoPanel.Height := labelHotKeyInfo.Height + 4;
 end;
 
 procedure TframeHotKeys.OptionsChange(Sender: TObject);
