@@ -132,6 +132,8 @@ begin
     end;
   end;
 
+  frmPopUMain.panIntervalAccount.Visible := Options.TimerAccount;
+
   edTime.Enabled := radioCheckEvery.Checked;
   UpDown.Enabled := radioCheckEvery.Checked;
 
