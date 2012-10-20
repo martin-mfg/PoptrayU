@@ -5,6 +5,18 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+
+4.0.9
+	(+) Now you can set do not (automatically) check hours on a per
+	    account basis. 
+	(-) Panel needed to set Timer Interval per account was not showing 
+            up immediately after setting timer interval per account
+	(-) Fixed Interval settings page to resize labels correctly for 
+            non-english languages.
+        (-) Fixed a couple spelling mistakes and inconsistent capitalization
+        (*) Updated German and Blank translation files for latest version
+            of PopTrayU.
+
 4.0.8
         (*) Upgraded Indy Components from 9.0.18 to 9.0.53. This should 
             improve stability and reduce network-related bugs in general.
