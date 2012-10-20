@@ -41,6 +41,7 @@ const
   popBusy2 = 7;
   popBusy3 = 8;
   popNew = 9;
+  popSleeping = 10;
   // imlListView
   mHigh = 0;
   mHigh2 = 1;

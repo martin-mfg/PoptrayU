@@ -114,6 +114,9 @@ type
     Prot : TPluginProtocol;
     UIDLSupported : boolean;
     Mail : TMailItems;
+    DontCheckTimes : boolean;
+    DontCheckStart : TDateTime;
+    DontCheckEnd : TDateTime;
   protected
     procedure AssignTo(Dest: TPersistent); override;
   public
@@ -377,6 +380,9 @@ begin
       Prot := self.Prot;
       UIDLSupported := self.UIDLSupported;
       Mail := self.Mail;
+      DontCheckTimes := self.DontCheckTimes;
+      DontCheckStart := self.DontCheckStart;
+      DontCheckEnd := self.DontCheckEnd;
     end
   else inherited AssignTo(Dest);
 end;
