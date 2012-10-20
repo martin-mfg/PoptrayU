@@ -84,7 +84,7 @@ const
 type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
 
-  TIconType = (itNormal,itChecking,itDeleting,itError);
+  TIconType = (itNormal,itChecking,itDeleting,itError,itSleeping);
 
   TWhiteBlack = (wbWhite, wbBlack);
 
@@ -274,6 +274,11 @@ type
     TabAboutPTU: TTabSheet;
     lblDerivative: TLabel;
     Image2: TImage;
+    panNoCheckHours: TPanel;
+    chkDontCheckTimes: TCheckBox;
+    dtStart: TDateTimePicker;
+    lblAnd: TLabel;
+    dtEnd: TDateTimePicker;
     procedure lvVolunteers2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
@@ -446,6 +451,7 @@ type
     procedure StatusBarDrawPanel(StatusBar: TStatusBar;
       Panel: TStatusPanel; const Rect: TRect);
     procedure actOpenMessageExecute(Sender: TObject);
+    procedure chkDontCheckTimesClick(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -645,7 +651,33 @@ var
   Rules : TRuleItems;
   HintSep : string = ' -- ';
 
+// Checks whether now is between the global "do not check" (any account) hours
+function BetweenTimes : boolean; overload;
+begin
+  if Options.DontCheckEnd < Options.DontCheckStart then
+  begin
+    // times across midnight
+    Result := (GetTime >= frac(Options.DontCheckStart)) or (GetTime <= frac(Options.DontCheckEnd));
+  end
+  else begin
+    // normal times
+    Result := (GetTime >= frac(Options.DontCheckStart)) and (GetTime <= frac(Options.DontCheckEnd));
+  end;
+end;
 
+// Checks whether now is between the don't check hours for a specific account
+function BetweenTimes (Account : TAccountItem) : boolean; overload;
+begin
+  if Account.DontCheckEnd < Account.DontCheckStart then
+  begin
+    // times across midnight
+    Result := (GetTime >= frac(Account.DontCheckStart)) or (GetTime <= frac(Account.DontCheckEnd));
+  end
+  else begin
+    // normal times
+    Result := (GetTime >= frac(Account.DontCheckStart)) and (GetTime <= frac(Account.DontCheckEnd));
+  end;
+end;
 
 
 //------------------------------------------------------------------------------
@@ -700,9 +732,12 @@ begin
   end;
 end;
 
+//*****************************************************************************
+// ShowIcon
+// --------
+// Sets/shows the correct icon for each account tab (and tray?)
+//*****************************************************************************
 procedure TfrmPopUMain.ShowIcon(num: integer; IconType : TIconType);
-////////////////////////////////////////////////////////////////////////////////
-// Show the correct icon in tabs and tray
 var
   mailcount : integer;
 begin
@@ -725,6 +760,12 @@ begin
   begin
     // disabled
     dm.ReplaceBitmap(dm.imlTabs,num-1, dm.imlPopTrueColor,popDisabled);
+  end
+  else if (IconType=itSleeping) or
+  (Accounts[num-1].DontCheckTimes and BetweenTimes(Accounts[num-1])) then
+  begin
+    // account check suspended due to "Don't Check Hours"
+    dm.ReplaceBitmap(dm.imlTabs,num-1, dm.imlPopTrueColor,popSleeping);
   end
   else begin
     if Options.HideViewed then
@@ -806,9 +847,13 @@ begin
   end;
 end;
 
+//*****************************************************************************
+// CheckAllMail
+// ------------
+// Checks all (not-disabled) accounts for new messages. This is what happens
+// when you press the "Check all" button on the main screen.
+//*****************************************************************************
 procedure TfrmPopUMain.CheckAllMail;
-////////////////////////////////////////////////////////////////////////////////
-// Check all accounts for mail
 var
   num : integer;
 begin
@@ -837,7 +882,18 @@ begin
   for num := 1 to NumAccounts do
   begin
     if Accounts[num-1].Enabled and not FStop then
-      CheckMail(num,not FNotified,True);
+    begin
+      if (not Accounts[num-1].DontCheckTimes) or (Accounts[num-1].DontCheckTimes
+      and not BetweenTimes(Accounts[num-1])) then
+        CheckMail(num,not FNotified,True)
+      else
+      begin
+        Accounts[num-1].Status := Translate('Skipped Checking')+HintSep+TimeToStr(Now);
+        if (tabMail.TabIndex = num-1) then
+          StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+        ShowIcon(num,itSleeping);
+      end;
+    end;
   end;
   CallNotifyPlugins;
 
@@ -1301,18 +1357,6 @@ begin
   end;
 end;
 
-function BetweenTimes : boolean;
-begin
-  if Options.DontCheckEnd < Options.DontCheckStart then
-  begin
-    // times across midnight
-    Result := (GetTime >= frac(Options.DontCheckStart)) or (GetTime <= frac(Options.DontCheckEnd));
-  end
-  else begin
-    // normal times
-    Result := (GetTime >= frac(Options.DontCheckStart)) and (GetTime <= frac(Options.DontCheckEnd));
-  end;
-end;
 
 function TfrmPopUMain.AllowAutoCheck: boolean;
 begin
@@ -1860,6 +1904,9 @@ begin
     Accounts[num-1].Color := Ini.ReadString(Section,'Color','');
     Accounts[num-1].Enabled := Ini.ReadBool(Section,'Enabled',True);
     Accounts[num-1].Interval := Ini.ReadFloat(Section,'Interval',5);
+    Accounts[num-1].DontCheckTimes := Ini.ReadBool(Section,'DontCheckTimes',FALSE);
+    Accounts[num-1].DontCheckStart := Ini.ReadTime(Section,'DontCheckStart',StrToTime('20:00'));
+    Accounts[num-1].DontCheckEnd := Ini.ReadTime(Section,'DontCheckEnd',StrToTime('08:00'));
     Accounts[num-1].ViewedMsgIDs := TStringList.Create;
     Accounts[num-1].Mail := TMailItems.Create;
     LoadViewedMessageIDs(num);
@@ -1900,6 +1947,9 @@ begin
     Ini.WriteString(Section,'Color',Accounts[num-1].Color);
     Ini.WriteBool(Section,'Enabled',Accounts[num-1].Enabled);
     Ini.WriteFloat(Section,'Interval',Accounts[num-1].Interval);
+    Ini.WriteBool(Section,'DontCheckTimes',Accounts[num-1].DontCheckTimes);
+    Ini.WriteTime(Section,'DontCheckStart',Accounts[num-1].DontCheckStart);
+    Ini.WriteTime(Section,'DontCheckEnd',Accounts[num-1].DontCheckEnd);
     Ini.WriteInteger('Options','NumAccounts',NumAccounts);
     Ini.UpdateFile;
   finally
@@ -1929,6 +1979,9 @@ begin
   Accounts[num-1].Color := ColorToString2(colAccount.Selected);
   Accounts[num-1].Enabled := chkAccEnabled.Checked;
   Accounts[num-1].Interval := StrToFloatDef(edIntervalAccount.Text,5); //UpDownAccount.Position;
+  Accounts[num-1].DontCheckTimes := chkDontCheckTimes.Checked;
+  Accounts[num-1].DontCheckStart := dtStart.Time;
+  Accounts[num-1].DontCheckEnd := dtEnd.Time;
   Accounts[num-1].Error := False;
   Accounts[num-1].UIDLSupported := True;
   // objects
@@ -1980,6 +2033,9 @@ begin
   chkAccEnabled.Checked := Accounts[num-1].Enabled;
   edIntervalAccount.Text := FloatToStr(Accounts[num-1].Interval);
   //  UpDownAccount.Position := round(Accounts[num-1].Interval);
+  chkDontCheckTimes.Checked := Accounts[num-1].DontCheckTimes;
+  dtStart.Time := Accounts[num-1].DontCheckStart;
+  dtEnd.Time := Accounts[num-1].DontCheckEnd;
   // server/port disable
   if Accounts[num-1].Port < 0 then
   begin
@@ -2306,7 +2362,10 @@ begin
               (Accounts[tab].Enabled <> chkAccEnabled.Checked) or
               (Accounts[tab].Sound <> sound) or
               (Accounts[tab].MailProgram <> mailprogram) or
-              (Accounts[tab].Interval <> StrToFloatDef(edIntervalAccount.Text,5));
+              (Accounts[tab].Interval <> StrToFloatDef(edIntervalAccount.Text,5)) or
+              (Accounts[tab].DontCheckTimes <> chkDontCheckTimes.Checked) or
+              (Accounts[tab].DontCheckStart <> dtStart.Time) or
+              (Accounts[tab].DontCheckEnd <> dtEnd.Time);
 end;
 
 
@@ -3356,8 +3415,6 @@ begin
     frmInfo.Left := Screen.WorkAreaLeft + Screen.WorkAreaWidth - frmInfo.Width - 16;
     frmInfo.Top := Screen.WorkAreaTop + Screen.WorkAreaHeight - frmInfo.Height - 4;
     frmInfo.AlphaBlendValue := 0;
-    //ShowWindow(frmInfo.Handle, SW_SHOWNOACTIVATE);
-    //frmInfo.Visible := True;
     frmInfo.Show;
     // blend it in
     i := 0;
@@ -4342,6 +4399,11 @@ begin
   end;
 end;
 
+//*****************************************************************************
+// RunQueue
+// --------
+// Does the "auto" check for all accounts waiting to be checked right now.
+//*****************************************************************************
 procedure TfrmPopUMain.RunQueue;
 var
   acc : integer;
@@ -4352,7 +4414,19 @@ begin
   begin
     acc := Integer(FQueue.Pop);
     if (NumAccounts > 0) and Accounts[acc-1].Enabled then
-      CheckMail(acc, not FNotified,True);
+      // Check the account for new mail (unless the account is "sleeping"
+      // because it's during no-check hours for that account)
+      if (not Accounts[acc-1].DontCheckTimes) or (Accounts[acc-1].DontCheckTimes
+      and not BetweenTimes(Accounts[acc-1])) then
+        CheckMail(acc, not FNotified,True)
+      else
+      begin
+        // Account is "sleeping"
+        Accounts[acc-1].Status := Translate('Account Skipped')+HintSep+TimeToStr(Now);
+        if (tabMail.TabIndex = acc-1) then
+          StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+        ShowIcon(acc,itSleeping);
+      end;
     Application.ProcessMessages;
   end;
   CallNotifyPlugins;
@@ -6962,5 +7036,13 @@ begin
 end;
 
 
+
+procedure TfrmPopUMain.chkDontCheckTimesClick(Sender: TObject);
+begin
+  dtStart.Enabled := chkDontCheckTimes.Checked;
+  dtEnd.Enabled := chkDontCheckTimes.Checked;
+
+  edAccChange(Sender);
+end;
 
 end.
