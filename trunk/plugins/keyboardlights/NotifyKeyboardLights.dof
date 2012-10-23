@@ -90,7 +90,7 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=..
+OutputDir=..\..\build\plugins
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -101,7 +101,7 @@ DebugSourceDirs=
 UsePackages=0
 [Parameters]
 RunParams=
-HostApplication=C:\Dev\Misc\PopTray\PopTray.exe
+HostApplication=C:\Users\Jessica\Documents\Borland Studio Projects\poptray\build\PopTrayU.exe
 Launcher=
 UseLauncher=0
 DebugCWD=
@@ -134,9 +134,12 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Components
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..
+Count=2
+Item0=..\..\build\plugins
+Item1=..
