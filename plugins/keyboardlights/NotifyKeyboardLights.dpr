@@ -1,8 +1,9 @@
 library NotifyKeyboardLights;
 
 {-------------------------------------------------------------------------------
-POPTRAY
-Copyright (C) 2003  Renier Crause
+POPTRAYU KEYBOARD LIGHTS PLUGIN 2.0
+Copyright (C) 2001-2005  Renier Crause
+Copyright (C) 2012 Jessica Brown
 All Rights Reserved.
 
 This is free software.
@@ -18,8 +19,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 -------------------------------------------------------------------------------}
 
 uses
-  Windows, SysUtils, 
-  uPlugins in '..\..\uPlugins.pas';
+  Windows,
+  SysUtils,
+  uPlugins in '..\..\uPlugins.pas',
+  uFSUtils in '..\..\uFSUtils.pas',
+  Controls,
+  IniFiles,
+  KeyLightsConfig in 'KeyLightsConfig.pas' {KeyLightsConfigForm};
 
 function InterfaceVersion : integer; stdcall; forward;
 procedure Init; stdcall; forward;
@@ -48,7 +54,8 @@ exports
 
 var
   TimerHandle : UINT = 0;
-
+  lightsMode : TKeyboardLightsMode = ScrollKeyBlinking;
+  IniName : TFileName;
 //------------------------------------------------------------------ helpers ---
 
 type
@@ -104,10 +111,39 @@ begin
   Result := 1;
 end;
 
+
+procedure LoadIniFile();
+var
+  Ini : TIniFile;
+begin
+  //TODO: ignores cmd line param storage path
+  IniName := GetDataStoragePath('')+'PopTray.ini';
+  Ini := TIniFile.Create(IniName);
+  try
+    lightsMode := TKeyboardLightsMode(Ini.ReadInteger('KeyboardLights','Mode',1)); //1 = blinking
+  finally
+     Ini.Free;
+  end;
+end;
+
+procedure SaveIniFile;
+var
+  Ini : TIniFile;
+begin
+  Ini := TIniFile.Create(IniName);
+  try
+    Ini.WriteInteger('KeyboardLights','Mode', Ord(lightsMode));
+  finally
+     Ini.Free;
+  end;
+end;
+
 procedure Init;
 begin
-  // init code goes here
+  // init code
+  LoadIniFile();
 end;
+
 
 function PluginType : TPluginType;
 begin
@@ -116,12 +152,27 @@ end;
 
 function PluginName : ShortString;
 begin
-  Result := 'Keyboard Lights';
+  Result := 'Keyboard Lights 2.0';
 end;
 
 procedure ShowOptions;
+var
+  optionsScreen : TKeyLightsConfigForm;
 begin
-  MessageBox(0,'PopTray Example Plugin: KeyboardLights','KeyboardLights',MB_OK);
+
+  optionsScreen := TKeyLightsConfigForm.Create(nil);
+  optionsScreen.Init(lightsMode);
+
+  if optionsScreen.ShowModal = mrOk then
+  begin
+    if optionsScreen.radioSolid.Checked then
+      lightsMode := ScrollKeySolid
+    else if optionsScreen.radioFlash.Checked then
+      lightsMode := ScrollKeyBlinking;
+
+    SaveIniFile();
+  end;
+  optionsScreen.Destroy;
 end;
 
 procedure Unload;
@@ -145,8 +196,13 @@ procedure Notify(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean
 begin
   if (ResetTray and (UnviewedCount>0)) or (not ResetTray and (MailCount>0)) then
   begin
-    if TimerHandle = 0 then
-      TimerHandle := SetTimer(0,0,500,@TimerProc);
+    if lightsMode = ScrollKeySolid then
+      //solid scroll lock
+      SetKeyboardLight(klScrollLock,True)
+    else
+      //blinking scroll lock
+      if TimerHandle = 0 then
+        TimerHandle := SetTimer(0,0,500,@TimerProc);
   end
   else begin
     KillTimer(0,TimerHandle);
