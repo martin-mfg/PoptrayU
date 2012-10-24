@@ -25,9 +25,6 @@ with a command-line parameter to specify the settings folder. This should not
 have any harmful side-effects, it just means the settings for this plugin will
 not be in the location you might expect.
 
-The uninstaller does not yet remove the KeyboardLights section from PopTray.ini
-This must be done manually if desired.
-
 Credits:
 --------
 Keyboard Lights 2.0 was developed by Jessica Brown, building upon Renier 
