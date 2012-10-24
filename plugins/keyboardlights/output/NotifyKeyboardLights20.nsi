@@ -25,11 +25,11 @@ NAME "Keyboard Lights 2.0"
 !insertmacro MUI_PAGE_WELCOME
 
 ; Readme page
-!define MUI_LICENSEPAGE_BUTTON "Next >"
 !define MUI_PAGE_HEADER_TEXT "Review Readme File"
 !define MUI_PAGE_HEADER_SUBTEXT  "General information about this software"
 !define MUI_LICENSEPAGE_TEXT_TOP "Please review:"
 !define MUI_LICENSEPAGE_TEXT_BOTTOM "This is FREE software. It is released under the GPLv2 (or later) license."
+!define MUI_LICENSEPAGE_BUTTON "Next >"
 !insertmacro MUI_PAGE_LICENSE "NotifyKeyboardLights.txt"
 
 ; Install Directory page
@@ -125,10 +125,11 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
-  DetailPrint "Added uninstaller information to the System Registry"
+  DetailPrint "Added uninstaller information to the Registry"
 SectionEnd
 
 Function .onInit
+  ; Change the installation directory to match the PopTrayU's install location if possible
   ReadRegStr $INSTDIR HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PopTrayU" "InstallLocation"
 FunctionEnd
 
@@ -139,7 +140,12 @@ Function .onVerifyInstDir
 FunctionEnd
 
 
+
+  Var IniPathDword
+  Var IniPathString
+  
 Section Uninstall
+
 
 ;; Close PopTrayU if it is running.
 ;  !define HWND $R0
@@ -175,6 +181,33 @@ Section Uninstall
   # remove program files
   Delete /REBOOTOK "$INSTDIR\NotifyKeyboardLights.txt"
   Delete /REBOOTOK "$INSTDIR\NotifyKeyboardLights.dll"
+
+  # remove poptray.ini section
+
+    ; Check if Registry key exists for IniPath
+    ReadRegDWORD $IniPathDword HKLM "Software\PopTrayU" "IniPath"
+
+    IntCmp $IniPathDword 0x0000001A localappdata
+    IntCmp $IniPathDword 0x00000023 alluserappdata
+    IntCmp $IniPathDword 0x00000026 progfiles
+
+    ; if not found, presume program files
+    Goto progfiles
+
+  localappdata:
+    SetShellVarContext current
+    StrCpy $IniPathString "$APPDATA\PopTrayU\PopTray.ini"
+    Goto donechecking
+  alluserappdata:
+    SetShellVarContext all
+    StrCpy $IniPathString  "$APPDATA\PopTrayU\PopTray.ini"
+    Goto donechecking
+  progfiles:
+    StrCpy $IniPathString "$INSTDIR\..\PopTray.ini"
+    Goto donechecking
+  donechecking:
+    ; remove KeyboardLights section from PopTray.ini
+    DeleteINISec $IniPathString "KeyboardLights"
 
   # remove uninstaller
   Delete /REBOOTOK "$INSTDIR\UninstallKeyboardLights20.exe"
