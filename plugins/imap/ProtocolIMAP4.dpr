@@ -19,7 +19,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 uses
   Windows, SysUtils,
-  IdComponent, IdMessage, IdIMAP4, IdSSLOpenSSL,
+  IdComponent, IdMessage, IdIMAP4, IdSSLOpenSSL, //IdMailbox,
   uPlugins in '..\..\uPlugins.pas';
 
 // general
@@ -73,13 +73,12 @@ type
   TIMAPWorkObject = class(TObject)
   public
     OnWork : TPluginWorkEvent;
-    procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+    procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
   end;
-
 var
   IMAP : TIdIMAP4;
   Msg : TIdMessage;
-  SSL : TIdSSLIOHandlerSocket;
+  SSL : TIdSSLIOHandlerSocketOpenSSL;
   IMAPWorkObject : TIMAPWorkObject;
 
 //------------------------------------------------------------------ helpers ---
@@ -113,7 +112,7 @@ begin
   Msg.NoDecode := True;
   IMAPWorkObject := TIMAPWorkObject.Create;
   IMAP.OnWork := IMAPWorkObject.IMAPWork;
-  SSL := TIdSSLIOHandlerSocket.Create(nil);
+  SSL := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
   SSL.SSLOptions.Method := sslvSSLv23;
   SSL.SSLOptions.Mode := sslmClient;
 end;
@@ -125,12 +124,12 @@ end;
 
 function PluginName : ShortString;
 begin
-  Result := 'IMAP4';
+  Result := 'IMAP4 (Indy10)';
 end;
 
 procedure ShowOptions;
 begin
-  MessageBox(0,'PopTray Example Plugin: IMAP','IMAP',MB_OK);
+  MessageBox(0,'IMAP Plugin does not have any configurable options.','IMAP',MB_OK);
 end;
 
 procedure Unload;
@@ -164,7 +163,8 @@ begin
   IMAP.IOHandler := nil;
   if Protocol = 'IMAP4 SSL' then
     IMAP.IOHandler := SSL;
-  IMAP.Connect(TimeOut);
+  IMAP.ConnectTimeout := TimeOut;
+  IMAP.Connect(true);
   IMAP.SelectMailBox('INBOX');
 end;
 
@@ -209,22 +209,24 @@ begin
   if Result then
   begin
     // get first LineCount*70 octets
+    IMAP.RetrievePeek(MsgNum, Msg);      //Temp replacement
+{
     IMAP.WriteLn('xx FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
                  IntToStr(LineCount*70)+'>');
     Result := IMAP.GetLineResponse('xx',[wsOK]) = wsOK;
     if Result then
     begin
       Msg.Body.Clear;
-      st := IMAP.Readln;
+      st := IMAP.ReadlnWait; //Changed from ReadLn indy9
       while Copy(st,1,3) <> 'xx ' do
       begin
         Msg.Body.Add(st);
-        st := IMAP.Readln;
+        st := IMAP.ReadlnWait; //Changed from ReadLn indy9;
       end;
       // delete last line
       Msg.Body.Strings[Msg.Body.Count-1] := '';
       pDest := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
-    end;
+    end; }
   end;
 end;
 
@@ -236,24 +238,23 @@ end;
 function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
 var
   st,UID : string;
-  i : integer;
+  i, nCount : integer;
 begin
   if MsgNum > -1 then
   begin
-    IMAP.SendCmd('x','FETCH '+IntToStr(MsgNum)+' (UID)');
-    st := WordAfterStr(IMAP.LastCmdResult.Text[0],'UID ');
-    st := IntToStr(MsgNum) + ' ' +IMAP.MailBox.UIDValidity + '_' + st;
+    Result := IMAP.GetUID(MsgNum, UID);
+    st := IntToStr(MsgNum) + ' ' +IMAP.MailBox.UIDValidity + '_' + UID;
     pUIDL := StrNew(PChar(st));
-    Result := True;
   end
   else begin
     st := '';
-    IMAP.SendCmd('x','FETCH 1:* (UID)');
-    for i := 0 to IMAP.LastCmdResult.Text.Count-1 do
+    nCount := IMAP.MailBox.TotalMsgs;
+    for i := 0 to nCount-1 do
     begin
-      UID := WordAfterStr(IMAP.LastCmdResult.Text[i],'UID ');
+      IMAP.GetUID(MsgNum, UID);
       if UID <> '' then
         st := st + IntToStr(i+1) + ' ' + IMAP.MailBox.UIDValidity + '_' + UID + #13#10;
+
     end;
     pUIDL := StrNew(PChar(Trim(st)));
     Result := True;
@@ -278,7 +279,7 @@ end;
 
 { TIMAPWorkObject }
 
-procedure TIMAPWorkObject.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+procedure TIMAPWorkObject.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
 begin
   if Assigned(OnWork) then
     OnWork(AWorkCount);

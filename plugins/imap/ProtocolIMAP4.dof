@@ -90,11 +90,11 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=..
+OutputDir=output/
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=$(DELPHI)\Lib\Debug
+SearchPath=$(DELPHI)\Lib\Debug;C:\code\Indy10\Protocols;C:\code\Indy10\Core;C:\code\Indy10\System;C:\code\Indy10\Security
 Packages=vcl;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;vcldb;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;CoolTrayIcon_D6plus
 Conditionals=
 DebugSourceDirs=
@@ -134,12 +134,16 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[Excluded Packages]
+c:\program files\borland\delphi7\Projects\Bpl\dclABPopup70.bpl=Borland User Components
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=1
-Item0=$(DELPHI)\Lib\Debug
+Count=2
+Item0=$(DELPHI)\Lib\Debug;C:\code\Indy10\Protocols;C:\code\Indy10\Core;C:\code\Indy10\System;C:\code\Indy10\Security
+Item1=$(DELPHI)\Lib\Debug
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..
+Count=2
+Item0=output/
+Item1=..
