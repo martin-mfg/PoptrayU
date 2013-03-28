@@ -8,6 +8,7 @@ PopTrayU Version History
 
 4.0.10
         (-) Added "utf8" (without a dash) to the supported encodings list.
+        (-) Handle some partially encoded subjects/headers better.
 
 
 4.0.9
