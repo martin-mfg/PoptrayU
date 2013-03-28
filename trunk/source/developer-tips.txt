@@ -1,0 +1,16 @@
+---------------------------
+Developer Tips for PopTrayU
+---------------------------
+
+Contributors
+------------
+   Jessica Brown
+
+Updating PopTrayU Version Number
+--------------------------------
+1. uMain.PAS has variables called MajorVersion, MinorVersion, ReleaseVersion, etc. 
+   This will change what's shown in the UI.
+   
+2. Project -> "Options..." -> "Version Info" also has version information. This 
+   should be updated as well, so the Windows can read the version information
+   from the binary.
