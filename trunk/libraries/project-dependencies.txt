@@ -25,6 +25,18 @@ open source/free libraries linked into your Delphi environment.
 They may be obtained online or from the libraries area of the 
 source tree.
    
+Dependency Installation Tips
+----------------------------
+   Many of the source code dependencies (like Indy) can be installed by 
+   opening an included .DPK file (delphi package file) in Delphi, and then 
+   selecting the "Compile" and "Install" buttons on the package window. This 
+   will add them to the component toolbar.
+
+   Dependencies that do not come with a .DPK file generally only need to 
+   have their source path added to the project "search path". This is under 
+   Project->Options->Directories/Conditionals->Search Path->...
+
+
 Cool Tray Icon - Version 4.4.0
 --------------
   http://www.subsimple.com/delphi.asp
@@ -40,9 +52,10 @@ TRegExpr
   Included in this source zip
   http://www.regexpstudio.com/
 
-Indy 9 - Version 9.0.18
+Indy 9 - Version 9.0.53
 -------
   http://www.indyproject.org
+  This version is the latest from Indy's SVN, not a precompiled binary
   
 TNT Unicode Controls - Version 2.3.0
 --------------------
@@ -52,6 +65,9 @@ TNT Unicode Controls - Version 2.3.0
 Delphi Dom HTML Parser and Converter - Version 0.96
 ------------------------------------
   https://sourceforge.net/projects/htmlp/
+
+
+
 
 ********************************************************************
 INSTALLER DEPENDENCIES
