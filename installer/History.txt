@@ -6,6 +6,10 @@ PopTrayU Version History
  (-) Bug fixed
 
 
+4.0.10
+        (-) Added "utf8" (without a dash) to the supported encodings list.
+
+
 4.0.9
 	(+) Now you can set do not (automatically) check hours on a per
 	    account basis. 
