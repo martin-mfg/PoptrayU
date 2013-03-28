@@ -271,6 +271,7 @@ initialization
   codePageMap.Add ('utf-32be=12001');
   codePageMap.Add ('utf-7=65000'); 
   codePageMap.Add ('utf-8=65001');
+  codePageMap.Add ('utf8=65001');
   codePageMap.Add ('windows-1250=1250'); 
   codePageMap.Add ('windows-1251=1251');
   codePageMap.Add ('windows-1252=1252');
