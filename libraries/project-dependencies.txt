@@ -66,6 +66,14 @@ Delphi Dom HTML Parser and Converter - Version 0.96
 ------------------------------------
   https://sourceforge.net/projects/htmlp/
 
+Microsoft Internet Controls
+---------------------------
+  The TWebBrowser is an Active X control that comes with 
+  your OS (Windows). 
+  Not installing this will result in SHDocVw_TLB not found
+  In Delphi, Select Component->Import ActiveX Control->
+  Microsoft Internet Controls (Version 1.1)
+  and press the Install.. Button.
 
 
 
