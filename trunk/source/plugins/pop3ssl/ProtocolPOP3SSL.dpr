@@ -1,8 +1,9 @@
 library ProtocolPOP3SSL;
 
 {-------------------------------------------------------------------------------
-POPTRAY
-Copyright (C) 2003  Renier Crause
+POPTRAYU
+Copyright (C) 2001-2005  Renier Crause
+Copyright (C) 2012 Jessica Brown
 All Rights Reserved.
 
 This is free software.
