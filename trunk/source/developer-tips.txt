@@ -14,3 +14,26 @@ Updating PopTrayU Version Number
 2. Project -> "Options..." -> "Version Info" also has version information. This 
    should be updated as well, so the Windows can read the version information
    from the binary.
+
+
+
+Testing Arbitrary Emails
+------------------------
+   The following program is recommended for testing arbitrary emails.
+   It acts as a local POP server on your machine getting the emails
+   from plain-text files on your local machine.
+
+   JES-Catchall (Java Email Server)
+   by Eric Daugherty and Andreas Kyrmegalos
+   http://javaemailserver.sf.net/
+
+   Included with the download is a PDF with installation instructions.
+   The BAT file needs to be modified with correct directory options.
+
+   Run mail.bat to make the server active.
+   In PopTrayU, use: 
+   server=localhost
+   login=test@example.com
+   password=test
+
+   Add new raw emails to the users\test@example.com folder with a .LOC extension.
