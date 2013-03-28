@@ -118,21 +118,26 @@ function DecodeHeader(const encodedHeader : AnsiString) : WideString;
 const
   encodingCue = '=?';
   lenOfEncodingCue = Length(encodingCue);
-  posEncoding = lenOfEncodingCue + 1;
+  //posEncoding = lenOfEncodingCue + 1;
   utf8str = 'utf-8';
   quotedPrintable = '?Q?';
   base64 = '?B?';
 var
   decoderStream: TStringStream;
   decoder: TIdDecoder;
-  qmarkLoc, startStrToDecode, endStrToDecode, addlLineStart: integer;
+  posEncoding, qmarkLoc, startStrToDecode, endStrToDecode, addlLineStart: integer;
   charEncoding, stringToDecode, decodedString, leftoverChars: string;
   transferEncoding: char;
 begin
   Result := encodedHeader;
 
-  if (Length(encodedHeader) < 2) OR (encodedHeader[1] <> '=') OR (encodedHeader[2] <> '?')
+  if (Length(encodedHeader) < 2) //OR (encodedHeader[1] <> '=') OR (encodedHeader[2] <> '?')
     then Exit; // return original string for unencoded strings.
+
+  posEncoding := PosEx(encodingCue, encodedHeader, 0);
+  if (posEncoding = 0) then Exit; //not encoded, so skip rest.
+  posEncoding := posEncoding + lenOfEncodingCue; //offset by size of encoding cue
+
 
   qmarkLoc := PosEx('?', encodedHeader, posEncoding); // 2nd '?' is between charEnc and tranferEnc
   if (qmarkLoc = 0) then Exit; {data integrity check}
@@ -160,6 +165,9 @@ begin
   {Invalid transfer encoding}
   else begin Exit; end;
 
+  
+  Result :=  Copy (encodedHeader, 0, posEncoding-lenOfEncodingCue-1);
+
   decoderStream := TStringStream.Create('');
   try
     decoder.DecodeToStream (stringToDecode, decoderStream);
@@ -172,11 +180,11 @@ begin
   if (charEncoding = 'utf-8')
   then begin
     { Convert UTF-8 to WideChar }
-    Result := UTF8Decode(decodedString);
+    Result := Concat(Result,UTF8Decode(decodedString));
   end
   else begin
     { The header is not UTF-8, convert from the specified codepage to WideChar }
-    Result := AnsiStringToWideString(decodedString, charEncoding);
+    Result := Concat(Result,AnsiStringToWideString(decodedString, charEncoding));
   end;
 
   { If the header has another line, check for whether we need to repeat
