@@ -15,6 +15,7 @@ Updating PopTrayU Version Number
    should be updated as well, so the Windows can read the version information
    from the binary.
 
+3. Update version number in the installer as well (in PopTrayU.nsi)
 
 
 Testing Arbitrary Emails
@@ -37,3 +38,20 @@ Testing Arbitrary Emails
    password=test
 
    Add new raw emails to the users\test@example.com folder with a .LOC extension.
+
+
+Deployment Steps
+----------------
+   (For releasing a new version of PopTrayU)
+
+1. Verify version numbers are correct in source code (2 places).
+2. Build and test PopTrayU, then copy PopTrayU.exe to installer folder
+3. Fix the exe's 256px icon with the FixVistaIcon exe/bat files.
+4. Verify all important changes documented in version history text file
+5. Verify installer .nsi file has correct version number, then rebuild the installer
+6. Check in any outstanding changes into SVN, and then create a tag for the build
+7. Zip the source code, rename to match installer (but source instead of setup)
+8. Upload the installer and source code zip to files area on Sourceforge
+9. Update sourceforge blog to announce new version.
+10 Update website to correct version number on version check page and update revision 
+   history page with the new version.
