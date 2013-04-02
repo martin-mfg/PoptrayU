@@ -27,7 +27,8 @@ uses
 type
   TPluginPOP3 = class(TPluginProtocol)
   private
-    procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+    procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
+    //procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //indy10
   public
     POP : TIdPOP3;
     constructor Create;
@@ -48,6 +49,7 @@ type
   end;
 
 implementation
+  uses IdIMap4; //for wsOk indy10
 
 { TPluginPOP3 }
 
@@ -56,7 +58,8 @@ begin
   Self.PluginType := piProtocol;
   Self.Name := 'POP3';
   POP := TidPOP3.Create(nil);
-  POP.MaxLineLength := 64*1024;
+  Pop.MaxLineLength := 64*1024; //Indy9
+  //Pop.IOHandler.MaxLineLength := 64*1024; //Remove for Indy10
   POP.OnWork := POPWork;
 end;
 
@@ -72,7 +75,9 @@ begin
   POP.Username := Username;
   POP.Password := Password;
   POP.ReadTimeout := TimeOut;
-  POP.Connect(TimeOut);
+  POP.Connect(TimeOut); //Indy9
+  //Pop.ConnectTimeout := TimeOut; //Added for Indy10 to replace Connect param.
+  //POP.Connect(); //removing parameter 'TimeOut' for indy10
 end;
 
 procedure TPluginPOP3.Disconnect;
@@ -138,7 +143,8 @@ begin
   begin
     Dest := TStringList.Create;
     try
-      POP.Capture(Dest);
+      POP.Capture(Dest); //Indy9
+      //POP.IOHandler.Capture(Dest); //Indy10 - add IOHandler
       pDest := Dest.GetText;
     finally
       Dest.Free;
@@ -172,7 +178,8 @@ begin
   Result := POP.Delete(MsgNum);
 end;
 
-procedure TPluginPOP3.POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+procedure TPluginPOP3.POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
+//procedure TPluginPOP3.POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //changed for indy10
 begin
   if Assigned(OnWork) then
     OnWork(AWorkCount);
