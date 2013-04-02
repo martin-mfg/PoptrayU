@@ -32,7 +32,8 @@ uses
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
   SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder, TntForms,
-  TntStdCtrls, RegExpr, TntComCtrls;
+  TntStdCtrls, RegExpr, TntComCtrls;//,
+  //IdAttachment, IdText, IdAttachmentFile; // for Indy10
 
 type
   TfrmPreview = class(TTntForm)
@@ -243,7 +244,8 @@ begin
   begin
     if Msg.MessageParts.Items[i] is TIdAttachment then
     begin
-      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachment).StoredPathName);
+      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachment).StoredPathName); //Indy9
+      //DeleteFile((Msg.MessageParts.Items[i] as TIdAttachmentFile).StoredPathName);  //Changed for Indy10
     end;
   end;
   // delete execute temp files
@@ -1050,9 +1052,11 @@ begin
     SaveDialog.FileName := lvAttachments.Selected.Caption;
     if SaveDialog.Execute then
     begin
-      if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
+      if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then //Indy9
+      //if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachmentFile then //Indy10
       begin
-        if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName),
+        if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName), //Indy9
+        //if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachmentFile).StoredPathName), //Indy10
                         pchar(SaveDialog.FileName),false) then
         begin
           MessageDlg(uTranslate.Translate('Failed to Save Attachment.')+#13#10#13#10+
@@ -1089,7 +1093,8 @@ begin
     if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
     begin
       // rename temp file
-      OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName;
+      OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName; //Indy9
+      //OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachmentFile).StoredPathName; //Indy10
       NewName := TempFileName(lvAttachments.Selected.Caption);
       if CopyFile(PChar(OldName), PChar(NewName), true) then
       begin

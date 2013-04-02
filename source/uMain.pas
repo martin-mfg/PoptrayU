@@ -36,7 +36,9 @@ uses
   CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uObjects, Grids,
   uHeaderDecoder, IdCoder3to4, IdCoderMIME, IdCoder, IdCoderQuotedPrintable,
   TntComCtrls, TntForms, TntDialogs, TntClasses,
-  TntWideStrings;
+  TntWideStrings;//, IdGlobalProtocols, IdResourceStringsProtocols, IdStack;
+  
+  //Added IdGlobalProtocols, IdResourceStringsProtocols, IdStack - Indy10
 
 const
   // --- version info ---
@@ -622,7 +624,8 @@ type
     procedure OnFirstWait(Sender: TObject);
     procedure OnHint(Sender : TObject);
     procedure OnProtWork(const AWorkCount: Integer);
-    procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); virtual;
+    procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); virtual; //Indy9
+    //procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual; //Indy10
     procedure OnMinimize(Sender: TObject);
   public
     FKB : WideString; //UI label for kilobytes in the current language
@@ -2461,6 +2464,7 @@ begin
             RawMsg.SaveToStream(TmpStream);
             TmpStream.Position := 0;
             try
+//INDY10 TODO - is this still needed?  frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
               frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
               ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
             except
@@ -4850,7 +4854,8 @@ begin
   end;
 end;
 
-procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer);
+procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
+//procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);//Indy10
 begin
   OnProtWork(AWorkCount);
 end;
@@ -6764,7 +6769,9 @@ begin
     try
       TCP.Host := Host;
       TCP.Port := Port;
-      TCP.Connect(Options.TimeOut*1000);
+      TCP.Connect(Options.TimeOut*1000); //Indy9
+      //TCP.ConnectTimeout := Options.TimeOut*1000; //Indy10
+      //TCP.Connect(); //Indy10
       TCP.GetResponse([]);
       Result := {TCP.LastCmdResult.TextCode + ' ' +} TCP.LastCmdResult.Text.Text;
       TCP.Disconnect;
