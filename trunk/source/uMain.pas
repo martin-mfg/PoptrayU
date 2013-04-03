@@ -262,8 +262,6 @@ type
     actRuleSubjectDelete: TAction;
     actRuleSubjectSpam: TAction;
     actOpenMessage: TAction;
-    IdDecoderQuotedPrintable: TIdDecoderQuotedPrintable;
-    IdDecoderMIME1: TIdDecoderMIME;
     Image1: TImage;
     labelAppName: TLabel;
     lblHomepage: TLabel;
