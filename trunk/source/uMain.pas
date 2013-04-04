@@ -36,7 +36,8 @@ uses
   CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uObjects, Grids,
   uHeaderDecoder, IdCoder3to4, IdCoderMIME, IdCoder, IdCoderQuotedPrintable,
   TntComCtrls, TntForms, TntDialogs, TntClasses,
-  TntWideStrings;//, IdGlobalProtocols, IdResourceStringsProtocols, IdStack;
+  TntWideStrings, ActiveX;
+  //, IdGlobalProtocols, IdResourceStringsProtocols, IdStack;
   
   //Added IdGlobalProtocols, IdResourceStringsProtocols, IdStack - Indy10
 
@@ -7049,5 +7050,11 @@ begin
 
   edAccChange(Sender);
 end;
+
+// Needed to make TWebBrowser copy (used on the preview window)
+initialization
+  OleInitialize(nil);
+finalization
+  oleuninitialize;
 
 end.
