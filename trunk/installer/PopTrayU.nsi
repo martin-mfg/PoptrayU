@@ -3,8 +3,8 @@
 ;------------------------------------------------------------
 
 !define VER_MAJOR "4"
-!define VER_MINOR "0"
-!define VER_BETA "10"
+!define VER_MINOR "1"
+!define VER_BETA "0"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -58,7 +58,7 @@ ShowUninstDetails show
   ; Text
   !define MUI_WELCOMEPAGE_TITLE "${PRODUCT} Setup Wizard"
   !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of PopTrayU$\r$\n$\r$\nPopTrayU is a full-featured, open-source, e-mail notifier with an easy to use interface.$\r$\n$\r$\n"
-  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Show HISTORY.TXT"
+  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Download SSL Plugin"
 
 
 
@@ -72,7 +72,7 @@ ShowUninstDetails show
     
     !define MUI_FINISHPAGE_NOREBOOTSUPPORT
     !define MUI_FINISHPAGE_RUN $INSTDIR\PopTrayU.exe
-    !define MUI_FINISHPAGE_SHOWREADME $INSTDIR\History.txt
+    !define MUI_FINISHPAGE_SHOWREADME "http://sourceforge.net/projects/poptrayupop3ssl/"
     !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
   !insertmacro MUI_PAGE_FINISH
 
@@ -277,7 +277,28 @@ Section "Sound files" SecSound
   File "sounds\poptray_spam_lo.wav"
 SectionEnd
 
+SubSection "Additional Protocols & Notification Plugins" SecPlugins
 
+Section "IMAP4 Protocol Plugin" SecImap
+  SectionIn 1
+  WriteRegStr HKLM "Software\${PRODUCT}" "imapplugin" 1
+
+  SetOutPath "$INSTDIR\plugins"
+
+  File "plugins\ProtocolIMAP4.dll"
+SectionEnd
+
+Section "Keyboard Lights Notification Plugin" SecKeyboardLights
+  SectionIn 1
+  WriteRegStr HKLM "Software\${PRODUCT}" "keyboardlights" 1
+
+  SetOutPath "$INSTDIR\plugins"
+
+  File "plugins\NotifyKeyboardLights.dll"
+  File "plugins\NotifyKeyboardLights.txt"
+SectionEnd
+
+SubSectionEnd
 
 ;!insertmacro MUI_SECTIONS_FINISHHEADER
 
