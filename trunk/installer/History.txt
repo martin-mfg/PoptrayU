@@ -6,6 +6,21 @@ PopTrayU Version History
  (-) Bug fixed
 
 
+4.1.0
+        (-) "Copy" right click menu item should now work on HTML message
+            preview.
+	(+) SASL authentication option for POP3 and IMAP
+	(+) IMAP plugin bundled with PopTrayU installer
+	(+) APOP for POP3 built in (no plugin needed)
+        (+) SSL, APOP, and STARTTLS options built in (except APOP these
+	    require OpenSSL to be installed)
+	(*) Indy Networking components upgraded from Version 9 to 10. Some
+	    old protocol plugins may no longer be compatible because of this.
+	    However, this allows any stock version of OpenSSL to be used,
+	    and IMAP support is supposed to be much more reliable in Indy 10.
+	(*) Plugin interface has new optional methods for configuring SSL 
+            and authentication methods
+
 4.0.10
         (-) Added "utf8" (without a dash) to the supported encodings list.
         (-) Handle some partially encoded subjects/headers better.
