@@ -150,8 +150,9 @@ Section "PopTrayU (required)" SecPopTrayU
   	File "Readme.txt"
   	File "History.txt"
   	File "License.txt"
-  	File "Skin.bmp"
-  
+  	File "lightskin.bmp"
+ 	File "darkskin.bmp"
+ 	
   ;MessageBox MB_OK "Debug Wait"
 
   WriteRegStr HKLM "Software\${PRODUCT}" "" $INSTDIR
