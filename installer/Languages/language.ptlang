@@ -11,6 +11,7 @@
 #-----------------------------------------------------------------------
 # 2012-06-29 Updated for PopTrayU 4.0.5
 # 2012-10-19 Updated for PopTrayU 4.0.8
+# 2013-05-04 Updated for PopTrayU 4.1
 #-----------------------------------------------------------------------
 
 OK=
@@ -591,3 +592,17 @@ Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequen
 Don't automatically check for new messages=
 Set Interval per account=
 Only check when already online=
+
+#---------------------------------------------------------------------
+# New Strings for 4.1 
+#---------------------------------------------------------------------
+Don't check this account between=
+Advanced=
+Use SSL/TLS=
+Authentication=
+SSL/TLS Version:=
+Auto=
+Password=
+Toolbar Color Scheme:=
+Normal=
+Twilight=

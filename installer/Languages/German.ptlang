@@ -11,6 +11,7 @@
 # 2012-03-29 PopTrayU 4.0.3 - Jessica Brown
 # 2012-06-29 PopTrayU 4.0.5 - Jessica Brown
 # 2012-10-19 PopTrayU 4.0.8 - Jessica Brown
+# 2013-05-04 PopTrayU 4.1 - Jessica Brown
 #-----------------------------------------------------------------------
 
 (All Actions)=(Alle Aktionen)
@@ -520,5 +521,18 @@ Check for new mail every=Prüfen Sie, ob neue E-Mail alle
 Don't automatically check for new messages=Nicht automatisch nach neuen Nachrichten schauen
 Set Interval per account=Eigenes Prüfintervall für jedes Konto
 Only check when already online=Nur prüfen, wenn bereits online
+#---------------------------------------------------------------------
+# New Strings for 4.1 
+#---------------------------------------------------------------------
+Don't check this account between=Nicht prüfen dieses Konto zwischen
+Advanced=Erweiterte
+Use SSL/TLS=SSL/TLS Verwenden
+Authentication=Authentifizierung
+SSL/TLS Version:=SSL/TLS version:
+Auto=Automatisch 
+Password=Passwort
+Toolbar Color Scheme:=Symbolleisten-Farbschema:
+Normal=Senkrechte
+Twilight=Zwielicht
 
 
