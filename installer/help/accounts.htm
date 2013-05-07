@@ -13,7 +13,7 @@
 		<th>Accounts</th>
 	</tr>
 	<tr>
-		<td class="info"> Clicking on the accounts tab on the right-hand
+	  <td class="info"> Clicking on the accounts tab on the right-hand
 			side allows you to define all your e-mail accounts.<br><br>
 			A Help button <img src="img/help.png" height=25 width=65> can be found in the lower left corner of the screen.<br><br>
 			<a name="buttons"></a>First up is the account management buttons:<br>
@@ -50,7 +50,7 @@
 			<br>
 			For each account you define you have to fill in the following
 			fields:<br>
-			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
+<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
 				<tr>
 					<td width="130" class="light" align="center">Enabled</td>
 					<td class="light">Checkbox that selects whether PopTrayU
@@ -115,7 +115,34 @@
 						between mail check for each account here. Set time interval
 						in minutes using the up-down buttons or typing in a number.</td>
 				</tr>
-			</table></td>
+				<tr>
+				  <td class="light" align="center">Use SSL/TLS</td>
+				  <td class="light">Can only be  enabled if OpenSSL dlls are present in the PopTrayU directory. This will use a secure/encrypted connection to download your email. It will automatically change the port number to the standard secure port number (unless STARTTLS advanced option is checked), and use the most common secure settings available. </td>
+			  </tr>
+		</table>
+			<p>Advanced account options:</p>
+			<p>These options are hidden unless the &quot;Advanced&quot; button is pressed.</p>
+			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
+              <tr>
+                <td width="130" class="light" align="center">Authentication</td>
+                <td class="light"><p>Depending on what protocol is selected (and whether you have installed OpenSSL DLLs), you may see some or all of the following choices:</p>
+                  <ul>
+                    <li><strong>Auto</strong> - Let PopTrayU decide for you what authentication method should be used</li>
+                    <li> <strong>Password</strong> - This is the standard old-fashioned way of sending the password in plain-text to the  server</li>
+                    <li> <strong>APOP</strong> - This is a less secure form of password encryption some email servers may offer if they do not offer SSL connections. The password is sent as an &quot;MD5 Hash&quot; which is not as secure as SSL, but more secure than plain-text passwords.</li>
+                    <li> <strong>SASL</strong> - the most secure option for sending your password. PopTrayU will pick the most secure password encryption algorithm that both your email server and PopTrayU  support. </li>
+                </ul></td>
+              </tr>
+              <tr>
+                <td class="light" align="center">SSL/TLS Version </td>
+                <td class="light">This setting can be used to manually specify which version of SSL or TLS should be used in connecting to your email server. SSL 2.0 is generally not recommended because it's less secure. TLS are newer versions than SSL, but not all servers support the newest version(s) of TLS. This option is only available when &quot;Use SSL/TLS&quot; is enabled. </td>
+              </tr>
+              <tr>
+                <td class="light" align="center">STARTTLS</td>
+                <td class="light">Also sometimes called &quot;explicit TLS&quot;, this option will initate a connection over the &quot;insecure&quot; port, and then tell the server to switch to secure mode (SSL/TLS), before sending the username, password, or downloading mail. This option is only available when &quot;Use SSL/TLS&quot; is enabled. </td>
+              </tr>
+            </table>			
+			<p>&nbsp; </p></td>
 	</tr>
 </table>
 
