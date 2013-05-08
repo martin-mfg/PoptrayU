@@ -5,8 +5,11 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+4.1 beta 2
+	(-) Accounts toolbar follows toolbar theme correctly
+	(-) Fixed positioning issue with progress bar in 4.1 beta 1
 
-4.1.1
+4.1 beta 1
         (-) "Copy" right click menu item should now work on HTML message
             preview.
 	(+) SASL authentication option for POP3 
