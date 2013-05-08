@@ -90,13 +90,13 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=PopTrayU
 [Directories]
-OutputDir=C:\code\poptray\trunk\source\output\
-UnitOutputDir=C:\code\poptray\trunk\source\output\dcu\
-PackageDLLOutputDir=C:\code\poptray\trunk\source\output\bpl\
-PackageDCPOutputDir=C:\code\poptray\trunk\source\output\dcp\
-SearchPath=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy9\trunk\Indy 9
-Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx;Indy70
-Conditionals=
+OutputDir=C:\code\poptray\branches\indy10\source\output\
+UnitOutputDir=C:\code\poptray\branches\indy10\source\output\dcu\
+PackageDLLOutputDir=C:\code\poptray\branches\indy10\output\bpl\
+PackageDCPOutputDir=C:\code\poptray\branches\indy10\output\dcp\
+SearchPath=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System
+Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx;IndyCore70;IndySystem70
+Conditionals=madExcept
 DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 UsePackages=0
 [Parameters]
@@ -113,9 +113,9 @@ RootDir=
 IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=4
-MinorVer=0
-Release=11
-Build=7
+MinorVer=1
+Release=1
+Build=2
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Jessica Brown
 FileDescription=PopTrayU E-Mail Notifier
-FileVersion=4.0.11.7
+FileVersion=4.1.1.2
 InternalName=
 LegalCopyright=Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause
 LegalTrademarks=
@@ -136,8 +136,6 @@ ProductVersion=4.0
 Comments=Freeware and Open-Source
 URL=poptrayu.sourceforge.net
 [Excluded Packages]
-c:\apps\delphi7\Projects\Bpl\dclIndyProtocols70.bpl=Indy 10 Protocols Design Time
-C:\apps\delphi7\Projects\Bpl\dclIndyCore70.bpl=Indy 10 Core Design Time
 c:\apps\delphi7\Bin\dclnet70.bpl=Borland Internet Components
 c:\apps\delphi7\Bin\dclwbm70.bpl=Borland InternetExpress Components
 c:\apps\delphi7\Bin\dclwebsnap70.bpl=Borland WebSnap Components
@@ -148,19 +146,29 @@ Item0=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\I
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=3
-Item0=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy9\trunk\Indy 9
-Item1=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\System;C:\code\Indy10\Protocols
-Item2=C:\code\Indy9\trunk\Indy 9;C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source
+Count=5
+Item0=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System
+Item1=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\Protocols
+Item2=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy9\trunk\Indy 9
+Item3=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\System;C:\code\Indy10\Protocols
+Item4=C:\code\Indy9\trunk\Indy 9;C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source
 [HistoryLists\hlUnitOutputDirectory]
-Count=1
-Item0=C:\code\poptray\trunk\source\output\dcu\
+Count=3
+Item0=C:\code\poptray\branches\indy10\source\output\dcu\
+Item1=.\source\output\dcu\
+Item2=C:\code\poptray\trunk\source\output\dcu\
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=C:\code\poptray\trunk\source\output\
+Count=3
+Item0=C:\code\poptray\branches\indy10\source\output\
+Item1=.\source\output\
+Item2=C:\code\poptray\trunk\source\output\
 [HistoryLists\hlBPLOutput]
-Count=1
-Item0=C:\code\poptray\trunk\source\output\bpl\
+Count=3
+Item0=C:\code\poptray\branches\indy10\output\bpl\
+Item1=.\output\bpl\
+Item2=C:\code\poptray\trunk\source\output\bpl\
 [HistoryLists\hlDCPOutput]
-Count=1
-Item0=C:\code\poptray\trunk\source\output\dcp\
+Count=3
+Item0=C:\code\poptray\branches\indy10\output\dcp\
+Item1=.\output\dcp\
+Item2=C:\code\poptray\trunk\source\output\dcp\

@@ -33,20 +33,20 @@ uses
   IdGlobal, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdPOP3,
   IdMessageClient, IdMessage, IdException, IdAntiFreezeBase, IdAntiFreeze,
   ActnList, ActnMan, ActnCtrls, ActnPopupCtrl, XPStyleActnCtrls,
-  CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uObjects, Grids,
+  CoolTrayIcon, RegExpr, uGlobal, uPlugins, uPOP3, uIMAP4, uObjects, Grids,
   uHeaderDecoder, IdCoder3to4, IdCoderMIME, IdCoder, IdCoderQuotedPrintable,
   TntComCtrls, TntForms, TntDialogs, TntClasses,
-  TntWideStrings, ActiveX;
-  //, IdGlobalProtocols, IdResourceStringsProtocols, IdStack;
+  TntWideStrings, ActiveX//;
+  , IdGlobalProtocols, IdResourceStringsProtocols, IdStack, ActnColorMaps;
   
   //Added IdGlobalProtocols, IdResourceStringsProtocols, IdStack - Indy10
 
 const
   // --- version info ---
   MajorVersion = '4';
-  MinorVersion = '0';
-  ReleaseVersion = '11';
-  BetaVersion = '0';
+  MinorVersion = '1';
+  ReleaseVersion = '0';
+  BetaVersion = '2';
   ReleaseCandidate = '';
 
 const
@@ -86,10 +86,9 @@ const
 
 type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
-
   TIconType = (itNormal,itChecking,itDeleting,itError,itSleeping);
-
   TWhiteBlack = (wbWhite, wbBlack);
+  TToolbarScheme = (schemeNormal = 0, schemeTwilight = 1);
 
   TfrmPopUMain = class(TTntForm)
     PageControl: TPageControl;
@@ -280,6 +279,16 @@ type
     dtStart: TDateTimePicker;
     lblAnd: TLabel;
     dtEnd: TDateTimePicker;
+    chkSSL: TCheckBox;
+    cmbAuthType: TComboBox;
+    Label9: TLabel;
+    btnAdvConnection: TSpeedButton;
+    cmbSslVer: TComboBox;
+    lblSslVer: TLabel;
+    panAdvConn: TPanel;
+    chkStartTLS: TCheckBox;
+    XPColorMap1: TXPColorMap;
+    TwilightColorMap1: TTwilightColorMap;
     procedure lvVolunteers2Resize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
@@ -453,6 +462,8 @@ type
       Panel: TStatusPanel; const Rect: TRect);
     procedure actOpenMessageExecute(Sender: TObject);
     procedure chkDontCheckTimesClick(Sender: TObject);
+    procedure chkSSLClick(Sender: TObject);
+    procedure btnAdvConnectionClick(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -475,7 +486,9 @@ type
     procedure SetSortColumn(ColNum : integer);
     procedure UpdateFonts;
     procedure OnCloseFree(Sender: TObject; var Action: TCloseAction); //used to be private
-    procedure OnClickClose(Sender: TObject); //used to be private 
+    procedure OnClickClose(Sender: TObject); //used to be private
+    function SchemeNumToColorMap(const colorSchemeNum: integer) : TCustomActionBarColorMap;
+    procedure LoadSkin;
   private
     { Private declarations }
     FNotified : Boolean;
@@ -571,7 +584,6 @@ type
     function GetStatusIcon(MailItem : TMailItem) : integer;
     procedure ErrorMsg(num : integer; Heading,Msg : string; IgnoreError : boolean);
     procedure ShowStatusBar(num : integer);
-    procedure LoadSkin;
     // rules
     procedure CreateRegExpr;
     function CheckRegExpr(area : string; text : string) : boolean;
@@ -623,9 +635,13 @@ type
     procedure OnFirstWait(Sender: TObject);
     procedure OnHint(Sender : TObject);
     procedure OnProtWork(const AWorkCount: Integer);
+    {$IFDEF INDY9}
     procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); virtual; //Indy9
-    //procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual; //Indy10
+    {$ELSE}
+    procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual; //Indy10
+    {$ENDIF}
     procedure OnMinimize(Sender: TObject);
+    procedure setPortOnAccountTab();
   public
     FKB : WideString; //UI label for kilobytes in the current language
     frame : TFrame; //Frame currently shown in on the options page
@@ -647,7 +663,8 @@ uses
   uFrameAdvancedInterface, uFrameAdvancedMisc,
   uFrameMouseButtons, uFrameHotKeys, uFrameWhiteBlack, uFramePlugins,
   uFrameVisualAppearance, IniFiles,  ShellAPI,  StrUtils, Types,
-  IdEMailAddress, IdResourceStrings, uFSUtils, uTranslate;
+  IdEMailAddress, IdResourceStrings, uFSUtils, uTranslate,
+  IdReplyPOP3; // for ST_OK
 
 var
   Rules : TRuleItems;
@@ -859,6 +876,7 @@ procedure TfrmPopUMain.CheckAllMail;
 var
   num : integer;
 begin
+  if (Accounts.Count = 0) then Exit; // do not check if no accounts created
   FStop := false;
   // check if busy
   if FBusy then
@@ -1331,9 +1349,12 @@ var
   st : string;
   i,j : integer;
 begin
-  // clear all protocols (except POP3)
-  SetLength(Protocols,1);
+  // clear all protocols (except POP3/IMAP)
+  SetLength(Protocols,2);
+
   cmbProtocol.Items.Text := 'POP3';
+  cmbProtocol.Items.Add('IMAP4');
+
   // new list of protocols
   sl := TStringList.Create;
   try
@@ -1685,6 +1706,10 @@ begin
           (Plugins[i] as TPluginProtocol).FDelete := GetProcAddress(Plugins[i].hPlugin,'Delete');
           (Plugins[i] as TPluginProtocol).FSetOnWork := GetProcAddress(Plugins[i].hPlugin,'SetOnWork');
           (Plugins[i] as TPluginProtocol).FLastErrorMsg := GetProcAddress(Plugins[i].hPlugin,'LastErrorMsg');
+          (Plugins[i] as TPluginProtocol).FSetSSLOptions := GetProcAddress(Plugins[i].hPlugin,'SetSSLOptions');
+          (Plugins[i] as TPluginProtocol).FPluginSupportsSSL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSSL');
+          (Plugins[i] as TPluginProtocol).FPluginSupportsAPOP := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsAPOP');
+          (Plugins[i] as TPluginProtocol).FPluginSupportsSASL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSASL');
         end;
         Plugins[i].Init;
       end;
@@ -1713,6 +1738,8 @@ begin
     Options.VerticalFont.Assign(font);
     FreeAndNil(font);
 
+    Options.ToolbarColorScheme := Ini.ReadInteger('VisualOptions', 'ToolbarColorScheme',0);
+
     UpdateFonts();
 
     // num accounts
@@ -1732,7 +1759,7 @@ begin
   GetBitmapFromFileIcon(Options.MailProgram,btnStartProgram.Glyph,True);
   dm.imlActions.ReplaceMasked(actStartProgram.ImageIndex,btnStartProgram.Glyph,clBtnFace);
   // skin
-  LoadSkin;
+  LoadSkin();
   // multiline account tabs
   tabMail.MultiLine := Options.MultilineAccounts;
   tabAccounts.MultiLine := Options.MultilineAccounts;
@@ -1859,6 +1886,8 @@ begin
     Ini.WriteString('VisualOptions', 'GlobalFont', FontToString(Options.GlobalFont));
     Ini.WriteString('VisualOptions', 'VerticalFont', FontToString(Options.VerticalFont));
 
+    Ini.WriteInteger('VisualOptions', 'ToolbarColorScheme',Options.ToolbarColorScheme);
+
   finally
      Ini.Free;
   end;
@@ -1899,6 +1928,10 @@ begin
     Accounts[num-1].Server := Ini.ReadString(Section,'Server','');
     Accounts[num-1].Port := Ini.ReadInteger(Section,'Port',110);
     Accounts[num-1].Protocol := Ini.ReadString(Section,'Protocol','POP3');
+    Accounts[num-1].UseSSLorTLS := Ini.ReadBool(Section,'UseSSLorTLS',FALSE);
+    Accounts[num-1].AuthType := TAuthType(Ini.ReadInteger(Section,'AuthType',0));
+    Accounts[num-1].SslVersion := TsslVer(Ini.ReadInteger(Section,'SslVer',0));
+    Accounts[num-1].StartTLS := Ini.ReadBool(Section,'StartTLS',false);
     Accounts[num-1].Login := Ini.ReadString(Section,'Login','');
     Accounts[num-1].MailProgram := Ini.ReadString(Section,'MailProgram','');
     Accounts[num-1].Password := Decrypt(Ini.ReadString(Section,'Password',''));
@@ -1942,6 +1975,10 @@ begin
     Ini.WriteString(Section,'Server',Accounts[num-1].Server);
     Ini.WriteInteger(Section,'Port',Accounts[num-1].Port);
     Ini.WriteString(Section,'Protocol',Accounts[num-1].Protocol);
+    Ini.WriteBool(Section,'UseSSLorTLS',Accounts[num-1].UseSSLorTLS);
+    Ini.WriteInteger(Section,'AuthType',Integer(Accounts[num-1].AuthType));
+    Ini.WriteInteger(Section,'SslVer',Integer(Accounts[num-1].SslVersion));
+    Ini.WriteBool(Section,'StartTLS',Accounts[num-1].StartTLS);
     Ini.WriteString(Section,'Login',Accounts[num-1].Login);
     Ini.WriteString(Section,'Password',Encrypt(Accounts[num-1].Password));
     Ini.WriteString(Section,'MailProgram',Accounts[num-1].MailProgram);
@@ -1968,6 +2005,10 @@ begin
   Accounts[num-1].Server := edServer.Text;
   Accounts[num-1].Port := StrToIntDef(edPort.Text,-1);
   Accounts[num-1].Protocol := cmbProtocol.Text;
+  Accounts[num-1].UseSSLorTLS := chkSSL.Checked;
+  Accounts[num-1].SslVersion := TsslVer(cmbSslVer.ItemIndex);
+  Accounts[num-1].AuthType := TAuthType(cmbAuthType.ItemIndex);
+  Accounts[num-1].StartTLS := chkStartTLS.Checked;
   Accounts[num-1].Login := edLogin.Text;
   Accounts[num-1].Password := edPassword.Text;
   if edAccountProgram.Text = Translate(UseDefaultProgram) then
@@ -2000,6 +2041,8 @@ end;
 procedure TfrmPopUMain.ShowAccount(num: integer);
 ////////////////////////////////////////////////////////////////////////////////
 // Show the account info in the edit boxes
+var
+  i: integer;
 begin
   if (num<=0) or (num>NumAccounts) then Exit;
   // main params
@@ -2007,6 +2050,43 @@ begin
   edServer.Text := Accounts[num-1].Server;
   edPort.Text := IntToStr(Accounts[num-1].Port);
   cmbProtocol.ItemIndex := cmbProtocol.Items.IndexOf(Accounts[num-1].Protocol);
+
+
+  chkSSL.Checked := Accounts[num-1].UseSSLorTLS;
+  cmbSslVer.ItemIndex := Integer(Accounts[num-1].SslVersion);
+  cmbAuthType.ItemIndex := Integer(Accounts[num-1].AuthType);
+  chkStartTLS.Checked := Accounts[num-1].StartTLS;
+
+  // If the plugin does not support SSL, do not allow user to click on
+  // options that require SSL encryption.
+  if (Accounts[num-1].Prot.PluginSupportsSSL = false)
+  then begin
+    chkSSL.Enabled := false;
+    cmbSslVer.Enabled := false;
+    lblSslVer.Enabled := false;
+    //cmbAuthType.Items.Delete(Integer(sasl)); // no option to disable, so hide
+    chkStartTLS.Enabled := false;
+  end
+  else if (Accounts[num-1].UseSSLorTLS = false) then
+  begin
+    cmbSslVer.Enabled := false;
+    lblSslVer.Enabled := false;
+  end;
+
+  // reset items in auth types box per what the protocol supports
+  cmbAuthType.Items.Clear;
+  cmbAuthType.Items.AddObject('Auto',TObject(autoAuth));
+  cmbAuthType.Items.AddObject('Password',TObject(password));
+  if (Accounts[num-1].Prot.PluginSupportsAPOP) then
+     cmbAuthType.Items.AddObject('APOP',TObject(apop));
+  if (Accounts[num-1].Prot.PluginSupportsSSL and Accounts[num-1].Prot.PluginSupportsSASL) then
+     cmbAuthType.Items.AddObject('SASL',TObject(sasl));
+
+  //retranslate
+  for i := 0 to cmbAuthType.Items.Count-1 do
+    ChangeItem(cmbAuthType,i,TranslateDir(cmbAuthType.Items[i],FromEnglish));
+
+
   edLogin.Text := Accounts[num-1].Login;
   edPassword.Text := Accounts[num-1].Password;
   // mail program
@@ -2054,6 +2134,18 @@ begin
   FAccChanged := False;
   btnSave.Enabled := False;
   btnCancelAccount.Enabled := False;
+
+  AutoSizeCheckBox(chkDontCheckTimes);
+  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+
+  btnAccountSoundTest.Glyph := nil;
+  if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
+    dm.imlLtDk16.GetBitmap(1, btnAccountSoundTest.Glyph)
+  else
+    dm.imlLtDk16.GetBitmap(0, btnAccountSoundTest.Glyph);
+
 end;
 
 procedure TfrmPopUMain.LoadRulesINI;
@@ -2360,6 +2452,11 @@ begin
               (Accounts[tab].Protocol <> cmbProtocol.Text) or
               (Accounts[tab].Login <> edLogin.Text) or
               (Accounts[tab].Password <> edPassword.Text) or
+              (Accounts[tab].UseSSLorTLS <> chkSSL.Checked) or
+              (Accounts[tab].AuthType <> TAuthType(
+                Integer(cmbAuthType.Items.ValueFromIndex[cmbAuthType.ItemIndex]))) or
+              (Accounts[tab].SslVersion <> TsslVer(cmbSslVer.ItemIndex)) or
+              (Accounts[tab].StartTLS <> chkStartTLS.Checked) or
               (Accounts[tab].Color <> ColorToString2(colAccount.Selected)) or
               (Accounts[tab].Enabled <> chkAccEnabled.Checked) or
               (Accounts[tab].Sound <> sound) or
@@ -2463,8 +2560,9 @@ begin
             RawMsg.SaveToStream(TmpStream);
             TmpStream.Position := 0;
             try
-//INDY10 TODO - is this still needed?  frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
+              {$IFDEF INDY9}
               frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
+              {$ENDIF}
               ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
             except
               on e : EIdEmailParseError do
@@ -2692,6 +2790,7 @@ begin
   // viewed e-mails
   if (num = -1) and (tabMail.Tabs.Count>0) then num := tabMail.TabIndex+1;
   if num < 0 then Exit;
+  if Accounts.Count <= 0 then Exit; //added to prevent exception when no accounts
   if Accounts[num-1].Mail.Count = 0 then Exit;
   Accounts[num-1].ViewedMsgIDs.Clear;
   changed := false;
@@ -3055,7 +3154,11 @@ procedure TfrmPopUMain.UpdateFonts();
 var
   font : TFont;
   color : TColor;
+  colorMap : TCustomActionBarColorMap;
 begin
+  // Vertical Font
+  frmPopUMain.PageControl.Font := Options.VerticalFont;
+
   // Global Font - Because PageControl uses a different font for the vertical
   // tabs, it's children are not set to inherit the font, so we have to
   // manually update the font for each of it's children items.
@@ -3088,8 +3191,22 @@ begin
   lvMail.Font := Options.ListboxFont;
   lvMail.Color := Options.ListboxBg; //set bg color too
 
-  // Vertical Font
-  frmPopUMain.PageControl.Font := Options.VerticalFont;
+  // Update Toolbar Colors
+  colorMap :=  SchemeNumToColorMap(Options.ToolbarColorScheme);
+  frmPopUMain.MailToolBar.ColorMap := colorMap;
+  frmPopUMain.RulesToolbar.ColorMap := colorMap;
+  frmPopUMain.AccountsToolbar.ColorMap := colorMap;
+
+end;
+
+function TfrmPopUMain.SchemeNumToColorMap(const colorSchemeNum: integer) : TCustomActionBarColorMap;
+begin
+  case colorSchemeNum of
+  0: Result := frmPopUMain.XPColorMap1;
+  1: Result := frmPopUMain.TwilightColorMap1;
+  else
+     Result := frmPopUMain.XPColorMap1;
+  end;
 end;
 
 function TfrmPopUMain.GetTrayColor(num : integer) : TColor;
@@ -3313,6 +3430,7 @@ begin
   chkAccEnabled.Enabled := EnableIt;
   actTestAccount.Enabled := EnableIt;
   actDeleteAccount.Enabled := EnableIt;
+  EnableControl(chkDontCheckTimes,EnableIt);
 end;
 
 procedure TfrmPopUMain.SetColumnMenuCheckMarks;
@@ -3646,6 +3764,14 @@ var
   i,y : integer;
 begin
   skinname := ExtractFilePath(IniName)+'PopTray.skin';
+  if not fileExists(skinname) then begin
+    if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then begin
+       skinname := 'darkskin.bmp';
+    end else begin
+       skinname := 'lightskin.bmp';
+    end;
+  end;
+
   if FileExists(skinname) then
   begin
     try
@@ -4326,18 +4452,23 @@ var
   aHost,aProtocol : string;
   aUsername,aPassword : string;
   aPort : integer;
+  acct : TAccountITem;
+  errMsg : PChar;
 begin
-  aHost := Accounts[num-1].Server;
-  aPort := Accounts[num-1].Port;
-  aProtocol := Accounts[num-1].Protocol;
-  aUsername := Accounts[num-1].Login;
-  aPassword := Accounts[num-1].Password;
-  Accounts[num-1].Connecting := True;
+  acct := Accounts[num-1];
+  aHost := acct.Server;
+  aPort := acct.Port;
+  aProtocol := acct.Protocol;
+  aUsername := acct.Login;
+  aPassword := acct.Password;
+  acct.Connecting := True;
   try
-    Accounts[num-1].Prot.Connect(PChar(aHost),aPort,PChar(aProtocol),PChar(aUsername),PChar(aPassword), Options.TimeOut*1000);
-    if Accounts[num-1].Prot.LastErrorMsg<>nil then
+    acct.Prot.SetSSLOptions(acct.UseSSLorTLS, acct.AuthType, acct.SslVersion, acct.StartTLS);
+    acct.Prot.Connect(PChar(aHost),aPort,PChar(aProtocol),PChar(aUsername),PChar(aPassword), Options.TimeOut*1000);
+    errMsg := acct.Prot.LastErrorMsg();
+    if (errMsg <> nil) then
     begin
-      raise EIdException.Create(Translate('Plug-in Error:')+' '+Accounts[num-1].Prot.LastErrorMsg);
+      raise EIdException.Create(errMsg);
     end;
   finally
     Accounts[num-1].Connecting := False;
@@ -4627,6 +4758,14 @@ begin
       tabAccounts.TabIndex := 0;
       ShowAccount(tabAccounts.TabIndex+1);
       ShowMail(tabMail.TabIndex+1,True);
+    end
+    else begin
+      // this is a workaround, before it wasn't fixing the size of these
+      // items if there's no accounts yet.
+      AutoSizeCheckBox(chkDontCheckTimes);
+      dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+      lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+      dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
     end;
   end;
 end;
@@ -4853,8 +4992,8 @@ begin
   end;
 end;
 
-procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
-//procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);//Indy10
+procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode;
+   {$IFDEF INDY9}const AWorkCount: Integer{$ELSE}AWorkCount: Int64{$ENDIF});
 begin
   OnProtWork(AWorkCount);
 end;
@@ -4939,10 +5078,14 @@ begin
   // help file
   HelpFileName := ExtractFilePath(Application.ExeName)+'PopTrayU.chm';
   // POP3 protocol
-  SetLength(Protocols,1);
+  SetLength(Protocols,2);
   Protocols[0].Name := 'POP3';
   Protocols[0].Port := 110;
   Protocols[0].Prot := TPluginPOP3.Create;
+
+  Protocols[1].Name := 'IMAP4';
+  Protocols[1].Port := 143;
+  Protocols[1].Prot := TPluginIMAP4.Create;
 
   // ini files
   IniName := IniPath+'PopTray.ini';
@@ -5099,6 +5242,7 @@ begin
   end;
 
   Protocols[0].Prot.Free;
+  Protocols[1].Prot.Free;
   
   if (Rules <> nil) then
   begin
@@ -6430,6 +6574,11 @@ begin
     edPort.Text := IntToStr(Protocols[cmbProtocol.ItemIndex].Port);
     Accounts[tabAccounts.TabIndex].Prot := Protocols[cmbProtocol.ItemIndex].Prot;
   end;
+
+  // To make sure the port number reflects whether "Use SSL" is checked or not
+  // (needs to be after the Protocols[i].Port calls above)
+  setPortOnAccountTab();
+
   // buttons
   FAccChanged := AccountChanged(tabAccounts.TabIndex);
   btnSave.Enabled := FAccChanged;
@@ -6768,11 +6917,14 @@ begin
     try
       TCP.Host := Host;
       TCP.Port := Port;
-      TCP.Connect(Options.TimeOut*1000); //Indy9
-      //TCP.ConnectTimeout := Options.TimeOut*1000; //Indy10
-      //TCP.Connect(); //Indy10
-      TCP.GetResponse([]);
-      Result := {TCP.LastCmdResult.TextCode + ' ' +} TCP.LastCmdResult.Text.Text;
+      {$IFDEF INDY9}
+      TCP.Connect(Options.TimeOut*1000);
+      {$ELSE}
+      TCP.ConnectTimeout := Options.TimeOut*1000;
+      TCP.Connect();
+      {$ENDIF}
+      TCP.GetResponse(ST_OK); //used to be [] instead of ST_OK
+      Result := TCP.LastCmdResult.Text.Text;
       TCP.Disconnect;
     finally
       TCP.Free;
@@ -6816,8 +6968,10 @@ begin
         end;
       finally
         Accounts[num-1].Prot.DisconnectWithQuit;
-        if Accounts[num-1].Port in [110,143] then
-          info := GetWelcomeMessage(Accounts[num-1].Server,Accounts[num-1].Port) + sLineBreak + info;
+        // TODO: GetWelcomeMessage was throwing an exception on GetResponse causing the connection not to be closed
+        // which appears to be worse than not having this info that I'm not sure actually shows anything.
+        //if Accounts[num-1].Port in [110,143] then
+          //info := GetWelcomeMessage(Accounts[num-1].Server,Accounts[num-1].Port) + sLineBreak + info;
         Screen.Cursor := crDefault;
         ShowMemo(Translate('Connection Info'),info,450,250);
       end;
@@ -7051,10 +7205,79 @@ begin
   edAccChange(Sender);
 end;
 
-// Needed to make TWebBrowser copy (used on the preview window)
+// When using standard port numbers, this method will make sure the port numbers
+// toggle to the right choices based on the protocol and use ssl state selected.
+procedure TfrmPopUMain.setPortOnAccountTab();
+begin
+  if (chkSSL.Checked) then
+  begin
+    // STARTTLS encryption mode should use the "insecure" port numbers to start
+    // the connection. Otherwise, use the secure port numbers.
+    if (edPort.Text = '110') and (chkStartTLS.Checked = false) then //POP3
+      edPort.Text := '995'
+    else if (edPort.Text = '143') and (chkStartTLS.Checked = false) then //IMAP
+      edPort.Text := '993'
+    else if (edPort.Text = '995') and (chkStartTLS.Checked = true)  then //POP3 starttls
+      edPort.Text := '110'
+    else if (edPort.Text = '993') and (chkStartTLS.Checked = true) then //IMAP starttls
+      edPort.Text := '143';
+  end
+  else begin
+    // Use SSL/TLS not checked, use insecure port numbers, do not use STARTTLS
+    if (edPort.Text = '995') then
+      edPort.Text := '110' //Pop3 not SSL
+    else if (edPort.Text = '993') then
+      edPort.Text := '143'; //IMAP not SSL
+  end;
+end;
+
+{ OnClick handler for SSL/TLS enabled checkbox on Accounts setup tab }
+procedure TfrmPopUMain.chkSSLClick(Sender: TObject);
+begin
+  // Swap the port numbers (if using standard port numbers)
+  setPortOnAccountTab();
+
+  if (chkSSL.Checked) then
+  begin
+    // enable advanced options on GUI that only apply to SSL connections
+    lblSslVer.Enabled := true;
+    cmbSslVer.Enabled := true;
+    chkStartTLS.Enabled := true;
+  end
+  else begin
+    // Uncheck use STARTTLS if it was previously selected
+    chkStartTLS.Checked := false;
+
+    // disable advanced options on GUI that only apply to SSL connections
+    lblSslVer.Enabled := false;
+    cmbSslVer.Enabled := false;
+    chkStartTLS.Enabled := false;
+  end;
+
+
+  // Update GUI to enable save button
+  FAccChanged := AccountChanged(tabAccounts.TabIndex) or FNewAccount;
+  btnSave.Enabled := FAccChanged;
+  btnCancelAccount.Enabled := FAccChanged;
+end;
+
+
+
+
+procedure TfrmPopUMain.btnAdvConnectionClick(Sender: TObject);
+begin
+  panAdvConn.Visible := NOT panAdvConn.Visible;
+  if panAdvConn.Visible then
+    btnAdvConnection.Caption := '<< ' +Translate('Advanced')
+  else
+    btnAdvConnection.Caption := Translate('Advanced')+' >>'
+end;
+
 initialization
+  // Needed to make TWebBrowser copy (used on the preview window)
   OleInitialize(nil);
 finalization
-  oleuninitialize;
+  OleUninitialize;
 
 end.
+

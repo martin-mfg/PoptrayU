@@ -65,7 +65,7 @@ type
 
 implementation
 
-uses uMain, uRCUtils, uGlobal, uTranslate;
+uses uMain, uRCUtils, uGlobal, uTranslate, uDM;
 
 {$R *.dfm}
 
@@ -81,6 +81,20 @@ begin
   btnTest.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
+
+  btnSndTest.Glyph := nil;
+  if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
+    dm.imlLtDk16.GetBitmap(1, btnSndTest.Glyph)
+  else
+    dm.imlLtDk16.GetBitmap(0, btnSndTest.Glyph);
+
+  btnLanguageRefresh.Glyph := nil;
+  if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
+    dm.imlLtDk16.GetBitmap(3, btnLanguageRefresh.Glyph)
+  else
+    dm.imlLtDk16.GetBitmap(2, btnLanguageRefresh.Glyph);
+
+
   self.Repaint;
 end;
 

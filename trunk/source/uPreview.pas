@@ -31,9 +31,9 @@ uses
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
   ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
-  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder, TntForms,
-  TntStdCtrls, RegExpr, TntComCtrls;//,
-  //IdAttachment, IdText, IdAttachmentFile; // for Indy10
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder,
+  {$IFNDEF INDY9} IdAttachment, IdText, IdAttachmentFile, {$ENDIF} // for Indy10
+  TntForms, TntStdCtrls, RegExpr, TntComCtrls;
 
 type
   TfrmPreview = class(TTntForm)
@@ -112,6 +112,7 @@ type
     ShowImages1: TMenuItem;
     ShowImages2: TMenuItem;
     N1: TMenuItem;
+    imlActionsDark: TImageList;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -244,8 +245,11 @@ begin
   begin
     if Msg.MessageParts.Items[i] is TIdAttachment then
     begin
+      {$IFDEF INDY9}
       DeleteFile((Msg.MessageParts.Items[i] as TIdAttachment).StoredPathName); //Indy9
-      //DeleteFile((Msg.MessageParts.Items[i] as TIdAttachmentFile).StoredPathName);  //Changed for Indy10
+      {$ELSE}
+      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachmentFile).StoredPathName);  //Changed for Indy10
+      {$ENDIF}
     end;
   end;
   // delete execute temp files
@@ -718,6 +722,12 @@ begin
   with Label4.Font do Style := Style + [fsBold];
   with Label5.Font do Style := Style + [fsBold];
   with Label6.Font do Style := Style + [fsBold];
+
+  toolbarPreview.ActionManager.Images := imlActions;
+  toolbarPreview.ColorMap := frmPopUMain.SchemeNumToColorMap(Options.ToolbarColorScheme);
+  if (toolbarPreview.ColorMap = frmPopUMain.TwilightColorMap1) then begin
+    toolbarPreview.ActionManager.images := imlActionsDark;
+  end;
 end;
 
 procedure TfrmPreview.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1052,12 +1062,12 @@ begin
     SaveDialog.FileName := lvAttachments.Selected.Caption;
     if SaveDialog.Execute then
     begin
-      if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then //Indy9
-      //if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachmentFile then //Indy10
+      if Msg.MessageParts[lvAttachments.Selected.StateIndex] is
+        {$IFDEF INDY9} TIdAttachment {$ELSE} TIdAttachmentFile {$ENDIF} then
       begin
-        if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName), //Indy9
-        //if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachmentFile).StoredPathName), //Indy10
-                        pchar(SaveDialog.FileName),false) then
+        if not CopyFile(pchar((Msg.MessageParts[lvAttachments.Selected.StateIndex]
+          as {$IFDEF INDY9} TIdAttachment{$ELSE} TIdAttachmentFile{$ENDIF}).StoredPathName),
+          pchar(SaveDialog.FileName),false) then
         begin
           MessageDlg(uTranslate.Translate('Failed to Save Attachment.')+#13#10#13#10+
                      SaveDialog.FileName, mtError, [mbOK], 0);
@@ -1093,8 +1103,11 @@ begin
     if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
     begin
       // rename temp file
+      {$IFDEF INDY9}
       OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachment).StoredPathName; //Indy9
-      //OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachmentFile).StoredPathName; //Indy10
+      {$ELSE}
+      OldName := (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdAttachmentFile).StoredPathName; //Indy10
+      {$ENDIF}
       NewName := TempFileName(lvAttachments.Selected.Caption);
       if CopyFile(PChar(OldName), PChar(NewName), true) then
       begin

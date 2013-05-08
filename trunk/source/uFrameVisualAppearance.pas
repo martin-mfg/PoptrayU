@@ -57,7 +57,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, ImgList;
 
 type
 
@@ -70,12 +70,19 @@ type
     listboxBgColorBox: TColorBox;
     listboxFgColorBox: TColorBox;
     resetListboxBtn: TSpeedButton;
-    Image1: TImage;
-    Image2: TImage;
+    imgFg: TImage;
+    imgBg: TImage;
     btnGlobalFont: TSpeedButton;
     btnVerticalTabFont: TSpeedButton;
     lblVerticalTabsSample: TLabel;
     lblGlobalSample: TLabel;
+    cmbToolbarColors: TComboBox;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    imgVisualDk: TImageList;
+    imgVisualLt: TImageList;
     procedure btnFontChangeClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
@@ -83,25 +90,31 @@ type
     procedure listboxBgColorBoxChange(Sender: TObject);
     procedure listboxFgColorBoxChange(Sender: TObject);
     procedure resetListboxBtnClick(Sender: TObject);
+    procedure cmbToolbarColorsChange(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
+    procedure SetColors();
   end;
 
 
 
 implementation
 
-uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils, uTranslate;
+uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils, uTranslate, uDM;
 
 {$R *.dfm}
 
 constructor TframeVisualAppearance.Create(AOwner: TComponent);
+var
+  i: integer;
 begin
   inherited;
   TranslateFrame(self);
+  for i := 0 to cmbToolbarColors.Items.Count-1 do
+    ChangeItem(cmbToolbarColors,i,TranslateDir(cmbToolbarColors.Items[i],FromEnglish));
 
   // Options to screen
 
@@ -131,9 +144,38 @@ begin
   listboxFgColorBox.Selected := lblListboxFontSample.Font.Color;
   listboxBgColorBox.Selected := lblListboxFontSample.Color;
 
+  cmbToolbarColors.ItemIndex := Options.ToolbarColorScheme;
+
+  SetColors();
 
   Refresh;
 
+end;
+
+procedure TframeVisualAppearance.SetColors();
+begin
+  btnGlobalFont.Glyph := Nil;
+  btnFontChange.Glyph := Nil;
+  btnVerticalTabFont.Glyph := Nil;
+  resetListboxBtn.Glyph := Nil;
+
+  if (frmPopUMain.MailToolBar.ColorMap = frmPopUMain.TwilightColorMap1) then begin
+    imgVisualDk.GetBitmap(0, btnGlobalFont.Glyph);
+    imgVisualDk.GetBitmap(0, btnFontChange.Glyph);
+    imgVisualDk.GetBitmap(0, btnVerticalTabFont.Glyph);
+    imgVisualDk.GetBitmap(1, resetListboxBtn.Glyph);
+    imgVisualDk.GetIcon(2, imgFg.Picture.Icon);
+    imgVisualDk.GetIcon(3, imgBg.Picture.Icon);
+  end else begin
+    imgVisualLt.GetBitmap(0, btnGlobalFont.Glyph);
+    imgVisualLt.GetBitmap(0, btnFontChange.Glyph);
+    imgVisualLt.GetBitmap(0, btnVerticalTabFont.Glyph);
+    imgVisualLt.GetBitmap(1, resetListboxBtn.Glyph);
+    imgVisualLt.GetIcon(2, imgFg.Picture.Icon);
+    imgVisualLt.GetIcon(3, imgBg.Picture.Icon);
+  end;
+  frmPopUMain.LoadSkin();
+  Self.Repaint;
 end;
 
 procedure TframeVisualAppearance.OptionsChange(Sender: TObject);
@@ -147,10 +189,13 @@ begin
     frmPopUMain.lvMail.Font.Assign(lblListboxFontSample.Font);
     frmPopUMain.lvMail.Color := lblListboxFontSample.Color;
 
-    Options.VerticalFont.Assign(lblVerticalTabsSample.Font);
     Options.GlobalFont.Assign(lblGlobalSample.Font);
+    Options.VerticalFont.Assign(lblVerticalTabsSample.Font);
+
+    Options.ToolbarColorScheme := (cmbToolbarColors.ItemIndex);
 
     frmPopUMain.UpdateFonts();
+    SetColors();
 
     // buttons
     frmPopUMain.btnSaveOptions.Enabled := True;
@@ -238,6 +283,11 @@ begin
   FreeAndNil(font);
 
   OptionsChange(resetListboxBtn);
+end;
+
+procedure TframeVisualAppearance.cmbToolbarColorsChange(Sender: TObject);
+begin
+  OptionsChange(cmbToolbarColors);
 end;
 
 end.

@@ -170,10 +170,13 @@ begin
 
   decoderStream := TStringStream.Create('');
   try
-	//INDY10 - the next 2 lines do not compile in Indy10.
+    {$IFDEF INDY9}
     decoder.DecodeToStream (stringToDecode, decoderStream);
+    {$ELSE}
+    decoder.DecodeStream(stringToDecode, decoderStream); //Indy10
+    {$ENDIF}
     decodedString := decoderStream.DataString;
-    //Indy10 (untested) decodedString := decoder.DecodeString(stringToDecode);
+
   finally
     FreeAndNil(decoder);
     FreeAndNil(decoderStream);

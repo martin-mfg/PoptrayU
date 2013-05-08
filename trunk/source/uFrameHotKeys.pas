@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList;
 
 type
   TframeHotKeys = class(TFrame)
@@ -44,6 +44,7 @@ type
     imgInfo: TImage;
     labelHotKeyInfo: TLabel;
     InfoPanel: TPanel;
+    imlHotKeys: TImageList;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -90,6 +91,11 @@ begin
   hkHotKey3.HotKey := Options.HotKey3;
   hkHotKey4.HotKey := Options.HotKey4;
   Options.Busy := False;
+
+  if (Options.ToolbarColorScheme = 0) then
+    imlHotKeys.GetIcon(0, imgInfo.Picture.Icon)
+  else
+    imlHotKeys.GetIcon(1, imgInfo.Picture.Icon);
 
   //TODO: autosize info panel... InfoPanel.Height := labelHotKeyInfo.Height + 4;
 end;

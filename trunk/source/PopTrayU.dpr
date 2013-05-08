@@ -31,6 +31,11 @@ The GNU GPL can be found at:
 {$WARN SYMBOL_PLATFORM OFF}
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Forms,
   Windows,
   SysUtils,
@@ -54,12 +59,14 @@ uses
   uPlugins in 'uPlugins.pas',
   uGlobal in 'uGlobal.pas',
   uPOP3 in 'uPOP3.pas',
+  uIMAP4 in 'uIMAP4.pas',
   uObjects in 'uObjects.pas',
   RegExpr in 'RegExpr.pas',
   uHeaderDecoder in 'uHeaderDecoder.pas',
   uCodePageConverter in 'uCodePageConverter.pas',
   uFSUtils in 'uFSUtils.pas',
-  uHtmlDecoder in 'uHtmlDecoder.pas';
+  uHtmlDecoder in 'uHtmlDecoder.pas',
+  uTranslate in 'uTranslate.pas';
 
 {$R *.RES}
 

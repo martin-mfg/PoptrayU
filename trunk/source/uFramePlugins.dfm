@@ -1,17 +1,17 @@
 object framePlugins: TframePlugins
   Left = 0
   Top = 0
-  Width = 316
-  Height = 236
+  Width = 324
+  Height = 244
   TabOrder = 0
   DesignSize = (
-    316
-    236)
+    324
+    244)
   object lvPlugins: TListView
     Left = 7
     Top = 7
-    Width = 301
-    Height = 221
+    Width = 309
+    Height = 229
     Hint = 
       'This lists all the plugin DLLs found in your plugins directory.'#13 +
       #10'Select to load/unload. Right-click for options.'
