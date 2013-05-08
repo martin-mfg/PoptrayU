@@ -31,11 +31,6 @@ The GNU GPL can be found at:
 {$WARN SYMBOL_PLATFORM OFF}
 
 uses
-  madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,
   Forms,
   Windows,
   SysUtils,
