@@ -132,6 +132,7 @@ type
     AddRuleformailwithSubject1: TMenuItem;
     mnuRuleSubjectDelete: TMenuItem;
     mnuRuleSubjectSpam: TMenuItem;
+    imlLtDk16: TImageList;
     procedure mnuColumnsClick(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);

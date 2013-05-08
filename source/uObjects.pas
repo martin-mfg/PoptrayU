@@ -114,9 +114,13 @@ type
     Prot : TPluginProtocol;
     UIDLSupported : boolean;
     Mail : TMailItems;
+    UseSSLorTLS : boolean;
     DontCheckTimes : boolean;
     DontCheckStart : TDateTime;
     DontCheckEnd : TDateTime;
+    AuthType : TAuthType;
+    SslVersion : TsslVer;
+    StartTLS : boolean;
   protected
     procedure AssignTo(Dest: TPersistent); override;
   public

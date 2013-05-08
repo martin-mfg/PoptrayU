@@ -292,6 +292,12 @@ begin
     // languages
     for i := 0 to Length(Options.Languages)-1 do
       Options.Languages[i] := TranslateDir(Options.Languages[i],LangDirection);
+
+    for i := 0 to cmbAuthType.Items.Count-1 do
+      ChangeItem(cmbAuthType,i,TranslateDir(cmbAuthType.Items[i],LangDirection));
+    for i := 0 to cmbSslVer.Items.Count-1 do
+      ChangeItem(cmbSslVer,i,TranslateDir(cmbSslVer.Items[i],LangDirection));
+
     // options treeview
     for i := 0 to tvOptions.Items.Count-1 do
       tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);

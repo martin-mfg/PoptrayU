@@ -26,7 +26,6 @@ The GNU GPL can be found at:
 interface
 
 uses Classes, ExtCtrls, Contnrs, SysUtils, uPlugins, uObjects, Graphics;
-
 var
   Options : record
     Busy : boolean;
@@ -117,6 +116,7 @@ var
     GlobalFont : TFont;
     VerticalFont : TFont;
     UseCustomFonts : boolean;
+    ToolbarColorScheme : integer;
   end;
 
 const
