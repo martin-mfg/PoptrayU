@@ -96,7 +96,7 @@ PackageDLLOutputDir=C:\code\poptray\branches\indy10\output\bpl\
 PackageDCPOutputDir=C:\code\poptray\branches\indy10\output\dcp\
 SearchPath=C:\code\poptray\dependencies\actionband_popup_menu_component;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\TntUnicodeControls_2.3.0\Source;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System
 Packages=Vcl50;Vclx50;VclSmp50;Vcldb50;vclado50;ibevnt50;Vclbde50;vcldbx50;qrpt50;TeeUI50;TeeDB50;Tee50;Dss50;TeeQR50;VCLIB50;Vclmid50;vclie50;Inetdb50;Inet50;NMFast50;webmid50;dclocx50;dclaxserver50;RxCtl5;RxDB5;RxBDE5;ZCommon5;ZDbware5;ZMySQL5;vcl;rtl;vclactnband;vclx;IndyCore70;IndySystem70
-Conditionals=madExcept
+Conditionals=
 DebugSourceDirs=$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source
 UsePackages=0
 [Parameters]
