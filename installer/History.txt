@@ -8,6 +8,9 @@ PopTrayU Version History
 4.1 beta 2
 	(-) Accounts toolbar follows toolbar theme correctly
 	(-) Fixed positioning issue with progress bar in 4.1 beta 1
+	(-) Fixed hide viewed messages icon in both skin files
+	(*) IMAP no longer requires a seperate dll/plugin file
+	(*) Help file updated with changes in 4.1
 
 4.1 beta 1
         (-) "Copy" right click menu item should now work on HTML message

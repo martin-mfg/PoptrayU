@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "4"
 !define VER_MINOR "1"
-!define VER_BETA "1"
+!define VER_BETA "2"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -153,6 +153,9 @@ Section "PopTrayU (required)" SecPopTrayU
   	File "lightskin.bmp"
  	File "darkskin.bmp"
  	
+  ; delete old version of bundled IMAP plugin if present.
+  Delete "plugins\ProtocolIMAP4.dll"
+ 	
   ;MessageBox MB_OK "Debug Wait"
 
   WriteRegStr HKLM "Software\${PRODUCT}" "" $INSTDIR
@@ -278,16 +281,7 @@ Section "Sound files" SecSound
   File "sounds\poptray_spam_lo.wav"
 SectionEnd
 
-SubSection "Additional Protocols & Notification Plugins" SecPlugins
-
-Section "IMAP4 Protocol Plugin" SecImap
-  SectionIn 1
-  WriteRegStr HKLM "Software\${PRODUCT}" "imapplugin" 1
-
-  SetOutPath "$INSTDIR\plugins"
-
-  File "plugins\ProtocolIMAP4.dll"
-SectionEnd
+SubSection "Optional Plugins" SecPlugins
 
 Section "Keyboard Lights Notification Plugin" SecKeyboardLights
   SectionIn 1
@@ -391,6 +385,10 @@ Section "Uninstall"
   Delete "$INSTDIR\Languages\Ukranian.ptlang"
   Delete "$INSTDIR\Languages\Valencian.ptlang"
   
+  Delete "plugins\NotifyKeyboardLights.dll"
+  Delete "plugins\NotifyKeyboardLights.txt"
+  Delete "plugins\ProtocolIMAP4.dll" ;uninstall OLD imap plugin if needed
+    
   ; configuration files
   !insertmacro INSTALLOPTIONS_READ ${TEMP} "NSIS.ini" "Field 4" "State"
   StrCmp ${TEMP} "1" "" NoConfig
