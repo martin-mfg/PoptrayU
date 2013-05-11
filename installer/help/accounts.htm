@@ -78,7 +78,7 @@
 					<td class="light">
 						If your server uses a different port than the default POP3
 						port (110), you can specify it here.  <br>
-						When using protocol plug-ins, they may also change the port value.</td>
+						When using SSL or protocol plug-ins, this value may be automatically adjusted.</td>
 				</tr>
 				<tr>
 					<td class="light" align="center">Login</td>
@@ -109,16 +109,20 @@
 						each account.</td>
 				</tr>
 				<tr>
-					<td class="light" align="center">Timer Interval</td>
+					<td class="light" align="center">Check Every... </td>
 					<td class="light">If you set the Timer Interval per Account
-					<a href="options.htm">option</a>, you must set the interval
-						between mail check for each account here. Set time interval
+					<a href="options.htm">option</a> (on the Interval tab), you must set the interval
+						between mail checks for each account here. Set time interval
 						in minutes using the up-down buttons or typing in a number.</td>
 				</tr>
 				<tr>
 				  <td class="light" align="center">Use SSL/TLS</td>
 				  <td class="light">Can only be  enabled if OpenSSL dlls are present in the PopTrayU directory. This will use a secure/encrypted connection to download your email. It will automatically change the port number to the standard secure port number (unless STARTTLS advanced option is checked), and use the most common secure settings available. </td>
 			  </tr>
+				<tr>
+				  <td class="light" align="center">Don't Check... </td>
+				  <td class="light">If enabled, this allows you to set a time range between which the account will not be automatically checked. The disabled icon will be navy instead of red to distinguish this state from account disabled. The account can still be manually/individually checked on request, but it will not automatically check on a timer during these times. </td>
+	    </tr>
 		</table>
 			<p>Advanced account options:</p>
 			<p>These options are hidden unless the &quot;Advanced&quot; button is pressed.</p>
