@@ -87,52 +87,54 @@ BrandingText " "
 
 ;------------------------------------------------------------------[ Languages ]---
 ;; do not hide languages that are outside current codepage
-!define MUI_LANGDLL_ALLLANGUAGES
+;;!define MUI_LANGDLL_ALLLANGUAGES
 
 ; First language listed will be the default
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Afrikaans.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Albanian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Arabic.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Bulgarian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Catalan.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Czech.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\SimpChinese.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\TradChinese.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Danish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Estonian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\SpanishInternational.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Galician.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hebrew.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Korean.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hungarian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Norwegian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\NorwegianNynorsk.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Polish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\PortugueseBR.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Romanian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Serbian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\SerbianLatin.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovenian.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovak.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Finnish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Swedish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Turkish.nlf"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Afrikaans.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Albanian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Arabic.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Bulgarian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Catalan.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Czech.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SimpChinese.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\TradChinese.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Danish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Estonian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SpanishInternational.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Galician.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hebrew.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Korean.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hungarian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Norwegian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\NorwegianNynorsk.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Polish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\PortugueseBR.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Romanian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Serbian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SerbianLatin.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovenian.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovak.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Finnish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Swedish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Turkish.nlf"
+;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
 
 
 
  
-;;  !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "German"
+
   !define MUI_TEXT_FINISH_SHOWREADME "Show HISTORY.TXT"
   
   
@@ -172,6 +174,11 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
   LangString SEC_KeyboardLights ${LANG_ENGLISH} "Keyboard Lights Notification Plugin"
   LangString DESC_SecKeyboardLights ${LANG_ENGLISH} "New message notification by turning on or blinking the scroll-lock key light."
 
+  LangString title_user_storage_dir ${LANG_ENGLISH} "User Settings Storage Location"
+  LangString desc_user_storage_dir ${LANG_ENGLISH} "Where should PopTrayU store settings like email accounts and rules?"
+
+
+
   ;-------------------------- German --------------------------------
 
   LangString mui_welcomepage_title ${LANG_GERMAN} "${PRODUCT} Setup-Assistent"
@@ -197,7 +204,7 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
   LangString SEC_Lang ${LANG_GERMAN} "Sprachdateien"
   LangString DESC_SecLang ${LANG_GERMAN} "Installieren Sie die Sprachdateien für mehrsprachige PopTrayU."
 
-  LangString SEC_SoundFiles ${LANG_ENGLISH} "Sound-Dateien"
+  LangString SEC_SoundFiles ${LANG_GERMAN} "Sound-Dateien"
   LangString DESC_SecSound ${LANG_GERMAN} "Installieren Sie beispielsweise Benachrichtigung Sound-Dateien."
 
   LangString SEC_OptionalPlugins ${LANG_GERMAN} "Optional Plugins"
@@ -205,6 +212,8 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
   LangString SEC_KeyboardLights ${LANG_GERMAN} "Keyboard Lichter Benachrichtigung Plugin"
   LangString DESC_SecKeyboardLights ${LANG_GERMAN} "Signalisierung neuer Nachrichten durch Einschalten oder Blinken der Scroll-Lock-Taste Licht."
 
+  LangString title_user_storage_dir ${LANG_GERMAN} "Benutzereinstellungen Lagerort"
+  LangString desc_user_storage_dir ${LANG_GERMAN} "Wo soll PopTrayU speichern Einstellungen wie E-Mail-Konten und Regeln?"
 
 
 ;------------------------------------------------------------------[ Reserve Files ]---
@@ -809,7 +818,8 @@ Function fnc_IniDialog_Create
 	nsDialogs::OnBack $0
 
 
-  !insertmacro MUI_HEADER_TEXT "User Settings Storage Location" "Where should PopTrayU store settings like email accounts and rules?"
+  !insertmacro MUI_HEADER_TEXT $(title_user_storage_dir) $(desc_user_storage_dir)
+  ;"User Settings Storage Location" "Where should PopTrayU store settings like email accounts and rules?"
   
   ; === RadioLocalAppdata (type: RadioButton) ===
   ${NSD_CreateRadioButton} 8u 7u 257u 14u "Current User Appdata Folder (Recommended)"
