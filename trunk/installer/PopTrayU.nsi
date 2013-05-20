@@ -105,7 +105,7 @@ BrandingText " "
   
   ReserveFile "${MUI_HEADERIMAGE_BITMAP}"
   ReserveFile "${MUI_WELCOMEFINISHPAGE_BITMAP}"
-  ReserveFile "NSIS.ini" 
+  ReserveFile "uninstaller.ini"
   ReserveFile '${NSISDIR}\Plugins\InstallOptions.dll'
 
 ;------------------------------------------------------------------[ Installer Sections ]---
@@ -390,7 +390,7 @@ Section "Uninstall"
   Delete "plugins\ProtocolIMAP4.dll" ;uninstall OLD imap plugin if needed
     
   ; configuration files
-  !insertmacro INSTALLOPTIONS_READ ${TEMP} "NSIS.ini" "Field 4" "State"
+  !insertmacro INSTALLOPTIONS_READ ${TEMP} "uninstaller.ini" "Field 4" "State"
   StrCmp ${TEMP} "1" "" NoConfig
     Delete "$INSTDIR\PopTray.ini"
     Delete "$INSTDIR\Rules.ini"
@@ -443,7 +443,7 @@ SectionEnd
 
 Function un.SetPage
   !insertmacro MUI_HEADER_TEXT "Uninstall PopTrayU" "Remove PopTrayU from you computer."
-  !insertmacro INSTALLOPTIONS_DISPLAY "NSIS.ini"
+  !insertmacro INSTALLOPTIONS_DISPLAY "uninstaller.ini"
 FunctionEnd
 
 
@@ -490,8 +490,8 @@ Function .onInit
 FunctionEnd
 
 Function un.onInit
-  !insertmacro INSTALLOPTIONS_EXTRACT "NSIS.ini"
-  !insertmacro INSTALLOPTIONS_WRITE "NSIS.ini" "Field 3" "State" "$INSTDIR"
+  !insertmacro INSTALLOPTIONS_EXTRACT "uninstaller.ini"
+  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 3" "State" "$INSTDIR"
 FunctionEnd
 
 
