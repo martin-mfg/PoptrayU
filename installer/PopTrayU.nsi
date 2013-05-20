@@ -26,7 +26,7 @@ Name "${PRODUCT} ${VERSION}"
 ;------------------------------------------------------------------[ Configuration ]---
 
 ;OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
-OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}_beta${VER_BETA}.exe"
+OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}_beta${VER_BETA}u.exe"
 SetCompressor /SOLID lzma
 
 InstType "Full"
@@ -56,10 +56,10 @@ ShowUninstDetails show
   ;!define MUI_UNCUSTOMPAGECOMMANDS
 
   ; Text
-  !define MUI_WELCOMEPAGE_TITLE "${PRODUCT} Setup Wizard"
-  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of PopTrayU$\r$\n$\r$\nPopTrayU is a full-featured, open-source, e-mail notifier with an easy to use interface.$\r$\n$\r$\n"
-  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Download SSL Plugin"
-
+  !define MUI_WELCOMEPAGE_TITLE $(mui_welcomepage_title)
+  !define MUI_WELCOMEPAGE_TEXT $(mui_welcomepage_text)
+  !define MUI_FINISHPAGE_SHOWREADME_TEXT $(mui_finish_dl_ssl_plugin)
+    
 
 
 
@@ -86,20 +86,126 @@ BrandingText " "
 
 
 ;------------------------------------------------------------------[ Languages ]---
+;; do not hide languages that are outside current codepage
+!define MUI_LANGDLL_ALLLANGUAGES
+
+; First language listed will be the default
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Afrikaans.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Albanian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Arabic.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Bulgarian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Catalan.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Czech.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\SimpChinese.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\TradChinese.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Danish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Estonian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\SpanishInternational.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Galician.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hebrew.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Korean.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hungarian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Norwegian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\NorwegianNynorsk.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Polish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\PortugueseBR.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Romanian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Serbian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\SerbianLatin.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovenian.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovak.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Finnish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Swedish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Turkish.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
+
+
+
  
-  !insertmacro MUI_LANGUAGE "English"
+;;  !insertmacro MUI_LANGUAGE "English"
   !define MUI_TEXT_FINISH_SHOWREADME "Show HISTORY.TXT"
   
   
 ;------------------------------------------------------------------[ Language Strings ]---
+; Languages need to be defined AFTER THE PAGES!
 
+  ;-------------------------- English --------------------------------
+  
+  LangString mui_welcomepage_title ${LANG_ENGLISH} "${PRODUCT} Setup Wizard"
+  LangString mui_welcomepage_text ${LANG_ENGLISH} "This wizard will guide you through the installation of PopTrayU$\r$\n$\r$\nPopTrayU is a full-featured, open-source, e-mail notifier with an easy to use interface.$\r$\n$\r$\n"
+  LangString mui_finish_dl_ssl_plugin ${LANG_ENGLISH} "Download SSL Plugin"
+  
+  LangString SEC_PopTrayU ${LANG_ENGLISH} "PopTrayU (required)"
   LangString DESC_SecPopTrayU ${LANG_ENGLISH} "Copy PopTrayU application files to the application folder."
-  LangString DESC_SecLang ${LANG_ENGLISH} "Install the Language files for multi-language PopTrayU."
-  LangString DESC_SecSound ${LANG_ENGLISH} "Install example notification sound files."
+
+  LangString SEC_Icons ${LANG_ENGLISH} "Icons"
   LangString DESC_SecIcons ${LANG_ENGLISH} "Select the icons to create."
+  
+  LangString SEC_StartMenuIcons ${LANG_ENGLISH} "Start Menu Icons"
   LangString DESC_SecStartMenu ${LANG_ENGLISH} "Create a PopTrayU group under the start menu with icons the the PopTrayU files."
+
+  LangString SEC_StartupIcon ${LANG_ENGLISH} "Startup Icon"
   LangString DESC_SecStartup ${LANG_ENGLISH} "Automatically start PopTrayU when Windows starts"
+
+  
+  LangString SEC_DesktopIcon ${LANG_ENGLISH} "Desktop Icon"
   LangString DESC_SecDesktop ${LANG_ENGLISH} "Put PopTrayU icon on the Desktop"
+
+  LangString SEC_Lang ${LANG_ENGLISH} "Language files"
+  LangString DESC_SecLang ${LANG_ENGLISH} "Install the Language files for multi-language PopTrayU."
+  
+  LangString SEC_SoundFiles ${LANG_ENGLISH} "Sound files"
+  LangString DESC_SecSound ${LANG_ENGLISH} "Install example notification sound files."
+
+  LangString SEC_OptionalPlugins ${LANG_ENGLISH} "Optional Plugins"
+  
+  LangString SEC_KeyboardLights ${LANG_ENGLISH} "Keyboard Lights Notification Plugin"
+  LangString DESC_SecKeyboardLights ${LANG_ENGLISH} "New message notification by turning on or blinking the scroll-lock key light."
+
+  ;-------------------------- German --------------------------------
+
+  LangString mui_welcomepage_title ${LANG_GERMAN} "${PRODUCT} Setup-Assistent"
+  
+  LangString mui_welcomepage_text ${LANG_GERMAN} "Dieser Assistent führt Sie durch die Installation von PopTrayU zu führen.$\r$\n$\r$\nPopTrayU ist ein full-featured, Open-Source-E-Mail-Benachrichtigung mit einer einfach zu bedienenden Oberfläche.$\r$\n$\r$\n"
+  LangString mui_finish_dl_ssl_plugin ${LANG_GERMAN} "Herunterladen SSL Plugin"
+  
+  LangString SEC_PopTrayU ${LANG_GERMAN} "PopTrayU (erforderlich)"
+  LangString DESC_SecPopTrayU ${LANG_GERMAN} "Kopieren PopTrayU Anwendung Dateien in den Programmordner."
+
+  LangString SEC_Icons ${LANG_GERMAN} "Symbole/Icons"
+  LangString DESC_SecIcons ${LANG_GERMAN} "Wählen Sie die Symbole zu erstellen."
+  
+  LangString SEC_StartMenuIcons ${LANG_GERMAN} "Startmenü Symbole"
+  LangString DESC_SecStartMenu ${LANG_GERMAN} "Erstellen Sie eine Gruppe unter der PopTrayU Startmenü mit Symbolen die die PopTrayU Dateien."
+
+  LangString SEC_StartupIcon ${LANG_GERMAN} "Startup Symbol"
+  LangString DESC_SecStartup ${LANG_GERMAN} "Automatisch starten, wenn Windows startet PopTrayU"
+
+  LangString SEC_DesktopIcon ${LANG_GERMAN} "Desktopsymbol"
+  LangString DESC_SecDesktop ${LANG_GERMAN} "Setzen PopTrayU Symbol auf dem Desktop"
+  
+  LangString SEC_Lang ${LANG_GERMAN} "Sprachdateien"
+  LangString DESC_SecLang ${LANG_GERMAN} "Installieren Sie die Sprachdateien für mehrsprachige PopTrayU."
+
+  LangString SEC_SoundFiles ${LANG_ENGLISH} "Sound-Dateien"
+  LangString DESC_SecSound ${LANG_GERMAN} "Installieren Sie beispielsweise Benachrichtigung Sound-Dateien."
+
+  LangString SEC_OptionalPlugins ${LANG_GERMAN} "Optional Plugins"
+
+  LangString SEC_KeyboardLights ${LANG_GERMAN} "Keyboard Lichter Benachrichtigung Plugin"
+  LangString DESC_SecKeyboardLights ${LANG_GERMAN} "Signalisierung neuer Nachrichten durch Einschalten oder Blinken der Scroll-Lock-Taste Licht."
+
+
 
 ;------------------------------------------------------------------[ Reserve Files ]---
   
@@ -110,7 +216,7 @@ BrandingText " "
 
 ;------------------------------------------------------------------[ Installer Sections ]---
 
-Section "PopTrayU (required)" SecPopTrayU
+Section $(SEC_PopTrayU) SecPopTrayU
   SectionIn 1 2
 
   SetOutPath "$INSTDIR"
@@ -190,9 +296,9 @@ Section "PopTrayU (required)" SecPopTrayU
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 SectionEnd
 
-SubSection "Icons" SecIcons
+SubSection $(SEC_Icons) SecIcons
 
-Section "Start Menu Icons" SecStartMenu
+Section $(SEC_StartMenuIcons) SecStartMenu
   SectionIn 1 2
   WriteRegStr HKLM "Software\${PRODUCT}" "StartMenuIcons" 1
   CreateDirectory $SMPROGRAMS\PopTrayU
@@ -203,13 +309,13 @@ Section "Start Menu Icons" SecStartMenu
   CreateShortCut "$SMPROGRAMS\PopTrayU\Version History.lnk" "$INSTDIR\History.txt" ""
 SectionEnd
 
-Section "Startup Icon" SecStartup
+Section $(SEC_StartupIcon) SecStartup
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "StartupIcon" 1
   CreateShortCut "$SMSTARTUP\PopTrayU.lnk" "$INSTDIR\PopTrayU.exe" ""
 SectionEnd
 
-Section "Desktop Icon" SecDesktop
+Section $(SEC_DesktopIcon) SecDesktop
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "DesktopIcon" 1
   CreateShortCut "$DESKTOP\PopTrayU.lnk" "$INSTDIR\PopTrayU.exe" ""
@@ -217,7 +323,7 @@ SectionEnd
 
 SubSectionEnd
 
-Section "Language files" SecLang
+Section $(SEC_Lang) SecLang
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "Language" 1
   
@@ -267,7 +373,7 @@ Section "Language files" SecLang
   File "languages\Valencian.ptlang"
 SectionEnd
 
-Section "Sound files" SecSound
+Section $(SEC_SoundFiles) SecSound
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "Sounds" 1
   
@@ -281,9 +387,9 @@ Section "Sound files" SecSound
   File "sounds\poptray_spam_lo.wav"
 SectionEnd
 
-SubSection "Optional Plugins" SecPlugins
+SubSection $(SEC_OptionalPlugins) SecPlugins
 
-Section "Keyboard Lights Notification Plugin" SecKeyboardLights
+Section $(SEC_KeyboardLights) SecKeyboardLights
   SectionIn 1
   WriteRegStr HKLM "Software\${PRODUCT}" "keyboardlights" 1
 
@@ -307,6 +413,7 @@ SubSectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SecStartMenu} $(DESC_SecStartMenu)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecStartup} $(DESC_SecStartup)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} $(DESC_SecDesktop)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecKeyboardLights} $(DESC_SecKeyboardLights)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;------------------------------------------------------------------[ Uninstaller Section ]---
@@ -451,6 +558,173 @@ FunctionEnd
 ;------------------------------------------------------------------[ Events ]---
 
 Function .onInit
+
+    ;; Show a language-select dialog when the installer is launched
+    Push ""
+    ;
+    Push 0
+    Push ${LANG_ENGLISH}
+    Push English
+    ;
+    Push 1252
+    Push ${LANG_AFRIKAANS}
+    Push Afrikaans
+    ;
+    Push 1250
+    Push ${LANG_ALBANIAN}
+    Push Albanian
+    ;
+    Push 1256
+    Push ${LANG_ARABIC}
+    Push Arabic
+    ;
+    Push 1251
+    Push ${LANG_BULGARIAN}
+    Push Bulgarian
+    ;
+    Push 1252
+    Push ${LANG_CATALAN}
+    Push "Català (Catalon)"
+    ;
+    Push 1250
+    Push ${LANG_CZECH}
+    Push "Cesky (Czech)"
+    ;
+    Push 936
+    Push ${LANG_SIMPCHINESE}
+    Push "Chinese (Simplified)"
+    ;
+    Push 950
+    Push ${LANG_TRADCHINESE}
+    Push "Chinese (Traditional)"
+    ;
+    Push 1252
+    Push ${LANG_DANISH}
+    Push "Dansk (Danish)"
+    ;
+    Push 1252
+    Push ${LANG_GERMAN}
+    Push "Deutsch (German)"
+    ;
+    Push 1257
+    Push ${LANG_ESTONIAN}
+    Push "Eesti keel (Estonian)"
+    ;
+    Push 1252
+    Push ${LANG_SPANISH}
+    Push "Español (Spanish)"
+    ;
+    Push 1252
+    Push ${LANG_SPANISHINTERNATIONAL}
+    Push "Español (Alfabetización Internacional)"
+    ;
+    Push 1252
+    Push ${LANG_FRENCH}
+    Push "Français (French)"
+    ;
+    Push 1252
+    Push ${LANG_GALICIAN}
+    Push "Galego (Galician)"
+    ;
+    Push 1253
+    Push ${LANG_GREEK}
+    Push Greek
+    ;
+    Push 1255
+    Push ${LANG_HEBREW}
+    Push Hebrew
+    ;
+    Push 1250
+    Push ${LANG_CROATIAN}
+    Push "Hrvatski (Croatian)"
+    ;
+    Push 1252
+    Push ${LANG_ITALIAN}
+    Push "Italiano (Italian)"
+    ;
+    Push 949
+    Push ${LANG_KOREAN}
+    Push "Korean"
+    ;
+    Push 1250
+    Push ${LANG_HUNGARIAN}
+    Push "Magyar (Hungarian)"
+    ;
+    Push 1252
+    Push ${LANG_DUTCH}
+    Push "Nederlands (Dutch)"
+    ;
+    Push 1252
+    Push ${LANG_NORWEGIAN}
+    Push Norwegian
+    ;
+    Push 1252
+    Push ${LANG_NORWEGIANNYNORSK}
+    Push "Norwegian nynorsk"
+    ;
+    Push 1250
+    Push ${LANG_POLISH}
+    Push "Polski (Polish)"
+    ;
+    Push 1252
+    Push ${LANG_PORTUGUESE}
+    Push "Português (Portuguese)"
+    ;
+    Push 1252
+    Push ${LANG_PORTUGUESEBR}
+    Push "Português Brasileiro"
+    ;
+    Push 1250
+    Push ${LANG_ROMANIAN}
+    Push "Romana (Romanian)"
+    ;
+    Push 1251
+    Push ${LANG_RUSSIAN}
+    Push Russian
+    ;
+    Push 1251
+    Push ${LANG_SERBIAN}
+    Push "Serbian Cyrillic"
+    ;
+    Push 1250
+    Push ${LANG_SERBIANLATIN}
+    Push "Serbian Latin"
+    ;
+    Push 1250
+    Push ${LANG_SLOVENIAN}
+    Push "Slovenski jezik (Slovenian)"
+    ;
+    Push 1250
+    Push ${LANG_SLOVAK}
+    Push "Slovensky (Slovak)"
+    ;
+    Push 1252
+    Push ${LANG_FINNISH}
+    Push "Suomi (Finnish)"
+    ;
+    Push 1252
+    Push ${LANG_SWEDISH}
+    Push "Svenska (Swedish)"
+    ;Push 874
+    ;Push ${LANG_THAI}
+    ;Push Thai
+    ;
+    Push 1254
+    Push ${LANG_TURKISH}
+    Push "Türkçe (Turkish)"
+    ;
+    Push 1251
+    Push ${LANG_UKRAINIAN}
+    Push Ukrainian
+    ;
+    
+    Push CA
+    LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
+    Pop $LANGUAGE
+    StrCmp $LANGUAGE "cancel" 0 +2
+    Abort
+		
+
   ; get install dir
   ReadRegStr ${TEMP} HKLM "Software\${PRODUCT}" ""
   StrCmp ${TEMP} "" +2
