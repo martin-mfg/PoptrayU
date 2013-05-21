@@ -37,10 +37,10 @@
 LangString title_user_storage_dir ${LANG_POLISH} "User Storage Settings Location"
 LangString desc_user_storage_dir ${LANG_POLISH} "Gdzie PopTrayU przechowywania ustawie?, takich jak konta e-mail i zasad?"
 LangString ini_storage_appdata ${LANG_POLISH} "Current User appdata (Zalecane)"
-LangString ini_storage_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla wi?kszo?ci u?ytkowników, zw?aszcza je?li u?ywasz Vista lub Windows 7. Ka?dy u?ytkownik tego komputera b?dzie mia? w?asny folder Ustawienia dla PopTrayU".
+LangString ini_storage_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla wi?kszo?ci u?ytkowników, zw?aszcza je?li u?ywasz Vista lub Windows 7. Ka?dy u?ytkownik tego komputera b?dzie mia? w?asny folder Ustawienia dla PopTrayU."
 LangString ini_alluser_appdata ${LANG_POLISH} "Wszystko Appdata U?ytkownicy Folder"
-LangString ini_alluser_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla u?ytkowników, którzy maj? kilka kont u?ytkowników na ich maszyny, ale aby wszyscy u?ytkownicy urz?dzenia, aby te same konta e-mail i ustawienia PopTrayU".
-Ini_progfiles LangString ${LANG_POLISH} "Folder instalacji PopTrayU"
+LangString ini_alluser_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla u?ytkowników, którzy maj? kilka kont u?ytkowników na ich maszyny, ale aby wszyscy u?ytkownicy urz?dzenia, aby te same konta e-mail i ustawienia PopTrayU."
+LangString ini_progfiles ${LANG_POLISH} "Folder instalacji PopTrayU"
 LangString ini_progfiles_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla profesjonalnych u?ytkowników, którzy UAC niepe?nosprawnych, i chc? zachowa? wszystkie pliki PopTrayU jest w jednym miejscu. U?ytkownicy Windows 95 powinien równie? wybra? t? opcj?."
 
 LangString msg_closing_poptrayu ${LANG_POLISH} "Zamkni?cie istniej?cych PopTrayU"
