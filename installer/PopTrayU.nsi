@@ -155,7 +155,7 @@ BrandingText " "
 ;------------------------------------------------------------------[ Language Strings ]---
 ; Languages need to be defined AFTER THE PAGES!
 !include LangStrings.nsh
-;;!include LangStringsU.nsh
+!include LangStringsU.nsh
 
 ;------------------------------------------------------------------[ Reserve Files ]---
   
