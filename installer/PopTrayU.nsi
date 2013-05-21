@@ -57,7 +57,7 @@ ShowUninstDetails show
 
   ; Text
   !define MUI_WELCOMEPAGE_TITLE $(mui_welcomepage_title)
-  !define MUI_WELCOMEPAGE_TEXT $(mui_welcomepage_text)
+  !define MUI_WELCOMEPAGE_TEXT "$(mui_welcomepage_text1)$\r$\n$\r$\n$(mui_welcomepage_text2)$\r$\n$\r$\n"
   !define MUI_FINISHPAGE_SHOWREADME_TEXT $(mui_finish_dl_ssl_plugin)
     
 
@@ -80,60 +80,74 @@ ShowUninstDetails show
 BrandingText " "
 
 ;------------------------------------------------------------------[ Pages ]---
-  
+
+  !define MUI_CUSTOMFUNCTION_UNGUIINIT un.myGuiInit
   UninstPage custom un.SetPage
   !insertmacro MUI_UNPAGE_INSTFILES
 
-
+  
 ;------------------------------------------------------------------[ Languages ]---
 ;; do not hide languages that are outside current codepage
 ;;!define MUI_LANGDLL_ALLLANGUAGES
 
-; First language listed will be the default
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Afrikaans.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Albanian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Arabic.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Bulgarian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Catalan.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Czech.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SimpChinese.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\TradChinese.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Danish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\German.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Estonian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SpanishInternational.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Galician.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hebrew.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Croatian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Korean.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Hungarian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Dutch.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Norwegian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\NorwegianNynorsk.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Polish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\PortugueseBR.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Romanian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Russian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Serbian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\SerbianLatin.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovenian.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Slovak.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Finnish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Swedish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Turkish.nlf"
-;LoadLanguageFile "${NSISDIR}\Contrib\Language files\Ukrainian.nlf"
+  !insertmacro MUI_LANGUAGE "English" ;first language is the default
+  !insertmacro MUI_LANGUAGE "French"
+  !insertmacro MUI_LANGUAGE "German"
+  !insertmacro MUI_LANGUAGE "Spanish"
+;  !insertmacro MUI_LANGUAGE "SpanishInternational"
+;  !insertmacro MUI_LANGUAGE "SimpChinese"
+;  !insertmacro MUI_LANGUAGE "TradChinese"
+;  !insertmacro MUI_LANGUAGE "Japanese"
+;  !insertmacro MUI_LANGUAGE "Korean"
+;  !insertmacro MUI_LANGUAGE "Italian"
+;  !insertmacro MUI_LANGUAGE "Dutch"
+;  !insertmacro MUI_LANGUAGE "Danish"
+;  !insertmacro MUI_LANGUAGE "Swedish"
+;  !insertmacro MUI_LANGUAGE "Norwegian"
+;  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+;  !insertmacro MUI_LANGUAGE "Finnish"
+;  !insertmacro MUI_LANGUAGE "Greek"
+;  !insertmacro MUI_LANGUAGE "Russian"
+;  !insertmacro MUI_LANGUAGE "Portuguese"
+;  !insertmacro MUI_LANGUAGE "PortugueseBR"
+  !insertmacro MUI_LANGUAGE "Polish"
+;  !insertmacro MUI_LANGUAGE "Ukrainian"
+;  !insertmacro MUI_LANGUAGE "Czech"
+;  !insertmacro MUI_LANGUAGE "Slovak"
+;  !insertmacro MUI_LANGUAGE "Croatian"
+;  !insertmacro MUI_LANGUAGE "Bulgarian"
+;  !insertmacro MUI_LANGUAGE "Hungarian"
+;  !insertmacro MUI_LANGUAGE "Thai"
+;  !insertmacro MUI_LANGUAGE "Romanian"
+;  !insertmacro MUI_LANGUAGE "Latvian"
+;  !insertmacro MUI_LANGUAGE "Macedonian"
+;  !insertmacro MUI_LANGUAGE "Estonian"
+;  !insertmacro MUI_LANGUAGE "Turkish"
+;  !insertmacro MUI_LANGUAGE "Lithuanian"
+;  !insertmacro MUI_LANGUAGE "Slovenian"
+;  !insertmacro MUI_LANGUAGE "Serbian"
+;  !insertmacro MUI_LANGUAGE "SerbianLatin"
+;  !insertmacro MUI_LANGUAGE "Arabic"
+;  !insertmacro MUI_LANGUAGE "Farsi"
+;  !insertmacro MUI_LANGUAGE "Hebrew"
+;  !insertmacro MUI_LANGUAGE "Indonesian"
+;  !insertmacro MUI_LANGUAGE "Mongolian"
+;  !insertmacro MUI_LANGUAGE "Luxembourgish"
+;  !insertmacro MUI_LANGUAGE "Albanian"
+;  !insertmacro MUI_LANGUAGE "Breton"
+;  !insertmacro MUI_LANGUAGE "Belarusian"
+;  !insertmacro MUI_LANGUAGE "Icelandic"
+;  !insertmacro MUI_LANGUAGE "Malay"
+;  !insertmacro MUI_LANGUAGE "Bosnian"
+;  !insertmacro MUI_LANGUAGE "Kurdish"
+;  !insertmacro MUI_LANGUAGE "Irish"
+;  !insertmacro MUI_LANGUAGE "Uzbek"
+;  !insertmacro MUI_LANGUAGE "Galician"
+;  !insertmacro MUI_LANGUAGE "Afrikaans"
+;  !insertmacro MUI_LANGUAGE "Catalan"
+;  !insertmacro MUI_LANGUAGE "Esperanto"
+;  !insertmacro MUI_LANGUAGE "Asturian"
 
-
-
- 
-!insertmacro MUI_LANGUAGE "English"
-!insertmacro MUI_LANGUAGE "German"
 
   !define MUI_TEXT_FINISH_SHOWREADME "Show HISTORY.TXT"
   
@@ -141,6 +155,7 @@ BrandingText " "
 ;------------------------------------------------------------------[ Language Strings ]---
 ; Languages need to be defined AFTER THE PAGES!
 !include LangStrings.nsh
+;;!include LangStringsU.nsh
 
 ;------------------------------------------------------------------[ Reserve Files ]---
   
@@ -173,14 +188,14 @@ Section $(SEC_PopTrayU) SecPopTrayU
   	FindWindow ${HWND} "TfrmPopUMain.UnicodeClass"
   	IntCmp ${Count} 1 Print Send Send
   Print:
-  	DetailPrint "Closing existing PopTrayU"
+  	DetailPrint $(msg_closing_poptrayu)
   Send:
   	SendMessage ${HWND} 1036 0 0 ; UM_QUIT = 1036
   	;SendMessage ${HWND} ${WM_CLOSE} 0 0
   	Sleep 1000
   	Goto TryPopTrayU
   CantClose:
-  	DetailPrint "Can't close existing PopTrayU"
+  	DetailPrint $(msg_cant_close_poptrayu)
   	SetOverwrite on
   	File "PopTrayU.exe"
   
@@ -483,12 +498,27 @@ SectionEnd
 
 ;------------------------------------------------------------------[ Functions ]---
 
+
+Function un.myGuiInit
+
+  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 1" "Text" $(uninstaller_desc)
+  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 2" "Text" $(uninstall_from)
+  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 4" "Text" $(uninstall_remove_config_files)
+
+FunctionEnd
+
 Function un.SetPage
-  !insertmacro MUI_HEADER_TEXT "Uninstall PopTrayU" "Remove PopTrayU from you computer."
+  !insertmacro MUI_HEADER_TEXT $(mui_header_uninstall) $(mui_subhead_uninstall)
   !insertmacro INSTALLOPTIONS_DISPLAY "uninstaller.ini"
 FunctionEnd
 
+Function un.onInit
+  !insertmacro MUI_UNGETLANGUAGE
 
+  !insertmacro INSTALLOPTIONS_EXTRACT "uninstaller.ini"
+  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 3" "State" "$INSTDIR"
+
+FunctionEnd
 
 ;------------------------------------------------------------------[ Events ]---
 
@@ -698,10 +728,6 @@ Function .onInit
     SectionSetFlags ${SecSound} 0
 FunctionEnd
 
-Function un.onInit
-  !insertmacro INSTALLOPTIONS_EXTRACT "uninstaller.ini"
-  !insertmacro INSTALLOPTIONS_WRITE "uninstaller.ini" "Field 3" "State" "$INSTDIR"
-FunctionEnd
 
 
 
@@ -754,23 +780,23 @@ Function fnc_IniDialog_Create
   SendMessage $RadioLocalAppdata_HWND ${WM_SETFONT} $IniDialog_HWND_Font1 0
   
   ; === Label3 (type: Label) ===
-  ${NSD_CreateLabel} 8u 22u 271u 16u "This setting is best for most users, especially if you are using Vista or Windows 7. Each user of this computer will have their own settings folder for PopTrayU."
+  ${NSD_CreateLabel} 8u 22u 271u 16u $(ini_storage_appdata_desc)
   Pop $IniDialog_HWND_Label3
   
   ; === RadioAllUserAppdata (type: RadioButton) ===
-  ${NSD_CreateRadioButton} 8u 47u 257u 14u "All Users Appdata Folder"
+  ${NSD_CreateRadioButton} 8u 47u 257u 14u $(ini_alluser_appdata)
   Pop $RadioAllUserAppdata_HWND
   
   ; === Label2 (type: Label) ===
-  ${NSD_CreateLabel} 8u 62u 271u 24u "This setting is best for users who have multiple user accounts on their machine, but want all users of the machine to share the same email accounts and PopTrayU settings."
+  ${NSD_CreateLabel} 8u 62u 271u 24u $(ini_alluser_appdata_desc)
   Pop $IniDialog_HWND_Label2
   
   ; === RadioProgramFiles (type: RadioButton) ===
-  ${NSD_CreateRadioButton} 8u 95u 257u 14u "PopTrayU Installation Folder"
+  ${NSD_CreateRadioButton} 8u 95u 257u 14u $(ini_progfiles)
   Pop $RadioProgramFiles_HWND
   
   ; === Label4 (type: Label) ===
-  ${NSD_CreateLabel} 8u 108u 271u 16u "This setting is best for pro users who have UAC disabled, and wish to keep all of PopTrayU's files in one place. Windows 95 users should also select this option."
+  ${NSD_CreateLabel} 8u 108u 271u 16u $(ini_progfiles_desc)
   Pop $IniDialog_HWND_Label4
   
 FunctionEnd
