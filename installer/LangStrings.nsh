@@ -208,3 +208,165 @@ LangString uninstaller_desc ${LANG_SPANISH} "Este asistente le PopTrayU desinsta
 LangString uninstall_from ${LANG_SPANISH} "Desinstalación de:"
 LangString uninstall_remove_config_files ${LANG_SPANISH} "Eliminar archivos de configuración"
 
+;-------------------------- Italian --------------------------------
+
+LangString mui_welcomepage_title ${LANG_ITALIAN} "PopTrayU installazione guidata"
+LangString mui_welcomepage_text1 ${LANG_ITALIAN} "Questa procedura guidata vi guiderà attraverso l'installazione di PopTrayU"
+LangString mui_welcomepage_text2 ${LANG_ITALIAN} "PopTrayU è un full-optional, open-source, e-mail notifier con una interfaccia facile da usare."
+LangString mui_finish_dl_ssl_plugin ${LANG_ITALIAN} "Download Plugin SSL"
+
+LangString SEC_PopTrayU ${LANG_ITALIAN} "PopTrayU (richiesto)"
+LangString DESC_SecPopTrayU ${LANG_ITALIAN} "Copia dei file di applicazione PopTrayU la cartella dell'applicazione."
+
+LangString SEC_Icons ${LANG_ITALIAN} "Icone"
+LangString DESC_SecIcons ${LANG_ITALIAN} "Selezionare le icone per creare."
+
+LangString SEC_StartMenuIcons ${LANG_ITALIAN} "Start Menu Icons"
+LangString DESC_SecStartMenu ${LANG_ITALIAN} "Crea un gruppo PopTrayU sotto il menu di avvio con le icone dei file PopTrayU."
+
+LangString SEC_StartupIcon ${LANG_ITALIAN} "Icona di avvio"
+LangString DESC_SecStartup ${LANG_ITALIAN} "Avvia automaticamente PopTrayU all'avvio di Windows"
+
+
+LangString SEC_DesktopIcon ${LANG_ITALIAN} "Desktop Icon"
+LangString DESC_SecDesktop ${LANG_ITALIAN} "Metti PopTrayU icona sul desktop"
+
+LangString SEC_Lang ${LANG_ITALIAN} "file di lingua"
+LangString DESC_SecLang ${LANG_ITALIAN} "Installa i file di lingua per multi-lingua PopTrayU."
+
+LangString SEC_SoundFiles ${LANG_ITALIAN} "file audio"
+LangString DESC_SecSound ${LANG_ITALIAN} "Installa i file audio di notifica."
+
+LangString SEC_OptionalPlugins ${LANG_ITALIAN} "Plugins opzionali"
+
+LangString SEC_KeyboardLights ${LANG_ITALIAN} "Tastiera Luci Notifica Plugin"
+LangString DESC_SecKeyboardLights ${LANG_ITALIAN} "messaggio di notifica Nuovo accendendo o lampeggiare la spia tasto di scorrimento-lock."
+
+LangString title_user_storage_dir ${LANG_ITALIAN} "User Settings posizione di archiviazione"
+LangString desc_user_storage_dir ${LANG_ITALIAN} "Dove deve PopTrayU memorizzare le impostazioni come account di posta elettronica e le regole?"
+LangString ini_storage_appdata ${LANG_ITALIAN} "Current User AppData (scelta consigliata)"
+LangString ini_storage_appdata_desc ${LANG_ITALIAN} "Questa impostazione è ottimale per la maggior parte degli utenti, soprattutto se si utilizza Vista o Windows 7. Ogni utente di questo computer hanno la loro cartella di impostazioni proprio per PopTrayU."
+LangString ini_alluser_appdata ${LANG_ITALIAN} "All Users cartella AppData"
+LangString ini_alluser_appdata_desc ${LANG_ITALIAN} "Questa impostazione è ideale per gli utenti che dispongono di più account utente sulla loro macchina, ma vuole a tutti gli utenti della macchina di condividere gli stessi account di posta elettronica e le impostazioni PopTrayU."
+LangString ini_progfiles ${LANG_ITALIAN} "Cartella di installazione PopTrayU"
+LangString ini_progfiles_desc ${LANG_ITALIAN} "Questa impostazione è ideale per gli utenti professionisti che hanno UAC disabili, e che desiderano mantenere tutti i file di PopTrayU in un unico luogo. Gli utenti Windows 95 dovranno selezionare anche questa opzione."
+
+LangString msg_closing_poptrayu ${LANG_ITALIAN} "Closing PopTrayU esistente"
+LangString msg_cant_close_poptrayu ${LANG_ITALIAN} "Impossibile chiudere PopTrayU esistente"
+
+LangString mui_header_uninstall ${LANG_ITALIAN} "Disinstalla PopTrayU"
+LangString mui_subhead_uninstall ${LANG_ITALIAN} "Rimuovere PopTrayU dal tuo computer."
+
+LangString uninstaller_desc ${LANG_ITALIAN} "Questa procedura guidata PopTrayU disinstallare dal proprio computer. Fare clic su Disinstalla per continuare."
+LangString uninstall_from ${LANG_ITALIAN} "Disinstallazione da:"
+LangString uninstall_remove_config_files ${LANG_ITALIAN} "Elimina file di configurazione"
+
+
+;-------------------------- Dutch --------------------------------
+
+LangString mui_welcomepage_title ${LANG_DUTCH} "PopTrayU installatiewizard"
+LangString mui_welcomepage_text1 ${LANG_DUTCH} "Deze wizard zal u door de installatie van PopTrayU"
+LangString mui_welcomepage_text2 ${LANG_DUTCH} "PopTrayU is een full-featured, open-source, e-mail notifier met een eenvoudig te gebruiken interface."
+LangString mui_finish_dl_ssl_plugin ${LANG_DUTCH} "Download SSL Plugin"
+
+LangString SEC_PopTrayU ${LANG_DUTCH} "PopTrayU (verplicht)"
+LangString DESC_SecPopTrayU ${LANG_DUTCH} "Copy PopTrayU programmabestanden naar de applicatie map."
+
+LangString SEC_Icons ${LANG_DUTCH} "Icons"
+LangString DESC_SecIcons ${LANG_DUTCH} "Selecteer de pictogrammen te creëren."
+
+LangString SEC_StartMenuIcons ${LANG_DUTCH} "Start Menu Icons"
+LangString DESC_SecStartMenu ${LANG_DUTCH} "Maak een PopTrayU groep onder het start menu met pictogrammen de de PopTrayU bestanden."
+
+LangString SEC_StartupIcon ${LANG_DUTCH} "Startup Icoon"
+LangString DESC_SecStartup ${LANG_DUTCH} "Automatisch starten PopTrayU wanneer Windows wordt gestart"
+
+
+LangString SEC_DesktopIcon ${LANG_DUTCH} "Desktop Icoon"
+LangString DESC_SecDesktop ${LANG_DUTCH} "Doe PopTrayU pictogram op het bureaublad"
+
+LangString SEC_Lang ${LANG_DUTCH} "Taal bestanden"
+LangString DESC_SecLang ${LANG_DUTCH} "Installeer de taalbestanden voor multi-language PopTrayU."
+
+LangString SEC_SoundFiles ${LANG_DUTCH} "Sound files"
+LangString DESC_SecSound ${LANG_DUTCH} "Installeer kennisgeving geluidsbestanden."
+
+LangString SEC_OptionalPlugins ${LANG_DUTCH} "Optionele Plugins"
+
+LangString SEC_KeyboardLights ${LANG_DUTCH} "Keyboard Lights Notification Plugin"
+LangString DESC_SecKeyboardLights ${LANG_DUTCH} "Nieuw bericht melding door aan te zetten of knipperen de scroll-lock toets licht."
+
+LangString title_user_storage_dir ${LANG_DUTCH} "Gebruiker Instellingen Storage Location"
+LangString desc_user_storage_dir ${LANG_DUTCH} "Waar moet PopTrayU slaan instellingen zoals e-mail accounts en regels?"
+LangString ini_storage_appdata ${LANG_DUTCH} "Huidige gebruiker map AppData (aanbevolen)"
+LangString ini_storage_appdata_desc ${LANG_DUTCH} "Deze instelling is het beste voor de meeste gebruikers, vooral als u gebruik maakt van Vista of Windows 7. Elke gebruiker van deze computer zullen hun map eigen instellingen voor PopTrayU hebben."
+LangString ini_alluser_appdata ${LANG_DUTCH} "All Users map AppData"
+LangString ini_alluser_appdata_desc ${LANG_DUTCH} "Deze instelling is het beste voor gebruikers die meerdere gebruikersaccounts op hun machine, maar willen dat alle gebruikers van de machine om dezelfde e-mailaccounts en PopTrayU instellingen te delen."
+LangString ini_progfiles ${LANG_DUTCH} "PopTrayU Installation Folder"
+LangString ini_progfiles_desc ${LANG_DUTCH} "Deze instelling is het beste voor professionele gebruikers die UAC heeft uitgeschakeld, en willen alle PopTrayU's bestanden op een plaats te houden. Windows 95-gebruikers moeten ook deze optie te selecteren."
+
+LangString msg_closing_poptrayu ${LANG_DUTCH} "Closing bestaande PopTrayU"
+LangString msg_cant_close_poptrayu ${LANG_DUTCH} "Kan niet sluiten bestaande PopTrayU"
+
+LangString mui_header_uninstall ${LANG_DUTCH} "Uninstall PopTrayU"
+LangString mui_subhead_uninstall ${LANG_DUTCH} "Verwijder PopTrayU uit je computer."
+
+LangString uninstaller_desc ${LANG_DUTCH} "Deze wizard zal verwijderen PopTrayU van uw computer. Klik op verwijderen om verder te gaan."
+LangString uninstall_from ${LANG_DUTCH} "verwijderen van:"
+LangString uninstall_remove_config_files ${LANG_DUTCH} "Verwijder Configuration Files"
+
+
+
+;-------------------------- Africaans --------------------------------
+
+
+LangString mui_welcomepage_title ${LANG_AFRICAANS} "PopTrayU installasie Wizard"
+LangString mui_welcomepage_text1 ${LANG_AFRICAANS} "Hierdie slimmerd sal u deur die installering van PopTrayU"
+LangString mui_welcomepage_text2 ${LANG_AFRICAANS} "PopTrayU is 'n full-featured, oop-bron, e-pos notifier met 'n maklike koppelvlak te gebruik."
+LangString mui_finish_dl_ssl_plugin ${LANG_AFRICAANS} "Download SSL Plugin"
+
+LangString SEC_PopTrayU ${LANG_AFRICAANS} "PopTrayU (vereis)"
+LangString DESC_SecPopTrayU ${LANG_AFRICAANS} "Copy PopTrayU aansoek lêers na die aansoek gids."
+
+LangString SEC_Icons ${LANG_AFRICAANS} "ikone"
+LangString DESC_SecIcons ${LANG_AFRICAANS} "Kies die ikone te skep."
+
+LangString SEC_StartMenuIcons ${LANG_AFRICAANS} "Start menu ikone"
+LangString DESC_SecStartMenu ${LANG_AFRICAANS} "Skep 'n PopTrayU groep onder die start menu met ikone die PopTrayU die lêers."
+
+LangString SEC_StartupIcon ${LANG_AFRICAANS} "Startup simbool"
+LangString DESC_SecStartup ${LANG_AFRICAANS} "outomaties begin PopTrayU wanneer Windows begin"
+
+
+LangString SEC_DesktopIcon ${LANG_AFRICAANS} "Desktop-simbool"
+LangString DESC_SecDesktop ${LANG_AFRICAANS} "Sit PopTrayU ikoon op die Desktop"
+
+LangString SEC_Lang ${LANG_AFRICAANS} "taal lêers"
+LangString DESC_SecLang ${LANG_AFRICAANS} "Die installering van die taal lêers vir multi-taal PopTrayU."
+
+LangString SEC_SoundFiles ${LANG_AFRICAANS} "Sound lêers"
+LangString DESC_SecSound ${LANG_AFRICAANS} "installeer kennisgewing klank lêers."
+
+LangString SEC_OptionalPlugins ${LANG_AFRICAANS} "Opsionele proppe"
+
+LangString SEC_KeyboardLights ${LANG_AFRICAANS} "Keyboard Lights Kennisgewing Plugin"
+LangString DESC_SecKeyboardLights ${LANG_AFRICAANS} "Nuwe boodskap kennisgewing deur die draai op of knip die lint-slot sleutel lig."
+
+LangString title_user_storage_dir ${LANG_AFRICAANS} "Gebruikers Stellings Storage ligging"
+LangString desc_user_storage_dir ${LANG_AFRICAANS} "Waar moet PopTrayU stoor instellings soos e-pos rekeninge en reëls?"
+LangString ini_storage_appdata ${LANG_AFRICAANS} "Hierdie gebruiker AppData dopgehou (aanbevole)"
+LangString ini_storage_appdata_desc ${LANG_AFRICAANS} "Hierdie instelling is die beste vir die meeste gebruikers, veral as jy met Vista of Windows 7 Elke gebruiker van hierdie rekenaar sal hul eie instellings gids vir PopTrayU het."
+LangString ini_alluser_appdata ${LANG_AFRICAANS} "Alle gebruikers AppData Folder"
+LangString ini_alluser_appdata_desc ${LANG_AFRICAANS} "Hierdie instelling is die beste vir gebruikers wat verskeie gebruikers rekeninge op hulle masjien het nie, maar wil hê dat alle gebruikers van die masjien dieselfde e-pos rekeninge en PopTrayU instellings te deel."
+LangString ini_progfiles ${LANG_AFRICAANS} "PopTrayU installasie gids"
+LangString ini_progfiles_desc ${LANG_AFRICAANS} "Hierdie instelling is die beste vir pro gebruikers wat UAC gestremd, en wens almal van PopTrayU se lêers te hou in een plek Windows 95 gebruikers moet ook hierdie opsie kies."
+
+LangString msg_closing_poptrayu ${LANG_AFRICAANS} "sluiting van die bestaande PopTrayU"
+LangString msg_cant_close_poptrayu ${LANG_AFRICAANS} "Kan nie naby bestaande PopTrayU"
+
+LangString mui_header_uninstall ${LANG_AFRICAANS} "verwyder PopTrayU"
+LangString mui_subhead_uninstall ${LANG_AFRICAANS} "Verwyder PopTrayU van jou rekenaar."
+
+LangString uninstaller_desc ${LANG_AFRICAANS} "Hierdie slimmerd sal verwyder PopTrayU van jou rekenaar kliek verwyder om voort te gaan."
+LangString uninstall_from ${LANG_AFRICAANS} "Verwyder uit:"
+LangString uninstall_remove_config_files ${LANG_AFRICAANS} "Verwyder konfigurasielêers"
