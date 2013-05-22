@@ -30,7 +30,7 @@ LangString DESC_SecSound ${LANG_POLISH} "Instalacja plików dźwiękowych powiad
 LangString SEC_OptionalPlugins ${LANG_POLISH} "Opcjonalne Plugins"
 
 LangString SEC_KeyboardLights ${LANG_POLISH} "Keyboard Zawiadomienie Lights Plugin"
-DESC_SecKeyboardLights LangString ${LANG_POLISH} "powiadomienie o nowej wiadomości, włączając lub miganiem scroll-Lock, światło."
+LangString DESC_SecKeyboardLights ${LANG_POLISH} "powiadomienie o nowej wiadomości, włączając lub miganiem scroll-Lock, światło."
 
 LangString title_user_storage_dir ${LANG_POLISH} "User Storage Settings Location"
 LangString desc_user_storage_dir ${LANG_POLISH} "Gdzie PopTrayU przechowywania ustawień, takich jak konta e-mail i zasad?"
@@ -38,7 +38,7 @@ LangString ini_storage_appdata ${LANG_POLISH} "Current User appdata (Zalecane)"
 LangString ini_storage_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla większości użytkowników, zwłaszcza jeśli używasz Vista lub Windows 7. Każdy użytkownik tego komputera będzie miał własny folder Ustawienia dla PopTrayU."
 LangString ini_alluser_appdata ${LANG_POLISH} "Wszystko Appdata Użytkownicy Folder"
 LangString ini_alluser_appdata_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla użytkowników, którzy mają kilka kont użytkowników na ich maszyny, ale aby wszyscy użytkownicy urządzenia, aby te same konta e-mail i ustawienia PopTrayU."
-Ini_progfiles LangString ${LANG_POLISH} "Folder instalacji PopTrayU"
+LangString ini_progfiles ${LANG_POLISH} "Folder instalacji PopTrayU"
 LangString ini_progfiles_desc ${LANG_POLISH} "To ustawienie jest najlepsze dla profesjonalnych użytkowników, którzy UAC niepełnosprawnych, i chcą zachować wszystkie pliki PopTrayU jest w jednym miejscu. Użytkownicy Windows 95 powinien również wybrać tę opcję."
 
 LangString msg_closing_poptrayu ${LANG_POLISH} "Zamknięcie istniejących PopTrayU"
