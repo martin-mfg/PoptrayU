@@ -91,62 +91,43 @@ BrandingText " "
 ;;!define MUI_LANGDLL_ALLLANGUAGES
 
   !insertmacro MUI_LANGUAGE "English" ;first language is the default
+  !insertmacro MUI_LANGUAGE "Afrikaans"
+  !insertmacro MUI_LANGUAGE "Arabic"
+  !insertmacro MUI_LANGUAGE "Bulgarian"
+  !insertmacro MUI_LANGUAGE "Catalan"
+  !insertmacro MUI_LANGUAGE "SimpChinese"
+  !insertmacro MUI_LANGUAGE "TradChinese"
+  !insertmacro MUI_LANGUAGE "Croatian"
+  !insertmacro MUI_LANGUAGE "Czech"
+  !insertmacro MUI_LANGUAGE "Danish"
+  !insertmacro MUI_LANGUAGE "Dutch"
+  !insertmacro MUI_LANGUAGE "Estonian"
+  !insertmacro MUI_LANGUAGE "Finnish"
   !insertmacro MUI_LANGUAGE "French"
   !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "Spanish"
-;  !insertmacro MUI_LANGUAGE "SpanishInternational"
-;  !insertmacro MUI_LANGUAGE "SimpChinese"
-;  !insertmacro MUI_LANGUAGE "TradChinese"
-;  !insertmacro MUI_LANGUAGE "Japanese"
-;  !insertmacro MUI_LANGUAGE "Korean"
-  !insertmacro MUI_LANGUAGE "Italian"
-  !insertmacro MUI_LANGUAGE "Dutch"
-;  !insertmacro MUI_LANGUAGE "Danish"
-  !insertmacro MUI_LANGUAGE "Swedish"
-;  !insertmacro MUI_LANGUAGE "Norwegian"
-;  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
-;  !insertmacro MUI_LANGUAGE "Finnish"
   !insertmacro MUI_LANGUAGE "Greek"
-  !insertmacro MUI_LANGUAGE "Russian"
-  !insertmacro MUI_LANGUAGE "Portuguese"
-;  !insertmacro MUI_LANGUAGE "PortugueseBR"
-  !insertmacro MUI_LANGUAGE "Polish"
-;  !insertmacro MUI_LANGUAGE "Ukrainian"
-;  !insertmacro MUI_LANGUAGE "Czech"
-;  !insertmacro MUI_LANGUAGE "Slovak"
-;  !insertmacro MUI_LANGUAGE "Croatian"
-  !insertmacro MUI_LANGUAGE "Bulgarian"
+  !insertmacro MUI_LANGUAGE "Hebrew"
   !insertmacro MUI_LANGUAGE "Hungarian"
-;  !insertmacro MUI_LANGUAGE "Thai"
+  !insertmacro MUI_LANGUAGE "Italian"
+  !insertmacro MUI_LANGUAGE "Korean"
+  !insertmacro MUI_LANGUAGE "Lithuanian"
+  !insertmacro MUI_LANGUAGE "Norwegian"
+  !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+  !insertmacro MUI_LANGUAGE "Polish"
+  !insertmacro MUI_LANGUAGE "Portuguese"
+  !insertmacro MUI_LANGUAGE "PortugueseBR"
   !insertmacro MUI_LANGUAGE "Romanian"
-;  !insertmacro MUI_LANGUAGE "Latvian"
-;  !insertmacro MUI_LANGUAGE "Macedonian"
-;  !insertmacro MUI_LANGUAGE "Estonian"
-;  !insertmacro MUI_LANGUAGE "Turkish"
-;  !insertmacro MUI_LANGUAGE "Lithuanian"
-;  !insertmacro MUI_LANGUAGE "Slovenian"
-;  !insertmacro MUI_LANGUAGE "Serbian"
-;  !insertmacro MUI_LANGUAGE "SerbianLatin"
-;  !insertmacro MUI_LANGUAGE "Arabic"
-;  !insertmacro MUI_LANGUAGE "Farsi"
-;  !insertmacro MUI_LANGUAGE "Hebrew"
-;  !insertmacro MUI_LANGUAGE "Indonesian"
-;  !insertmacro MUI_LANGUAGE "Mongolian"
-;  !insertmacro MUI_LANGUAGE "Luxembourgish"
-;  !insertmacro MUI_LANGUAGE "Albanian"
-;  !insertmacro MUI_LANGUAGE "Breton"
-;  !insertmacro MUI_LANGUAGE "Belarusian"
-;  !insertmacro MUI_LANGUAGE "Icelandic"
-;  !insertmacro MUI_LANGUAGE "Malay"
-;  !insertmacro MUI_LANGUAGE "Bosnian"
-;  !insertmacro MUI_LANGUAGE "Kurdish"
-;  !insertmacro MUI_LANGUAGE "Irish"
-;  !insertmacro MUI_LANGUAGE "Uzbek"
-;  !insertmacro MUI_LANGUAGE "Galician"
-  !insertmacro MUI_LANGUAGE "Afrikaans"
-;  !insertmacro MUI_LANGUAGE "Catalan"
-;  !insertmacro MUI_LANGUAGE "Esperanto"
-;  !insertmacro MUI_LANGUAGE "Asturian"
+  !insertmacro MUI_LANGUAGE "Russian"
+  !insertmacro MUI_LANGUAGE "Serbian"
+  !insertmacro MUI_LANGUAGE "SerbianLatin"
+  !insertmacro MUI_LANGUAGE "Slovak"
+  !insertmacro MUI_LANGUAGE "Slovenian"
+  !insertmacro MUI_LANGUAGE "Spanish"
+  !insertmacro MUI_LANGUAGE "SpanishInternational"
+  !insertmacro MUI_LANGUAGE "Swedish"
+  !insertmacro MUI_LANGUAGE "Turkish"
+  !insertmacro MUI_LANGUAGE "Ukrainian"
+
 
 
   !define MUI_TEXT_FINISH_SHOWREADME "Show HISTORY.TXT"
@@ -524,170 +505,7 @@ FunctionEnd
 
 Function .onInit
 
-    ;; Show a language-select dialog when the installer is launched
-    Push ""
-    ;
-    Push 0
-    Push ${LANG_ENGLISH}
-    Push English
-    ;
-    Push 1252
-    Push ${LANG_AFRIKAANS}
-    Push Afrikaans
-    ;
-    Push 1250
-    Push ${LANG_ALBANIAN}
-    Push Albanian
-    ;
-    Push 1256
-    Push ${LANG_ARABIC}
-    Push Arabic
-    ;
-    Push 1251
-    Push ${LANG_BULGARIAN}
-    Push Bulgarian
-    ;
-    Push 1252
-    Push ${LANG_CATALAN}
-    Push "Català (Catalon)"
-    ;
-    Push 1250
-    Push ${LANG_CZECH}
-    Push "Cesky (Czech)"
-    ;
-    Push 936
-    Push ${LANG_SIMPCHINESE}
-    Push "Chinese (Simplified)"
-    ;
-    Push 950
-    Push ${LANG_TRADCHINESE}
-    Push "Chinese (Traditional)"
-    ;
-    Push 1252
-    Push ${LANG_DANISH}
-    Push "Dansk (Danish)"
-    ;
-    Push 1252
-    Push ${LANG_GERMAN}
-    Push "Deutsch (German)"
-    ;
-    Push 1257
-    Push ${LANG_ESTONIAN}
-    Push "Eesti keel (Estonian)"
-    ;
-    Push 1252
-    Push ${LANG_SPANISH}
-    Push "Español (Spanish)"
-    ;
-    Push 1252
-    Push ${LANG_SPANISHINTERNATIONAL}
-    Push "Español (Alfabetización Internacional)"
-    ;
-    Push 1252
-    Push ${LANG_FRENCH}
-    Push "Français (French)"
-    ;
-    Push 1252
-    Push ${LANG_GALICIAN}
-    Push "Galego (Galician)"
-    ;
-    Push 1253
-    Push ${LANG_GREEK}
-    Push Greek
-    ;
-    Push 1255
-    Push ${LANG_HEBREW}
-    Push Hebrew
-    ;
-    Push 1250
-    Push ${LANG_CROATIAN}
-    Push "Hrvatski (Croatian)"
-    ;
-    Push 1252
-    Push ${LANG_ITALIAN}
-    Push "Italiano (Italian)"
-    ;
-    Push 949
-    Push ${LANG_KOREAN}
-    Push "Korean"
-    ;
-    Push 1250
-    Push ${LANG_HUNGARIAN}
-    Push "Magyar (Hungarian)"
-    ;
-    Push 1252
-    Push ${LANG_DUTCH}
-    Push "Nederlands (Dutch)"
-    ;
-    Push 1252
-    Push ${LANG_NORWEGIAN}
-    Push Norwegian
-    ;
-    Push 1252
-    Push ${LANG_NORWEGIANNYNORSK}
-    Push "Norwegian nynorsk"
-    ;
-    Push 1250
-    Push ${LANG_POLISH}
-    Push "Polski (Polish)"
-    ;
-    Push 1252
-    Push ${LANG_PORTUGUESE}
-    Push "Português (Portuguese)"
-    ;
-    Push 1252
-    Push ${LANG_PORTUGUESEBR}
-    Push "Português Brasileiro"
-    ;
-    Push 1250
-    Push ${LANG_ROMANIAN}
-    Push "Romana (Romanian)"
-    ;
-    Push 1251
-    Push ${LANG_RUSSIAN}
-    Push Russian
-    ;
-    Push 1251
-    Push ${LANG_SERBIAN}
-    Push "Serbian Cyrillic"
-    ;
-    Push 1250
-    Push ${LANG_SERBIANLATIN}
-    Push "Serbian Latin"
-    ;
-    Push 1250
-    Push ${LANG_SLOVENIAN}
-    Push "Slovenski jezik (Slovenian)"
-    ;
-    Push 1250
-    Push ${LANG_SLOVAK}
-    Push "Slovensky (Slovak)"
-    ;
-    Push 1252
-    Push ${LANG_FINNISH}
-    Push "Suomi (Finnish)"
-    ;
-    Push 1252
-    Push ${LANG_SWEDISH}
-    Push "Svenska (Swedish)"
-    ;Push 874
-    ;Push ${LANG_THAI}
-    ;Push Thai
-    ;
-    Push 1254
-    Push ${LANG_TURKISH}
-    Push "Türkçe (Turkish)"
-    ;
-    Push 1251
-    Push ${LANG_UKRAINIAN}
-    Push Ukrainian
-    ;
-    
-    Push CA
-    LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
-    Pop $LANGUAGE
-    StrCmp $LANGUAGE "cancel" 0 +2
-    Abort
+  !include LangSelectDlg.nsh
 		
 
   ; get install dir
