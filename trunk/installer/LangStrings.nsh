@@ -50,6 +50,9 @@ LangString uninstaller_desc ${LANG_ENGLISH} "This wizard will uninstall PopTrayU
 LangString uninstall_from ${LANG_ENGLISH} "Uninstalling from:"
 LangString uninstall_remove_config_files ${LANG_ENGLISH} "Remove Configuration Files"
 
+LangString full_install ${LANG_ENGLISH} "Full"
+LangString minimum_install ${LANG_ENGLISH} "Minimum"
+
 ;-------------------------- German --------------------------------
 LangString mui_welcomepage_title ${LANG_GERMAN} "PopTrayU Setup-Assistent"
 LangString mui_welcomepage_text1 ${LANG_GERMAN} "Dieser Assistent führt Sie durch die Installation von PopTrayU zu führen."
@@ -100,6 +103,9 @@ LangString mui_subhead_uninstall ${LANG_GERMAN} "Entfernen PopTrayU von diesem C
 LangString uninstaller_desc ${LANG_GERMAN} "Dieser Assistent wird PopTrayU von Ihrem Computer deinstallieren. Klicken Sie auf Deinstallieren, um fortzufahren."
 LangString uninstall_from ${LANG_GERMAN} "Deinstallieren von:"
 LangString uninstall_remove_config_files ${LANG_GERMAN} "Entfernen Konfigurationsdateien"
+
+LangString full_install ${LANG_GERMAN} "Vollständige"
+LangString minimum_install ${LANG_GERMAN} "Minimum"
 
 ;-------------------------- French --------------------------------
 
@@ -153,6 +159,9 @@ LangString uninstaller_desc ${LANG_FRENCH} "Cet assistant va désinstaller PopTra
 LangString uninstall_from ${LANG_FRENCH} "Désinstaller à partir de:"
 LangString uninstall_remove_config_files ${LANG_FRENCH} "Supprimer les fichiers de configuration"
 
+LangString full_install ${LANG_FRENCH} "Installation complète"
+LangString minimum_install ${LANG_FRENCH} "Installation minimale"
+
 ;-------------------------- Spanish --------------------------------
 
 LangString mui_welcomepage_title ${LANG_SPANISH} "PopTrayU Asistente para la instalación"
@@ -204,6 +213,9 @@ LangString mui_subhead_uninstall ${LANG_SPANISH} "Eliminar PopTrayU de su ordena
 LangString uninstaller_desc ${LANG_SPANISH} "Este asistente le PopTrayU desinstalar de su equipo. Haga clic en Desinstalar para continuar."
 LangString uninstall_from ${LANG_SPANISH} "Desinstalación de:"
 LangString uninstall_remove_config_files ${LANG_SPANISH} "Eliminar archivos de configuración"
+
+LangString full_install ${LANG_SPANISH} "Instalación completa"
+LangString minimum_install ${LANG_SPANISH} "Instalación mínima"
 
 ;-------------------------- Italian --------------------------------
 
@@ -257,6 +269,9 @@ LangString uninstaller_desc ${LANG_ITALIAN} "Questa procedura guidata PopTrayU d
 LangString uninstall_from ${LANG_ITALIAN} "Disinstallazione da:"
 LangString uninstall_remove_config_files ${LANG_ITALIAN} "Elimina file di configurazione"
 
+LangString full_install ${LANG_ITALIAN} "Installazione completa"
+LangString minimum_install ${LANG_ITALIAN} "installazione minima"
+
 ;-------------------------- Danish --------------------------------
 
 LangString mui_welcomepage_title ${LANG_DANISH} "PopTrayU Installation Wizard"
@@ -309,8 +324,8 @@ LangString uninstaller_desc ${LANG_DANISH} "Denne guide vil afinstallere PopTray
 LangString uninstall_from ${LANG_DANISH} "Afinstallation fra:"
 LangString uninstall_remove_config_files ${LANG_DANISH} "Fjern Configuration Files"
 
-
-
+LangString full_install ${LANG_DANISH} "Full installation"
+LangString minimum_install ${LANG_DANISH} "Minimum Installation"
 
 ;-------------------------- Dutch --------------------------------
 
@@ -364,10 +379,10 @@ LangString uninstaller_desc ${LANG_DUTCH} "Deze wizard zal verwijderen PopTrayU 
 LangString uninstall_from ${LANG_DUTCH} "verwijderen van:"
 LangString uninstall_remove_config_files ${LANG_DUTCH} "Verwijder Configuration Files"
 
-
+LangString full_install ${LANG_DUTCH} "Volledige Installation"
+LangString minimum_install ${LANG_DUTCH} "Minimale installatie"
 
 ;-------------------------- Afrikaans --------------------------------
-
 
 LangString mui_welcomepage_title ${LANG_AFRIKAANS} "PopTrayU installasie Wizard"
 LangString mui_welcomepage_text1 ${LANG_AFRIKAANS} "Hierdie slimmerd sal u deur die installering van PopTrayU"
@@ -419,7 +434,8 @@ LangString uninstaller_desc ${LANG_AFRIKAANS} "Hierdie slimmerd sal verwyder Pop
 LangString uninstall_from ${LANG_AFRIKAANS} "Verwyder uit:"
 LangString uninstall_remove_config_files ${LANG_AFRIKAANS} "Verwyder konfigurasielêers"
 
-
+LangString full_install ${LANG_AFRIKAANS} "Volledige installasie"
+LangString minimum_install ${LANG_AFRIKAANS} "Minimum installasie"
 
 ;-------------------------- Galician --------------------------------
 
@@ -473,6 +489,8 @@ LangString uninstaller_desc ${LANG_GALICIAN} "Este asistente desinstala PopTrayU
 LangString uninstall_from ${LANG_GALICIAN} "Desinstalar desde:"
 LangString uninstall_remove_config_files ${LANG_GALICIAN} "Eliminar os ficheiros de configuración"
 
+LangString full_install ${LANG_GALICIAN} "Instalación completa"
+LangString minimum_install ${LANG_GALICIAN} "Instalación mínima"
 
 ;-------------------------- Finnish --------------------------------
 
@@ -526,6 +544,8 @@ LangString uninstaller_desc ${LANG_FINNISH} "Ohjattu toiminto poistaa PopTrayU t
 LangString uninstall_from ${LANG_FINNISH} "poistaminen alkaen:"
 LangString uninstall_remove_config_files ${LANG_FINNISH} "Poista kokkoonpanotiedostojen"
 
+LangString full_install ${LANG_FINNISH} "täysi asennus"
+LangString minimum_install ${LANG_FINNISH} "Minimi asennus"
 
 ;-------------------------- Norwegian --------------------------------
 
@@ -579,7 +599,8 @@ LangString uninstaller_desc ${LANG_NORWEGIAN} "Denne veiviseren vil avinstallere
 LangString uninstall_from ${LANG_NORWEGIAN} "Avinstallere fra:"
 LangString uninstall_remove_config_files ${LANG_NORWEGIAN} "Fjern konfigurasjonsfiler"
 
-
+LangString full_install ${LANG_NORWEGIAN} "Full installasjon"
+LangString minimum_install ${LANG_NORWEGIAN} "Minimum installasjon"
 
 ;-------------------------- Estonian --------------------------------
 
@@ -633,8 +654,8 @@ LangString uninstaller_desc ${LANG_ESTONIAN} "See nõustaja aitab eemaldada PopTr
 LangString uninstall_from ${LANG_ESTONIAN} "eemaldamine alates"
 LangString uninstall_remove_config_files ${LANG_ESTONIAN} "Eemalda Configuration Files"
 
-
-
+LangString full_install ${LANG_ESTONIAN} "Täielik Paigaldus"
+LangString minimum_install ${LANG_ESTONIAN} "Minimaalne paigaldus"
 
 ;-------------------------- Catalan --------------------------------
 
@@ -685,9 +706,11 @@ LangString mui_header_uninstall ${LANG_CATALAN} "Uninstall PopTrayU"
 LangString mui_subhead_uninstall ${LANG_CATALAN} "Eliminar PopTrayU del seu ordinador."
 
 LangString uninstaller_desc ${LANG_CATALAN} "Aquest assistent us PopTrayU desinstal · lar del seu equip. Feu clic a Desinstal per continuar."
-LangString uninstall_from ${LANG_CATALAN} "Desinstal · lació de:"
+LangString uninstall_from ${LANG_CATALAN} "Desinstallació de:"
 LangString uninstall_remove_config_files ${LANG_CATALAN} "Eliminar arxius de configuració"
 
+LangString full_install ${LANG_CATALAN} "Installació completa"
+LangString minimum_install ${LANG_CATALAN} "installació mínima"
 
 
 

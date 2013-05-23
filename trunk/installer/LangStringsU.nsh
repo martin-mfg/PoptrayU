@@ -51,6 +51,8 @@ LangString uninstaller_desc ${LANG_POLISH} "Ten kreator deinstalacji PopTrayU z 
 LangString uninstall_from ${LANG_POLISH} "Dezinstalacja z:"
 LangString uninstall_remove_config_files ${LANG_POLISH} "Usuń pliki konfiguracyjne"
 
+LangString full_install ${LANG_POLISH} "pełnej instalacji"
+LangString minimum_install ${LANG_POLISH} "Minimum Instalacja"
 
 ;-------------------------- Hungarian --------------------------------
 
@@ -105,6 +107,8 @@ LangString uninstaller_desc ${LANG_HUNGARIAN} "A varázsló uninstall PopTrayU s
 LangString uninstall_from ${LANG_HUNGARIAN} "Eltávolítás innen:"
 LangString uninstall_remove_config_files ${LANG_HUNGARIAN} "Vegye konfigurációs fájlok"
 
+LangString full_install ${LANG_HUNGARIAN} "A telepítés befejezéséhez"
+LangString minimum_install ${LANG_HUNGARIAN} "Minimális telepítés"
 
 ;-------------------------- Czech --------------------------------
 
@@ -158,9 +162,10 @@ LangString uninstaller_desc ${LANG_CZECH} "Tento průvodce vám odinstalovat Pop
 LangString uninstall_from ${LANG_CZECH} "Odinstalace z:"
 LangString uninstall_remove_config_files ${LANG_CZECH} "Odstranit konfiguračních souborů"
 
+LangString full_install ${LANG_CZECH} "Kompletní instalace"
+LangString minimum_install ${LANG_CZECH} "Minimální instalace"
 
 ;-------------------------- Portuguese --------------------------------
-
 
 LangString mui_welcomepage_title ${LANG_PORTUGUESE} "Assistente de Instalação do PopTrayU"
 LangString mui_welcomepage_text1 ${LANG_PORTUGUESE} "Este assistente irá guiá-lo através da instalação de PopTrayU"
@@ -212,10 +217,10 @@ LangString uninstaller_desc ${LANG_PORTUGUESE} "Este assistente irá desinstalar
 LangString uninstall_from ${LANG_PORTUGUESE} "Desinstalar a partir de:"
 LangString uninstall_remove_config_files ${LANG_PORTUGUESE} "Remover arquivos de configuração"
 
-
+LangString full_install ${LANG_PORTUGUESE} "instalação completa"
+LangString minimum_install ${LANG_PORTUGUESE} "instalação mínima"
 
 ;-------------------------- Romanian --------------------------------
-
 
 LangString mui_welcomepage_title ${LANG_ROMANIAN} "PopTrayU Setup Wizard"
 LangString mui_welcomepage_text1 ${LANG_ROMANIAN} "Acest asistent vă va ghida prin instalarea de PopTrayU"
@@ -267,7 +272,8 @@ LangString uninstaller_desc ${LANG_ROMANIAN} "Acest vrajitor va dezinstala PopTr
 LangString uninstall_from ${LANG_ROMANIAN} "Dezinstalarea la:"
 LangString uninstall_remove_config_files ${LANG_ROMANIAN} "Remove fișiere de configurare"
 
-
+LangString full_install ${LANG_ROMANIAN} "Instalare completa"
+LangString minimum_install ${LANG_ROMANIAN} "minimă de instalare"
 
 ;-------------------------- Swedish --------------------------------
 
@@ -321,7 +327,8 @@ LangString uninstaller_desc ${LANG_SWEDISH}  "Denna guide kommer att avinstaller
 LangString uninstall_from ${LANG_SWEDISH}  "Avinstallera från:"
 LangString uninstall_remove_config_files ${LANG_SWEDISH}  "Ta bort konfigurationsfiler"
 
-
+LangString full_install ${LANG_SWEDISH} "Fullständig installation"
+LangString minimum_install ${LANG_SWEDISH} "Minimal installation"
 
 ;-------------------------- Bulgarian --------------------------------
 
@@ -375,7 +382,8 @@ LangString uninstaller_desc ${LANG_BULGARIAN}  "Този помощник ще �
 LangString uninstall_from ${LANG_BULGARIAN}  "Деинсталиране от:"
 LangString uninstall_remove_config_files ${LANG_BULGARIAN}  "Премахване на конфигурационните файлове"
 
-
+LangString full_install ${LANG_BULGARIAN} "пълна инсталация"
+LangString minimum_install ${LANG_BULGARIAN} "Минимална инсталация"
 
 ;-------------------------- Greek --------------------------------
 
@@ -429,7 +437,8 @@ LangString uninstaller_desc ${LANG_GREEK} "Αυτός ο οδηγός θα PopTr
 LangString uninstall_from ${LANG_GREEK} "Κατάργηση εγκατάστασης από:"
 LangString uninstall_remove_config_files ${LANG_GREEK} "Αφαιρέστε τα αρχεία ρύθμισης παραμέτρων"
 
-
+LangString full_install ${LANG_GREEK} "πλήρης εγκατάσταση"
+LangString minimum_install ${LANG_GREEK} "Ελάχιστη Εγκατάσταση"
 
 ;-------------------------- Russian --------------------------------
 
@@ -484,6 +493,8 @@ LangString uninstaller_desc ${LANG_RUSSIAN} "Этот мастер PopTrayU уд
 LangString uninstall_from ${LANG_RUSSIAN} "Удаление из:"
 LangString uninstall_remove_config_files ${LANG_RUSSIAN} "Удалить файлы конфигурации"
 
+LangString full_install ${LANG_RUSSIAN} "Полная установка"
+LangString minimum_install ${LANG_RUSSIAN} "Минимальная установка"
 
 ;-------------------------- Korean --------------------------------
 
@@ -537,6 +548,8 @@ LangString uninstaller_desc ${LANG_KOREAN} "이 마법사는 컴퓨터에서 Pop
 LangString uninstall_from ${LANG_KOREAN} "에서 제거"
 LangString uninstall_remove_config_files ${LANG_KOREAN} "구성 파일 제거"
 
+LangString full_install ${LANG_KOREAN} "전체 설치"
+LangString minimum_install ${LANG_KOREAN} "최소 설치"
 
 ;-------------------------- Ukranian --------------------------------
 
@@ -590,7 +603,8 @@ LangString uninstaller_desc ${LANG_UKRAINIAN} "Цей майстер PopTrayU в
 LangString uninstall_from ${LANG_UKRAINIAN} "Видалення з:"
 LangString uninstall_remove_config_files ${LANG_UKRAINIAN} "Видалити файли конфігурації"
 
-
+LangString full_install ${LANG_UKRAINIAN} "Повна установка"
+LangString minimum_install ${LANG_UKRAINIAN} "Мінімальна установка"
 
 ;-------------------------- Lithuanian --------------------------------
 
@@ -644,6 +658,8 @@ LangString uninstaller_desc ${LANG_LITHUANIAN} "Šis vedlys padės pašalinti Po
 LangString uninstall_from ${LANG_LITHUANIAN} "pašalinimas iš:"
 LangString uninstall_remove_config_files ${LANG_LITHUANIAN} "Pašalinti konfigūracijos failus"
 
+LangString full_install ${LANG_LITHUANIAN} "Pilnas įrengimas"
+LangString minimum_install ${LANG_LITHUANIAN} "Minimalus įrengimas"
 
 ;-------------------------- Turkish --------------------------------
 
@@ -697,6 +713,8 @@ LangString uninstaller_desc ${LANG_TURKISH} "Bu sihirbaz bilgisayarınızdan Pop
 LangString uninstall_from ${LANG_TURKISH} "den kaldırma:"
 LangString uninstall_remove_config_files ${LANG_TURKISH} "Yapılandırma Dosyaları Kaldır"
 
+LangString full_install ${LANG_TURKISH} "Tam Kurulum"
+LangString minimum_install ${LANG_TURKISH} "Minimum Kurulum"
 
 ;-------------------------- Slovak --------------------------------
 
@@ -750,6 +768,8 @@ LangString uninstaller_desc ${LANG_SLOVAK} "Tento sprievodca vám odinštalovať
 LangString uninstall_from ${LANG_SLOVAK} "Odinštalovanie z:"
 LangString uninstall_remove_config_files ${LANG_SLOVAK} "Odstrániť konfiguračných súborov"
 
+LangString full_install ${LANG_SLOVAK} "Kompletná inštalácia"
+LangString minimum_install ${LANG_SLOVAK} "Minimálna inštalácia"
 
 ;-------------------------- Slovanian --------------------------------
 
@@ -803,6 +823,8 @@ LangString uninstaller_desc ${LANG_SLOVENIAN} "Ta čarovnik bo odstranil PopTray
 LangString uninstall_from ${LANG_SLOVENIAN} "Odstranjevanje iz:"
 LangString uninstall_remove_config_files ${LANG_SLOVENIAN} "Odstrani konfiguracijske datoteke"
 
+LangString full_install ${LANG_SLOVENIAN} "Polna namestitev"
+LangString minimum_install ${LANG_SLOVENIAN} "Minimalna namestitev"
 
 ;-------------------------- Croatian --------------------------------
 
@@ -856,7 +878,8 @@ LangString uninstaller_desc ${LANG_CROATIAN} "Ovaj čarobnjak će deinstalirati 
 LangString uninstall_from ${LANG_CROATIAN} "Uklanjanje iz:"
 LangString uninstall_remove_config_files ${LANG_CROATIAN} "Uklanjanje konfiguracijskim datotekama"
 
-
+LangString full_install ${LANG_CROATIAN} "Cijeli Instalacija"
+LangString minimum_install ${LANG_CROATIAN} "Minimalna Instalacija"
 
 ;-------------------------- Chinese (Simplified) --------------------------------
 
@@ -910,7 +933,8 @@ LangString uninstaller_desc ${LANG_SIMPCHINESE} "该向导将卸载PopTr​​ay
 LangString uninstall_from ${LANG_SIMPCHINESE} "卸载"
 LangString uninstall_remove_config_files ${LANG_SIMPCHINESE} "删除配置文件"
 
-
+LangString full_install ${LANG_SIMPCHINESE} "完整安装"
+LangString minimum_install ${LANG_SIMPCHINESE} "最小安装"
 
 ;-------------------------- Hebrew --------------------------------
 
@@ -964,7 +988,8 @@ LangString uninstaller_desc ${LANG_HEBREW} "אשף זה יהיה להסיר PopT
 LangString uninstall_from ${LANG_HEBREW} "ההסרה מ:"
 LangString uninstall_remove_config_files ${LANG_HEBREW} "להסיר קבצי תצורה"
 
-
+LangString full_install ${LANG_HEBREW} "התקנה מלאה"
+LangString minimum_install ${LANG_HEBREW} "התקנה מזערית"
 
 ;-------------------------- Arabic --------------------------------
 LangString mui_welcomepage_title ${LANG_ARABIC} "معالج تثبيت PopTrayU"
@@ -1016,3 +1041,7 @@ LangString mui_subhead_uninstall ${LANG_ARABIC} "إزالة PopTrayU من جها
 LangString uninstaller_desc ${LANG_ARABIC} "وهذا إلغاء تثبيت معالج PopTrayU من جهاز الكمبيوتر الخاص بك. انقر فوق إلغاء التثبيت للمتابعة."
 LangString uninstall_from ${LANG_ARABIC} "إلغاء تثبيت من:"
 LangString uninstall_remove_config_files ${LANG_ARABIC} "إزالة ملفات التكوين"
+
+LangString full_install ${LANG_ARABIC} "التثبيت الكامل"
+LangString minimum_install ${LANG_ARABIC} "تثبيت الحد الأدنى"
+
