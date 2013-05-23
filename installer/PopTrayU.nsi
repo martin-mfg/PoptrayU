@@ -23,17 +23,11 @@ Name "${PRODUCT} ${VERSION}"
 
 !define TEMP $R9
 
-;------------------------------------------------------------------[ Configuration ]---
+;------------------------------------------------------------------[ Configuration1 ]---
 
 ;OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
 OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}_beta${VER_BETA}u.exe"
 SetCompressor /SOLID lzma
-
-InstType "Full"
-InstType "Minimum"
-
-ShowInstDetails show
-ShowUninstDetails show
 
 ;------------------------------------------------------------------[ Modern UI Configuration ]---
 
@@ -138,6 +132,14 @@ BrandingText " "
 ; Languages need to be defined AFTER THE PAGES!
 !include LangStrings.nsh
 !include LangStringsU.nsh
+
+;------------------------------------------------------------------[ Configuration2 ]---
+
+InstType $(full_install) ;"Full"
+InstType $(minimum_install) ;"Minimum"
+
+ShowInstDetails show
+ShowUninstDetails show
 
 ;------------------------------------------------------------------[ Reserve Files ]---
   
