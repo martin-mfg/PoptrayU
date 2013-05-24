@@ -31,7 +31,7 @@
     ;
     Push 936
     Push ${LANG_SIMPCHINESE}
-    Push "Chinese (Simplified)"
+    Push "中文简体 (Chinese, Simplified)"
     ;
     ;Push 950
     ;Push ${LANG_TRADCHINESE}
