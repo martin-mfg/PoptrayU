@@ -1,6 +1,6 @@
 #---------------------------------------------------------------------------------------------
-# Software - name                          : PopTray
-# Software - version                       : 3.2 (beta 2)
+# Software - name                          : PopTrayU
+# Software - version                       : 4.1 beta 2
 # Software - author                        : Renier Crause
 # Software - website                       : http://www.poptray.org
 #--------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@
 # File - process                           : update -> zip -> send to translation@poptray.org
 #--------------------------------------------------------------------------------------------
 (All Actions)=(Toutes les actions)
-(Checkmark toggles visibility)=Cocher les barres d'outils à afficher        - - 
+(Checkmark toggles visibility)=Cocher les barres d'outils à afficher
 1 message deleted.=1 message supprimé
 [Use Default Program]=[utiliser logiciel par défaut]
 [Use Default Sound]=[utiliser son par défaut]
@@ -447,3 +447,81 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=Le bouton [x] réduit au lieu de quitter
 Yes=Oui
 You are trying to delete protected messages.=Vous êtes sur le point de supprimer des messages protégés.
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aspect visuel
+Main Window Listbox Font=Fenêtre principale zone de liste Police
+Change the main window listbox background=Changer la fenêtre principale zone de liste background
+Change the main window listbox foreground=Changer la fenêtre principale zone de liste plan
+Failure connecting to server.=Échec de connexion au serveur.
+Server found, but is not a mail server.=Serveur trouvé, mais n'est pas un serveur de messagerie.
+Change the Main Window Listbox Font=Changer la fenêtre principale zone de liste Police
+Clear all customizations=Effacer toutes les personnalisations
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Merci à tous les bénévoles suivants qui ont aidé à traduire ce logiciel:
+Language=Language
+Translator=Traducteur
+Component=Composant
+Author=Auteur
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU est un travail dérivé de PopTray de Renier Crause 3.2 et une grande partie du code de cette application est donc d'auteur 2001-2005 Renier Crause. Un grand merci à Renier pour le développement PopTray, et pour le soutien qu'il a fourni.
+Check online for newer version=Vérifiez en ligne pour la version plus récente
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Afficher les erreurs dans les popups de ballon (au lieu de boîtes de dialogue modales)
+Changes how errors are shown when the main window is visible.=Change la façon dont les erreurs sont affichées lorsque la fenêtre principale est visible.
+Error checking=Vérification d'erreur
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Crédits composants
+Translation Credits=Crédits de conversion
+Message Deletion=La suppression du message
+Mail Client Communication=Courrier Communication Client
+Rules/Blacklist=Règles / blacklist
+Advanced POP Settings=Paramètres avancés POP
+Error Handling=Gestion des erreurs
+Message Download (Enable to use advanced rules)=Télécharger le message (Enable pour utiliser les règles avancées)
+Startup=Startup
+Tray Icon=Icône de la barre
+New Message Notification=Nouvelle notification de message
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Combien de fois doit PopTrayU vérifier les nouveaux messages?
+Interval Check Conditions=Intervalle de vérifier les conditions d'=
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Folder: (où les fichiers PopTray.ini et les règles sont stockées)
+Misc=Divers
+About PopTrayU=À propos de PopTrayU
+Version=Version
+Show Images=Voir les photos
+Reset Customizations=Annule la personnalisation
+Most UI Items= Articles les plus Ui
+Vertical Tabs=Vertical Tabs
+Message List=Liste des messages
+Flash Tray Icon=Flash icône de la barre
+Show Balloon Notification=Afficher Ballon notification
+Use Deluxe Balloon=Utilisez Deluxe Ballon
+(show for=(Montrer pour
+seconds)=seconde)
+Show Main Window=Afficher la fenêtre principale
+Keyboard Lights=éclairage du clavier
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 avec SSL ou APOP
+Specify a different timer interval for each account.=Spécifiez un intervalle de minuterie différent pour chaque compte.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Utilisé par les utilisateurs dial-up qui ne veulent pas le dialogue dial-up ~ de pop-up lorsque vous n'êtes pas connecté. ~ Simplifie le contrôle un peu plus lent.
+This setting can be changed via setup or a command line parameter.=Ce réglage peut être modifié via l'installation ou un paramètre de ligne de commande.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not reccommended.=Hot-Keys sont l'échelle du système. Utilisez un peu raccourci clavier plutôt que celui que vous utilisez fréquemment dans d'autres applications. Hot-touches comme Ctrl-C ne sont pas conseillé.
+Don't automatically check for new messages=Ne pas vérifier automatiquement les nouveaux messages
+Set Interval per account=Définir l'intervalle par compte
+Only check when already online=Vérifier uniquement lorsque déjà en ligne
+
+#---------------------------------------------------------------------
+# New Strings for 4.1 (Nouvelles Cordes pour 4.1)
+#---------------------------------------------------------------------
+Don't check this account between=Ne cochez pas cette compte entre
+Advanced=Avancée
+Use SSL/TLS=Utiliser SSL / TLS
+Authentication=Authentification
+SSL/TLS Version:=SSL / TLS Version:
+Auto=Auto
+Password=Mot de passe
+Toolbar Color Scheme:=Color Scheme barre d'outils:
+Normal=Normal
+Twilight=Crépuscule
+
