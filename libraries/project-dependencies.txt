@@ -52,7 +52,7 @@ TRegExpr
   Included in this source zip
   http://www.regexpstudio.com/
 
-Indy 9 - Version 9.0.53
+Indy 10 - Version 10.???
 -------
   http://www.indyproject.org
   This version is the latest from Indy's SVN, not a precompiled binary
@@ -82,11 +82,12 @@ INSTALLER DEPENDENCIES
 
 To package PopTrayU into an installer, you will need:
 
-NSIS - Version 2.46
-----
+NSIS Unicode - Version 2.46.5
+------------
   Nullsoft Scriptable Install System. Creates the installer.
-  http://nsis.sourceforge.net/
-  Uses the Modern UI included in newer versions.
+  http://www.scratchpaper.com/
+  see also documentatio at http://nsis.sourceforge.net/
+  Uses the Modern UI included.
 
 
 Replace Vista Icon - Version 1.0
@@ -103,5 +104,10 @@ Microsoft HTML Help Workshop - Version 1.0
   an error message part-way through the install saying you already have a 
   newer version. This message is in regards to the bundled help *viewer* 
   that the workshop is attempting to install, not the help workshop itself.
+
+BabelPad
+--------
+  Not required, but recommended for editing the unicode installer script files
+  http://www.babelstone.co.uk/software/babelpad.html
 
 ********************************************************************
