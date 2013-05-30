@@ -55,57 +55,57 @@ LangString minimum_install ${LANG_ENGLISH} "Minimum"
 
 ;-------------------------- German --------------------------------
 LangString mui_welcomepage_title ${LANG_GERMAN} "PopTrayU Setup-Assistent"
-LangString mui_welcomepage_text1 ${LANG_GERMAN} "Dieser Assistent führt Sie durch die Installation von PopTrayU zu führen."
-LangString mui_welcomepage_text2 ${LANG_GERMAN} "PopTrayU ist ein full-featured, Open-Source-E-Mail-Benachrichtigung mit einer einfach zu bedienenden Oberfläche."
-LangString mui_finish_dl_ssl_plugin ${LANG_GERMAN} "Herunterladen SSL Plugin"
+LangString mui_welcomepage_text1 ${LANG_GERMAN} "Dieser Assistent wird Sie durch die Installation von PopTrayU führen."
+LangString mui_welcomepage_text2 ${LANG_GERMAN} "PopTrayU ist ein umfangreiches Open-Source-E-Mail-Benachrichtigungsprogramm mit einer einfach zu bedienenden Benutzeroberfläche."
+LangString mui_finish_dl_ssl_plugin ${LANG_GERMAN} "SSL-Plugin herunterladen"
 
 LangString SEC_PopTrayU ${LANG_GERMAN} "PopTrayU (erforderlich)"
-LangString DESC_SecPopTrayU ${LANG_GERMAN} "Kopieren PopTrayU Anwendung Dateien in den Programmordner."
+LangString DESC_SecPopTrayU ${LANG_GERMAN} "PopTrayU-Anwendungsdateien in den Programmordner kopieren."
 
-LangString SEC_Icons ${LANG_GERMAN} "Symbole/Icons"
-LangString DESC_SecIcons ${LANG_GERMAN} "Wählen Sie die Symbole zu erstellen."
+LangString SEC_Icons ${LANG_GERMAN} "Icons"
+LangString DESC_SecIcons ${LANG_GERMAN} "Wählen Sie die zu erstellenden Icons aus."
 
-LangString SEC_StartMenuIcons ${LANG_GERMAN} "Startmenü Symbole"
-LangString DESC_SecStartMenu ${LANG_GERMAN} "Erstellen Sie eine Gruppe unter der PopTrayU Startmenü mit Symbolen die die PopTrayU Dateien."
+LangString SEC_StartMenuIcons ${LANG_GERMAN} "Startmenü-Icon"
+LangString DESC_SecStartMenu ${LANG_GERMAN} "Im Startmenü eine Gruppe PopTrayU mit den Icons der PopTrayU-Dateien erstellen."
 
-LangString SEC_StartupIcon ${LANG_GERMAN} "Startup Symbol"
-LangString DESC_SecStartup ${LANG_GERMAN} "Automatisch starten, wenn Windows startet PopTrayU"
+LangString SEC_StartupIcon ${LANG_GERMAN} "Startup-Icon"
+LangString DESC_SecStartup ${LANG_GERMAN} "PopTrayU automatisch mit Windows starten"
 
-LangString SEC_DesktopIcon ${LANG_GERMAN} "Desktopsymbol"
-LangString DESC_SecDesktop ${LANG_GERMAN} "Setzen PopTrayU Symbol auf dem Desktop"
+LangString SEC_DesktopIcon ${LANG_GERMAN} "Desktop-Icon"
+LangString DESC_SecDesktop ${LANG_GERMAN} "Ein PopTrayU-Icon auf dem Desktop erzeugen"
 
 LangString SEC_Lang ${LANG_GERMAN} "Sprachdateien"
-LangString DESC_SecLang ${LANG_GERMAN} "Installieren Sie die Sprachdateien für mehrsprachige PopTrayU."
+LangString DESC_SecLang ${LANG_GERMAN} "Installieren Sie die Sprachdateien für ein mehrsprachiges PopTrayU."
 
-LangString SEC_SoundFiles ${LANG_GERMAN} "Sound-Dateien"
-LangString DESC_SecSound ${LANG_GERMAN} "Install Benachrichtigung Sound-Dateien."
+LangString SEC_SoundFiles ${LANG_GERMAN} "Ereignisklänge"
+LangString DESC_SecSound ${LANG_GERMAN} "Ereignisklangdateien installieren."
 
-LangString SEC_OptionalPlugins ${LANG_GERMAN} "Optional Plugins"
+LangString SEC_OptionalPlugins ${LANG_GERMAN} "Optionale Plugins"
 
-LangString SEC_KeyboardLights ${LANG_GERMAN} "Keyboard Lichter Benachrichtigung Plugin"
-LangString DESC_SecKeyboardLights ${LANG_GERMAN} "Signalisierung neuer Nachrichten durch Einschalten oder Blinken der Scroll-Lock-Taste Licht."
+LangString SEC_KeyboardLights ${LANG_GERMAN} "Benachrichtigungsplugin: Keyboardlicht"
+LangString DESC_SecKeyboardLights ${LANG_GERMAN} "Signalisierung neuer Nachrichten durch Einschalten oder Blinken der Scroll-Lock-Taste."
 
-LangString title_user_storage_dir ${LANG_GERMAN} "Benutzereinstellungen Lagerort"
-LangString desc_user_storage_dir ${LANG_GERMAN} "Wo soll PopTrayU speichern Einstellungen wie E-Mail-Konten und Regeln?"
-LangString ini_storage_appdata ${LANG_GERMAN} "Aktueller Benutzer Ordner AppData (empfohlen)"
-LangString ini_storage_appdata_desc ${LANG_GERMAN} "Diese Einstellung ist für die meisten Nutzer, vor allem, wenn Sie mit Vista oder Windows 7. Jeder Benutzer dieses Computers haben ihre eigenen Einstellungen für Ordner PopTrayU."
-LangString ini_alluser_appdata ${LANG_GERMAN} "All Users Ordner AppData"
-LangString ini_alluser_appdata_desc ${LANG_GERMAN} "Diese Einstellung ist am besten für Benutzer, die mehrere Benutzerkonten auf ihrem Rechner haben, wollen aber alle Benutzer der Maschine, um die gleiche E-Mail-Konten und Einstellungen PopTrayU teilen."
-LangString ini_progfiles ${LANG_GERMAN} "PopTrayU Installationsordner"
-LangString ini_progfiles_desc ${LANG_GERMAN} "Diese Einstellung ist am besten für professionellen Anwender, die UAC deaktiviert haben, und wünschen allen PopTrayU die Dateien an einem Ort zu halten. Windows 95-Benutzer sollten diese Option auch auswählen."
+LangString title_user_storage_dir ${LANG_GERMAN} "Speicherort für Benutzereinstellungen"
+LangString desc_user_storage_dir ${LANG_GERMAN} "Wo soll PopTrayU die Einstellungen für die E-Mail-Konten und Regeln speichern?"
+LangString ini_storage_appdata ${LANG_GERMAN} "Aktueller Benutzerordner (empfohlen)"
+LangString ini_storage_appdata_desc ${LANG_GERMAN} "Diese Einstellung wird für die meisten Nutzer empfohlen - vor allem, wenn Sie Vista oder Windows 7 nutzen. Jeder Benutzer dieses Computers hat seine eigenen E-Mail-Konten und Einstellungen für PopTrayU."
+LangString ini_alluser_appdata ${LANG_GERMAN} "Ordner für alle Benutzer"
+LangString ini_alluser_appdata_desc ${LANG_GERMAN} "Diese Einstellung eignet sich am besten für Benutzer, die zwar mehrere Benutzerkonten auf ihrem Rechner haben, aber die gleichen E-Mail-Konten und Einstellungen von PopTrayU teilen wollen."
+LangString ini_progfiles ${LANG_GERMAN} "PopTrayU-Installationsordner"
+LangString ini_progfiles_desc ${LANG_GERMAN} "Diese Einstellung wird für professionelle Anwender empfohlen, die UAC deaktiviert haben und / oder alle PopTrayU-Dateien an einem Ort wünschen. Windows 95-Benutzer sollten diese Option ebenfalls auswählen."
 
-LangString msg_closing_poptrayu ${LANG_GERMAN} "Schließen bestehenden PopTrayU"
-LangString msg_cant_close_poptrayu ${LANG_GERMAN} "Kann nicht geschlossen werden vorhandene PopTrayU"
+LangString msg_closing_poptrayu ${LANG_GERMAN} "Schließe PopTrayU ..."
+LangString msg_cant_close_poptrayu ${LANG_GERMAN} "PopTrayU kann nicht geschlossen werden!"
 
-LangString mui_header_uninstall ${LANG_GERMAN} "Deinstallieren PopTrayU"
-LangString mui_subhead_uninstall ${LANG_GERMAN} "Entfernen PopTrayU von diesem Computer."
+LangString mui_header_uninstall ${LANG_GERMAN} "PopTrayU deinstallieren"
+LangString mui_subhead_uninstall ${LANG_GERMAN} "PopTrayU von diesem Computer entfernen."
 
-LangString uninstaller_desc ${LANG_GERMAN} "Dieser Assistent wird PopTrayU von Ihrem Computer deinstallieren. Klicken Sie auf Deinstallieren, um fortzufahren."
-LangString uninstall_from ${LANG_GERMAN} "Deinstallieren von:"
-LangString uninstall_remove_config_files ${LANG_GERMAN} "Entfernen Konfigurationsdateien"
+LangString uninstaller_desc ${LANG_GERMAN} "Dieser Assistent wird PopTrayU von Ihrem Computer entfernen. Klicken Sie auf Deinstallieren, um fortzufahren."
+LangString uninstall_from ${LANG_GERMAN} "Deinstallation von:"
+LangString uninstall_remove_config_files ${LANG_GERMAN} "Konfigurationsdateien entfernen"
 
-LangString full_install ${LANG_GERMAN} "Vollständige"
-LangString minimum_install ${LANG_GERMAN} "Minimum"
+LangString full_install ${LANG_GERMAN} "Vollständige Installation"
+LangString minimum_install ${LANG_GERMAN} "Minimale Installation"
 
 ;-------------------------- French --------------------------------
 
