@@ -1,454 +1,454 @@
-#----------------------------------#
+๏ปฟ#----------------------------------#
 # PopTray Arabic translation file  #
 #----------------------------------#
 # Ahmad Mostafa                    #
 # ahmadmostafa@gmail.com           #
 # Cairo, Egypt                     #
 #----------------------------------#
-# Last Change: ý02:45 AM ý12/ý29/ý2004 #
+# Last Change: โ€02:45 AM โ€12/โ€29/โ€2004 #
 #----------------------------------#
 # PopTray 3.1                      #
 #----------------------------------#
 
-(All Actions)=(฿แ วแลฬัวมวส)
-(Checkmark toggles visibility)=(ฺแวใษ ีอ สูๅั/สฮÝํ วแริัุษ)
-1 message deleted.=สใ อะÝ ัำวแษ ๆวอฯษ.
-[Use Default Program]=[ลำสฮฯวใ วแศัไวใฬ วแลÝสัวึํ]
-[Use Default Sound]=[ลำสฮฯวใ วแีๆส วแลÝสัวึํ]
-About ...=อๆแ ...
-About=อๆแ
-Account Info changed.~Do you want to save it?=ใฺแๆใวส วแอำวศ สÛํัส.~ๅแ สัํฯ อÝูๅฟ
-Account=วแอำวศ
-accounts.=อำวศวส.
-Accounts=อำวศวส
-Action:=วแลฬัวม:
-Actions:=วแลฬัวมวส:
-Actions=ลฬัวมวส
-Add Account=ลึวÝษ อำวศ
-Add Rule to Delete all mail from Sender=ลึวÝษ Þวฺฯษ แอะÝ ฿แ วแศัํฯ ใไ วแใัำแ
-Add Rule to mark messages from Sender as Spam=ลึวÝษ Þวฺฯษ แๆึฺ ฺแวใษ สุÝแํ แแัำวฦแ ใไ วแใัำแ
-Add Rule=ลึวÝษ Þวฺฯษ
-Add sender to Black List=ลึวÝษ วแใัำแ แแวฦอษ วแำๆฯวม
-Add sender to White List=ลึวÝษ วแใัำแ แแวฦอษ วแศํึวม
-Added to the White List:=สใส วแลึวÝษ แแวฦอษ วแศํึวม:
-Advanced Options=ฮํวัวส ใสÞฯใษ
-Advanced Show Info=ใฺแๆใวส ลูๅวั ใสÞฯใษ
-Afrikaans=วแรÝัํÞวไํษ (Afrikaans)
-All Accounts=฿แ วแอำวศวส
-All Files=฿แ วแใแÝวส
-All=วแ฿แ
-Already Connected=ใสีแ ศวแÝฺแ
-and=ๆ
-Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=สอัํ฿ ัใา ฺแศษ วแไูวใ ฺไฯ ลำสÞศวแ฿ ศัํฯว๐ ฬฯํฯว๐.~ๅะว ำํไสฬ ใฤิัว๐ ใๆใึว๐ ศฯแว๐ ใไ วแัใา วแฺวฯํ วแหวศส.
-Animated Star=ไฬใษ ใสอั฿ษ
-Animated Tray Icon=ัใา ฺแศษ วแไูวใ ใสอั฿
-Any mail received from the following e-mail addresses~will automatically be deleted.=รํ ศัํฯ ํำสÞศแ ใไ ฺไวๆํไ~วแศัํฯ วแยสํษ ำํอะÝ สแÞวฦํว๐.
-Arabic=วแฺัศํษ (Arabic)
-Are you sure?=ๅแ รไส ใสร฿ฯฟ
-Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=ุแศ สร฿ํฯ Þศแ อะÝ รํ ศัํฯ. ๅะว ÝÞุ~ํฺใแ ฺไฯ วำสฮฯวใ าั "อะÝ". อะÝ~วแัำวฦแ ศวำสฮฯวใ วแÞๆวฺฯ แไ ํุแศ สร฿ํฯว๐.
-AutoCheck disabled=วแศอห วแสแÞวฦํ ใฺุแ
-AutoCheck Enabled=สใ฿ํไ วแศอห วแสแÞวฦํ
-AutoCheck only while Minimized=วแศอห วแสแÞวฦํ ÝÞุ รหไวม วแสÞแํี
-Because of the Security Risk, PopTray doesn't allow the opening of Executable files.=ศำศศ วแใฮวุัษ วแรใไํษก แว ํำใอ วแศัไวใฬ ศÝสอ วแใแÝวส วแÞวศแษ แแสไÝํะ.
-Black List mark as Spam=ๆึฺ ฺแวใษ สุÝแํ แัำวฦแ วแแวฦอษ วแำๆฯวม
-Black List will mark the messages as Spam~instead of deleting them.=ำํสใ ๆึฺ ฺแวใษ สุÝแํ แแัำวฦแ ใไ~วแแวฦอษ วแำๆฯวม ศฯแว๐ ใไ อะÝๅว.
-Black List=วแแวฦอษ วแำๆฯวม
-Body=วแใสไ
-Bulgarian=วแศแÛวัํษ (Bulgarian)
-Cancel=ลแÛวม วแรใั
-Cannot delete last Account=แว ํใ฿ไ อะÝ วแอำวศ วแรฮํั
-Caption Options=ฮํวัวส วแสำใํวส
-Catalan=วแ฿วสวแวไํษ (Catalan)
-Categories:=วแÝฦวส:
-CC=ไำฮษ ลแ์
-Check All=ศอห ฿แ วแอำวศวส
-Check and Info=ศอห ๆลูๅวั ใฺแๆใวส
-Check and Show=ศอห ๆลูๅวั วแัำวฦแ
-Check current account for New Mail=วแศอห ฺไ ศัํฯ ฬฯํฯ Ýํ วแอำวศ วแอวแํ
-Check First Account=ศอห วแอำวศ วแรๆแ
-Check for Mail=ศอห ฺไ วแศัํฯ
-Check for new mail every =วแศอห ฺไ ศัํฯ ฬฯํฯ ฿แ 
-Check for New Mail on Startup=วแศอห ฺไ ศัํฯ ฬฯํฯ ฺไฯ ศฯม วแศัไวใฬ
-Check if On-Line=วแสร฿ฯ ใไ วแลสีวแ Þศแ วแศอห
-Check on-line if newer version available.=วแศอห Ýํ วแใๆÞฺ ฺไ รอฯห ไำฮษ ใสๆวÝัษ
-Check=ศอห
-Checked:=สใ วแศอห:
-Checking=ฬวัํ ศอห
-Chinese=วแีํไํษ (Chinese)
-Close=ลÛแวÞ
-Color:=วแแๆไ:
-Confirm=สร฿ํฯ
-Connect Error:=ฮุร ศวแวสีวแ:
-Connection Info=ใฺแๆใวส วแลสีวแ
-Connection TimeOut:=ใๅแษ วแวสีวแ:
-Contact Info=ใฺแๆใวส วแลสีวแ
-Contains=ํอสๆํ ฺแ์
-Copy=ไำฮ
-Criteria=วแใฺํวั
-Customize...=สฮีํี...
-Customize=สฮีํี
-Cut=Þี
-Czech=วแสิํ฿ํษ (Czech)
-Danish=วแฯไใวั฿ํษ (Danish)
-Date=วแสวัํฮ
-Default e-mail program to open.=ศัไวใฬ วแศัํฯ วแลÝสัวึํ วแะํ ํสใ Ýสอๅ.
-Default sound to play when new mail arrives.=วแีๆส วแลÝสัวึํ วแะํ สสใ Þัวมสๅ ฺไฯ ๆีๆแ ศัํฯ ฬฯํฯ.
-Default sound:=วแีๆส วแลÝสัวึํ:
-Defaults=วแลÝสัวึํวส
-Del Spam=อะÝ วแสุÝแํ
-Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=ฺฯฯ ฯÞวฦÞ วแสรฮํั ศํไ ฿แ Ýวีแ ศอห ฺไ ศัํฯ.~ฺํไๅ ีÝัว๐ 0 แลแÛวม วแศอห วแสแÞวฦํ.
-Delay on a SingleClick to wait and see if a DoubleClick is coming.=วแสรฮํั ฺไฯ วแไÞัษ วแๆวอฯษ ๆวแวไสูวั อส์ สีศอ ไÞัสวไ.
-Delete Account:=อะÝ วแอำวศ:
-Delete Account=อะÝ วแอำวศ
-Delete Button only available when using Safe Delete option=าั วแอะÝ ํสๆวÝั ÝÞุ ฺไฯ ลำสฮฯวใ ฮํวั วแอะÝ วแยใไ
-Delete current message=อะÝ วแัำวแษ วแอวแํษ
-Delete Error:=ฮุร ฺไฯ วแอะÝ:
-Delete from server=อะÝ ใไ วแใแÞใ
-Delete Message from Server?=อะÝ วแัำวแษ ใไ วแใแÞใฟ
-Delete Messages from Server?=อะÝ วแัำวฦแ ใไ วแใแÞใฟ
-Delete messages marked as Spam=อะÝ วแัำวฦแ ะวส ฺแวใษ สุÝแํ
-Delete Rule:=อะÝ วแÞวฺฯษ:
-Delete Rule=อะÝ วแÞวฺฯษ
-Delete Spam from Server?=อะÝ วแสุÝแํ ใไ วแใแÞใฟ
-Delete Spam=อะÝ วแสุÝแํ
-Delete this message from server=อะÝ ๅะๅ วแัำวแษ ใไ วแใแÞใ
-Delete=อะÝ
-Deletion Confirmation=สร฿ํฯ วแอะÝ
-Description=วแๆีÝ
-Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=สฺุํแ วแศอห วแสแÞวฦํ ฺไ วแศัํฯ ศํไ วแำวฺวส~วแใอฯฯษ. ํีศอ ๅะว วแฮํวั ใÝํฯว๐ ฺไฯ ฺฯใ~ัÛศส฿ Ýํ ัฤํษ สไศํๅวส ใาฺฬษ รหไวม วแแํแ
-Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=ฺัึ ฺแวใวส วแสศๆํศ แแอำวศวส วแใฮสแÝษ~Ýํ ำุๆั ใสฺฯฯษ ศฯแว๐ ใไ ำุั ๆวอฯ.
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=ใไฺ สิÛํแ ใํÞวส วแศอห วแสแÞวฦํ รหไวม~ฺัึ ลุวั วแศัไวใฬ. ๅะว ใÝํฯ แใไฺ วแศอห~วแสแÞวฦํ ศํไใว สำสุํฺ วแศอห วแํฯๆํ
-Don't Check between=ใไฺ วแศอห Ýํ วแÝสัษ ศํไ
-Double Click delay on Click=ลไสูวั วแไÞัษ วแหวไํษ
-Double Click:=ไÞัษ ใาฯๆฬษ:
-Downloading...=ฬวัํ วแสไาํแ...
-Drag to Create Separators=วำอศ แลไิวม Ýๆวีแ
-Dutch=วแๅๆแไฯํษ (Dutch)
-E-Mail Program:=ศัไวใฬ วแศัํฯ:
-E-Mail:=ศัํฯ ลแ฿สัๆไํ:
-Empty=ฮวๆํ
-Enable Quick Checking=สใ฿ํไ วแศอห วแำัํฺ
-Enabled=สใ฿ํไ
-English=วแลไฬแําํษ (English)
-Equals=ํำวๆํ
-Error:=ฮุร:
-Error=ฮุร
-Estonian=วแลำสๆไํษ (Estonian)
-EXE files=ใแÝวส Þวศแษ แแสไÝํะ
-Execute File=สไÝํะ ใแÝ
-Failed to Save Attachment.=Ýิแ อÝู วแใัÝÞ.
-Finnish=วแÝไแไฯํษ (Finnish)
-First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=วแสอÞÞ รๆแว๐ ใไ วแลสีวแ ศวแลไสัไส Þศแ วแศอห ฺไ~วแศัํฯ. ํำสฺใแๅ ใำสฮฯใํ วแุแศ วแๅวสÝํ วแะํไ~แว ํัํฯๆไ ลไศหวÞ ใัศฺ วแุแศ วแๅวสÝํ ฺไฯใว ํ฿ๆไๆไ~Ûํั ใสีแํไ. สฬฺแ วแศอห รศุร Þแํแว๐.
-First Wait=วแลไสูวั รๆแว๐
-French (Canada)=(วแÝัไำํษ (฿ไฯว French (Canada)
-French=วแÝัไำํษ (French)
->From (address)=(ใไ (ฺไๆวไ
->From (name)=(ใไ (ลำใ
-From=ใไ
-General Options=ฮํวัวส ฺวใษ
-German=วแรแใวไํษ (German)
-Header=วแัรำ
-Hebrew=วแฺศัํษ (Hebrew)
-Help=สฺแํใวส
-Hide Viewed Messages=ลฮÝวม วแัำวฦแ วแใÞัๆมษ
-Hide=ลฮÝวม
-Homepage:=วแีÝอษ วแัฦํำํษ:
-Hot-Key:=วแใÝสวอ วแำวฮไ:
-Hot-Keys=วแใÝวสํอ วแำวฮไษ
-Hungarian=วแใฬัํษ (Hungarian)
-Ignore (don't notify)=(สฬวๅแ (แว สีฯั สไศํษ
-Ignore Connection Errors=สฬวๅแ รฮุวม วแลสีวแ
-Ignore errors that occurs while retrieving the header info.=สฬวๅแ วแรฮุวม วแสํ สอีแ รหไวม วำสแวใ ใฺแๆใวส วแัฤๆำ.
-Ignore Retrieve Errors=สฬวๅแ รฮุวม วแวำสแวใ
-Immediately check for mail when PopTray starts.=วแศอห Ýๆัว๐ ฺไ วแศัํฯ ฺไฯ ศฯวํษ วแศัไวใฬ.
-Import Rules=ลำสํัวฯ Þๆวฺฯ
-Important (Balloon Pop-Up)=(ๅวใ (ศวแๆไษ ใไศหÞษ
-Important=ๅวใ
-in=Ýํ
-Incompatible Plugin:=ๆูํÝษ สๆีํแ Ûํั ใสๆวÝÞษ:
-Indicate Viewed and Unviewed Messages=ศํวไ วแัำวฦแ วแใÞัๆมษ ๆÛํั วแใÞัๆมษ
-Info Balloon on Notification=ศวแๆไษ ใฺแๆใวส ฺไฯ วแสไศํษ
-Info=ใฺแๆใวส
-Information=ใฺแๆใวส
-INI Files=ใแÝวส INI
-Interval=วแใๆวÞํส
-Italian=วแลํุวแํษ (Italian)
-KB=฿ศ
-Korean=วแ฿ๆัํษ (Korean)
-Language:=วแแÛษ:
-Large icons=ัใๆา ฿ศํัษ
-Left Click:=ไÞัษ ํำั์:
-Lightning Bolt=ิฺวฺ ศัÞ
-Limit download to the first=สอฯํฯ วแสไาํแ ลแ์ รๆแ
-lines=ำุๆั
-Lists=แๆวฦอ
-Log Rule=สำฬํแ วแÞวฺฯษ
-Log Rules=สำฬํแ วแÞๆวฺฯ
-Login OK=สำฬํแ วแฯฮๆแ ีอํอ
-Login:=ลำใ วแฯฮๆแ:
-Mail Info=ใฺแๆใวส วแศัํฯ
-Mail=ศัํฯ
-MAPI instead of mailto:=mailto: ศฯแว๐ ใไ MAPI
-Mark as Spam=ๆึฺ ฺแวใษ สุÝแํ
-Mark as Viewed=ๆึฺ ฺแวใษ ใÞัๆม
-Mark the selected messages as Spam.=ๆึฺ ฺแวใษ สุÝแํ แแัำวฦแ วแใอฯฯษ.
-Maximum number of lines to download.=รÞี์ ฺฯฯ ำุๆั ํสใ สไาํแๅว.
-Message Count:=ฺฯฯ วแัำวฦแ:
-Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=ใฺัÝวส วแัำวแษ แว สสุวศÞ.~ฮํวั วแอะÝ วแยใไ ใไฺ อะÝ ๅะๅ วแัำวแษ.
-Message Status=อวแษ วแัำวแษ
-message(s) deleted.=ัำวแษ(ัำวฦแ) สใ อะÝๅว.
-message.=ัำวแษ.
-message=ัำวแษ
-messages.=ัำวฦแ.
-messages=ัำวฦแ
-Middle Click:=ไÞัษ ๆำุ์:
-Minimize PopTray to the System Tray instead of the Taskbar.=สÞแํี วแศัไวใฬ ลแ์ ฺแศษ วแไูวใ ศฯแว ใไ ิัํุ วแใๅวใ.
-Minimize to Tray=สÞแํี ลแ์ ฺแศษ วแไูวใ
-minutes.=ฯÞวฦÞ.
-Miscellaneous=ฮํวัวส ใสไๆฺษ
-Mouse Action:=ัฯ Ýฺแ วแÝรัษ:
-Mouse Buttons=ราัวั วแÝรัษ
-msg.=ัำวแษ.
-msgs.=ัำวฦแ.
-Multi-line Account Tabs=ำุๆั ใสฺฯฯษ แสศๆํศวส วแอำวศวส
-Name:=วแลำใ:
-Name=วแลำใ
-Never=แว สศอห สแÞวฦํว๐
-New Mail=ศัํฯ ฬฯํฯ
-New message using default mail client=ัำวแษ ฬฯํฯษ ศวำสฮฯวใ ฺใํแ วแศัํฯ วแลÝสัวึํ
-New Message=ัำวแษ ฬฯํฯษ
-New Messages Only=วแัำวฦแ วแฬฯํฯษ ÝÞุ
-New=ฬฯํฯ
-No E-Mail Client specified=แใ ํสใ สอฯํฯ ฺใํแ ศัํฯ
-No message selected.=แใ ํสใ สอฯํฯ ัำวแษ.
-No new mail=แว ํๆฬฯ ศัํฯ ฬฯํฯ
-No protocol defined for account=แใ ํสใ สฺัํÝ ศัๆสๆ฿ๆแ แแอำวศ
-No rule selected=แใ ํสใ สอฯํฯ Þวฺฯษ
-No Sort=แว Ýัา
-No=แว
-NoName=ศแว ลำใ
-None=ศฯๆไ
-Norwegian=วแไัๆํฬํษ (Norwegian)
-NOT Contains=แว ํอสๆํ ฺแ์
-Not On-Line=Ûํั ใสีแ
-NOT Supported=Ûํั ใฯฺๆใ
-Nothing=แว ิฦ
-Number of message lines to preview.=ฺฯฯ ำุๆั วแัำวแษ วแสํ ํสใ ใฺวํไสๅว.
-Number of messages marked as Spam:=ฺฯฯ วแัำวฦแ ะวส ฺแวใษ สุÝแํ:
-Number of seconds to display the Info window~before closing it.=ฺฯฯ หๆวไ ฺัึ ลุวั~วแใฺแๆใวส Þศแ ลÛแวÞๅ.
-Number of seconds to wait during connection~before giving an error.=ฺฯฯ หๆวไ วแลไสูวั รหไวม วแลสีวแ~Þศแ ลฺุวม สไศํๅ ศๆฬๆฯ ฮุร.
-Number of selected messages:=ฺฯฯ วแัำวฦแ วแใอฯฯษ:
-OK=ใๆวÝÞ
-Once a message has been viewed, don't show it again.=ฺฯใ ลูๅวั วแัำวแษ ใัษ รฮั์ Ýๆั Þัวมสๅว.
-Only download if size less than=วแสไาํแ ÝÞุ ละว ฿วไ วแอฬใ รÞแ ใไ
-Open...=Ýสอ...
-Options ...=ฮํวัวส ...
-Options=ฮํวัวส
-Other=Ûํั ะแ฿
-Password Protect=อใวํษ ศ฿แใษ ใัๆั
-Password:=฿แใษ วแใัๆั:
-Paste=แีÞ
-Play different wav=Þัวมษ ีๆส ใฮสแÝ
-Please enter the password to open Poptray=วแัฬวม ลฯฮวแ ฿แใษ วแใัๆั แÝสอ วแศัไวใฬ
-Plug-in Error:=ฮุร ศๆูํÝษ วแสๆีํแ:
-Plug-in Options...=ฮํวัวส ๆูํÝษ วแสๆีํแ...
-Plug-ins=ๆูวฦÝ วแสๆีํแ
-Polish=วแศๆแไฯํษ (Polish)
-Pop-Up Menu=Þวฦใษ ใไศหÞษ
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=วแศัไวใฬ ำํศฯร Ýํ อวแษ วแสÞแํี.~ๅ฿ะว ำํีศอ ลุวั วแศัไวใฬ ใฮÝํ~ๆ ํูๅั ÝÞุ ัใา ฺแศษ วแไูวใ.
-Port:=วแใไÝะ:
-Portuguese (Brazil)=(วแศัสÛวแํษ (วแศัวาํแ Portugese (Brazil)
-Portuguese=วแศัสÛวแํษ (Portuguese)
-Preview the Message=ใฺวํไษ วแัำวแษ
-Preview Top Lines=ใฺวํไษ วแำุๆั วแรๆแ์
-Preview=ใฺวํไษ
-Print=ุศวฺษ
-Processing...=ฬวัํ วแใฺวแฬษ...
-Protect against auto-delete=อใวํษ ึฯ วแอะÝ วแสแÞวฦํ
-Protocol:=วแศัๆสๆ฿ๆแ:
-Quick Checked:=สใ วแศอห วแำัํฺ Ýํ:
-Quick Checking and Safe Delete (UIDL):=วแศอห วแำัํฺ ๆวแอะÝ วแยใไ (UIDL):
-Quick Help=สฺแํใวส ำัํฺษ
-Quit=ลไๅวม
-Raw Message=ัำวแษ รๆแํษ
-Read Only=แแÞัวมษ ÝÞุ
-Refresh the list of languages=สอฯํห แวฦอษ วแแÛวส
-Refresh=สอฯํห
-Remember Viewed Messages=สะ฿ั วแัำวฦแ วแใÞัๆมษ
-Remember which messages on the server has already been viewed~even after closing PopTray.=สะ฿ั รํ วแัำวฦแ ฺแ์ วแใแÞใ Þฯ สใ~Þัวมสๅว อส์ ศฺฯ ลÛแวÞ วแศัไวใฬ.
-Reply using default mail client=ัฯ ศวำสฮฯวใ ฺใํแ วแศัํฯ วแลÝสัวึํ
-Reply=ัฯ
-Requires that you enter the specified password to open PopTray.=สสุแศ ลฯฮวแ ฿แใษ วแใัๆั วแใอฯฯษ แÝสอ วแศัไวใฬ.
-Reset Mail Count in Tray when Viewing=ลฺวฯษ สฺํํไ ฺฯวฯ วแศัํฯ Ýํ ฺแศษ วแไูวใ ฺไฯ วแฺัึ
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=ลฺวฯษ สฺํํไ ฺฯวฯ วแัำวฦแ Ýํ ัใา ฺแศษ~วแไูวใ ฺไฯ ฺัึ ลุวั วแศัไวใฬ. ฺไฯ ๆีๆแ~ศัํฯ ฬฯํฯ ํูๅั ÝÞุ รอฯห ฺฯ ใไะ ยฮั ฺัึ.
-Reset...=ลฺวฯษ สฺํํไ...
-Retrieve Body while Checking=ลำสแวใ วแใสไ รหไวม วแศอห
-Retrieve complete message while checking,~if message smaller than specified size.=ลำสแวใ วแัำวแษ ฿วใแษ รหไวม วแศอหก~ละว ฿วไส วแัำวแษ รีÛั ใไ วแอฬใ วแใอฯฯ.
-Retrieve Error:=ฮุร ฺไฯ วแลำสแวใ:
-Right Click:=ไÞัษ ํใไ์:
-Romanian=วแัๆใวไํษ (Romanian)
-Rotate Icon for each Account=สÛํํั วแัใา แ฿แ อำวศ
-Rotate Icon to show messages in each account=สÛํํั ัใา ฺแศษ วแไูวใ แลูๅวั ฺฯฯ วแัำวฦแ Ýํ ฿แ อำวศ
-Rule=วแÞวฺฯษ
-Rules ...=Þๆวฺฯ ...
-Rules=Þๆวฺฯ
-Run E-Mail Client=สิÛํแ ฺใํแ วแศัํฯ
-Russian=วแัๆำํษ (Russian)
-Safe Delete (using UIDL)=(UIDL วแอะÝ วแยใไ (ศวำสฮฯวใ
-Save Account=อÝู วแอำวศ
-Save All Attachments...=อÝู ฿แ วแใัÝÞวส...
-Save Options=อÝู วแฮํวัวส
-Save Rules=อÝู วแÞๆวฺฯ
-Save...=อÝู...
-Save=อÝู
-seconds=หๆวไ
-Select All=สอฯํฯ วแ฿แ
-Select Font...=สอฯํฯ วแฮุ...
-Select Spam Messages=สอฯํฯ วแัำวฦแ วแสุÝแํษ
-Select the option screen to show.=อฯฯ ิวิษ ฮํวัวส แลูๅวัๅว.
-Selective=ลฮสํวัํษ
-Serbian=วแีัศํษ (Serbian)
-Server:=วแใแÞใ:
-Shift Left Click:=Shift+ไÞัษ ํำั์:
-Shift Middle Click:=Shift+ไÞัษ ๆำุ์:
-Shift Right Click:=Shift+ไÞัษ ํใไ์:
-Show Info Balloon or Advanced Info when new mail arrives.=ลูๅวั ศวแๆไษ ใฺแๆใวส รๆ ใฺแๆใวส ใสÞฯใษ ฺไฯ ๆีๆแ ศัํฯ ฬฯํฯ.
-Show Info dialog with message details and buttons.=ลูๅวั ใัศฺ ใฺแๆใวส ศๅ สÝวีํแ อๆแ วแัำวแษ ๆ ราัวั.
-Show Info=ลูๅวั ใฺแๆใวส
-Show Messages ...=ลูๅวั วแัำวฦแ ...
-Show Messages=ลูๅวั วแัำวฦแ
-Show shortcut keys in tips=ลูๅวั ใÝวสํอ วแลฮสีวั Ýํ วแสแใํอวส
-Show the PopTray window always on top of other windows.=ลูๅวั ลุวั วแศัไวใฬ ÝๆÞ ฿แ วแไๆวÝะ วแรฮั์ ฯๆใว๐.
-Show the PopTray window when new mail arrives.=ลูๅวั ลุวั วแศัไวใฬ ฺไฯ ๆีๆแ ศัํฯ ฬฯํฯ.
-Show tips on toolbars=ลูๅวั สแใํอวส Ýํ ริัุษ วแรฯๆวส
-Show Window on Notification=ลูๅวั วแลุวั ฺไฯ วแสไศํษ
-Show/Hide Viewed Messages=ลูๅวั/ลฮÝวม วแัำวฦแ วแใÞัๆมษ
-Size=วแอฬใ
-Slovak=วแำแๆÝว฿ํษ (Slovak)
-Slovene=วแำแๆÝํไํษ (Slovene)
-Sort=Ýัา อำศ
-Sound:=วแีๆส:
-Spam=สุÝแํ
-Spam Last=วแสุÝแํ Ýํ วแยฮ๖ั
-Spanish (Chile)=(วแลำศวไํษ (ิํแํ Spanish (Chile)
-Spanish (Hispanic America)=(วแลำศวไํษ (รใัํ฿ว วแแวสํไํษ Spanish (Hispanic America)
-Spanish=วแลำศวไํษ (Spanish)
-Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=สอฯํฯ ใํÞวส ศอห ใฮสแÝ แ฿แ อำวศ.~ฺํ๘๖ไ ๅะๅ วแรๆÞวส Ýํ ศวศ อำวศวส.
-Star=ไฬใษ
-Start Minimized=วแศฯม ใÞแีว๐
-Stay on Top=วแศÞวม Ýํ วแใÞฯใษ
-Still busy checking=วแศัไวใฬ แว ําวแ ใิÛๆแว๐ ศวแศอห
-Still busy deleting other messages.=วแศัไวใฬ แว ําวแ ใิÛๆแว๐ ศอะÝ ัำวฦแ รฮั์.
-Stop and disconnect.=ลํÞวÝ ๆ Ýีแ วแวสีวแ.
-Stop=ลํÞวÝ
-Stop Checking=ลํÞวÝ วแศอห
-Subject=วแใๆึๆฺ
-Summary=วแลฬใวแํ
-Support Forum:=ใไสฯ์ วแฯฺใ:
-Supported=ใฯฺๆใ
-Suspend Sound=สฺุํแ วแีๆส
-Swedish=วแำๆํฯํษ (Swedish)
-System-wide hot-key to execute selected action.=ใÝสวอ ำวฮไ ฺแ์ ใำสๆ์ วแไูวใ แสไÝํะ วแลฬัวม วแใอฯฯ.
-Taiwan=วแสวํๆวไํษ (Taiwan)
-Test Account=ลฮสศวั วแอำวศ
-Test the sound file=ลฮสศวั ใแÝ วแีๆส
-Test to run the e-mail program=ลฮสศวั สิÛํแ ศัไวใฬ วแศัํฯ
-Test=ลฮสศวั
-Thanks to the following volunteers who helped with the translation:=วแิ฿ั แแใสุๆฺํไ วแยสํไ วแะํไ ำวฺฯๆว Ýํ วแสัฬใษ:
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=าั ลÛแวÞ ื Ýํ วแั฿ไ วแฺแๆํ-วแรํใไ~ำๆÝ ํÞแี วแศัไวใฬ ศฯแว๐ ใไ ลÛแวÞๅ.~ๆ แลÛแวÞ วแศัไวใฬ ํฬศ วแไÞั ฺแ์ าั "ลไๅวม".
-This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=ๅไว ํสใ ำัฯ ฿แ ใ฿สศวส ๆูวฦÝ วแสๆีํแ วแใๆฬๆฯษ Ýํ ฯแํแ ๆูวฦÝ~วแสๆีํแ. อฯฯ แแสอใํแ/ลแÛวม วแสอใํแ. ลไÞั วแาั วแรํใไ แแฮํวัวส.
-This will add the following e-mails to the Black List:=ๅะว ำํึํÝ วแฺไวๆํไ วแยสํษ ลแ์ วแแวฦอษ วแำๆฯวม:
-This will create a rule to delete all future e-mails from=ๅะว ำํไิฦ Þวฺฯษ แอะÝ ฿แ วแศัํฯ วแๆวัฯ Ýํ วแใำสÞศแ ใไ
-This will create a rule to spam mark all future e-mails from=ๅะว ำํไิฦ Þวฺฯษ แๆึฺ ฺแวใษ สุÝแํ ฺแ์ ฿แ วแศัํฯ วแๆวัฯ Ýํ วแใำสÞศแ ใไ ๅฤแวม:
-This will delete all these messages.=ๅะว ำํอะÝ ฿แ ๅะๅ วแัำวฦแ.
-This will delete all these selected messages.=ๅะว ำํอะÝ ฿แ ๅะๅ วแัำวฦแ วแใอฯฯษ.
-Timer Interval per Account=สอฯํฯ ใํÞวส ศอห แ฿แ อำวศ ฺแ์ อฯษ
-To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=แลึวÝษ ลฬัวมวส แสุศํÞ฿ วำอศๅว ๆรÝแสๅว ศศำวุษ ลใว ใไ วแÝฦวส รๆ วแลฬัวมวส ลแ์ ิัํุ ลฬัวมวส ใๆฬๆฯ.
-To Tray=ลแ์ ฺแศษ วแไูวใ
-To=ลแ์
-Toggle AutoCheck=สใ฿ํไ/สฺุํแ วแศอห วแสแÞวฦํ
-Toggle Message Window=ส฿ศํั/สÞแํี ลุวั วแัำวฦแ
-Toggle Sound=สใ฿ํไ/สฺุํแ วแีๆส
-Toolbar Options=ฮํวัวส ริัุษ วแรฯๆวส
-Toolbars:=ริัุษ วแรฯๆวส:
-Toolbars=ริัุษ รฯๆวส
-Tools=รฯๆวส
-Translations=วแสัฬใวส:
-TrayIcon while Checking=ัใา ฺแศษ วแไูวใ รหไวม วแศอห
-Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=ใอวๆแษ ใาฬ วแรแๆวไ ฺไฯใว ํีแ ศัํฯ ใไ อำวศวส ใสฺฯฯษ.~ํำใอ ๆํไฯๆา ศÜ16 แๆไ ÝÞุ Ýํ ฺแศษ วแไูวใก แะว Ýวแใาฬ~Þฯ แว ํฺุ์ วแแๆไ วแีอํอ ฯวฦใว๐
-Turkish=วแสั฿ํษ (Turkish)
-Ukranian=วแรๆ฿ัวไํษ (Ukranian)
-Unable to Copy file.=Ûํั Þวฯั ฺแ์ ไำฮ วแใแÝ.
-Unable to Retrieve Message=Ûํั Þวฯั ฺแ์ ลำสแวใ วแัำวแษ
-Undo=สัวฬฺ
-Unknown Attachment Type.=ไๆฺ ใัÝÞ Ûํั ใฺัๆÝ.
-Unmark as Spam=ลาวแษ ฺแวใษ สุÝแํ
-Unviewed messages will be shown in Bold.=ำํสใ ลูๅวั วแัำวฦแ Ûํั วแใÞัๆมษ ศฮุ ฺัํึ.
-Use MAPI=MAPI ลำสฮฯวใ
-Use the POP3 UIDL command to check that message is still the same~before deleting it.=แแสร฿ฯ ใไ รไ วแัำวแษ แว สาวแ ฿ใว ๅํ Þศแ วแอะÝ POP3 UIDL ลำสฮฯวใ
-Use the POP3 UIDL command to quickly check if the mail on the server has changed.=แแสร฿ฯ วแำัํฺ ลไ ฿วไ วแศัํฯ ฺแ์ วแใแÞใ Þฯ สÛํั POP3 UIDL ลำสฮฯวใ
-Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=.แแัฯๆฯ ๆวแัำวฦแ วแฬฯํฯษ "mailto:" วแศำํุษ แฺใํแ ศัํฯ฿ ศฯแว๐ ใไ วัสศวุ MAPI ลำสฮฯวใ ๆวฬๅษ
-User Aborted.=วแใำสฮฯใ รอศุ วแรใั.
-User Interface=ๆวฬๅษ วแใำสฮฯใ
-version=วแลีฯวั
-WARNING: This account does NOT support Safe Delete.=สอะํั: ๅะว วแอำวศ แว ํฯฺใ วแอะÝ วแยใไ.
-WAV files=ใแÝวส ีๆส
-What to show on the TrayIcon~while checking for new mail.=ใว ํสใ ลูๅวัๅ Ýํ ัใา ฺแศษ วแไูวใ~รหไวม วแศอห ฺไ ศัํฯ ฬฯํฯ.
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=ฺไฯใว ํอฯห ฮุร ศวแลสีวแก ํฺัึ วแศัไวใฬ ัำวแษ ฮุร. แๆ รีศอ ๅะว~วแฮํวั ใใ฿ไวก สฺัึ ัำวแษ วแฮุร ÝÞุ Ýํ ิัํุ วแอวแษ ๆ Ýํ ฺแศษ วแไูวใ.
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=ฺไฯ ใฺวํไษ ัำวแษ สอสๆํ ฺแ์ Þฺุ MIME ำํÝ฿ วแศัไวใฬ สิÝํั ัำวแษ MIME ๆํูๅั วแฬาม วแรๆแ Ýํ ใำวอษ วแใฺวํไษ ๆ วแศวÞํ ฿ใัÝÞวส. ฺไฯใว แว ํสใ สอฯํฯ ๅะวก วแใฺวํไษ ำสูๅั วแัำวแษ วแรๆแํษ.
-When previewing a message, only load the~specified number of lines.=ฺไฯ ใฺวํไษ ัำวแษก ÝÞุ สอใํแ~วแฺฯฯ วแใอฯฯ ใไ วแำุๆั.
-When starting PopTray, first wait a few seconds~before checking for mail.=ฺไฯ ศฯม วแศัไวใฬก วแลไสูวั รๆแว๐~ศึฺษ หๆวไ Þศแ วแศอห ฺไ วแศัํฯ.
-When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=ฺไฯ ลำสÞศวแ฿ ศัํฯ ใไ แวฦอษ วแฺไวๆํไ~วแสวแํษก แไ สอะÝ วแัำวฦแ ฺไ ุัํÞ วแÞๆวฺฯ.
-While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=รหไวม วแศอห ฺไ ศัํฯ ฬฯํฯก ลำสแวใ ใสไ วแัำวแษ~รํึว๐. ๅะว ำๆÝ ํศุฦ วแศอหก ๆแ฿ไ ํฺุํ฿ ฮํวั~Ýอี ใอสๆ์ วแใสไ Ýํ วแÞๆวฺฯ.
-White / Black List=วแแวฦอษ วแศํึวม/วแำๆฯวม
-White List=วแแวฦอษ วแศํึวม
-Wildcard=รอัÝ วแศฯแ
-Window=ลุวั
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=.Ýํ ไÝำ ฯแํแ วแศัไวใฬ RULES.LOG :฿สวศษ ฿แ ลฬัวมวส วแÞๆวฺฯ แใแÝ ำฬแ. ลำใ วแใแÝ
-X Button Minimizes=าั ื ํÞแี
-Yes=ไฺใ
-Edit=สอัํั
-Attachments=ใัÝÞวส
-Delete account=อะÝ วแอำวศ
-Donation:=วแสศัฺ:
-Add Row=ลึวÝษ ีÝ
-ALL Rows=฿แ วแีÝๆÝ
-ANY Row=รํ ีÝ
-Area=วแอÞแ
-Compare=วแใÞวัไษ
-Croation=วแ฿ัๆวสํษ (Croatian)
-Croatian=วแ฿ัๆวสํษ (Croatian)
-Delete Row=อะÝ ีÝ
-Has Attachment=ศๅ ใัÝÞ
-Ignored=สใ สฬวๅแๅ
-Needed=วแิัๆุ
-Not=แํำ
-Play Sound=Þัวมษ ีๆส
-Protected=ใอใํ
-Reg Expr=วแใีุแอ วแฺวฯํ
-Regular Expression Syntax OK=ศไวม ฬใแษ วแใีุแอ วแฺวฯํ ำแํใ
-Status=วแอวแษ
-Stop Checking=ลํÞวÝ วแศอห
-Test the Reg Expr syntax=วฮสศวั ศไวม ฬใแษ วแใีุแอ วแฺวฯํ
-Text=ไี
-To Be Deleted=ำํสใ อะÝๅ
-Tray Color=แๆไ วแัใา
-Viewed=สใส Þัวมสๅ
-Move Down=สอัํ฿ แแรำÝแ
-Move Up=สอัํ฿ แแรฺแ์
-Delete Mail only on Next Check=อะÝ วแศัํฯ ÝÞุ ฺไฯ วแศอห วแสวแํ
-When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=ำํสใ ๆึฺ ฺแวใษ "ใอะๆÝ" แแัำวฦแ ฺไฯ อะÝๅว~ๆ ํสใ อะÝๅว Ýฺแํว๐ ฺไฯ สิÛํแ วแศอห วแสวแํ
-Undelete=สัวฬฺ ฺไ วแอะÝ
-Add Rule for mail from Sender=ลึวÝษ Þวฺฯษ แแศัํฯ ใไ วแใัำแ
-Add Rule for mail with Subject=ลึวÝษ Þวฺฯษ แแศัํฯ ศๅะว วแใๆึๆฺ
-Add Rule to Delete mail from Sender=ลึวÝษ Þวฺฯษ แอะÝ วแศัํฯ ใไ วแใัำแ
-Add Rule to Delete mail with Subject=ลึวÝษ Þวฺฯษ แอะÝ วแศัํฯ ศๅะว วแใๆึๆฺ
-Add Rule to mark messages with Subject as Spam=ลึวÝษ Þวฺฯษ แๆึฺ ฺแวใษ สุÝแํ แแัำวฦแ ศๅะว วแใๆึๆฺ
-Galician=วแฬวแํิํษ (Galician)
-Downloading=ฬวัํ สอใํแ
-Show Messages while Checking=ลูๅวั วแัำวฦแ รหไวม วแศอห
-While checking, show each message as it is downloaded.=ฺไฯ วแศอหก ลูๅวั วแัำวฦแ Ýๆั สไาํแๅว.
-Extra Confirmation when Deleting Protected Messages=สร฿ํฯ าวฦฯ ฺไฯ อะÝ ัำวฦแ ใอใํษ
-Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=ุแศ สร฿ํฯ าวฦฯ ฺไฯ ใอวๆแษ อะÝ ัำวฦแ~ใอใํษ ฺไ ุัํÞ วแÞๆวฺฯ รๆ วแแวฦอษ วแศํึวม.
-You are trying to delete protected messages.=รไส สอวๆแ อะÝ ัำวแษ ใอใํษ.
-Lithuanian=วแแสๆวไํษ (Lithuanian)
+(All Actions)=(ูู ุงูุฅุฌุฑุงุกุงุช)
+(Checkmark toggles visibility)=(ุนูุงู…ุฉ ุตุญ ุชุธูุฑ/ุชุฎูู ุงูุฃุดุฑุทุฉ)
+1 message deleted.=ุชู… ุญุฐู ุฑุณุงูุฉ ูุงุญุฏุฉ.
+[Use Default Program]=[ุฅุณุชุฎุฏุงู… ุงูุจุฑูุงู…ุฌ ุงูุฅูุชุฑุงุถู]
+[Use Default Sound]=[ุฅุณุชุฎุฏุงู… ุงูุตูุช ุงูุฅูุชุฑุงุถู]
+About ...=ุญูู ...
+About=ุญูู
+Account Info changed.~Do you want to save it?=ู…ุนููู…ุงุช ุงูุญุณุงุจ ุชุบูุฑุช.~ูู ุชุฑูุฏ ุญูุธูุ
+Account=ุงูุญุณุงุจ
+accounts.=ุญุณุงุจุงุช.
+Accounts=ุญุณุงุจุงุช
+Action:=ุงูุฅุฌุฑุงุก:
+Actions:=ุงูุฅุฌุฑุงุกุงุช:
+Actions=ุฅุฌุฑุงุกุงุช
+Add Account=ุฅุถุงูุฉ ุญุณุงุจ
+Add Rule to Delete all mail from Sender=ุฅุถุงูุฉ ูุงุนุฏุฉ ูุญุฐู ูู ุงูุจุฑูุฏ ู…ู ุงูู…ุฑุณู
+Add Rule to mark messages from Sender as Spam=ุฅุถุงูุฉ ูุงุนุฏุฉ ููุถุน ุนูุงู…ุฉ ุชุทููู ููุฑุณุงุฆู ู…ู ุงูู…ุฑุณู
+Add Rule=ุฅุถุงูุฉ ูุงุนุฏุฉ
+Add sender to Black List=ุฅุถุงูุฉ ุงูู…ุฑุณู ููุงุฆุญุฉ ุงูุณูุฏุงุก
+Add sender to White List=ุฅุถุงูุฉ ุงูู…ุฑุณู ููุงุฆุญุฉ ุงูุจูุถุงุก
+Added to the White List:=ุชู…ุช ุงูุฅุถุงูุฉ ููุงุฆุญุฉ ุงูุจูุถุงุก:
+Advanced Options=ุฎูุงุฑุงุช ู…ุชูุฏู…ุฉ
+Advanced Show Info=ู…ุนููู…ุงุช ุฅุธูุงุฑ ู…ุชูุฏู…ุฉ
+Afrikaans=ุงูุฃูุฑููุงููุฉ (Afrikaans)
+All Accounts=ูู ุงูุญุณุงุจุงุช
+All Files=ูู ุงูู…ููุงุช
+All=ุงููู
+Already Connected=ู…ุชุตู ุจุงููุนู
+and=ู
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=ุชุญุฑูู ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู… ุนูุฏ ุฅุณุชูุจุงูู ุจุฑูุฏุงู ุฌุฏูุฏุงู.~ูุฐุง ุณููุชุฌ ู…ุคุดุฑุงู ู…ูู…ุถุงู ุจุฏูุงู ู…ู ุงูุฑู…ุฒ ุงูุนุงุฏู ุงูุซุงุจุช.
+Animated Star=ูุฌู…ุฉ ู…ุชุญุฑูุฉ
+Animated Tray Icon=ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู… ู…ุชุญุฑู
+Any mail received from the following e-mail addresses~will automatically be deleted.=ุฃู ุจุฑูุฏ ูุณุชูุจู ู…ู ุนูุงููู~ุงูุจุฑูุฏ ุงูุขุชูุฉ ุณูุญุฐู ุชููุงุฆูุงู.
+Arabic=ุงูุนุฑุจูุฉ (Arabic)
+Are you sure?=ูู ุฃูุช ู…ุชุฃูุฏุ
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=ุทูุจ ุชุฃููุฏ ูุจู ุญุฐู ุฃู ุจุฑูุฏ. ูุฐุง ููุท~ูุนู…ู ุนูุฏ ุงุณุชุฎุฏุงู… ุฒุฑ "ุญุฐู". ุญุฐู~ุงูุฑุณุงุฆู ุจุงุณุชุฎุฏุงู… ุงูููุงุนุฏ ูู ูุทูุจ ุชุฃููุฏุงู.
+AutoCheck disabled=ุงูุจุญุซ ุงูุชููุงุฆู ู…ุนุทู
+AutoCheck Enabled=ุชู…ููู ุงูุจุญุซ ุงูุชููุงุฆู
+AutoCheck only while Minimized=ุงูุจุญุซ ุงูุชููุงุฆู ููุท ุฃุซูุงุก ุงูุชูููุต
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=ุจุณุจุจ ุงูู…ุฎุงุทุฑุฉ ุงูุฃู…ููุฉุ ูุง ูุณู…ุญ ุงูุจุฑูุงู…ุฌ ุจูุชุญ ุงูู…ููุงุช ุงููุงุจูุฉ ููุชูููุฐ.
+Black List mark as Spam=ูุถุน ุนูุงู…ุฉ ุชุทููู ูุฑุณุงุฆู ุงููุงุฆุญุฉ ุงูุณูุฏุงุก
+Black List will mark the messages as Spam~instead of deleting them.=ุณูุชู… ูุถุน ุนูุงู…ุฉ ุชุทููู ููุฑุณุงุฆู ู…ู~ุงููุงุฆุญุฉ ุงูุณูุฏุงุก ุจุฏูุงู ู…ู ุญุฐููุง.
+Black List=ุงููุงุฆุญุฉ ุงูุณูุฏุงุก
+Body=ุงูู…ุชู
+Bulgarian=ุงูุจูุบุงุฑูุฉ (Bulgarian)
+Cancel=ุฅูุบุงุก ุงูุฃู…ุฑ
+Cannot delete last Account=ูุง ูู…ูู ุญุฐู ุงูุญุณุงุจ ุงูุฃุฎูุฑ
+Caption Options=ุฎูุงุฑุงุช ุงูุชุณู…ูุงุช
+Catalan=ุงููุงุชุงูุงููุฉ (Catalan)
+Categories:=ุงููุฆุงุช:
+CC=ูุณุฎุฉ ุฅูู
+Check All=ุจุญุซ ูู ุงูุญุณุงุจุงุช
+Check and Info=ุจุญุซ ูุฅุธูุงุฑ ู…ุนููู…ุงุช
+Check and Show=ุจุญุซ ูุฅุธูุงุฑ ุงูุฑุณุงุฆู
+Check current account for New Mail=ุงูุจุญุซ ุนู ุจุฑูุฏ ุฌุฏูุฏ ูู ุงูุญุณุงุจ ุงูุญุงูู
+Check First Account=ุจุญุซ ุงูุญุณุงุจ ุงูุฃูู
+Check for Mail=ุจุญุซ ุนู ุงูุจุฑูุฏ
+Check for new mail every =ุงูุจุญุซ ุนู ุจุฑูุฏ ุฌุฏูุฏ ูู 
+Check for New Mail on Startup=ุงูุจุญุซ ุนู ุจุฑูุฏ ุฌุฏูุฏ ุนูุฏ ุจุฏุก ุงูุจุฑูุงู…ุฌ
+Check if On-Line=ุงูุชุฃูุฏ ู…ู ุงูุฅุชุตุงู ูุจู ุงูุจุญุซ
+Check on-line if newer version available.=ุงูุจุญุซ ูู ุงูู…ููุน ุนู ุฃุญุฏุซ ูุณุฎุฉ ู…ุชูุงูุฑุฉ
+Check=ุจุญุซ
+Checked:=ุชู… ุงูุจุญุซ:
+Checking=ุฌุงุฑู ุจุญุซ
+Chinese=ุงูุตูููุฉ (Chinese)
+Close=ุฅุบูุงู
+Color:=ุงูููู:
+Confirm=ุชุฃููุฏ
+Connect Error:=ุฎุทุฃ ุจุงูุงุชุตุงู:
+Connection Info=ู…ุนููู…ุงุช ุงูุฅุชุตุงู
+Connection TimeOut:=ู…ููุฉ ุงูุงุชุตุงู:
+Contact Info=ู…ุนููู…ุงุช ุงูุฅุชุตุงู
+Contains=ูุญุชูู ุนูู
+Copy=ูุณุฎ
+Criteria=ุงูู…ุนูุงุฑ
+Customize...=ุชุฎุตูุต...
+Customize=ุชุฎุตูุต
+Cut=ูุต
+Czech=ุงูุชุดูููุฉ (Czech)
+Danish=ุงูุฏูู…ุงุฑููุฉ (Danish)
+Date=ุงูุชุงุฑูุฎ
+Default e-mail program to open.=ุจุฑูุงู…ุฌ ุงูุจุฑูุฏ ุงูุฅูุชุฑุงุถู ุงูุฐู ูุชู… ูุชุญู.
+Default sound to play when new mail arrives.=ุงูุตูุช ุงูุฅูุชุฑุงุถู ุงูุฐู ุชุชู… ูุฑุงุกุชู ุนูุฏ ูุตูู ุจุฑูุฏ ุฌุฏูุฏ.
+Default sound:=ุงูุตูุช ุงูุฅูุชุฑุงุถู:
+Defaults=ุงูุฅูุชุฑุงุถูุงุช
+Del Spam=ุญุฐู ุงูุชุทููู
+Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=ุนุฏุฏ ุฏูุงุฆู ุงูุชุฃุฎูุฑ ุจูู ูู ูุงุตู ุจุญุซ ุนู ุจุฑูุฏ.~ุนููู ุตูุฑุงู 0 ูุฅูุบุงุก ุงูุจุญุซ ุงูุชููุงุฆู.
+Delay on a SingleClick to wait and see if a DoubleClick is coming.=ุงูุชุฃุฎูุฑ ุนูุฏ ุงูููุฑุฉ ุงููุงุญุฏุฉ ูุงูุงูุชุธุงุฑ ุญุชู ุชุตุจุญ ููุฑุชุงู.
+Delete Account:=ุญุฐู ุงูุญุณุงุจ:
+Delete Account=ุญุฐู ุงูุญุณุงุจ
+Delete Button only available when using Safe Delete option=ุฒุฑ ุงูุญุฐู ูุชูุงูุฑ ููุท ุนูุฏ ุฅุณุชุฎุฏุงู… ุฎูุงุฑ ุงูุญุฐู ุงูุขู…ู
+Delete current message=ุญุฐู ุงูุฑุณุงูุฉ ุงูุญุงููุฉ
+Delete Error:=ุฎุทุฃ ุนูุฏ ุงูุญุฐู:
+Delete from server=ุญุฐู ู…ู ุงูู…ููู…
+Delete Message from Server?=ุญุฐู ุงูุฑุณุงูุฉ ู…ู ุงูู…ููู…ุ
+Delete Messages from Server?=ุญุฐู ุงูุฑุณุงุฆู ู…ู ุงูู…ููู…ุ
+Delete messages marked as Spam=ุญุฐู ุงูุฑุณุงุฆู ุฐุงุช ุนูุงู…ุฉ ุชุทููู
+Delete Rule:=ุญุฐู ุงููุงุนุฏุฉ:
+Delete Rule=ุญุฐู ุงููุงุนุฏุฉ
+Delete Spam from Server?=ุญุฐู ุงูุชุทููู ู…ู ุงูู…ููู…ุ
+Delete Spam=ุญุฐู ุงูุชุทููู
+Delete this message from server=ุญุฐู ูุฐู ุงูุฑุณุงูุฉ ู…ู ุงูู…ููู…
+Delete=ุญุฐู
+Deletion Confirmation=ุชุฃููุฏ ุงูุญุฐู
+Description=ุงููุตู
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=ุชุนุทูู ุงูุจุญุซ ุงูุชููุงุฆู ุนู ุงูุจุฑูุฏ ุจูู ุงูุณุงุนุงุช~ุงูู…ุญุฏุฏุฉ. ูุตุจุญ ูุฐุง ุงูุฎูุงุฑ ู…ููุฏุงู ุนูุฏ ุนุฏู…~ุฑุบุจุชู ูู ุฑุคูุฉ ุชูุจููุงุช ู…ุฒุนุฌุฉ ุฃุซูุงุก ุงูููู
+Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=ุนุฑุถ ุนูุงู…ุงุช ุงูุชุจููุจ ููุญุณุงุจุงุช ุงูู…ุฎุชููุฉ~ูู ุณุทูุฑ ู…ุชุนุฏุฏุฉ ุจุฏูุงู ู…ู ุณุทุฑ ูุงุญุฏ.
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=ู…ูุน ุชุดุบูู ู…ููุงุช ุงูุจุญุซ ุงูุชููุงุฆู ุฃุซูุงุก~ุนุฑุถ ุฅุทุงุฑ ุงูุจุฑูุงู…ุฌ. ูุฐุง ู…ููุฏ ูู…ูุน ุงูุจุญุซ~ุงูุชููุงุฆู ุจููู…ุง ุชุณุชุทูุน ุงูุจุญุซ ุงููุฏูู
+Don't Check between=ู…ูุน ุงูุจุญุซ ูู ุงููุชุฑุฉ ุจูู
+Double Click delay on Click=ุฅูุชุธุงุฑ ุงูููุฑุฉ ุงูุซุงููุฉ
+Double Click:=ููุฑุฉ ู…ุฒุฏูุฌุฉ:
+Downloading...=ุฌุงุฑู ุงูุชูุฒูู...
+Drag to Create Separators=ุงุณุญุจ ูุฅูุดุงุก ููุงุตู
+Dutch=ุงูููููุฏูุฉ (Dutch)
+E-Mail Program:=ุจุฑูุงู…ุฌ ุงูุจุฑูุฏ:
+E-Mail:=ุจุฑูุฏ ุฅููุชุฑููู:
+Empty=ุฎุงูู
+Enable Quick Checking=ุชู…ููู ุงูุจุญุซ ุงูุณุฑูุน
+Enabled=ุชู…ููู
+English=ุงูุฅูุฌููุฒูุฉ (English)
+Equals=ูุณุงูู
+Error:=ุฎุทุฃ:
+Error=ุฎุทุฃ
+Estonian=ุงูุฅุณุชูููุฉ (Estonian)
+EXE files=ู…ููุงุช ูุงุจูุฉ ููุชูููุฐ
+Execute File=ุชูููุฐ ู…ูู
+Failed to Save Attachment.=ูุดู ุญูุธ ุงูู…ุฑูู.
+Finnish=ุงูููููุฏูุฉ (Finnish)
+First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=ุงูุชุญูู ุฃููุงู ู…ู ุงูุฅุชุตุงู ุจุงูุฅูุชุฑูุช ูุจู ุงูุจุญุซ ุนู~ุงูุจุฑูุฏ. ูุณุชุนู…ูู ู…ุณุชุฎุฏู…ู ุงูุทูุจ ุงููุงุชูู ุงูุฐูู~ูุง ูุฑูุฏูู ุฅูุจุซุงู ู…ุฑุจุน ุงูุทูุจ ุงููุงุชูู ุนูุฏู…ุง ูููููู~ุบูุฑ ู…ุชุตููู. ุชุฌุนู ุงูุจุญุซ ุฃุจุทุฃ ููููุงู.
+First Wait=ุงูุฅูุชุธุงุฑ ุฃููุงู
+French (Canada)=(ุงููุฑูุณูุฉ (ููุฏุง French (Canada)
+French=ุงููุฑูุณูุฉ (French)
+>From (address)=(ู…ู (ุนููุงู
+>From (name)=(ู…ู (ุฅุณู…
+From=ู…ู
+General Options=ุฎูุงุฑุงุช ุนุงู…ุฉ
+German=ุงูุฃูู…ุงููุฉ (German)
+Header=ุงูุฑุฃุณ
+Hebrew=ุงูุนุจุฑูุฉ (Hebrew)
+Help=ุชุนููู…ุงุช
+Hide Viewed Messages=ุฅุฎูุงุก ุงูุฑุณุงุฆู ุงูู…ูุฑูุกุฉ
+Hide=ุฅุฎูุงุก
+Homepage:=ุงูุตูุญุฉ ุงูุฑุฆูุณูุฉ:
+Hot-Key:=ุงูู…ูุชุงุญ ุงูุณุงุฎู:
+Hot-Keys=ุงูู…ูุงุชูุญ ุงูุณุงุฎูุฉ
+Hungarian=ุงูู…ุฌุฑูุฉ (Hungarian)
+Ignore (don't notify)=(ุชุฌุงูู (ูุง ุชุตุฏุฑ ุชูุจูุฉ
+Ignore Connection Errors=ุชุฌุงูู ุฃุฎุทุงุก ุงูุฅุชุตุงู
+Ignore errors that occurs while retrieving the header info.=ุชุฌุงูู ุงูุฃุฎุทุงุก ุงูุชู ุชุญุตู ุฃุซูุงุก ุงุณุชูุงู… ู…ุนููู…ุงุช ุงูุฑุคูุณ.
+Ignore Retrieve Errors=ุชุฌุงูู ุฃุฎุทุงุก ุงูุงุณุชูุงู…
+Immediately check for mail when PopTrayU starts.=ุงูุจุญุซ ููุฑุงู ุนู ุงูุจุฑูุฏ ุนูุฏ ุจุฏุงูุฉ ุงูุจุฑูุงู…ุฌ.
+Import Rules=ุฅุณุชูุฑุงุฏ ููุงุนุฏ
+Important (Balloon Pop-Up)=(ูุงู… (ุจุงูููุฉ ู…ูุจุซูุฉ
+Important=ูุงู…
+in=ูู
+Incompatible Plugin:=ูุธููุฉ ุชูุตูู ุบูุฑ ู…ุชูุงููุฉ:
+Indicate Viewed and Unviewed Messages=ุจูุงู ุงูุฑุณุงุฆู ุงูู…ูุฑูุกุฉ ูุบูุฑ ุงูู…ูุฑูุกุฉ
+Info Balloon on Notification=ุจุงูููุฉ ู…ุนููู…ุงุช ุนูุฏ ุงูุชูุจูุฉ
+Info=ู…ุนููู…ุงุช
+Information=ู…ุนููู…ุงุช
+INI Files=ู…ููุงุช INI
+Interval=ุงูู…ูุงููุช
+Italian=ุงูุฅูุทุงููุฉ (Italian)
+KB=ูุจ
+Korean=ุงูููุฑูุฉ (Korean)
+Language:=ุงููุบุฉ:
+Large icons=ุฑู…ูุฒ ูุจูุฑุฉ
+Left Click:=ููุฑุฉ ูุณุฑู:
+Lightning Bolt=ุดุนุงุน ุจุฑู
+Limit download to the first=ุชุญุฏูุฏ ุงูุชูุฒูู ุฅูู ุฃูู
+lines=ุณุทูุฑ
+Lists=ููุงุฆุญ
+Log Rule=ุชุณุฌูู ุงููุงุนุฏุฉ
+Log Rules=ุชุณุฌูู ุงูููุงุนุฏ
+Login OK=ุชุณุฌูู ุงูุฏุฎูู ุตุญูุญ
+Login:=ุฅุณู… ุงูุฏุฎูู:
+Mail Info=ู…ุนููู…ุงุช ุงูุจุฑูุฏ
+Mail=ุจุฑูุฏ
+MAPI instead of mailto:=mailto: ุจุฏูุงู ู…ู MAPI
+Mark as Spam=ูุถุน ุนูุงู…ุฉ ุชุทููู
+Mark as Viewed=ูุถุน ุนูุงู…ุฉ ู…ูุฑูุก
+Mark the selected messages as Spam.=ูุถุน ุนูุงู…ุฉ ุชุทููู ููุฑุณุงุฆู ุงูู…ุญุฏุฏุฉ.
+Maximum number of lines to download.=ุฃูุตู ุนุฏุฏ ุณุทูุฑ ูุชู… ุชูุฒูููุง.
+Message Count:=ุนุฏุฏ ุงูุฑุณุงุฆู:
+Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=ู…ุนุฑูุงุช ุงูุฑุณุงูุฉ ูุง ุชุชุทุงุจู.~ุฎูุงุฑ ุงูุญุฐู ุงูุขู…ู ู…ูุน ุญุฐู ูุฐู ุงูุฑุณุงูุฉ.
+Message Status=ุญุงูุฉ ุงูุฑุณุงูุฉ
+message(s) deleted.=ุฑุณุงูุฉ(ุฑุณุงุฆู) ุชู… ุญุฐููุง.
+message.=ุฑุณุงูุฉ.
+message=ุฑุณุงูุฉ
+messages.=ุฑุณุงุฆู.
+messages=ุฑุณุงุฆู
+Middle Click:=ููุฑุฉ ูุณุทู:
+Minimize PopTrayU to the System Tray instead of the Taskbar.=ุชูููุต ุงูุจุฑูุงู…ุฌ ุฅูู ุนูุจุฉ ุงููุธุงู… ุจุฏูุง ู…ู ุดุฑูุท ุงูู…ูุงู….
+Minimize to Tray=ุชูููุต ุฅูู ุนูุจุฉ ุงููุธุงู…
+minutes.=ุฏูุงุฆู.
+Miscellaneous=ุฎูุงุฑุงุช ู…ุชููุนุฉ
+Mouse Action:=ุฑุฏ ูุนู ุงููุฃุฑุฉ:
+Mouse Buttons=ุฃุฒุฑุงุฑ ุงููุฃุฑุฉ
+msg.=ุฑุณุงูุฉ.
+msgs.=ุฑุณุงุฆู.
+Multi-line Account Tabs=ุณุทูุฑ ู…ุชุนุฏุฏุฉ ูุชุจููุจุงุช ุงูุญุณุงุจุงุช
+Name:=ุงูุฅุณู…:
+Name=ุงูุฅุณู…
+Never=ูุง ุชุจุญุซ ุชููุงุฆูุงู
+New Mail=ุจุฑูุฏ ุฌุฏูุฏ
+New message using default mail client=ุฑุณุงูุฉ ุฌุฏูุฏุฉ ุจุงุณุชุฎุฏุงู… ุนู…ูู ุงูุจุฑูุฏ ุงูุฅูุชุฑุงุถู
+New Message=ุฑุณุงูุฉ ุฌุฏูุฏุฉ
+New Messages Only=ุงูุฑุณุงุฆู ุงูุฌุฏูุฏุฉ ููุท
+New=ุฌุฏูุฏ
+No E-Mail Client specified=ูู… ูุชู… ุชุญุฏูุฏ ุนู…ูู ุจุฑูุฏ
+No message selected.=ูู… ูุชู… ุชุญุฏูุฏ ุฑุณุงูุฉ.
+No new mail=ูุง ููุฌุฏ ุจุฑูุฏ ุฌุฏูุฏ
+No protocol defined for account=ูู… ูุชู… ุชุนุฑูู ุจุฑูุชูููู ููุญุณุงุจ
+No rule selected=ูู… ูุชู… ุชุญุฏูุฏ ูุงุนุฏุฉ
+No Sort=ูุง ูุฑุฒ
+No=ูุง
+NoName=ุจูุง ุฅุณู…
+None=ุจุฏูู
+Norwegian=ุงููุฑููุฌูุฉ (Norwegian)
+NOT Contains=ูุง ูุญุชูู ุนูู
+Not On-Line=ุบูุฑ ู…ุชุตู
+NOT Supported=ุบูุฑ ู…ุฏุนูู…
+Nothing=ูุง ุดุฆ
+Number of message lines to preview.=ุนุฏุฏ ุณุทูุฑ ุงูุฑุณุงูุฉ ุงูุชู ูุชู… ู…ุนุงููุชูุง.
+Number of messages marked as Spam:=ุนุฏุฏ ุงูุฑุณุงุฆู ุฐุงุช ุนูุงู…ุฉ ุชุทููู:
+Number of seconds to display the Info window~before closing it.=ุนุฏุฏ ุซูุงู ุนุฑุถ ุฅุทุงุฑ~ุงูู…ุนููู…ุงุช ูุจู ุฅุบูุงูู.
+Number of seconds to wait during connection~before giving an error.=ุนุฏุฏ ุซูุงู ุงูุฅูุชุธุงุฑ ุฃุซูุงุก ุงูุฅุชุตุงู~ูุจู ุฅุนุทุงุก ุชูุจูู ุจูุฌูุฏ ุฎุทุฃ.
+Number of selected messages:=ุนุฏุฏ ุงูุฑุณุงุฆู ุงูู…ุญุฏุฏุฉ:
+OK=ู…ูุงูู
+Once a message has been viewed, don't show it again.=ุนุฏู… ุฅุธูุงุฑ ุงูุฑุณุงูุฉ ู…ุฑุฉ ุฃุฎุฑู ููุฑ ูุฑุงุกุชูุง.
+Only download if size less than=ุงูุชูุฒูู ููุท ุฅุฐุง ูุงู ุงูุญุฌู… ุฃูู ู…ู
+Open...=ูุชุญ...
+Options ...=ุฎูุงุฑุงุช ...
+Options=ุฎูุงุฑุงุช
+Other=ุบูุฑ ุฐูู
+Password Protect=ุญู…ุงูุฉ ุจููู…ุฉ ู…ุฑูุฑ
+Password:=ููู…ุฉ ุงูู…ุฑูุฑ:
+Paste=ูุตู
+Play different wav=ูุฑุงุกุฉ ุตูุช ู…ุฎุชูู
+Please enter the password to open PopTrayU=ุงูุฑุฌุงุก ุฅุฏุฎุงู ููู…ุฉ ุงูู…ุฑูุฑ ููุชุญ ุงูุจุฑูุงู…ุฌ
+Plug-in Error:=ุฎุทุฃ ุจูุธููุฉ ุงูุชูุตูู:
+Plug-in Options...=ุฎูุงุฑุงุช ูุธููุฉ ุงูุชูุตูู...
+Plug-ins=ูุธุงุฆู ุงูุชูุตูู
+Polish=ุงูุจูููุฏูุฉ (Polish)
+Pop-Up Menu=ูุงุฆู…ุฉ ู…ูุจุซูุฉ
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=ุงูุจุฑูุงู…ุฌ ุณูุจุฏุฃ ูู ุญุงูุฉ ุงูุชูููุต.~ููุฐุง ุณูุตุจุญ ุฅุทุงุฑ ุงูุจุฑูุงู…ุฌ ู…ุฎูู~ู ูุธูุฑ ููุท ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู….
+Port:=ุงูู…ููุฐ:
+Portuguese (Brazil)=(ุงูุจุฑุชุบุงููุฉ (ุงูุจุฑุงุฒูู Portugese (Brazil)
+Portuguese=ุงูุจุฑุชุบุงููุฉ (Portuguese)
+Preview the Message=ู…ุนุงููุฉ ุงูุฑุณุงูุฉ
+Preview Top Lines=ู…ุนุงููุฉ ุงูุณุทูุฑ ุงูุฃููู
+Preview=ู…ุนุงููุฉ
+Print=ุทุจุงุนุฉ
+Processing...=ุฌุงุฑู ุงูู…ุนุงูุฌุฉ...
+Protect against auto-delete=ุญู…ุงูุฉ ุถุฏ ุงูุญุฐู ุงูุชููุงุฆู
+Protocol:=ุงูุจุฑูุชูููู:
+Quick Checked:=ุชู… ุงูุจุญุซ ุงูุณุฑูุน ูู:
+Quick Checking and Safe Delete (UIDL):=ุงูุจุญุซ ุงูุณุฑูุน ูุงูุญุฐู ุงูุขู…ู (UIDL):
+Quick Help=ุชุนููู…ุงุช ุณุฑูุนุฉ
+Quit=ุฅููุงุก
+Raw Message=ุฑุณุงูุฉ ุฃูููุฉ
+Read Only=ูููุฑุงุกุฉ ููุท
+Refresh the list of languages=ุชุญุฏูุซ ูุงุฆุญุฉ ุงููุบุงุช
+Refresh=ุชุญุฏูุซ
+Remember Viewed Messages=ุชุฐูุฑ ุงูุฑุณุงุฆู ุงูู…ูุฑูุกุฉ
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=ุชุฐูุฑ ุฃู ุงูุฑุณุงุฆู ุนูู ุงูู…ููู… ูุฏ ุชู…~ูุฑุงุกุชูุง ุญุชู ุจุนุฏ ุฅุบูุงู ุงูุจุฑูุงู…ุฌ.
+Reply using default mail client=ุฑุฏ ุจุงุณุชุฎุฏุงู… ุนู…ูู ุงูุจุฑูุฏ ุงูุฅูุชุฑุงุถู
+Reply=ุฑุฏ
+Requires that you enter the specified password to open PopTrayU.=ุชุชุทูุจ ุฅุฏุฎุงู ููู…ุฉ ุงูู…ุฑูุฑ ุงูู…ุญุฏุฏุฉ ููุชุญ ุงูุจุฑูุงู…ุฌ.
+Reset Mail Count in Tray when Viewing=ุฅุนุงุฏุฉ ุชุนููู ุนุฏุงุฏ ุงูุจุฑูุฏ ูู ุนูุจุฉ ุงููุธุงู… ุนูุฏ ุงูุนุฑุถ
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=ุฅุนุงุฏุฉ ุชุนููู ุนุฏุงุฏ ุงูุฑุณุงุฆู ูู ุฑู…ุฒ ุนูุจุฉ~ุงููุธุงู… ุนูุฏ ุนุฑุถ ุฅุทุงุฑ ุงูุจุฑูุงู…ุฌ. ุนูุฏ ูุตูู~ุจุฑูุฏ ุฌุฏูุฏ ูุธูุฑ ููุท ุฃุญุฏุซ ุนุฏ ู…ูุฐ ุขุฎุฑ ุนุฑุถ.
+Reset...=ุฅุนุงุฏุฉ ุชุนููู...
+Retrieve Body while Checking=ุฅุณุชูุงู… ุงูู…ุชู ุฃุซูุงุก ุงูุจุญุซ
+Retrieve complete message while checking,~if message smaller than specified size.=ุฅุณุชูุงู… ุงูุฑุณุงูุฉ ูุงู…ูุฉ ุฃุซูุงุก ุงูุจุญุซุ~ุฅุฐุง ูุงูุช ุงูุฑุณุงูุฉ ุฃุตุบุฑ ู…ู ุงูุญุฌู… ุงูู…ุญุฏุฏ.
+Retrieve Error:=ุฎุทุฃ ุนูุฏ ุงูุฅุณุชูุงู…:
+Right Click:=ููุฑุฉ ูู…ูู:
+Romanian=ุงูุฑูู…ุงููุฉ (Romanian)
+Rotate Icon for each Account=ุชุบููุฑ ุงูุฑู…ุฒ ููู ุญุณุงุจ
+Rotate Icon to show messages in each account=ุชุบููุฑ ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู… ูุฅุธูุงุฑ ุนุฏุฏ ุงูุฑุณุงุฆู ูู ูู ุญุณุงุจ
+Rule=ุงููุงุนุฏุฉ
+Rules ...=ููุงุนุฏ ...
+Rules=ููุงุนุฏ
+Run E-Mail Client=ุชุดุบูู ุนู…ูู ุงูุจุฑูุฏ
+Russian=ุงูุฑูุณูุฉ (Russian)
+Safe Delete (using UIDL)=(UIDL ุงูุญุฐู ุงูุขู…ู (ุจุงุณุชุฎุฏุงู…
+Save Account=ุญูุธ ุงูุญุณุงุจ
+Save All Attachments...=ุญูุธ ูู ุงูู…ุฑููุงุช...
+Save Options=ุญูุธ ุงูุฎูุงุฑุงุช
+Save Rules=ุญูุธ ุงูููุงุนุฏ
+Save...=ุญูุธ...
+Save=ุญูุธ
+seconds=ุซูุงู
+Select All=ุชุญุฏูุฏ ุงููู
+Select Font...=ุชุญุฏูุฏ ุงูุฎุท...
+Select Spam Messages=ุชุญุฏูุฏ ุงูุฑุณุงุฆู ุงูุชุทูููุฉ
+Select the option screen to show.=ุญุฏุฏ ุดุงุดุฉ ุฎูุงุฑุงุช ูุฅุธูุงุฑูุง.
+Selective=ุฅุฎุชูุงุฑูุฉ
+Serbian=ุงูุตุฑุจูุฉ (Serbian)
+Server:=ุงูู…ููู…:
+Shift Left Click:=Shift+ููุฑุฉ ูุณุฑู:
+Shift Middle Click:=Shift+ููุฑุฉ ูุณุทู:
+Shift Right Click:=Shift+ููุฑุฉ ูู…ูู:
+Show Info Balloon or Advanced Info when new mail arrives.=ุฅุธูุงุฑ ุจุงูููุฉ ู…ุนููู…ุงุช ุฃู ู…ุนููู…ุงุช ู…ุชูุฏู…ุฉ ุนูุฏ ูุตูู ุจุฑูุฏ ุฌุฏูุฏ.
+Show Info dialog with message details and buttons.=ุฅุธูุงุฑ ู…ุฑุจุน ู…ุนููู…ุงุช ุจู ุชูุงุตูู ุญูู ุงูุฑุณุงูุฉ ู ุฃุฒุฑุงุฑ.
+Show Info=ุฅุธูุงุฑ ู…ุนููู…ุงุช
+Show Messages ...=ุฅุธูุงุฑ ุงูุฑุณุงุฆู ...
+Show Messages=ุฅุธูุงุฑ ุงูุฑุณุงุฆู
+Show shortcut keys in tips=ุฅุธูุงุฑ ู…ูุงุชูุญ ุงูุฅุฎุชุตุงุฑ ูู ุงูุชูู…ูุญุงุช
+Show the PopTrayU window always on top of other windows.=ุฅุธูุงุฑ ุฅุทุงุฑ ุงูุจุฑูุงู…ุฌ ููู ูู ุงูููุงูุฐ ุงูุฃุฎุฑู ุฏูู…ุงู.
+Show the PopTrayU window when new mail arrives.=ุฅุธูุงุฑ ุฅุทุงุฑ ุงูุจุฑูุงู…ุฌ ุนูุฏ ูุตูู ุจุฑูุฏ ุฌุฏูุฏ.
+Show tips on toolbars=ุฅุธูุงุฑ ุชูู…ูุญุงุช ูู ุฃุดุฑุทุฉ ุงูุฃุฏูุงุช
+Show Window on Notification=ุฅุธูุงุฑ ุงูุฅุทุงุฑ ุนูุฏ ุงูุชูุจูุฉ
+Show/Hide Viewed Messages=ุฅุธูุงุฑ/ุฅุฎูุงุก ุงูุฑุณุงุฆู ุงูู…ูุฑูุกุฉ
+Size=ุงูุญุฌู…
+Slovak=ุงูุณูููุงููุฉ (Slovak)
+Slovene=ุงูุณููููููุฉ (Slovene)
+Sort=ูุฑุฒ ุญุณุจ
+Sound:=ุงูุตูุช:
+Spam=ุชุทููู
+Spam Last=ุงูุชุทููู ูู ุงูุขุฎูุฑ
+Spanish (Chile)=(ุงูุฅุณุจุงููุฉ (ุดููู Spanish (Chile)
+Spanish (Hispanic America)=(ุงูุฅุณุจุงููุฉ (ุฃู…ุฑููุง ุงููุงุชูููุฉ Spanish (Hispanic America)
+Spanish=ุงูุฅุณุจุงููุฉ (Spanish)
+Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=ุชุญุฏูุฏ ู…ููุงุช ุจุญุซ ู…ุฎุชูู ููู ุญุณุงุจ.~ุนูู‘ูู ูุฐู ุงูุฃููุงุช ูู ุจุงุจ ุญุณุงุจุงุช.
+Star=ูุฌู…ุฉ
+Start Minimized=ุงูุจุฏุก ู…ููุตุงู
+Stay on Top=ุงูุจูุงุก ูู ุงูู…ูุฏู…ุฉ
+Still busy checking=ุงูุจุฑูุงู…ุฌ ูุง ูุฒุงู ู…ุดุบููุงู ุจุงูุจุญุซ
+Still busy deleting other messages.=ุงูุจุฑูุงู…ุฌ ูุง ูุฒุงู ู…ุดุบููุงู ุจุญุฐู ุฑุณุงุฆู ุฃุฎุฑู.
+Stop and disconnect.=ุฅููุงู ู ูุตู ุงูุงุชุตุงู.
+Stop=ุฅููุงู
+Stop Checking=ุฅููุงู ุงูุจุญุซ
+Subject=ุงูู…ูุถูุน
+Summary=ุงูุฅุฌู…ุงูู
+Support Forum:=ู…ูุชุฏู ุงูุฏุนู…:
+Supported=ู…ุฏุนูู…
+Suspend Sound=ุชุนุทูู ุงูุตูุช
+Swedish=ุงูุณููุฏูุฉ (Swedish)
+System-wide hot-key to execute selected action.=ู…ูุชุงุญ ุณุงุฎู ุนูู ู…ุณุชูู ุงููุธุงู… ูุชูููุฐ ุงูุฅุฌุฑุงุก ุงูู…ุญุฏุฏ.
+Taiwan=ุงูุชุงููุงููุฉ (Taiwan)
+Test Account=ุฅุฎุชุจุงุฑ ุงูุญุณุงุจ
+Test the sound file=ุฅุฎุชุจุงุฑ ู…ูู ุงูุตูุช
+Test to run the e-mail program=ุฅุฎุชุจุงุฑ ุชุดุบูู ุจุฑูุงู…ุฌ ุงูุจุฑูุฏ
+Test=ุฅุฎุชุจุงุฑ
+Thanks to the following volunteers who helped with the translation:=ุงูุดูุฑ ููู…ุชุทูุนูู ุงูุขุชูู ุงูุฐูู ุณุงุนุฏูุง ูู ุงูุชุฑุฌู…ุฉ:
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=ุฒุฑ ุฅุบูุงู ร— ูู ุงูุฑูู ุงูุนููู-ุงูุฃูู…ู~ุณูู ูููุต ุงูุจุฑูุงู…ุฌ ุจุฏูุงู ู…ู ุฅุบูุงูู.~ู ูุฅุบูุงู ุงูุจุฑูุงู…ุฌ ูุฌุจ ุงูููุฑ ุนูู ุฒุฑ "ุฅููุงุก".
+This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=ููุง ูุชู… ุณุฑุฏ ูู ู…ูุชุจุงุช ูุธุงุฆู ุงูุชูุตูู ุงูู…ูุฌูุฏุฉ ูู ุฏููู ูุธุงุฆู~ุงูุชูุตูู. ุญุฏุฏ ููุชุญู…ูู/ุฅูุบุงุก ุงูุชุญู…ูู. ุฅููุฑ ุงูุฒุฑ ุงูุฃูู…ู ููุฎูุงุฑุงุช.
+This will add the following e-mails to the Black List:=ูุฐุง ุณูุถูู ุงูุนูุงููู ุงูุขุชูุฉ ุฅูู ุงููุงุฆุญุฉ ุงูุณูุฏุงุก:
+This will create a rule to delete all future e-mails from=ูุฐุง ุณููุดุฆ ูุงุนุฏุฉ ูุญุฐู ูู ุงูุจุฑูุฏ ุงููุงุฑุฏ ูู ุงูู…ุณุชูุจู ู…ู
+This will create a rule to spam mark all future e-mails from=ูุฐุง ุณููุดุฆ ูุงุนุฏุฉ ููุถุน ุนูุงู…ุฉ ุชุทููู ุนูู ูู ุงูุจุฑูุฏ ุงููุงุฑุฏ ูู ุงูู…ุณุชูุจู ู…ู ูุคูุงุก:
+This will delete all these messages.=ูุฐุง ุณูุญุฐู ูู ูุฐู ุงูุฑุณุงุฆู.
+This will delete all these selected messages.=ูุฐุง ุณูุญุฐู ูู ูุฐู ุงูุฑุณุงุฆู ุงูู…ุญุฏุฏุฉ.
+Timer Interval per Account=ุชุญุฏูุฏ ู…ููุงุช ุจุญุซ ููู ุญุณุงุจ ุนูู ุญุฏุฉ
+To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=ูุฅุถุงูุฉ ุฅุฌุฑุงุกุงุช ูุชุทุจููู ุงุณุญุจูุง ูุฃููุชูุง ุจุจุณุงุทุฉ ุฅู…ุง ู…ู ุงููุฆุงุช ุฃู ุงูุฅุฌุฑุงุกุงุช ุฅูู ุดุฑูุท ุฅุฌุฑุงุกุงุช ู…ูุฌูุฏ.
+To Tray=ุฅูู ุนูุจุฉ ุงููุธุงู…
+To=ุฅูู
+Toggle AutoCheck=ุชู…ููู/ุชุนุทูู ุงูุจุญุซ ุงูุชููุงุฆู
+Toggle Message Window=ุชูุจูุฑ/ุชูููุต ุฅุทุงุฑ ุงูุฑุณุงุฆู
+Toggle Sound=ุชู…ููู/ุชุนุทูู ุงูุตูุช
+Toolbar Options=ุฎูุงุฑุงุช ุฃุดุฑุทุฉ ุงูุฃุฏูุงุช
+Toolbars:=ุฃุดุฑุทุฉ ุงูุฃุฏูุงุช:
+Toolbars=ุฃุดุฑุทุฉ ุฃุฏูุงุช
+Tools=ุฃุฏูุงุช
+Translations=ุงูุชุฑุฌู…ุงุช:
+TrayIcon while Checking=ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู… ุฃุซูุงุก ุงูุจุญุซ
+Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=ู…ุญุงููุฉ ู…ุฒุฌ ุงูุฃููุงู ุนูุฏู…ุง ูุตู ุจุฑูุฏ ู…ู ุญุณุงุจุงุช ู…ุชุนุฏุฏุฉ.~ูุณู…ุญ ูููุฏูุฒ ุจู€16 ููู ููุท ูู ุนูุจุฉ ุงููุธุงู…ุ ูุฐุง ูุงูู…ุฒุฌ~ูุฏ ูุง ูุนุทู ุงูููู ุงูุตุญูุญ ุฏุงุฆู…ุงู
+Turkish=ุงูุชุฑููุฉ (Turkish)
+Ukranian=ุงูุฃููุฑุงููุฉ (Ukranian)
+Unable to Copy file.=ุบูุฑ ูุงุฏุฑ ุนูู ูุณุฎ ุงูู…ูู.
+Unable to Retrieve Message=ุบูุฑ ูุงุฏุฑ ุนูู ุฅุณุชูุงู… ุงูุฑุณุงูุฉ
+Undo=ุชุฑุงุฌุน
+Unknown Attachment Type.=ููุน ู…ุฑูู ุบูุฑ ู…ุนุฑูู.
+Unmark as Spam=ุฅุฒุงูุฉ ุนูุงู…ุฉ ุชุทููู
+Unviewed messages will be shown in Bold.=ุณูุชู… ุฅุธูุงุฑ ุงูุฑุณุงุฆู ุบูุฑ ุงูู…ูุฑูุกุฉ ุจุฎุท ุนุฑูุถ.
+Use MAPI=MAPI ุฅุณุชุฎุฏุงู…
+Use the POP3 UIDL command to check that message is still the same~before deleting it.=ููุชุฃูุฏ ู…ู ุฃู ุงูุฑุณุงูุฉ ูุง ุชุฒุงู ูู…ุง ูู ูุจู ุงูุญุฐู POP3 UIDL ุฅุณุชุฎุฏุงู…
+Use the POP3 UIDL command to quickly check if the mail on the server has changed.=ููุชุฃูุฏ ุงูุณุฑูุน ุฅู ูุงู ุงูุจุฑูุฏ ุนูู ุงูู…ููู… ูุฏ ุชุบูุฑ POP3 UIDL ุฅุณุชุฎุฏุงู…
+Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=.ููุฑุฏูุฏ ูุงูุฑุณุงุฆู ุงูุฌุฏูุฏุฉ "mailto:" ุงูุจุณูุทุฉ ูุนู…ูู ุจุฑูุฏู ุจุฏูุงู ู…ู ุงุฑุชุจุงุท MAPI ุฅุณุชุฎุฏุงู… ูุงุฌูุฉ
+User Aborted.=ุงูู…ุณุชุฎุฏู… ุฃุญุจุท ุงูุฃู…ุฑ.
+User Interface=ูุงุฌูุฉ ุงูู…ุณุชุฎุฏู…
+version=ุงูุฅุตุฏุงุฑ
+WARNING: This account does NOT support Safe Delete.=ุชุญุฐูุฑ: ูุฐุง ุงูุญุณุงุจ ูุง ูุฏุนู… ุงูุญุฐู ุงูุขู…ู.
+WAV files=ู…ููุงุช ุตูุช
+What to show on the TrayIcon~while checking for new mail.=ู…ุง ูุชู… ุฅุธูุงุฑู ูู ุฑู…ุฒ ุนูุจุฉ ุงููุธุงู…~ุฃุซูุงุก ุงูุจุญุซ ุนู ุจุฑูุฏ ุฌุฏูุฏ.
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=ุนูุฏู…ุง ูุญุฏุซ ุฎุทุฃ ุจุงูุฅุชุตุงูุ ูุนุฑุถ ุงูุจุฑูุงู…ุฌ ุฑุณุงูุฉ ุฎุทุฃ. ูู ุฃุตุจุญ ูุฐุง~ุงูุฎูุงุฑ ู…ู…ููุงุ ุชุนุฑุถ ุฑุณุงูุฉ ุงูุฎุทุฃ ููุท ูู ุดุฑูุท ุงูุญุงูุฉ ู ูู ุนูุจุฉ ุงููุธุงู….
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=ุนูุฏ ู…ุนุงููุฉ ุฑุณุงูุฉ ุชุญุชูู ุนูู ูุทุน MIME ุณููู ุงูุจุฑูุงู…ุฌ ุชุดููุฑ ุฑุณุงูุฉ MIME ููุธูุฑ ุงูุฌุฒุก ุงูุฃูู ูู ู…ุณุงุญุฉ ุงูู…ุนุงููุฉ ู ุงูุจุงูู ูู…ุฑููุงุช. ุนูุฏู…ุง ูุง ูุชู… ุชุญุฏูุฏ ูุฐุงุ ุงูู…ุนุงููุฉ ุณุชุธูุฑ ุงูุฑุณุงูุฉ ุงูุฃูููุฉ.
+When previewing a message, only load the~specified number of lines.=ุนูุฏ ู…ุนุงููุฉ ุฑุณุงูุฉุ ููุท ุชุญู…ูู~ุงูุนุฏุฏ ุงูู…ุญุฏุฏ ู…ู ุงูุณุทูุฑ.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=ุนูุฏ ุจุฏุก ุงูุจุฑูุงู…ุฌุ ุงูุฅูุชุธุงุฑ ุฃููุงู~ุจุถุนุฉ ุซูุงู ูุจู ุงูุจุญุซ ุนู ุงูุจุฑูุฏ.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=ุนูุฏ ุฅุณุชูุจุงูู ุจุฑูุฏ ู…ู ูุงุฆุญุฉ ุงูุนูุงููู~ุงูุชุงููุฉุ ูู ุชุญุฐู ุงูุฑุณุงุฆู ุนู ุทุฑูู ุงูููุงุนุฏ.
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=ุฃุซูุงุก ุงูุจุญุซ ุนู ุจุฑูุฏ ุฌุฏูุฏุ ุฅุณุชูุงู… ู…ุชู ุงูุฑุณุงูุฉ~ุฃูุถุงู. ูุฐุง ุณูู ูุจุทุฆ ุงูุจุญุซุ ูููู ูุนุทูู ุฎูุงุฑ~ูุญุต ู…ุญุชูู ุงูู…ุชู ูู ุงูููุงุนุฏ.
+White / Black List=ุงููุงุฆุญุฉ ุงูุจูุถุงุก/ุงูุณูุฏุงุก
+White List=ุงููุงุฆุญุฉ ุงูุจูุถุงุก
+Wildcard=ุฃุญุฑู ุงูุจุฏู
+Window=ุฅุทุงุฑ
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=.ูู ููุณ ุฏููู ุงูุจุฑูุงู…ุฌ RULES.LOG :ูุชุงุจุฉ ูู ุฅุฌุฑุงุกุงุช ุงูููุงุนุฏ ูู…ูู ุณุฌู. ุฅุณู… ุงูู…ูู
+X Button Minimizes=ุฒุฑ ร— ูููุต
+Yes=ูุนู…
+Edit=ุชุญุฑูุฑ
+Attachments=ู…ุฑููุงุช
+Delete account=ุญุฐู ุงูุญุณุงุจ
+Donation:=ุงูุชุจุฑุน:
+Add Row=ุฅุถุงูุฉ ุตู
+ALL Rows=ูู ุงูุตููู
+ANY Row=ุฃู ุตู
+Area=ุงูุญูู
+Compare=ุงูู…ูุงุฑูุฉ
+Croation=ุงููุฑูุงุชูุฉ (Croatian)
+Croatian=ุงููุฑูุงุชูุฉ (Croatian)
+Delete Row=ุญุฐู ุตู
+Has Attachment=ุจู ู…ุฑูู
+Ignored=ุชู… ุชุฌุงููู
+Needed=ุงูุดุฑูุท
+Not=ููุณ
+Play Sound=ูุฑุงุกุฉ ุตูุช
+Protected=ู…ุญู…ู
+Reg Expr=ุงูู…ุตุทูุญ ุงูุนุงุฏู
+Regular Expression Syntax OK=ุจูุงุก ุฌู…ูุฉ ุงูู…ุตุทูุญ ุงูุนุงุฏู ุณููู…
+Status=ุงูุญุงูุฉ
+Stop Checking=ุฅููุงู ุงูุจุญุซ
+Test the Reg Expr syntax=ุงุฎุชุจุงุฑ ุจูุงุก ุฌู…ูุฉ ุงูู…ุตุทูุญ ุงูุนุงุฏู
+Text=ูุต
+To Be Deleted=ุณูุชู… ุญุฐูู
+Tray Color=ููู ุงูุฑู…ุฒ
+Viewed=ุชู…ุช ูุฑุงุกุชู
+Move Down=ุชุญุฑูู ููุฃุณูู
+Move Up=ุชุญุฑูู ููุฃุนูู
+Delete Mail only on Next Check=ุญุฐู ุงูุจุฑูุฏ ููุท ุนูุฏ ุงูุจุญุซ ุงูุชุงูู
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=ุณูุชู… ูุถุน ุนูุงู…ุฉ "ู…ุญุฐูู" ููุฑุณุงุฆู ุนูุฏ ุญุฐููุง~ู ูุชู… ุญุฐููุง ูุนููุงู ุนูุฏ ุชุดุบูู ุงูุจุญุซ ุงูุชุงูู
+Undelete=ุชุฑุงุฌุน ุนู ุงูุญุฐู
+Add Rule for mail from Sender=ุฅุถุงูุฉ ูุงุนุฏุฉ ููุจุฑูุฏ ู…ู ุงูู…ุฑุณู
+Add Rule for mail with Subject=ุฅุถุงูุฉ ูุงุนุฏุฉ ููุจุฑูุฏ ุจูุฐุง ุงูู…ูุถูุน
+Add Rule to Delete mail from Sender=ุฅุถุงูุฉ ูุงุนุฏุฉ ูุญุฐู ุงูุจุฑูุฏ ู…ู ุงูู…ุฑุณู
+Add Rule to Delete mail with Subject=ุฅุถุงูุฉ ูุงุนุฏุฉ ูุญุฐู ุงูุจุฑูุฏ ุจูุฐุง ุงูู…ูุถูุน
+Add Rule to mark messages with Subject as Spam=ุฅุถุงูุฉ ูุงุนุฏุฉ ููุถุน ุนูุงู…ุฉ ุชุทููู ููุฑุณุงุฆู ุจูุฐุง ุงูู…ูุถูุน
+Galician=ุงูุฌุงููุดูุฉ (Galician)
+Downloading=ุฌุงุฑู ุชุญู…ูู
+Show Messages while Checking=ุฅุธูุงุฑ ุงูุฑุณุงุฆู ุฃุซูุงุก ุงูุจุญุซ
+While checking, show each message as it is downloaded.=ุนูุฏ ุงูุจุญุซุ ุฅุธูุงุฑ ุงูุฑุณุงุฆู ููุฑ ุชูุฒูููุง.
+Extra Confirmation when Deleting Protected Messages=ุชุฃููุฏ ุฒุงุฆุฏ ุนูุฏ ุญุฐู ุฑุณุงุฆู ู…ุญู…ูุฉ
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=ุทูุจ ุชุฃููุฏ ุฒุงุฆุฏ ุนูุฏ ู…ุญุงููุฉ ุญุฐู ุฑุณุงุฆู~ู…ุญู…ูุฉ ุนู ุทุฑูู ุงูููุงุนุฏ ุฃู ุงููุงุฆุญุฉ ุงูุจูุถุงุก.
+You are trying to delete protected messages.=ุฃูุช ุชุญุงูู ุญุฐู ุฑุณุงูุฉ ู…ุญู…ูุฉ.
+Lithuanian=ุงููุชูุงููุฉ (Lithuanian)

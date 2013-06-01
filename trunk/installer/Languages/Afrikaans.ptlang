@@ -1,4 +1,4 @@
-#-----------------------------------------
+ï»¿#-----------------------------------------
 # Afrikaans PopTray Translation file
 #-----------------------------------------
 # Translated by Renier Crause
@@ -15,17 +15,17 @@ Accounts=Rekeninge
 Action:=Aksie:
 Actions=Aksies
 Add Account=Skep Rekening
-Add Rule to Delete all mail from Sender=Skep reël wat alle e-pos delete van sender
-Add Rule=Skep reël
+Add Rule to Delete all mail from Sender=Skep reÃ«l wat alle e-pos delete van sender
+Add Rule=Skep reÃ«l
 Advanced Options=Gevorderde Opsies
 Afrikaans=Afrikaans
 All Accounts=Alle Rekeninge
-All Files=Alle Lêers
+All Files=Alle LÃªers
 Already Connected=Reeds Gekonnekteer
 Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animeer die Tray Ikoon wanneer jy nuwe pos ontvang.~Die gevolge is 'n flikkerende indikator in plaas van die normale enkele een.
 Animated Tray Icon=Geanimeerde Tray ikoon
 Are you sure?=Is jy seker?
-Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Vra vir bevestiging voordat pos uitgevee word.~Hierdie werk slegs saam met die Uitvee Knoppie.~Reëls wat uitvee sal nie eers vra nie.
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Vra vir bevestiging voordat pos uitgevee word.~Hierdie werk slegs saam met die Uitvee Knoppie.~ReÃ«ls wat uitvee sal nie eers vra nie.
 AutoCheck disabled=Autocheck afgeskakel
 AutoCheck Enabled=AutoCheck Aan Geskakel
 AutoCheck only while Minimized=AutoCheck slegs wanneer Geminimaliseerd.
@@ -66,8 +66,8 @@ Delete current message=Verwyder boodskap
 Delete from server=Verwyder vanaf bediener
 Delete Message from Server?=Vee boodskap uit op bediener?
 Delete Messages from Server?=Vee boodskappe uit op bediener?
-Delete Rule:=Verwyder Reël:
-Delete Rule=Verwyder reël
+Delete Rule:=Verwyder ReÃ«l:
+Delete Rule=Verwyder reÃ«l
 Delete=Verwyder
 Deletion Confirmation=Bevestig voor uitvee
 Double Click delay on Click=Dubbel Klik vertraging by enkele Klik
@@ -83,7 +83,7 @@ English=Engels
 Equals=Gelyk aan
 Error:=Fout:
 Error=Fout
-EXE files=EXE lêers
+EXE files=EXE lÃªers
 Execute File=Hardloop program
 Finnish=Fins
 First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Kyk eers of jy aan-lyn is voordat vir pos getoets word.~Hierdie word gebruik deur inskakel gebruikers.~Maak toetsing 'n klein bietjie stadiger.
@@ -103,8 +103,8 @@ Hungarian=Hongaars
 Ignore (don't notify)=Ignoreer (nie aankondig)
 Ignore errors that occurs while retrieving the header info.=Ignoreer foute wat gebeur terwyl die boodskap hoofde gelaai word.
 Ignore Retrieve Errors=Ignoreer Laai Foute
-ignored=geïgnoreer
-Immediately check for mail when PopTray starts.=Toets vir Pos wanner Poptray gelaai word.
+ignored=geÃ¯gnoreer
+Immediately check for mail when PopTrayU starts.=Toets vir Pos wanner PopTrayU gelaai word.
 Important (Balloon Pop-Up)=Belangrik (Ballon Pop-Up)
 Important=Belangrik
 in=in
@@ -114,7 +114,7 @@ Italian=Italiaans
 Korean=Koreaans
 Language:=Taal:
 Left Click:=Linker Muisknop
-Log Rules=Log reëls
+Log Rules=Log reÃ«ls
 Login:=Magtiging:
 Mail Info=E-Pos Info
 Mail=Pos
@@ -125,7 +125,7 @@ message=boodskap
 messages.=boodskappe.
 messages=boodskappe
 Middle Click:=Middelste Muisknop
-Minimize PopTray to the System Tray instead of the Taskbar.=Minimaliseer na Tray in plaas van Taskbar.
+Minimize PopTrayU to the System Tray instead of the Taskbar.=Minimaliseer na Tray in plaas van Taskbar.
 Minimize to Tray=Minimaliseer na Tray
 minutes.=minute.
 Mouse Action:=Muis Aksie:
@@ -143,7 +143,7 @@ New=Nuut
 No E-Mail Client specified=Geen E-Mail program gespesifiseer
 No message selected.=Geen boodskap gekies.
 No new mail=Geen nuwe e-pos
-No rule selected=Geen reël geselekteerd
+No rule selected=Geen reÃ«l geselekteerd
 No Sort=Geen Sortering
 No=Nee
 NOT Contains=Nie Bevat
@@ -155,11 +155,11 @@ Options ...=Opsies ...
 Options=Opsies
 Password Protect=Wagwoord Beskerm
 Password:=Wagwoord:
-Please enter the password to open Poptray=Gee die wagwoord om PopTray oop te maak
+Please enter the password to open PopTrayU=Gee die wagwoord om PopTrayU oop te maak
 Polish=Pools
 Pop-Up Menu=Pop-up Menu
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=Poptray sal geminimaliseerd begin.~Slegs die Tray Ikoon sal sigbaar wees.
-Portuguese (Brazil)=Portugees (Brasilië)
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTrayU sal geminimaliseerd begin.~Slegs die Tray Ikoon sal sigbaar wees.
+Portuguese (Brazil)=Portugees (BrasiliÃ«)
 Preview the Message=Lees die boodskap
 Preview=Lees
 Quick Checked:=Vinnig Getoets:
@@ -168,26 +168,26 @@ Refresh the list of languages=Herlaai lys van Tale
 Refresh=Herlaai
 Reply using default mail client=Beantwoord met standaard e-pos program
 Reply=Antwoord
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=Herset die Tray Ikoon aantal boodskappe wanneer~die boodskap venster oopgemaak word.~Wanneer pos arriveer sal slegs die aantal nuwe boodskappe,~vanaf die laaste kyk, getel word.
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=Herset die Tray Ikoon aantal boodskappe wanneer~die boodskap venster oopgemaak word.~Wanneer pos arriveer sal slegs die aantal nuwe boodskappe,~vanaf die laaste kyk, getel word.
 Right Click:=Regter Muisknop
 Romanian=Roemeens
 Rotate Icon for each Account=Alterneer tray ikoon vir elke rekening
 Rotate Icon to show messages in each account=Alterneer tray ikoon om aantal pos vir elke rekening te wys
-Rule=Reël
-Rules=Reëls
+Rule=ReÃ«l
+Rules=ReÃ«ls
 Run E-Mail Client=Begin E-Pos Program
 Russian=Russies
 Save Account=Stoor Rekening
 Save Options=Stoor Opsies
-Save Rules=Stoor Reëls
+Save Rules=Stoor ReÃ«ls
 Save=Stoor
 seconds=sekondes
 Show Info=Wys Info
 Show Messages ...=Wys Boodskappe ...
 Show Messages=Wys Boodskappe
-Show the PopTray window always on top of other windows.=PopTray venster altyd bo-op ander vensters.
-Show the PopTray window when new mail arrives.=Wys PopTray venster met nuwe pos.
-Show Window on Notification=Wys PopTray venster met nuwe pos
+Show the PopTrayU window always on top of other windows.=PopTrayU venster altyd bo-op ander vensters.
+Show the PopTrayU window when new mail arrives.=Wys PopTrayU venster met nuwe pos.
+Show Window on Notification=Wys PopTrayU venster met nuwe pos
 Size=Grootte
 Slovak=Slowakies
 Slovene=Sloweens
@@ -205,8 +205,8 @@ Test the sound file=Toets klank
 Test to run the e-mail program=Toets die e-pos program
 Test=Toets
 Thanks to the following volunteers who helped with the translation:=Dankie vir die volgende vrywilligers wat gehelp het met die vertaling:
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=Die X knoppie in die boonste regterhande hoek~sal PopTray minimaliseer in plaas van toemaak.
-This will create a rule to delete all future e-mails from=Hierdie sal 'n reël skep wat alle toekomsitge e-pos sal uitvee vanaf
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=Die X knoppie in die boonste regterhande hoek~sal PopTrayU minimaliseer in plaas van toemaak.
+This will create a rule to delete all future e-mails from=Hierdie sal 'n reÃ«l skep wat alle toekomsitge e-pos sal uitvee vanaf
 This will delete all these selected messages.=Hierdie sal al die geslekteerde boodksappe uitvee.
 Timer Interval per Account=Tyd per Rekening
 To Tray=Na Tray
@@ -219,17 +219,17 @@ Unable to Retrieve Message=Kon nie Boodskap Laai nie
 Use MAPI=Gebruik MAPI
 User Aborted.=Gebruiker Stop.
 version=weergawe
-WAV files=WAV lêers
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=As 'n konneksie fout gebeur, wys slegs die foutboodskap in die status venster en Tray.
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Wanneer jy 'n MIME boodskap lees sal jy die eerste leesbare~ gedeelte van die boodskap kan lees, en die res sien as aanhegsels.~As dit afgeskakel is, sien die oorsprinklike boodskap op die bediener.
+WAV files=WAV lÃªers
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=As 'n konneksie fout gebeur, wys slegs die foutboodskap in die status venster en Tray.
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Wanneer jy 'n MIME boodskap lees sal jy die eerste leesbare~ gedeelte van die boodskap kan lees, en die res sien as aanhegsels.~As dit afgeskakel is, sien die oorsprinklike boodskap op die bediener.
 Wildcard=Wildcard
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=Skryf alle reël aksies na 'n log lêer.~Naam: RULES.LOG in dieselfde plek as PopTray.
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Skryf alle reÃ«l aksies na 'n log lÃªer.~Naam: RULES.LOG in dieselfde plek as PopTrayU.
 X Button Minimizes=X Knoppie Minimaliseer
 Yes=Ja
 [Use Default Program]=[Standaard E-Pos Program]
 [Use Default Sound]=[Standaard Klank]
 
-# ---------- Added PopTray 2.1 (beta 8) ----------
+# ---------- Added PopTrayU 2.1 (beta 8) ----------
 Delete this message from server=Verwyder hierdie boodskap vanaf bediener
 Delete Button only available when using Safe Delete option=Verwyder knoppie slegs beskikbaar met Veilige Verdyder opsie
 Safe Delete (using UIDL)=Veilige Verwyder (gebruik UIDL)
@@ -246,8 +246,8 @@ Display the tabs for the different accounts in~multiple lines instead of one scr
 Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=Gebruik die Simple MAPI koppelvlak van jou e-pos program~ipv om 'n "mailto:" link te gebruik vir antwoorde en nuwe boodskappe.
 Use the POP3 UIDL command to check that message is still the same~before deleting it.=Gebruik POP3 se UIDL bevel om seker te maak dat 'n boodskap nog dieselfde is~voordat dit uitgevee word.
 Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Gebruik POP3 se UIDL bevel om vinnig te kyk of die boodskappe op die bediener verander het.
-Requires that you enter the specified password to open PopTray.=Sleutel hierdie wagwoord in om PopTray oop te maak.
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Moenie AutoCheck hardloop wanneer die PopTray venster oop is nie.~Hierdie is handig om te verhoed dat jy AutoCheck en self toets~op dieselfde tyd.
+Requires that you enter the specified password to open PopTrayU.=Sleutel hierdie wagwoord in om PopTrayU oop te maak.
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Moenie AutoCheck hardloop wanneer die PopTrayU venster oop is nie.~Hierdie is handig om te verhoed dat jy AutoCheck en self toets~op dieselfde tyd.
 Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Gee verskillende tye vir elke rekening.~Stel die tye op die rekeninge lip.
 
 # ---------- Added PopTray 3.0 (beta 1) ----------
@@ -255,14 +255,14 @@ Arabic=Arabies
 Portuguese=Portugees
 Turkish=Turks
 
-Add Rule to mark messages from Sender as Spam=Skep reël wat alle e-pos van sender te merk as Spam
+Add Rule to mark messages from Sender as Spam=Skep reÃ«l wat alle e-pos van sender te merk as Spam
 Add sender to Black List=Voeg sender na Swartlys
 Add sender to White List=Voeg sender na Witlys
 Added to the White List:=Gevoeg tot Witlys
 Advanced Show Info=Gevordede Wys Info
 Black List mark as Spam=Swartlys merk as Spam
 Black List=Swartlys
-Copy=Kopiëer
+Copy=KopiÃ«er
 Customize...=Verander ...
 Cut=Sny
 Del Spam=Vee Spam
@@ -272,11 +272,11 @@ Failed to Save Attachment.=Kon nie Aanhegsel Stoor nie.
 First Wait=Wag eers
 Hide Viewed Messages=Steek besigte boodkappe weg
 Hide=Steek Weg
-Import Rules=Bring reëls in
-INI Files=INI Lêers
+Import Rules=Bring reÃ«ls in
+INI Files=INI LÃªers
 Interval=Interval
 Lists=Lyste
-Log Rule=Log Reël
+Log Rule=Log ReÃ«l
 Mark as Spam=Merk as Spam
 Mark as Viewed=Merk as Besigtig
 New Mail=Nuwe Pos
@@ -292,7 +292,7 @@ Protocol:=Protokol:
 Raw Message=Rou Boodskap
 Read Only=Lees Aanleenlik
 Remember Viewed Messages=Onthou Geleesde Boodskappe
-Rules ...=Reëls ...
+Rules ...=ReÃ«ls ...
 Save All Attachments...=Stoor Alle Aanhegsels
 Save...=Stoor...
 Select All=Selekteer Almal
@@ -302,10 +302,10 @@ Server:=Bediener:
 Show/Hide Viewed Messages=Wys/Steek Weg geleesde boodskappe
 Spam=Spam
 This will add the following e-mails to the Black List:=Hierdie sal die volgende adresse na die Swarlys voeg:
-This will create a rule to spam mark all future e-mails from=Hierdie sal 'n reëls skep om alles te merk vanaf
+This will create a rule to spam mark all future e-mails from=Hierdie sal 'n reÃ«ls skep om alles te merk vanaf
 This will delete all these messages.=Hierdie sal al hierdie boodskappe uit vee.
 TrayIcon while Checking=TrayIkoon terwyl besig om te Toets
-Unable to Copy file.=Nie moontlik om lêer to kopieer.
+Unable to Copy file.=Nie moontlik om lÃªer to kopieer.
 Undo=Herstel
 Unknown Attachment Type.=Onbekende Aanhegsel Tipe.
 Unmark as Spam=Verwyder Spam Merk
@@ -314,7 +314,7 @@ White / Black List=Wit / Swart Lys
 White List=Wit Lust
 
 Any mail received from the following e-mail addresses~will automatically be deleted.=Enige pos van die volgende adresse~gaan outomaties uitgevee word.
-Because of the Security Risk, PopTray doesn't allow the opening of Executable files.=PopTray laat nie toe dat jy hierdie lêer hardloop nie.
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=PopTrayU laat nie toe dat jy hierdie lÃªer hardloop nie.
 Black List will mark the messages as Spam~instead of deleting them.=Swartlys sal boodskappe merk as Spam~in plaas van om die uittevee.
 Default e-mail program to open.=E-Pos program om oop te maak.
 Default sound to play when new mail arrives.=Klank om te speel wanner jy nuwe pos kry.
@@ -323,15 +323,15 @@ Number of message lines to preview.=Aantal lyne om te lees.
 Number of seconds to display the Info window~before closing it.=Aantal sekondes om die Gevorderde Info te wys.
 Number of seconds to wait during connection~before giving an error.=Aantal sekondes om te probeer konnekteer~voordat 'n fout verskyn.
 Once a message has been viewed, don't show it again.=As 'n boodskap eers besigtig is~moenie dit weer wys nie.
-Remember which messages on the server has already been viewed~even after closing PopTray.=Onthou watter boodskappe op die bediener reeds gesien is~selfs nadat jy PopTray toe gemaak het.
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=Onthou watter boodskappe op die bediener reeds gesien is~selfs nadat jy PopTrayU toe gemaak het.
 Select the option screen to show.=Kies die opsie skerm om te wys.
 Show Info dialog with message details and buttons.=Wys Info window met boodskap besonderhede.
 System-wide hot-key to execute selected action.=Sleutel kombinasie wat van enige plek af~die aksie sal uitvoer.
 This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Hierdie lys die plug-in DLLs in jou plugin directory.~Selekteer om dit te laai.
-What to show on the TrayIcon~while checking for new mail.=Wat op in die Tray te wys terwyl PopTray~besig is om te toets.
+What to show on the TrayIcon~while checking for new mail.=Wat op in die Tray te wys terwyl PopTrayU~besig is om te toets.
 When previewing a message, only load the~specified number of lines.=Wanner jy 'n boodskap lees~laai slegs hierdie aantal lyne.
-When starting PopTray, first wait a few seconds~before checking for mail.=Wanneer PopTray begin, wag eers hierdie~aantal sekondes voordat toetsing begin.
-When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Wanner jy pos van hierdie adresse ontvang~sal die boodskap nie uitgevee word deur reëls nie.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=Wanneer PopTrayU begin, wag eers hierdie~aantal sekondes voordat toetsing begin.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Wanner jy pos van hierdie adresse ontvang~sal die boodskap nie uitgevee word deur reÃ«ls nie.
 
 None=Geen
 Lightning Bolt=Weerligstraal
@@ -341,7 +341,7 @@ Animated Star=Geanimeerde Ster
 Customize=Verander
 Toolbars=IkoonBorde
 Toolbars:=IkoonBorde:
-Categories:=Kategorië:
+Categories:=KategoriÃ«:
 Actions:=Aksies:
 Window=Venster
 Tools=Gereedskap
@@ -363,11 +363,11 @@ Show shortcut keys in tips=Wys sleutels in wenke
 
 
 # ---------- Added PopTray 3.0 (beta 2) ----------
-No protocol defined for account=Geen protokol gedefiniëerd vir rekening.
+No protocol defined for account=Geen protokol gedefiniÃ«erd vir rekening.
 Donation:=Donasie:
 Don't Check between=Moenie toets tussen
 and=en
-Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Moenie toets tussen hierdie ure nie.~Hierdie is nuttig as jy stilte gedurende die nag~wil hê.
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Moenie toets tussen hierdie ure nie.~Hierdie is nuttig as jy stilte gedurende die nag~wil hÃª.
 
 # ---------- Added PopTray 3.0 (beta 3) ----------
 Spanish (Hispanic America)=Spaans (Hispanic Amerika)
@@ -400,7 +400,7 @@ Ignore Connection Errors=Ignoreer Konneksie Foute
 Retrieve Body while Checking=Laai volledige boodskap
 Limit download to the first=Laai slegs eerste
 lines=lyne
-While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Wanneer getoets word, word die totale boodskape afgelaai.~Hierdie is stadiger, maar dit beteken jy kan die hele boodskap in reëls toets.
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Wanneer getoets word, word die totale boodskape afgelaai.~Hierdie is stadiger, maar dit beteken jy kan die hele boodskap in reÃ«ls toets.
 
 # ---------- Added PopTray 3.0 (beta 11) ---------
 Protect against auto-delete=Beskerm teen outo-uitvee.
@@ -462,7 +462,7 @@ Play Sound=Speel Klank
 Tray Color=Tray Kleur
 Protected=Beskermd
 To Be Deleted=Om uitgevee te word
-Ignored=Geïgnoreer
+Ignored=GeÃ¯gnoreer
 Has Attachment=Met Aanhegsel
 Viewed=Gesien
 
@@ -473,8 +473,8 @@ Move Up=Skuif Op
 Delete Mail only on Next Check=Vee uit met volgende toets.
 When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Wanneer mail uitgevee word, word dit gemerk~en slegs uitgevee wanneer die volgende toets hardloop.
 Undelete=Herstel
-Add Rule for mail from Sender=Skep reël vir alle e-pos vanaf sender
-Add Rule for mail with Subject=Skep reël vir alle e-pos met onderwerp
+Add Rule for mail from Sender=Skep reÃ«l vir alle e-pos vanaf sender
+Add Rule for mail with Subject=Skep reÃ«l vir alle e-pos met onderwerp
 
 
 # ---------- Added PopTray 3.1 (beta 4) ---------
@@ -485,16 +485,16 @@ While checking, show each message as it is downloaded.=Terwyl toets, wys elke bo
 
 # ---------- Added PopTray 3.1 (beta 5) ---------
 Extra Confirmation when Deleting Protected Messages=Ekstra bevestiging vir beskermde boodskappe
-Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Ekstra bevestiging wanneer jy probeer om boodskappe uittevee~wat beskerm is deur reëls of die witlys.
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Ekstra bevestiging wanneer jy probeer om boodskappe uittevee~wat beskerm is deur reÃ«ls of die witlys.
 You are trying to delete protected messages.=Jy probeer beskermde boodskappe uitvee.
 
 # ---------- Added PopTray 3.1 (beta 8) ---------
 Lithuanian=Litaus
 
 # ---------- Missing customization phrases ---------
-Add Rule to Delete mail with Subject=Skep reël wat boodskap met Onderwerp uitvee
-Add Rule to delete Mail from Sender=Skep reël wat boodskap vanaf sender uitvee
-Add Rule to mark messages with Subject as Spam=Skep reël wat boodskap met Onderwerp merk as Spam
+Add Rule to Delete mail with Subject=Skep reÃ«l wat boodskap met Onderwerp uitvee
+Add Rule to delete Mail from Sender=Skep reÃ«l wat boodskap vanaf sender uitvee
+Add Rule to mark messages with Subject as Spam=Skep reÃ«l wat boodskap met Onderwerp merk as Spam
 
 # ---------- Added PopTray 3.2 (beta 1) ---------
 Greek=Grieks

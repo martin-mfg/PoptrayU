@@ -95,7 +95,7 @@ Cancel=
 Check All=
 Check current account for New Mail=
 Check for New Mail on Startup=
-Check for new mail every =
+Check for new mail every=
 Check if On-Line=
 Check=
 Color:=
@@ -124,7 +124,7 @@ Hot-Keys=
 Ignore (don't notify)=
 Ignore Retrieve Errors=
 Ignore errors that occurs while retrieving the header info.=
-Immediately check for mail when PopTray starts.=
+Immediately check for mail when PopTrayU starts.=
 Info=
 Left Click:=
 Log Rules=
@@ -132,7 +132,7 @@ Login:=
 MAPI instead of mailto:=
 Mail=
 Middle Click:=
-Minimize PopTray to the System Tray instead of the Taskbar.=
+Minimize PopTrayU to the System Tray instead of the Taskbar.=
 Minimize to Tray=
 minutes.=
 Mouse Action:=
@@ -148,14 +148,14 @@ Options ...=
 Options=
 Password Protect=
 Password:=
-Please enter the password to open Poptray=
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=
+Please enter the password to open PoptrayU=
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=
 Preview the Message=
 Preview=
 Quit=
 Reply using default mail client=
 Reply=
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=
 Right Click:=
 Rotate Icon for each Account=
 Rotate Icon to show messages in each account=
@@ -167,8 +167,8 @@ Save Options=
 Save Rules=
 Show Messages ...=
 Show Window on Notification=
-Show the PopTray window always on top of other windows.=
-Show the PopTray window when new mail arrives.=
+Show the PopTrayU window always on top of other windows.=
+Show the PopTrayU window when new mail arrives.=
 Size=
 Sound:=
 Start Minimized=
@@ -178,21 +178,18 @@ Support Forum:=
 Test the sound file=
 Test to run the e-mail program=
 Test=
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=
 Timer Interval per Account=
 To Tray=
-Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=
 Use MAPI=
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=
+
 X Button Minimizes=
 
 # ---------- Added PopTray 2.1 (beta 1.2) ----------
 Language:=
 Refresh=
 Refresh the list of languages=
-Thanks to the following volunteers who helped with the translation:=
 Translations=
 Contact Info=
 
@@ -265,9 +262,9 @@ Display the tabs for the different accounts in~multiple lines instead of one scr
 Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=
 Use the POP3 UIDL command to check that message is still the same~before deleting it.=
 Use the POP3 UIDL command to quickly check if the mail on the server has changed.=
-Requires that you enter the specified password to open PopTray.=
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=
-Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=
+Requires that you enter the specified password to open PopTrayU.=
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=
+
 
 # ---------- Added PopTray 2.1 ----------
 Important=
@@ -337,7 +334,7 @@ White / Black List=
 White List=
 
 Any mail received from the following e-mail addresses~will automatically be deleted.=
-Because of the Security Risk, PopTray doesn't allow the opening of Executable files.=
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=
 Black List will mark the messages as Spam~instead of deleting them.=
 Default e-mail program to open.=
 Default sound to play when new mail arrives.=
@@ -346,14 +343,14 @@ Number of message lines to preview.=
 Number of seconds to display the Info window~before closing it.=
 Number of seconds to wait during connection~before giving an error.=
 Once a message has been viewed, don't show it again.=
-Remember which messages on the server has already been viewed~even after closing PopTray.=
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=
 Select the option screen to show.=
 Show Info dialog with message details and buttons.=
 System-wide hot-key to execute selected action.=
 This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=
 What to show on the TrayIcon~while checking for new mail.=
 When previewing a message, only load the~specified number of lines.=
-When starting PopTray, first wait a few seconds~before checking for mail.=
+When starting PopTrayU, first wait a few seconds~before checking for mail.=
 When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=
 
 None=
@@ -539,7 +536,6 @@ Server found, but is not a mail server.=
 Change the Main Window Listbox Font=
 Clear all customizations=
 HTML View=
-Thanks to the following volunteers who helped translate this software:=
 Language=
 Translator=
 Component=
@@ -588,14 +584,12 @@ POP3 with SSL or APOP=
 Specify a different timer interval for each account.=
 Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=
 This setting can be changed via setup or a command line parameter.=
-Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not reccommended.=
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=
 Don't automatically check for new messages=
 Set Interval per account=
 Only check when already online=
 
-#---------------------------------------------------------------------
-# New Strings for 4.1 
-#---------------------------------------------------------------------
+# ---------- Added PopTrayU 4.1 ---------
 Don't check this account between=
 Advanced=
 Use SSL/TLS=
@@ -606,3 +600,28 @@ Password=
 Toolbar Color Scheme:=
 Normal=
 Twilight=
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=
+Disable HTML Preview=
+Main Window=
+Default Spam Toolbar Button Action:=
+Image Credits=
+Image Package=
+Images=
+Main Window Message List=
+Main Window Behaviors=
+Check Interval=
+Theme:=
+Spam Management=
+Changes the action of the Spam toolbar button on the Main Window=
+AKA Explicit TLS=
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=
+Disables the HTML Preview tab when previewing a message.=
+Listbox Font=
+Reset Fonts and Colors=
+APOP=
+SASL=
+Customize the Font=
+Edit=

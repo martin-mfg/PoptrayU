@@ -1,7 +1,8 @@
+Ôªø#-----------------------------------------------------------------------
+# PopTrayU translation file
 #-----------------------------------------------------------------------
-# PopTray 3.2 translation file by www.alienpro.it
-#-----------------------------------------------------------------------
-# 2006-08-15  PopTray 3.2
+# 2013-05-31 PopTrayU 5.0 beta 1
+# 2006-08-15  PopTray 3.2 by www.alienpro.it
 #-----------------------------------------------------------------------
 
 OK=OK
@@ -25,7 +26,7 @@ Checking=Controllando:
 Not On-Line=Offline
 Error:=Errore:
 Still busy checking=Ancora occupato
-Already Connected=Gi‡ connesso
+Already Connected=Gi√† connesso
 User Aborted.=Annullato dall'utente
 Unable to Retrieve Message=Impossibile Aprire il Messaggio
 Checked:=Controllato:
@@ -55,13 +56,13 @@ Still busy deleting other messages.=Occupato cancellando altri messaggi.
 Delete Message from Server?=Cancello il Messaggio dal Server?
 Delete Messages from Server?=Cancello i Messaggi dal Server?
 Number of selected messages:=Numero dei messaggi selezionati:
-This will delete all these selected messages.=Questo canceller‡ tutti i messaggi selezionati.
-Cannot delete last Account=Non Ë possibile cancellare l'ultimo Account
+This will delete all these selected messages.=Questo canceller√† tutti i messaggi selezionati.
+Cannot delete last Account=Non √® possibile cancellare l'ultimo Account
 Delete Account:=Cancella Account:
 Delete Rule:=Cancella la Regola:
 Are you sure?=Sei sicuro?
 No rule selected=Nessuna regola selezionata
-This will create a rule to delete all future e-mails from=Questo creer‡ una regola che canceller‡ tutte le e-mail future provenienti da
+This will create a rule to delete all future e-mails from=Questo creer√† una regola che canceller√† tutte le e-mail future provenienti da
 
 
 Header=Instestazione
@@ -87,9 +88,9 @@ Add Rule to Delete all mail from Sender=Crea Regola per Cancellare i messaggi de
 Add Rule=Aggiungi Regola
 Add new rule=Aggiungi nuova regola
 Advanced Options=Opzioni Avanzate
-Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Icona nella Tray animata quando ricevi nuova posta.~Al posto della normale icona statica si vedr‡ una icona lampeggiante.
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Icona nella Tray animata quando ricevi nuova posta.~Al posto della normale icona statica si vedr√† una icona lampeggiante.
 Animated Tray Icon=Icona Animata nella Tray
-Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Chiedi conferma prima di cancellare messaggi.~Funziona solo per il tasto Elimina. Cancellare i messaggi mediante le regole non verr‡ chiesta alcuna conferma.
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Chiedi conferma prima di cancellare messaggi.~Funziona solo per il tasto Elimina. Cancellare i messaggi mediante le regole non verr√† chiesta alcuna conferma.
 AutoCheck Enabled=Controllo Automatico Abilitato
 Body=Corpo del messaggio
 Cancel=Annulla
@@ -100,7 +101,7 @@ Check current account for New Mail=Controlla questo account per Nuovi Messaggi
 Check for New Mail on Startup=Controlla Nuovi Messaggi all'Avvio
 Check for new mail every =Controlla ogni
 Check if On-Line=Controlla se Online
-Check on-line if newer version available.=Controlla se Ë disponibile una versione pi˘ recente.
+Check on-line if newer version available.=Controlla se √® disponibile una versione pi√π recente.
 Check=Controlla
 Color:=Colore:
 Criteria=Criterio
@@ -125,7 +126,7 @@ Downloading...=Attendere...
 E-Mail Program:=Client E-Mail:
 E-Mail:=E-mail:
 Enabled=Attivato
-First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Controlla di essere online prima di controllare i messaggi.~Da usare da parte degli utenti dial-up che non vogliono si apra la finestra di connessione se non si Ë connessi.~La procedura di controllo sar‡ poco pi˘ lenta.
+First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Controlla di essere online prima di controllare i messaggi.~Da usare da parte degli utenti dial-up che non vogliono si apra la finestra di connessione se non si √® connessi.~La procedura di controllo sar√† poco pi√π lenta.
 General Options=Opzioni Generali
 Headers=Intestazioni
 Help=Aiuto
@@ -135,7 +136,7 @@ Hot-Keys=Hot-Key
 Ignore (don't notify)=Ignora (non notifica)
 Ignore Retrieve Errors=Ignora gli Errori durante l'Apertura
 Ignore errors that occurs while retrieving the header info.=Ignora gli errori che occorrono durante l'apertura dell'intestazione.
-Immediately check for mail when PopTray starts.=Controlla i messaggi all'avvio di PopTray.
+Immediately check for mail when PopTrayU starts.=Controlla i messaggi all'avvio di PopTrayU.
 Info=Info
 Left Click:=Tasto Sinistro:
 Log Rules=Log Regole
@@ -143,7 +144,7 @@ Login:=Login:
 MAPI instead of mailto:=Usa MAPI al posto di mailto:
 Mail=Messaggi
 Middle Click:=Tasto Centrale:
-Minimize PopTray to the System Tray instead of the Taskbar.=Minimizza PopTray nella Tray al posto della Taskbar
+Minimize PopTrayU to the System Tray instead of the Taskbar.=Minimizza PopTrayU nella Tray al posto della Taskbar
 Minimize to Tray=Minimizza alla Tray
 minutes.=minuti.
 Mix Colors=Mix Colori
@@ -162,15 +163,15 @@ POP3 Server:=Server POP3:
 Password Protect=Proteggi da Password
 Password:=Password:
 Play different wav=Esegui wav differenti
-Please enter the password to open Poptray=Inserire la password per aprire PopTray
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTray partir‡ minimizzato.~Ovvero la finestra sar‡ nascosta e solo l'icona nella Tray~sar‡ visibile.
+Please enter the password to open PopTrayU=Inserire la password per aprire PopTrayU
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTrayU partir√† minimizzato.~Ovvero la finestra sar√† nascosta e solo l'icona nella Tray~sar√† visibile.
 Preview the Message=Anteprima del Messaggio
 Preview=Anteprima
 Quit=Esci
 Reply using default mail client=Rispondi utilizzando il client E-mail predefinito
 Reply=Rispondi
 Reset Tray Icon when Viewing=Azzera Icona della Tray quando Visualizza
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=Resetta il contatore nella icona nella Tray~quando viene aperta la finestra principale di PopTray.~Quando arriveranno nuovi messaggi il conteggio ricomincer‡ da zero.
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=Resetta il contatore nella icona nella Tray~quando viene aperta la finestra principale di PopTrayU.~Quando arriveranno nuovi messaggi il conteggio ricomincer√† da zero.
 Right Click:=Tasto Destro:
 Rotate Icon for each Account=Ruota Icone per ogni Account
 Rotate Icon to show messages in each account=Rotazione delle Icone per mostrare i messaggi di ogni account
@@ -185,8 +186,8 @@ Save Options=Salva Opzioni
 Save Rules=Salva Regole
 Show Messages ...=Mostra Messaggi...
 Show Window on Notification=Visualizza la Finestra come Notifica
-Show the PopTray window always on top of other windows.=Visualizza la finestra di PopTray sempre sopra ogni altra finestra.
-Show the PopTray window when new mail arrives.=Visualizza la finestra di PopTray quando arrivano nuovi messaggi.
+Show the PopTrayU window always on top of other windows.=Visualizza la finestra di PopTrayU sempre sopra ogni altra finestra.
+Show the PopTrayU window when new mail arrives.=Visualizza la finestra di PopTrayU quando arrivano nuovi messaggi.
 Size=Dimensione
 Sound:=Suono:
 Start Minimized=Avvia Minimizzato
@@ -196,15 +197,15 @@ Support Forum:=Forum-Supporto:
 Test the sound file=Prova il suono:
 Test to run the e-mail program=Prova ad eseguire il client di posta elettronica
 Test=Prova
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=Il bottone X nell'angolo in alto a destra minimizzer‡~PopTray anzichË chiuderlo.~Per uscire usare il tasto "Esci".
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=Il bottone X nell'angolo in alto a destra minimizzer√†~PopTrayU anzich√® chiuderlo.~Per uscire usare il tasto "Esci".
 Timer Interval per Account=Singolo Intervallo per Account
 To Tray=Minimizza
-Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Prova a cambiare i colori quando arrivano messaggi in pi˘ account.~Windows permette solo 16 colori nella Tray, pertanto i colori~non sono sempre quelli corretti.
+Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Prova a cambiare i colori quando arrivano messaggi in pi√π account.~Windows permette solo 16 colori nella Tray, pertanto i colori~non sono sempre quelli corretti.
 Use MAPI=Usa MAPI
 Viewed Messages Icon=Icona dei Messaggi Visualizzati
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=In caso di errore di connessione, PopTray visualizzer‡ un messaggio d'errore.~Se questa opzione Ë attivata, il messaggio d'errore verr‡ visualizzato nella barra di stato e nella Tray.
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=In caso di anteprima di un messaggio con parti MIME~PopTray decodificher‡ il messaggio in formato MIME, visualizzando~la prima parte nella preview e il resto come allegato.~Quando non selezionata, l'anteprima visualizzer‡ il messaggio in formato RAW.
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=Usa un file di Log per tutte le azioni delle regole.
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=In caso di errore di connessione, PopTrayU visualizzer√† un messaggio d'errore.~Se questa opzione √® attivata, il messaggio d'errore verr√† visualizzato nella barra di stato e nella Tray.
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=In caso di anteprima di un messaggio con parti MIME~PopTrayU decodificher√† il messaggio in formato MIME, visualizzando~la prima parte nella preview e il resto come allegato.~Quando non selezionata, l'anteprima visualizzer√† il messaggio in formato RAW.
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Usa un file di Log per tutte le azioni delle regole.
 X Button Minimizes=Il bottone X minimizza
 
 
@@ -233,7 +234,7 @@ Del=Canc
 Ign=Ign
 EXE=EXE
 message=messaggio
-Multi-line Account Tabs=Linguette Account su pi˘ righe
+Multi-line Account Tabs=Linguette Account su pi√π righe
 AutoCheck only while Minimized=Controlla automatico solo se Minimizzato
 Print=Stampa
 Print the message to your default printer=Stampa il messaggio sulla stampante predefinita
@@ -283,7 +284,7 @@ Swedish=Svedese
 
 # ---------- Added PopTray 2.1 (beta 8) ----------
 Delete this message from server=Elimina questo messaggio dal server
-Delete Button only available when using Safe Delete option=Il bottone Elimina Ë attivo solo in modalit‡ Eliminazione Sicura
+Delete Button only available when using Safe Delete option=Il bottone Elimina √® attivo solo in modalit√† Eliminazione Sicura
 Safe Delete (using UIDL)=Eliminazione sicura (usando UIDL)
 Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=L'identificatore del messaggio non corrisponde~L'opzione Eliminazione Sicura ha prevenuto l'errata cancellazione di questo messaggio.
 
@@ -296,12 +297,12 @@ Interface=Interfaccia
 Connection=Connessione
 Miscellaneous=Altro
 Quick Help=Aiuto veloce
-Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Visualizza le linguette dei differenti account~su pi˘ righe al posto di una linea sola.
+Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Visualizza le linguette dei differenti account~su pi√π righe al posto di una linea sola.
 Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=Usa l'interfaccia Simple MAPI del client di posta elettronica~al posto di usare il "mailto:" per rispondere ai nuovi messaggi.
 Use the POP3 UIDL command to check that message is still the same~before deleting it.=Usa il comando POP3 UIDL per verificare che~il messaggio da cancellare sia ancora lo stesso.
-Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Usa il comando POP3 UIDL per verificare velocemente se la posta sul server Ë cambiata.
-Requires that you enter the specified password to open PopTray.=E' necessario l'inserimento della relativa password per aprire PopTray.
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Non eseguire il timer del Controllo Automatico durante la visualizzazione della finestra di PopTray.~Questo Ë utile per prevenire il controllo automatico~mentre si stanno controllando manualmente i messaggi.
+Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Usa il comando POP3 UIDL per verificare velocemente se la posta sul server √® cambiata.
+Requires that you enter the specified password to open PopTrayU.=E' necessario l'inserimento della relativa password per aprire PopTrayU.
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Non eseguire il timer del Controllo Automatico durante la visualizzazione della finestra di PopTrayU.~Questo √® utile per prevenire il controllo automatico~mentre si stanno controllando manualmente i messaggi.
 Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Specifica un differente intervallo di tempo per ogni account.~Imposta gli intervalli nelle relative finestre dei vari Account.
 
 # ---------- Added PopTray 2.1 (beta 12) ----------
@@ -333,7 +334,7 @@ Delete messages marked as Spam=Elimina messaggi segnati come Spam
 Delete Spam from Server?=Eliminare lo Spam dal Server?
 Failed to Save Attachment.=Errore durante il Salvataggio degli Allegati.
 First Wait=Prima attendi
-Hide Viewed Messages=Nasconde i Messaggi gi‡ Visualizzati
+Hide Viewed Messages=Nasconde i Messaggi gi√† Visualizzati
 Hide=Nascondi
 Import Rules=Importa Regole
 INI Files=File INI
@@ -355,47 +356,47 @@ Processing...=Elaborazione in corso...
 Protocol:=Protocollo:
 Raw Message=Messaggio Raw
 Read Only=Sola Lettura
-Remember Viewed Messages=Ricorda i Messaggi gi‡ Visualizzati
+Remember Viewed Messages=Ricorda i Messaggi gi√† Visualizzati
 Rules ...=Regole ...
-Remember which messages on the server has already been viewed even after closing PopTray.=Ricorda quei messaggi che sono gi‡ stati visualizzati dopo la chiusura di PopTray.
+Remember which messages on the server has already been viewed even after closing PopTrayU.=Ricorda quei messaggi che sono gi√† stati visualizzati dopo la chiusura di PopTrayU.
 Save All Attachments...=Salva Tutti gli Allegati...
 Save...=Salva...
 Select All=Seleziona Tutto
 Select Font...=Seleziona Font...
 Select Spam Messages=Selezione Messaggi di Spam
 Server:=Server:
-Show/Hide Viewed Messages=Mostra/Nascondi messaggi gi‡ visualizzati
+Show/Hide Viewed Messages=Mostra/Nascondi messaggi gi√† visualizzati
 Spam=Spam
-This will add the following e-mails to the Black List:=Questo aggiunger‡ i seguenti indirizzi e-mail alla Black List
-This will create a rule to spam mark all future e-mails from=Questo creer‡ una regola che segner‡ i messaggi e-mail con questo mittente come spam
-This will delete all these messages.=Questo canceller‡ tutti questi messaggi.
+This will add the following e-mails to the Black List:=Questo aggiunger√† i seguenti indirizzi e-mail alla Black List
+This will create a rule to spam mark all future e-mails from=Questo creer√† una regola che segner√† i messaggi e-mail con questo mittente come spam
+This will delete all these messages.=Questo canceller√† tutti questi messaggi.
 TrayIcon while Checking=Icona durante il controllo
 Unable to Copy file.=Impossibile Copiare il file.
 Undo=Annulla ultima azione
 Unknown Attachment Type.=Tipo di allegato sconosciuto.
 Unmark as Spam=Deseleziona come Spam
 User Interface=Interfaccia utente
-White / Black List=White / Black List
-White List=White List
+White / Black List=Lista bianca / Lista bloccati
+White List=Lista bianca
 
 Any mail received from the following e-mail addresses~will automatically be deleted.=Tutti i messaggi ricevuti dai seguenti indirizzi e-mail~verranno automaticamente eliminati.
-Because of the Security Risk, PopTray doesn't allow the opening of Executable files.=Per motivi di Sicurezza, PopTray non consente l'apertura di file .exe.
-Black List will mark the messages as Spam~instead of deleting them.=La Black List marcher‡ i messaggi come Spam~al posto di eliminarli.
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=Per motivi di Sicurezza, PopTrayU non consente l'apertura di file .exe.
+Black List will mark the messages as Spam~instead of deleting them.=La Black List marcher√† i messaggi come Spam~al posto di eliminarli.
 Default e-mail program to open.=Client e-mail da usare di default.
 Default sound to play when new mail arrives.=Suono predefinito all'arrivo di nuovi messaggi.
 Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=Intervallo di tempo per il controllo dei messaggi~Impostare a 0 per non controllare automaticamente.
 Number of message lines to preview.=Numero di linee da visualizzare nell'anteprima.
 Number of seconds to display the Info window~before closing it.=Numero di secondi per visualizzare la finestra Informazioni~prima di chiuderla.
 Number of seconds to wait during connection~before giving an error.=Numero di secondi da attendere durante la connessione~prima di riportare un errore.
-Once a message has been viewed, don't show it again.=Una volta visualizzato un messaggio, questo non viene pi˘ visualizzato.
-Remember which messages on the server has already been viewed~even after closing PopTray.=Ricorda quei messaggi sul server che sono gi‡ stati visualizzati~anche dopo la chiusura di PopTray.
+Once a message has been viewed, don't show it again.=Una volta visualizzato un messaggio, questo non viene pi√π visualizzato.
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=Ricorda quei messaggi sul server che sono gi√† stati visualizzati~anche dopo la chiusura di PopTrayU.
 Select the option screen to show.=Seleziona l'opzione da visualizzare.
 Show Info dialog with message details and buttons.=Mostra finestra Informazioni con dettagli dei messaggi e bottoni.
 System-wide hot-key to execute selected action.=Combinazione di tasti per eseguire l'azione selezionata.
 This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Lista delle DLL dei plug-in trovati nella cartella plugins~Seleziona per attivare. Fare clic con il tasto destro per le opzioni.
 What to show on the TrayIcon~while checking for new mail.=Quale icona utilizzare nella Tray accanto all'orologio~durante il controllo per nuovi messaggi.
 When previewing a message, only load the~specified number of lines.=Durante l'antemprima dei messaggi vengono~scaricati e visualizzati solo il numero specificato di linee.
-When starting PopTray, first wait a few seconds~before checking for mail.=All'avvio di PopTray, attende alcuni secondi~prima di controllare per nuovi messaggi.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=All'avvio di PopTrayU, attende alcuni secondi~prima di controllare per nuovi messaggi.
 When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Quando ricevi messaggi dai seguenti indirizzi e-mail,~questi non verranno cancellati dalle regole.
 
 None=Nessuno
@@ -414,7 +415,7 @@ Tools=Strumenti
 Description=Descrizione
 Drag to Create Separators=Trascina per Separatore
 Close=Chiudi
-(Checkmark toggles visibility)=(Spunta verifica visibilt‡)
+(Checkmark toggles visibility)=(Spunta verifica visibilt√†)
 Reset...=Ripristina...
 Toolbar Options=Opzioni della barra degli strumenti
 Caption Options=Opzioni delle etichette
@@ -426,13 +427,13 @@ Other=Altro
 Large icons=Icone grandi
 Show tips on toolbars=Mostra suggerimenti sulla barra degli strumenti
 Show shortcut keys in tips=Mostra scorciatoie di tastiera nei suggerimenti
-Menu animations:=Animazioni del Men˘:
+Menu animations:=Animazioni del Men√π:
 
-# ---------- Added PopTray 3.0 (beta 2) ----------
+# ---------- Added PopTrayU 3.0 (beta 2) ----------
 No protocol defined for account=Nessun protocollo definito per l'account
 Don't Check between=Non controllare tra le ore
 and=e le
-Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Sospende Controllo Automatico nelle ore specificate.~Questo Ë utile per evitare noiose notifiche~durante le ore notturne.
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Sospende Controllo Automatico nelle ore specificate.~Questo √® utile per evitare noiose notifiche~durante le ore notturne.
 
 # ---------- Added PopTray 3.0 (beta 3) ----------
 Spanish (Hispanic America)=Spagnolo (Hispanic America)
@@ -465,7 +466,7 @@ Ignore Connection Errors=Ignora gli Errori di Connessione
 Retrieve Body while Checking=Fai download anche del corpo del messaggio
 Limit download to the first=Limita il download alle prime
 lines=righe
-While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Controllando per nuovi messaggi, scarica anche il corpo del messaggio.~Questo rallenter‡ il controllo per nuovi messaggi, ma d‡ la possibilit‡~di verificare il corpo del messaggio nelle regole.
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Controllando per nuovi messaggi, scarica anche il corpo del messaggio.~Questo rallenter√† il controllo per nuovi messaggi, ma d√† la possibilit√†~di verificare il corpo del messaggio nelle regole.
 
 # ---------- Added PopTray 3.0 (beta 11) ---------
 Protect against auto-delete=Proteggi da auto-cancellazione
@@ -535,8 +536,8 @@ Viewed=Visualizzato
 
 # ---------- Added PopTray 3.1 (beta 2) ---------
 Croatian=Croato
-Move Down=Sposta gi˘
-Move Up=Sposta s˘
+Move Down=Sposta gi√π
+Move Up=Sposta s√π
 Delete Mail only on Next Check=Elimina messaggi solo durante il Prossimo Controllo
 When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=I messaggi da eliminare verranno segnati per l'eliminazione e saranno fisicamente cancellati all'avvio del controllo successivo.
 Undelete=Non eliminare
@@ -552,7 +553,7 @@ While checking, show each message as it is downloaded.=Durante il controllo, mos
 # ---------- Added PopTray 3.1 (beta 5) ---------
 Extra Confirmation when Deleting Protected Messages=Conferma extra quando si Eliminano Messaggi Protetti
 Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Viene chiesta una conferma extra quando si tenta di eliminare~un messaggio protetto da una regola o dalla Whitelist.
-You are trying to delete protected messages.=Si sta tentado di eliminare uno o pi˘ messaggi protetti.
+You are trying to delete protected messages.=Si sta tentado di eliminare uno o pi√π messaggi protetti.
 
 # ---------- Added PopTray 3.1 (beta 8) ---------
 Lithuanian=Lituano
@@ -570,3 +571,111 @@ Valencian=Valenciano
 Open=Apri
 Open Message=Apri messaggio
 Frisian=Frisone
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aspetto Visivo
+Main Window Listbox Font=MainWindow carattere listbox
+Change the main window listbox background=Cambiare la finestra principale di listbox sfondo
+Change the main window listbox foreground=Modificare la finestra principale listbox in primo piano
+Failure connecting to server.=La mancata connessione al server.
+Server found, but is not a mail server.=Server trovato, ma non √® un server di posta.
+Change the Main Window Listbox Font=Modificare il carattere lista scatola MainWindow
+Clear all customizations=Cancella tutte le personalizzazioni
+HTML View=View HTML
+Thanks to the following volunteers who helped translate this software:=A seguito di seguito Grazie ai volontari che hanno contribuito a tradurre questo software:
+Language=Lingua
+Translator=Traduttore
+Component=Componente
+Author=Autore
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU √® un'opera derivata di Renier Crause PopTray 3.2 e gran parte del codice di questa applicazione √® Malthus Copyright 2001-2005 Renier Crause. Molte grazie a Renier per lo sviluppo PopTray, e per il sostegno che ha fornito.
+Check online for newer version=Verifica on-line per la nuova versione
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Mostra Errori nella popup palloncino (Invece di dialogo modale)
+Changes how errors are shown when the main window is visible.=Modifiche come gli errori vengono visualizzati quando la finestra principale √® visibile.
+Error checking=Il controllo degli errori
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Crediti Componente
+Translation Credits=Crediti di traduzione
+Message Deletion=Messaggio di cancellazione
+Mail Client Communication=Comunicazione Mail Client
+Rules/Blacklist=Regole / blacklist
+Advanced POP Settings=Impostazioni POP avanzate
+Error Handling=Gestione degli errori
+Message Download (Enable to use advanced rules)=Scaricamento messaggio (Attiva per utilizzare le regole avanzate)
+Startup=Startup
+Tray Icon=Icona della barra
+New Message Notification=Nuovo messaggio di notifica
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Quanto spesso PopTrayU verificare i nuovi messaggi?
+Interval Check Conditions=Intervallo di controllo Condizioni
+User Data Folder: (where PopTray.ini and Rules files are stored)=Cartella dati utente (in cui sono memorizzati i file PopTray.ini e Regolamento)
+Misc=Varie
+About PopTrayU=Chi PopTrayU
+Version=Versione
+Show Images=Mostra Immagini
+Reset Customizations=Ripristina le personalizzazioni
+Most UI Items= Voci pi√π UI
+Vertical Tabs=Tabs verticali
+Message List=Elenco dei messaggi
+Flash Tray Icon=Flash tray icon
+Show Balloon Notification=Mostra Balloon Notifica
+Use Deluxe Balloon=Utilizzare Deluxe Balloon
+(show for=(Per l'esposizione
+seconds)=secondi)
+Show Main Window=Mostra finestra principale
+Keyboard Lights=Luci della tastiera
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 con SSL o APOP
+Specify a different timer interval for each account.=Specificare un intervallo del timer diversa per ogni account.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Usato dagli utenti dial-up che non vogliono la finestra di dial-up di pop-up quando non si √® connessi. Rende il controllo di un po 'pi√π lento.
+This setting can be changed via setup or a command line parameter.=Questa impostazione pu√≤ essere modificata tramite l'installazione o un parametro della riga di comando.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Tasti di scelta rapida sono a livello di sistema. Utilizzare un insolito caldo-chiave, piuttosto che quello che si usa di frequente in altre applicazioni. Tasti rapidi come Ctrl-C non sono consigliato.
+Don't automatically check for new messages=Non controllare automaticamente la presenza di nuovi messaggi
+Set Interval per account=Intervallo impostato da conto
+Only check when already online=Gi√† quando solo controllare on-line
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Non selezionare questa considerazione tra
+Advanced=Avanzato
+Use SSL/TLS=Utilizzare SSL / TLS
+Authentication=Autenticazione
+SSL/TLS Version:=SSL / TLS versione:
+Auto=Car
+Password=Parola d'ordine
+Toolbar Color Scheme:=Barra degli strumenti Combinazione di colori:
+Normal=Normale
+Twilight=Crepuscolo
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Messaggio Anteprima Opzione
+Disable HTML Preview=Disabilitare Anteprima HTML
+Main Window=MainWindow
+Default Spam Toolbar Button Action:=Predefinito Spam Toolbar Button Azione:
+Default Spam Toolbar Action:=Predefinito Spam Toolbar Azione:
+Image Credits=Credits Immagine
+Image Package=Pacchetto immagini
+Images=Immagini
+Main Window Message List=MainWindow Message List
+Main Window Behaviors=MainWindow Comportamenti
+Plain Text=Testo normale
+Theme:=tema:
+Spam Management=Spam Gestione
+Changes the action of the Spam toolbar button on the Main Window=Cambia l'azione del pulsante Spam barra degli strumenti nella finestra principale
+AKA Explicit TLS=anche noto come TLS espliciti
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Scrivere tutte le regole le azioni in un file di log. Nome file: RULES.LOG nella directory delle impostazioni utente per PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Disattiva la scheda Anteprima HTML durante l'anteprima di un messaggio.
+Listbox Font=Listbox Font
+Reset Fonts and Colors=Ripristinare Caratteri e colori
+APOP=APOP
+SASL=SASL
+Customize the Font=Personalizzare il font
+Edit=Modifica
+Credits:=Crediti:
+
+Spam Last=Spam Ultimo
+This will create a rule to delete all future e-mails with subject=Questo creer√† una regola per cancellare tutti i futuri messaggi e-mail con soggetto
+This will create a rule to spam mark all future e-mails with subject=Questo creer√† una regola per tutti i futuri segno di spam e-mail con soggetto
+Check for new mail every=Verificare la presenza di nuova posta ogni
