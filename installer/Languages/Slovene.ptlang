@@ -1,4 +1,4 @@
-#-----------------------------------------------------------------------
+Ôªø#-----------------------------------------------------------------------
 # PopTray translation file - Slovene language
 # -----------------------------------------
 # Slovenska verzija: prevedel Shinca & Protoncek
@@ -11,15 +11,15 @@
 OK=V redu
 Yes=Da
 No=Ne
-Nothing=NiË
-Show Messages=Pokaûi sporoËila
+Nothing=Ni√®
+Show Messages=Poka≈æi sporo√®ila
 Pop-Up Menu=Pojavni meni
-Check for Mail=Preveri poöto
-Run E-Mail Client=Zaûeni E-poötni odjemalec
-Check and Show=Preveri in pokaûi
-Show Info=Pokaûi info
-Check and Info=Preveri in pokaûi Info
-Toggle Message Window=Preklopi okno s sporoËili
+Check for Mail=Preveri po≈°to
+Run E-Mail Client=Za≈æeni E-po≈°tni odjemalec
+Check and Show=Preveri in poka≈æi
+Show Info=Poka≈æi info
+Check and Info=Preveri in poka≈æi Info
+Toggle Message Window=Preklopi okno s sporo√®ili
 Toggle AutoCheck=Preklopi samodejno posodabljanje
 [Use Default Sound]=[Uporabi privzeti zvok]
 [Use Default Program]=[Uporabi privzeti program]
@@ -27,37 +27,37 @@ Toggle AutoCheck=Preklopi samodejno posodabljanje
 Checking=Preverjanje
 Not On-Line=Ni povezave
 Error:=Napaka
-Still busy checking=äe vedno preverjam
-Already Connected=ée povezan
+Still busy checking=≈†e vedno preverjam
+Already Connected=≈Ωe povezan
 User Aborted.=Uporabnikov preklic
-Unable to Retrieve Message=Ne morem prenesti sporoËil
+Unable to Retrieve Message=Ne morem prenesti sporo√®il
 Connect Error:=Napaka pri povezavi
 Error=Napaka
 msgs.=spor.
-1 message deleted.=1 sporoËilo izbrisano
-message(s) deleted.=sporoËil izbrisanih
-AutoCheck disabled=Samodejno preverjanje izkljuËeno
-messages=sporoËila
+1 message deleted.=1 sporo√®ilo izbrisano
+message(s) deleted.=sporo√®il izbrisanih
+AutoCheck disabled=Samodejno preverjanje izklju√®eno
+messages=sporo√®ila
 in=v
-accounts.=raËunov
-No new mail=Ni nove poöte
+accounts.=ra√®unov
+No new mail=Ni nove po≈°te
 Checked:=Preverjeno:
-No E-Mail Client specified=Program za poöto ni nastavljen
-Mail Info=Informacije o poöti
+No E-Mail Client specified=Program za po≈°to ni nastavljen
+Mail Info=Informacije o po≈°ti
 EXE files=EXE datoteke
 WAV files=WAV datoteke
-No message selected.=Ni izbranih sporoËil
-Account Info changed.~Do you want to save it?=Podatki o raËunu so spremenjeni!~Ali jih ûelite shraniti?
-Delete Message from Server?=Izbriöem sporoËilo s streûnika?
-Delete Messages from Server?=Izbriöem sporoËila s streûnika?
-Number of selected messages:=ätevilo izbranih sporoËil:
-This will delete all these selected messages.=To bo izbrisalo vsa izbrana sporoËila.
-Cannot delete last Account=Ne morem izbrisati zadnjega raËuna
-Delete Account:=Izbriöi raËun
-Delete Rule:=Izbriöi pravilo
-Are you sure?=Ali ste prepriËani?
+No message selected.=Ni izbranih sporo√®il
+Account Info changed.~Do you want to save it?=Podatki o ra√®unu so spremenjeni!~Ali jih ≈æelite shraniti?
+Delete Message from Server?=Izbri≈°em sporo√®ilo s stre≈ænika?
+Delete Messages from Server?=Izbri≈°em sporo√®ila s stre≈ænika?
+Number of selected messages:=≈†tevilo izbranih sporo√®il:
+This will delete all these selected messages.=To bo izbrisalo vsa izbrana sporo√®ila.
+Cannot delete last Account=Ne morem izbrisati zadnjega ra√®una
+Delete Account:=Izbri≈°i ra√®un
+Delete Rule:=Izbri≈°i pravilo
+Are you sure?=Ali ste prepri√®ani?
 No rule selected=Ni izbranih pravil
-This will create a rule to delete all future e-mails from=To bo ustvarilo pravilo ki bo brisalo vso bodoËo poöto od
+This will create a rule to delete all future e-mails from=To bo ustvarilo pravilo ki bo brisalo vso bodo√®o po≈°to od
 
 Header=Glava
 From=Od
@@ -73,284 +73,284 @@ Empty=prazno
 
 About ...=Vizitka...
 About=Vizitka
-Accounts=RaËuni
+Accounts=Ra√®uni
 Action:=Akcija
 Actions=Akcije
-Add Account=Dodaj raËun
-Add Rule to Delete all mail from Sender=Dodaj pravilo za brisanje vse poöte poöiljatelja
+Add Account=Dodaj ra√®un
+Add Rule to Delete all mail from Sender=Dodaj pravilo za brisanje vse po≈°te po≈°iljatelja
 Add Rule=Dodaj pravilo
-Advanced Options=Napredne moûnosti
-Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animira ikono v tray-u ko sprejema poöto~Ta opcija vkljuËi animirano ikono namesto mirujoËe
+Advanced Options=Napredne mo≈ænosti
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animira ikono v tray-u ko sprejema po≈°to~Ta opcija vklju√®i animirano ikono namesto mirujo√®e
 Animated Tray Icon=Animirana ikona v tray-u
-Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Pred brisanjem vpraöa za potrditev~To deluje samo za tipko Delete (roËno brisanje). Brisanje s pomoËjo pravil ne bo vpraöalo za potrditev.
-AutoCheck Enabled=Samodejno preverjanje vkljuËeno
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Pred brisanjem vpra≈°a za potrditev~To deluje samo za tipko Delete (ro√®no brisanje). Brisanje s pomo√®jo pravil ne bo vpra≈°alo za potrditev.
+AutoCheck Enabled=Samodejno preverjanje vklju√®eno
 Body=Telo
-Cancel=PrekliËi
+Cancel=Prekli√®i
 Check All=Preveri vse
-Check current account for New Mail=Preveri poöto na trenutnem raËunu
-Check for New Mail on Startup=Preveri poöto ob zagonu
-Check for new mail every =Preveri poöto vsakih
-Check if On-Line=Preveri Ëe je povezava aktivna
-Check on-line if newer version available.=Preveri, Ëe je na voljo nova verzija
+Check current account for New Mail=Preveri po≈°to na trenutnem ra√®unu
+Check for New Mail on Startup=Preveri po≈°to ob zagonu
+Check for new mail every =Preveri po≈°to vsakih
+Check if On-Line=Preveri √®e je povezava aktivna
+Check on-line if newer version available.=Preveri, √®e je na voljo nova verzija
 Check=Preveri
 Color:=Barva
 Date=Datum
 Default sound:=Privzeti zvok
 Defaults=Privzeto
-Delay on a SingleClick to wait and see if a DoubleClick is coming.=Zakasni aktiviranje enojnega kliku da vidi, Ëe bo dvoklik
-Delete Account=Izbriöi raËun
-Delete Rule=Izbriöi pravilo
-Delete current message=Izbriöi trenutno sporoËilo
-Delete from server=Izbriöi iz streûnika
-Delete=Izbriöi
+Delay on a SingleClick to wait and see if a DoubleClick is coming.=Zakasni aktiviranje enojnega kliku da vidi, √®e bo dvoklik
+Delete Account=Izbri≈°i ra√®un
+Delete Rule=Izbri≈°i pravilo
+Delete current message=Izbri≈°i trenutno sporo√®ilo
+Delete from server=Izbri≈°i iz stre≈ænika
+Delete=Izbri≈°i
 Deletion Confirmation=Potrditev brisanja
 Double Click delay on Click=Zakasnitev dvoklika ob prvem kliku
 Double Click:=Dvoklik
-Downloading...=Prenaöam...
-E-Mail Program:=E-poötni program:
-E-Mail:=E-poöta:
-Enabled=OmogoËen
-First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Preden preverja poöto, preveri Ëe je povezava aktivna.~Uporabno za uporabnike s klicno povezavo, ki noËejo da se pokaûe dialog o povezavi, Ëe niso povezani.
-General Options=Sploöne nastavitve
-Help=PomoË
-Homepage:=DomaËa stran
-Hot-Key:=VroËa tipka
-Hot-Keys=VroËe tipke
+Downloading...=Prena≈°am...
+E-Mail Program:=E-po≈°tni program:
+E-Mail:=E-po≈°ta:
+Enabled=Omogo√®en
+First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Preden preverja po≈°to, preveri √®e je povezava aktivna.~Uporabno za uporabnike s klicno povezavo, ki no√®ejo da se poka≈æe dialog o povezavi, √®e niso povezani.
+General Options=Splo≈°ne nastavitve
+Help=Pomo√®
+Homepage:=Doma√®a stran
+Hot-Key:=Vro√®a tipka
+Hot-Keys=Vro√®e tipke
 Ignore (don't notify)=Ignoriraj (ne obvesti)
 Ignore Retrieve Errors=Prezri napake pri sprejemanju
-Ignore errors that occurs while retrieving the header info.=Prezre napake, ki nastanejo med dobivanjem glave sporoËila
-Immediately check for mail when PopTray starts.=Takoj ko se PopTray zaûene, preveri poöto.
+Ignore errors that occurs while retrieving the header info.=Prezre napake, ki nastanejo med dobivanjem glave sporo√®ila
+Immediately check for mail when PopTrayU starts.=Takoj ko se PopTrayU za≈æene, preveri po≈°to.
 Info=Info
 Left Click:=Levi klik
 Log Rules=Pravila dnevnika
-Login:=Uporabniöko ime
+Login:=Uporabni≈°ko ime
 MAPI instead of mailto:=MAPI namesto mailto
-Mail=Poöta
+Mail=Po≈°ta
 Middle Click:=Srednji klik
-Minimize PopTray to the System Tray instead of the Taskbar.=Minimizira PopTray v Tray namesto v opravilno vrstico.
+Minimize PopTrayU to the System Tray instead of the Taskbar.=Minimizira PopTrayU v Tray namesto v opravilno vrstico.
 Minimize to Tray=Minimiziraj v Tray
 minutes.=minut
-Mouse Action:=Akcija miöke
-Mouse Buttons=Gumbi miöke
+Mouse Action:=Akcija mi≈°ke
+Mouse Buttons=Gumbi mi≈°ke
 Name:=Ime:
 Name=Ime
 Never=Nikoli
-New Message=Novo sporoËilo
-New message using default mail client=Novo sporoËilo z uporabo privzetega poötnega programa
+New Message=Novo sporo√®ilo
+New message using default mail client=Novo sporo√®ilo z uporabo privzetega po≈°tnega programa
 New=Novo
 No Sort=Ne sortiraj
-Options ...=Moûnosti...
-Options=Moûnosti
-Password Protect=ZaöËiti z geslom
+Options ...=Mo≈ænosti...
+Options=Mo≈ænosti
+Password Protect=Za≈°√®iti z geslom
 Password:=Geslo
-Please enter the password to open Poptray=Prosim vpiöite geslo za dostop do programa PopTray
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTray se bo zagnal minimiran.~Tako se glavno okno ne bo pokazalo,~le ikona v tray-u
-Preview the Message=Predogled sporoËila
+Please enter the password to open PopTrayU=Prosim vpi≈°ite geslo za dostop do programa PopTrayU
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=PopTrayU se bo zagnal minimiran.~Tako se glavno okno ne bo pokazalo,~le ikona v tray-u
+Preview the Message=Predogled sporo√®ila
 Preview=Predogled
 Quit=Izhod
-Reply using default mail client=Odgovori z uporabo privzetega poötnega programa
+Reply using default mail client=Odgovori z uporabo privzetega po≈°tnega programa
 Reply=Odgovori
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=Resetira ötevec sporoËil v tray ikoni ko odpreö~PopTray okno. Ko pride nova poöta, bo prikazano samo~ötevilo novih sporoËil od zadnjega ogleda.
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=Resetira ≈°tevec sporo√®il v tray ikoni ko odpre≈°~PopTrayU okno. Ko pride nova po≈°ta, bo prikazano samo~≈°tevilo novih sporo√®il od zadnjega ogleda.
 Right Click:=Desni klik
-Rotate Icon for each Account=Kroûi ikono za vsak raËun
-Rotate Icon to show messages in each account=Animira kroûni prikaz ikone za prikaz sporoËil v vsakem raËunu
+Rotate Icon for each Account=Kro≈æi ikono za vsak ra√®un
+Rotate Icon to show messages in each account=Animira kro≈æni prikaz ikone za prikaz sporo√®il v vsakem ra√®unu
 Rule=Pravilo
 Rules=Pravila
 Save=Shrani
-Save Account=Shrani raËun
+Save Account=Shrani ra√®un
 Save Options=Shrani nastavitve
 Save Rules=Shrani pravila
-Show Messages ...=Pokaûi sporoËila...
-Show Window on Notification=Pokaûi glavno okno ob prihodu poöte
-Show the PopTray window always on top of other windows.=PopTray okno vedno pokaûe nad vsemi drugimi
-Show the PopTray window when new mail arrives.=Pokaûe PopTray okno ko prispe nova poöta
+Show Messages ...=Poka≈æi sporo√®ila...
+Show Window on Notification=Poka≈æi glavno okno ob prihodu po≈°te
+Show the PopTrayU window always on top of other windows.=PopTrayU okno vedno poka≈æe nad vsemi drugimi
+Show the PopTrayU window when new mail arrives.=Poka≈æe PopTrayU okno ko prispe nova po≈°ta
 Size=Velikost
 Sound:=Zvok
-Start Minimized=ZaËni minimirano
+Start Minimized=Za√®ni minimirano
 Stay on Top=Vedno na vrhu
 Stop and disconnect.=Ustavi in prekini povezavo
 Support Forum:=Spletni forum
 Test the sound file=Testira izbrani zvok
-Test to run the e-mail program=Testira izbrani program tako, da ga zaûene
+Test to run the e-mail program=Testira izbrani program tako, da ga za≈æene
 Test=Testiraj
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=Gumb X v gornjem levem kotu bo program minimiral namesto da bi ga zaprl.
-Timer Interval per Account=»asovni interval po raËunu
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=Gumb X v gornjem levem kotu bo program minimiral namesto da bi ga zaprl.
+Timer Interval per Account=√àasovni interval po ra√®unu
 To Tray=V tray
-Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Poskusite meöati barve in izbrati drugo za vsak raËun posebej.~Toda ker Windows v Tray-u dovoli samo 16 barv,~mogoËe ne bodo vedno pravilno prikazane.
+Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Poskusite me≈°ati barve in izbrati drugo za vsak ra√®un posebej.~Toda ker Windows v Tray-u dovoli samo 16 barv,~mogo√®e ne bodo vedno pravilno prikazane.
 Use MAPI=Uporabi MAPI
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=»e se pojavi napaka, jo bo PopTray pokazal.~»e je ta opcija vkljuËena, bo napaka javljena samo v statusni vrstici in namigu v Tray-u.
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Ob predogledu sporoËil z MIME deli bo PopTray~dekodiral MIME sporoËilo, prvi del prikazal v predogledu,~ostalo pa kot priponko.»e je ta moûnost izkljuËena,~bo v predogledu prikazano RAW(golo) sporoËilo.
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=Zapiöi vsa dejanja pravil v dnevnik.~Datoteka je RULES.LOG in je v isti mapi kot PopTray
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=√àe se pojavi napaka, jo bo PopTrayU pokazal.~√àe je ta opcija vklju√®ena, bo napaka javljena samo v statusni vrstici in namigu v Tray-u.
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Ob predogledu sporo√®il z MIME deli bo PopTrayU~dekodiral MIME sporo√®ilo, prvi del prikazal v predogledu,~ostalo pa kot priponko.√àe je ta mo≈ænost izklju√®ena,~bo v predogledu prikazano RAW(golo) sporo√®ilo.
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Zapi≈°i vsa dejanja pravil v dnevnik.~Datoteka je RULES.LOG in je v isti mapi kot PopTrayU
 X Button Minimizes=Gumb X minimira
-# ---------- Added PopTray 2.1 (beta 1.2) ----------
+# ---------- Added PopTrayU 2.1 (beta 1.2) ----------
 Language:=Jezik
-Refresh=Osveûi
-Refresh the list of languages=Osveûi seznam jezikov
-Thanks to the following volunteers who helped with the translation:=Zahvala sledeËim prostovoljcem, ki so pomagali s prevodom:
+Refresh=Osve≈æi
+Refresh the list of languages=Osve≈æi seznam jezikov
+Thanks to the following volunteers who helped with the translation:=Zahvala slede√®im prostovoljcem, ki so pomagali s prevodom:
 Translations=Prevodi
 Contact Info=Kontaktne informacije
 
-# ---------- Added PopTray 2.1 (beta 1.4) ----------
+# ---------- Added PopTrayU 2.1 (beta 1.4) ----------
 Confirm=Potrdi
 
-# ---------- Added PopTray 2.1 (beta 2) ----------
-message=SporoËilo
-Multi-line Account Tabs=JeziËki raËunov v veË vrsticah
-AutoCheck only while Minimized=Samodejno preveri samo ko je PopTray minimiran
+# ---------- Added PopTrayU 2.1 (beta 2) ----------
+message=Sporo√®ilo
+Multi-line Account Tabs=Jezi√®ki ra√®unov v ve√® vrsticah
+AutoCheck only while Minimized=Samodejno preveri samo ko je PopTrayU minimiran
 Print=Natisni
-Connection TimeOut:=Najdaljöi Ëas povezovanja
+Connection TimeOut:=Najdalj≈°i √®as povezovanja
 seconds=sekund
 
-# ---------- Added PopTray 2.1 (beta 2) ----------
+# ---------- Added PopTrayU 2.1 (beta 2) ----------
 version=verzija
 
-# ---------- Added PopTray 2.1 (beta 4) ----------
-Info Balloon on Notification=Informacijski oblaËek pri obveöËanju
-Important (Balloon Pop-Up)=Pomembno (informacijski oblaËek)
-New Messages Only=Samo nova sporoËila
+# ---------- Added PopTrayU 2.1 (beta 4) ----------
+Info Balloon on Notification=Informacijski obla√®ek pri obve≈°√®anju
+Important (Balloon Pop-Up)=Pomembno (informacijski obla√®ek)
+New Messages Only=Samo nova sporo√®ila
 All Files=Vse datoteke
-All Accounts=Vsi raËuni
-Execute File=Zaûeni datoteko
-Account=RaËun
+All Accounts=Vsi ra√®uni
+Execute File=Za≈æeni datoteko
+Account=Ra√®un
 
 
-# ---------- Added PopTray 2.1 (beta 6) ----------
-Enable Quick Checking=OmogoËi hitro preverjanje
+# ---------- Added PopTrayU 2.1 (beta 6) ----------
+Enable Quick Checking=Omogo√®i hitro preverjanje
 
-# ---------- Added PopTray 2.1 (beta 7) ----------
+# ---------- Added PopTrayU 2.1 (beta 7) ----------
 Quick Checked:=Hitro preverjeno
 
-English=Angleöko
-Afrikaans=Afriöko
+English=Angle≈°ko
+Afrikaans=Afri≈°ko
 Bulgarian=Bolgarsko
 Catalan=Katalonsko
-Czech=»eöko
+Czech=√àe≈°ko
 Danish=Dansko
 Dutch=Nizozemsko
 Finnish=Finsko
 French=Francosko
-German=Nemöko
+German=Nem≈°ko
 Hebrew=Hebrejsko
-Hungarian=Madûarsko
+Hungarian=Mad≈æarsko
 Italian=Italijansko
 Polish=Poljsko
 Portuguese (Brazil)=Portugalsko (Brazilija)
 Romanian=Romunsko
 Russian=Rusko
-Slovak=Slovaöko
+Slovak=Slova≈°ko
 Slovene=Slovensko
-Spanish=äpansko
-Swedish=ävedsko
+Spanish=≈†pansko
+Swedish=≈†vedsko
 
-# ---------- Added PopTray 2.1 (beta 8) ----------
-Delete this message from server=Izbriöi to sporoËilo s streûnika
-Delete Button only available when using Safe Delete option=Gumb Izbriöi je na voljo samo ko uporabljate moûnost varno brisanje
+# ---------- Added PopTrayU 2.1 (beta 8) ----------
+Delete this message from server=Izbri≈°i to sporo√®ilo s stre≈ænika
+Delete Button only available when using Safe Delete option=Gumb Izbri≈°i je na voljo samo ko uporabljate mo≈ænost varno brisanje
 Safe Delete (using UIDL)=Varno brisanje (z uporabo UIDL)
-Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=Identifikatorji sporoËila se ne ujemajo,~Funkcija varno brisanje je prepreËila brisanje tega sporoËila-
+Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=Identifikatorji sporo√®ila se ne ujemajo,~Funkcija varno brisanje je prepre√®ila brisanje tega sporo√®ila-
 
-# ---------- Added PopTray 2.1 (beta 10) ----------
+# ---------- Added PopTrayU 2.1 (beta 10) ----------
 Taiwan=Tajvansko
 Ukranian=Ukrajinsko
-Norwegian=Norveöko
+Norwegian=Norve≈°ko
 
 Miscellaneous=Razno
-Quick Help=Hitra pomoË
-Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Pokaûe jeziËke vseh raËunov v veË~vrsticah namesto v eni drseËi vrsti.
-Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=Uporabi enostavni MAPI vmesnik vaöega poötnega programa ~namesto uporabe "mailto" za odgovarjanje na sporoËila.
-Use the POP3 UIDL command to check that message is still the same~before deleting it.=Uporabi ukaz POP3 UIDL da vidi Ëe je~sporoËilo res isto preden ga izbriöe
-Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Uporabi ukaz POP3 UIDL da na hitro preveri~Ëe se je poöta na streûniku spremenila.
-Requires that you enter the specified password to open PopTray.=Zahteva vnos gesla za odpiranje programa Poptray
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Ne preverja poöte medtem koje okno PopTray odprto.~To je uporabno zato da se samodejno preverjanje ne zaûene medtem ko roËno pregledujete poöto.
-Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Vnos Ëasa preverjanja za vsak raËun posebej.~ V tem primeru glejte jeziËek RaËuni.
+Quick Help=Hitra pomo√®
+Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Poka≈æe jezi√®ke vseh ra√®unov v ve√®~vrsticah namesto v eni drse√®i vrsti.
+Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=Uporabi enostavni MAPI vmesnik va≈°ega po≈°tnega programa ~namesto uporabe "mailto" za odgovarjanje na sporo√®ila.
+Use the POP3 UIDL command to check that message is still the same~before deleting it.=Uporabi ukaz POP3 UIDL da vidi √®e je~sporo√®ilo res isto preden ga izbri≈°e
+Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Uporabi ukaz POP3 UIDL da na hitro preveri~√®e se je po≈°ta na stre≈æniku spremenila.
+Requires that you enter the specified password to open PopTrayU.=Zahteva vnos gesla za odpiranje programa PopTrayU
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=Ne preverja po≈°te medtem koje okno PopTrayU odprto.~To je uporabno zato da se samodejno preverjanje ne za≈æene medtem ko ro√®no pregledujete po≈°to.
+Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Vnos √®asa preverjanja za vsak ra√®un posebej.~ V tem primeru glejte jezi√®ek Ra√®uni.
 
-# ---------- Added PopTray 2.1 ----------
+# ---------- Added PopTrayU 2.1 ----------
 Important=Pomembno
 Korean=Korejsko
 
-# ---------- Added PopTray 3.0 (beta 1) ----------
+# ---------- Added PopTrayU 3.0 (beta 1) ----------
 Arabic=Arabsko
 Portuguese=Portugalsko
-Turkish=Turöko
+Turkish=Tur≈°ko
 
-Add Rule to mark messages from Sender as Spam=Dodaj pravilo da je sporoËilo tega poöiljatelja spam
-Add sender to Black List=Dodaj poöiljatelja na Ërno listo
-Add sender to White List=Dodaj poöiljatelja na belo listo
+Add Rule to mark messages from Sender as Spam=Dodaj pravilo da je sporo√®ilo tega po≈°iljatelja spam
+Add sender to Black List=Dodaj po≈°iljatelja na √®rno listo
+Add sender to White List=Dodaj po≈°iljatelja na belo listo
 Added to the White List:=Dodano na belo listo:
 Advanced Show Info=Napredni prikaz informacij
-Black List mark as Spam=OznaËi Ëro listo kot spam
-Black List=»rna lista
+Black List mark as Spam=Ozna√®i √®ro listo kot spam
+Black List=√àrna lista
 Copy=Kopiraj
 Customize...=Prilagodi...
-Cut=Izreûi
-Del Spam=Izbriöi spam
-Delete messages marked as Spam=Izbriöi sporoËila, oznaËena kot spam
-Delete Spam from Server?=Izbriöem spam s streûnika?
+Cut=Izre≈æi
+Del Spam=Izbri≈°i spam
+Delete messages marked as Spam=Izbri≈°i sporo√®ila, ozna√®ena kot spam
+Delete Spam from Server?=Izbri≈°em spam s stre≈ænika?
 Failed to Save Attachment.=Ne morem shraniti priponke.
-First Wait=Najprej Ëakaj
-Hide Viewed Messages=Skrij ogledana sporoËila
+First Wait=Najprej √®akaj
+Hide Viewed Messages=Skrij ogledana sporo√®ila
 Hide=Skrij
 Import Rules=Uvozi pravila
 INI Files=INI datoteke
 Interval=Interval
 Lists=Seznami
 Log Rule=Shrani  pravilo v dnevnik
-Mark as Spam=OznaËi kot spam
-Mark as Viewed=OznaËi kot ogledano
-New Mail=Nova poöta
-Number of messages marked as Spam:=ätevilo sporoËil, oznaËenih kot spam:
+Mark as Spam=Ozna√®i kot spam
+Mark as Viewed=Ozna√®i kot ogledano
+New Mail=Nova po≈°ta
+Number of messages marked as Spam:=≈†tevilo sporo√®il, ozna√®enih kot spam:
 Open...=Odpri...
 Paste=Prilepi
-Plug-in Options...=Moûnosti vkljuËkov...
-Plug-ins=VkljuËki
+Plug-in Options...=Mo≈ænosti vklju√®kov...
+Plug-ins=Vklju√®ki
 Port:=Vrata:
-Preview Top Lines=Predogled zaËetnih vrstic
+Preview Top Lines=Predogled za√®etnih vrstic
 Processing...=Obdelava...
 Protocol:=Protokol:
-Raw Message=RAW sporoËilo
+Raw Message=RAW sporo√®ilo
 Read Only=Samo za branje
-Remember Viewed Messages=Zapomni si ogledana sporoËila
+Remember Viewed Messages=Zapomni si ogledana sporo√®ila
 Rules ...=Pravila...
 Save All Attachments...=Shrani sve priponke...
 Save...=Shrani...
 Select All=Izberi vse
 Select Font...=Izberi pisavo
-Select Spam Messages=Izberi spam sporoËila
-Server:=Streûnik:
-Show/Hide Viewed Messages=Pokaûi/skrij ogledana sporoËila
+Select Spam Messages=Izberi spam sporo√®ila
+Server:=Stre≈ænik:
+Show/Hide Viewed Messages=Poka≈æi/skrij ogledana sporo√®ila
 Spam=Spam
-This will add the following e-mails to the Black List:=To bo dodalo sledeËa sporoËila na Ërno listo:
-This will create a rule to spam mark all future e-mails from=To bo ustvarilo pravilo da so spam vsa nadaljnja sporoËila od
-This will delete all these messages.=To bo izbrisalo vsa ta sporoËila.
+This will add the following e-mails to the Black List:=To bo dodalo slede√®a sporo√®ila na √®rno listo:
+This will create a rule to spam mark all future e-mails from=To bo ustvarilo pravilo da so spam vsa nadaljnja sporo√®ila od
+This will delete all these messages.=To bo izbrisalo vsa ta sporo√®ila.
 TrayIcon while Checking=Ikona v tray-u med preverjanjem
 Unable to Copy file.=Ne morem kopirati datoteke.
 Undo=Razveljavi
 Unknown Attachment Type.=Neznan tip priponke
-Unmark as Spam=OdznaËi kot spam
-User Interface=Uporabniöki vmesnik
-White / Black List=Bela/»rna lista
+Unmark as Spam=Odzna√®i kot spam
+User Interface=Uporabni≈°ki vmesnik
+White / Black List=Bela/√àrna lista
 White List=Bela lista
 
-Any mail received from the following e-mail addresses~will automatically be deleted.=Vsa poöta od sledeËih naslovov bo samodejno izbrisana.
-Because of the Security Risk, PopTray doesn't allow the opening of Executable files.=Zaradi varnostnih tveganj PopTray ne dovoli odpiranja exe datotek.
-Black List will mark the messages as Spam~instead of deleting them.=»rna lista bo oznaËila sporoËila kot spam namesto da bi jih izbrisala.
-Default e-mail program to open.=Privzeti e-poötni program za odpiranje.
-Default sound to play when new mail arrives.=Privzeti zvok, ki naj zaigra ob novi poöti.
-Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=»as v minutah med dvema preverjanjema poöte.~»e je niË, ni samodejnega preverjanja.
-Number of message lines to preview.=ätevilo vrstic za predogled
-Number of seconds to display the Info window~before closing it.=ätevilo sekund za prikaz Info okna~preden se zapre.
-Number of seconds to wait during connection~before giving an error.=ätevilo sekund, ki naj preteËe preden se javi napaka med povezovanjem.
-Once a message has been viewed, don't show it again.=Ko enkrat pogledam sporoËilo, ga ne kaûe veË.
-Remember which messages on the server has already been viewed~even after closing PopTray.=Zapomne si, katera sporoËila so bila ûe ogledana,~tudi Ëe zaprem PopTray.
+Any mail received from the following e-mail addresses~will automatically be deleted.=Vsa po≈°ta od slede√®ih naslovov bo samodejno izbrisana.
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=Zaradi varnostnih tveganj PopTrayU ne dovoli odpiranja exe datotek.
+Black List will mark the messages as Spam~instead of deleting them.=√àrna lista bo ozna√®ila sporo√®ila kot spam namesto da bi jih izbrisala.
+Default e-mail program to open.=Privzeti e-po≈°tni program za odpiranje.
+Default sound to play when new mail arrives.=Privzeti zvok, ki naj zaigra ob novi po≈°ti.
+Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=√àas v minutah med dvema preverjanjema po≈°te.~√àe je ni√®, ni samodejnega preverjanja.
+Number of message lines to preview.=≈†tevilo vrstic za predogled
+Number of seconds to display the Info window~before closing it.=≈†tevilo sekund za prikaz Info okna~preden se zapre.
+Number of seconds to wait during connection~before giving an error.=≈†tevilo sekund, ki naj prete√®e preden se javi napaka med povezovanjem.
+Once a message has been viewed, don't show it again.=Ko enkrat pogledam sporo√®ilo, ga ne ka≈æe ve√®.
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=Zapomne si, katera sporo√®ila so bila ≈æe ogledana,~tudi √®e zaprem PopTrayU.
 Select the option screen to show.=Izberite okno za prikaz
-Show Info dialog with message details and buttons.=Pokaûi info dialog z  podrobnostmi sporoËil in gumbi.
-System-wide hot-key to execute selected action.=Sistemska vroËa tipka za izvröitev akcije.
-This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Tukaj so naöteti vsi vkljuËki v tvoji mapi za vkljuËke.~Izberi za vklop/izklop. Desni klik za moûnosti.
+Show Info dialog with message details and buttons.=Poka≈æi info dialog z  podrobnostmi sporo√®il in gumbi.
+System-wide hot-key to execute selected action.=Sistemska vro√®a tipka za izvr≈°itev akcije.
+This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Tukaj so na≈°teti vsi vklju√®ki v tvoji mapi za vklju√®ke.~Izberi za vklop/izklop. Desni klik za mo≈ænosti.
 What to show on the TrayIcon~while checking for new mail.=
-When previewing a message, only load the~specified number of lines.=Kaj naj se prikazuje v ikoni v trayu~med preverjanjem za novo poöto.
-When starting PopTray, first wait a few seconds~before checking for mail.=Ob zagonu PopTraya poËaka nekaj sekund pred preverjanjem za novo poöto.
-When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=»e dobiö poöto z enega od naslovov v tem seznamu,~je pravila ne bodo pobrisala.
+When previewing a message, only load the~specified number of lines.=Kaj naj se prikazuje v ikoni v trayu~med preverjanjem za novo po≈°to.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=Ob zagonu PopTrayUa po√®aka nekaj sekund pred preverjanjem za novo po≈°to.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=√àe dobi≈° po≈°to z enega od naslovov v tem seznamu,~je pravila ne bodo pobrisala.
 
-None=NiË
+None=Ni√®
 Lightning Bolt=Strela
 Star=Zvezda
 Animated Star=Animirana zvezda
@@ -366,159 +366,159 @@ Tools=Orodja
 Description=opis
 Drag to Create Separators=Povlecite da ustvarite separatorje
 Close=Zapri
-(Checkmark toggles visibility)=(OznaËitev spremeni vidnost)
+(Checkmark toggles visibility)=(Ozna√®itev spremeni vidnost)
 Reset...=Resetiraj...
-Toolbar Options=Moûnosti orodne vrstice
-Caption Options=Moûnosti zajema
+Toolbar Options=Mo≈ænosti orodne vrstice
+Caption Options=Mo≈ænosti zajema
 Selective=Izbirno
 All=Vse
-To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=Za dodajanje akcij jih enostavno potegni iz kategorij ali iz akcij in jih spusti na obstojeËo akcijsko vrstico.
+To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=Za dodajanje akcij jih enostavno potegni iz kategorij ali iz akcij in jih spusti na obstoje√®o akcijsko vrstico.
 Other=Ostalo
 Large icons=Velike ikone
-Show tips on toolbars=Pokaûi namige na orodnih vrsticah
-Show shortcut keys in tips=Prikaûi bliûnjice za tipke v namigih
+Show tips on toolbars=Poka≈æi namige na orodnih vrsticah
+Show shortcut keys in tips=Prika≈æi bli≈ænjice za tipke v namigih
 
-# ---------- Added PopTray 3.0 (beta 2) ----------
-No protocol defined for account=Za raËun ni definiran protokol
+# ---------- Added PopTrayU 3.0 (beta 2) ----------
+No protocol defined for account=Za ra√®un ni definiran protokol
 Don't Check between=Ne preverjaj med
 and=in
-Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=IzkljuËi avtomatsko preverjanje med nastavljenima urama.~To je uporabno, Ëe ne ûeliö glasnih opozoril Ëez noË.
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Izklju√®i avtomatsko preverjanje med nastavljenima urama.~To je uporabno, √®e ne ≈æeli≈° glasnih opozoril √®ez no√®.
 
-# ---------- Added PopTray 3.0 (beta 3) ----------
+# ---------- Added PopTrayU 3.0 (beta 3) ----------
 Spanish (Hispanic America)=
-Chinese=äpansko (Hispanic Amerika)
-Show Info Balloon or Advanced Info when new mail arrives.=Prikaûe informacijski oblaËek ali napredni prikaz informacij, ko pride nova poöta.
+Chinese=≈†pansko (Hispanic Amerika)
+Show Info Balloon or Advanced Info when new mail arrives.=Prika≈æe informacijski obla√®ek ali napredni prikaz informacij, ko pride nova po≈°ta.
 
-# ---------- Added PopTray 3.0 (beta 4) ----------
-Suspend Sound=IzkljuËi zvok
+# ---------- Added PopTrayU 3.0 (beta 4) ----------
+Suspend Sound=Izklju√®i zvok
 
-# ---------- Added PopTray 3.0 (beta 5) ----------
+# ---------- Added PopTrayU 3.0 (beta 5) ----------
 Toggle Sound=Preklopi zvok
 
-# ---------- Added PopTray 3.0 (beta 6) ----------
-Delete Spam=Izbriöi spam
+# ---------- Added PopTrayU 3.0 (beta 6) ----------
+Delete Spam=Izbri≈°i spam
 
-# ---------- Added PopTray 3.0 (beta 7) ----------
+# ---------- Added PopTrayU 3.0 (beta 7) ----------
 Shift Left Click:=Shift+levi klik:
 Shift Right Click:=Shift+desni klik:
 Shift Middle Click:=Shift+srednji klik:
-Check First Account=Preveri prvi raËun
+Check First Account=Preveri prvi ra√®un
 
-# ---------- Added PopTray 3.0 (beta 9) ----------
-Spanish (Chile)=äpansko (»ile)
+# ---------- Added PopTrayU 3.0 (beta 9) ----------
+Spanish (Chile)=≈†pansko (√àile)
 Stop=Stoj
 Information=Informacije
-Mark the selected messages as Spam.=OznaËi izbrana sporoËila kot spam
+Mark the selected messages as Spam.=Ozna√®i izbrana sporo√®ila kot spam
 Ignore Connection Errors=Ignoriraj napake pri povezavi
 
-# ---------- Added PopTray 3.0 (beta 10) ---------
+# ---------- Added PopTrayU 3.0 (beta 10) ---------
 Retrieve Body while Checking=Med preverjanjem prenesi telo
 Limit download to the first=Omeji prenos na prvih
 lines=vrstic
-While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Med preverjanjem poöte se prenese tudi telo sporoËila.~To sicer upoËasni preverjanje, vendar~omogoËi preverjanje telesa sporoËil v pravilih.
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Med preverjanjem po≈°te se prenese tudi telo sporo√®ila.~To sicer upo√®asni preverjanje, vendar~omogo√®i preverjanje telesa sporo√®il v pravilih.
 
-# ---------- Added PopTray 3.0 (beta 11) ---------
-Protect against auto-delete=ZaöËiti pred samodejnim brisanjem
+# ---------- Added PopTrayU 3.0 (beta 11) ---------
+Protect against auto-delete=Za≈°√®iti pred samodejnim brisanjem
 Sort=Sortiraj
-Message Status=Stanje sporoËila
-Indicate Viewed and Unviewed Messages=OznaËi ogledana in neogledana sporoËila
-Unviewed messages will be shown in Bold.=Neogledana sporoËila bodo prikazana krepko.
-Only download if size less than=Prenesi samo Ëe je velikost manj kot
-Retrieve complete message while checking,~if message smaller than specified size.=Med preverjanjem prenese celo~sporoËilo, Ëe je manjöe kot navedeno.
-Maximum number of lines to download.=NajveËje ötevilo prenesenih vrstic.
+Message Status=Stanje sporo√®ila
+Indicate Viewed and Unviewed Messages=Ozna√®i ogledana in neogledana sporo√®ila
+Unviewed messages will be shown in Bold.=Neogledana sporo√®ila bodo prikazana krepko.
+Only download if size less than=Prenesi samo √®e je velikost manj kot
+Retrieve complete message while checking,~if message smaller than specified size.=Med preverjanjem prenese celo~sporo√®ilo, √®e je manj≈°e kot navedeno.
+Maximum number of lines to download.=Najve√®je ≈°tevilo prenesenih vrstic.
 
-# ---------- Added PopTray 3.0 (beta 12) ---------
-Incompatible Plugin:=Nezdruûljiv vkljuËek
+# ---------- Added PopTrayU 3.0 (beta 12) ---------
+Incompatible Plugin:=Nezdru≈æljiv vklju√®ek
 Connection Info=Info o povezavi
-Message Count:=ätevilo sporoËil:
+Message Count:=≈†tevilo sporo√®il:
 
-# ---------- Added PopTray 3.0 (beta 13) ---------
-Test Account=Testiraj raËun
+# ---------- Added PopTrayU 3.0 (beta 13) ---------
+Test Account=Testiraj ra√®un
 French (Canada)=Francosko (Kanada)
-WARNING: This account does NOT support Safe Delete.=POZOR! Ta raËun ne podpira varnega brisanja.
-Quick Checking and Safe Delete (UIDL):=Na hitro preveri in varno briöi (UIDL):
+WARNING: This account does NOT support Safe Delete.=POZOR! Ta ra√®un ne podpira varnega brisanja.
+Quick Checking and Safe Delete (UIDL):=Na hitro preveri in varno bri≈°i (UIDL):
 Supported=Podprto
 NOT Supported=NEpodprto
 
-# ---------- Added PopTray 3.0 (beta 14) ---------
+# ---------- Added PopTrayU 3.0 (beta 14) ---------
 Summary=Povzetek
 KB=KB
-Login OK=Vpis uspeöen
+Login OK=Vpis uspe≈°en
 
-# ---------- Added PopTray 3.0 (beta 15) ---------
+# ---------- Added PopTrayU 3.0 (beta 15) ---------
 Delete Error:=Napaka pri brisanju:
 Retrieve Error:=Napaka pri prenosu:
-Plug-in Error:=Napaka vkljuËka:
+Plug-in Error:=Napaka vklju√®ka:
 
-# ---------- Added PopTray 3.0.1 ---------
+# ---------- Added PopTrayU 3.0.1 ---------
 Estonian=Estonsko
 Serbian=Srbsko
 NoName=Ni imena
-Reset Mail Count in Tray when Viewing=Resetiraj ötevilo sporoËil ob ogledu
+Reset Mail Count in Tray when Viewing=Resetiraj ≈°tevilo sporo√®il ob ogledu
 
-# ---------- Added PopTray 3.0.3 ---------
+# ---------- Added PopTrayU 3.0.3 ---------
 Stop Checking=Ustavi preverjanje
 Spam Last=Zadnji spam
 
-# ---------- Added PopTray 3.1 (beta 1) ---------
+# ---------- Added PopTrayU 3.1 (beta 1) ---------
 Reg Expr=Reg Expr
 Test the Reg Expr syntax=Testiraj Reg Expr sintakso
 Regular Expression Syntax OK=Regular Expression Syntax OK
 Needed=Potrebno
 ANY Row=Katerikoli stolpec
 ALL Rows=Vsi stolpci
-Area=Povröina
+Area=Povr≈°ina
 Compare=Primerjaj
 Text=Tekst
 Not=Ne
 Add Row=Dodaj vrstico
-Delete Row=Izbriöi vrstico
+Delete Row=Izbri≈°i vrstico
 Play Sound=Predvajaj zvok
 Tray Color=Barva tray-a
 Status=Stanje
-Protected=ZaöËiteno
+Protected=Za≈°√®iteno
 To Be Deleted=Bo izbrisano
 Ignored=Ignorirano
 Has Attachment=Ima priponko
 Viewed=Ogledano
 
-# ---------- Added PopTray 3.1 (beta 2) ---------
-Croatian=Hrvaöko
+# ---------- Added PopTrayU 3.1 (beta 2) ---------
+Croatian=Hrva≈°ko
 Move Down=Premakni dol
 Move Up=Premakni gor
-Delete Mail only on Next Check=Izbriöi sporoËila öele ob naslednjem preverjanju.
-When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=SporoËila, oznaËena za brisanje bodo fiziËno~izbrisana öele med naslednjim preverjanjem poöte.
-Undelete=PrekliËi brisanje
-Add Rule for mail from Sender=Dodaj pravilo za poöto od poöiljatelja
-Add Rule for mail with Subject=Dodaj pravilo za poöto s predmetom
-This will create a rule to delete all future e-mails with subject=To bo ustvarilo pravilo za brisanje vse bodoËe poöte s predmetom
-This will create a rule to spam mark all future e-mails with subject=To bo ustvarilo pravilo za oznaËitev kot spam za vsa bodoËa sporoËila s predmetom
+Delete Mail only on Next Check=Izbri≈°i sporo√®ila ≈°ele ob naslednjem preverjanju.
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Sporo√®ila, ozna√®ena za brisanje bodo fizi√®no~izbrisana ≈°ele med naslednjim preverjanjem po≈°te.
+Undelete=Prekli√®i brisanje
+Add Rule for mail from Sender=Dodaj pravilo za po≈°to od po≈°iljatelja
+Add Rule for mail with Subject=Dodaj pravilo za po≈°to s predmetom
+This will create a rule to delete all future e-mails with subject=To bo ustvarilo pravilo za brisanje vse bodo√®e po≈°te s predmetom
+This will create a rule to spam mark all future e-mails with subject=To bo ustvarilo pravilo za ozna√®itev kot spam za vsa bodo√®a sporo√®ila s predmetom
 
 
-# ---------- Added PopTray 3.1 (beta 4) ---------
+# ---------- Added PopTrayU 3.1 (beta 4) ---------
 Galician=Galicijsko
 Downloading=Prenos
-Show Messages while Checking=Pokaûi sporoËila med preverjanjem
-While checking, show each message as it is downloaded.=Med preverjanjem pokaûi vsako sporoËilo takoj, ko je preneöeno
+Show Messages while Checking=Poka≈æi sporo√®ila med preverjanjem
+While checking, show each message as it is downloaded.=Med preverjanjem poka≈æi vsako sporo√®ilo takoj, ko je prene≈°eno
 
-# ---------- Added PopTray 3.1 (beta 5) ---------
-Extra Confirmation when Deleting Protected Messages=Posebna potrditev brisanja zaöËitenih sproËil
-Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Posebna potrditev ko ûelim brisati sporoËila,~zaöËitena s pravili ali belo listo.
-You are trying to delete protected messages.=Poskuöate izbrisati zaöËitena sporoËila.
+# ---------- Added PopTrayU 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Posebna potrditev brisanja za≈°√®itenih spro√®il
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Posebna potrditev ko ≈æelim brisati sporo√®ila,~za≈°√®itena s pravili ali belo listo.
+You are trying to delete protected messages.=Posku≈°ate izbrisati za≈°√®itena sporo√®ila.
 
-# ---------- Added PopTray 3.1 (beta 8) ---------
+# ---------- Added PopTrayU 3.1 (beta 8) ---------
 Lithuanian=Litvijsko
 
 # ---------- Missing customization phrases ---------
-Add Rule to Delete mail with Subject=Dodaj pravilo za brisanje poöte s predmetom
-Add Rule to delete Mail from Sender=Dodaj pravilo za brisanje poöte od poöiljatelja
-Add Rule to mark messages with Subject as Spam=Dodaj pravilo za oznaËitev sporoËil s predmetom
+Add Rule to Delete mail with Subject=Dodaj pravilo za brisanje po≈°te s predmetom
+Add Rule to delete Mail from Sender=Dodaj pravilo za brisanje po≈°te od po≈°iljatelja
+Add Rule to mark messages with Subject as Spam=Dodaj pravilo za ozna√®itev sporo√®il s predmetom
 
-# ---------- Added PopTray 3.2 (beta 1) ---------
-Greek=Gröko
+# ---------- Added PopTrayU 3.2 (beta 1) ---------
+Greek=Gr≈°ko
 Valencian=Valencijsko
 
-# ---------- Added PopTray 3.2 (beta 2) ---------
+# ---------- Added PopTrayU 3.2 (beta 2) ---------
 Open=Odpri
-Open Message=Odpri sporoËilo
+Open Message=Odpri sporo√®ilo
 Frisian=Frizijsko

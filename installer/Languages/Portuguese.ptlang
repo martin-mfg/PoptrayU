@@ -1,9 +1,9 @@
-#-----------------------------------------------------------------------
+Ôªø#-----------------------------------------------------------------------
 # PopTray 2.1 (and later) translation file
 #-----------------------------------------------------------------------
 
 Yes=Sim
-No=N„o
+No=N√£o
 OK=OK
 Nothing=Nenhuma
 Show Messages=Mostrar Mensagens
@@ -11,22 +11,22 @@ Pop-Up Menu=Menu de Contexto
 Check for Mail=Verificar Mensagens
 Run E-Mail Client=Abrir Programa de E-mail
 Check and Show=Verificar e Mostrar
-Show Info=Mostrar InformaÁ„o
-Check and Info=Verificar e Mostrar InformaÁ„o
+Show Info=Mostrar Informa√ß√£o
+Check and Info=Verificar e Mostrar Informa√ß√£o
 Toggle Message Window=Alternar Janela de Mensagens
-Toggle AutoCheck=Alternar VerificaÁ„o Autom·tica
-[Use Default Sound]=[Usar Som Padr„o]
-[Use Default Program]=[Usar Programa Padr„o]
+Toggle AutoCheck=Alternar Verifica√ß√£o Autom√°tica
+[Use Default Sound]=[Usar Som Padr√£o]
+[Use Default Program]=[Usar Programa Padr√£o]
 
 
 Checking=A Verificar...
 Not On-Line=Desligado
 Error:=Erro:
 Still busy checking=Ainda ocupado. A verificar...
-Already Connected=J· se encontra Ligado
+Already Connected=J√° se encontra Ligado
 User Aborted.=Cancelado pelo Utilizador
-Unable to Retrieve Message=N„o È possÌvel aceder ‡s mensagens
-Connect Error:=Erro de LigaÁ„o:
+Unable to Retrieve Message=N√£o √© poss√≠vel aceder √†s mensagens
+Connect Error:=Erro de Liga√ß√£o:
 Error=Erro
 msg.=Mensagem
 msgs.=Mensagens
@@ -37,76 +37,76 @@ messages.=mensagens.
 message(s) deleted.=mensagem(ns) apagada(s).
 Attachment:=Ficheiro Anexo:
 Attachment(s)=Ficheiro(s) Anexo(s)
-AutoCheck disabled=VerificaÁ„o Autom·tica Desactivada
+AutoCheck disabled=Verifica√ß√£o Autom√°tica Desactivada
 messages=mensagens
 in=em
 accounts.=Contas
 No new mail=Nenhuma mensagem nova
 Checked:=Verificado:
 No E-Mail Client specified=Nenhum Programa de E-mail especificado
-Mail Info=InformaÁ„o do E-mail
+Mail Info=Informa√ß√£o do E-mail
 EXE files=Ficheiros EXE
 WAV files=Ficheiros WAV
 No message selected.=Nenhuma mensagem seleccionada.
-Account Info changed.~Do you want to save it?=As informaÁıes da Conta sofreram alteraÁıes.~Deseja guardar?
+Account Info changed.~Do you want to save it?=As informa√ß√µes da Conta sofreram altera√ß√µes.~Deseja guardar?
 Still busy deleting other messages.=Ainda ocupado. A apagar as outras mensagens...
 Delete Message from Server?=Apagar Mensagem do Servidor?
 Delete Messages from Server?=Apagar Mensagens do Servidor?
-Number of selected messages:=N˙mero de mensagens seleccionadas:
+Number of selected messages:=N√∫mero de mensagens seleccionadas:
 This will delete all these selected messages.=Isto vai apagar todas as mensagens seleccionadas.
-Cannot delete last Account=N„o È possÌvel apagar a ˙ltima Conta.
+Cannot delete last Account=N√£o √© poss√≠vel apagar a √∫ltima Conta.
 Delete Account:=Apagar Conta:
 Delete Rule:=Apagar Regra:
 Are you sure?=Tem a certeza?
 No rule selected=Nenhuma regra seleccionada
-This will create a rule to delete all future e-mails from=Isto ir· criar uma regra para apagar todas as futuras mensagens vindas de
+This will create a rule to delete all future e-mails from=Isto ir√° criar uma regra para apagar todas as futuras mensagens vindas de
 
 
-Header=CabeÁalho
+Header=Cabe√ßalho
 From=De
 Subject=Assunto
 To=Para
 CC=CC
 >From (name)=De (nome)
 >From (address)=De (e-mail)
-Contains=ContÈm
+Contains=Cont√©m
 Equals=Igual
 Wildcard=Wildcard
 Empty=Vazio
 
 
-About ...=Sobre o PopTray...
+About ...=Sobre o PopTrayU...
 About=Sobre
 Accounts=Contas
-Action:=AcÁ„o:
-Actions=AcÁıes
+Action:=Ac√ß√£o:
+Actions=Ac√ß√µes
 Add Account=Adicionar Conta
 Add Rule to Delete all mail from Sender=Adicionar uma Regra para Apagar Todas as Futuras Mensagens vindas do Remetente
 Add Rule=Adicionar Regra
 Add new rule=Adicionar nova regra
-Advanced Options=OpÁıes AvanÁadas
-Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animar o Õcone da ¡rea de NotificaÁ„o assim que chegar uma nova mensagem.~Isso vai mostrar um Ìcone intermitente em vez do Ìcone normal est·tico.
-Animated Tray Icon=Õcone da ¡rea de NotificaÁ„o animado
-Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Pergunta antes de apagar qualquer mensagem.~Isso sÛ funciona para o bot„o Apagar. N„o ser· pedida confirmaÁ„o quando apagar mensagens usando as Regras.
-AutoCheck Enabled=VerificaÁ„o Autom·tica
+Advanced Options=Op√ß√µes Avan√ßadas
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animar o √çcone da √Årea de Notifica√ß√£o assim que chegar uma nova mensagem.~Isso vai mostrar um √≠cone intermitente em vez do √≠cone normal est√°tico.
+Animated Tray Icon=√çcone da √Årea de Notifica√ß√£o animado
+Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Pergunta antes de apagar qualquer mensagem.~Isso s√≥ funciona para o bot√£o Apagar. N√£o ser√° pedida confirma√ß√£o quando apagar mensagens usando as Regras.
+AutoCheck Enabled=Verifica√ß√£o Autom√°tica
 Body=Corpo da Mensagem
 Cancel=Cancelar
 Check All=Verificar Todas as Contas
-Check Interval=Intervalo entre VerificaÁıes 
+Check Interval=Intervalo entre Verifica√ß√µes 
 Check Now=Verificar Agora
 Check current account for New Mail=Verificar Mensagens desta Conta
 Check for New Mail on Startup=Verificar Novas Mensagens ao Iniciar
 Check for new mail every =Verificar novas mensagens a cada 
 Check if On-Line=Verificar Ligado
-Check on-line if newer version available.=Verificar se h· novas versıes online do PopTray.
+Check on-line if newer version available.=Verificar se h√° novas vers√µes online do PopTrayU.
 Check=Verificar
 Color:=Cor:
-Criteria=CritÈrios
+Criteria=Crit√©rios
 Date=Data
 Decode preview message=Descodificar Mensagem Visualizada
-Default sound:=Som Padr„o:
-Defaults=DefiniÁıes standard
-Delay on a SingleClick to wait and see if a DoubleClick is coming.=Pequeno atraso num clique ˙nico e esperar se vem um duplo clique.
+Default sound:=Som Padr√£o:
+Defaults=Defini√ß√µes standard
+Delay on a SingleClick to wait and see if a DoubleClick is coming.=Pequeno atraso num clique √∫nico e esperar se vem um duplo clique.
 Delete Account=Apagar Conta
 Delete Rule=Apagar Regra
 Delete account=Apagar conta
@@ -115,63 +115,63 @@ Delete from server=Apagar do servidor
 Delete selected rule=Apagar regra seleccionada
 Delete=Apagar
 Deletion Confirmation=Confirmar para Apagar
-Different Icon for Viewed Messages=Õcone diferente para mensagens j· visualizadas
-Don't show Error Dialogs=N„o mostrar Mensagens de Erro
+Different Icon for Viewed Messages=√çcone diferente para mensagens j√° visualizadas
+Don't show Error Dialogs=N√£o mostrar Mensagens de Erro
 Double Click delay on Click=Atrasar o Duplo Clique 
 Double Click:=Duplo Clique:
 Downloading...=A Receber...
 E-Mail Program:=Programa de E-mail:
 E-Mail:=E-mail:
 Enabled=Activado
-First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Verifica primeiro se est· ligado para depois verificar existÍncia de novas mensagens.~Para utilizadores de ligaÁ„o por acesso telefÛnico que n„o~querem que apareÁam mensagens a solicitar a ligaÁ„o quando estiver desligado.~Atrasa um pouco a verificaÁ„o das mensagens.
-General Options=OpÁıes Gerais
-Headers=CabeÁalhos
+First check if you are on-line before checking for e-mail.~Used by dial-up users who don't want the dial-up dialog ~to pop-up when you are not connected.~Makes checking a little bit slower.=Verifica primeiro se est√° ligado para depois verificar exist√™ncia de novas mensagens.~Para utilizadores de liga√ß√£o por acesso telef√≥nico que n√£o~querem que apare√ßam mensagens a solicitar a liga√ß√£o quando estiver desligado.~Atrasa um pouco a verifica√ß√£o das mensagens.
+General Options=Op√ß√µes Gerais
+Headers=Cabe√ßalhos
 Help=Ajuda
 Homepage:=Homepage:
 Hot-Key:=Tecla de Atalho:
 Hot-Keys=Teclas de Atalho
-Ignore (don't notify)=Ignorar (n„o notificar)
+Ignore (don't notify)=Ignorar (n√£o notificar)
 Ignore Retrieve Errors=Ignorar erros de acesso
-Ignore errors that occurs while retrieving the header info.=Ignora erros ao aceder a informaÁ„o do cabeÁalho.
-Immediately check for mail when PopTray starts.=Verificar mensagens imediatamente ao iniciar o PopTray.
-Info=InformaÁ„o
-Left Click:=Bot„o Esquerdo:
+Ignore errors that occurs while retrieving the header info.=Ignora erros ao aceder a informa√ß√£o do cabe√ßalho.
+Immediately check for mail when PopTrayU starts.=Verificar mensagens imediatamente ao iniciar o PopTrayU.
+Info=Informa√ß√£o
+Left Click:=Bot√£o Esquerdo:
 Log Rules=Registar regras em arquivo .LOG
 Login:=Nome de Utilizador:
 MAPI instead of mailto:=MAPI em vez de mailto:
 Mail=Mensagens
-Middle Click:=Bot„o do Meio:
-Minimize PopTray to the System Tray instead of the Taskbar.=Minimiza o PopTray para a ¡rea de NotificaÁ„o em vez da Barra de Tarefas.
-Minimize to Tray=Minimizar para a ¡rea de NotificaÁ„o
+Middle Click:=Bot√£o do Meio:
+Minimize PopTrayU to the System Tray instead of the Taskbar.=Minimiza o PopTrayU para a √Årea de Notifica√ß√£o em vez da Barra de Tarefas.
+Minimize to Tray=Minimizar para a √Årea de Notifica√ß√£o
 minutes.=minutos.
 Mix Colors=Misturar cores
-Mouse Action:=AcÁ„o do Rato:
-Mouse Buttons=Botıes do Rato
+Mouse Action:=Ac√ß√£o do Rato:
+Mouse Buttons=Bot√µes do Rato
 Name:=Nome:
 Name=Nome
 Never=Nunca
 New Message=Nova Mensagem
-New message using default mail client=Nova Mensagem Usando o Programa de E-mail Padr„o
+New message using default mail client=Nova Mensagem Usando o Programa de E-mail Padr√£o
 New=Nova
-No Sort=N„o Ordenar
-Options ...=OpÁıes ...
-Options=OpÁıes
+No Sort=N√£o Ordenar
+Options ...=Op√ß√µes ...
+Options=Op√ß√µes
 POP3 Server:=Servidor POP3:
 Password Protect=Proteger com Palavra-passe
 Password:=Palavra-passe:
 Play different wav=Tocar som diferente
-Please enter the password to open Poptray=Por favor, introduza a palavra-passe para abrir o PopTray
-PopTray will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=O PopTray ser· iniciado minimizado.~Assim, a janela ficar· escondida e sÛ o Ìcone da ·rea de notificaÁ„o~ficar· visÌvel.
+Please enter the password to open PopTrayU=Por favor, introduza a palavra-passe para abrir o PopTrayU
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=O PopTrayU ser√° iniciado minimizado.~Assim, a janela ficar√° escondida e s√≥ o √≠cone da √°rea de notifica√ß√£o~ficar√° vis√≠vel.
 Preview the Message=Visualizar Mensagem
 Preview=Visualizar
 Quit=Sair
-Reply using default mail client=Responder Usando o Programa de E-mail Padr„o
+Reply using default mail client=Responder Usando o Programa de E-mail Padr√£o
 Reply=Responder
-Reset Mail Count in Tray when Viewing=Reiniciar o Ìcone da ¡rea de NotificaÁ„o ao visualizar
-Reset the Tray Icon message count when you view the PopTray~window.  When new mail arrives only the new count since last ~view will be shown.=Reinicializar o n˙mero de mensagens do Ìcone da ¡rea de NotificaÁ„o quando visualizar~a janela do PopTray. Quando novas mensagens chegarem, ser· mostrado sÛ o novo n˙mero de mensagens desde a ˙ltima verificaÁ„o.
-Right Click:=Bot„o Direito:
-Rotate Icon for each Account=Alternar os Ìcones de cada conta
-Rotate Icon to show messages in each account=Alternar os Ìcones para mostrar mensagens de cada conta
+Reset Mail Count in Tray when Viewing=Reiniciar o √≠cone da √Årea de Notifica√ß√£o ao visualizar
+Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=Reinicializar o n√∫mero de mensagens do √≠cone da √Årea de Notifica√ß√£o quando visualizar~a janela do PopTrayU. Quando novas mensagens chegarem, ser√° mostrado s√≥ o novo n√∫mero de mensagens desde a √∫ltima verifica√ß√£o.
+Right Click:=Bot√£o Direito:
+Rotate Icon for each Account=Alternar os √≠cones de cada conta
+Rotate Icon to show messages in each account=Alternar os √≠cones para mostrar mensagens de cada conta
 Rule=Regra
 Rules=Regras
 Run EXE File=Iniciar arquivo .EXE
@@ -179,51 +179,51 @@ Save=Guardar
 Save Account=Guardar Conta
 Save Captions=Guardar Legendas
 Save Message=Guardar Mensagem
-Save Options=Guardar OpÁıes
+Save Options=Guardar Op√ß√µes
 Save Rules=Guardar Regras
 Show Messages ...=Mostrar Mensagens ...
 Show Window on Notification=Mostrar a janela ao verificar
-Show the PopTray window always on top of other windows.=Torna a Janela do PopTray sempre visÌvel.
-Show the PopTray window when new mail arrives.=Mostrar a Janela do PopTray quando chegar nova mensagem.
+Show the PopTrayU window always on top of other windows.=Torna a Janela do PopTrayU sempre vis√≠vel.
+Show the PopTrayU window when new mail arrives.=Mostrar a Janela do PopTrayU quando chegar nova mensagem.
 Size=Tamanho
 Sound:=Som:
 Start Minimized=Iniciar minimizado
-Stay on Top=Sempre visÌvel
+Stay on Top=Sempre vis√≠vel
 Stop and disconnect.=Parar e desligar.
-Support Forum:=FÛrum de Apoio:
+Support Forum:=F√≥rum de Apoio:
 Test the sound file=Testar o Ficheiro de Som
 Test to run the e-mail program=Testar o Programa de E-mail
 Test=Testar
-The X close button in the top right-hand corner will minimize~PopTray instead of closing it.~To close use the "Quit" button.=O bot„o X no canto superior direito ir· minimizar~o PopTray em vez o de fechar.~Para o fechar use o bot„o "Sair".
+The X close button in the top right-hand corner will minimize~PopTrayU instead of closing it.~To close use the "Quit" button.=O bot√£o X no canto superior direito ir√° minimizar~o PopTrayU em vez o de fechar.~Para o fechar use o bot√£o "Sair".
 Timer Interval per Account=Intervalo Individual por Conta
 To Tray=Minimizar
-Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Tentar misturar as cores quando chegarem mensagens em v·rias contas.~O Windows permite no m·ximo 16 cores na ¡rea de NotificaÁ„o, portanto a mistura nem sempre~mostrar· uma cor correta.
+Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=Tentar misturar as cores quando chegarem mensagens em v√°rias contas.~O Windows permite no m√°ximo 16 cores na √Årea de Notifica√ß√£o, portanto a mistura nem sempre~mostrar√° uma cor correta.
 Use MAPI=Usar MAPI
-Viewed Messages Icon=Õcone de msgs. j· visualizadas
-When a connect error occurs, PopTray will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=Quando se verificar um erro de ligaÁ„o, o PopTray vai mostrar uma mensagem de erro.~Se esta opÁ„o estiver activada, a mensagem de erro sÛ aparecer· na barra de estado e na legenda do Ìcone na ¡rea de NotificaÁ„o.
-When previewing a message with MIME parts~PopTray will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Ao visualizar uma mensagem com partes em MIME~o PopTray ir· descodificar a mensagem MIME, mostrar a ~primeira parte na visualizaÁ„o e o restante como anexos.~Quando desmarcada, a visualizaÁ„o sÛ mostrar· a mensagem codificada.
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=Regista todas as acÁıes das Regras num arquivo de log.~Nome do arquivo: RULES.LOG na mesma pasta do PopTray.
-X Button Minimizes=O Bot„o X minimiza
+Viewed Messages Icon=√çcone de msgs. j√° visualizadas
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=Quando se verificar um erro de liga√ß√£o, o PopTrayU vai mostrar uma mensagem de erro.~Se esta op√ß√£o estiver activada, a mensagem de erro s√≥ aparecer√° na barra de estado e na legenda do √≠cone na √Årea de Notifica√ß√£o.
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Ao visualizar uma mensagem com partes em MIME~o PopTrayU ir√° descodificar a mensagem MIME, mostrar a ~primeira parte na visualiza√ß√£o e o restante como anexos.~Quando desmarcada, a visualiza√ß√£o s√≥ mostrar√° a mensagem codificada.
+Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Regista todas as ac√ß√µes das Regras num arquivo de log.~Nome do arquivo: RULES.LOG na mesma pasta do PopTrayU.
+X Button Minimizes=O Bot√£o X minimiza
 
 
-# ---------- Added PopTray 2.1 (beta 1.2) ----------
+# ---------- Added PopTrayU 2.1 (beta 1.2) ----------
 Language:=Idioma:
 Refresh=Actualizar
 Refresh the list of languages=Actualiza a Lista de Idiomas
-Thanks to the following volunteers who helped with the translation:=AgradeÁo aos seguintes volunt·rios que contribuiram com as traduÁıes:
+Thanks to the following volunteers who helped with the translation:=Agrade√ßo aos seguintes volunt√°rios que contribuiram com as tradu√ß√µes:
 Copyright=Copyright
-Translations=TraduÁ„o:
+Translations=Tradu√ß√£o:
 Contact Info=Contacto
 
 
-# ---------- Added PopTray 2.1 (beta 1.4) ----------
-Confirm=ConfirmaÁ„o
-No.=N.∫
+# ---------- Added PopTrayU 2.1 (beta 1.4) ----------
+Confirm=Confirma√ß√£o
+No.=N.¬∫
 
 
-# ---------- Added PopTray 2.1 (beta 2) ----------
+# ---------- Added PopTrayU 2.1 (beta 2) ----------
 On=Activada?
-Area=¡rea
+Area=√Årea
 Comp=Complemento
 Text=Texto
 Wav=.WAV
@@ -232,20 +232,20 @@ Ign=Ignorar?
 EXE=.EXE
 message=mensagem
 Multi-line Account Tabs=Abas das Contas sobrepostas
-AutoCheck only while Minimized=Verif. Autom·tica sÛ qdo. Minimizado
+AutoCheck only while Minimized=Verif. Autom√°tica s√≥ qdo. Minimizado
 Print=Imprimir
-Print the message to your default printer=Imprimir a mensagem na impressora padr„o
-Connection TimeOut:=Tempo-limite de LigaÁ„o:
+Print the message to your default printer=Imprimir a mensagem na impressora padr√£o
+Connection TimeOut:=Tempo-limite de Liga√ß√£o:
 seconds=segundos.
 
 
-# ---------- Added PopTray 2.1 (beta 2) ----------
-version=vers„o
+# ---------- Added PopTrayU 2.1 (beta 2) ----------
+version=vers√£o
 
 
-# ---------- Added PopTray 2.1 (beta 4) ----------
-Info Balloon on Notification=Mostrar Bal„o ao Notificar 
-Important (Balloon Pop-Up)=Importante (Pop-up em Bal„o)
+# ---------- Added PopTrayU 2.1 (beta 4) ----------
+Info Balloon on Notification=Mostrar Bal√£o ao Notificar 
+Important (Balloon Pop-Up)=Importante (Pop-up em Bal√£o)
 New Messages Only=Apenas Novas Msgs.
 All Files=Todos os Ficheiros
 All Accounts=Todas as Contas
@@ -253,13 +253,13 @@ Execute File=Abrir Ficheiro
 Account=Conta
 
 
-# ---------- Added PopTray 2.1 (beta 6) ----------
-Enable Quick Checking=Activar VerificaÁ„o R·pida
+# ---------- Added PopTrayU 2.1 (beta 6) ----------
+Enable Quick Checking=Activar Verifica√ß√£o R√°pida
 
 
-# ---------- Added PopTray 2.1 (beta 7) ----------
-Quick Checked:=VerificaÁ„o R·pida:
-NOT Contains=N√O ContÈm
+# ---------- Added PopTrayU 2.1 (beta 7) ----------
+Quick Checked:=Verifica√ß√£o R√°pida:
+NOT Contains=N√ÉO Cont√©m
 
 English=
 Afrikaans=
@@ -275,7 +275,7 @@ Hebrew=
 Hungarian=
 Italian=
 Polish=
-Portuguese (Brazil)=PortuguÍs (Brasil)
+Portuguese (Brazil)=Portugu√™s (Brasil)
 Romanian=
 Russian=
 Slovak=
@@ -283,54 +283,54 @@ Slovene=
 Spanish=
 Swedish=
 
-# ---------- Added PopTray 2.1 (beta 8) ----------
+# ---------- Added PopTrayU 2.1 (beta 8) ----------
 Delete this message from server=Apagar esta mensagem do servidor
-Delete Button only available when using Safe Delete option=Bot„o Apagar disponÌvel apenas quando marcada a opÁ„o Apagar com SeguranÁa
-Safe Delete (using UIDL)=Apagar com SeguranÁa
-Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=Identificadores de mensagem n„o combinam.~A opÁ„o Apagar com SeguranÁa impediu a eliminaÁ„o desta mensagem.
+Delete Button only available when using Safe Delete option=Bot√£o Apagar dispon√≠vel apenas quando marcada a op√ß√£o Apagar com Seguran√ßa
+Safe Delete (using UIDL)=Apagar com Seguran√ßa
+Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=Identificadores de mensagem n√£o combinam.~A op√ß√£o Apagar com Seguran√ßa impediu a elimina√ß√£o desta mensagem.
 
-# ---------- Added PopTray 2.1 (beta 10) ----------
+# ---------- Added PopTrayU 2.1 (beta 10) ----------
 Taiwan=
 Ukranian=
 Norwegian=
 
 Interface=Interface
-Connection=LigaÁ„o
+Connection=Liga√ß√£o
 Miscellaneous=Diversos
-Quick Help=Ajuda R·pida
-Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Mostrar as barras para contas diferentes em~m˙ltiplas linhas em vez de uma linha de deslocaÁ„o.
+Quick Help=Ajuda R√°pida
+Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=Mostrar as barras para contas diferentes em~m√∫ltiplas linhas em vez de uma linha de desloca√ß√£o.
 Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=Usa a interface MAPI Simples no seu programa de e-mail~em vez de usar o link "mailto:" para respostas e novas mensagens.
-Use the POP3 UIDL command to check that message is still the same~before deleting it.=Usa o comando POP3 UIDL para verificar se a mensagem ainda È a mesma~antes de a eliminar.
+Use the POP3 UIDL command to check that message is still the same~before deleting it.=Usa o comando POP3 UIDL para verificar se a mensagem ainda √© a mesma~antes de a eliminar.
 Use the POP3 UIDL command to quickly check if the mail on the server has changed.=Usa o comando POP3 UIDL para verificar rapidamente se a mensagem no servidor foi alterada.
-Requires that you enter the specified password to open PopTray.=Obriga a que introduza uma palavra-passe especÌfica para abrir o PopTray.
-Do not run the AutoCheck timer event while viewing the PopTray Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=N„o executa a VerificaÁ„o Autom·tica enquanto estiver a usar a janela do PopTray.~Isto È ˙til para impedir uma VerificaÁ„o Autom·tica enquanto est· a~verificar as mensagens manualmente.
+Requires that you enter the specified password to open PopTrayU.=Obriga a que introduza uma palavra-passe espec√≠fica para abrir o PopTrayU.
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=N√£o executa a Verifica√ß√£o Autom√°tica enquanto estiver a usar a janela do PopTrayU.~Isto √© √∫til para impedir uma Verifica√ß√£o Autom√°tica enquanto est√° a~verificar as mensagens manualmente.
 Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Especifica um intervalo de tempo diferente para cada conta.~Ajuste os intervalos na barra Contas.
 
 
 # -- more --
 First Wait=Esperar
-Preview top lines=PrÈ-visualizar primeiras linhas da mensagem 
+Preview top lines=Pr√©-visualizar primeiras linhas da mensagem 
 Retrieve body while checking=Carregar corpo das mensagens enquanto verifica
 Only download if size is less than=Apenas se o tamanho da mensagem for inferior a
 Limit download to the first=Primeiras 
 lines=linhas
-Indicate Viewed and Unviewed Messages=Indicar Mensagens Lidas e n„o-Lidas
-Hide Viewed Messages=N„o mostrar Mensagens Lidas
-Advanced Show Info=Mostrar InformaÁ„o Detalhada
+Indicate Viewed and Unviewed Messages=Indicar Mensagens Lidas e n√£o-Lidas
+Hide Viewed Messages=N√£o mostrar Mensagens Lidas
+Advanced Show Info=Mostrar Informa√ß√£o Detalhada
 Remember Viewed Messages=Lembrar Mensagens Lidas
-Don¥t check between=N„o Verificar Novas Mensagens entre as
+Don¬¥t check between=N√£o Verificar Novas Mensagens entre as
 and=e as
 Lists=Listas
 Black List=Lista Negra
 White List=Lista Branca
-Black List mark as Spam=Marcar como Spam os endereÁos da Lista Negra
-Mouse Buttons=Botıes do Rato
+Black List mark as Spam=Marcar como Spam os endere√ßos da Lista Negra
+Mouse Buttons=Bot√µes do Rato
 Toggle Sound=Alternar Som
 Delete Spam=Apagar Mensagens Spam
 Mark as Viewed=Marcar como Lida
 Check First Account=Verificar Primeira Conta
 Hot-Keys=Atalhos
-Defaults=DefiniÁıes Padr„o
-General Options=OpÁıes Gerais
-Advanced Options=OpÁıes AvanÁadas
+Defaults=Defini√ß√µes Padr√£o
+General Options=Op√ß√µes Gerais
+Advanced Options=Op√ß√µes Avan√ßadas
 Miscellaneous=Diversos
