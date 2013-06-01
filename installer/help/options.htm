@@ -18,10 +18,11 @@
 			available. You have to save the options for the change to stay
 			in effect after you quit PopTrayU.<br>
 			<br>
-			A Help button <img src="img/help.png" height=25 width=65> can be found in the 
+			A Help button <img src="img/help.png" height=23 width=63> can be found in the 
 			lower left corner of the screen. A Quick Help is also	available if you click 
 			on the <img src="img/quickhelp.png" height=23 width=23> button just next to 
-			the Help button and right click the item you want help with.<br><br>
+			the Help button and right click the item you want help with.<br>
+			<br>
 			All options are saved in PopTray.ini in your PopTrayU program directory.
 			PopTrayU saves all its settings in the PopTray.ini file and Rules are 
 			saved in the Rules.ini file. You can specify a different directory for 
@@ -34,7 +35,7 @@
 			<span class="code">"C:\Program Files\PopTrayU\PopTrayU.exe" "%HOMEDRIVE%%HOMEPATH%"</span><br>
 			your PopTray.ini file will be created in your user home directory,
 			which is different for each user on the PC.<br><br>
-			<img src="img/options_interval.gif" width="24" height="24">
+			<img src="img/options_interval.png" width="24" height="24">
 			<b>Interval:</b><br>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
 				<tr>
@@ -73,7 +74,7 @@
 				</tr>
 		  </table>
 			<br>
-			<img src="img/options_defaults.gif" width="24" height="24">
+			<img src="img/options_defaults.png" width="22" height="22">
 			<b>Defaults:</b>
 			<br>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
@@ -109,7 +110,7 @@
 			</table>
 			<br>
 			<a name="general"></a>
-			<img src="img/options_options.gif" width="24" height="24">
+			<img src="img/options_general.png" width="24" height="24">
 			<b>General Options:</b>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
 				<tr>
@@ -243,8 +244,8 @@
 				</tr>
 		  </table>
 			<br>
-			<img src="img/options_ui.gif" width="24" height="24">
-			<b>Advanced Options - User Interface:</b>
+			<img src="img/options_mainwindow.png" width="24" height="24">
+			<b>Advanced Options - Main Window:</b>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
 				<tr>
 					<td colspan="2" align=middle class=dark><div align="center"><strong>Main Window Message List </strong></div></td>
@@ -307,9 +308,13 @@
                 	<td class=light align=middle>Password Protect</td>
                 	<td class=light>PopTrayU will ask for a password before showing the mail list screen. If you select this option a box will appear where you should type the password you want. Only use this option together with the <i>"Minimize to Tray"</i> option.</td>
 				</tr>
+				<tr>
+				  <td class=light align=middle>Default Spam Toolbar Button Action </td>
+				  <td class=light>On the main-window toolbar, there's a button called &quot;Spam&quot; with a drop-down with various spam-related action. With this option, you can change which option is shown on the main-toolbar without having to use the drop down menu. The default is a (no action) button labeled spam. Other choices include a button to delete messages marked as spam or to mark the selected messages as spam. </td>
+			  </tr>
 		  </table>
 			<br>
-			<img src="img/options_misc.gif" width="24" height="24">
+			<img src="img/options_misc.png" width="24" height="24">
 			<b>Advanced Options - Miscellaneous:</b>
 			<br>
 			<table cellSpacing=4 cellPadding=2 width="90%" align=center border=0>
@@ -359,6 +364,13 @@
 						black list will be deleted. With this option it
 						will be marked as spam instead of deleted.</td>
 				</tr>
+				<tr>
+                  <td colspan="2" align=middle class=dark><div align="center"><strong>Message Preview Options </strong></div></td>
+			  </tr>
+				<tr>
+				  <td class=light align=middle>Disable HTML Preview </td>
+				  <td class=light>When enabled, this option makes the &quot;HTML view&quot; tab on the Preview window  disabled. This option was created for users who are paranoid about not loading spam tracking images without setting Internet Explorer to offline mode.</td>
+			  </tr>
 		  </table>
 			<br>
 			<a name="actions"></a>
@@ -479,7 +491,7 @@
 			</table>
 			<br>
 			<a name="plugins"></a>
-			<img src="img/options_plugins.gif" width="24" height="24">
+			<img src="img/options_plugins.png" width="24" height="24">
 			<b>Plug-ins:</b>
 			<br>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
@@ -494,7 +506,7 @@
 			</table>
 			<br>
 			<a name="visual"></a>
-			<img src="img/visual.gif" width="24" height="24">
+			<img src="img/options_visual.png" width="24" height="24">
 			<b>Visual Appearance:</b>
 			<br>
 			<table border="0" width="90%" align="center" cellspacing="4" cellpadding="2">
@@ -511,8 +523,12 @@
 					<td class="light">Change the font as well as foreground (pencil icon) and background colors (paint can) for the list of new email messages in the main window. Many of the colors available are system UI colors, for coordination with the active Windows color scheme. The x button clears customizations to the font and colors for this item. </td>
 				</tr>
 				<tr>
+				  <td class="light" align="middle">Theme</td>
+				  <td class="light">The entire look of PopTrayU can be changed by choosing a different theme. The &quot;...&quot; button next to the theme dropdown can be used to load a theme from a file. Any Delphi Visual Style theme (*.vsf) may be used, including ones from third party sources. </td>
+			  </tr>
+				<tr>
 				  <td class="light" align="middle">Toolbar Color Scheme </td>
-				  <td class="light">If you are using a (third party) dark windows theme, you should enable the &quot;twilight&quot; scheme. This scheme changes the highlight color for toolbar buttons, and uses an alternate version of the toolbar (and other) images that will look better on a dark background. If you are using the standard Aero theme or another light colored windows theme, the &quot;Normal&quot; color scheme should be selected.</td>
+				  <td class="light">If you are using a (third party) dark windows theme, you should enable the &quot;twilight&quot; scheme. This scheme changes the highlight color for toolbar buttons, and uses an alternate version of some images that will look better on a dark background (for example, images may use white instead of black as a foreground color). If you are using the standard Aero theme or another light colored windows theme, the &quot;Normal&quot; color scheme should be selected.</td>
 			  </tr>
 			</table>
 
