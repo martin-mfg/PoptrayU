@@ -2,9 +2,9 @@
 ; PopTrayU 4.0 NSIS install script (NSIS 2.46 Modern UI 2.0)
 ;------------------------------------------------------------
 
-!define VER_MAJOR "4"
-!define VER_MINOR "1"
-!define VER_BETA "2"
+!define VER_MAJOR "5"
+!define VER_MINOR "0"
+!define VER_BETA "1"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
