@@ -1,7 +1,7 @@
 [OPTIONS]
 Auto Index=Yes
 Compatibility=1.1 or later
-Compiled file=../PoptrayU.chm
+Compiled file=..\PoptrayU.chm
 Contents file=poptrayu.hhc
 Default Window=Poptray
 Default topic=poptray.htm
@@ -34,6 +34,8 @@ whatsnew30.htm
 whatsnew31.htm
 whatsnew32.htm
 whatsnew40.htm
+whatsnew41.htm
+whatsnew50.htm
 
 [INFOTYPES]
 

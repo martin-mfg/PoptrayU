@@ -47,6 +47,14 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PopTrayU 5.0">
+			<param name="Local" value="whatsnew50.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PopTrayU 4.1">
+			<param name="Local" value="whatsnew41.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="PopTrayU 4.0">
 			<param name="Local" value="whatsnew40.htm">
 			</OBJECT>
