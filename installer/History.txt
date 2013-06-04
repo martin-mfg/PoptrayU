@@ -5,8 +5,11 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
-5.0 beta 1 
+5.0 beta 2
+	(-) Fixed bug that notification sounds did not play at all in 5.0 beta 1.
+	(+) Dutch language translation updated
 
+5.0 beta 1 
 	(*) Entire project ported from Delphi 7 (written for windows XP) to Delphi XE4 (written 
 	    for Windows 7/8).
 	(+) Porting means... Support for images with alpha-transparency, so buttons and toolbar 
