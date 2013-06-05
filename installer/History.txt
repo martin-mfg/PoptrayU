@@ -5,6 +5,9 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 3
+	(+) HTML preview now decodes & displays embedded attachment images
+
 5.0 beta 2
 	(-) Fixed bug that notification sounds did not play at all in 5.0 beta 1.
 	(+) Dutch language translation updated
