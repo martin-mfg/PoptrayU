@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "0"
-!define VER_BETA "3"
+!define VER_BETA "4"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -114,7 +114,7 @@ BrandingText " "
   !insertmacro MUI_LANGUAGE "Romanian"
   !insertmacro MUI_LANGUAGE "Russian"
 ;  !insertmacro MUI_LANGUAGE "Serbian"
-;  !insertmacro MUI_LANGUAGE "SerbianLatin"
+  !insertmacro MUI_LANGUAGE "SerbianLatin"
   !insertmacro MUI_LANGUAGE "Slovak"
   !insertmacro MUI_LANGUAGE "Slovenian"
   !insertmacro MUI_LANGUAGE "Spanish"
