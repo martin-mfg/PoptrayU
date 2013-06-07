@@ -129,9 +129,9 @@
     ;Push ${LANG_SERBIAN}
     ;Push "српски (Serbian Cyrillic)"
     ;
-    ;Push 1250
-    ;Push ${LANG_SERBIANLATIN}
-    ;Push "srpski (Serbian Latin)"
+    Push 1250
+    Push ${LANG_SERBIANLATIN}
+    Push "srpski (Serbian Latin)"
     ;
     Push 1250
     Push ${LANG_SLOVENIAN}

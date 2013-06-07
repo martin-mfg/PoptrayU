@@ -5,6 +5,13 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 4
+	(*) Missing strings in language files for Russian, Romanian
+	    filled in with automated translations
+	(-) Fixed a couple problem strings that were not showing up correctly in most languages.
+	(-) Several Eastern European and Baltic langagues had errors in the conversion to UTF-8
+	    in 5.0 beta 1 that have been fixed.
+
 5.0 beta 3
 	(+) HTML preview now decodes & displays embedded attachment images
 
@@ -55,6 +62,8 @@ PopTrayU Version History
 	    on security settings). This has been fixed so it now correctly saves to the ini/settings 
 	    folder. Upgrading users who do not wish to redo their toolbar customizations should 
 	    manually move this file.
+	(-) Bug fixed: Clicking create (new) account when currently on an SSL enabled account did 
+	    not correctly reset the port number, leaving invalid default settings.
 
 4.1 beta 2
 	(-) Accounts toolbar follows toolbar theme correctly

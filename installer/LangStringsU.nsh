@@ -1044,3 +1044,58 @@ LangString uninstall_remove_config_files ${LANG_ARABIC} "إزالة ملفات �
 LangString full_install ${LANG_ARABIC} "التثبيت الكامل"
 LangString minimum_install ${LANG_ARABIC} "تثبيت الحد الأدنى"
 
+;-------------------------- Serbian (Latin) --------------------------------
+
+LangString mui_welcomepage_title ${LANG_SERBIANLATIN} "PopTrayU Setup Vizard"
+LangString mui_welcomepage_text1 ${LANG_SERBIANLATIN} "Ovaj čarobnjak će vas voditi kroz instalaciju PopTrayU"
+LangString mui_welcomepage_text2 ${LANG_SERBIANLATIN} "PopTrayU je potpuno funkcionalan, open source, e-mail prijave sa lak za korišćenje interfejs."
+LangString mui_finish_dl_ssl_plugin ${LANG_SERBIANLATIN} "Skidanje SSL Plugin" 
+
+LangString SEC_PopTrayU ${LANG_SERBIANLATIN} "PopTrayU (obavezno)"
+LangString DESC_SecPopTrayU ${LANG_SERBIANLATIN} "Copi PopTrayU aplikacija fajlove u folder aplikacija."
+
+LangString SEC_Icons ${LANG_SERBIANLATIN} "ikone"
+LangString DESC_SecIcons ${LANG_SERBIANLATIN} "Izbor ikone za stvaranje."
+
+LangString SEC_StartMenuIcons ${LANG_SERBIANLATIN} "ikone Start Menu"
+LangString DESC_SecStartMenu ${LANG_SERBIANLATIN} "Napravi PopTrayU grupu pod start meniju sa ikonama su se PopTrayU datoteke."
+
+LangString SEC_StartupIcon ${LANG_SERBIANLATIN} "Pokretanje Ikona"
+LangString DESC_SecStartup ${LANG_SERBIANLATIN} "PopTrayU automatski pokrenuti kada se Vindovs pokrene"
+
+LangString SEC_DesktopIcon ${LANG_SERBIANLATIN} "Desktop Icon"
+LangString DESC_SecDesktop ${LANG_SERBIANLATIN} "stavi PopTrayU ikonu na desktopu"
+
+LangString SEC_Lang ${LANG_SERBIANLATIN} "Jezičke datoteke"
+LangString DESC_SecLang ${LANG_SERBIANLATIN} "instalira datoteke jezik za višejezičnoj PopTrayU."
+
+LangString SEC_SoundFiles ${LANG_SERBIANLATIN} "Zvučne datoteke"
+LangString DESC_SecSound ${LANG_SERBIANLATIN} "Install obaveštenja zvučne fajlove."
+
+LangString SEC_OptionalPlugins ${LANG_SERBIANLATIN} "Opcioni Plugins" 
+LangString SEC_KeyboardLights ${LANG_SERBIANLATIN} "Svetla tastatura Obaveštenje Plugin"
+LangString DESC_SecKeyboardLights ${LANG_SERBIANLATIN} "Nova poruka Saopštenje uključivanjem ili treptanjem pomeranje za zaključavanje tastera svetlost.."
+
+LangString title_user_storage_dir ${LANG_SERBIANLATIN} "Podešavanja Uputstva Lokacija stovarišta"
+LangString desc_user_storage_dir ${LANG_SERBIANLATIN} "Gde da PopTrayU čuvanje podešavanja kao što su e-mail naloga i pravila?"
+LangString ini_storage_appdata ${LANG_SERBIANLATIN} "Current User Appdata Folder (Recommended)"
+LangString ini_storage_appdata_desc ${LANG_SERBIANLATIN} "Ova postavka je najbolja za većinu korisnika, pogotovo ako koristite Vista ili Vindovs 7 Svaki korisnik ovog računara će imati svoj Settings za PopTrayU."
+LangString ini_alluser_appdata ${LANG_SERBIANLATIN} "Svi korisnici AppData folder"
+LangString ini_alluser_appdata_desc ${LANG_SERBIANLATIN} "Ova postavka je najbolja za korisnike koji imaju više korisničkih naloga na svom računaru, ali želim svim korisnicima računara da dele iste e-mail nalozima i PopTrayU podešavanja."
+LangString ini_progfiles ${LANG_SERBIANLATIN} "PopTrayU Instalacija Folder"
+LangString ini_progfiles_desc ${LANG_SERBIANLATIN} "Ova postavka je najbolja za Pro korisnike koji su UAC invaliditetom, a želite da zadržite sve PopTrayU dosijeima na jednom mestu Korisnici Vindovsa 95 trebalo bi da izaberete ovu opciju."
+
+LangString msg_closing_poptrayu ${LANG_SERBIANLATIN} "Zatvaranje postojećih PopTrayU"
+LangString msg_cant_close_poptrayu ${LANG_SERBIANLATIN} "ne može zatvoriti postojeći PopTrayU"
+
+LangString mui_header_uninstall ${LANG_SERBIANLATIN} "Deinstaliraj PopTrayU"
+LangString mui_subhead_uninstall ${LANG_SERBIANLATIN} "Uklanjanje PopTrayU od vas računar."
+
+LangString uninstaller_desc ${LANG_SERBIANLATIN} "Ovaj čarobnjak će PopTrayU deinstalirati sa računara deinstalirate Kliknite da nastavite."
+LangString uninstall_from ${LANG_SERBIANLATIN} "Deinstalacija iz:"
+LangString uninstall_remove_config_files ${LANG_SERBIANLATIN} "Remove konfiguracioni fajl"
+
+LangString full_install ${LANG_SERBIANLATIN} "kompletnu instalaciju" 
+LangString minimum_install ${LANG_SERBIANLATIN} "Minimalna Instalacija"
+
+; -- end of file --
