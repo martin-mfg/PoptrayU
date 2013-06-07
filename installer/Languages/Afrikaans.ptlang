@@ -40,7 +40,7 @@ Check and Info=Toets en Wys info
 Check and Show=Toets en Wys
 Check current account for New Mail=Toets in huidige rekening vir Nuwe Pos
 Check for Mail=Toets vir E-Pos
-Check for new mail every =Toets vir Nuwe Pos elke
+Check for new mail every=Toets vir Nuwe Pos elke
 Check for New Mail on Startup=Toets vir Nuwe Pos as Begin
 Check if On-Line=Toets as Aan-lyn
 Check on-line if newer version available.=Kyk of daar 'n nuwer weergawe beskikbaar is.
@@ -223,13 +223,13 @@ WAV files=WAV lêers
 When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=As 'n konneksie fout gebeur, wys slegs die foutboodskap in die status venster en Tray.
 When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Wanneer jy 'n MIME boodskap lees sal jy die eerste leesbare~ gedeelte van die boodskap kan lees, en die res sien as aanhegsels.~As dit afgeskakel is, sien die oorsprinklike boodskap op die bediener.
 Wildcard=Wildcard
-Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Skryf alle reël aksies na 'n log lêer.~Naam: RULES.LOG in dieselfde plek as PopTrayU.
+#Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTray.=Skryf alle reël aksies na 'n log lêer.~Naam: RULES.LOG in dieselfde plek as PopTray.
 X Button Minimizes=X Knoppie Minimaliseer
 Yes=Ja
 [Use Default Program]=[Standaard E-Pos Program]
 [Use Default Sound]=[Standaard Klank]
 
-# ---------- Added PopTrayU 2.1 (beta 8) ----------
+# ---------- Added PopTray 2.1 (beta 8) ----------
 Delete this message from server=Verwyder hierdie boodskap vanaf bediener
 Delete Button only available when using Safe Delete option=Verwyder knoppie slegs beskikbaar met Veilige Verdyder opsie
 Safe Delete (using UIDL)=Veilige Verwyder (gebruik UIDL)

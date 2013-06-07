@@ -1,5 +1,5 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray translation file
+# PopTrayU translation file
 #-----------------------------------------------------------------------
 # 2004-05-20  PopTray 3.1 Beta 5
 #-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ Check and Show=Verificar e Exibir
 Check current account for New Mail=Verificar Mensagens desta Conta
 Check First Account=Verificar Primeira Conta
 Check for Mail=Verificar Mensagens
-Check for new mail every =Verificar mensagens a cada 
+Check for new mail every=Verificar mensagens a cada 
 Check for New Mail on Startup=Verificar ao início do Windows
 Check if On-Line=Verificar conexão
 Check Interval=Intervalo entre Verificações 
