@@ -96,7 +96,7 @@ Check Interval=Intervalo entre Verificações
 Check Now=Verificar Agora
 Check current account for New Mail=Verificar Mensagens desta Conta
 Check for New Mail on Startup=Verificar Novas Mensagens ao Iniciar
-Check for new mail every =Verificar novas mensagens a cada 
+Check for new mail every=Verificar novas mensagens a cada 
 Check if On-Line=Verificar Ligado
 Check on-line if newer version available.=Verificar se há novas versões online do PopTrayU.
 Check=Verificar
@@ -206,7 +206,7 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=O Botão X minimiza
 
 
-# ---------- Added PopTrayU 2.1 (beta 1.2) ----------
+# ---------- Added PopTray 2.1 (beta 1.2) ----------
 Language:=Idioma:
 Refresh=Actualizar
 Refresh the list of languages=Actualiza a Lista de Idiomas
@@ -216,12 +216,12 @@ Translations=Tradução:
 Contact Info=Contacto
 
 
-# ---------- Added PopTrayU 2.1 (beta 1.4) ----------
+# ---------- Added PopTray 2.1 (beta 1.4) ----------
 Confirm=Confirmação
 No.=N.º
 
 
-# ---------- Added PopTrayU 2.1 (beta 2) ----------
+# ---------- Added PopTray 2.1 (beta 2) ----------
 On=Activada?
 Area=Área
 Comp=Complemento
@@ -239,11 +239,11 @@ Connection TimeOut:=Tempo-limite de Ligação:
 seconds=segundos.
 
 
-# ---------- Added PopTrayU 2.1 (beta 2) ----------
+# ---------- Added PopTray 2.1 (beta 2) ----------
 version=versão
 
 
-# ---------- Added PopTrayU 2.1 (beta 4) ----------
+# ---------- Added PopTray 2.1 (beta 4) ----------
 Info Balloon on Notification=Mostrar Balão ao Notificar 
 Important (Balloon Pop-Up)=Importante (Pop-up em Balão)
 New Messages Only=Apenas Novas Msgs.
@@ -253,11 +253,11 @@ Execute File=Abrir Ficheiro
 Account=Conta
 
 
-# ---------- Added PopTrayU 2.1 (beta 6) ----------
+# ---------- Added PopTray 2.1 (beta 6) ----------
 Enable Quick Checking=Activar Verificação Rápida
 
 
-# ---------- Added PopTrayU 2.1 (beta 7) ----------
+# ---------- Added PopTray 2.1 (beta 7) ----------
 Quick Checked:=Verificação Rápida:
 NOT Contains=NÃO Contém
 
@@ -283,13 +283,13 @@ Slovene=
 Spanish=
 Swedish=
 
-# ---------- Added PopTrayU 2.1 (beta 8) ----------
+# ---------- Added PopTray 2.1 (beta 8) ----------
 Delete this message from server=Apagar esta mensagem do servidor
 Delete Button only available when using Safe Delete option=Botão Apagar disponível apenas quando marcada a opção Apagar com Segurança
 Safe Delete (using UIDL)=Apagar com Segurança
 Message identifiers don't match.~The Safe Delete option prevented deletion of this message.=Identificadores de mensagem não combinam.~A opção Apagar com Segurança impediu a eliminação desta mensagem.
 
-# ---------- Added PopTrayU 2.1 (beta 10) ----------
+# ---------- Added PopTray 2.1 (beta 10) ----------
 Taiwan=
 Ukranian=
 Norwegian=

@@ -1,5 +1,5 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray translation file
+# PopTrayU translation file
 # ------------------------
 # Frysk 29-08-2005
 #-------------------------------------------------
@@ -81,7 +81,7 @@ Check and Show=Kontrolearje en sjen litte
 Check current account for New Mail=Kontrolearje aktive akkount op nije berjochten
 Check First Account=Kontrolearje earste akkount
 Check for Mail=Kontrolearje op berjochten
-Check for new mail every =Kontrolearje op nije berjochten eltse
+Check for new mail every=Kontrolearje op nije berjochten eltse
 Check for New Mail on Startup=Kontrolearje op nije berjochten by it begjinnen
 Check if On-Line=Kontrolearje of der ferbining is
 Check on-line if newer version available.=Kontrolearje of der in nije ferzje is

@@ -1,4 +1,8 @@
-﻿(All Actions)=(Totes les accions)
+﻿#---------------------------------------------------------
+# Valencian PopTrayU Language File
+# Originally for PopTray 3.2
+#---------------------------------------------------------
+(All Actions)=(Totes les accions)
 (Checkmark toggles visibility)=(Marcar per a vore'l/amagar-lo)
 [Use Default Program]=[Usar programa per defecte]
 [Use Default Sound]=[Usar so per defecte]
@@ -67,7 +71,7 @@ Check and Show=Comprovar i mostrar
 Check current account for New Mail=Buscar correu nou en este conte
 Check First Account=Comprovar el primer conte
 Check for Mail=Buscar correu
-Check for new mail every =Buscar correu nou cada
+Check for new mail every=Buscar correu nou cada
 Check for New Mail on Startup=Buscar correu nou al principi
 Check if On-Line=Comprovar si hi ha conexio
 Check Interval=Interval de comprovacio

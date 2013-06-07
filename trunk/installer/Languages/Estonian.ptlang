@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------------
-# 2006-05-18  PopTray 3.2 (beta 5)
+# Estonian Translation File
 #-----------------------------------------------------------------------
-# estonian translation by Toomas Tomberg
+# 2006-05-18 PopTray 3.2 (beta 5) by Toomas Tomberg
 #-----------------------------------------------------------------------
 (All Actions)=(Kõik toimingud)
 (Checkmark toggles visibility)=(Linnuke muudab nähtavust)
@@ -69,7 +69,7 @@ Check and Show=Kontrolli ja näita
 Check current account for New Mail=Kontrolli uusi sõnumeid aktiivsel kontol
 Check First Account=Kontrolli esimest kontot
 Check for Mail=Kontrolli sõnumeid
-Check for new mail every =&Kontrolli uusi sõnumeid iga 
+Check for new mail every=&Kontrolli uusi sõnumeid iga 
 Check for New Mail on Startup=&Kontrolli uusi sõnumeid käivitamisel
 Check if On-Line=&Kontrolli võrguühendust
 Check on-line if newer version available.=Kontrolli internetist programmi uue versiooni olemasolu.
@@ -91,7 +91,7 @@ Croatian=Kroaadi
 Customize...=Kohanda...
 Customize=Kohanda
 Cut=Lõika
-Czech=Tðehhi
+Czech=Tšehhi
 Danish=Taani
 Date=Kuupäev
 Default e-mail program to open.=Vaikimisi avatav meiliprogramm.
@@ -350,7 +350,7 @@ Sort=Sordi
 Sound:=&Heli:
 Spam Last=Viimane rämpspostiks
 Spam=Rämpspost
-Spanish (Chile)=Hispaania (Tðiili)
+Spanish (Chile)=Hispaania (Tšiili)
 Spanish (Hispanic America)=Hispaania (Ladina-Ameerika)
 Spanish=Hispaania
 Specify a different timer interval for each account.~Set the intervals on the Accounts tab.=Kontodele saab erinevat intervalli~määrata kontode vahekaardil.

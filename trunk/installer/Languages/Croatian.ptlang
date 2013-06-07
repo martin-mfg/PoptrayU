@@ -1,12 +1,5 @@
 #-----------------------------------------------------------------------
-# PopTray translation file
-# ------------------------
-# To create your own translation, copy this file to the name of the
-# language you want to create eg. "German.ptlang" in the PopTray
-# directory.  Translate the phrases you want, and leave the rest blank.
-#
-# Please zip the new file and send it to translation@poptray.org to 
-# have your translation included in the next version of PopTray.
+# PopTrayU translation file - Croatian
 #-----------------------------------------------------------------------
 # 2003-10-08  PopTray 3.0
 #-----------------------------------------------------------------------
@@ -97,7 +90,7 @@ Cancel=Otkazi
 Check All=Provjeri sve
 Check current account for New Mail=Provjeri postu za trenutni nalog
 Check for New Mail on Startup=Provjeri postu na start-up-u
-Check for new mail every =Provjeravaj postu svakih
+Check for new mail every=Provjeravaj postu svakih
 Check if On-Line=Provjeri postu ako ste online
 Check on-line if newer version available.=Provjeri online ako je novija verzija dostupna
 Check=Provjeri
