@@ -1,10 +1,9 @@
-﻿#1 -----------------------------------------------------------------------
-#2 PopTray translation file
-#3 -----------------------------------------------------------------------
-#4 2006-08-14  PopTray 3.2
-#5 -----------------------------------------------------------------------
-#6 Bulgarian translation Nikolai Tsvetkov koko/at\erpaz/dot\bg
-#7-----------------------------------------------------------------------
+﻿#-----------------------------------------------------------------------
+# PopTrayU translation file - Bulgarian
+#-----------------------------------------------------------------------
+# 2013-06-08 PopTrayU 5.0 beta 1
+# 2006-08-14 PopTray 3.2 Bulgarian translation Nikolai Tsvetkov koko/at\erpaz/dot\bg
+#-----------------------------------------------------------------------
 
 
 (All Actions)=(Всички действия)
@@ -73,7 +72,7 @@ Check and Show=Провери и покажи
 Check current account for New Mail=Провери текущия акаунт за нова поща
 Check First Account=Провери първи акаунт
 Check for Mail=Проверявай за поща
-Check for new mail every =Проверявай за поща на всеки 
+Check for new mail every=Проверявай за поща на всеки 
 Check for New Mail on Startup=Провери за нова поща при старт
 Check if On-Line=Провери при онлайн
 Check on-line if newer version available.=Провери за нова версия.
@@ -443,3 +442,106 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=X бутонът минимизира
 Yes=Да
 You are trying to delete protected messages.=Опитвате да изтриете защитено съобщение.
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Външен вид
+Main Window Listbox Font=Main Window ListBox Font
+Change the main window listbox background=Промяна на основния фон падащ списък прозорец
+Change the main window listbox foreground=Промяна на основния прозорец на падащ списък преден план
+Failure connecting to server.=Неизпълнение връзка със сървъра.
+Server found, but is not a mail server.=Сървър получена, но не е сървър за електронна поща.
+Change the Main Window Listbox Font=Промяна на основния прозорец ListBox Font
+Clear all customizations=Изчистване на всички персонализации
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Благодарение на следните доброволци, които помогнаха с превода на този софтуер:
+Language=Език
+Translator=Преводач
+Component=Компонент
+Author=Автор
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU е производен на PopTray Рение Crause е 3.2 и голяма част от кода в това приложение е по този начин Copyright 2001-2005 Рение Crause. Много благодаря за Рение за развитие на PopTray, и за подкрепата, която е предоставил.
+Check online for newer version=Проверете онлайн за нова версия
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Показване на грешките в балон изскачащи прозорци (вместо на прехвърлен диалогови прозорци)
+Changes how errors are shown when the main window is visible.=Променя грешки се показват, когато главния прозорец се вижда.
+Error checking=Проверка за грешки
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Компонент Credits
+Translation Credits=Преводи Credits
+Message Deletion=Съобщение Заличаване
+Mail Client Communication=Съобщение Mail Client
+Rules/Blacklist=Правила / Черен списък
+Advanced POP Settings=Advanced Settings POP
+Error Handling=Обработка на грешки
+Message Download (Enable to use advanced rules)=Съобщение Download (Включване да използват предимствата на правилата)
+Startup=Startup
+Tray Icon=Tray Icon
+New Message Notification=Ново съобщение за уведомяване
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Колко често трябва PopTrayU проверява за нова поща?
+Interval Check Conditions=Условия Интервал Проверка
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Folder: (където PopTray.ini и Правила файлове се съхраняват)
+Misc=Разни
+About PopTrayU=За PopTrayU
+Version=Версия
+Show Images=Показване на изображения
+Reset Customizations=Reset персонализации
+Most UI Items= Най-UI артикули
+Vertical Tabs=Вертикални Tabs
+Message List=Списък със съобщенията
+Flash Tray Icon=Flash Tray Icon
+Show Balloon Notification=Покажи Уведомление Balloon
+Use Deluxe Balloon=Използвайте Deluxe Балон
+(show for=(Показва за
+seconds)=секунди)
+Show Main Window=Покажи Main Window
+Keyboard Lights=Клавиатура Lights
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 със SSL или APOP
+Specify a different timer interval for each account.=Посочете различен интервал таймер за всяка сметка.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Използва се от комутируема потребители, които не искат на Dial-нагоре диалоговия да поп-нагоре, когато не сте свързани. Прави проверка на малко по-бавно.
+This setting can be changed via setup or a command line parameter.=Тази настройка може да се промени чрез настройка или параметър от командния ред.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Горещо клавиши са на цялата система. Използвайте необичайно горещ клавиш, а не този, който използвате често в други приложения. Горещо клавиши като Ctrl-C не се препоръчват.
+Don't automatically check for new messages=Да не се проверява автоматично за нови съобщения
+Set Interval per account=Задайте интервал на сметка
+Only check when already online=Само провери, когато вече онлайн
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Да не се провери тази сметка между
+Advanced=Напреднал
+Use SSL/TLS=Използване на SSL / TLS
+Authentication=Заверка
+SSL/TLS Version:=SSL / TLS Version:
+Auto=Автомобил
+Password=Парола
+Toolbar Color Scheme:=Схема Toolbar Цвят:
+Normal=Нормален
+Twilight=Здрач
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Опции съобщение Визуализация
+Disable HTML Preview=Изключване HTML Preview
+Main Window=Main Window
+Default Spam Toolbar Button Action:=Default Spam действие Toolbar бутон:
+Default Spam Toolbar Action:=Default действие Spam Toolbar:
+Image Credits=Изображение Credits
+Image Package=Изображение на пакета
+Images=Снимки
+Main Window Message List=Main Списък Window съобщение
+Main Window Behaviors=Основни режими на Window
+Plain Text=Plain Text
+Credits:=Кредити:
+
+Theme:=Тема:
+Spam Management=Спам управление
+Changes the action of the Spam toolbar button on the Main Window=Променя действието на бутона Spam лентата с инструменти на основния прозорец
+AKA Explicit TLS=известен също като Явните TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Напиши всички правила действия в лог файл. Име: RULES.LOG в потребителските настройки директория за PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Забранява HTML раздела Preview при визуализирането на съобщение.
+Listbox Font=Падащ списък Font
+Reset Fonts and Colors=Reset шрифтове и цветове
+APOP=APOP
+SASL=SASL
+Customize the Font=Персонализиране на шрифта
+Edit=Редактирам
