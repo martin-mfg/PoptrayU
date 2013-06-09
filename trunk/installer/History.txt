@@ -6,8 +6,8 @@ PopTrayU Version History
  (-) Bug fixed
 
 5.0 beta 4
-	(*) Missing strings in language files for Russian, Romanian
-	    filled in with automated translations
+	(*) Missing strings in language files for Bulgarian, Finnish, Greek, Hungarian, Korean,
+	    Portuguese, Romanian, and Russian filled in with automated translations
 	(-) Fixed a couple problem strings that were not showing up correctly in most languages.
 	(-) Several Eastern European and Baltic langagues had errors in the conversion to UTF-8
 	    in 5.0 beta 1 that have been fixed.
