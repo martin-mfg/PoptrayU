@@ -439,3 +439,109 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=&X nupp minimeerib
 Yes=Jah
 You are trying to delete protected messages.=Püüad kustutada kaitstud sõnumeid.
+
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Välimuse
+Main Window Listbox Font=Main Window loendikasti Font
+Change the main window listbox background=Muuda peaaknas nimekirjakast tausta
+Change the main window listbox foreground=Muuda peaaknas nimekirjakast esiplaanil
+Failure connecting to server.=Suutmatus ühendamisel server.
+Server found, but is not a mail server.=Server leiti, kuid ei ole mail server.
+Change the Main Window Listbox Font=Muutke Main Window loendikasti Font
+Clear all customizations=Kustuta kõik kohandused
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Täname järgmisi vabatahtlikke, kes aitasid tõlkida see tarkvara:
+Language=Keel
+Translator=Tõlkija
+Component=Osa
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU on tuletatud teos Renier Crause on PopTray 3,2 ja palju koodi see taotlus on seega Copyright 2001-2005 Renier Crause. Suur tänu Renier arendamise PopTray ja toetuse eest, ta on andnud.
+Check online for newer version=Saate onlain uuem versioon
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Näitavad Vead Balloon hüpikaknad (Selle asemel, Modal Dialoogid)
+Changes how errors are shown when the main window is visible.=Muutused kuidas vead kuvatakse peaaknas on nähtav.
+Error checking=Vigade kontrollimine
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Component Autorid
+Translation Credits=Tõlge Autorid
+Message Deletion=Sõnumi kustutamine
+Mail Client Communication=Mail Client Side
+Rules/Blacklist=Reeglid / must nimekiri
+Advanced POP Settings=Advanced POP seaded
+Error Handling=Error Handling
+Message Download (Enable to use advanced rules)=Sõnum Lae alla (Luba kasutada täiustatud eeskirjad)
+Startup=Startup
+Tray Icon=Tray Icon
+New Message Notification=Uus kiri teatamine
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Kui tihti peaks PopTrayU uute kirjade kontrollimiseks?
+Interval Check Conditions=Intervall Kontrolli Tingimused
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Folder: (kus PopTray.ini ja reeglid failid on salvestatud)
+Misc=Muu
+About PopTrayU=Umbes PopTrayU
+Version=Versioon
+Show Images=Näita pilte
+Reset Customizations=Nulli Räätälöinnit
+Most UI Items= Enamik UI valikud
+Vertical Tabs=Vertikaalne Tabs
+Message List=Sõnumite nimekiri
+Flash Tray Icon=Flash Tray Icon
+Show Balloon Notification=Näita jutumulliteavitus
+Use Deluxe Balloon=Kasutage Deluxe ballooni
+(show for=(Näidata
+seconds)=sekundit)
+Show Main Window=Näita Main Window
+Keyboard Lights=Klaviatuur Tuled
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 SSL või APOP
+Specify a different timer interval for each account.=Määra teine ​​taimer intervalliga iga konto.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Kasutab dial-up kasutajad, kes ei taha, et dial-up dialoogi pop-up, kui sa ei ole ühendatud. Paneb kontrollimine veidi aeglasem.
+This setting can be changed via setup or a command line parameter.=See seade saab muuta setup või käsurea parameeter.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Kiirklahvid on kogu süsteemi. Kasutage ebatavaline kiirklahvi asemel üks te kasutate sageli teistes rakendustes. Hot-võtmed nagu Ctrl-C ei ole soovitatav.
+Don't automatically check for new messages=Ärge automaatselt uusi kirju kontrollima
+Set Interval per account=Intervallidega konto kohta
+Only check when already online=Ainult vaadake, kui juba võrgus
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Ärge vaadake seda kontole
+Advanced=Edasijõudnud
+Use SSL/TLS=Kasuta SSL / TLS
+Authentication=Autentimine
+SSL/TLS Version:=SSL / TLS Versioon:
+Auto=Auto
+Password=Parool
+Toolbar Color Scheme:=Toolbar värviskeem:
+Normal=Normaalne
+Twilight=Videvik
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Sõnumi eelvaade juurde
+Disable HTML Preview=Keela HTML Preview
+Main Window=Main Window
+Default Spam Toolbar Button Action:=Vaikimisi Spam tööriistariba Nupu toiming:
+Default Spam Toolbar Action:=Vaikimisi Spam Toolbar Action:
+Image Credits=Pilt Autorid
+Image Package=Pilt Package
+Images=Pildid
+Main Window Message List=Main Window Message List
+Main Window Behaviors=Main Window käitumised
+Plain Text=Plain Text
+Credits:=Autorid:
+
+Theme:=Teema:
+Spam Management=Spam juhtimine
+Changes the action of the Spam toolbar button on the Main Window=Muudab tegevuse Spam tööriistaribal nuppu Main Window
+AKA Explicit TLS=tuntud ka selgesõnaline TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Kirjutage kõik reeglid meetmete logifail. Faili nimi: RULES.LOG kasutaja seaded kataloog PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Keelab HTML Preview tab kui eelvaate sõnum.
+Listbox Font=Loendikasti Font
+Reset Fonts and Colors=Nulli fondid ja värvid
+APOP=APOP
+SASL=SASL
+Customize the Font=Kohanda Font
+Edit=Redigeerima
+

@@ -1,7 +1,8 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray 3.0 translation file
+# PopTrayU translation file for Chinese (Simplified)
 #-----------------------------------------------------------------------
-# 2005-10-15  PopTray 3.2 (beta 2)
+# 2013-06-08 PopTrayU 5.0 beta 1
+# 2005-10-15 PopTray 3.2 (beta 2)
 #-----------------------------------------------------------------------
 
 OK=确定
@@ -568,3 +569,107 @@ Valencian=巴伦西亚语
 Open=打开
 Open Message=打开消息
 Frisian=佛里斯兰语
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=视觉外观
+Main Window Listbox Font=主窗口列表框字体
+Change the main window listbox background=更改主窗口的列表框背景
+Change the main window listbox foreground=更改主窗口列表框前景
+Failure connecting to server.=连接到服务器失败。
+Server found, but is not a mail server.=服务器发现，但不是邮件服务器。
+Change the Main Window Listbox Font=更改主窗口的列表框字体
+Clear all customizations=清除所有自定义
+HTML View=HTML查看
+Thanks to the following volunteers who helped translate this software:=感谢以下志愿者帮助翻译这个软件：
+Language=语
+Translator=翻译者
+Component=元件
+Author=作者
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU 3.2 PopTr​​ay Renier Crause的这个应用程序中的代码，因此2001-2005 Renier Crause的衍生作品。非常感谢Renier发展PopTr​​ay，他提供的支持。
+Check online for newer version=新版本的网上查询
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=气球弹出窗口中显示错误（而不是模态对话框）
+Changes how errors are shown when the main window is visible.=错误时显示主窗口是可见的变化。
+Error checking=错误检查
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=组件积分
+Translation Credits=翻译积分
+Message Deletion=消息删除
+Mail Client Communication=邮件客户端通信
+Rules/Blacklist=规则/黑名单
+Advanced POP Settings=先进的POP设置
+Error Handling=错误处理
+Message Download (Enable to use advanced rules)=消息下载（允许使用先进的规则）
+Startup=启动
+Tray Icon=托盘图标
+New Message Notification=新邮件通知
+Plugins=插件
+How often should PopTrayU check for new mail?=PopTr​​ayU应该多久检查新邮件？
+Interval Check Conditions=间隔入住条件
+User Data Folder: (where PopTray.ini and Rules files are stored)=用户数据文件夹：（PopTr​​ay.ini和规则文件存储）
+Misc=杂项
+About PopTrayU=关于PopTr​​ayU
+Version=版本
+Show Images=显示图像
+Reset Customizations=重置自定义
+Most UI Items= 大多数UI项目
+Vertical Tabs=垂直制表符
+Message List=留言列表
+Flash Tray Icon=闪光托盘图标
+Show Balloon Notification=显示气球通知
+Use Deluxe Balloon=使用豪华气球
+(show for=（显示为
+seconds)=秒）
+Show Main Window=显示主窗口
+Keyboard Lights=键盘灯
+IMAP4=IMAP4
+POP3 with SSL or APOP=使用SSL POP3或APOP
+Specify a different timer interval for each account.=为每个帐户指定不同的定时器的时间间隔。
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=使用拨号用户谁不想在拨号对话框弹出时你没有连接。使检查速度慢一点点。
+This setting can be changed via setup or a command line parameter.=此设置可通过改变设置或命令行参数。
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=全系统热键。使用一个不寻常的快捷键，而不是一个在其他应用程序中经常使用。热键如Ctrl-C不推荐。
+Don't automatically check for new messages=不要自动检查新邮件
+Set Interval per account=每个帐户设置间隔
+Only check when already online=只有检查的时候就已经在网上
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=不选中此帐户之间
+Advanced=先进
+Use SSL/TLS=使用SSL / TLS
+Authentication=认证
+SSL/TLS Version:=SSL / TLS的版本：
+Auto=汽车
+Password=密码
+Toolbar Color Scheme:=工具栏颜色方案：
+Normal=正常
+Twilight=黄昏
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=邮件预览选项
+Disable HTML Preview=禁用HTML预览
+Main Window=主窗口
+Default Spam Toolbar Button Action:=默认邮件工具栏按钮操作：
+Default Spam Toolbar Action:=默认的垃圾邮件工具栏操作：
+Image Credits=图片来源
+Image Package=图片包
+Images=图片
+Main Window Message List=主窗口消息列表
+Main Window Behaviors=主窗口行为
+Plain Text=纯文本
+Credits:=现金：
+
+Theme:=主题：
+Spam Management=垃圾邮件管理
+Changes the action of the Spam toolbar button on the Main Window=在主窗口中更改垃圾邮件的工具栏按钮的作用
+AKA Explicit TLS=也被称为色情TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=所有规则的行动写入到一个日志文件。档案名称：RULES.LOG在用户设置目录PopTr​​ayU。
+Disables the HTML Preview tab when previewing a message.=预览邮件时禁用HTML预览“选项卡。
+Listbox Font=列表框字体
+Reset Fonts and Colors=重置字体和颜色
+APOP=APOP
+SASL=SASL
+Customize the Font=自定义字体
+Edit=编辑

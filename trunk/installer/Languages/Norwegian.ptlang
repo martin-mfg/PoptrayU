@@ -1,10 +1,10 @@
-﻿# Norwegian Languagefile for PopTray 2.1, updated 15. oct 2002. Translated by Thomas Melbye, thomas@fig-halden.com
-# 2002-11-18  PopTray 2.1 (beta 10)
-# Norwegian Languagefile for PopTray 3.0, updated 02. oct 2003. Translated by Thomas Melbye, thomas@fig-halden.com
-# 2002-10-02  PopTray 3.0 (beta 15)
-
-
-
+﻿#---------------------------------------------------------------
+# PopTrayU Language File - Norwegian
+#---------------------------------------------------------------
+# 2013-06-10 PopTrayU 5.0 beta 1
+# 2002-10-02  PopTray 3.0 (beta 15) - PopTray 3.0, updated 02. oct 2003. Translated by Thomas Melbye, thomas@fig-halden.com
+# 2002-11-18  PopTray 2.1 (beta 10) - PopTray 2.1, updated 15. oct 2002. Translated by Thomas Melbye, thomas@fig-halden.com
+#---------------------------------------------------------------
 
 1 message deleted.=En melding slettet
 About ...=Om...
@@ -373,8 +373,7 @@ This lists all the plugin DLLs found in your plugins directory.~Select to load/u
 What to show on the TrayIcon~while checking for new mail.=Hva som vises på TrayIkon~når det sjekkes for ny e-post.
 When previewing a message, only load the~specified number of lines.=Ved forhåndsvisning av melding, vis kun~spesifisert antall linjer.
 When starting PopTrayU, first wait a few seconds~before checking for mail.=Når PopTrayU startes, vent noen sekunder før sjekking av e-post.
-When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=
-Når du mottar e-post fra følgende liste av e-post adresser,~vil ikke meldingene bli slettet av regler.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Når du mottar e-post fra følgende liste av e-post adresser,~vil ikke meldingene bli slettet av regler.
 
 None=Ingen
 Lightning Bolt=Lyn
@@ -441,8 +440,7 @@ Ignore Connection Errors=Ignorer tilkoblingsfeil
 Retrieve Body while Checking=Hent inn tekst under sjekking
 Limit download to the first=Begrens nedlasting til de første
 lines=linjene
-While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=
-Under sjekking for ny epost, last også ned meldingstekst.~Dette vil gjøre sjekkingen tregere, men gir deg mulighet til å sjekke~meldingstekst i regler.
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Under sjekking for ny epost, last også ned meldingstekst.~Dette vil gjøre sjekkingen tregere, men gir deg mulighet til å sjekke~meldingstekst i regler.
 # ---------- Added PopTray 3.0 (beta 11) ---------
 Protect against auto-delete=Beskytt mot auto-slett
 Sort=Sorter
@@ -475,3 +473,180 @@ Login OK=Login OK
 Delete Error:=Slette feil
 Retrieve Error:=Hent feil
 Plug-in Error:=Plugin feil
+
+
+# ---------- Added PopTray 3.0.1 ---------
+Estonian=Estonian
+Serbian=Serbisk
+NoName=NoName
+Reset Mail Count in Tray when Viewing=Nullstille Mail Count i skuff når Vise
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Stopp Kontroll
+Spam Last=Spam Siste
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Uttr
+Test the Reg Expr syntax=Test Reg Uttrykk syntaks
+Regular Expression Syntax OK=Regular Expression Syntax OK
+Needed=Nødvendig
+ANY Row=NOEN Row
+ALL Rows=Alle rader
+Area=Område
+Compare=Sammenligne
+Text=Tekst
+Not=Ikke
+Add Row=Legg til rad
+Delete Row=Slett rad
+Play Sound=Spill Sound
+Tray Color=Skuffen Farge
+Status=Status
+Protected=Beskyttet
+To Be Deleted=Skal slettes
+Ignored=Ignorert
+Has Attachment=Har Vedlegg
+Viewed=Sett
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Croatian
+Move Down=Flytt ned
+Move Up=Flytt opp
+Delete Mail only on Next Check=Slett Mail bare på neste sjekk
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Når du sletter mail de vil bli markert for sletting ~ og bare fysisk slettet når neste sjekken går.
+Undelete=Gjenoppretter
+Add Rule for mail from Sender=Legg til regel for post fra avsender
+Add Rule for mail with Subject=Legg til regel for post med forbehold
+This will create a rule to delete all future e-mails with subject=Dette vil skape en regel for å slette alle fremtidige e-postmeldinger med forbehold
+This will create a rule to spam mark all future e-mails with subject=Dette vil skape en regel til spam mark alle fremtidige e-post med emne
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galisisk
+Downloading=Nedlasting
+Show Messages while Checking=Vis meldinger mens Kontroll
+While checking, show each message as it is downloaded.=Mens sjekke, viser hver melding som den er lastet ned.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Ekstra Bekreftelse når Slette beskyttede meldinger
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Ekstra bekreftelse når du prøver å slette meldinger ~ beskyttet av regler eller hviteliste.
+You are trying to delete protected messages.=Du prøver å slette beskyttede meldinger.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Litauisk
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Legg til regel for å slette mail med forbehold
+Add Rule to delete Mail from Sender=Legg til regel å slette post fra avsender
+Add Rule to mark messages with Subject as Spam=Legg til regel for å markere meldinger med forbehold som spam
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Gresk
+Valencian=Valencia
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Åpent
+Open Message=Åpen melding
+Frisian=Frisiske
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Visual Utseende
+Main Window Listbox Font=Hovedvinduet Listbox Font
+Change the main window listbox background=Endre hovedvinduet listeboksen bakgrunn
+Change the main window listbox foreground=Endre hovedvinduet listeboksen forgrunnen
+Failure connecting to server.=Unnlatelse av å koble til serveren.
+Server found, but is not a mail server.=Server funnet, men er ikke en e-postserver.
+Change the Main Window Listbox Font=Endre hovedvinduet Listbox Font
+Clear all customizations=Fjern alle tilpasninger
+HTML View=HTML Vis
+Thanks to the following volunteers who helped translate this software:=Takket være disse frivillige som bidro til å oversette denne programvaren:
+Language=Språk
+Translator=Oversetter
+Component=Komponent
+Author=Forfatter
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU er et avledet arbeid av Renier Crause er PopTray 3,2 og mye av koden i denne søknaden er dermed Copyright 2001-2005 Renier Crause. Mange takk til RENIER for å utvikle PopTray, og for den støtten han har gitt.
+Check online for newer version=Sjekk på nettet for nyere versjon
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Vis Feil i Balloon Popups (I stedet for Modal Dialoger)
+Changes how errors are shown when the main window is visible.=Endringer hvordan feil vises når hovedvinduet er synlig.
+Error checking=Feilsjekking
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Komponent Credits
+Translation Credits=Oversettelse Credits
+Message Deletion=Melding Sletting
+Mail Client Communication=Mail Client Communication
+Rules/Blacklist=Regler / Blacklist
+Advanced POP Settings=Avanserte POP-innstillinger
+Error Handling=Feilhåndtering
+Message Download (Enable to use advanced rules)=Melding Last ned (Aktiver for å bruke avanserte regler)
+Startup=Oppstart
+Tray Icon=Systemstatusfeltikon
+New Message Notification=Ny melding Notification
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Hvor ofte bør PopTrayU se etter ny e-post?
+Interval Check Conditions=Intervall sjekke forholdene
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data-mappen: (hvor PopTray.ini og regler filene er lagret)
+Misc=Diverse
+About PopTrayU=Om PopTrayU
+Version=Versjon
+Show Images=Vis Images
+Reset Customizations=Tilbakestille Tilpasninger
+Most UI Items= Mest UI elementer
+Vertical Tabs=Vertikale Tabs
+Message List=Message List
+Flash Tray Icon=Flash Tray Ikon
+Show Balloon Notification=Vis Balloon Notification
+Use Deluxe Balloon=Bruk Deluxe Balloon
+(show for=(Vis for
+seconds)=sekunder)
+Show Main Window=Vis Hovedvinduet
+Keyboard Lights=Tastatur Lights
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 med SSL eller APOP
+Specify a different timer interval for each account.=Angi en annen tidtaker intervall for hver konto.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Brukes av oppringte brukere som ikke ønsker den eksterne dialogen til pop-up når du ikke er tilkoblet. Gjør sjekke litt tregere.
+This setting can be changed via setup or a command line parameter.=Denne innstillingen kan endres via oppsett eller en kommandolinje parameter.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Keys er system-wide. Bruk en uvanlig hot-tasten i stedet for en du bruker ofte i andre programmer. Hot-nøkler som Ctrl-C anbefales ikke.
+Don't automatically check for new messages=Ikke automatisk sjekke etter nye meldinger
+Set Interval per account=Sett Intervall per konto
+Only check when already online=Bare sjekk når allerede online
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Ikke sjekk denne kontoen mellom
+Advanced=Avansert
+Use SSL/TLS=Bruk SSL / TLS
+Authentication=Autentisering
+SSL/TLS Version:=SSL / TLS versjon:
+Auto=Auto
+Password=Passord
+Toolbar Color Scheme:=Toolbar Fargevalg:
+Normal=Normal
+Twilight=Twilight
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Melding Preview Options
+Disable HTML Preview=Deaktiver HTML Preview
+Main Window=Hovedvinduet
+Default Spam Toolbar Button Action:=Standard Spam Toolbar Knapp Handling:
+Default Spam Toolbar Action:=Standard Spam Toolbar Handling:
+Image Credits=Bilde Credits
+Image Package=Bilde Package
+Images=Images
+Main Window Message List=Hovedvinduet Message List
+Main Window Behaviors=Hovedvindu atferd
+Plain Text=Plain Text
+Credits:=Studiepoeng:
+
+Theme:=Tema:
+Spam Management=Spam Ledelse
+Changes the action of the Spam toolbar button on the Main Window=Endrer handlingen av Spam-verktøylinjen knappen på hovedvinduet
+AKA Explicit TLS=også kjent som Explicit TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Skriv alle regler handlinger til en loggfil. Filnavn: RULES.LOG i brukerens innstillinger katalog for PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Deaktiverer HTML kategorien Forhåndsvisning ved forhåndsvisning av en melding.
+Listbox Font=Listeboksen Font
+Reset Fonts and Colors=Tilbakestille fonter og farger
+APOP=APOP
+SASL=SASL
+Customize the Font=Tilpasse Font
+Edit=Rediger

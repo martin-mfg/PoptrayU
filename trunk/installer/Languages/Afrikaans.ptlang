@@ -1,8 +1,8 @@
 ﻿#-----------------------------------------
 # Afrikaans PopTray Translation file
 #-----------------------------------------
-# Translated by Renier Crause
-# 2006-09-16  PopTray 3.2
+# 2013-06-08 PopTrayU 5.0 beta 1
+# 2006-09-16 PopTray 3.2 - Translated by Renier Crause
 #-----------------------------------------
 
 1 message deleted.=1 boodskap uitgevee.
@@ -504,3 +504,107 @@ Valencian=Velensies
 Open=Oopmaak
 Open Message=Boodskap Oopmaak
 Frisian=Fries
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Visuele voorkoms
+Main Window Listbox Font=Hoof venster Listbox Font
+Change the main window listbox background=Verander die hoof venster listbox agtergrond
+Change the main window listbox foreground=Verander die hoof venster listbox voorgrond
+Failure connecting to server.=Versuim om die koppeling aan die bediener.
+Server found, but is not a mail server.=Bediener gevind nie, maar is nie 'n e-pos bediener.
+Change the Main Window Listbox Font=Verander die belangrikste venster Listbox Font
+Clear all customizations=Duidelik al die veranderinge
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Dankie aan die volgende vrywilligers wat gehelp het om dit te vertaal sagteware:
+Language=Taal
+Translator=Vertaler
+Component=Komponent
+Author=Skrywer
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU is 'n afgeleide werk van Renier Crause se PopTray 3.2 en baie van die kode in hierdie aansoek is dus Kopiereg 2001-2005 Renier Crause. Baie dankie aan Renier vir die ontwikkeling van PopTray, en vir die ondersteuning wat hy voorsien het.
+Check online for newer version=Check aanlyn vir nuwer weergawe
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Laat foute in Balloon Pop (in plaas van Modale Dialogs)
+Changes how errors are shown when the main window is visible.=Wysigings hoe foute word vertoon wanneer die hoof venster sigbaar is.
+Error checking=Fouttoetsing
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Komponent Krediete
+Translation Credits=Vertaling Krediete
+Message Deletion=Boodskap Skrapping
+Mail Client Communication=Pos kliënt Kommunikasie
+Rules/Blacklist=Reëls / swartlys
+Advanced POP Settings=Gevorderde POP-instellings
+Error Handling=Fouthantering
+Message Download (Enable to use advanced rules)=Boodskap Aflaai (Aktiveer gevorderde reëls te gebruik)
+Startup=Startup
+Tray Icon=Skinkbord ikoon
+New Message Notification=Nuwe melding
+Plugins=Proppe
+How often should PopTrayU check for new mail?=Hoe gereeld moet PopTrayU kyk vir nuwe pos?
+Interval Check Conditions=Interval Check voorwaardes
+User Data Folder: (where PopTray.ini and Rules files are stored)=Gebruiker data gids (waar PopTray.ini en Reëls lêers gestoor word)
+Misc=Misc
+About PopTrayU=Oor PopTrayU
+Version=Weergawe
+Show Images=Wys Images
+Reset Customizations=Herstel Veranderinge
+Most UI Items= Die meeste UI Items
+Vertical Tabs=Vertikale Tabs
+Message List=Boodskap Lys
+Flash Tray Icon=Flits Tray Icon
+Show Balloon Notification=Wys Ballon Kennisgewing
+Use Deluxe Balloon=Gebruik Deluxe Ballonklitser
+(show for=(Toon vir
+seconds)=sekondes)
+Show Main Window=Wys Main Venster
+Keyboard Lights=Klawerbord Lights
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 met SSL of APOP
+Specify a different timer interval for each account.=Spesifiseer 'n ander timer interval vir elke rekening.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Gebruik word deur die gebruikers wat inbel wat nie die inbel-dialoog te pop-up wil wanneer jy nie verbind is. Maak en kontroleer 'n bietjie stadiger.
+This setting can be changed via setup or a command line parameter.=Hierdie instelling kan verander word via opstel of 'n command line parameter.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Warm-sleutels is die hele stelsel. Gebruik 'n ongewone warm-sleutel, eerder as een wat jy dikwels gebruik in ander programme. Warm-sleutels soos Ctrl-C word nie aanbeveel nie.
+Don't automatically check for new messages=Moenie outomaties kyk vir nuwe boodskappe
+Set Interval per account=Stel Interval per rekening
+Only check when already online=Slegs kontroleer wanneer al aanlyn
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Gaan nie hierdie rekening tussen
+Advanced=Gevorderde
+Use SSL/TLS=Gebruik SSL / TLS
+Authentication=Verifikasie
+SSL/TLS Version:=SSL / TLS weergawe:
+Auto=Auto
+Password=Wagwoord
+Toolbar Color Scheme:=Toolbar kleur skema:
+Normal=Normale
+Twilight=Twilight
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Boodskap voorbeeld Options
+Disable HTML Preview=Skakel HTML Preview
+Main Window=Hoof venster
+Default Spam Toolbar Button Action:=Verstek Spam Toolbar Button Aksie:
+Default Spam Toolbar Action:=Verstek Spam Toolbar Aksie:
+Image Credits=Image Krediete
+Image Package=Image pakket
+Images=Images
+Main Window Message List=Hoof venster Boodskap Lys
+Main Window Behaviors=Hoof venster werkinge
+Plain Text=Plain Text
+Credits:=Krediete:
+
+Theme:=Tema:
+Spam Management=Spam Bestuur
+Changes the action of the Spam toolbar button on the Main Window=Verander die optrede van die Spam nutsbalk knoppie op die hoof venster
+AKA Explicit TLS=ook bekend as Explicit TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Skryf al die reëls aksies na 'n log-lêer. Filename: RULES.LOG in die gebruiker-instellings gids vir PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Versper die HTML blad Voorbeeld wanneer voorbeeld van 'n boodskap.
+Listbox Font=Listbox Font
+Reset Fonts and Colors=Herstel Fonts en Kleure
+APOP=APOP
+SASL=SASL
+Customize the Font=Pas die Font
+Edit=Wysig

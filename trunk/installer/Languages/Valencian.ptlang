@@ -476,3 +476,103 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=El boto 'X' minimisa
 Yes=&Si
 You are trying to delete protected messages.=Estas intentant borrar mensages protegits.
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=
+Main Window Listbox Font=
+Change the main window listbox background=
+Change the main window listbox foreground=
+Failure connecting to server.=
+Server found, but is not a mail server.=
+Change the Main Window Listbox Font=
+Clear all customizations=
+HTML View=
+Language=
+Translator=
+Component=
+Author=
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=
+Check online for newer version=
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=
+Changes how errors are shown when the main window is visible.=
+Error checking=
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=
+Translation Credits=
+Message Deletion=
+Mail Client Communication=
+Rules/Blacklist=
+Advanced POP Settings=
+Error Handling=
+Message Download (Enable to use advanced rules)=
+Startup=
+Tray Icon=
+New Message Notification=
+Plugins=
+How often should PopTrayU check for new mail?=	
+Interval Check Conditions=
+User Data Folder: (where PopTray.ini and Rules files are stored)=
+Misc=
+About PopTrayU=
+Version=
+Show Images=
+Reset Customizations=
+Most UI Items= 
+Vertical Tabs=
+Message List=
+Flash Tray Icon=
+Show Balloon Notification=
+Use Deluxe Balloon=
+(show for=
+seconds)=
+Show Main Window=
+Keyboard Lights=
+IMAP4=
+POP3 with SSL or APOP=
+Specify a different timer interval for each account.=
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=
+This setting can be changed via setup or a command line parameter.=
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=
+Don't automatically check for new messages=
+Set Interval per account=
+Only check when already online=
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=
+Advanced=
+Use SSL/TLS=
+Authentication=
+SSL/TLS Version:=
+Auto=
+Password=
+Toolbar Color Scheme:=
+Normal=
+Twilight=
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=
+Disable HTML Preview=
+Main Window=
+Default Spam Toolbar Button Action:=
+Image Credits=
+Image Package=
+Images=
+Main Window Message List=
+Main Window Behaviors=
+Check Interval=
+Theme:=
+Spam Management=
+Changes the action of the Spam toolbar button on the Main Window=
+AKA Explicit TLS=
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=
+Disables the HTML Preview tab when previewing a message.=
+Listbox Font=
+Reset Fonts and Colors=
+APOP=
+SASL=
+Customize the Font=
+Edit=

@@ -1,5 +1,8 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray 2.1 (and later) translation file
+# Portuguese PopTrayU Language File
+#
+# 2013-06-17 PopTrayU 5.0 beta 1
+# Date Unknown - PopTray 2.1 
 #-----------------------------------------------------------------------
 
 Yes=Sim
@@ -334,3 +337,369 @@ Defaults=Definições Padrão
 General Options=Opções Gerais
 Advanced Options=Opções Avançadas
 Miscellaneous=Diversos
+
+
+# ---------- Added PopTray 2.1 ----------
+Important=Importante
+Korean=Coreano
+
+# ---------- Added PopTray 3.0 (beta 1) ----------
+Arabic=Árabe
+Portuguese=Português
+Turkish=Turco
+
+Add Rule to mark messages from Sender as Spam=Adicionar regra para marcar as mensagens do remetente como Spam
+Add sender to Black List=Adicionar remetente à lista negra
+Add sender to White List=Adicionar remetente à Lista Branca
+Added to the White List:=Adicionado à Lista Branca:
+Advanced Show Info=Avançado Show Info
+Black List mark as Spam=Marca Black List como Spam
+Black List=Lista negra
+Copy=Copie
+Customize...=Personalize ...
+Cut=Cortar
+Del Spam=Del Spam
+Delete messages marked as Spam=Excluir mensagens marcadas como Spam
+Delete Spam from Server?=Eliminar Spam Server?
+Failed to Save Attachment.=Falha ao salvar o anexo.
+First Wait=Primeiro Espere
+Hide Viewed Messages=Ocultar mensagens visualizadas
+Hide=Esconder
+Import Rules=Regras de importação
+INI Files=Arquivos INI
+Interval=Intervalo
+Lists=Listas
+Log Rule=Entrar Rule
+Mark as Spam=Marcar como spam
+Mark as Viewed=Marcar como Visto
+New Mail=Novo Correio
+Number of messages marked as Spam:=Número de mensagens marcadas como spam:
+Open...=Abra ...
+Paste=Colar
+Plug-in Options...=Plug-in Opções ...
+Plug-ins=Plug-ins
+Port:=Porto:
+Preview Top Lines=Pré-Top Linhas
+Processing...=Processing ...
+Protocol:=Protocolo:
+Raw Message=Mensagem Raw
+Read Only=Somente leitura
+Remember Viewed Messages=Lembre-se de Mensagens Visto
+Rules ...=Regras ...
+Save All Attachments...=Guardar todos os anexos ...
+Save...=Salve ...
+Select All=Selecionar Todos
+Select Font...=Selecione Font ...
+Select Spam Messages=Selecione mensagens de spam
+Server:=Servidor:
+Show/Hide Viewed Messages=Mostrar / Ocultar mensagens Vistos
+Spam=Spam
+This will add the following e-mails to the Black List:=Isto irá adicionar os seguintes e-mails para a Lista Negra:
+This will create a rule to spam mark all future e-mails from=Isto irá criar uma regra para o spam marca todos os futuros e-mails de
+This will delete all these messages.=Isto irá apagar todas essas mensagens.
+TrayIcon while Checking=TrayIcon enquanto Verificação
+Unable to Copy file.=Não é possível copiar arquivos.
+Undo=Desfazer
+Unknown Attachment Type.=Desconhecido Tipo de anexo.
+Unmark as Spam=Desmarcar como spam
+User Interface=Interface de Usuário
+White / Black List=Branco / Black List
+White List=Lista Branca
+
+Any mail received from the following e-mail addresses~will automatically be deleted.=Todas as mensagens recebidas a partir dos seguintes endereços de e-mail ~ será automaticamente excluído.
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=Por causa do risco de segurança, PopTrayU não permite a abertura de arquivos executáveis.
+Black List will mark the messages as Spam~instead of deleting them.=Lista Negra vai marcar as mensagens como Spam ~ em vez de excluí-los.
+Default e-mail program to open.=Programa de e-mail padrão para abrir.
+Default sound to play when new mail arrives.=Som padrão para jogar quando chega uma nova mensagem.
+Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=Atraso em minutos de espera entre intervalos de verificação de e-mail. ~ Defini-lo para 0 para nunca verificar automaticamente.
+Number of message lines to preview.=Número de linhas de mensagem para pré-visualização.
+Number of seconds to display the Info window~before closing it.=Número de segundos para exibir a janela de informações ~ antes de fechá-la.
+Number of seconds to wait during connection~before giving an error.=Número de segundos para esperar durante a conexão ~ antes de dar um erro.
+Once a message has been viewed, don't show it again.=Uma vez que a mensagem foi visto, não mostrá-lo novamente.
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=Lembre-se de que as mensagens do servidor já foi visto ~ mesmo após o encerramento PopTrayU.
+Select the option screen to show.=Selecione a tela de opção para mostrar.
+Show Info dialog with message details and buttons.=Mostrar diálogo Informações com detalhes da mensagem e botões.
+System-wide hot-key to execute selected action.=De todo o sistema hot-chave para executar a ação selecionada.
+This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Esta lista todas as DLLs do plugin encontrados no seu diretório de plugins. ~ Selecione para carregar / descarregar. Botão direito do mouse para as opções.
+What to show on the TrayIcon~while checking for new mail.=O que mostrar na TrayIcon ~ ao verificar se há novas mensagens.
+When previewing a message, only load the~specified number of lines.=Ao visualizar uma mensagem, carregar apenas o número especificado de linhas ~.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=Ao iniciar PopTrayU, primeiro aguarde alguns segundos ~ antes de verificar e-mail.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Quando você receber e-mails a partir da seguinte lista de endereços de e-mail, ~ as mensagens não serão apagadas por regras.
+
+None=Nenhum
+Lightning Bolt=Lightning Bolt
+Star=Estrela
+Animated Star=Estrela Animated
+
+Customize=Personalize
+Toolbars=Barras de ferramentas
+Toolbars:=Barras de ferramentas:
+Categories:=Categorias:
+Actions:=Ações:
+Window=Janela
+Tools=Ferramentas
+(All Actions)=(Todas as ações)
+Description=Descrição
+Drag to Create Separators=Arraste para criar Separadores
+Close=Fechar
+(Checkmark toggles visibility)=(Checkmark visibilidade alterna)
+Reset...=Redefinir ...
+Toolbar Options=Opções da barra de ferramentas
+Caption Options=Opções de legenda
+Selective=Seletivo
+All=Tudo
+To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=Para adicionar ações para a sua aplicação simplesmente arrastar e soltar a partir de Categorias ou Ações para um ActionBar existente.
+Other=Outro
+Large icons=Ícones grandes
+Show tips on toolbars=Mostrar dicas sobre barras de ferramentas
+Show shortcut keys in tips=Mostrar teclas de atalho nas dicas
+
+# ---------- Added PopTray 3.0 (beta 2) ----------
+No protocol defined for account=No protocolo definido para a conta
+Don't Check between=Não Verifique entre
+and=e
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=Desativar AutoChecking entre as horas especificadas. ~ Isso é útil quando você não quer que as notificações ruidosos ~ durante a noite.
+
+# ---------- Added PopTray 3.0 (beta 3) ----------
+Spanish (Hispanic America)=Espanhol (América hispânica)
+Chinese=Chinês
+Show Info Balloon or Advanced Info when new mail arrives.=Mostrar informações balão ou Informações avançada quando chega uma nova mensagem.
+
+# ---------- Added PopTray 3.0 (beta 4) ----------
+Suspend Sound=Suspender Som
+
+# ---------- Added PopTray 3.0 (beta 5) ----------
+Toggle Sound=Alternar Som
+
+# ---------- Added PopTray 3.0 (beta 6) ----------
+Delete Spam=Eliminar Spam
+
+# ---------- Added PopTray 3.0 (beta 7) ----------
+Shift Left Click:=Deslocamento para a esquerda Click:
+Shift Right Click:=Deslocamento para a direita Clique em:
+Shift Middle Click:=Mudança Middle Click:
+Check First Account=Verifique Primeira Conta
+
+# ---------- Added PopTray 3.0 (beta 9) ----------
+Spanish (Chile)=Espanhol (Chile)
+Stop=Pare
+Information=Informações
+Mark the selected messages as Spam.=Marque as mensagens selecionadas como Spam.
+Ignore Connection Errors=Ignorar Erros de Conexão
+
+# ---------- Added PopTray 3.0 (beta 10) ---------
+Retrieve Body while Checking=Recuperar o corpo durante a verificação
+Limit download to the first=Limite de download para o primeiro
+lines=linhas
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=Durante a verificação de novos e-mails, também recuperar o corpo da mensagem. ~ Isso vai desacelerar a verificação, mas se lhe dá a opção de verificar ~ o conteúdo do corpo nas regras.
+
+# ---------- Added PopTray 3.0 (beta 11) ---------
+Protect against auto-delete=Proteger contra a auto-delete
+Sort=Tipo
+Message Status=Mensagem Estado
+Indicate Viewed and Unviewed Messages=Indique Visto e unviewed Mensagens
+Unviewed messages will be shown in Bold.=Unviewed mensagens serão mostradas em negrito.
+Only download if size less than=Só baixar se o tamanho menor do que
+Retrieve complete message while checking,~if message smaller than specified size.=Recuperar a mensagem completa ao verificar, ~ se a mensagem menor do que o tamanho especificado.
+Maximum number of lines to download.=O número máximo de linhas para download.
+
+# ---------- Added PopTray 3.0 (beta 12) ---------
+Incompatible Plugin:=Plugin incompatível:
+Connection Info=Informações de conexão
+Message Count:=Contagem de mensagens:
+
+# ---------- Added PopTray 3.0 (beta 13) ---------
+Test Account=Test Account
+French (Canada)=Francês (Canadá)
+WARNING: This account does NOT support Safe Delete.=ATENÇÃO: Esta conta não suporta a eliminação segura.
+Quick Checking and Safe Delete (UIDL):=Verificação rápida e Excluir Seguro (UIDL):
+Supported=Apoiado
+NOT Supported=Não é suportado
+
+# ---------- Added PopTray 3.0 (beta 14) ---------
+Summary=Resumo
+KB=KB
+Login OK=Entrar OK
+
+# ---------- Added PopTray 3.0 (beta 15) ---------
+Delete Error:=Excluir erro:
+Retrieve Error:=Recuperar erro:
+Plug-in Error:=Plug-in de erro:
+
+
+
+# ---------- Added PopTray 3.0.1 ---------
+Estonian=Estoniano
+Serbian=Sérvio
+NoName=NoName
+Reset Mail Count in Tray when Viewing=Redefinir Conde Mail no Tray quando Visualizando
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Parar de verificar
+Spam Last=Spam Última
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Teste o Expr sintaxe Reg
+Regular Expression Syntax OK=Sintaxe da expressão regular OK
+Needed=Necessário
+ANY Row=Qualquer linha
+ALL Rows=Todas as linhas
+Area=Área
+Compare=Comparar
+Text=Texto
+Not=Não
+Add Row=Adicionar linha
+Delete Row=Apagar Linha
+Play Sound=Reproduzir som
+Tray Color=Cor Tray
+Status=Estado
+Protected=Protegido
+To Be Deleted=A ser eliminado
+Ignored=Ignorado
+Has Attachment=Possui anexo
+Viewed=Visto
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Croata
+Move Down=Mover para baixo
+Move Up=Mover para cima
+Delete Mail only on Next Check=Excluir correio somente em seguida verifique
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Ao excluir correio eles vão ficar marcados para exclusão ~ e excluídos apenas fisicamente quando a próxima verificação é executado.
+Undelete=Undelete
+Add Rule for mail from Sender=Adicionar regra para e-mail de remetente
+Add Rule for mail with Subject=Adicionar regra para e-mails com o assunto
+This will create a rule to delete all future e-mails with subject=Isto irá criar uma regra para excluir todos os futuros e-mails com o assunto
+This will create a rule to spam mark all future e-mails with subject=Isto irá criar uma regra para o spam marca todos os futuros e-mails com o assunto
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galego
+Downloading=Baixando
+Show Messages while Checking=Mostrar mensagens ao verificar
+While checking, show each message as it is downloaded.=Ao verificar, mostrar a cada mensagem, uma vez que é baixado.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Confirmação extra quando Excluindo mensagens protegidas
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Confirmação adicional quando você tenta apagar mensagens ~ protegida por regras ou o whitelist.
+You are trying to delete protected messages.=Você está tentando apagar mensagens protegidas.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Lituano
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Adicionar regra para excluir mail com o assunto
+Add Rule to delete Mail from Sender=Adicionar regra para excluir Mail Sender
+Add Rule to mark messages with Subject as Spam=Adicionar regra para marcar as mensagens com o assunto como Spam
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Grego
+Valencian=Valência
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Aberto
+Open Message=Abrir a mensagem
+Frisian=Frísio
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aspecto Visual
+Main Window Listbox Font=Janela principal Listbox Font
+Change the main window listbox background=Altere a janela principal do fundo listbox
+Change the main window listbox foreground=Altere a janela principal do listbox primeiro plano
+Failure connecting to server.=A falha de ligação ao servidor.
+Server found, but is not a mail server.=Servidor encontrado, mas não é um servidor de correio.
+Change the Main Window Listbox Font=Altere a janela principal do Listbox Font
+Clear all customizations=Limpar todas as personalizações
+HTML View=HTML Ver
+Thanks to the following volunteers who helped translate this software:=Graças aos seguintes voluntários que ajudaram a traduzir este software:
+Language=Linguagem
+Translator=Tradutor
+Component=Componente
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU é uma obra derivada de Renier Crause PopTray 3.2 e grande parte do código desta aplicação é, portanto, Direitos de autor 2001-2005 Renier Crause. Muito obrigado a Renier para o desenvolvimento PopTray, e pelo apoio que prestou.
+Check online for newer version=Verifique on-line para a versão mais recente
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Mostrar Erros em Popups balão (em vez de diálogos modais)
+Changes how errors are shown when the main window is visible.=Alterações como os erros são mostrados quando a janela principal é visível.
+Error checking=A verificação de erros
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Créditos componentes
+Translation Credits=Créditos de tradução
+Message Deletion=Supressão mensagem
+Mail Client Communication=Comunicação Mail Client
+Rules/Blacklist=Regras / blacklist
+Advanced POP Settings=Configurações avançadas POP
+Error Handling=Tratamento de erros
+Message Download (Enable to use advanced rules)=Mensagem Download (Ativar para usar as regras avançadas)
+Startup=Startup
+Tray Icon=Ícone da Bandeja
+New Message Notification=Nova Mensagem de Notificação
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Quantas vezes PopTrayU deve verificar se há novos e-mails?
+Interval Check Conditions=Intervalo de verificação de condições
+User Data Folder: (where PopTray.ini and Rules files are stored)=Pasta de Dados do Usuário: (onde PopTray.ini e Regras arquivos são armazenados)
+Misc=Misc
+About PopTrayU=Sobre PopTrayU
+Version=Versão
+Show Images=Mostrar Imagens
+Reset Customizations=Redefinir personalizações
+Most UI Items= Itens Mais UI
+Vertical Tabs=Tabs verticais
+Message List=Lista de mensagens
+Flash Tray Icon=Flash Ícone da bandeja
+Show Balloon Notification=Mostrar Notificação em balão
+Use Deluxe Balloon=Use luxo balão
+(show for=(Mostrar para
+seconds)=segundos)
+Show Main Window=Mostrar janela principal
+Keyboard Lights=Luzes do teclado
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 com SSL ou APOP
+Specify a different timer interval for each account.=Especifique um intervalo de timer diferente para cada conta.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Usado por usuários dial-up que não querem o diálogo dial-up de pop-up quando você não está conectado. Faz a verificação de um pouco mais lento.
+This setting can be changed via setup or a command line parameter.=Esta configuração pode ser alterada através de configuração ou um parâmetro de linha de comando.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Keys são de todo o sistema. Use uma invulgar hot-chave ao invés de um que você usa com freqüência em outras aplicações. Teclas de atalho como Ctrl-C não são recomendados.
+Don't automatically check for new messages=Não verificar automaticamente se há novas mensagens
+Set Interval per account=Definir intervalo por conta
+Only check when already online=Só já verificar quando on-line
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Não marque essa conta entre
+Advanced=Avançado
+Use SSL/TLS=Use SSL / TLS
+Authentication=Autenticação
+SSL/TLS Version:=SSL / TLS Versão:
+Auto=Automático
+Password=Senha
+Toolbar Color Scheme:=Barra de ferramentas Esquema de cores:
+Normal=Normal
+Twilight=Crepúsculo
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Mensagem Opções de visualização
+Disable HTML Preview=Desativar visualização HTML
+Main Window=Janela Principal
+Default Spam Toolbar Button Action:=Padrão Spam Toolbar Botão de Ação:
+Default Spam Toolbar Action:=Padrão Spam Ação Barra de Ferramentas:
+Image Credits=Créditos de imagem
+Image Package=Pacote de imagem
+Images=Imagens
+Main Window Message List=Principal Lista de mensagens Janela
+Main Window Behaviors=Comportamentos janela principal
+Plain Text=Plain Text
+Credits:=Créditos:
+
+Theme:=Tema:
+Spam Management=Gestão de Spam
+Changes the action of the Spam toolbar button on the Main Window=Altera a ação do botão Spam na barra de ferramentas da janela principal
+AKA Explicit TLS=também conhecida como TLS Explícito
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Escreve todas as ações regras para um arquivo de log. Matrícula: RULES.LOG no diretório de configurações do usuário para PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Desativa a guia Preview HTML ao visualizar uma mensagem.
+Listbox Font=Listbox Font
+Reset Fonts and Colors=Redefinir fontes e cores
+APOP=APOP
+SASL=SASL
+Customize the Font=Personalize o Font
+Edit=Editar

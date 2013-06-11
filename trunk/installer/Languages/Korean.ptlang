@@ -1,7 +1,8 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray 2.1 (and later) translation file
+# PopTrayU translation file
 #-----------------------------------------------------------------------
-# 2002-10-02  PopTray 2.1 (beta 8)
+# 2013-06-07 PopTrayU 5.0 beta 1
+# 2002-10-02 PopTray 2.1 (beta 8)
 #-----------------------------------------------------------------------
 
 Yes=예
@@ -98,7 +99,7 @@ Check Interval=확인 주기
 Check Now=지금 확인
 Check current account for New Mail=현재 메일계정의 새로운 메일 확인
 Check for New Mail on Startup=프로그램 시작시 새로운 메일 확인
-Check for new mail every = 새로운 메일 확인 주기
+Check for new mail every= 새로운 메일 확인 주기
 Check if On-Line=온라인 상태 확인
 Check on-line if newer version available.=새로운 버전이 발표되었는지 확인
 Check=확인
@@ -202,7 +203,7 @@ To Tray=트레이로
 Try to mix the colors when e-mail arrives in multiple accounts.~Windows only allows 16 colors in the tray, so mixing will not~always give the correct color.=메일 계정에 메일이 도착하면, 색상을 혼합하여 표시한다.~윈도우가 트레이에서 16칼라만 지원하기 때문에 색상이 혼합되지 않을 수 있다.
 Use MAPI=MAPI사용
 Viewed Messages Icon=읽은 메일 아이콘
-When a connect error occurs, PopTrayU will dsiplay an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=접속 오류가 발생하면, 오류 메시지를 표시한다.
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=접속 오류가 발생하면, 오류 메시지를 표시한다.
 When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=MIME Part가 있는 메일을 미리보기할때, 디코딩한다.
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=규칙 실행을 PopTrayU 디렉토리에 RULES.LOG파일에 남긴다.
 X Button Minimizes=X 버튼 최소화로 사용
@@ -304,3 +305,382 @@ Eclipse Launcher=이클립스 실행기
 RegExp=정규식
 Compare=비교
 Korean Version Contact Info=한국어버전 제작자 정보
+
+
+# ---------- Added PopTray 2.1 (beta 10) ----------
+Taiwan=대만
+Ukranian=우크라이나어
+Norwegian=노르웨이의
+
+Miscellaneous=기타
+Quick Help=빠른 도움말
+Display the tabs for the different accounts in~multiple lines instead of one scrolling line.=하나가 아닌 스크롤 라인 ~ 여러 줄의 여러 계정 탭을 표시합니다.
+Use the Simple MAPI interface of you e-mail client,~instead of using a "mailto:" link for replies and new messages.=회신 및 새 메시지 링크 : "흔한"를 사용하는 대신 ~ 당신이 전자 메일 클라이언트의 단순 MAPI 인터페이스를 사용합니다.
+Use the POP3 UIDL command to check that message is still the same~before deleting it.=메시지를 삭제하기 전에 여전히 동일합니다 ~인지 확인하기 위해 POP3 UIDL 명령을 사용합니다.
+Use the POP3 UIDL command to quickly check if the mail on the server has changed.=서버에 메일이 변경되었는지 여부를 신속하게 확인하려면 POP3 UIDL 명령을 사용합니다.
+Requires that you enter the specified password to open PopTrayU.=당신이 PopTrayU를 엽니 지정된 암호를 입력해야합니다. =
+Do not run the AutoCheck timer event while viewing the PopTrayU Window.~This is useful to prevent an AutoCheck from happening~while you are manually checking for mail.=PopTrayU 창을 보면서 설명 AutoCheck 타이머 이벤트를 실행하지 마십시오. ~ 이것은 당신이 수동으로 메일을 확인하는 동안 ~ 벌어에서 설명 AutoCheck를 방지하는 데 유용합니다.
+
+# ---------- Added PopTray 2.1 ----------
+Important=중요
+Korean=한국의
+
+# ---------- Added PopTray 3.0 (beta 1) ----------
+Arabic=아라비아 말
+Portuguese=포르투갈의
+Turkish=터키의
+
+Add Rule to mark messages from Sender as Spam=스팸으로 보낸 사람의 메시지를 표시하는 규칙 추가
+Add sender to Black List=블랙리스트에 보낸 사람 추가
+Add sender to White List=화이트리스트에 보낸 사람 추가
+Added to the White List:=화이트리스트에 추가 :
+Advanced Show Info=고급 정보보기
+Black List mark as Spam=스팸으로 블랙리스트 표시
+Black List=블랙리스트
+Copy=복사
+Customize...=사용자 지정 ...
+Cut=절단
+Del Spam=델 스팸
+Delete messages marked as Spam=스팸으로 표시된 메시지 삭제
+Delete Spam from Server?=서버에서 스팸 메일을 삭제 하시겠습니까?
+Failed to Save Attachment.=첨부 파일을 저장하지 못했습니다.
+First Wait=먼저 대기
+Hide Viewed Messages=본 메시지 숨기기
+Hide=숨기기
+Import Rules=규칙 가져 오기
+INI Files=INI 파일
+Interval=간격
+Lists=목록
+Log Rule=규칙 로그인
+Mark as Spam=스팸으로 표시
+Mark as Viewed=로 볼 마크
+New Mail=새 메일
+Number of messages marked as Spam:=스팸으로 표시된 메시지 수 :
+Open...=여 ...
+Paste=풀
+Plug-in Options...=플러그인 옵션 ...
+Plug-ins=플러그인
+Port:=포트 :
+Preview Top Lines=미리보기 탑 라인
+Processing...=처리 중 ...
+Protocol:=프로토콜 :
+Raw Message=원시 메시지
+Read Only=읽기 전용
+Remember Viewed Messages=본 메시지 기억
+Rules ...=규칙 ...
+Save All Attachments...=모든 첨부 파일을 저장 ...
+Save...=저장 ...
+Select All=전체 선택
+Select Font...=글꼴 선택 ...
+Select Spam Messages=스팸 메시지를 선택
+Server:=서버 :
+Show/Hide Viewed Messages=본 메시지를 표시 / 숨기기
+Spam=스팸
+This will add the following e-mails to the Black List:=이 블랙리스트에 다음과 같은 전자 메일을 추가합니다 :
+This will create a rule to spam mark all future e-mails from=이 스팸 메일의 마크 향후 모든 전자 메일에 규칙을 생성합니다
+This will delete all these messages.=이 모든 메시지를 삭제합니다.
+TrayIcon while Checking=TrayIcon에 확인하면서
+Unable to Copy file.=파일을 복사 할 수 없습니다.
+Undo=취소
+Unknown Attachment Type.=알 수없는 첨부 파일의 유형입니다.
+Unmark as Spam=스팸으로 표시 해제
+User Interface=사용자 인터페이스
+White / Black List=블랙 / 화이트리스트
+White List=화이트리스트
+
+Any mail received from the following e-mail addresses~will automatically be deleted.=다음 전자 메일 주소 ~로부터받은 메일은 자동으로 삭제됩니다.
+Because of the Security Risk, PopTrayU doesn't allow the opening of Executable files.=때문에 보안 위험, PopTr​​ayU은 실행 파일의 개방을 허용하지 않습니다.
+Black List will mark the messages as Spam~instead of deleting them.=스팸을 삭제하는 대신 ~로 블랙리스트는 메시지를 표시합니다.
+Default e-mail program to open.=기본 전자 메일 프로그램을 엽니 다.
+Default sound to play when new mail arrives.=새 메일이 도착할 때 기본 사운드를 재생합니다.
+Delay in minutes to wait between mail check intervals.~Set it to 0 to never automatically check.=메일 확인 간격 사이에 대기하는 분 지연. ~ 자동으로 확인하지 않으려면 0으로 설정합니다.
+Number of message lines to preview.=미리보기로 메시지를 줄 수.
+Number of seconds to display the Info window~before closing it.=정보 창을 표시 할 시간 (초) 수를 닫기 전에 ~.
+Number of seconds to wait during connection~before giving an error.=연결하는 동안 대기하는 초 단위는 에러를주기 전에 ~.
+Once a message has been viewed, don't show it again.=메시지를 본 후에, 그것을 다시 표시되지 않습니다.
+Remember which messages on the server has already been viewed~even after closing PopTrayU.=서버에 메시지가 이미 ~도 PopTr​​ayU을 닫은 후 조회되었습니다 어떤 기억하십시오.
+Select the option screen to show.=표시하는 옵션 화면을 선택합니다.
+Show Info dialog with message details and buttons.=메시지 세부 사항 및 버튼을 사용하여 정보 대화 상자를 표시합니다.
+System-wide hot-key to execute selected action.=선택한 작업을 실행하는 시스템 전체에 핫 키를 누릅니다.
+This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=이것은 당신의 플러그인 디렉토리에있는 모든 플러그인 DLL을 나열합니다. ~로드 / 언로드를 선택합니다. 옵션을 마우스 오른쪽 단추로 클릭합니다.
+What to show on the TrayIcon~while checking for new mail.=새 메일을 확인하는 동안 무엇을 TrayIcon에 게재하려면 ~.
+When previewing a message, only load the~specified number of lines.=메시지를 미리 볼 때는 전용 라인 ~ 지정된 번호를로드합니다.
+When starting PopTrayU, first wait a few seconds~before checking for mail.=PopTr​​ayU을 시작할 때, 처음 몇 초 동안 기다립니다 ~ 메일을 확인하기 전에.
+When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=당신은 전자 메일 주소의 다음 목록에서 메일을받을 때, ~ 메시지는 규칙에 의해 삭제되지 않습니다.
+
+None=없음
+Lightning Bolt=번개
+Star=스타
+Animated Star=애니메이션 스타
+
+Customize=사용자 지정
+Toolbars=도구 모음
+Toolbars:=도구 모음 :
+Categories:=카테고리 :
+Actions:=작업 :
+Window=창
+Tools=도구
+(All Actions)=(모든 작업)
+Description=기술
+Drag to Create Separators=분리기를 만들기 위해 드래그 하십시요
+Close=가까운
+(Checkmark toggles visibility)=(확인 표시 토글 시정)
+Reset...=다시 ...
+Toolbar Options=도구 모음 옵션
+Caption Options=캡션 옵션
+Selective=선택적인
+All=모든
+To add actions to your application simply drag and drop from either Categories or Actions onto an existing ActionBar.=응용 프로그램에 작업을 추가하려면 드래그 및 기존 액션 바 위에 카테고리 또는 동작 하나에서 놓습니다.
+Other=다른
+Large icons=큰 아이콘
+Show tips on toolbars=도구 모음에 대한 도움말을 표시
+Show shortcut keys in tips=팁에 바로 가기 키 표시
+
+# ---------- Added PopTray 3.0 (beta 2) ----------
+No protocol defined for account=계정에 대해 정의 된 프로토콜 없음
+Don't Check between=간을 확인하지 않는
+and=과
+Disable AutoChecking between the hours specified.~This is useful when you do not want noisy notifications~during the night.=지정된 시간 사이 AutoChecking 해제합니다. ~ 당신이 시끄러운 알림 밤 ~하지 않으려는 경우에 유용합니다.
+
+# ---------- Added PopTray 3.0 (beta 3) ----------
+Spanish (Hispanic America)=스페인어 (라틴 아메리카)
+Chinese=중국의
+Show Info Balloon or Advanced Info when new mail arrives.=정보 풍선이나 새 메일이 도착할 고급 정보를 표시합니다.
+
+# ---------- Added PopTray 3.0 (beta 4) ----------
+Suspend Sound=사운드를 일시 중지
+
+# ---------- Added PopTray 3.0 (beta 5) ----------
+Toggle Sound=사운드 전환
+
+# ---------- Added PopTray 3.0 (beta 6) ----------
+Delete Spam=스팸 삭제
+
+# ---------- Added PopTray 3.0 (beta 7) ----------
+Shift Left Click:=왼쪽 클릭 이동 :
+Shift Right Click:=마우스 오른쪽 단추로 클릭 이동 :
+Shift Middle Click:=중간 클릭 이동 :
+Check First Account=첫 번째 계정을 확인
+
+# ---------- Added PopTray 3.0 (beta 9) ----------
+Spanish (Chile)=스페인어 (칠레)
+Stop=정지
+Information=정보
+Mark the selected messages as Spam.=스팸으로 선택한 메시지를 표시합니다.
+Ignore Connection Errors=연결 오류를 무시
+
+# ---------- Added PopTray 3.0 (beta 10) ---------
+Retrieve Body while Checking=확인하면서 몸을 검색
+Limit download to the first=처음에 다운로드 제한
+lines=선
+While checking for new mail, also retrieve the message body.~This will slow down checking, but if gives you the option to check~the body contents in the rules.=새 메일을 확인하는 동안, 또한 메시지 본문을 검색 할 수 있습니다. ~이 검사 천천히, 그러나 당신에게 규칙 ~ 본문 내용을 확인하는 옵션을 제공하면됩니다.
+
+# ---------- Added PopTray 3.0 (beta 11) ---------
+Protect against auto-delete=자동 삭제로부터 보호
+Sort=종류
+Message Status=메시지 상태
+Indicate Viewed and Unviewed Messages=조회 및 읽지 않음 메시지 표시
+Unviewed messages will be shown in Bold.=읽지 않음 메시지는 굵게 표시됩니다.
+Only download if size less than=다운로드 만보다 크기가 작은 경우
+Retrieve complete message while checking,~if message smaller than specified size.=확인하면서 전체 메시지를 검색, ~ 지정된 크기보다 작은 경우 메시지.
+Maximum number of lines to download.=행의 최대 수 다운로드 할 수 있습니다.
+
+# ---------- Added PopTray 3.0 (beta 12) ---------
+Incompatible Plugin:=호환되지 않는 플러그인 :
+Connection Info=연결 정보
+Message Count:=메시지 수 :
+
+# ---------- Added PopTray 3.0 (beta 13) ---------
+Test Account=테스트 계정
+French (Canada)=프랑스어 (캐나다)
+WARNING: This account does NOT support Safe Delete.=경고 :이 계정은 안전한 삭제를 지원하지 않습니다.
+Quick Checking and Safe Delete (UIDL):=빠른 검사 및 안전 삭제 (UIDL)
+Supported=지원
+NOT Supported=지원되지 않음
+
+# ---------- Added PopTray 3.0 (beta 14) ---------
+Summary=개요
+KB=KB
+Login OK=OK 로그인
+
+# ---------- Added PopTray 3.0 (beta 15) ---------
+Delete Error:=오류 삭제 :
+Retrieve Error:=오류를 검색 :
+Plug-in Error:=플러그인 오류 :
+
+# ---------- Added PopTray 3.0.1 ---------
+Estonian=에스토니아의
+Serbian=세르비아의
+NoName=NONAME
+Reset Mail Count in Tray when Viewing=볼 때 트레이에 메일 수를 재설정
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=검사를 중지
+Spam Last=최근 스팸 메일
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=등록 EXPR
+Test the Reg Expr syntax=등록 EXPR 구문을 테스트
+Regular Expression Syntax OK=정규 표현식 구문 OK
+Needed=필요
+ANY Row=모든 행
+ALL Rows=모든 행
+Area=지역
+Compare=비교
+Text=원본
+Not=아니
+Add Row=행 추가
+Delete Row=행 삭제
+Play Sound=소리 재생
+Tray Color=트레이 색상
+Status=지위
+Protected=보호
+To Be Deleted=삭제할
+Ignored=무시
+Has Attachment=첨부 파일이
+Viewed=조회
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=크로아티아의
+Move Down=아래로 이동
+Move Up=위로 이동
+Delete Mail only on Next Check=단지 다음 확인의 메일을 삭제합니다
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=메일을 삭제 할 때 삭제 표시가 ~하고 다음 검사가 실행되는 경우에만 물리적으로 삭제 얻을 것이다.
+Undelete=취소
+Add Rule for mail from Sender=보낸 사람의 메일에 대한 규칙 추가
+Add Rule for mail with Subject=제목을 가진 메일에 규칙 추가
+This will create a rule to delete all future e-mails with subject=이 주제와 미래의 모든 전자 메일을 삭제하는 규칙을 생성합니다
+This will create a rule to spam mark all future e-mails with subject=이 스팸 메일 표시 될 모든 미래의 전자 메일에 규칙을 생성합니다
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=갈리시아어
+Downloading=다운로드
+Show Messages while Checking=확인하는 동안 메시지 표시
+While checking, show each message as it is downloaded.=확인하는 동안이 다운로드되는 각 메시지를 표시합니다.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=보호 메시지를 삭제 추가 확인
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=메시지를 삭제하려고 별도의 확인 ~ 규칙이나 허용 목록에 의해 보호됩니다.
+You are trying to delete protected messages.=당신은 보호 된 메시지를 삭제하기 위해 노력하고 있습니다.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=리투아니아의
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=제목으로 메일을 삭제하려면 규칙 추가
+Add Rule to delete Mail from Sender=보낸 사람의 메일을 삭제하려면 규칙 추가
+Add Rule to mark messages with Subject as Spam=스팸으로 제목으로 메시지를 표시하는 규칙 추가
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=그리스의
+Valencian=발렌시아
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=열려있는
+Open Message=열려있는 메시지
+Frisian=프리즐 란드 사람
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=시각적 인 외관
+Main Window Listbox Font=메인 창 목록 상자 글꼴
+Change the main window listbox background=메인 윈도우의리스트 박스의 배경을 변경
+Change the main window listbox foreground=메인 윈도우 박스 전경을 변경
+Failure connecting to server.=서버에 연결 실패.
+Server found, but is not a mail server.=서버를 찾았지만 메일 서버가 아닙니다.
+Change the Main Window Listbox Font=메인 창 목록 상자의 글꼴 변경
+Clear all customizations=모든 사용자 지정을 취소
+HTML View=HTML보기
+Thanks to the following volunteers who helped translate this software:=이 소프트웨어를 번역 도왔 다음과 자원 봉사자들에게 감사 :
+Language=언어
+Translator=번역기
+Component=구성 요소
+Author=저자
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU는 Renier Crause의 PopTr​​ay 3.2 등이 응용 프로그램의 코드 따라서 저작권 2001년에서 2005년까지 Renier Crause이다의 파생 작품입니다. 많은 감사 PopTr​​ay 개발을위한 Renier하고, 지원을 위해 그가 제공하고 있습니다.
+Check online for newer version=최신 버전을 온라인으로 확인
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=풍선 팝업의 오류 (대신 모달 대화 상자)의 표시
+Changes how errors are shown when the main window is visible.=메인 윈도우가 표시 될 때 오류가 표시되는 방법을 변경합니다.
+Error checking=오류 검사
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=구성 요소 크레딧
+Translation Credits=번역 크레딧
+Message Deletion=메시지 삭제
+Mail Client Communication=메일 클라이언트 통신
+Rules/Blacklist=규칙 / 블랙리스트
+Advanced POP Settings=고급 POP 설정
+Error Handling=오류 처리
+Message Download (Enable to use advanced rules)=메시지 다운로드 (고급 규칙을 사용하도록 설정)
+Startup=시작
+Tray Icon=트레이 아이콘
+New Message Notification=새 메시지 알림
+Plugins=플러그인
+How often should PopTrayU check for new mail?=얼마나 자주 PopTr​​ayU 새 메일을 확인해야합니까?
+Interval Check Conditions=간격 확인 조건
+User Data Folder: (where PopTray.ini and Rules files are stored)=사용자 데이터 폴더 (PopTr​​ay.ini 및 규칙 파일이 저장되는 위치)
+Misc=기타
+About PopTrayU=PopTr​​ayU 소개
+Version=버전
+Show Images=이미지보기
+Reset Customizations=사용자 정의를 재설정
+Most UI Items= 대부분의 UI 항목
+Vertical Tabs=수직 탭
+Message List=메시지 목록
+Flash Tray Icon=플래시 트레이 아이콘
+Show Balloon Notification=풍선 도움말 표시
+Use Deluxe Balloon=사용 디럭스 벌룬
+(show for=(대한 표시
+seconds)=초)
+Show Main Window=기본 창 표시
+Keyboard Lights=키보드 조명
+IMAP4=IMAP4
+POP3 with SSL or APOP=SSL 또는 APOP와 POP3
+Specify a different timer interval for each account.=각 계정에 대해 다른 타이머 간격을 지정합니다.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=당신이 연결되지 않은 경우 팝업에 전화 대화를 원하지 않는 전화 접속 사용자에 의해 사용됩니다. 조금 느린 확인합니다.
+This setting can be changed via setup or a command line parameter.=이 설정은 설정이나 명령 줄 매개 변수를 통해 변경 될 수 있습니다.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=핫 키 시스템 전반입니다. 다른 응용 프로그램에서 자주 사용하는 특별한 핫 키보다는 하나를 사용합니다. Ctrl-C를 같은 핫 키는 권장되지 않습니다.
+Don't automatically check for new messages=자동으로 새 메시지를 확인하지 않는
+Set Interval per account=계정 당 간격 설정
+Only check when already online=경우에만 이미 온라인 확인
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=이 계정을 사이에 체크하지 마십시오
+Advanced=고급
+Use SSL/TLS=SSL / TLS를 사용하여
+Authentication=입증
+SSL/TLS Version:=SSL / TLS 버전 :
+Auto=자동
+Password=암호
+Toolbar Color Scheme:=도구 모음에서 색 구성표 :
+Normal=표준
+Twilight=어스름
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=메시지 미리보기 옵션
+Disable HTML Preview=HTML 미리보기를 사용하지 않도록 설정
+Main Window=메인 윈도우
+Default Spam Toolbar Button Action:=기본 스팸 도구 모음 단추 작업 :
+Default Spam Toolbar Action:=기본 스팸 도구 모음 작업 :
+Image Credits=이미지 크레딧
+Image Package=이미지 패키지
+Images=이미지
+Main Window Message List=메인 윈도우 메시지 목록
+Main Window Behaviors=메인 윈도우 동작
+Plain Text=일반 텍스트
+Credits:=크레딧 :
+
+Theme:=주제 :
+Spam Management=스팸 관리
+Changes the action of the Spam toolbar button on the Main Window=주 창에서 스팸 도구 모음 단추의 동작을 변경합니다
+AKA Explicit TLS=또한 명시 적 TLS로 알려진
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=로그 파일에 모든 규칙 작업을 작성합니다. 이름 : PopTr​​ayU에 대한 사용자 설정 디렉토리에 RULES.LOG.
+Disables the HTML Preview tab when previewing a message.=메시지를 미리 볼 때 HTML 미리보기 탭을 비활성화합니다.
+Listbox Font=목록 상자 글꼴
+Reset Fonts and Colors=글꼴 및 색을 다시 설정
+APOP=APOP
+SASL=SASL
+Customize the Font=글꼴을 사용자 정의
+Edit=편집
+

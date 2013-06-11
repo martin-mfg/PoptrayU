@@ -1,7 +1,8 @@
 ﻿#-----------------------------------------------------------------------
 # PopTrayU translation file - Hungarian
 #-----------------------------------------------------------------------
-# 2003-12-03  PopTray 3.0.1 Jozsef Tamas Herczeg http://www.soft-trans.hu
+# 2013-06-07 PopTrayU 5.0 beta 1
+# 2003-12-03 PopTray 3.0.1 Jozsef Tamas Herczeg http://www.soft-trans.hu
 #-----------------------------------------------------------------------
 
 (All Actions)=(Minden művelet)
@@ -251,7 +252,7 @@ Plug-in Options...=Modul tulajdonságai...
 Plug-ins=Beépülő modulok
 Polish=Lengyel
 Pop-Up Menu=Helyi menü
-PopTrayU will startup in minimized state.~Thus the window will be hidden and  only the trayicon~will be visible.=A PopTrayU kis méretben indul.-Így elrejti az ablakot, és csak az ikon lesz látható az óra környékén.
+PopTrayU will startup in minimized state.~Thus the window will be hidden and only the trayicon~will be visible.=A PopTrayU kis méretben indul.-Így elrejti az ablakot, és csak az ikon lesz látható az óra környékén.
 Port:=Port:
 Portuguese (Brazil)=Portugál (Brazil)
 Portuguese=Portugál
@@ -389,7 +390,7 @@ version=verzió
 Viewed Messages Icon=Megtekintett üzenetek ikon
 WAV files=Hangfájlok
 What to show on the TrayIcon~while checking for new mail.=Mi legyen látható új posta keresésekor a tálca ikonon?
-When a connect error occurs, PopTrayU will dsiplay an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=Ha csatlakozási hiba áll fenn, a PopTrayU hibaüzenettel értesít.-Ha bejelöli ezt az opciót, a hibaüzenet csak az állapotsoron és a tálca ikon tanácsában jelenik meg.
+When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=Ha csatlakozási hiba áll fenn, a PopTrayU hibaüzenettel értesít.-Ha bejelöli ezt az opciót, a hibaüzenet csak az állapotsoron és a tálca ikon tanácsában jelenik meg.
 When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=A MIME-részekből álló üzenet előzetes megtekintésekor a PopTrayU csak a MIME üzenetet kódolja, az első rész lesz látható az előnézetben, a többi pedig mellékletként tekinthető meg.-Ha nem jelöli be, az üzenet forrását tekintheti meg előnézetben.
 When previewing a message, only load the~specified number of lines.=Csak meghatározott számú sor betöltése az üzenet előnézetben megtekintésekor
 When starting PopTrayU, first wait a few seconds~before checking for mail.=Néhány másodperc várakozás a PopTrayU indításakor az e-mail keresés előtt 
@@ -402,3 +403,343 @@ Window=Ablak
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Az összes szabály naplófájlba írása.-Fájlnév: RULES.LOG, ugyanabban a mappában, mint a PopTrayU.
 X Button Minimizes=Kis méret az X gombbal
 Yes=Igen
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Ellenőrzés leállításához
+Spam Last=Spam Utolsó
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Próbálja ki a Reg Expr szintaxis
+Regular Expression Syntax OK=Reguláris kifejezésben OK
+Needed=Szükséges
+ANY Row=Minden sorban
+ALL Rows=Minden sor
+Area=Terület
+Compare=Összehasonlítása
+Text=Szöveg
+Not=Nem
+Add Row=Add Row
+Delete Row=Sor törlése
+Play Sound=Lejátszása Hang
+Tray Color=Tálca Color
+Status=Állapot
+Protected=Védett
+To Be Deleted=Törlendő
+Ignored=Figyelmen kívül hagyva
+Has Attachment=Has Attachment
+Viewed=Nézett
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Horvát
+Move Down=Lefelé
+Move Up=Felköltözik
+Delete Mail only on Next Check=Delete Mail csak Next Check
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Törlésekor mail akkor lesz jelölve törlésre ~ és csak fizikailag törlődnek, ha a következő ellenőrzés fut.
+Undelete=Undelete
+Add Rule for mail from Sender=Szabály hozzáadása a leveleket küldő
+Add Rule for mail with Subject=Szabály hozzáadása a mail tárgya
+This will create a rule to delete all future e-mails with subject=Ez létrehoz egy szabályt, hogy törölje az összes jövőbeni e-maileket tárgy
+This will create a rule to spam mark all future e-mails with subject=Ez létrehoz egy szabályt, hogy a jövőben minden jel spam e-mailek tárgy
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galíciai
+Downloading=Letöltése
+Show Messages while Checking=Mutasd az üzenetek ellenőrzése
+While checking, show each message as it is downloaded.=Míg ellenőrzése mutatnak minden üzenetet a letöltött.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Extra Megerősítés törlésekor védett üzenetek
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Extra megerősítést, amikor megpróbálja törölni az üzeneteket ~ szabályokkal védeni vagy whitelist.
+You are trying to delete protected messages.=Ön próbál törölni védett üzeneteket.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Litván
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Szabály hozzáadása a Törlés mail tárgya
+Add Rule to delete Mail from Sender=Szabály hozzáadása törölni Mail Sender
+Add Rule to mark messages with Subject as Spam=Szabály hozzáadása megjelölni üzenetek Tárgy spamként
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Görög
+Valencian=Valencia
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Nyitott
+Open Message=Nyitott üzenet
+Frisian=Fríz
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Vizuális megjelenés
+Main Window Listbox Font=Főablak Listbox betűtípus
+Change the main window listbox background=Módosítása a főablakban listaablakban háttér
+Change the main window listbox foreground=Módosítása a főablakban listaablakban előtérben
+Failure connecting to server.=Ha nem csatlakozik a szerverhez.
+Server found, but is not a mail server.=Server található, de ez nem egy levelező szervert.
+Change the Main Window Listbox Font=Változtassuk meg a főablak Listbox betűtípus
+Clear all customizations=Tiszta minden testreszabást
+HTML View=HTML nézet
+Thanks to the following volunteers who helped translate this software:=Köszönet a következő önkéntes, aki segített lefordítani ezt a szoftvert:
+Language=Nyelv
+Translator=Fordító
+Component=Összetevő
+Author=Szerző
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU egy származéka munka Renier Crause a PopTray 3.2 és sok a kód az alkalmazás tehát Szerzői 2001-2005 Renier Crause. Köszönet Renier fejlesztésére PopTray, és a támogatást is biztosított.
+Check online for newer version=Ellenőrizze, online újabb verzió
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Mutatják, hibák Balloon Popups (helyett modális párbeszédablakok)
+Changes how errors are shown when the main window is visible.=Változások milyen hibák jelennek meg, amikor a fő ablak látható.
+Error checking=Hiba ellenőrzés
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Component Credits
+Translation Credits=Fordítás Credits
+Message Deletion=Üzenet törlése
+Mail Client Communication=Mail Client Kommunikáció
+Rules/Blacklist=Szabályok / Feketelista
+Advanced POP Settings=Speciális POP beállítások
+Error Handling=Hibakezelés
+Message Download (Enable to use advanced rules)=Message letöltése (engedélyezés használni a fejlett szabályok)
+Startup=Startup
+Tray Icon=Tálca ikon
+New Message Notification=Új üzenet értesítés
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Milyen gyakran kell PopTrayU ellenőrizze az új e-mail?
+Interval Check Conditions=Interval Check feltételek
+User Data Folder: (where PopTray.ini and Rules files are stored)=Felhasználói adatok Folder: (ahol PopTray.ini és Szabályok fájlok)
+Misc=Egyéb
+About PopTrayU=Körülbelül PopTrayU
+Version=Változat
+Show Images=Képek megjelenítése
+Reset Customizations=Törlés testreszabása
+Most UI Items= A legtöbb UI elemek
+Vertical Tabs=Vertical Tabs
+Message List=Message List
+Flash Tray Icon=Flash Tálca ikon
+Show Balloon Notification=Mutasd Balloon Értesítés
+Use Deluxe Balloon=Használja Deluxe Balloon
+(show for=(Felmutatni
+seconds)=másodperc)
+Show Main Window=Mutasd főablak
+Keyboard Lights=Billentyűzet világítás
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 SSL vagy APOP
+Specify a different timer interval for each account.=Adjon meg egy másik időzítő intervallum minden számla.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Használják dial-up felhasználók, akik nem akarnak a dial-up ablak, hogy pop-up, ha nem csatlakozik. Teszi ellenőrzése egy kicsit lassabb.
+This setting can be changed via setup or a command line parameter.=Ez a beállítás lehet változtatni beállítás vagy a parancssori paraméter.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-kulcsok rendszerszintű. Használjon szokatlan hot-key helyett egy gyakran használt más alkalmazásokban. Hot-gombok, mint a Ctrl-C nem ajánlott.
+Don't automatically check for new messages=Nem automatikusan ellenőrzi az új üzeneteket
+Set Interval per account=Állítsa Interval számlánként
+Only check when already online=Csak akkor válassza, ha már on-line
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Ne ezt nézd közötti elszámolás
+Advanced=Fejlett
+Use SSL/TLS=SSL / TLS
+Authentication=Hitelesítés
+SSL/TLS Version:=SSL / TLS Verzió:
+Auto=Kocsi
+Password=Jelszó
+Toolbar Color Scheme:=Eszköztár Color Scheme:
+Normal=Normál
+Twilight=Szürkület
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Message Preview Options
+Disable HTML Preview=HTML kikapcsolása Preview
+Main Window=Főablak
+Default Spam Toolbar Button Action:=Alapértelmezett Spam eszköztár Gomb Művelet:
+Default Spam Toolbar Action:=Alapértelmezett Spam eszköztár Action:
+Image Credits=Kép Credits
+Image Package=Kép csomag
+Images=Kép
+Main Window Message List=Fő ablak Message List
+Main Window Behaviors=Főablak viselkedések
+Plain Text=Egyszerű szöveg
+Credits:=Credits:
+
+Theme:=Téma:
+Spam Management=Spam Management
+Changes the action of the Spam toolbar button on the Main Window=Megváltoztatja az intézkedés a Spam eszköztár gombot a főablak
+AKA Explicit TLS=más néven Explicit TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Írja minden szabályt intézkedést egy log fájlt. Fájlnév: RULES.LOG a felhasználói beállítások könyvtárat PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Tiltja a HTML Preview fülön amikor előnézetét egy üzenetet.
+Listbox Font=Listaablakban betűtípus
+Reset Fonts and Colors=Visszaállítása betűtípusok és színek
+APOP=APOP
+SASL=SASL
+Customize the Font=Megszokott a betűtípus
+Edit=Szerkeszt
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Ellenőrzés leállításához
+Spam Last=Spam Utolsó
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Próbálja ki a Reg Expr szintaxis
+Regular Expression Syntax OK=Reguláris kifejezésben OK
+Needed=Szükséges
+ANY Row=Minden sorban
+ALL Rows=Minden sor
+Area=Terület
+Compare=Összehasonlítása
+Text=Szöveg
+Not=Nem
+Add Row=Add Row
+Delete Row=Sor törlése
+Play Sound=Lejátszása Hang
+Tray Color=Tálca Color
+Status=Állapot
+Protected=Védett
+To Be Deleted=Törlendő
+Ignored=Figyelmen kívül hagyva
+Has Attachment=Has Attachment
+Viewed=Nézett
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Horvát
+Move Down=Lefelé
+Move Up=Felköltözik
+Delete Mail only on Next Check=Delete Mail csak Next Check
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Törlésekor mail akkor lesz jelölve törlésre ~ és csak fizikailag törlődnek, ha a következő ellenőrzés fut.
+Undelete=Undelete
+Add Rule for mail from Sender=Szabály hozzáadása a leveleket küldő
+Add Rule for mail with Subject=Szabály hozzáadása a mail tárgya
+This will create a rule to delete all future e-mails with subject=Ez létrehoz egy szabályt, hogy törölje az összes jövőbeni e-maileket tárgy
+This will create a rule to spam mark all future e-mails with subject=Ez létrehoz egy szabályt, hogy a jövőben minden jel spam e-mailek tárgy
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galíciai
+Downloading=Letöltése
+Show Messages while Checking=Mutasd az üzenetek ellenőrzése
+While checking, show each message as it is downloaded.=Míg ellenőrzése mutatnak minden üzenetet a letöltött.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Extra Megerősítés törlésekor védett üzenetek
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Extra megerősítést, amikor megpróbálja törölni az üzeneteket ~ szabályokkal védeni vagy whitelist.
+You are trying to delete protected messages.=Ön próbál törölni védett üzeneteket.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Litván
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Szabály hozzáadása a Törlés mail tárgya
+Add Rule to delete Mail from Sender=Szabály hozzáadása törölni Mail Sender
+Add Rule to mark messages with Subject as Spam=Szabály hozzáadása megjelölni üzenetek Tárgy spamként
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Görög
+Valencian=Valencia
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Nyitott
+Open Message=Nyitott üzenet
+Frisian=Fríz
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Vizuális megjelenés
+Main Window Listbox Font=Főablak Listbox betűtípus
+Change the main window listbox background=Módosítása a főablakban listaablakban háttér
+Change the main window listbox foreground=Módosítása a főablakban listaablakban előtérben
+Failure connecting to server.=Ha nem csatlakozik a szerverhez.
+Server found, but is not a mail server.=Server található, de ez nem egy levelező szervert.
+Change the Main Window Listbox Font=Változtassuk meg a főablak Listbox betűtípus
+Clear all customizations=Tiszta minden testreszabást
+HTML View=HTML nézet
+Thanks to the following volunteers who helped translate this software:=Köszönet a következő önkéntes, aki segített lefordítani ezt a szoftvert:
+Language=Nyelv
+Translator=Fordító
+Component=Összetevő
+Author=Szerző
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU egy származéka munka Renier Crause a PopTray 3.2 és sok a kód az alkalmazás tehát Szerzői 2001-2005 Renier Crause. Köszönet Renier fejlesztésére PopTray, és a támogatást is biztosított.
+Check online for newer version=Ellenőrizze, online újabb verzió
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Mutatják, hibák Balloon Popups (helyett modális párbeszédablakok)
+Changes how errors are shown when the main window is visible.=Változások milyen hibák jelennek meg, amikor a fő ablak látható.
+Error checking=Hiba ellenőrzés
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Component Credits
+Translation Credits=Fordítás Credits
+Message Deletion=Üzenet törlése
+Mail Client Communication=Mail Client Kommunikáció
+Rules/Blacklist=Szabályok / Feketelista
+Advanced POP Settings=Speciális POP beállítások
+Error Handling=Hibakezelés
+Message Download (Enable to use advanced rules)=Message letöltése (engedélyezés használni a fejlett szabályok)
+Startup=Startup
+Tray Icon=Tálca ikon
+New Message Notification=Új üzenet értesítés
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Milyen gyakran kell PopTrayU ellenőrizze az új e-mail?
+Interval Check Conditions=Interval Check feltételek
+User Data Folder: (where PopTray.ini and Rules files are stored)=Felhasználói adatok Folder: (ahol PopTray.ini és Szabályok fájlok)
+Misc=Egyéb
+About PopTrayU=Körülbelül PopTrayU
+Version=Változat
+Show Images=Képek megjelenítése
+Reset Customizations=Törlés testreszabása
+Most UI Items= A legtöbb UI elemek
+Vertical Tabs=Vertical Tabs
+Message List=Message List
+Flash Tray Icon=Flash Tálca ikon
+Show Balloon Notification=Mutasd Balloon Értesítés
+Use Deluxe Balloon=Használja Deluxe Balloon
+(show for=(Felmutatni
+seconds)=másodperc)
+Show Main Window=Mutasd főablak
+Keyboard Lights=Billentyűzet világítás
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 SSL vagy APOP
+Specify a different timer interval for each account.=Adjon meg egy másik időzítő intervallum minden számla.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Használják dial-up felhasználók, akik nem akarnak a dial-up ablak, hogy pop-up, ha nem csatlakozik. Teszi ellenőrzése egy kicsit lassabb.
+This setting can be changed via setup or a command line parameter.=Ez a beállítás lehet változtatni beállítás vagy a parancssori paraméter.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-kulcsok rendszerszintű. Használjon szokatlan hot-key helyett egy gyakran használt más alkalmazásokban. Hot-gombok, mint a Ctrl-C nem ajánlott.
+Don't automatically check for new messages=Nem automatikusan ellenőrzi az új üzeneteket
+Set Interval per account=Állítsa Interval számlánként
+Only check when already online=Csak akkor válassza, ha már on-line
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Ne ezt nézd közötti elszámolás
+Advanced=Fejlett
+Use SSL/TLS=SSL / TLS
+Authentication=Hitelesítés
+SSL/TLS Version:=SSL / TLS Verzió:
+Auto=Kocsi
+Password=Jelszó
+Toolbar Color Scheme:=Eszköztár Color Scheme:
+Normal=Normál
+Twilight=Szürkület
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Message Preview Options
+Disable HTML Preview=HTML kikapcsolása Preview
+Main Window=Főablak
+Default Spam Toolbar Button Action:=Alapértelmezett Spam eszköztár Gomb Művelet:
+Default Spam Toolbar Action:=Alapértelmezett Spam eszköztár Action:
+Image Credits=Kép Credits
+Image Package=Kép csomag
+Images=Kép
+Main Window Message List=Fő ablak Message List
+Main Window Behaviors=Főablak viselkedések
+Plain Text=Egyszerű szöveg
+Credits:=Credits:
+
+Theme:=Téma:
+Spam Management=Spam Management
+Changes the action of the Spam toolbar button on the Main Window=Megváltoztatja az intézkedés a Spam eszköztár gombot a főablak
+AKA Explicit TLS=más néven Explicit TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Írja minden szabályt intézkedést egy log fájlt. Fájlnév: RULES.LOG a felhasználói beállítások könyvtárat PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Tiltja a HTML Preview fülön amikor előnézetét egy üzenetet.
+Listbox Font=Listaablakban betűtípus
+Reset Fonts and Colors=Visszaállítása betűtípusok és színek
+APOP=APOP
+SASL=SASL
+Customize the Font=Megszokott a betűtípus
+Edit=Szerkeszt

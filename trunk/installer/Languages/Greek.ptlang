@@ -1,10 +1,8 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray translation file
-# ------------------------
-#    Greek Translation by Vaggelis Skarmoutsos and Nick Angelopoulos
-#    Ελληνική μετάφραση από τον Βαγγέλη Σκαρμούτσο και τον Νίκο Αγγελόπουλο
+# PopTrayU translation file
 #-----------------------------------------------------------------------
-# 2005-10-15  PopTray 3.2 (beta 2)
+# 2013-06-08 PopTrayU 5.0 beta 1
+# 2005-10-15 PopTray 3.2 (beta 2) by Vaggelis Skarmoutsos and Nick Angelopoulos
 #-----------------------------------------------------------------------
 
 
@@ -74,7 +72,7 @@ Check and Show=Έλεγχος και Εμφάνιση
 Check current account for New Mail=Έλεγχος επιλεγμένου λογαριασμού για νέα μηνύματα
 Check First Account=Έλεγχος πρώτου λογαριασμού
 Check for Mail=Έλεγχος μηνυμάτων
-Check for new mail every =Έλεγχος για νέα μηνύματα κάθε 
+Check for new mail every=Έλεγχος για νέα μηνύματα κάθε 
 Check for New Mail on Startup=Έλεγχος νέων μηνυμάτων κατά την εκκίνηση
 Check if On-Line=Έλεγχος μόνο αν υπάρχει ενεργή σύνδεση
 Check on-line if newer version available.=Έλεγχος για νεότερη έκδοση.
@@ -191,7 +189,7 @@ Information=Πληροφορίες
 INI Files=Αρχεία INI
 Interval=Χρόνος ελέγχου
 Italian=Ιταλικά
-KB=
+KB=KB
 Korean=Κορεάτικα
 Language:=Γλώσσα:
 Large icons=Μεγάλα εικονίδια
@@ -445,3 +443,106 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=Το κουμπί Χ ελαχιστοποιεί
 Yes=Ναι
 You are trying to delete protected messages.=Προσπαθείτε να διαγράψετε προστατευμένα μηνύματα.
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Οπτική εμφάνιση
+Main Window Listbox Font=Κύρια Font Παράθυρο πλαίσιο λίστας
+Change the main window listbox background=Αλλάξτε το κύριο υπόβαθρο πλαίσιο λίστας παραθύρου
+Change the main window listbox foreground=Αλλαγή της κύριας προσκήνιο παράθυρο listbox
+Failure connecting to server.=Αποτυχία σύνδεσης με το διακομιστή.
+Server found, but is not a mail server.=Διακομιστή που βρέθηκαν, αλλά δεν είναι ένας mail server.
+Change the Main Window Listbox Font=Αλλαγή της γραμματοσειράς Main Window πλαίσιο λίστας
+Clear all customizations=Διαγραφή όλων των προσαρμογών
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Χάρη στις ακόλουθες εθελοντές που βοήθησαν μεταφράσει αυτό το λογισμικό:
+Language=Γλώσσα
+Translator=Μεταφραστής
+Component=Συστατικό
+Author=Συγγραφέας
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU είναι ένα παράγωγο έργο του PopTray Renier Crause του 3.2 και ένα μεγάλο μέρος του κώδικα σε αυτό το αίτημα αυτό είναι επομένως Copyright 2001-2005 Renier Crause. Πολλές ευχαριστίες σε Ρενιέ για την ανάπτυξη PopTray, και για την υποστήριξη που παρείχε.
+Check online for newer version=Ελέγξτε online για νεότερη έκδοση
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Εμφάνιση Λάθη σε Popups Balloon (Αντί διάλογοι)
+Changes how errors are shown when the main window is visible.=Αλλαγές πώς τα λάθη εμφανίζονται όταν το κύριο παράθυρο είναι ορατό.
+Error checking=Ο έλεγχος σφαλμάτων
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Συντελεστές Component
+Translation Credits=Εύσημα Μετάφρασης
+Message Deletion=Διαγραφή Μηνύματος
+Mail Client Communication=Mail πελάτη επικοινωνίας
+Rules/Blacklist=Κανόνες / Μαύρη
+Advanced POP Settings=Προηγμένες ρυθμίσεις POP
+Error Handling=Χειρισμός σφαλμάτων
+Message Download (Enable to use advanced rules)=Λήψη μηνύματος (Ενεργοποίηση να χρησιμοποιούν προηγμένες κανόνες)
+Startup=Startup
+Tray Icon=Icon Δίσκος
+New Message Notification=Ειδοποίηση νέου μηνύματος
+Plugins=Πρόσθετα
+How often should PopTrayU check for new mail?=Πόσο συχνά πρέπει PopTrayU ελέγχει για νέα e-mail;
+Interval Check Conditions=Όροι Έλεγχος Διάστημα
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Folder: (όπου αποθηκεύονται PopTray.ini και κανόνες αρχεία)
+Misc=Διάφορα
+About PopTrayU=Σχετικά με PopTrayU
+Version=Εκδοχή
+Show Images=Προβολή εικόνων
+Reset Customizations=Επαναφορά Προσαρμογές
+Most UI Items= Οι περισσότεροι UI Είδη
+Vertical Tabs=Vertical Tabs
+Message List=Λίστα μηνυμάτων
+Flash Tray Icon=Flash Tray Icon
+Show Balloon Notification=Εμφάνιση Γνωστοποίηση Balloon
+Use Deluxe Balloon=Χρησιμοποιήστε Deluxe μπαλόνι
+(show for=(Δείτε για
+seconds)=δευτερόλεπτα)
+Show Main Window=Εμφάνιση Main Window
+Keyboard Lights=Φώτα Πληκτρολόγιο
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 με SSL ή ΑΠΟΠ
+Specify a different timer interval for each account.=Καθορίστε ένα διαφορετικό χρονικό χρονόμετρο για κάθε λογαριασμό.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Χρησιμοποιείται από dial-up χρήστες που δεν θέλουν την dial-up παράθυρο σε pop-up όταν δεν είστε συνδεδεμένοι. Κάνει έλεγχο λίγο πιο αργά.
+This setting can be changed via setup or a command line parameter.=Αυτή η ρύθμιση μπορεί να αλλάξει μέσω της ρύθμισης ή μια παράμετρο γραμμής εντολών.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-κλειδιά είναι όλο το σύστημα. Χρησιμοποιήστε μια ασυνήθιστη ζεστό-κλειδί και όχι αυτό που χρησιμοποιείτε συχνά σε άλλες εφαρμογές. Hot-κλειδιά όπως το Ctrl-C δεν συνιστώνται.
+Don't automatically check for new messages=Μην ελέγχει αυτόματα για νέα μηνύματα
+Set Interval per account=Ορισμός Διάστημα ανά λογαριασμό
+Only check when already online=Μόνο όταν έχει ήδη ελέγξει σε απευθείας σύνδεση
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Μην επιλέξετε αυτό υπόψη μεταξύ
+Advanced=Αναλυτική
+Use SSL/TLS=Χρήση SSL / TLS
+Authentication=Πιστοποίηση
+SSL/TLS Version:=SSL / TLS Έκδοση:
+Auto=Auto
+Password=Κωδικός
+Toolbar Color Scheme:=Toolbar Συνδυασμός χρωμάτων:
+Normal=Κανονικός
+Twilight=Λυκόφως
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Επιλογές μήνυμα Προεπισκόπηση
+Disable HTML Preview=Απενεργοποίηση HTML Προεπισκόπηση
+Main Window=Κύριο Παράθυρο
+Default Spam Toolbar Button Action:=Προεπιλογή Toolbar Spam Κουμπί Ενέργεια:
+Default Spam Toolbar Action:=Προεπιλογή Δράση Toolbar Spam:
+Image Credits=Συντελεστές εικόνας
+Image Package=Package Image
+Images=Εικόνες
+Main Window Message List=Κύρια Λίστα μηνυμάτων Παράθυρο
+Main Window Behaviors=Κύρια Συμπεριφορές Παράθυρο
+Plain Text=Απλό Κείμενο
+Credits:=Credits:
+
+Theme:=Θέμα:
+Spam Management=Spam Διαχείρισης
+Changes the action of the Spam toolbar button on the Main Window=Αλλάζει τη δράση του Spam κουμπί της γραμμής εργαλείων στο κύριο παράθυρο
+AKA Explicit TLS=επίσης γνωστή ως ρητή TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Γράψτε όλες τις ενέργειες κανόνες σε ένα αρχείο καταγραφής. Όνομα αρχείου: RULES.LOG, στις ρυθμίσεις του χρήστη καταλόγου για PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Απενεργοποιεί το HTML καρτέλα Preview κατά την προεπισκόπηση ενός μηνύματος.
+Listbox Font=Listbox γραμματοσειράς
+Reset Fonts and Colors=Επαναφορά γραμματοσειρών και χρωμάτων
+APOP=ΑΠΟΠ
+SASL=SASL
+Customize the Font=Προσαρμογή της γραμματοσειράς
+Edit=Επεξεργασία

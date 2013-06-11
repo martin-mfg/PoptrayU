@@ -1,9 +1,8 @@
 ﻿#-----------------------------------------------------------------------
 # PopTrayU translation file for Turkish [TÜRKÇE]
-# --------------------------------------------------
-# Send suggestions to metin@ozmener.net (2006-09-07)
 #-----------------------------------------------------------------------
-# 2005-01-03  PopTray 3.1
+# 2013-06-10 PopTrayU 5.0 beta 1
+# 2005-01-03 PopTray 3.1 metin@ozmener.net (2006-09-07)
 #-----------------------------------------------------------------------
 
 (All Actions)=(Tüm İşlemler)
@@ -435,3 +434,115 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes= x düğmesi küçültür
 Yes=Evet
 You are trying to delete protected messages.=Korumalı iletileri silmeye çalışıyorsunuz.
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Yunan
+Valencian=Valencia
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Açık
+Open Message=Açık Mesaj
+Frisian=Frizyeli
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Görsel Görünüm
+Main Window Listbox Font=Ana Pencere liste kutusu Yazı
+Change the main window listbox background=Ana pencerede liste arka planını değiştirme
+Change the main window listbox foreground=Ana pencerede liste ön değiştirin
+Failure connecting to server.=Sunucuya bağlanırken hatası.
+Server found, but is not a mail server.=Sunucu bulundu, ancak bir posta sunucusu değil.
+Change the Main Window Listbox Font=Ana Pencere liste kutusu yazı tipini değiştirmek
+Clear all customizations=Tüm özelleştirmeleri temizleyin
+HTML View=HTML Profil
+Thanks to the following volunteers who helped translate this software:=Bu yazılım tercüme yardımcı aşağıdaki gönüllülere sayesinde:
+Language=Dil
+Translator=Tercüman
+Component=Bileşen
+Author=Yazar
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU Renier Crause en PopTray 3.2 ve daha bu uygulamada kod böylece Copyright 2.001-2.005 Renier Crause olan bir türevi eseridir. Çok teşekkürler PopTray geliştirmek için Renier için ve destek için o sağlamıştır.
+Check online for newer version=Yeni bir sürümü için çevrimiçi kontrol edin
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Balon Açılır hatalar (yerine Modal Dialogs) göster
+Changes how errors are shown when the main window is visible.=Ana pencere görünür olduğunda yanlışlar nasıl değiştirir.
+Error checking=Hata denetimi
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Bileşen Kredi
+Translation Credits=Çeviri Kredi
+Message Deletion=Mesaj Silme
+Mail Client Communication=Posta istemcisi İletişim
+Rules/Blacklist=Kuralları / Kara
+Advanced POP Settings=Gelişmiş POP Ayarları
+Error Handling=Hata İşleme
+Message Download (Enable to use advanced rules)=Mesajı İndir (gelişmiş kurallar kullanmak için etkinleştirin)
+Startup=Başlangıç
+Tray Icon=Tepsi Simgesi
+New Message Notification=Yeni Mesaj Bildirimi
+Plugins=Eklentiler
+How often should PopTrayU check for new mail?=Ne kadar sıklıkla PopTrayU yeni posta kontrol etmelisiniz?
+Interval Check Conditions=Aralığı Kontrol Koşullar
+User Data Folder: (where PopTray.ini and Rules files are stored)=Kullanıcı Veri Dosya: (PopTray.ini ve Kuralları dosyalarının saklandığı yer)
+Misc=Çeşitli
+About PopTrayU=PopTrayU Hakkında
+Version=Versiyon
+Show Images=Görüntüler göster
+Reset Customizations=Özelleştirmeler Sıfırla
+Most UI Items= En UI Öğeler
+Vertical Tabs=Dikey Sekmeler
+Message List=Mesaj Listesi
+Flash Tray Icon=Flaş Tepsi Simgesi
+Show Balloon Notification=Balon Bildirim göster
+Use Deluxe Balloon=Kullanım Deluxe Balon
+(show for=(Için göstermek
+seconds)=saniye)
+Show Main Window=Ana Pencere göster
+Keyboard Lights=Klavye Işıklar
+IMAP4=IMAP4
+POP3 with SSL or APOP=SSL veya APOP ile POP3
+Specify a different timer interval for each account.=Her bir hesap için farklı bir zaman aralığı belirleyin.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Eğer bağlı olmadığınızda pop-up çevirmeli iletişim istemiyorum dial-up kullanıcıları tarafından kullanılır. Biraz daha yavaş kontrol yapar.
+This setting can be changed via setup or a command line parameter.=Bu ayar, kurulum veya bir komut satırı parametresi ile değiştirilebilir.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Sıcak-Keys sistem genelinde bulunmaktadır. Diğer uygulamalarda sık kullandığınız alışılmadık sıcak anahtar yerine birini kullanın. Ctrl-C gibi sıcak-tuşları tavsiye edilmez.
+Don't automatically check for new messages=Yeni iletileri otomatik olarak kontrol etme
+Set Interval per account=Hesap başına Aralığı ayarlayın
+Only check when already online=Yalnızca çevrimiçi zaten kontrol
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Bu hesabı arasında kontrol yok
+Advanced=Gelişmiş
+Use SSL/TLS=SSL / TLS kullanın
+Authentication=Kimlik Doğrulama
+SSL/TLS Version:=SSL / TLS Sürüm:
+Auto=Oto
+Password=Parola
+Toolbar Color Scheme:=Araç Çubuğu Renk Düzeni:
+Normal=Normal
+Twilight=Tan
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Mesaj Önizleme Seçenekleri
+Disable HTML Preview=HTML Önizleme devre dışı
+Main Window=Ana Pencere
+Default Spam Toolbar Button Action:=Varsayılan Spam Araç Çubuğu Düğmesi Eylem:
+Default Spam Toolbar Action:=Varsayılan Spam Araç Çubuğu Eylem:
+Image Credits=Görüntü Kredi
+Image Package=Resim Paketi
+Images=Görüntüler
+Main Window Message List=Ana Pencere Mesaj Listesi
+Main Window Behaviors=Ana Pencere Davranışları
+Plain Text=Düz Metin
+Credits:=Kredi:
+
+Theme:=Tema:
+Spam Management=Spam Yönetimi
+Changes the action of the Spam toolbar button on the Main Window=Ana Pencere üzerindeki Spam araç çubuğu düğmesi eylemini değiştirir
+AKA Explicit TLS=Ayrıca Açık TLS gibi bilinen
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Bir günlük dosyasına tüm kuralları eylemleri yazın. Adı: PopTrayU için kullanıcı ayarları dizininde RULES.LOG.
+Disables the HTML Preview tab when previewing a message.=Bir mesaj önizleme, HTML Önizleme sekmesinde devre dışı bırakır.
+Listbox Font=Liste kutusu Yazı
+Reset Fonts and Colors=Yazı tipleri ve renkler Sıfırla
+APOP=APOP
+SASL=SASL
+Customize the Font=Yazı tipi özelleştirme
+Edit=Düzenle
