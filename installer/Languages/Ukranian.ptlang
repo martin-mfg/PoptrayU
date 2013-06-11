@@ -449,3 +449,123 @@ Window=Системне меню
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Записує всі правила до файлу звіту.~Ім'я файлу: RULES.LOG в директорії,~куди було встановлено PopTray.
 X Button Minimizes=Кнопка Х мінімізує
 Yes=Так
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Грецька
+Valencian=Валенсія
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Відкрити
+Open Message=Відкрити повідомлення
+Frisian=Фризька
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Зовнішній вигляд
+Main Window Listbox Font=Головне вікно Шрифт Listbox
+Change the main window listbox background=Змініть основний фон вікна списку
+Change the main window listbox foreground=Змінити головному вікні списку передньому плані
+Failure connecting to server.=Відмова з'єднання з сервером.
+Server found, but is not a mail server.=Сервер знайдений, але не поштового сервера.
+Change the Main Window Listbox Font=Змініть Головне вікно Шрифт Listbox
+Clear all customizations=Очистити всі налаштування
+HTML View=HTML Переглянути
+Thanks to the following volunteers who helped translate this software:=Завдяки волонтерам, які допомогли перевести це програмне забезпечення:
+Language=Мова
+Translator=Перекладач
+Component=Компонент
+Author=Автор
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU є похідною роботою PopTray Реньє Crause в 3,2 і велика частина коду в цьому додатку, таким чином Copyright 2001-2005 Crause Реньє. Велике спасибі Реньє PopTray для розробки, так і для підтримки, яку він надав.
+Check online for newer version=Перевірити в інтернеті нову версію
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Показати Помилки в кулю спливаючі вікна (замість модальних діалогів)
+Changes how errors are shown when the main window is visible.=Зміни як відображаються помилки, коли головне вікно є видимим.
+Error checking=Контроль помилок
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Компонент кредити
+Translation Credits=Переклад кредитів
+Message Deletion=Видалення повідомлень
+Mail Client Communication=Спілкування Пошта Клієнт
+Rules/Blacklist=Правила / Чорний список
+Advanced POP Settings=Розширені налаштування POP
+Error Handling=Обробка помилок
+Message Download (Enable to use advanced rules)=Повідомлення Скачати (дозволяють використовувати просунуті правила)
+Startup=Startup
+Tray Icon=Tray Icon
+New Message Notification=Повідомлення про нове повідомлення
+Plugins=Плагіни
+How often should PopTrayU check for new mail?=Як часто слід PopTrayU перевірки нової пошти?
+Interval Check Conditions=Умови Інтервал перевірки
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Папка: (де PopTray.ini і правила зберігаються файли)
+Misc=Різне
+About PopTrayU=Про PopTrayU
+Version=Версія
+Show Images=Показати фото
+Reset Customizations=Скидання налаштувань
+Most UI Items= Більшість елементи інтерфейсу
+Vertical Tabs=Vertical Tabs
+Message List=Перелік повідомлень
+Flash Tray Icon=Спалах Tray Icon
+Show Balloon Notification=Показати Спливаючі повідомлення
+Use Deluxe Balloon=Використовуйте Делюкс Balloon
+(show for=(Показати на
+seconds)=секунд)
+Show Main Window=Показати головне вікно
+Keyboard Lights=Клавіатура світло
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 з SSL або APOP
+Specify a different timer interval for each account.=Вкажіть іншу інтервальний таймер для кожного облікового запису.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Використовується користувачів комутованого доступу, які не хочуть комутованого діалог спливаючі, коли ви не підключені. Робить перевірку трохи повільніше.
+This setting can be changed via setup or a command line parameter.=Ця установка може бути змінена через установку або параметр командного рядка.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Гарячі Ключі всій системі. Використовуйте незвичайні гарячих клавіш, а не той, який ви часто використовуєте в інших додатках. Гарячі клавіші, як Ctrl-C не рекомендується.
+Don't automatically check for new messages=Чи не автоматично перевіряти наявність нових повідомлень
+Set Interval per account=Set Interval за рахунок
+Only check when already online=Тільки перевірити, коли вже в мережі
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Не перевіряти цю обліковий запис між
+Advanced=Передовий
+Use SSL/TLS=Використання SSL / TLS
+Authentication=Ідентифікація
+SSL/TLS Version:=SSL / TLS версії:
+Auto=Автоматичний
+Password=Пароль
+Toolbar Color Scheme:=Схема панелі інструментів Колір:
+Normal=Нормальний
+Twilight=Сутінки
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Опції повідомлення Попередній
+Disable HTML Preview=Відключити HTML Попередній перегляд
+Main Window=Головне вікно
+Default Spam Toolbar Button Action:=Спаму за замовчуванням кнопки панелі інструментів Дія:
+Default Spam Toolbar Action:=Спаму за замовчуванням дії панелі інструментів:
+Image Credits=Зображення кредити
+Image Package=Зображення Пакет
+Images=Зображення
+Main Window Message List=Головному списку повідомлень вікна
+Main Window Behaviors=Головне вікно Поведінки
+Plain Text=Звичайний текст
+Credits:=Кредити:
+
+Theme:=Стиль:
+Spam Management=Спам управління
+Changes the action of the Spam toolbar button on the Main Window=Змінює дію Спам кнопку панелі інструментів у головному вікні
+AKA Explicit TLS=також відомий як явні TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Написати всі правила дій в лог-файл. Файл: RULES.LOG в каталозі користувача настройки для PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Відключає HTML вкладку Попередній перегляд при перегляді повідомлення.
+Listbox Font=Listbox шрифту
+Reset Fonts and Colors=Скидання шрифтів і квітів
+APOP=APOP
+SASL=SASL
+Customize the Font=Налаштувати шрифт
+Edit=Редагувати
+
+Show Messages while Checking=Показати повідомлення при перевірці
+While checking, show each message as it is downloaded.=Під час перевірки, показати кожне повідомлення під час завантаження.
+Extra Confirmation when Deleting Protected Messages=Додаткове підтвердження при видаленні повідомлень, захищених
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Додаткове підтвердження, коли ви спробуєте видалити повідомлення, захищені за правилами або білий список.
+Delete Mail only on Next Check=Видаляти пошту тільки на наступній перевірки
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=При видаленні пошти вони отримуватимуть позначена для видалення і тільки фізично видалено під час наступної перевірки працює.
+Stop Checking=припинити перевірку

@@ -407,4 +407,172 @@ Window=Langas
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Įrašyti visų veiksmų taisykles į registracinį failą.~Failo vardas:RULES.LOG. toje pačioje papkėje kaip pagrindinė programa. 
 X Button Minimizes=X mygtukas sumažinimui.
 Yes=Taip
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Patikrinkite Reg Expr sintaksę
+Regular Expression Syntax OK=Reguliari išraiška Sintaksė Gerai
+Needed=Reikalingas
+ANY Row=BET eilutė
+ALL Rows=Visos eilutės
+Area=Plotas
+Compare=Palyginti
+Text=Tekstas
+Not=Ne
+Add Row=Pridėti eilutę
+Delete Row=Ištrinti eilutę
+Play Sound=Groti garsą
+Tray Color=Dėklo spalva
+Status=Statusas
+Protected=Saugomos
+To Be Deleted=Turi būti išbrauktas
+Ignored=Ignoruojamas
+Has Attachment=Turi priedą
+Viewed=Peržiūrėta
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Kroatų
+Move Down=Perkelti žemyn
+Move Up=Perkelti
+Delete Mail only on Next Check=Ištrinti laišką tik "Next Check
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Ištrynus laišką jie gaus pažymėtas pašalinimui ~ ir tik fiziškai ištrinti, kai kitas patikrinimas veikia.
+Undelete=Atstatyti
+Add Rule for mail from Sender=Pridėti taisyklę laiškams iš siuntėjo
+Add Rule for mail with Subject=Pridėti taisyklę paštu su nuoroda
+This will create a rule to delete all future e-mails with subject=Tai padės sukurti taisyklę ištrinti visus būsimus elektroninius laiškus su klausimu
+This will create a rule to spam mark all future e-mails with subject=Tai padės sukurti taisyklę šlamštą ženklo visi būsimi e-laiškus šiuo klausimu
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galisų
+Downloading=Atsisiųsti
+Show Messages while Checking=Rodyti žinutes, o patikrinimas
+While checking, show each message as it is downloaded.=Nors tikrinimo, parodyti kiekvienos žinutės, nes ji yra siunčiama.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Papildomas patvirtinimas, kai ištrynimas apsaugotiems pranešimams
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Papildomas patvirtinimas, kai bandote ištrinti žinutes ~ apsaugotas taisyklės arba "baltąjį sąrašą".
+You are trying to delete protected messages.=Bandote ištrinti apsaugotas žinutes.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Lietuvos
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Pridėti taisyklę ištrinti laišką su Pavadinimas
+Add Rule to delete Mail from Sender=Pridėti taisyklę ištrinti laišką iš siuntėjo
+Add Rule to mark messages with Subject as Spam=Pridėti taisyklę pažymėti žinutes su tema, Šlamštas
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Graikijos
+Valencian=Valensijos
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Atidaryti
+Open Message=Atidaryti pranešimas
+Frisian=Fryzų
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Išvaizda
+Main Window Listbox Font=Pagrindinis langas ListBox Šriftas
+Change the main window listbox background=Keisti pagrindiniame lange ListBox fone
+Change the main window listbox foreground=Keisti pagrindiniame lange ListBox įgytas žinias
+Failure connecting to server.=Nesugebėjimas jungiantis prie serverio.
+Server found, but is not a mail server.=Serveris rasti, tačiau tai nėra pašto serveris.
+Change the Main Window Listbox Font=Keisti pagrindiniame lange ListBox Šriftas
+Clear all customizations=Išvalyti visus pritaikymų
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Dėka šių savanorių, kurie padėjo išversti šią programinę įrangą:
+Language=Kalba
+Translator=Vertėjas
+Component=Komponentas
+Author=Autorius
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU yra išvestinis kūrinys 3,2 PopTray RENIER Crause yra ir daug šioje paraiškoje kodas yra todėl Copyright 2001-2005 Renier Crause. Daugelis dėka RENIER plėtoti PopTray ir už paramą jis suteikė.
+Check online for newer version=Patikrinkite internete naujesnę versiją
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Rodyti Klaidos Balloon Iššokantys langai (vietoj modalinio dialogai)
+Changes how errors are shown when the main window is visible.=Pokyčiai kaip klaidos rodomas, kai pagrindinis langas yra matomas.
+Error checking=Klaidų
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Sudėtinės Kreditai
+Translation Credits=Vertimo Kreditai
+Message Deletion=Pranešimas panaikinimas
+Mail Client Communication=Pašto klientas Bendravimas
+Rules/Blacklist=Taisyklės / į juodąjį sąrašą
+Advanced POP Settings=Išplėstinė POP Nustatymai
+Error Handling=Klaidų valdymas
+Message Download (Enable to use advanced rules)=Pranešimas Parsisiųsti (Enable naudoti pažangias taisykles)
+Startup=Paleidimas
+Tray Icon=Dėklo piktogramą
+New Message Notification=Naujas žinute
+Plugins=Įskiepiai
+How often should PopTrayU check for new mail?=Kaip dažnai reikia PopTrayU patikrinti ar nėra naujų laiškų?
+Interval Check Conditions=Intervalas Patikrinkite Sąlygos
+User Data Folder: (where PopTray.ini and Rules files are stored)=Vartotojo duomenys Byla: (kai PopTray.ini ir taisyklės failai yra saugomi)
+Misc=Įvairūs
+About PopTrayU=Apie PopTrayU
+Version=Versija
+Show Images=Rodyti nuotraukas
+Reset Customizations=Atstatyti Tinkinimai
+Most UI Items= Dauguma UI elementai
+Vertical Tabs=Vertikalios Skirtukai
+Message List=Žinučių sąrašas
+Flash Tray Icon=Flash dėklo piktogramą
+Show Balloon Notification=Rodyti balionas Pranešti
+Use Deluxe Balloon=Naudokite Deluxe balioninės
+(show for=(Rodyti už
+seconds)=sekundžių)
+Show Main Window=Rodyti Pagrindinė langą
+Keyboard Lights=Klaviatūros Žibintai
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 SSL ar APOP
+Specify a different timer interval for each account.=Nurodyti kitą laikmačio intervalas kiekvieną sąskaitą.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Naudojamas dial-up vartotojams, kurie nenori, kad dial-up langą, kad pop-up kai nesate prisijungę. Modelių tikrinimas šiek tiek lėčiau.
+This setting can be changed via setup or a command line parameter.=Šis nustatymas gali būti pakeistas per setup arba komandinės eilutės parametrą.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Karšto Raktai visai sistemai. Naudokite neįprastą karšto raktas, o ne vieną dažnai naudojamą kitose srityse. Karšto raktai, pavyzdžiui, Ctrl-C vartoti nerekomenduojama.
+Don't automatically check for new messages=Negalima automatiškai tikrinti naujus pranešimus
+Set Interval per account=Nustatykite intervalą už sąskaitą
+Only check when already online=Tik patikrinti, kai jau yra internete
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Nežymėkite šio sąskaitą tarp
+Advanced=Pažangus
+Use SSL/TLS=Naudokite SSL / TLS
+Authentication=Atpažinimas
+SSL/TLS Version:=SSL / TLS Versija:
+Auto=Auto
+Password=Slaptažodis
+Toolbar Color Scheme:=Juosta Spalvų schema:
+Normal=Normalus
+Twilight=Saulėlydis
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Pranešimas Peržiūrėti parinktys
+Disable HTML Preview=Išjungti HTML Peržiūra
+Main Window=Pagrindinis langas
+Default Spam Toolbar Button Action:=Įprasta Šlamštas įrankių juostos mygtukų Veiksmas:
+Default Spam Toolbar Action:=Įprasta Šlamštas juosta Veiksmas:
+Image Credits=Image Kreditai
+Image Package=Paveikslėlio paketas
+Images=Vaizdai
+Main Window Message List=Pagrindinis langas Žinučių sąrašas
+Main Window Behaviors=Pagrindinis langas Elgesį
+Plain Text=Paprastas tekstas
+Credits:=Kreditai:
+
+Theme:=Tema:
+Spam Management=Šlamštas valdymas
+Changes the action of the Spam toolbar button on the Main Window=Keičia Spam įrankių juostos mygtuką veiksmų Pagrindinis langas
+AKA Explicit TLS=taip pat žinomas kaip aiškų TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Rašyti Visos taisyklės veiksmus į žurnalo failą. Pavadinimas: RULES.LOG naudotojo nustatymų, katalogus PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Išjungia HTML skirtuką Peržiūra kai peržiūrėdami žinutę.
+Listbox Font=Listbox Šriftas
+Reset Fonts and Colors=Atstatyti šriftus ir spalvas
+APOP=APOP
+SASL=SASL
+Customize the Font=Tinkinti Šriftas
+Edit=Redaguoti
+
+
 # END OF FILE

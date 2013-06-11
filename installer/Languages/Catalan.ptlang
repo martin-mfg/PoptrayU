@@ -1,12 +1,9 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray 3.0 translation file
+# PopTrayU translation file - Catalan
 #-----------------------------------------------------------------------
-#
-#   Traducció al català feta per Xavier Sánchez (xaviersl@email.com)
-#   Darrera actualització : 09/12/03 (PT3.0.2)
-#
+# 2013-06-09 Updated for PopTrayU 5.0 beta 1
+# 2003-12-09 PopTray 3.0.2 - Xavier Sánchez (xaviersl@email.com)
 #-----------------------------------------------------------------------
-#
 (All Actions)=(Totes les accions)
 (Checkmark toggles visibility)=(Marcar per commutar la visibilitat)
 1 message deleted.=1 missatge esborrat.
@@ -404,3 +401,173 @@ Window=Finestra
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Escriure totes les accions de les regles a un arxiu de registre.~Arxiu: RULES.LOG (a la mateixa carpeta que el PopTrayU).
 X Button Minimizes=El botó X minimitza
 Yes=&Sí
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Aturar la comprovació
+Spam Last=Darrera spam
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Comprovi la sintaxi Expr Reg
+Regular Expression Syntax OK=Expressions regulars Sintaxi Acceptar
+Needed=Cal
+ANY Row=Qualsevol fila
+ALL Rows=Totes les files
+Area=Àrea
+Compare=Comparar
+Text=Text
+Not=No
+Add Row=Afegir fila
+Delete Row=Eliminar fila
+Play Sound=Reproduir so
+Tray Color=Color de la safata
+Status=Estat
+Protected=Protegit
+To Be Deleted=A esborrar
+Ignored=Ignorat
+Has Attachment=Té adjunts
+Viewed=Vist
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Croat
+Move Down=Baixar
+Move Up=Pujar
+Delete Mail only on Next Check=Eliminar correu només en seguir Verificar
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=En eliminar correu que marcaran per a la seva eliminació ~ i eliminats només físicament quan la comprovació s'executa.
+Undelete=Undelete
+Add Rule for mail from Sender=Afegeix regla de correu del remitent
+Add Rule for mail with Subject=Afegeix regla de correu amb l'assumpte
+This will create a rule to delete all future e-mails with subject=Això crearà una regla per eliminar tots els futurs missatges de correu electrònic amb l'assumpte
+This will create a rule to spam mark all future e-mails with subject=Això crearà una regla a la marca d'spam tots els futurs missatges de correu electrònic amb l'assumpte
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Gallego
+Downloading=Descàrrega d'
+Show Messages while Checking=Mostrar missatges mentre es comprova
+While checking, show each message as it is downloaded.=Mentre que el registre, mostri cada missatge que es descarrega.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Confirmació addicional a l'esborrar missatges protegits
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Confirmació addicional quan intenta eliminar missatges ~ protegits per les normes o la llista blanca.
+You are trying to delete protected messages.=Vostè està tractant d'eliminar els missatges protegits.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Lituà
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Afegeix regla per Eliminar mail amb Assumpte
+Add Rule to delete Mail from Sender=Afegeix regla per eliminar correu del remitent
+Add Rule to mark messages with Subject as Spam=Afegeix regla per marcar els missatges amb l'assumpte com Spam
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Grec
+Valencian=Valencià
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Obert
+Open Message=Obrir missatge
+Frisian=Frisio
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aparença Visual
+Main Window Listbox Font=Finestra principal listbox Font
+Change the main window listbox background=Canvieu la finestra principal fons listbox
+Change the main window listbox foreground=Canvieu la finestra principal listbox primer pla
+Failure connecting to server.=Error al connectar amb el servidor.
+Server found, but is not a mail server.=Servidor trobar, però no és un servidor de correu.
+Change the Main Window Listbox Font=Canvieu la finestra principal de quadre de llista Font
+Clear all customizations=Esborrar totes les personalitzacions
+HTML View=Vista HTML
+Thanks to the following volunteers who helped translate this software:=Gràcies als següents voluntaris que van ajudar a traduir aquest programari:
+Language=Idioma
+Translator=Traductor
+Component=Component
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU és una obra derivada d'Renier Crause PopTray 3.2 i gran part del codi d'aquesta aplicació és tant Copyright 2001-2005 Renier Crause. Moltes gràcies a Renier per desenvolupar PopTray, i pel suport que ha brindat.
+Check online for newer version=Comproveu en línia per a la versió més recent
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Mostra els errors de Popups globus (En lloc de quadres de diàleg modals)
+Changes how errors are shown when the main window is visible.=Canvis com es mostren els errors quan la finestra principal és visible.
+Error checking=La comprovació d'errors
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Crèdits de components
+Translation Credits=Crèdits de traducció
+Message Deletion=Supressió Missatge
+Mail Client Communication=Correu Communication Client
+Rules/Blacklist=Regles / llista negra
+Advanced POP Settings=Configuració POP avançada
+Error Handling=Control d'errors
+Message Download (Enable to use advanced rules)=Descarregar missatge (Habilitar per utilitzar les regles avançades)
+Startup=Inici
+Tray Icon=Icona de la safata
+New Message Notification=Nou missatge de notificació
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Amb quina freqüència ha de comprovar PopTrayU correu nou?
+Interval Check Conditions=Interval de comprovació de les condicions
+User Data Folder: (where PopTray.ini and Rules files are stored)=Carpeta de Dades d'usuari: (on s'emmagatzemen els arxius PopTray.ini i regles)
+Misc=Misc
+About PopTrayU=Sobre PopTrayU
+Version=Versió
+Show Images=Mostrar imatges
+Reset Customizations=Restablir personalitzacions
+Most UI Items= Objectes més d'UI
+Vertical Tabs=Vertical Tabs
+Message List=Llista de missatges
+Flash Tray Icon=Flash icona de la safata
+Show Balloon Notification=Mostra Notificació de globus
+Use Deluxe Balloon=Utilitzeu Deluxe Globus
+(show for=(Mostra per
+seconds)=segons)
+Show Main Window=Mostrar finestra principal
+Keyboard Lights=Llums del teclat
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 amb SSL i APOP
+Specify a different timer interval for each account.=Especifiqueu un interval de temporitzador diferent per a cada compte.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Utilitzat pels usuaris dial-up que no volen el diàleg d'accés telefònic per pop-up quan no estigui connectat. Fa comprovar una mica més lent.
+This setting can be changed via setup or a command line parameter.=Aquesta configuració es pot canviar a través de la instal · lació o un paràmetre de línia d'ordres.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Keys són per a tot el sistema. Utilitzeu un inusual lloc de tecles d'una s'utilitza amb freqüència en altres aplicacions. No es recomanen les tecles calentes com Ctrl-C.
+Don't automatically check for new messages=No comprovar automàticament si hi ha nous missatges
+Set Interval per account=Ajust d'interval per cada compte
+Only check when already online=Només comprovar si ja estan en línia
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=No marqui aquest compte entre
+Advanced=Avançat
+Use SSL/TLS=Utilitza SSL / TLS
+Authentication=Autenticació
+SSL/TLS Version:=SSL / TLS Versió:
+Auto=Acte
+Password=Contrasenya
+Toolbar Color Scheme:=Barra d'eines de combinació de colors:
+Normal=Normal
+Twilight=Crepuscle
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Missatge Opcions de vista prèvia
+Disable HTML Preview=Desactivar HTML Preveure
+Main Window=Finestra Principal
+Default Spam Toolbar Button Action:=Defecte spam Toolbar Button Acció:
+Default Spam Toolbar Action:=Defecte spam Toolbar Acció:
+Image Credits=Crèdits de les imatges
+Image Package=Paquet d'imatge
+Images=Imatges
+Main Window Message List=Llista de missatges Finestra Principal
+Main Window Behaviors=Principals Comportaments finestra
+Plain Text=Text sense format
+Credits:=Crèdits:
+
+Theme:=Tema:
+Spam Management=Spam Gestió
+Changes the action of the Spam toolbar button on the Main Window=Canvia l'acció del botó És Spam barra d'eines a la finestra principal
+AKA Explicit TLS=també conegut com TLS explícits
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Escriu totes les accions de regles a un fitxer de registre. Nom del fitxer: RULES.LOG al directori de configuració d'usuari per PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Desactiva la fitxa Vista prèvia HTML a la vista prèvia d'un missatge.
+Listbox Font=Quadre de llista de fonts
+Reset Fonts and Colors=Canviar fonts i colors
+APOP=APOP
+SASL=SASL
+Customize the Font=Personalitzar la font
+Edit=Edita

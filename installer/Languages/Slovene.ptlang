@@ -1,10 +1,10 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray translation file - Slovene language
+# PopTrayU translation file - Slovenian language
 # -----------------------------------------
+# 2013-06-11 PopTrayU 5.0 beta 1
+#------------------------------------------
 # Slovenska verzija: prevedel Shinca & Protoncek
-# -----------------------------------------
 # zadnja sprememba:  22.08.2006
-# -----------------------------------------
 # PopTray 3.2.0 b5 RC1
 #----------------------------------------------------------------------- 
 
@@ -345,7 +345,7 @@ Select the option screen to show.=Izberite okno za prikaz
 Show Info dialog with message details and buttons.=Pokaži info dialog z  podrobnostmi sporočil in gumbi.
 System-wide hot-key to execute selected action.=Sistemska vroča tipka za izvršitev akcije.
 This lists all the plugin DLLs found in your plugins directory.~Select to load/unload. Right-click for options.=Tukaj so našteti vsi vključki v tvoji mapi za vključke.~Izberi za vklop/izklop. Desni klik za možnosti.
-What to show on the TrayIcon~while checking for new mail.=
+What to show on the TrayIcon~while checking for new mail.=Kaj pokazati na TrayIcon pri preverjanju nove pošte.
 When previewing a message, only load the~specified number of lines.=Kaj naj se prikazuje v ikoni v trayu~med preverjanjem za novo pošto.
 When starting PopTrayU, first wait a few seconds~before checking for mail.=Ob zagonu PopTrayUa počaka nekaj sekund pred preverjanjem za novo pošto.
 When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Če dobiš pošto z enega od naslovov v tem seznamu,~je pravila ne bodo pobrisala.
@@ -522,3 +522,107 @@ Valencian=Valencijsko
 Open=Odpri
 Open Message=Odpri sporočilo
 Frisian=Frizijsko
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Vizualni izgled
+Main Window Listbox Font=Glavno okno seznamskem polju Pisava
+Change the main window listbox background=Spremenite glavno okno seznamskem polju ozadje
+Change the main window listbox foreground=Spremenite glavno okno seznamskem polju novega znanja
+Failure connecting to server.=Neuspeh povezavo s strežnikom.
+Server found, but is not a mail server.=Strežnik ugotovljeno, ni pa poštni strežnik.
+Change the Main Window Listbox Font=Spremenite glavno okno seznamskem polju Pisava
+Clear all customizations=Počisti vse prilagoditve
+HTML View=HTML Poglej
+Thanks to the following volunteers who helped translate this software:=Zahvaljujoč naslednjih prostovoljcev, ki so pomagali prevesti to programsko opremo:
+Language=Jezik
+Translator=Prevajalec
+Component=Komponenta
+Author=Avtor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU je derivat delo Renier Crause je PopTray 3.2 in večji del kode je v tem primeru tako Copyright 2001-2005 Renier Crause. Najlepša hvala za Renier za razvoj PopTray, in za podporo je zagotovil.
+Check online for newer version=Preverite na spletu za novejšo verzijo
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Pokaži Napake v Balloon Ljudstvo (namesto modal pogovornih oken)
+Changes how errors are shown when the main window is visible.=Spremembe kako so prikazane napake, ko je viden glavno okno.
+Error checking=Preverjanje napak
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Sestavni Avtorji
+Translation Credits=Prevajalske Avtorji
+Message Deletion=Izbris sporočilo
+Mail Client Communication=Poštni odjemalec Sporočilo
+Rules/Blacklist=Pravila / črno listo
+Advanced POP Settings=Napredne POP Nastavitve
+Error Handling=Napaka Ravnanje
+Message Download (Enable to use advanced rules)=Sporočilo Prenesi (Enable za uporabo naprednih pravil)
+Startup=Zagon
+Tray Icon=Tray Icon
+New Message Notification=Novo obvestilo Sporočilo
+Plugins=Plugins
+How often should PopTrayU check for new mail?=Kako pogosto naj PopTrayU preveri za novo pošto?
+Interval Check Conditions=Interval preverjanja Pogoji
+User Data Folder: (where PopTray.ini and Rules files are stored)=Uporabnik Podatki Mapa: (kjer so shranjeni PopTray.ini in pravila datoteke)
+Misc=Razno
+About PopTrayU=O PopTrayU
+Version=Različica
+Show Images=Prikaži slike
+Reset Customizations=Ponastavi prilagoditve
+Most UI Items= Najbolj UI Točke
+Vertical Tabs=Navpične zavihke
+Message List=Seznam sporočilo
+Flash Tray Icon=Flash Tray Icon
+Show Balloon Notification=Pokaži balon Obvestilo
+Use Deluxe Balloon=Uporaba Deluxe Balloon
+(show for=(Prikaz za
+seconds)=sekund)
+Show Main Window=Pokaži glavno okno
+Keyboard Lights=Tipkovnica Luči
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 s SSL ali APOP
+Specify a different timer interval for each account.=Določite drugačen timer interval za vsak račun.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Uporabljajo dial-up uporabnike, ki ne želijo, da dial-up okno na pop-up, ko niste povezani. Omogoča preverjanje malo počasneje.
+This setting can be changed via setup or a command line parameter.=To nastavitev lahko spremenite z nastavitvijo ali parameter ukazne vrstice.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Vroče tipke so za celoten sistem. Uporabite nenavadno vroče ključ, namesto tistega, ki ga pogosto uporabljajo v drugih aplikacijah. Vroče tipke, kot so Ctrl-C ne priporočamo.
+Don't automatically check for new messages=Ne preverjaj samodejno nova sporočila
+Set Interval per account=Nastavite Interval na računu
+Only check when already online=Ko samo preveri že na spletu
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Ne preveri tega računa med
+Advanced=Napredno
+Use SSL/TLS=Uporaba SSL / TLS
+Authentication=Preverjanje pristnosti
+SSL/TLS Version:=SSL / TLS različice:
+Auto=Avto
+Password=Geslo
+Toolbar Color Scheme:=Barvna shema orodna vrstica:
+Normal=Normalno
+Twilight=Twilight
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Sporočilo Preview Možnosti
+Disable HTML Preview=Onemogoči HTML Predogled
+Main Window=Glavno okno
+Default Spam Toolbar Button Action:=Privzeto Spam Toolbar Button Ukrep:
+Default Spam Toolbar Action:=Privzeto Spam Toolbar Akcija:
+Image Credits=Image Avtorji
+Image Package=Podoba paket
+Images=Slike
+Main Window Message List=Glavna Seznam Window Sporočilo
+Main Window Behaviors=Glavno okno Behaviors
+Plain Text=Plain Text
+Credits:=Kreditne točke:
+
+Theme:=Tema:
+Spam Management=Spam upravljanje
+Changes the action of the Spam toolbar button on the Main Window=Spremeni dejanje gumba Spam orodne vrstice na glavno okno
+AKA Explicit TLS=znan tudi kot eksplicitnih TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Napišite vseh pravil ukrepe za log datoteko. Ime: RULES.LOG v nastavitvah uporabniški mapi za PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Onemogoči HTML jeziček Preview pri predogledu sporočila.
+Listbox Font=Seznamsko polje pisave
+Reset Fonts and Colors=Ponastavi pisave in barve
+APOP=APOP
+SASL=SASL
+Customize the Font=Prilagajanje pisave
+Edit=Urejanje

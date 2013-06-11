@@ -1,14 +1,9 @@
-﻿#----------------------------------#
-# PopTray Arabic translation file  #
-#----------------------------------#
-# Ahmad Mostafa                    #
-# ahmadmostafa@gmail.com           #
-# Cairo, Egypt                     #
-#----------------------------------#
-# Last Change: ‎02:45 AM ‎12/‎29/‎2004 #
-#----------------------------------#
-# PopTray 3.1                      #
-#----------------------------------#
+﻿#----------------------------------
+# PopTray Arabic translation file  
+#----------------------------------
+# 2013-06-10 PopTrayU 5.0 beta 1
+# 2004-12-29 PopTray 3.1 - Ahmad Mostafa - ahmadmostafa@gmail.com - Cairo, Egypt                          
+#----------------------------------
 
 (All Actions)=(كل الإجراءات)
 (Checkmark toggles visibility)=(علامة صح تظهر/تخفي الأشرطة)
@@ -452,3 +447,116 @@ Extra Confirmation when Deleting Protected Messages=تأكيد زائد عند �
 Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=طلب تأكيد زائد عند محاولة حذف رسائل~محمية عن طريق القواعد أو اللائحة البيضاء.
 You are trying to delete protected messages.=أنت تحاول حذف رسالة محمية.
 Lithuanian=اللتوانية (Lithuanian)
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=يوناني
+Valencian=بلنسية
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=فتح
+Open Message=فتح رسالة
+Frisian=الفريزية
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=المظهر المرئي
+Main Window Listbox Font=الرئيسية نافذة مربع قائمة الخط
+Change the main window listbox background=تغيير الإطار الرئيسي لخلفية مربع القائمة
+Change the main window listbox foreground=تغيير الإطار الرئيسي مربع القائمة المقدمة
+Failure connecting to server.=فشل الاتصال بالخادم.
+Server found, but is not a mail server.=العثور على الملقم ولكن ليس ملقم البريد.
+Change the Main Window Listbox Font=تغيير الإطار الرئيسي مربع قائمة الخط
+Clear all customizations=مسح جميع التخصيصات
+HTML View=HTML مشاهدة
+Thanks to the following volunteers who helped translate this software:=وذلك بفضل المتطوعين الذين ساعدوا التالية ترجمة هذا البرنامج:
+Language=لغة
+Translator=مترجم
+Component=عنصر
+Author=الكاتب
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU هو عمل مشتق من PopTray رينييه Crause لل3.2 والكثير من التعليمات البرمجية في هذا التطبيق هو بالتالي حقوق الطبع والنشر 2001-2005 رينييه Crause. شكرا جزيلا لرينييه لتطوير PopTray، وعلى الدعم الذي قدم.
+Check online for newer version=الاختيار على الانترنت لأحدث إصدار
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=إظهار الأخطاء في بالنوافذ بالون (بدلا من مربعات حوار مشروط)
+Changes how errors are shown when the main window is visible.=تغييرات كيفية عرض أخطاء عند النافذة الرئيسية مرئيا.
+Error checking=تدقيق الأخطاء
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=قروض عنصر
+Translation Credits=ائتمانات ترجمة
+Message Deletion=حذف رسالة
+Mail Client Communication=البريد اتصال العميل
+Rules/Blacklist=قواعد / القائمة السوداء
+Advanced POP Settings=إعدادات POP المتقدم
+Error Handling=معالجة الخطأ
+Message Download (Enable to use advanced rules)=تحميل رسالة (تمكين لاستخدام قواعد متقدمة)
+Startup=بدء التشغيل
+Tray Icon=أيقونة صينية
+New Message Notification=كود رسالة جديدة
+Plugins=الإضافات
+How often should PopTrayU check for new mail?=كم مرة يجب PopTrayU تحقق من وجود بريد جديد؟
+Interval Check Conditions=فاصل تحقق الشروط
+User Data Folder: (where PopTray.ini and Rules files are stored)=المجلد بيانات المستخدم: (حيث يتم تخزين PopTray.ini والقواعد الملفات)
+Misc=متفرقات
+About PopTrayU=حول PopTrayU
+Version=الإصدار
+Show Images=إظهار الصور
+Reset Customizations=إعادة تعيين تخصيصات
+Most UI Items= العناصر الأكثر UI
+Vertical Tabs=علامات التبويب عمودي
+Message List=قائمة الرسائل
+Flash Tray Icon=فلاش رمز علبة
+Show Balloon Notification=إظهار تنبيه بالون
+Use Deluxe Balloon=استخدام ديلوكس بالون
+(show for=(أظهر لل
+seconds)=ثانية)
+Show Main Window=تظهر النافذة الرئيسية
+Keyboard Lights=أضواء لوحة المفاتيح
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 مع SSL أو APOP
+Specify a different timer interval for each account.=تحديد الفاصل الزمني الموقت مختلفة لكل حساب.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=المستخدمة من قبل مستخدمي الطلب الهاتفي الذين لا يريدون الحوار الطلب الهاتفي للالمنبثقة عندما كنت غير متصل. يجعل التحقق أبطأ قليلا.
+This setting can be changed via setup or a command line parameter.=يمكن تغيير هذا الإعداد من خلال الإعداد أو معلمة سطر الأوامر.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=الساخنة المفاتيح هي على نطاق المنظومة. استخدام غير عادي الساخنة الرئيسية بدلا من واحدة تستخدمها بشكل متكرر في تطبيقات أخرى. لا ينصح الساخنة مفاتيح مثل الضغط على مفتاح Ctrl C.
+Don't automatically check for new messages=لا تحقق تلقائيا من وجود رسائل جديدة
+Set Interval per account=تعيين الفاصل الزمني لكل حساب
+Only check when already online=تحقق فقط عندما بالفعل على الإنترنت
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=لا تحقق هذا الحساب بين
+Advanced=متقدم
+Use SSL/TLS=استخدام SSL / TLS
+Authentication=المصادقة
+SSL/TLS Version:=SSL / TLS الإصدار:
+Auto=السيارات
+Password=كلمة السر
+Toolbar Color Scheme:=شريط الأدوات مخطط اللون:
+Normal=طبيعي
+Twilight=الشفق
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=خيارات معاينة رسالة
+Disable HTML Preview=تعطيل معاينة HTML
+Main Window=النافذة الرئيسية
+Default Spam Toolbar Button Action:=الافتراضي المزعج شريط الأدوات زر العمل:
+Default Spam Toolbar Action:=الافتراضي المزعج شريط أدوات العمل:
+Image Credits=قروض صورة
+Image Package=صورة الحزمة
+Images=الصور
+Main Window Message List=الإطار الرئيسي قائمة الرسائل
+Main Window Behaviors=نافذة السلوكيات الرئيسية
+Plain Text=نص عادي
+Credits:=الاعتمادات:
+
+Theme:=موضوع:
+Spam Management=إدارة البريد المزعج
+Changes the action of the Spam toolbar button on the Main Window=تغيير عمل زر في شريط الأدوات المزعج في الإطار الرئيسي
+AKA Explicit TLS=المعروف أيضا باسم TLS صريح
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=كتابة كل الإجراءات القواعد إلى ملف السجل. اسم الملف: RULES.LOG في الدليل إعدادات المستخدم لPopTrayU.
+Disables the HTML Preview tab when previewing a message.=تعطيل علامة التبويب معاينة HTML عند معاينة رسالة.
+Listbox Font=مربع القائمة الخط
+Reset Fonts and Colors=إعادة تعيين الخطوط والألوان
+APOP=APOP
+SASL=SASL
+Customize the Font=تخصيص الخط
+Edit=تعديل

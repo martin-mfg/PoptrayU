@@ -1,17 +1,9 @@
 ﻿#-----------------------------------------------------------------------
-# PopTray translation file
-# ------------------------
-# To create your own translation, copy this file to the name of the
-# language you want to create eg. "German.ptlang" in the PopTray
-# directory.  Translate the phrases you want, and leave the rest blank.
-#
-# Please zip the new file and send it to translation@poptray.org to 
-# have your translation included in the next version of PopTray.
+# PopTrayU translation file - Galician
 #-----------------------------------------------------------------------
-# Tradución ao galego feita por José Antonio Cidre Bardelás (medulio@ciberirmandade.org)
-# Última actualización : 30/08/06
-#
-# 2005-10-15  PopTray 3.2 (beta 2)
+# 2013-06-11 PopTrayU 5.0 beta 1
+# Última actualización : 30/08/06 - Tradución ao galego feita por José Antonio Cidre Bardelás (medulio@ciberirmandade.org)
+# 2005-10-15  PopTray 3.2 (beta 2) 
 #-----------------------------------------------------------------------
 (All Actions)=(Tódalas accións)
 (Checkmark toggles visibility)=(Marcar para conmutar a visibilidade)
@@ -79,7 +71,7 @@ Check and Show=Comprobar e amosar
 Check current account for New Mail=Comprobar se hai novo correo na conta actual
 Check First Account=Comprobar a primeira conta
 Check for Mail=Comprobar o correo
-Check for new mail every =Comprobar se hai novo correo cada
+Check for new mail every=Comprobar se hai novo correo cada
 Check for New Mail on Startup=Comprobar se hai novo correo ao comezar
 Check if On-Line=Comprobar se estamos en liña
 Check on-line if newer version available.=Comprobar en liña se hai unha nova versión do programa dispoñible
@@ -449,3 +441,106 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=Minimizar o programa ao premer o botón X
 Yes=Si
 You are trying to delete protected messages.=Estás tentando eliminar mensaxes protexidas.
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aspecto Visual
+Main Window Listbox Font=Xanela principal listbox Font
+Change the main window listbox background=Cambia a xanela principal do fondo listbox
+Change the main window listbox foreground=Cambia a xanela principal do listbox primeiro plano
+Failure connecting to server.=O fallo de conexión ao servidor.
+Server found, but is not a mail server.=Servidor atopado, pero non é un servidor de correo.
+Change the Main Window Listbox Font=Cambia a xanela principal do listbox Font
+Clear all customizations=Borrar todas as personalizacións
+HTML View=HTML Ver
+Thanks to the following volunteers who helped translate this software:=Grazas aos seguintes voluntarios que axudaron a traducir este software:
+Language=Linguaxe
+Translator=Tradutor
+Component=Compoñente
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU é unha obra derivada Renier Crause PopTray 3.2 e gran parte do código desta aplicación é, polo tanto, Dereitos de autor 2001-2005 Renier Crause. Moitas grazas a Renier ao desenvolvemento PopTray, e polo apoio que prestou.
+Check online for newer version=Comprobe en liña para a última versión
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Amosar Erros en Popups globo (en vez de diálogos modais)
+Changes how errors are shown when the main window is visible.=Cambios como os erros son visibles cando a fiestra principal é visible.
+Error checking=A verificación de erros
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Créditos compoñentes
+Translation Credits=Créditos de tradución
+Message Deletion=Supresión mensaxe
+Mail Client Communication=Comunicación Mail Client
+Rules/Blacklist=Normas / Blacklist
+Advanced POP Settings=Configuración avanzada POP
+Error Handling=Tratamento de erros
+Message Download (Enable to use advanced rules)=Mensaxe Descargar (Habilitar para usar as regras avanzadas)
+Startup=Startup
+Tray Icon=Icona da Bandexa
+New Message Notification=Nova mensaxe de aviso
+Plugins=Extensións
+How often should PopTrayU check for new mail?=Cantas veces PopTrayU debe comprobar se hai novo correo?
+Interval Check Conditions=Intervalo de comprobación de condicións
+User Data Folder: (where PopTray.ini and Rules files are stored)=Pasta de Datos do usuario: (onde PopTray.ini e Normas arquivos están gardados)
+Misc=Misc
+About PopTrayU=Sobre PopTrayU
+Version=Versión
+Show Images=Mostra envíos
+Reset Customizations=Restablecer personalizacións
+Most UI Items= Elementos Máis UI
+Vertical Tabs=Tabs verticais
+Message List=Lista de mensaxes
+Flash Tray Icon=Flash Icona da bandexa
+Show Balloon Notification=Amosar Notificación en globo
+Use Deluxe Balloon=Use luxo globo
+(show for=(Mostrar a
+seconds)=segundos)
+Show Main Window=Mostrar xanela principal
+Keyboard Lights=Luces do teclado
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 con SSL ou APOP
+Specify a different timer interval for each account.=Especifique un intervalo de temporizador diferente para cada conta.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Usado por usuarios dial-up que non queren o diálogo dial-up de fiestras emerxentes cando non está conectado. Fai a verificación de un pouco máis lento.
+This setting can be changed via setup or a command line parameter.=Esta configuración pode ser modificada a través de configuración ou un parámetro de liña de comandos.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Keys son de todo o sistema. Use unha invulgar hot clave en vez de un que usa a miúdo en outras aplicacións. Teclas de atallo como Ctrl-C non recomendado.
+Don't automatically check for new messages=Non comprobar automaticamente se hai mensaxes novas
+Set Interval per account=Definir intervalo por conta
+Only check when already online=Só xa comprobar cando en liña
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Desactive esta conta entre
+Advanced=Avanzado
+Use SSL/TLS=Usar SSL / TLS
+Authentication=Autenticación
+SSL/TLS Version:=SSL / TLS Versión:
+Auto=Automático
+Password=Contrasinal
+Toolbar Color Scheme:=Barra de ferramentas Esquema de cores:
+Normal=Normal
+Twilight=Solpor
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Mensaxe Opcións de visualización
+Disable HTML Preview=Desactivar visualización HTML
+Main Window=Fiestra Principal
+Default Spam Toolbar Button Action:=Estándar Spam Toolbar Botón de Acción:
+Default Spam Toolbar Action:=Estándar Spam Acción Barra de ferramentas:
+Image Credits=Créditos de imaxe
+Image Package=Paquete de imaxe
+Images=Imaxes
+Main Window Message List=Iniciar sesión mensaxes Fiestra
+Main Window Behaviors=Comportamentos xanela principal
+Plain Text=Plain Text
+Credits:=Créditos:
+
+Theme:=Tema:
+Spam Management=Xestión de Spam
+Changes the action of the Spam toolbar button on the Main Window=Modifican a acción do botón Spam da barra de ferramentas da xanela principal
+AKA Explicit TLS=tamén coñecida como TLS explícito
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Escribe todas as accións regras para un ficheiro de rexistro. Matrícula: RULES.LOG no directorio de configuración do usuario para PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Desactiva o guía Preview HTML ao ver unha mensaxe.
+Listbox Font=Listbox Font
+Reset Fonts and Colors=Restablecer fontes e cores
+APOP=APOP
+SASL=SASL
+Customize the Font=Personaliza o Font
+Edit=Editar

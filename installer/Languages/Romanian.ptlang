@@ -1,7 +1,7 @@
 ﻿#---------------------------------------------------
 # Romanian Translation for PopTrayU
 #---------------------------------------------------
-#
+# 2013-06-07 Updated For PopTray 5.0 beta 1
 # Originally for PopTray 3.0.1
 #---------------------------------------------------
 (All Actions)=(Toate acţiunile)
@@ -401,3 +401,172 @@ Window=Fereastră
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Foloseşte un fişier de  Log pentru toate activităţile de la reguli.
 X Button Minimizes=Butonul X micşorează
 Yes=Da
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Opriți Verificarea
+Spam Last=Spam Ultima
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg Expr
+Test the Reg Expr syntax=Testați sintaxa Reg Expr
+Regular Expression Syntax OK=Expresie regulată Sintaxa OK
+Needed=Necesar
+ANY Row=Orice rând
+ALL Rows=Toate rândurile
+Area=Domeniu
+Compare=Comparație
+Text=Text
+Not=Nu
+Add Row=Adauga Row
+Delete Row=Delete Row
+Play Sound=Joaca de sunet
+Tray Color=Culoare tava
+Status=Starea
+Protected=Protejat
+To Be Deleted=Pentru a fi șterse
+Ignored=Ignorat
+Has Attachment=Are Atașament
+Viewed=Privite
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Croat
+Move Down=Coborî
+Move Up=Mutați în sus
+Delete Mail only on Next Check=Șterge Mail numai pe următoarea verificare
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Când ștergeți-mail care vor fi marcate pentru ștergere ~ și șterse doar fizic atunci când selectare de lângă rulează.
+Undelete=Undelete
+Add Rule for mail from Sender=Adauga Norma de e-mail de la expeditor
+Add Rule for mail with Subject=Adauga Regula de e-mail cu subiectul
+This will create a rule to delete all future e-mails with subject=Acest lucru va crea o regulă pentru a șterge toate viitoarele e-mail-uri cu subiect
+This will create a rule to spam mark all future e-mails with subject=Acest lucru va crea o regulă de a spam-ul marchează toate viitoare de e-mail-uri cu subiect
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galiciană
+Downloading=Descărcarea
+Show Messages while Checking=Afișare Mesaje în timp ce verificarea
+While checking, show each message as it is downloaded.=În timp ce verificarea, arata fiecare mesaj în care este descărcat.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Confirmarea suplimentar atunci când ștergerea mesajelor protejate
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Confirmare în plus, atunci când încercați să ștergeți mesaje ~ protejat de reguli sau lista albă.
+You are trying to delete protected messages.=Sunteți încercarea de a șterge mesaje protejate.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Lituanian
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Adauga Regula de a șterge e-mail cu subiectul
+Add Rule to delete Mail from Sender=Adauga Regula pentru a șterge Mail de la Sender
+Add Rule to mark messages with Subject as Spam=Adauga Regula pentru a marca mesajele cu subiectul ca spam
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Grec
+Valencian=Valencia
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Deschide
+Open Message=Deschis Mesaj
+Frisian=Frizian
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Aspectul vizual
+Main Window Listbox Font=Fereastra principală listbox Font
+Change the main window listbox background=Schimba fereastra principală fundal listbox
+Change the main window listbox foreground=Schimba fereastra principală listbox prim-plan
+Failure connecting to server.=Imposibilitatea de conectare la server.
+Server found, but is not a mail server.=Serverul găsit, dar nu este un server de mail.
+Change the Main Window Listbox Font=Schimbați Fereastra principală a listbox Font
+Clear all customizations=Șterge toate personalizările
+HTML View=HTML View
+Thanks to the following volunteers who helped translate this software:=Datorită următorilor voluntari care au ajutat la traducerea acestui software:
+Language=Limbă
+Translator=Translator
+Component=Component
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU este o lucrare derivat de Renier Crause lui PopTray 3.2 și o mare parte din cod în această cerere este, prin urmare Copyright 2001-2005 Renier Crause. Multe mulțumiri pentru a Renier pentru dezvoltarea PopTray, precum și pentru sprijinul care le-a furnizat.
+Check online for newer version=Verifica on-line pentru noua versiune
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Arată Erori în popup-uri cu balon (în loc de Dialoguri modale)
+Changes how errors are shown when the main window is visible.=Modificările ce erori sunt afișate când fereastra principală este vizibil.
+Error checking=Verificarea erorilor
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Credite componente
+Translation Credits=Credite de traducere
+Message Deletion=Ștergerea mesaj
+Mail Client Communication=Mail Client de comunicare
+Rules/Blacklist=Reguli / Lista cu
+Advanced POP Settings=Setări POP avansate
+Error Handling=Eroare de manipulare
+Message Download (Enable to use advanced rules)=Download Message (Activați pentru a utiliza reguli avansate)
+Startup=Startup
+Tray Icon=Pictograma tavă
+New Message Notification=Nou mesajul de notificare
+Plugins=Plugin-uri
+How often should PopTrayU check for new mail?=Cât de des ar trebui să PopTrayU verifica mail-ul nou?
+Interval Check Conditions=Interval de verificare Condiții
+User Data Folder: (where PopTray.ini and Rules files are stored)=Datele utilizatorului Folder: (unde sunt stocate PopTray.ini și Reguli fișiere)
+Misc=Misc
+About PopTrayU=Despre PopTrayU
+Version=Versiune
+Show Images=Afișare imagini
+Reset Customizations=Reset personalizări
+Most UI Items= Elementele cele mai UI
+Vertical Tabs=File verticale
+Message List=Lista de mesaje
+Flash Tray Icon=Flash Tava Icon
+Show Balloon Notification=Se afișează o notificare balon
+Use Deluxe Balloon=Utilizați Deluxe Balon
+(show for=(Arata pentru
+seconds)=secunde)
+Show Main Window=Arata ferestrei principale
+Keyboard Lights=Lumini tastatură
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 cu SSL sau APOP
+Specify a different timer interval for each account.=Specificați un interval de timer diferit pentru fiecare cont.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Folosit de utilizatori dial-up, care nu doresc dialogul dial-up la pop-up atunci când nu sunt conectate. Face verificarea un pic mai lent.
+This setting can be changed via setup or a command line parameter.=Această setare poate fi modificată prin configurare sau un parametru de linie de comandă.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Tastele de acces sunt la nivel de sistem. Folosiți un neobișnuit hot-cheie, mai degrabă decât cel pe care îl utilizați frecvent în alte aplicații. Nu sunt recomandate hot-keys, cum ar fi Ctrl-C.
+Don't automatically check for new messages=Nu se verifica automat mesaje noi
+Set Interval per account=Setați Interval pe cont
+Only check when already online=Verifica numai atunci când deja on-line
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Nu verifica acest cont între
+Advanced=Avansat
+Use SSL/TLS=Utilizați SSL / TLS
+Authentication=Autentificare
+SSL/TLS Version:=SSL / TLS Versiune:
+Auto=Auto
+Password=Parolă
+Toolbar Color Scheme:=Bara de instrumente Schema de culori:
+Normal=Normal
+Twilight=Amurg
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Opțiunile de previzualizare mesaj
+Disable HTML Preview=Dezactivați Previzualizare HTML
+Main Window=Fereastra principală
+Default Spam Toolbar Button Action:=Implicit Spam Toolbar Button acțiune:
+Default Spam Toolbar Action:=Implicit Spam Bara de instrumente de acțiune:
+Image Credits=Credite Image
+Image Package=Pachetul imagine
+Images=Imagini
+Main Window Message List=Fereastra principal Lista de mesaje
+Main Window Behaviors=Principalele Comportamente ferestre
+Plain Text=Plain Text
+Credits:=Credite:
+
+Theme:=Tema:
+Spam Management=Spam de management
+Changes the action of the Spam toolbar button on the Main Window=Schimbă acțiunea butonului Spam bara de instrumente din fereastra principală
+AKA Explicit TLS=de asemenea, cunoscut ca TLS explicite
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Scrie toate acțiunile reguli într-un fișier jurnal. Filename: RULES.LOG în directorul setările de utilizator pentru PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Dezactivează fila Previzualizare HTML atunci când examinarea unui mesaj.
+Listbox Font=Listbox Font
+Reset Fonts and Colors=Reset fonturi și culori
+APOP=APOP
+SASL=SASL
+Customize the Font=Personaliza Font
+Edit=Edita

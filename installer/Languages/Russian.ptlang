@@ -1,6 +1,8 @@
 ﻿#-------------------------------------------------------------------------------
 # PopTray Russian translation file
 # ------------------------------------------------------------------------------
+# 2013-06-07 Updated For PopTray 5.0 beta 1
+# ------------------------------------------------------------------------------
 # Русификатор для PopTray 3.1 (и выше)
 # Последнее обновление 10 Марта 2005 г. для версии 3.1
 # Перевели Павел А. Баулин и Алексей Хомутский АКА ХОМ@, poptray@i.com.ua
@@ -479,3 +481,120 @@ Write all rules actions to a log file.~Filename: RULES.LOG in the same directory
 X Button Minimizes=Кнопка Х сворачивает
 Yes=Да
 You are trying to delete protected messages.=Вы пытаетесь удалить защищенные сообщения.
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Добавить правило, чтобы удалить сообщение с темой
+Add Rule to delete Mail from Sender=Добавить правило, чтобы удалять почту от отправителя
+Add Rule to mark messages with Subject as Spam=Добавить правило, чтобы отметить сообщения с темой как спам
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Греческий
+Valencian=Валенсия
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Открыть
+Open Message=Открыть сообщение
+Frisian=Фризский
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Внешний вид
+Main Window Listbox Font=Главное окно Шрифт Listbox
+Change the main window listbox background=Измените основной фон окна списка
+Change the main window listbox foreground=Изменить главном окне списка переднем плане
+Failure connecting to server.=Отказ соединения с сервером.
+Server found, but is not a mail server.=Сервер найден, но не почтового сервера.
+Change the Main Window Listbox Font=Измените Главное окно Шрифт Listbox
+Clear all customizations=Очистить все настройки
+HTML View=HTML Посмотреть
+Thanks to the following volunteers who helped translate this software:=Благодаря волонтерам, которые помогли перевести это программное обеспечение:
+Language=Язык
+Translator=Переводчик
+Component=Компонент
+Author=Автор
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU является производной работой PopTray Ренье Crause в 3,2 и большая часть кода в этом приложении, таким образом Copyright 2001-2005 Crause Ренье. Большое спасибо Ренье PopTray для разработки, так и для поддержки, которую он предоставил.
+Check online for newer version=Проверить в интернете новую версию
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Показать Ошибки в шар всплывающие окна (вместо модальных диалогов)
+Changes how errors are shown when the main window is visible.=Изменения как отображаются ошибки, когда главное окно является видимым.
+Error checking=Контроль ошибок
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Компонент кредиты
+Translation Credits=Перевод кредитов
+Message Deletion=Удаление сообщений
+Mail Client Communication=Общение Почта Клиент
+Rules/Blacklist=Правила / Черный список
+Advanced POP Settings=Расширенные настройки POP
+Error Handling=Обработка ошибок
+Message Download (Enable to use advanced rules)=Сообщение Скачать (позволяют использовать продвинутые правила)
+Startup=Startup
+Tray Icon=Tray Icon
+New Message Notification=Уведомление о новом сообщении
+Plugins=Плагины
+How often should PopTrayU check for new mail?=Как часто следует PopTrayU проверки новой почты?
+Interval Check Conditions=Условия Интервал проверки
+User Data Folder: (where PopTray.ini and Rules files are stored)=User Data Папка: (где PopTray.ini и правила хранятся файлы)
+Misc=Разное
+About PopTrayU=О PopTrayU
+Version=Версия
+Show Images=Показать фото
+Reset Customizations=Сброс настроек
+Most UI Items= Большинство элементы интерфейса
+Vertical Tabs=Vertical Tabs
+Message List=Список сообщений
+Flash Tray Icon=Вспышка Tray Icon
+Show Balloon Notification=Показать Всплывающие уведомления
+Use Deluxe Balloon=Используйте Делюкс Balloon
+(show for=(Показать на
+seconds)=секунд)
+Show Main Window=Показать главное окно
+Keyboard Lights=Клавиатура свет
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 с SSL или APOP
+Specify a different timer interval for each account.=Укажите другое интервальный таймер для каждой учетной записи.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Используется пользователей коммутируемого доступа, которые не хотят коммутируемого диалог всплывающие, когда вы не подключены. Делает проверку немного медленнее.
+This setting can be changed via setup or a command line parameter.=Эта установка может быть изменена через установку или параметр командной строки.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Горячие Ключи всей системе. Используйте необычные горячих клавиш, а не тот, который вы часто используете в других приложениях. Горячие клавиши, как Ctrl-C не рекомендуется.
+Don't automatically check for new messages=Не автоматически проверять наличие новых сообщений
+Set Interval per account=Set Interval за счет
+Only check when already online=Только проверить, когда уже в сети
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Не проверять эту учетную запись между
+Advanced=Передовой
+Use SSL/TLS=Использование SSL / TLS
+Authentication=Идентификация
+SSL/TLS Version:=SSL / TLS версии:
+Auto=Автоматический
+Password=Пароль
+Toolbar Color Scheme:=Схема панели инструментов Цвет:
+Normal=Нормальный
+Twilight=Сумерки
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Опции сообщение Предварительный
+Disable HTML Preview=Отключить HTML Предварительный просмотр
+Main Window=Главное окно
+Default Spam Toolbar Button Action:=Спама по умолчанию кнопки панели инструментов Действие:
+Default Spam Toolbar Action:=Спама по умолчанию действия панели инструментов:
+Image Credits=Изображение кредиты
+Image Package=Изображение Пакет
+Images=Изображения
+Main Window Message List=Главном списке сообщений окна
+Main Window Behaviors=Главное окно Поведения
+Plain Text=Обычный текст
+Credits:=Кредиты:
+
+Theme:=Стиль:
+Spam Management=Спам управления
+Changes the action of the Spam toolbar button on the Main Window=Изменяет действие Спам кнопку панели инструментов в главном окне
+AKA Explicit TLS=также известный как явные TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Написать все правила действий в лог-файл. Имя файла: RULES.LOG в каталоге пользователя настройки для PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Отключает HTML вкладку Предварительный просмотр при просмотре сообщения.
+Listbox Font=Listbox шрифта
+Reset Fonts and Colors=Сброс шрифтов и цветов
+APOP=APOP
+SASL=SASL
+Customize the Font=Настроить шрифт
+Edit=Редактировать

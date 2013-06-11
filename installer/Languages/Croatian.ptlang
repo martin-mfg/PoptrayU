@@ -81,7 +81,7 @@ Add Account=Dodaj nalog
 Add Rule to Delete all mail from Sender=Dodaj pravilo da brise sve poruke od posaljioca
 Add Rule=Dodaj pravilo
 Advanced Options=Napredne opcije
-Animate the Tray Icon when you receive new mail.=Animiraj tray-ikonicu kada dobijete novu e-poruku
+Animate the Tray Icon when you receive new mail.~This will produce a flashing indicator instead of the normal static one.=Animiraj tray-ikonicu kada dobijete novu e-poruku.~To će proizvesti treperi indikator umjesto normalnog statičkog jedan.
 Animated Tray Icon=Animirana Tray-ikonica
 Ask for confirmation before deleting any e-mails.~This only works for the Delete button.  Deleting messages~using rules will not ask for confirmation.=Pitaj za potvrdu prije nego se obrise ijedna e-poruka. ~Ovo samo vazi za DEL dugme. Brisanje e-poruka~koristenje pravila nece pitati za potvrdu.
 AutoCheck Enabled=Automatska provjera ukljucena
@@ -187,7 +187,7 @@ When previewing a message with MIME parts~PopTrayU will decode the MIME message,
 Write all rules actions to a log file.~Filename: RULES.LOG in the same directory as PopTrayU.=Pisi sve akcije pravila u LOG fajl.~Ime fajla:RULES.LOG u istom direktorijumu kao i PopTrayU
 X Button Minimizes=X dugme minimizira
 
-# ---------- Added PopTrayU 2.1 (beta 1.2) ----------
+# ---------- Added PopTray 2.1 (beta 1.2) ----------
 Language:=Jezik:
 Refresh=Osvjezi
 Refresh the list of languages=Osvjezi listu jezika
@@ -457,3 +457,179 @@ Login OK=Logiranje Ok
 Delete Error:=Greska u brisanju
 Retrieve Error:=Obnovi gresku
 Plug-in Error:=Plugin greska
+
+# ---------- Added PopTray 3.0.1 ---------
+Estonian=Estonski
+Serbian=Srpski
+NoName=NoName
+Reset Mail Count in Tray when Viewing=Ponovno pošta tačka u ladicu kada Gledanje
+
+# ---------- Added PopTray 3.0.3 ---------
+Stop Checking=Zaustavite Provjera
+Spam Last=Spam Zadnji
+
+# ---------- Added PopTray 3.1 (beta 1) ---------
+Reg Expr=Reg expr
+Test the Reg Expr syntax=Ispitajte sintaksu Reg expr
+Regular Expression Syntax OK=Regular Expression Sintaksa OK
+Needed=Potrebne
+ANY Row=BILO Row
+ALL Rows=Sve retke
+Area=Zona
+Compare=Usporedi
+Text=Tekst
+Not=Ne
+Add Row=Dodaj Row
+Delete Row=Izbriši redak
+Play Sound=Igrajte Sound
+Tray Color=Ladica Boja
+Status=Status
+Protected=Zaštićen
+To Be Deleted=Da se briše
+Ignored=Zanemareni
+Has Attachment=Je prilog
+Viewed=Najgledanije
+
+# ---------- Added PopTray 3.1 (beta 2) ---------
+Croatian=Hrvatski
+Move Down=Pomicanje dolje
+Move Up=Napredovati
+Delete Mail only on Next Check=Brisanje Mail samo na slijedećem pregledu
+When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Kad brisanje pošte oni će dobiti označena za brisanje ~ i samo fizički izbrisani kad sljedećeg provjera traje.
+Undelete=Povrat
+Add Rule for mail from Sender=Dodajte pravilo za poštu od pošiljatelja
+Add Rule for mail with Subject=Dodajte pravilo za poštu s predmetom
+This will create a rule to delete all future e-mails with subject=To će stvoriti pravilo izbrisati sve buduće e-mailove s predmetom
+This will create a rule to spam mark all future e-mails with subject=To će stvoriti pravilo da spam marku sve buduće e-mailova s ​​subjekta
+
+
+# ---------- Added PopTray 3.1 (beta 4) ---------
+Galician=Galicijski
+Downloading=Preuzimanje
+Show Messages while Checking=Pokaži Poruke dok provjeravate
+While checking, show each message as it is downloaded.=Kod provjere, pokazuju svaku poruku, kao što je preuzeto.
+
+# ---------- Added PopTray 3.1 (beta 5) ---------
+Extra Confirmation when Deleting Protected Messages=Dodatna potvrda kada Brisanje zaštićenih Poruke
+Extra confirmation when you try to delete messages~protected by rules or the WhiteList.=Dodatna potvrda kada pokušate izbrisati poruke ~ zaštićen pravilima ili bijelu listu.
+You are trying to delete protected messages.=Pokušavate izbrisati zaštićene poruke.
+# ---------- Added PopTray 3.1 (beta 8) ---------
+Lithuanian=Litvanski
+
+# ---------- Missing customization phrases ---------
+Add Rule to Delete mail with Subject=Dodajte pravilo za brisanje pošte s Predmet
+Add Rule to delete Mail from Sender=Dodajte pravilo za brisanje iz Mail Sender
+Add Rule to mark messages with Subject as Spam=Dodaj pravila za označavanje poruke s Predmet kao Spam
+
+# ---------- Added PopTray 3.2 (beta 1) ---------
+Greek=Grčki
+Valencian=Valencije
+
+# ---------- Added PopTray 3.2 (beta 2) ---------
+Open=Otvoreno
+Open Message=Otvoreno Poruka
+Frisian=Frizijski
+
+# ---------- Added PopTrayU 4.0.3 ---------
+Visual Appearance=Vizualni izgled
+Main Window Listbox Font=Glavni prozor listbox slova
+Change the main window listbox background=Promijenite pozadinu listbox glavni prozor
+Change the main window listbox foreground=Promjena u glavnom prozoru listbox prvi plan
+Failure connecting to server.=Neuspjeh spajanja na poslužitelj.
+Server found, but is not a mail server.=Server pronašao, ali nije mail poslužitelja.
+Change the Main Window Listbox Font=Promijenite Glavni prozor listbox Font
+Clear all customizations=Očistite sve prilagodbe
+HTML View=HTML Pogledaj
+Thanks to the following volunteers who helped translate this software:=Zahvaljujući sljedećim volonterima koji su pomogli prevesti ovaj softver:
+Language=Jezik
+Translator=Prevoditelj
+Component=Sastavni
+Author=Autor
+PoptrayU is a derivative work of Renier Crause's PopTray 3.2 and much of the code in this application is thus Copyright 2001-2005 Renier Crause. Many thanks to Renier for developing PopTray, and for the support he has provided.=PoptrayU je derivat djelo Renier Crause je PopTray 3,2 i veći dio koda u ovom zahtjevu je taj Copyright 2001-2005 Renier Crause. Puno hvala na Renier za razvoj PopTray, i na potpori koju je pružio.
+Check online for newer version=Provjerite online za novije verzije
+
+# ---------- Added PopTrayU 4.0.5 ---------
+Show Errors in Balloon Popups (Instead of Modal Dialogs)=Pokaži pogreške u Balon Popups (umjesto dijaloga modalna)
+Changes how errors are shown when the main window is visible.=Promjene pogreške kako su prikazane kada se glavni prozor vidljiv.
+Error checking=Pogreška provjere
+
+# ---------- Added PopTrayU 4.0.6 to 4.0.8 ---------
+Component Credits=Sastavni Krediti
+Translation Credits=Prevođenje Krediti
+Message Deletion=Poruka brisanja
+Mail Client Communication=Mail Client Komunikacija
+Rules/Blacklist=Pravila / crnog popisa
+Advanced POP Settings=Napredne postavke POP
+Error Handling=Rukovanje pogreškama
+Message Download (Enable to use advanced rules)=Poruka Preuzimanje (Omogućite korištenje naprednih pravila)
+Startup=Startup
+Tray Icon=Tray Icon
+New Message Notification=Nova poruka Obavijest
+Plugins=Dodaci
+How often should PopTrayU check for new mail?=Koliko često treba PopTrayU provjeriti novi mail?
+Interval Check Conditions=Intervalni Provjeri Uvjeti
+User Data Folder: (where PopTray.ini and Rules files are stored)=Korisnički podaci mapa: (gdje PopTray.ini i Pravila su pohranjene datoteke)
+Misc=Razno
+About PopTrayU=O PopTrayU
+Version=Verzija
+Show Images=Pokaži Images
+Reset Customizations=Ponovno prilagodbe
+Most UI Items= Većina UI Proizvodi
+Vertical Tabs=Vertikalni Kartice
+Message List=Popis poruka
+Flash Tray Icon=Flash ikona
+Show Balloon Notification=Pokaži balon Obavijest
+Use Deluxe Balloon=Koristite Deluxe Balon
+(show for=(Pokazati
+seconds)=sekunde)
+Show Main Window=Pokaži glavni prozor
+Keyboard Lights=Tipkovnica Svjetla
+IMAP4=IMAP4
+POP3 with SSL or APOP=POP3 SSL-om ili APOP
+Specify a different timer interval for each account.=Odredite drugu timer interval za svaki račun.
+Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Koristi dial-up korisnike koji ne žele na dial-up dijalog s pop-up kad niste spojeni. Stvara provjeru malo sporije.
+This setting can be changed via setup or a command line parameter.=Ova postavka može se mijenjati preko postava ili parametar naredbenog retka.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Hot-Tipke su na razini cijelog sustava. Koristite neobičan hot-ključ, a ne onaj koji se često koriste u drugim aplikacijama. Vruće tipke kao što su Ctrl-C se ne preporuča.
+Don't automatically check for new messages=Nemojte automatski provjeriti ima li novih poruka
+Set Interval per account=Postavite razmaku po računu
+Only check when already online=Samo provjeriti kada je već online
+
+# ---------- Added PopTrayU 4.1 ---------
+Don't check this account between=Nemojte provjeriti ovaj račun između
+Advanced=Napredan
+Use SSL/TLS=Koristite SSL / TLS
+Authentication=Ovjera
+SSL/TLS Version:=SSL / TLS Verzija:
+Auto=Auto
+Password=Lozinka
+Toolbar Color Scheme:=Toolbar Shema boja:
+Normal=Normalan
+Twilight=Sumrak
+
+
+# ---------- Added PopTrayU 5.0 (beta 1) ---------
+Message Preview Options=Pregled poruke Options
+Disable HTML Preview=Bez HTML Preview
+Main Window=Glavni prozor
+Default Spam Toolbar Button Action:=Default Spam Toolbar Gumb Akcija:
+Default Spam Toolbar Action:=Default Spam Toolbar Akcija:
+Image Credits=Slika Krediti
+Image Package=Slika paket
+Images=Slike
+Main Window Message List=Glavni prozor Popis poruka
+Main Window Behaviors=Glavni prozor ponašanja
+Plain Text=Plain Text
+Credits:=Krediti:
+
+Theme:=Tema:
+Spam Management=Spam Upravljanje
+Changes the action of the Spam toolbar button on the Main Window=Mijenja djelovanje Spam gumb alatne trake na glavnom prozoru
+AKA Explicit TLS=Također poznat kao Explicit TLS
+Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Napišite sva pravila akcije u log datoteku. Naziv: RULES.LOG u imeniku korisničke postavke za PopTrayU.
+Disables the HTML Preview tab when previewing a message.=Onemogućuje HTML pregled karticu kada pregledavate poruku.
+Listbox Font=Listbox slova
+Reset Fonts and Colors=Ponovno fontove i boje
+APOP=APOP
+SASL=SASL
+Customize the Font=Prilagodite Font
+Edit=Uredi
