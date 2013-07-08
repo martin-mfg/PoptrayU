@@ -5,6 +5,11 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 5
+	(+) Show actual link URL in HTML preview window when mouse moves over a link (User requested feature).
+	(-) Fix Socket Error # 10054 when connecting to IMAP SSL accounts
+	(-) Fix crash when time seperator is a dot instead of a colon (eg: with Italian regional settings)
+
 5.0 beta 4
 	(*) Missing strings in language files for all remaining languages (except Frisian, 
 	    Taiwanese, and Valencian) filled in with automated translations.
