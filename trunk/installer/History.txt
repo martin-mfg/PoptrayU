@@ -5,6 +5,12 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 6
+	(+) Option to set a custom date/time format for the main window message list
+	(-) Button Skinning code disabled to prevent white ghosted images on options screen.
+	(-) Installer no longer installs (unused) skin files, properly removes skin files from older versions on uninstall.
+	(-) Do not treat "Already connected" as an error, instead skip connect and continue message check.
+
 5.0 beta 5
 	(+) Show actual link URL in HTML preview window when mouse moves over a link (User requested feature).
 	(-) Fix Socket Error # 10054 when connecting to IMAP SSL accounts

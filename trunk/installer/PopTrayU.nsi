@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "0"
-!define VER_BETA "5"
+!define VER_BETA "6"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -190,8 +190,8 @@ Section $(SEC_PopTrayU) SecPopTrayU
   	File "Readme.txt"
   	File "History.txt"
   	File "License.txt"
-  	File "lightskin.bmp"
- 	File "darkskin.bmp"
+  	;File "lightskin.bmp"
+ 	;File "darkskin.bmp"
  	
   ; delete old version of bundled IMAP plugin if present.
   Delete "plugins\ProtocolIMAP4.dll"
@@ -441,6 +441,8 @@ Section "Uninstall"
     Delete "$INSTDIR\BlackList.ptdat"
     Delete "$INSTDIR\Rules.log"
     Delete "$INSTDIR\Account_*.ids"
+    Delete "$INSTDIR\lightskin.bmp"
+    Delete "$INSTDIR\darkskin.bmp"
 
     SetShellVarContext current
     Delete "$APPDATA\PopTrayU\PopTray.ini"
