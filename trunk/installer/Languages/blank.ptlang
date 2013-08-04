@@ -11,6 +11,7 @@
 # 2005-10-15  PopTray 3.2 (beta 2)
 # 2012-10-19 Updated for PopTrayU 4.0.8
 # 2013-05-31 Updated for PopTrayU 5.0 beta 1
+# 2013-08-04 Updated for PopTrayU 5.0 beta 6
 #-----------------------------------------------------------------------
 
 (All Actions)=
@@ -497,6 +498,7 @@ Undo=
 Unknown Attachment Type.=
 Unmark as Spam=
 Unviewed messages will be shown in Bold.=
+Use Custom Date Format=
 Use Deluxe Balloon=
 Use MAPI=
 Use SSL/TLS=
