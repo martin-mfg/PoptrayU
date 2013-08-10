@@ -6,6 +6,11 @@ PopTrayU Version History
  (-) Bug fixed
 
 5.0 beta 7
+	(+) Preview Window/HTML preview: now blocks unsafe content (javascript, java, activex, 
+	    frames, IE element behaviors, background sounds) by default.
+	(+) Preview Window/HTML preview: If show images is disabled, preview should no longer
+	    fetch any external content (such as external stylesheets, background images, 
+	    videos, etc).
 	(+) Preview Window: Print toolbar button now prints in HTML (rather than plain-text) 
 	    format when viewing message as HTML and shows a print-preview dialog when print 
 	    is pressed rather than sending to default printer.
