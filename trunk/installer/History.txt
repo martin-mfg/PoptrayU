@@ -5,6 +5,24 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 7
+	(+) Preview Window: Print toolbar button now prints in HTML (rather than plain-text) 
+	    format when viewing message as HTML and shows a print-preview dialog when print 
+	    is pressed rather than sending to default printer.
+	(+) Preview Window: Plain text and raw view print now shows the print dialog rather 
+	    than sending to the default printer since no option was previously available to 
+	    print to a non-default printer.
+	(-) Preview Window: In Html preview, https:// links now open in default browser
+	(-) Preview Window: In Html preview, links that open in a new window (ones with 
+	    attribute target="_blank") now open in default browser
+	(-) Preview Window: Fixed crash related to loading a corrupted preview window toolbar 
+	    customization file.
+	(-) Custom date/time format with non-default custom format was not working correctly
+	(-) IMAP: properly disconnect after message check completed
+	(-) IMAP: Only expunge mailbox one time when deleting multiple messages.
+	(-) IMAP: Fix erroneous duplicate message display on subsequent checks when quick 
+	    check enabled.
+
 5.0 beta 6
 	(+) Option to set a custom date/time format for the main window message list
 	(+) SASL login option for IMAP/IMAP SSL
