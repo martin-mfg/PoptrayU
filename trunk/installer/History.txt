@@ -5,6 +5,13 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 8
+	(-) Fixed crash when pressing "reply" when no messages left in inbox
+	(-) Fixed crash from pressing "spam" button when default spam action set to none
+	(-) Toolbar buttons that require a message to be selected are disabled when changing
+	    account tabs or after deleting messages or when all messages have been deleted
+	    from the server prior to check.
+
 5.0 beta 7
 	(+) Preview Window/HTML preview: now blocks unsafe content (javascript, java, activex, 
 	    frames, IE element behaviors, background sounds) by default.
