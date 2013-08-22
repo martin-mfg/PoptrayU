@@ -13,6 +13,10 @@ PopTrayU Version History
 	    from the server prior to check.
 	(-) Fixed crash saving account when "Authentication type" in advanced options was blank 
 	    or invalid.
+	(-) Fixed crash when checking messages after previewing an externally deleted message 
+	    with "ignore retrieve errors" set in options.
+	(+) Save crash report (in addition to option to report by email) enabled in crash 
+	    reporting tool.
 
 5.0 beta 7
 	(+) Preview Window/HTML preview: now blocks unsafe content (javascript, java, activex, 
