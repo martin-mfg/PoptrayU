@@ -5,6 +5,13 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 9'
+	(-) Fixed "preview top lines", which has been broken since the indy upgrade (4.1+)
+	(-) Changes to blacklist via options screen were not saving correctly in prior v 5.0 builds
+	(-) Handle SASL login failure better when not supported by ISP/server
+	(-) Fix for memory access crash when auto-check happens while creating a new account.
+	(-) Pressing "test account" when server name was blank on Pop3 account could cause crash.
+
 5.0 beta 8
 	(-) Fixed crash when pressing "reply" when no messages left in inbox
 	(-) Fixed crash from pressing "spam" button when default spam action set to none
