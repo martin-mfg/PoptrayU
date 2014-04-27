@@ -5,7 +5,11 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
-5.0 beta 9'
+5.0 beta 10
+	(+) Account color for Rules now includes "Custom" and shows more readable color names, to
+	    be consistent with other color pickers throughout the application.
+
+5.0 beta 9
 	(-) Fixed "preview top lines", which has been broken since the indy upgrade (4.1+)
 	(-) Changes to blacklist via options screen were not saving correctly in prior v 5.0 builds
 	(-) Handle SASL login failure better when not supported by ISP/server
