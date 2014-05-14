@@ -11,6 +11,8 @@ PopTrayU Version History
 	(+) "Find" option for preview window. Find appears in the message's right-click menu on the 
 	    plain-text and RAW tabs, and has a keyboard shortcut Ctrl-F that works on any tab (so 
 	    can be used on the HTML preview tab if you use the keyboard shortcut to bring it up)
+	(+) New option to automatically close message preview windows when minimized or 'to tray'
+	    is pressed.
 
 5.0 beta 9
 	(-) Fixed "preview top lines", which has been broken since the indy upgrade (4.1+)
