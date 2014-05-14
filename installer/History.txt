@@ -8,6 +8,9 @@ PopTrayU Version History
 5.0 beta 10
 	(+) Account color for Rules now includes "Custom" and shows more readable color names, to
 	    be consistent with other color pickers throughout the application.
+	(+) "Find" option for preview window. Find appears in the message's right-click menu on the 
+	    plain-text and RAW tabs, and has a keyboard shortcut Ctrl-F that works on any tab (so 
+	    can be used on the HTML preview tab if you use the keyboard shortcut to bring it up)
 
 5.0 beta 9
 	(-) Fixed "preview top lines", which has been broken since the indy upgrade (4.1+)
