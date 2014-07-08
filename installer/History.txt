@@ -12,12 +12,23 @@ PopTrayU Version History
 	    plain-text and RAW tabs, and has a keyboard shortcut Ctrl-F that works on any tab (so 
 	    can be used on the HTML preview tab if you use the keyboard shortcut to bring it up)
 	(+) New option to automatically close message preview windows when minimized or 'to tray'
-	    is pressed.
+	    is pressed. See "Main Window" options.
 	(-) Fix crash when previewing a message that is unexpectedly missing.
-	(*) Speed improved downloading large inbox (FindMessage changed from O(N) to O(1) ave. case)
-	(*) 'Test account' rewritten to be substantially faster for large inboxes. 
-	    PopTrayU requests message count (STAT) instead of doing a full account check and 
-	    queries capabilities of the server instead of downloading UIDLs for each message
+	(-) Removed disconnect/reconnect between deleting messages and checking for new messages.
+	(*) Moderate speed improvement downloading large inbox for both IMAP and POP (change to 
+            message indexing to make it faster). 
+	(*) "Test account" rewritten to complete in reasonable amount of time regardless of inbox size. 
+	    Now PopTrayU requests message count (STAT) instead of downloading messages and 
+	    queries capabilities of the server instead of downloading UIDLs for each message.
+	(*) IMAP - deleting multiple messages at once is no longer painfully slow. Now sends the 
+	    server the entire list of messages to delete as one list of UIDs instead of individually
+	    doing a UID "safe delete" check and then indvidually deleting by relative message number
+	    being individually deleted by message number after doing UID check)
+	(*) Several non-user facing changes to rules code ("refactoring") 
+	(-) Rules was not playing correct notification sound in certain (less common) circumstances
+	(+) Support for previewing MMS text messages added
+	(+) Sprint (and possibly other) MMS picture messages now display inline in HTML view
+	(-) Certain attached pictures (with malformed CID) no longer fail to display inline in HTML view.
 
 5.0 beta 9
 	(-) Fixed "preview top lines", which has been broken since the indy upgrade (4.1+)

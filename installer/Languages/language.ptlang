@@ -15,6 +15,7 @@
 # 2013-05-31 Updated for PopTrayU 5.0 beta 1
 # 2013-08-04 Updated for PopTrayU 5.0 beta 6
 # 2013-12-11 Updated for PopTrayU 5.0 beta 9
+# 2014-07-07 Updated for PopTrayU 5.0 beta 10
 #-----------------------------------------------------------------------
 
 OK=
@@ -639,3 +640,4 @@ An error occurred.=
 # ---------- Added PopTrayU 5.0 (beta 10)
 Closes any open message preview windows when 'to tray' is pressed=
 Auto-close Preview Windows=
+Message Not Found=

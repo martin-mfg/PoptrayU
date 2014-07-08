@@ -12,6 +12,7 @@
 # 2012-10-19 Updated for PopTrayU 4.0.8
 # 2013-05-31 Updated for PopTrayU 5.0 beta 1
 # 2013-08-04 Updated for PopTrayU 5.0 beta 6
+# 2014-07-07 Updated for PopTrayU 5.0 beta 10
 #-----------------------------------------------------------------------
 
 (All Actions)=
@@ -538,3 +539,6 @@ Server does not support SASL Authentication. Please fix account settings.=
 Server is a required field, and may not be blank.=
 Server did not respond in a reasonable amount of time. Unable to connect.=
 An error occurred.=
+Closes any open message preview windows when 'to tray' is pressed=
+Auto-close Preview Windows=
+Message Not Found=
