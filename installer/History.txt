@@ -5,6 +5,12 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 11
+	(-) Fixed minor memory leak populating languages dialog
+	(-) Fixed error message for previewing a deleted email (previously gave a TProgressBar
+	    out of range error)
+	(-) Fix EIndexOutOfRange exception when using mail list/checking for messages.
+
 5.0 beta 10
 	(+) Account color for Rules now includes "Custom" and shows more readable color names, to
 	    be consistent with other color pickers throughout the application.
