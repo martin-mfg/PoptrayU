@@ -5,6 +5,14 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 12
+	(-) "Max line length exceeded" in non-conforming email no longer causes a message check failure,
+	    and can be previewed without error.
+	(-) Test Account (POP): More robust fast UIDL test. Fixes erroneous report that UIDL is not 
+	    supported if mailserver does not implement the CAPA command.
+	(-) Fixed: Rules Tab remained in English regardless of language selection in 5.0.10-11
+	(+) French (Canada) translation updated
+
 5.0 beta 11
 	(-) Fixed minor memory leak populating languages dialog
 	(-) Fixed error message for previewing a deleted email (previously gave a TProgressBar
