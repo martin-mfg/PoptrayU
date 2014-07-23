@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "0"
-!define VER_BETA "11"
+!define VER_BETA "12"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
