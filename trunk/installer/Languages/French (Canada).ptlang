@@ -567,7 +567,7 @@ Server is a required field, and may not be blank.=Le champ serveur doit nécessa
 Server did not respond in a reasonable amount of time. Unable to connect.=Le serveur n'a pas répondu à l'intérieur d'un délai réraisonnable. Connexion impossible.
 An error occurred.=Une erreur est survenue.
 
-# ---------- Added PopTrayU 5.0 (beta 10)
-Closes any open message preview windows when 'to tray' is pressed=
-Auto-close Preview Windows=Fermer automatique les fenêtres d'aperçu
-Message Not Found=
+# ---------- Added PopTrayU 5.0 (beta 10) (Nouveaux mots, expression et phrases pour 5.0 beta 10) --------
+Closes any open message preview windows when 'to tray' is pressed=Si cette case est cochée, les fenêtres de prévisualisation seront fermée en cliquant sur Réduire
+Auto-close Preview Windows=Fermer automatiquement la fenêtre de prévisiualisation
+Message Not Found=Courriel non trouvé
