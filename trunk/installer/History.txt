@@ -5,6 +5,12 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0 beta 14
+	(-) Test account still incorrectly reported "UIDL not supported" in beta 12
+	(+) Temp filename and extension can be overwritten by manually editing ini file.
+	(-) Emails of type multipart/mixed were occasionally incorrectly showing up as plain 
+	    text instead of HTML.
+
 5.0 beta 12
 	(-) "Max line length exceeded" in non-conforming email is no longer treated as an error
 	    and line breaks are silently added if needed, allowing the message to be decoded
