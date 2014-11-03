@@ -6,10 +6,13 @@ PopTrayU Version History
  (-) Bug fixed
 
 5.0 beta 14
+	(-) Fix SASL error connecting to Hotmail (and other servers) that don't support SASL
+	    when Authentication mode set to Automatic. 
 	(-) Test account still incorrectly reported "UIDL not supported" in beta 12
 	(+) Temp filename and extension can be overwritten by manually editing ini file.
 	(-) Emails of type multipart/mixed were occasionally incorrectly showing up as plain 
 	    text instead of HTML.
+	(-) Translation issues fixed on Main Interface options tab.
 
 5.0 beta 12
 	(-) "Max line length exceeded" in non-conforming email is no longer treated as an error
