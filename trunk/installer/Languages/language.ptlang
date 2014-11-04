@@ -16,6 +16,7 @@
 # 2013-08-04 Updated for PopTrayU 5.0 beta 6
 # 2013-12-11 Updated for PopTrayU 5.0 beta 9
 # 2014-07-07 Updated for PopTrayU 5.0 beta 10
+# 2014-11-04 Updated for PopTrayU 5.0 beta 14
 #-----------------------------------------------------------------------
 
 OK=
@@ -632,7 +633,7 @@ Edit=
 Use Custom Date Format=
 
 # ---------- Added PopTrayU 5.0 (beta 9) ---------
-Server does not support SASL Authentication. Please fix account settings.=
+## (removed in beta 14) Server does not support SASL Authentication. Please fix account settings.=
 Server is a required field, and may not be blank.=
 Server did not respond in a reasonable amount of time. Unable to connect.=
 An error occurred.=
@@ -641,3 +642,13 @@ An error occurred.=
 Closes any open message preview windows when 'to tray' is pressed=
 Auto-close Preview Windows=
 Message Not Found=
+
+# beta 12
+Changes the appearance of Date/Time for emails in the Main Window message list.=
+See help file for date/time format codes.=
+
+# 5.0 beta 14
+Server does not support APOP Authentication. Advanced account settings need to be modified.=
+Server does not support SASL Authentication mode. Advanced account settings need to be modified.=
+Changes the appearance of Date/Time for emails in the Main Window message list.=
+See help file for date/time format codes.=
