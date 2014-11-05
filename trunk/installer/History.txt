@@ -14,6 +14,7 @@ PopTrayU Version History
 	    text instead of HTML.
 	(-) Translation/tooltip issues fixed on Main Interface options tab.
 	(*) blank.ptlang has been eliminated as it is redundant to language.ptlang
+	(*) French (Canada) translation updated
 
 5.0 beta 12
 	(-) "Max line length exceeded" in non-conforming email is no longer treated as an error
