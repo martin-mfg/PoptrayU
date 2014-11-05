@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "0"
-!define VER_BETA "12"
+!define VER_BETA "14"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -264,7 +264,7 @@ Section $(SEC_Lang) SecLang
   SetOutPath "$INSTDIR\Languages"
   
   ; copy new
-  File "languages\blank.ptlang"
+  ;;File "languages\blank.ptlang"
   File "languages\language.ptlang"
   File "languages\Afrikaans.ptlang"
   File "languages\Arabic.ptlang"
