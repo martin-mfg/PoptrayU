@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.0 beta 11
+# Logiciel - version               : 5.0 beta 14
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 23.07.2014 - Ville de Québec 
+# Fichier - date et lieu           : 04.10.2014 - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -507,8 +507,8 @@ About PopTrayU=À propos de PopTrayU
 Version=Version
 Show Images=Voir les photos
 Reset Customizations=Annuler la personnalisation
-Most UI Items=La plupart des items de l'interface
-Vertical Tabs=Les onglets verticaux
+Most UI Items=La plupart des~items de l'interface
+Vertical Tabs=Les~onglets verticaux
 Message List=Liste des courriels
 Flash Tray Icon=Clignotement de l'icône de la barre de notification
 Show Balloon Notification=Afficher une fenêtre d'information
@@ -571,3 +571,23 @@ An error occurred.=Une erreur est survenue.
 Closes any open message preview windows when 'to tray' is pressed=Si cette case est cochée, les fenêtres de prévisualisation seront fermée en cliquant sur Réduire
 Auto-close Preview Windows=Fermer automatiquement la fenêtre de prévisiualisation
 Message Not Found=Courriel non trouvé
+
+ 
+
+# ---------- Added PopTrayU 5.0 (beta 12) ----------
+Changes the appearance of Date/Time for emails in the Main Window message list.=Changement de la présentation de la date et de l'heure des courriels dans la fenêtre principale.
+See help file for date/time format codes.=Voir la fonction Aide pour savoir comment indiquer la date et l'heure des courriels.
+
+ 
+
+# ---------- Added PopTrayU 5.0 (beta 14) ----------
+Server does not support APOP Authentication. Advanced account settings need to be modified.=Votre serveur ne supporte pas l'authentification APOP. Voir les paramètres avancés du compte.
+Server does not support SASL Authentication mode. Advanced account settings need to be modified.=Votre serveur ne supporte pas l'authentification SASL. Voir les paramètres avancés du compte.
+Changes the appearance of Date/Time for emails in the Main Window message list.=Changement de la présentation de la date et de l'heure des courriels dans la fenêtre principale.
+See help file for date/time format codes.=Voir la fonction Aide pour savoir comment indiquer la date et l'heure des courriels.
+
+
+
+
+
+
