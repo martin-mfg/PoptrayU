@@ -5,6 +5,15 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+5.0.15
+	(-) Fixed error "Response (last) line started with a * but next word was not a valid 
+	    response like OK, BAD, etc" when connecting to certain IMAP SSL accounts.
+	(-) Fixed Filename sanitization to remove more characters illegal in filenames like question mark and colon.
+	(-) Save Email (on preview window) list of types was working erroneously/missing MHT description
+	(+) Save Email (on preview window) will now remember filename when you change the file type.
+	(*) Updated Indy Networking Library to latest.
+
+
 5.0 beta 14
 	(-) Fix connection error connecting to Hotmail (and other servers) that don't support SASL
 	    when Authentication mode set to Auto. 
