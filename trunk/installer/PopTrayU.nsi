@@ -8,7 +8,7 @@
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
-!define VERSION "${VER_MAJOR}.${VER_MINOR}.${VER_BETA})"
+!define VERSION "${VER_MAJOR}.${VER_MINOR}.${VER_BETA}"
 Name "${PRODUCT} ${VERSION}"
 
 !include "MUI2.nsh"
@@ -26,7 +26,7 @@ Name "${PRODUCT} ${VERSION}"
 ;------------------------------------------------------------------[ Configuration1 ]---
 
 ;OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}.exe"
-OutFile "Deploy\PopTrayU${VER_MAJOR}${VER_MINOR}_beta${VER_BETA}u.exe"
+OutFile "Deploy\PopTrayU ${VER_MAJOR}.${VER_MINOR}.${VER_BETA} Installer.exe"
 SetCompressor /SOLID lzma
 
 ;------------------------------------------------------------------[ Modern UI Configuration ]---
@@ -168,14 +168,18 @@ Section $(SEC_PopTrayU) SecPopTrayU
   	File "PopTrayU.exe"
   	IfErrors ClosePopTrayU OtherFiles
   ClosePopTrayU:
-  	; close running PopTrayU
+  	; find and close running PopTrayU
+  	FindWindow ${HWND} "TfrmPopUMain"
+  	IntCmp ${Count} 1 PrintClosing
+  FindOldPTU:
   	FindWindow ${HWND} "TfrmPopUMain.UnicodeClass"
-  	IntCmp ${Count} 1 Print Send Send
-  Print:
+  	IntCmp ${Count} 1 PrintClosing TryClosePTU TryClosePTU
+  PrintClosing:
   	DetailPrint $(msg_closing_poptrayu)
-  Send:
+  TryClosePTU:
   	SendMessage ${HWND} 1036 0 0 ; UM_QUIT = 1036
   	;SendMessage ${HWND} ${WM_CLOSE} 0 0
+  SleepAndRetry:
   	Sleep 1000
   	Goto TryPopTrayU
   CantClose:

@@ -12,7 +12,8 @@ PopTrayU Version History
 	(-) Save Email (on preview window) list of types was working erroneously/missing MHT description
 	(+) Save Email (on preview window) will now remember filename when you change the file type.
 	(*) Updated Indy Networking Library to latest.
-
+	(-) Installer was not correctly closing running PoptrayU 5.0.x
+	(+) New User-friendly filename scheme for installer
 
 5.0 beta 14
 	(-) Fix connection error connecting to Hotmail (and other servers) that don't support SASL
