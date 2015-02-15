@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.0 beta 14
+# Logiciel - version               : 5.1
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 04.10.2014 - Ville de Québec 
+# Fichier - date et lieu           : 26.12.2014 - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -507,8 +507,8 @@ About PopTrayU=À propos de PopTrayU
 Version=Version
 Show Images=Voir les photos
 Reset Customizations=Annuler la personnalisation
-Most UI Items=La plupart des~items de l'interface
-Vertical Tabs=Les~onglets verticaux
+Most UI Items=La plupart des items de l'interface
+Vertical Tabs=Les onglets verticaux
 Message List=Liste des courriels
 Flash Tray Icon=Clignotement de l'icône de la barre de notification
 Show Balloon Notification=Afficher une fenêtre d'information
@@ -522,7 +522,7 @@ POP3 with SSL or APOP=POP3 avec SSL ou APOP
 Specify a different timer interval for each account.=Spécifiez un intervalle de vérification différent pour chaque compte.
 Used by dial-up users who don't want the dial-up dialog~to pop-up when you are not connected.~Makes checking a little bit slower.=Utilisé par les utilisateurs qui doivent composer un numéro et~qui ne veulent pas d'ouverture de fenêtre lorsque qu'ils ne sont pas connectés.~La vérififcation sera plus lente.
 This setting can be changed via setup or a command line parameter.=Ce réglage peut être modifié via l'installation ou un paramètre de ligne de commande.
-Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Deux touches ou plus du clavier, réunies par le signe "+" effectuent une action. N'utilisez pas de touches qui sont utilisées dans d'autres progrmmes. Les combisations Ctrl-C et Ctrl-V sont fortement déconseillées.
+Hot-Keys are system-wide. Use an unusual hot-key rather than one you use frequently in other applications. Hot-keys like Ctrl-C are not recommended.=Deux touches ou plus du clavier, réunies par le signe "+" effectuent une action. N'utilisez pas de touches qui sont utilisées dans d'autres progrmmes. Les combisations Ctrl+C et Ctrl+V sont fortement déconseillées.
 Don't automatically check for new messages=Ne pas vérifier automatiquement l'arrivée de nouveaux courriels
 Set Interval per account=Définir un intervalle par compte
 Only check when already online=Vérifier uniquement lorsque déjà en ligne
@@ -547,7 +547,7 @@ Changes the action of the Spam toolbar button on the Main Window=Déterminer l'a
 Check for new mail every=Vérifier les nouveaux courriels toutes les
 Credits:=Crédits :
 Customize the Font=Personnaliser la police
-Disables the HTML Preview tab when previewing a message.=Désactive l'onglet HTML lors de la prévisualisation d'un message.
+Disables the HTML Preview tab when previewing a message.=Si cette case est cochée, l'onglet HTML sera désactivé lors de la prévisualisation d'un message.
 Edit=Modifier
 Listbox Font=Liste des polices
 Reset Fonts and Colors=Réinitialiser les polices et les couleurs
@@ -571,11 +571,11 @@ An error occurred.=Une erreur est survenue.
 Closes any open message preview windows when 'to tray' is pressed=Si cette case est cochée, les fenêtres de prévisualisation seront fermée en cliquant sur Réduire
 Auto-close Preview Windows=Fermer automatiquement la fenêtre de prévisiualisation
 Message Not Found=Courriel non trouvé
-
+No such message=Courriel inexistant
  
 
 # ---------- Added PopTrayU 5.0 (beta 12) ----------
-Changes the appearance of Date/Time for emails in the Main Window message list.=Changement de la présentation de la date et de l'heure des courriels dans la fenêtre principale.
+Changes the appearance of Date/Time for emails in the Main Window message list.=Si cette case est cochée, il sera possible de changer la présentation de la date et de l'heure des courriels dans la fenêtre principale.~Les équivalents anglais de j,m et a doivent être utilisés: d,m,y.
 See help file for date/time format codes.=Voir la fonction Aide pour savoir comment indiquer la date et l'heure des courriels.
 
  
@@ -583,11 +583,76 @@ See help file for date/time format codes.=Voir la fonction Aide pour savoir comm
 # ---------- Added PopTrayU 5.0 (beta 14) ----------
 Server does not support APOP Authentication. Advanced account settings need to be modified.=Votre serveur ne supporte pas l'authentification APOP. Voir les paramètres avancés du compte.
 Server does not support SASL Authentication mode. Advanced account settings need to be modified.=Votre serveur ne supporte pas l'authentification SASL. Voir les paramètres avancés du compte.
-Changes the appearance of Date/Time for emails in the Main Window message list.=Changement de la présentation de la date et de l'heure des courriels dans la fenêtre principale.
 See help file for date/time format codes.=Voir la fonction Aide pour savoir comment indiquer la date et l'heure des courriels.
 
 
+# ---------- Added PopTrayU, version 5.1 ----------
 
-
+3D Dark Shadow=Ombre 3D foncée
+3D Light=3D pâle
+Active Border=Contour activé
+Active Caption=Sous-titrage activé
+Advanced Connection Settings=Paramètres avancés de connexion
+Application Workspace=Espace de travail
+Aqua=Cyan
+Authentication Mode:=Mode d'identification:
+Background=Arrière-plan
+Black=Noir
+Blue=Bleu
+Button Face=Dessus du bouton
+Button Highlight=Surbrillance du bouton
+Button Shadow=Ombre du bouton
+Button Text=Texte sur le bouton
+Caption Text=Texte du sous-titrage
+Connection Settings=Paramètres de connexion
+Cream=Crème
+Custom...=Personnalisation...
+Deleting...=Suppression...
+Display Options=Options d'affichage
+Downloading newest=Téléchargement le plus récent
+Enabled:=Activé:
+Find...=Chercher...
+Fuchsia=Fuchsia
+Gradient Active Caption=Sous-titrage actif dégradé
+Gradient Inactive Caption=Sous-titrage inatif dégradé
+Gray Text=Texte en gris
+Gray=Gris
+Green=Vert
+Highlight Background=Arrière-plan du reflet
+Highlight Text=Texte reflété
+Hot Light=Très clair
+Inactive Border=Contour inactif
+Inactive Caption Text=Texte du sous-titrage inacfif
+Inactive Caption=Sous-titrage inacfif
+Incoming Mail Server:=Serveur de courriel entrant:
+Info Background=Information en arrière-plan
+Info Text=Texte d'information
+Lime=Lime
+Maroon=Maron
+Medium Gray=Gris moyen
+Menu Background=Arrière-plan du menu
+Menu Bar=Barre du menu
+Menu Highlight=Surbrillance du menu
+Menu Text=Texte du menu
+Money Green=Vif argent
+Navy=Marine
+Olive=Olive
+Plain Text=Texte uni
+PopTrayU Account Preferences=Préférences pour les explications de PopTrayU
+Purple=Violet
+Red=Rouge
+Scroll Bar=Barre de défilement
+Silver=Argent
+Sky Blue=Bleu ciel
+Teal=Bleu-vert foncé
+Use SSL/TLS:=Utiliser SSL/TLS:
+Username:=Utilisateur:
+White=Blanc
+Window Background=Arrière-plan de la fenêtre
+Window Frame=Contour de la fenêtre
+Window Text=Texte de la fenêtre
+Yellow=Jaune
+Default Notification Sound:=Sonore par défaut :
+Ini Storage Folder:=Le dossier de stockage pour les fichiers ini :
 
 
