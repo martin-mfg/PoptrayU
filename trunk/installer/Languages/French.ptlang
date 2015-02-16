@@ -2,6 +2,7 @@
 # Software - name                          : PopTrayU
 # Software - version                       : 5.0 beta 1
 #--------------------------------------------------------------------------------------------
+# 2015-02-15 5.1.0 (Partial)
 # 2013-05-30 Updated for 5.0 beta 1
 # File - description                       : French (France) translation file
 # File - date and location                 : 2005/10/23 -  18h00 CET - Paris, France
@@ -547,3 +548,15 @@ Spam Management=Spam gestion
 Theme:=Thème:
 Use SSL/TLS=Utiliser SSL/TLS
 Write all rules actions to a log file.~Filename: RULES.LOG in the user settings directory for PopTrayU.=Donnez toutes les actions des règles dans un fichier de log. Nom du fichier: RULES.LOG dans le répertoire des paramètres utilisateur pour PopTrayU.
+
+
+# ---------- Added PopTrayU 5.1.0 ----------
+Authentication Mode:=l'authentification:
+Incoming Mail Server:=Serveur de courrier entrant:
+Username:=Nom d'utilisateur:
+Use SSL/TLS:=Utiliser SSL / TLS:
+Enabled:=Activé:
+Display Options=Options d'affichage
+Connection Settings=Paramètres de connexion
+Advanced Connection Settings=Paramètres de connexion avancés
+PopTrayU Account Preferences=Compte PopTrayU Préférences
