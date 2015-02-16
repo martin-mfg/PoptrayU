@@ -1,6 +1,7 @@
 ﻿#-----------------------------------------------------------------------
 # PopTrayU translation file for Swedish
 #-----------------------------------------------------------------------
+# 2015-04-15 PopTrayU 5.1.0 (partial)
 # 2013-05-31 PopTrayU 5.0 beta 1
 # 1006-08-21 PopTray v3.2 (RC1) Translated by Christian Hedberg, golfareninsweden@hotmail.com
 # 2005-10-15 PopTray 3.2 (beta 2)
@@ -548,3 +549,81 @@ Edit=Redigera
 
 Plain Text=Enkel text
 Credits:=credits:
+
+// added 5.1.x
+Incoming Mail Server:=Inkommande e-postserver:
+Info Background=Info bakgrund
+Info Text=Info Text
+Lime=lime
+Maroon=Rödbrun
+Medium Gray=Medium Gray
+Menu Background=Menybakgrund
+Menu Bar=Menyrad
+Menu Highlight=Meny Markera
+Menu Text=menytext
+Money Green=pengar Grön
+Navy=Navy
+Olive=Oliv
+OptionsForm=OptionsForm
+POP3=POP3
+PopTrayU Account Preferences=PopTrayU Kontoinställningar
+Purple=Lila
+Red=röd
+Scroll Bar=Scroll Bar
+Show In Groups=Visa I Grupper
+Silver=silver
+Sky Blue=Sky Blue
+Teal=Teal
+Use SSL/TLS:=Använd SSL / TLS:
+Username:=Användarnamn:
+White=vit
+Window Background=Fönster bakgrund
+Window Frame=fönsterram
+Window Text=Fönster Text
+Yellow=gul
+3D Dark Shadow=3D Dark Shadow
+3D Light=3D Ljus
+Active Border=Aktiv Gräns
+Active Caption=Aktiv Bildtext
+Advanced Connection Settings=Avancerade anslutningsinställningar
+Application Workspace=Programmets arbetsyta
+Aqua=Aqua
+Authentication Mode:=Autentiseringsläge:
+Background=bakgrund
+Blue=Blå
+Button Face=knapp Face
+Button Highlight=knapp Markera
+Button Shadow=knapp Shadow
+Button Text=Knapp Text
+Caption Text=bildtext Text
+Connection Settings=Anslutningsinställningar
+Cream=kräm
+Custom...=Anpassad ...
+Display Options=Visningsalternativ
+Email Accounts=E-postkonton
+Enabled:=aktiverad:
+Fuchsia=Rosanilin
+Gradient Active Caption=Gradient Aktiv Bildtext
+Gradient Inactive Caption=Gradient Inaktiv Bildtext
+Gray=Grå
+Gray Text=Grå text
+Green=grön
+Highlight Background=Markera bakgrund
+Highlight Text=Markera text
+Hot Light=Het Ljus
+Inactive Border=Inaktiv Gräns
+Inactive Caption=Inaktiv Bildtext
+Inactive Caption Text=Inaktiv Bildtext Text
+Advanced Connection Settings=Avancerade anslutningsinställningar
+Authentication Mode:=Autentiseringsläge:
+STARTTLS:=STARTTLS:
+SSL 2.0=SSL 2,0
+SSL 3.0=SSL 3,0
+TLS 1.0=TLS 1,0
+TLS 1.1=TLS 1,1
+TLS 1.2=TLS 1,2
+Black=Svart
+Aqua=Turkos
+Yellow=Gul
+Default Notification Sound:=Standard Anmälan Ljud:
+Ini Storage Folder:=Ini Storage mapp:
