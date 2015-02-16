@@ -5,6 +5,47 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+
+Version 5.1.0
+=============
+New Features
+------------
+Limit Inbox Size - Have thousands of messages in your inbox and message checks are taking too long? Now you can limit PopTrayU to only download the most recent (by server order) N messages (see Main Window options: Limit Inbox Size)
+
+/TRANSLATE command line parameter. For use by translators. Enables a debug window that will list phrases that may be missing translations.
+
+Large Fonts support! For those who are tired of squinting or use Window's Large Fonts setting, support has been added throughout the application to resize labels, edits, and other components vertically to accomodate larger font sizes. Support has also been added in several places (where it did not already exist) for correct horizontal resizing. In most cases the resizing code is custom written for each [Please post on the discussion board if you find any part of the application that does not adequately scale for larger fonts..ColorBoxes not sizing is a known issue] 
+
+Accounts Tab Redesigned. The accounts tab was getting a bit cluttered with all the additional options that have been added since PopTray 3.2 to accomodate SSL capabilities, as well as other newer features like do not check hours. The configuration options for accounts have been organized into categories to make it easier to create and manage accounts. All the information from your ISP about your account is in one category, for example. PopTrayU behaviors for that account are together. And the fields and boxes all automatically resize and reposition themselves to match the current font and language settings.
+
+Options Tab redesiged. The accounts tabs looked so awesome that I changed the options tab headings to match (using category panels that minimize/unminimize) to the options panes as well. The list of categories has had a few changes. The Advanced Misc. has been eliminated and its options are now merged into several other categories. Defaults was changed to the first category in the options panel as setting the language is often one of the first things new users will want to change. Two new categories have been added: Rules, and Preview Window. The Rules category gathers several existing options that all relate to rule creation into one place. Some options (on all tabs) have had their descriptions changed, or have been changed from checkboxes to dropdowns or vice versa, to make it more clear what the option is choosing between.
+
+Rule edit page modified to have the collapsible categories and auto-sizing as well.
+
+ColorBoxes for selecting colors are now translatable.
+
+"Select All" Toolbar Action added. This is not shown on the toolbar by default.You can add this action to the toolbar by right clicking on it and selecting customize. If you use a tablet or just dislike the keyboard this is a convenient way to select all or no messages.
+
+Bug Fixes
+---------
+ * Right click-dragging to reorder Rules is back.
+ * Rule account dropdown was not enabling the save button after changing rule account.
+
+
+Codebase Improvements
+---------------------
+Most of these changes will have no user-facing impact. But many of them will make the code easier to work with, pave the way for new features that previously weren't feasible, improve performance, or decrease the likelihood of bugs in certain parts of the code.
+
+ * Collections have been replaced with Generics 
+ * Accounts Tab, Options Tab, Rules Tab, and About Tab's contents each moved to it's own Form/unit, making them much more managable and cohesive units. This required some changes to the translation engine as well
+ * Eliminate use of integer msgNum variables througout code as much as possible, pass object references instead.
+ * Clean up & refactor Rules.ini reading/writing code. Read whole ini file before updating UI.
+ * Translation engine has had some modifications. It's now a bit more flexible about what it can translate automatically (ComboBoxes, ListViews, TreeViews, Popup Menus/Toolbars), so a bunch of code that used to translate specific items on the UI has been eliminated. Other modifications as well.
+
+
+Versions Prior to 5.1
+=====================
+
 5.0.15
 	(-) Fixed error "Response (last) line started with a * but next word was not a valid 
 	    response like OK, BAD, etc" when connecting to certain IMAP SSL accounts.
