@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.1
+# Logiciel - version               : 5.1.0
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 26.12.2014 - Ville de Québec 
+# Fichier - date et lieu           : 17.02.2015 - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -586,73 +586,136 @@ Server does not support SASL Authentication mode. Advanced account settings need
 See help file for date/time format codes.=Voir la fonction Aide pour savoir comment indiquer la date et l'heure des courriels.
 
 
-# ---------- Added PopTrayU, version 5.1 ----------
-
+# ------------- Added PopTrayU 5.1.0 -----------
 3D Dark Shadow=Ombre 3D foncée
 3D Light=3D pâle
 Active Border=Contour activé
 Active Caption=Sous-titrage activé
+Advanced POP/IMAP Settings=Paramètres POP/IMAP avancés
 Advanced Connection Settings=Paramètres avancés de connexion
 Application Workspace=Espace de travail
 Aqua=Cyan
-Authentication Mode:=Mode d'identification:
+Authentication Mode:=Mode d'identification :
+Auto-close Preview Windows=Fermer automatique la fenêtre de prévisiualisation
+Automatic Mail Check Conditions=Conditions de la vérification automatique du courriel
 Background=Arrière-plan
+Background:=Arrière-plan :
+Balloon Popup=Ballon surgissant
+Beta Release=Version beta
 Black=Noir
+Blacklist Action:=Action de la liste noire :
 Blue=Bleu
 Button Face=Dessus du bouton
 Button Highlight=Surbrillance du bouton
 Button Shadow=Ombre du bouton
-Button Text=Texte sur le bouton
+Button Text=Texte du bouton
 Caption Text=Texte du sous-titrage
-Connection Settings=Paramètres de connexion
+Changes the appearance of Date/Time for emails in the Main Window message list.=Si cette case cochée, la présentation de la date et de l'heure des courriels dans la fenêtre principale sera modifiée.
+Charcoal Dark Slate=Ardoise foncée couleur charbon
+Communicate using MAPI instead of mailto:=Utilisation de MAPI au lieu de mailto :
+Confirm Deletion=Corfirmer la suppression
+Connection Settings=Paramètres de la connexion
 Cream=Crème
-Custom...=Personnalisation...
+Custom...=Personnaliation...
+Cyan Night=Cyan nuit
+Default=Par défaut
+Default Notification Sound:=Signal sonore :
+Default Tab for Spam Messages:=Affichage par défaut pour les pourriels :
+Default Tab:=Affichage par défaut :
 Deleting...=Suppression...
 Display Options=Options d'affichage
-Downloading newest=Téléchargement le plus récent
-Enabled:=Activé:
-Find...=Chercher...
-Fuchsia=Fuchsia
+Downloading newest=Téléchargement des plus récents
+Email Accounts=Comptes de courriels
+Enabled:=Activé :
+External Mail Client=Logiciel de courriel externe
+Find...=Trouver...
+Fonts=Polices :
+Fuchsia=Fuchsia 
 Gradient Active Caption=Sous-titrage actif dégradé
 Gradient Inactive Caption=Sous-titrage inatif dégradé
-Gray Text=Texte en gris
 Gray=Gris
+Gray Text=Texte en gis
 Green=Vert
 Highlight Background=Arrière-plan du reflet
 Highlight Text=Texte reflété
 Hot Light=Très clair
+HTML=HTML
+HTML Preview=Aperçu en HTML
+Immediately=Immédiatement
 Inactive Border=Contour inactif
 Inactive Caption Text=Texte du sous-titrage inacfif
 Inactive Caption=Sous-titrage inacfif
-Incoming Mail Server:=Serveur de courriel entrant:
+Incoming Mail Server:=Serveur de courriel entrant :
 Info Background=Information en arrière-plan
 Info Text=Texte d'information
+Ini Storage Folder:=Dossier contenant les fichiers ini :
+Last Used=Le dernier utilisé
 Lime=Lime
+Limit Inbox Size=Taille maximum de la boîte de réception
+Mail Check Actions=Actions de la vérification du courriel
+Mail Check Frequency=Fréquence de la vérification du courriel
 Maroon=Maron
 Medium Gray=Gris moyen
 Menu Background=Arrière-plan du menu
 Menu Bar=Barre du menu
 Menu Highlight=Surbrillance du menu
 Menu Text=Texte du menu
+Message Download Options=Options pour le téléchargement du courriel
+Minimize Window Options=Réduire la fenêtre des options
+Modal Dialog=Fenêtre de dialogue
 Money Green=Vif argent
 Navy=Marine
+Number of Messages:=Nombre de courriels :
 Olive=Olive
+On Next Mail Check=À la prochaine vérification du courriel
+Only the newest emails will be shown if this option is selected.=Si cette case est cochée, seuls les plus récents courriels seront affichés
+Only when already online=Uniquement lorsque déjà connecté
+Only while Minimized=Uniquement lorsque la fenêtre est réduite
+Password=Mot de passe
 Plain Text=Texte uni
-PopTrayU Account Preferences=Préférences pour les explications de PopTrayU
-Purple=Violet
+Plain Text Emails=Texte uni des courriels
+Plain Text Preview=Texte uni en prévisualisation
+PopTrayU Account Preferences=Préférences pour l'utilisation de PopTrayU
+PopTrayU Skin/Theme=Thème de l'apparence de PopTrayU
+Preview Window=Fenêtre de prévisiualisation
+Purple=Pourpre
+Raw=Brut
+Raw=Brut
 Red=Rouge
+Rule Actions=Résultat de la règle
+Rule Conditions=Paramètres de la règle
+Rule Settings=Définition d'une règle
 Scroll Bar=Barre de défilement
+See help file for date/time format codes.=Voir le fichier Aide pour la façon d'indiquer la date et l'heure.
+Select Colors=Choisir les couleurs
+Set Frequency per account=Choisir une fréquence pour chaque compte
+Show In Groups=Afficher en groupe
+Show in Statusbar=Afficher dans la barre de statut
 Silver=Argent
+STARTTLS:=
 Sky Blue=Bleu ciel
+Smokey Quartz Kamri=Gris semi-transparent
+Tabs=Affichage
 Teal=Bleu-vert foncé
-Use SSL/TLS:=Utiliser SSL/TLS:
-Username:=Utilisateur:
+Text:=Texte :
+These options allow more sophisticated rules=Options qui permettent des règles plus sophistiquées
+Tray Icon while Checking:=Icône pendant la vérififcation :
+Use Custom Date Format=Utiliser le format de date personnalisé
+Use Defaults=Utiliser les valeurs par défaut
+Use Images and Colors for Dark Backgrounds=Utiliser des images et des couleurs pour un arrière-plan foncé
+Use SSL/TLS:=Utiliser SSL/TLS 
+Username:=Utilisateur :
+When deleting messages, delete from server:=Au moment de la suppressionn de courriels, supprimer du serveur :
 White=Blanc
-Window Background=Arrière-plan de la fenêtre
+Whitelist/Blacklist=Liste blanche/Liste noire
+Window Background=Fenêtre de l'arrière-plan
 Window Frame=Contour de la fenêtre
 Window Text=Texte de la fenêtre
+Windows=Windows
+With this option enabled, certain images will be replaced with ones better suited to dark background colors.=Si cette option est activée, certaines images seront remplacées pour mieux s'agences aux couleurs de l'arrière-plan.
 Yellow=Jaune
-Default Notification Sound:=Sonore par défaut :
-Ini Storage Folder:=Le dossier de stockage pour les fichiers ini :
+Error Display=Signalement d'une erreur
+
+
 
 
