@@ -13,30 +13,30 @@ object frameMouseButtons: TframeMouseButtons
     Caption = 'Left Click:'
   end
   object lblRight: TLabel
-    Left = 65
+    Left = 66
     Top = 48
-    Width = 54
+    Width = 53
     Height = 13
     Alignment = taRightJustify
     Caption = 'Right Click:'
   end
   object lblMiddle: TLabel
-    Left = 59
+    Left = 61
     Top = 72
-    Width = 60
+    Width = 58
     Height = 13
     Alignment = taRightJustify
     Caption = 'Middle Click:'
   end
   object lblDouble: TLabel
-    Left = 56
+    Left = 58
     Top = 96
-    Width = 63
+    Width = 61
     Height = 13
     Alignment = taRightJustify
     Caption = 'Double Click:'
   end
-  object Label13: TLabel
+  object lblMouseAction: TLabel
     Left = 162
     Top = 4
     Width = 68
@@ -45,9 +45,9 @@ object frameMouseButtons: TframeMouseButtons
     Caption = 'Mouse Action:'
   end
   object lblSLeft: TLabel
-    Left = 48
+    Left = 47
     Top = 120
-    Width = 71
+    Width = 72
     Height = 13
     Alignment = taRightJustify
     Caption = 'Shift Left Click:'
@@ -61,9 +61,9 @@ object frameMouseButtons: TframeMouseButtons
     Caption = 'Shift Right Click:'
   end
   object lblSMiddle: TLabel
-    Left = 35
+    Left = 36
     Top = 168
-    Width = 84
+    Width = 83
     Height = 13
     Alignment = taRightJustify
     Caption = 'Shift Middle Click:'
@@ -74,7 +74,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 0
     OnChange = OptionsChange
   end
@@ -84,7 +83,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 1
     OnChange = OptionsChange
   end
@@ -94,7 +92,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 2
     OnChange = OptionsChange
   end
@@ -104,7 +101,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 3
     OnChange = OptionsChange
   end
@@ -114,7 +110,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 4
     OnChange = OptionsChange
   end
@@ -124,7 +119,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 5
     OnChange = OptionsChange
   end
@@ -134,7 +128,6 @@ object frameMouseButtons: TframeMouseButtons
     Width = 190
     Height = 21
     Style = csDropDownList
-    ItemHeight = 13
     TabOrder = 6
     OnChange = OptionsChange
   end

@@ -24,31 +24,39 @@ The GNU GPL can be found at:
   http://www.gnu.org/copyleft/gpl.html
 -------------------------------------------------------------------------------}
 
+{$DEFINE TRANSLATE_DEBUG}
+
 interface
 uses
-  Forms, Dialogs, TntForms, StdCtrls;
+  Forms, Dialogs, StdCtrls, Vcl.Controls, System.Classes, Vcl.ComCtrls,
+  Vcl.ActnPopup, Vcl.Menus;
 
 type
   TLangDirection = (ToEnglish,FromEnglish);
 
   // translation
-  function TranslateDir(st : WideString; LangDirection : TLangDirection) : WideString;
-  procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection);
-  procedure TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
+  function TranslateDir(st : string; LangDirection : TLangDirection) : string;
+  procedure TranslateComponent(component : TComponent);
+  procedure TranslateComponentDir(component : TComponent; LangDirection : TLangDirection);
   procedure ReadTranslateStrings;
   procedure SetProp(obj : TObject; PropName : string; ToEnglish : boolean=False);
   procedure GetLanguages;
   procedure RefreshLanguages;
-  function TranslateToEnglish(phrase: WideString): WideString;
-  function Translate(english: WideString): WideString;
-  procedure TranslateFrame(frame : TFrame);
+  function TranslateToEnglish(phrase: string): string;
+  function Translate(english: string): string;
+  procedure TranslateTreeNode(node : TTreeNode; lastLanguage : Integer);
   procedure TranslateForm(form : TForm);
   function TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
-    Buttons: TMsgDlgButtons; HelpCtx: Integer) : TTntForm;
+    Buttons: TMsgDlgButtons; HelpCtx: Integer) : TForm;
   function ShowTranslatedDlg(const Msg: string; DlgType: TMsgDlgType;
     Buttons: TMsgDlgButtons; HelpCtx: Integer;
     DialogCaption : string = '' ): Integer;
-  procedure ChangeItem(cmb : TComboBox; item : integer; st : string);
+  procedure ChangeComboBoxListItem(cmb : TComboBox; item : integer; st : string);
+  procedure SetWinControlBiDi(Control: TWinControl);
+  procedure SetPreviousLanguage(const oldlang : integer);
+  procedure TranslateComponentFromEnglish(component : TComponent);
+  procedure TranslateComponentToEnglish(component : TComponent);
+  procedure TranslateTMenuItem(menuItem : TMenuItem; const LangDirection : TLangDirection; const recursive : boolean = true);
 
 //----------------------------------------------------------------------------
 // Implementation
@@ -56,12 +64,49 @@ type
 implementation
 
 uses
-  TntClasses, uGlobal, sysutils, StrUtils, TntDialogs, TntComCtrls,
-  Windows, uMain, uFrameDefaults, uDM, uRCUtils, TypInfo;
+  uGlobal, sysutils, StrUtils,
+  Windows, uMain, uFrameDefaults, uDM, uRCUtils, TypInfo, Vcl.Buttons,
+  uTranslateDebugWindow;
+const
+  WS_EX_NOINHERITLAYOUT = $00100000; // Disable inheritence of mirroring by children
+  WS_EX_LAYOUTRTL = $00400000; // Right to left mirroring
+
+  LANGUAGE_UNDEFINED = -1;
+  LANGUAGE_ENGLISH = 0;
 
 var
-  FTranslateStrings : TTntStringList;
+  FTranslateStrings : TStringList;
   FLastLanguage : integer;
+  {$IFDEF TRANSLATE_DEBUG}
+  DebugOutputWindow : TTranslateDebugWindow;
+  {$ENDIF}
+
+
+procedure SetPreviousLanguage(const oldlang : integer);
+var
+  i : integer;
+begin
+  FLastLanguage := oldlang;
+
+  // this isn't the ideal place to put translating the language names. but since
+  // they don't have a .tag field, this is the easist place to do it.
+  if (oldlang <> 0) then
+  for i := 0 to Length(Options.Languages)-1 do
+    Options.Languages[i] := TranslateDir(Options.Languages[i],ToEnglish);
+
+  if (oldlang <> Options.Language) then
+  for i := 0 to Length(Options.Languages)-1 do
+    Options.Languages[i] := TranslateDir(Options.Languages[i],FromEnglish);
+end;
+
+procedure SetWinControlBiDi(Control: TWinControl);
+var
+  ExStyle: Longint;
+begin
+  ExStyle := GetWindowLong(Control.Handle, GWL_EXSTYLE);
+  SetWindowLong(Control.Handle, GWL_EXSTYLE, ExStyle or WS_EX_RTLREADING or WS_EX_RIGHT
+    or WS_EX_LAYOUTRTL or WS_EX_NOINHERITLAYOUT );
+end;
 
 
 procedure ReadTranslateStrings;
@@ -70,21 +115,17 @@ var
   i : integer;
   newLang : string;
 begin
-  if Options.Language <> 0 then
+  if Options.Language <> -1 then
   begin
     if not assigned(FTranslateStrings) then
-      FTranslateStrings := TTntStringList.Create;
+      FTranslateStrings := TStringList.Create;
     newLang := TranslateToEnglish(Options.Languages[Options.Language]);
     fname := ExtractFilePath(Application.ExeName)+'languages\'+
              newLang +'.ptlang';
     if FileExists(fname) then
     begin
-      if (AnsiCompareStr(newLang, 'Hebrew') = 0) then
-      begin
-        FTranslateStrings.LoadFromFile(fname);
-      end
-      else
-      FTranslateStrings.LoadFromFile(fname);
+      FTranslateStrings.LoadFromFile(fname); //use current ANSI codepage OR utf8
+
       // strip comments
       i := 0;
       while i <= FTranslateStrings.Count-1 do
@@ -94,37 +135,64 @@ begin
         else
           Inc(i);
       end;
+
+      if (AnsiCompareStr(newLang, 'Hebrew') = 0) or
+         (AnsiCompareStr(newLang, 'Arabic') = 0) then
+      begin
+        Application.BiDiMode := bdRightToLeft;
+      end else begin
+        Application.BiDiMode := bdLeftToRight;
+      end;
     end;
   end;
-  FLastLanguage := Options.Language;
 end;
 
-function Translate(english: WideString): WideString;
+
+function Translate(english: string): string;
 var
-  lookup : WideString;
+  lookup : string;
+  {$IFDEF TRANSLATE_DEBUG}
+  origEnglish : string;
+  {$ENDIF}
 begin
   // if english then do nothing
   if Options.Language = 0 then
     Result := english
   else begin
+    {$IFDEF TRANSLATE_DEBUG}
+    origEnglish := english;
+    {$ENDIF}
     // otherwise translate it
-    if not Assigned(FTranslateStrings) or (english='') then
-      Result := english
-    else begin
+    if not Assigned(FTranslateStrings) or (english='') then begin
+      Result := english;
+      {$IFDEF TRANSLATE_DEBUG}
+      if (DebugOutputWindow <> nil) then
+        if (english <> '') and (english <> '-') then
+          DebugOutputWindow.Memo1.Lines.Add(origEnglish);
+      {$ENDIF}
+    end else begin
       lookup := AnsiReplaceStr(english,'&','');
       lookup := AnsiReplaceStr(lookup,#13#10,'~');
       Result := FTranslateStrings.Values[lookup];
       Result := AnsiReplaceStr(Result,'~',#13#10);
 
-      if Result = '' then Result := english
+      if Result = '' then begin
+        Result := english;
+        {$IFDEF TRANSLATE_DEBUG}
+        if (DebugOutputWindow <> nil) then
+          if (english <> '') and (english <> '-') then
+            DebugOutputWindow.Memo1.Lines.Add(origEnglish);
+        {$ENDIF}
+      end;
     end;
   end;
 end;
 
-function TranslateToEnglish(phrase: WideString): WideString;
+
+function TranslateToEnglish(phrase: string): string;
 var
   i,P : integer;
-  S : WideString;
+  S : string;
 begin
   phrase := AnsiReplaceStr(phrase,'&','');
   Result := phrase;
@@ -141,40 +209,81 @@ begin
   end;
 end;
 
-procedure TranslateFrame(frame : TFrame);
+//procedure TranslateFrame(frame : TFrame);
+//begin
+//  TranslateComponent(frame);
+//end;
+
+
+procedure TranslateComponent(component : TComponent);
 begin
-  if FLastLanguage <> 0 then
-    TranslateFrameDir(frame,ToEnglish);
-  if Options.Language <> 0 then
+  if (component.Tag <> Options.Language) then
   begin
-    ReadTranslateStrings;
-    TranslateFrameDir(frame,FromEnglish);
+    if component.Tag <> 0 then begin
+      //DebugOutputWindow.Memo1.Lines.Add('TranslateComponent TO ENGLISH ('+IntToStr(Options.Language)+'<-'+IntToStr(component.tag)+'): '+component.Name);
+      TranslateComponentDir(component,ToEnglish);
+    end;
+
+    if Options.Language <> 0 then begin
+      //DebugOutputWindow.Memo1.Lines.Add('TranslateComponent TO LANG ('+IntToStr(Options.Language)+'<-'+IntToStr(component.tag)+'): '+component.Name);
+      TranslateComponentDir(component,FromEnglish);
+    end;
+
+  end
+  else begin
+    //DebugOutputWindow.Memo1.Lines.Add('TranslateComponent does not need to translate ('+IntToStr(component.tag)+'): '+component.Name);
+  end;
+end;
+
+// This is for translating frames, etc. on their creation, regardless of the
+// fact that we have not changed the language recently so FLastLanguage is
+// going to be the same as the current langage
+procedure TranslateComponentFromEnglish(component : TComponent);
+begin
+  if Options.Language <> 0 then begin
+    //DebugOutputWindow.Memo1.Lines.Add('TranslateComponentFromEnglish TO LANG ('+IntToStr(Options.Language)+'<-'+IntToStr(component.tag)+'): '+component.Name);
+    TranslateComponentDir(component,FromEnglish);
+  end;
+end;
+
+procedure TranslateComponentToEnglish(component : TComponent);
+begin
+  if component.Tag <> 0 then begin
+    //DebugOutputWindow.Memo1.Lines.Add('TranslateComponentToEnglish TO LANG ('+IntToStr(Options.Language)+'<-'+IntToStr(component.tag)+'): '+component.Name);
+    TranslateComponentDir(component,ToEnglish);
   end;
 end;
 
 procedure TranslateForm(form : TForm);
 begin
-  if (FLastLanguage <> Options.Language) or (form <> frmPopUMain) then
+  //DebugOutputWindow.Memo1.Lines.Add('TranslateForm TO LANG ('+IntToStr(Options.Language)+'<-'+IntToStr(form.tag)+'): '+form.Name);
+
+  if (form.tag <> Options.Language) {or (form <> frmPopUMain)} then
   begin
-    if FLastLanguage <> 0 then
-      TranslateFormDir(form,ToEnglish);
-    if Options.Language <> 0 then
-    begin
-      ReadTranslateStrings;
-      TranslateFormDir(form,FromEnglish);
-    end;
+    TranslateComponent(form);
   end;
+end;
+
+//not used
+procedure TranslateTreeNode(node : TTreeNode; lastLanguage : Integer);
+begin
+  if lastLanguage <> 0 then   //FLastLanguage
+    node.Text := TranslateDir(node.Text,ToEnglish);
+
+  if Options.Language <> 0 then
+    node.Text := TranslateDir(node.Text,FromEnglish);
+
 end;
 
 
 function TranslateMsg(const Msg: string; DlgType: TMsgDlgType;
-                                  Buttons: TMsgDlgButtons; HelpCtx: Integer) : TTntForm;
+                                  Buttons: TMsgDlgButtons; HelpCtx: Integer) : TForm;
 ////////////////////////////////////////////////////////////////////////////////
 // Non-Modal message.
 var
   i : integer;
 begin
-  Result := WideCreateMessageDialog(Msg, DlgType, Buttons);
+  Result := CreateMessageDialog(Msg, DlgType, Buttons);
   with Result do
   begin
     HelpContext := HelpCtx;
@@ -191,23 +300,98 @@ begin
   end;
 end;
 
-procedure TranslateFrameDir(frame : TFrame; LangDirection : TLangDirection);
+procedure TranslateComponentDir(component : TComponent; LangDirection : TLangDirection);
 var
   i,j : integer;
   TransToEnglish : boolean;
+  listView : TListView;
+  tCombo : TComboBox;
+  tTree : TTreeView;
+  actionBar : TPopupActionBar;
 begin
   TransToEnglish := LangDirection = ToEnglish;
-  for i := 0 to frame.ComponentCount-1 do
+
+  if (component.Tag = Options.Language) then begin
+    //DebugOutputWindow.Memo1.Lines.Add('not translating ('+IntToStr(component.tag)+'): '+component.Name +' ToEnglish: '+BoolToStr(TransToEnglish));
+    exit;
+  end;
+
+  SetProp(component,'Caption',TransToEnglish);
+  SetProp(component,'Hint',TransToEnglish);
+
+
+  if (component is TListView)  then
   begin
-    // all captions and hints
-    SetProp(frame.Components[i],'Caption',TransToEnglish);
-    SetProp(frame.Components[i],'Hint',TransToEnglish);
-    // list view headers
-    if frame.Components[i] is TTntListView then
+    listView := (component as TListView);
+    for j := 0 to listView.Columns.Count-1 do  // column headers
+      SetProp(listView.Column[j],'Caption',TransToEnglish);
+  end
+  else
+  if component is TComboBox then
+  begin
+    tCombo := component as TComboBox;
+    for j := 0 to tCombo.Items.Count-1 do
+      ChangeComboBoxListItem(tCombo,j,TranslateDir(tCombo.Items[j],LangDirection));
+  end
+  else if component is TTreeView then
+  begin
+    tTree := component as TTreeView;
+    for i := 0 to tTree.Items.Count-1 do
     begin
-      for j := 0 to (frame.Components[i] as TTntListView).Columns.Count-1 do
-        SetProp((frame.Components[i] as TTntListView).Column[j],'Caption',TransToEnglish)
+      tTree.Items[i].Text := TranslateDir(tTree.Items[i].Text,LangDirection);
+      //SetProp(ttree.Items[i],'Text',TransToEnglish);
     end;
+
+    // put images on correct side depending on RTL or LTR language
+    if (Application.BiDiMode = bdRightToLeft) then begin
+      tTree.Align := alRight;
+    end else begin
+      tTree.Align := alLeft;
+    end;
+
+    tTree.Refresh;
+  end
+  else if component is TPopupActionBar then
+  begin
+    actionBar := component as TPopupActionBar;
+    for i := 0 to actionBar.Items.Count-1 do
+      TranslateTMenuItem(actionBar.Items[i], LangDirection, true);
+  end;
+
+  // sub-components
+  for i := 0 to component.ComponentCount-1 do
+  begin
+    TranslateComponentDir(component.Components[i],LangDirection);
+    //component.Components[i].Tag := Options.Language;
+  end;
+
+  if (LangDirection = ToEnglish) then
+    component.Tag := LANGUAGE_ENGLISH
+  else
+    component.Tag := Options.Language;
+
+end;
+
+// recursively translates menu items.
+procedure TranslateTMenuItem(menuItem : TMenuItem; const LangDirection : TLangDirection; const recursive : boolean = true);
+var
+  j : integer;
+begin
+  if (menuItem.Tag <> Options.Language) then begin
+    menuItem.Caption := TranslateDir(menuItem.Caption,LangDirection);
+
+    if recursive and (menuItem.Count > 0) then
+    begin
+      for j := 0 to menuItem.Count-1 do
+      begin
+        TranslateTMenuItem(menuItem.Items[j], LangDirection, recursive);
+      end;
+    end;
+
+    if (LangDirection = ToEnglish) then
+      menuItem.Tag := LANGUAGE_ENGLISH
+    else
+      menuItem.Tag := Options.Language;
   end;
 end;
 
@@ -220,7 +404,7 @@ var
 begin
   // save selected language
   if Options.Language < Length(Options.Languages) then
-    old := TranslateToEnglish(Options.Languages[Options.Language]);
+    old := Options.Languages[Options.Language];
   SetLength(Options.Languages,1);
   Options.Languages[0] := 'English';
   // get ptlang files from PopTray directory
@@ -235,16 +419,18 @@ begin
     end;
     res := FindNext(sr);
   end;
-//TODOTODOTODO  FindClose(sr);
+  SysUtils.FindClose(sr);
   // reset to selected language
   for i := 0 to Length(Options.Languages)-1 do
-    if Options.Languages[i] = old then
+    if Options.Languages[i] = old then begin
       Options.Language := i;
+      break;
+    end;
 end;
 
 
 
-function TranslateDir(st : WideString; LangDirection : TLangDirection) : WideString;
+function TranslateDir(st : string; LangDirection : TLangDirection) : string;
 begin
   if LangDirection = ToEnglish then
     Result := TranslateToEnglish(st)
@@ -252,102 +438,78 @@ begin
     Result := Translate(st);
 end;
 
-procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection);
+{procedure TranslateFormDir(form : TForm; LangDirection : TLangDirection);
 var
   i,j,k : integer;
   TransToEnglish : boolean;
+  tCombo : TComboBox;
+  listView : TListView;
 begin
   TransToEnglish := LangDirection = ToEnglish;
-  for i := 0 to form.ComponentCount-1 do
+
+  TranslateComponentDir(form, LangDirection);
+ (* for i := 0 to form.ComponentCount-1 do
   begin
-    // all captions and hints
     SetProp(form.Components[i],'Caption',TransToEnglish);
     SetProp(form.Components[i],'Hint',TransToEnglish);
     // list view headers
-    if form.Components[i] is TTntListView then
+    if (form.Components[i] is TListView)  then
     begin
-      for j := 0 to (form.Components[i] as TTntListView).Columns.Count-1 do
-        SetProp((form.Components[i] as TTntListView).Column[j],'Caption',TransToEnglish)
+      listView := (form.Components[i] as TListView);
+      for j := 0 to listView.Columns.Count-1 do  // column headers
+        SetProp(listView.Column[j],'Caption',TransToEnglish);
+    end
+    else
+    if form.Components[i] is TComboBox then
+    begin
+      tCombo := form.Components[i] as TComboBox;
+      for j := 0 to tCombo.Items.Count-1 do
+        ChangeItem(tCombo,j,TranslateDir(tCombo.Items[j],LangDirection));
+    end
+    else if form.Components[i] is TScrollBox then
+    begin
+      TranslateComponentDir(form.Components[i], LangDirection);
+      //tScroll := form.Components[i] as TScrollBox;
+      //for j := 0 to tScroll.Items.Count-1 do
+
     end;
   end;
+ *)
+  if form = frmPopUMain.RulesForm then
+    frmPopUMain.RulesForm.UpdateComponentSizes();
+
   if form = frmPopUMain then
   with frmPopUMain do
   begin
     // constant strings
     FKB := Translate(FKB);
-    // rule accounts
-    ChangeItem(cmbRuleAccount,0,TranslateDir(cmbRuleAccount.Items[0],LangDirection));
-    // rule areas
-    for i := 0 to cmbRuleArea.Items.Count-1 do
-      ChangeItem(cmbRuleArea,i,TranslateDir(cmbRuleArea.Items[i],LangDirection));
-    // rule compares
-    for i := 0 to cmbRuleComp.Items.Count-1 do
-      ChangeItem(cmbRuleComp,i,TranslateDir(cmbRuleComp.Items[i],LangDirection));
-    // rule status
-    for i := 0 to cmbRuleStatus.Items.Count-1 do
-      ChangeItem(cmbRuleStatus,i,TranslateDir(cmbRuleStatus.Items[i],LangDirection));
-    // rule operator
-    for i := 0 to cmbRuleOperator.Items.Count-1 do
-      ChangeItem(cmbRuleOperator,i,TranslateDir(cmbRuleOperator.Items[i],LangDirection));
+
     // languages
     for i := 0 to Length(Options.Languages)-1 do
       Options.Languages[i] := TranslateDir(Options.Languages[i],LangDirection);
 
-    for i := 0 to cmbAuthType.Items.Count-1 do
-      ChangeItem(cmbAuthType,i,TranslateDir(cmbAuthType.Items[i],LangDirection));
-    for i := 0 to cmbSslVer.Items.Count-1 do
-      ChangeItem(cmbSslVer,i,TranslateDir(cmbSslVer.Items[i],LangDirection));
-
     // options treeview
-    for i := 0 to tvOptions.Items.Count-1 do
-      tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);
-    tvOptions.Refresh;
-    // Translate column headers for Volunteer Translators Listview (on about page)
-    for i := 0 to lvVolunteers.Columns.Count-1 do
-      lvVolunteers.Columns[i].Caption :=  TranslateDir(lvVolunteers.Columns[i].Caption, LangDirection);
-    // Translate column headers for Component Credits Listview (on about page)
-    for i := 0 to lvCredits.Columns.Count-1 do
-      lvCredits.Columns[i].Caption :=  TranslateDir(lvCredits.Columns[i].Caption, LangDirection);
+//    for i := 0 to tvOptions.Items.Count-1 do
+//      tvOptions.Items[i].Text := TranslateDir(tvOptions.Items[i].Text,LangDirection);
+//    tvOptions.Refresh;
+
     // active frame
-    if Assigned(frmPopUMain.frame) then
-    begin
-      TranslateFrameDir(frame,LangDirection);
-      if (frmPopUMain.frame is TframeDefaults) then
-        (frmPopUMain.frame as TframeDefaults).ShowLanguages;
+//    if Assigned(frmPopUMain.frame) then
+//    begin
+//      TranslateFrameDir(frame,LangDirection);
+//      if (frmPopUMain.frame is TframeDefaults) then
+//        (frmPopUMain.frame as TframeDefaults).ShowLanguages;
+//    end;
+
+
+    if (Application.BiDiMode = bdRightToLeft) then begin
+      frmPopUMain.ActionManager.ActionBars[1].GlyphLayout := blGlyphRight;
+    end else begin
+      frmPopUMain.ActionManager.ActionBars[1].GlyphLayout := blGlyphLeft;
     end;
-    // popup menus
-    for i := 0 to dm.mnuMail.Items.Count-1 do
-    begin
-      dm.mnuMail.Items[i].Caption := TranslateDir(dm.mnuMail.Items[i].Caption,LangDirection);
-      if dm.mnuMail.Items[i].Count > 0 then
-        for j := 0 to dm.mnuMail.Items[i].Count-1 do
-        begin
-          dm.mnuMail.Items[i].Items[j].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Caption,LangDirection);
-          if dm.mnuMail.Items[i].Items[j].Count > 0 then
-            for k := 0 to dm.mnuMail.Items[i].Items[j].Count-1 do
-              dm.mnuMail.Items[i].Items[j].Items[k].Caption := TranslateDir(dm.mnuMail.Items[i].Items[j].Items[k].Caption,LangDirection);
-        end;
-    end;
-    for i := 0 to dm.mnuTray.Items.Count-1 do
-      dm.mnuTray.Items[i].Caption := TranslateDir(dm.mnuTray.Items[i].Caption,LangDirection);
-    for i := 0 to dm.mnuColumns.Items.Count-1 do
-    begin
-      dm.mnuColumns.Items[i].Caption := TranslateDir(dm.mnuColumns.Items[i].Caption,LangDirection);
-      if dm.mnuColumns.Items[i].Count > 0 then
-        for j := 0 to dm.mnuColumns.Items[i].Count-1 do
-          dm.mnuColumns.Items[i].Items[j].Caption := TranslateDir(dm.mnuColumns.Items[i].Items[j].Caption,LangDirection);
-    end;
-    // rules re-align
-    AutoSizeAllCheckBox(gbRule);
-    AutoSizeAllCheckBox(gbActions);
-    edRuleWav.Left := chkRuleWav.Left + chkRuleWav.Width + 4;
-    edRuleWav.Width := btnEdRuleWav.Left - edRuleWav.Left - 2;
-    edRuleEXE.Left := chkRuleEXE.Left + chkRuleEXE.Width + 4;
-    edRuleEXE.Width := btnEdRuleEXE.Left - edRuleEXE.Left - 2;
-    colRuleTrayColor.Left := chkRuleTrayColor.Left + chkRuleTrayColor.Width + 4;
-    colRuleTrayColor.Width := gbActions.Width - colRuleTrayColor.Left - 4;
   end;
 end;
+}
 
 procedure SetProp(obj: TObject; PropName: string; ToEnglish : boolean=False);
 var
@@ -366,19 +528,23 @@ begin
        // ignore where tag=999
     else begin
       cap := GetStrProp(obj,PropName);
-      if ToEnglish then
-        newcap := TranslatetoEnglish(cap)
+      if ToEnglish then begin
+        newcap := TranslatetoEnglish(cap);
+      end
       else
         newcap := Translate(cap);
       if newcap <> '' then
+      begin
         SetStrProp(obj,PropName,newcap);
+      end;
+
     end;
   end;
 end;
 
 //-------------------------------------------------------------- translation ---
 
-procedure ChangeItem(cmb : TComboBox; item : integer; st : string);
+procedure ChangeComboBoxListItem(cmb : TComboBox; item : integer; st : string);
 var
   tmp : integer;
 begin
@@ -392,7 +558,8 @@ begin
   GetLanguages;
   // translate it
   FLastLanguage := -1;
-  TranslateForm(frmPopUMain);
+
+  frmPopUMain.OnSetLanguage;
 end;
 
 
@@ -413,6 +580,11 @@ begin
       HelpContext := HelpCtx;
       Position := poScreenCenter;
       TranslateForm(dlg);
+
+	  //TODO: should we set popup parent and mode?
+      //dlg.PopupParent := frmPopUMain;
+      //dlg.PopupMode := pmAuto;
+
       // If a title for the dialog was passed in as a parameter, use it,
       // otherwise, show the default dialog title for the specified dialog
       // type (eg: "Error")
@@ -428,6 +600,14 @@ end;
 
 
 initialization
-  FLastLanguage := 0;
+  FLastLanguage := LANGUAGE_ENGLISH;
+  {$IFDEF TRANSLATE_DEBUG}
+  if ParamSwitch('TRANSLATE') then begin
+    DebugOutputWindow := TTranslateDebugWindow.Create(nil);
+    DebugOutputWindow.Show;
+    DebugOutputWindow.Memo1.Lines.Add('Welcome to the Translation Debug Window. This window lists English strings that may need translation to the current language. Some strings appearing in this window should not be translated. Remove ampersands before translating.');
+    DebugOutputWindow.Memo1.Lines.Add('------------------------------------------------------------------------------');
 
+  end;
+  {$ENDIF}
 end.

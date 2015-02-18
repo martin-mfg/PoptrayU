@@ -3,8 +3,8 @@ object frmPassword: TfrmPassword
   Top = 107
   ActiveControl = edPass
   BorderStyle = bsDialog
-  Caption = 'PopTray - Password'
-  ClientHeight = 66
+  Caption = 'PopTrayU - Password'
+  ClientHeight = 67
   ClientWidth = 320
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -247,12 +247,12 @@ object frmPassword: TfrmPassword
       FF00}
     Transparent = True
   end
-  object Label1: TLabel
-    Left = 76
-    Top = 8
-    Width = 203
+  object lblEnterPw: TLabel
+    Left = 68
+    Top = 11
+    Width = 211
     Height = 13
-    Caption = 'Please enter the password to open Poptray'
+    Caption = 'Please enter the password to open PoptrayU'
   end
   object edPass: TEdit
     Left = 68
@@ -267,15 +267,17 @@ object frmPassword: TfrmPassword
     Top = 34
     Width = 69
     Height = 25
-    TabOrder = 1
     Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 1
   end
   object btnCancel: TBitBtn
     Left = 244
     Top = 34
     Width = 69
     Height = 25
-    TabOrder = 2
     Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 2
   end
 end

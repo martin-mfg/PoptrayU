@@ -45,7 +45,7 @@ object frmInfo: TfrmInfo
       OnChange = pgInfoChange
       object tsNewMail: TTabSheet
         Caption = 'New Mail'
-        object lvInfoNew: TTntListView
+        object lvInfoNew: TListView
           Left = 0
           Top = 0
           Width = 342

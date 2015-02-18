@@ -27,28 +27,36 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, Buttons, TntStdCtrls;
+  Dialogs, StdCtrls, Buttons, PngSpeedButton, Vcl.ExtCtrls;
+
+type
+  TEnableSaveOptionsFunction = procedure of object;
 
 type
   TframeDefaults = class(TFrame)
-    Label9: TTntLabel;
+    lblProgram: TLabel;
     btnEdProgram: TSpeedButton;
     btnTest: TSpeedButton;
-    Label8: TTntLabel;
+    lblSound: TLabel;
     btnEdDefSound: TSpeedButton;
     btnSndTest: TSpeedButton;
-    Label24: TTntLabel;
-    btnLanguageRefresh: TSpeedButton;
+    lblLang: TLabel;
     edProgram: TEdit;
     edDefSound: TEdit;
     cmbLanguage: TComboBox;
-    Label1: TTntLabel;
+    lblIni: TLabel;
     edIniFolder: TEdit;
     btnStorageLoc: TSpeedButton;
+    btnLanguageRefresh: TPngSpeedButton;
+    panProg: TPanel;
+    panLang: TPanel;
+    panSnd: TPanel;
+    panlIniFolder: TPanel;
+    lblTester: TLabel;
     procedure btnEdProgramClick(Sender: TObject);
     procedure btnEdDefSoundClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
-    procedure btnLanguageRefreshClick(Sender: TObject);
+    procedure btnLanguageRefresh2Click(Sender: TObject);
     procedure btnTestClick(Sender: TObject);
     procedure btnSndTestClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
@@ -57,65 +65,66 @@ type
     procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
+    procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
     procedure ShowLanguages;
   end;
 
 implementation
 
-uses uMain, uRCUtils, uGlobal, uTranslate, uDM;
+uses uMain, uRCUtils, uGlobal, uTranslate, uDM, uIniSettings, Math;
 
 {$R *.dfm}
 
-constructor TframeDefaults.Create(AOwner: TComponent);
+constructor TframeDefaults.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
-  inherited;
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
   Options.Busy := True;
-  TranslateFrame(self);
+
   // options to screen
   edProgram.Text := Options.MailProgram;
   edDefSound.Text := Options.DefSound;
-  edIniFolder.Text := frmPopUMain.IniPath;
+  edIniFolder.Text := uIniSettings.GetSettingsFolder();
   btnTest.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
 
+  // Change images that change per scheme
   btnSndTest.Glyph := nil;
   if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
     dm.imlLtDk16.GetBitmap(1, btnSndTest.Glyph)
   else
     dm.imlLtDk16.GetBitmap(0, btnSndTest.Glyph);
 
-  btnLanguageRefresh.Glyph := nil;
-  if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
-    dm.imlLtDk16.GetBitmap(3, btnLanguageRefresh.Glyph)
-  else
-    dm.imlLtDk16.GetBitmap(2, btnLanguageRefresh.Glyph);
+  Self.Font.Assign(Options.GlobalFont);
 
-
-  self.Repaint;
+  TranslateComponentFromEnglish(self);
+  AlignLabels();
 end;
 
 procedure TframeDefaults.ShowLanguages;
 var
   i : integer;
   langs : TStringList;
+  currentLangName: String;
 begin
   langs := TStringList.Create;
   try
     // copy languages from options to stringlist
-    for i := Low(Options.Languages)+1 to High(Options.Languages) do
-      langs.Add(Translate(Options.Languages[i]));
-
-    // sort it
+    for i := Low(Options.Languages)+1 to High(Options.Languages) do //exclude english when adding here
+      langs.Add(Options.Languages[i]);
     langs.Sort;
-    langs.Insert(0,Translate(Options.Languages[0]));
+    langs.Insert(0,Options.Languages[0]); // now add english to make it always first
+
+    currentLangName := Options.Languages[Options.Language];
 
     // copy from stringlist to combo-box
     cmbLanguage.Items.Assign(langs);
-    cmbLanguage.ItemIndex := cmbLanguage.Items.IndexOf(Options.Languages[Options.Language]);
+    cmbLanguage.ItemIndex := cmbLanguage.Items.IndexOf(currentLangName);
   finally
     langs.Free;
   end;
@@ -128,9 +137,9 @@ begin
     // screen to options
     Options.MailProgram := edProgram.Text;
     Options.DefSound := edDefSound.Text;
-    // buttons
-    frmPopUMain.btnSaveOptions.Enabled := True;
-    frmPopUMain.btnCancel.Enabled := True;
+
+    // enable save button
+    funcEnableSaveBtn();
   end;
 end;
 
@@ -175,26 +184,35 @@ end;
 procedure TframeDefaults.cmbLanguageChange(Sender: TObject);
 var
   i : integer;
-  lang : string;
+  langEnglish, langTranslated : string;
 begin
   // screen to options
-  lang := cmbLanguage.Text;
-  for i := Low(Options.Languages) to High(Options.Languages) do
-    if Options.Languages[i] = lang then
-    begin
-      Options.Language := i;
-      Break;
-    end;
-  // butons
-  frmPopUMain.btnSaveOptions.Enabled := True;
-  frmPopUMain.btnCancel.Enabled := True;
+
+  langTranslated := cmbLanguage.Text ;
+  langEnglish := TranslateToEnglish(cmbLanguage.Text);
+
+  //bugfix...if English somehow got translated, and english is selected, force it back into english
+  if TranslateToEnglish(langTranslated) = 'English' then begin
+    Options.Language := 0;
+  end
+  else
+    for i := Low(Options.Languages) to High(Options.Languages) do
+      if Options.Languages[i] = langEnglish then
+      begin
+        Options.Language := i;
+        Break;
+      end;
+
+
+  // enable save button
+  funcEnableSaveBtn();
 end;
 
-procedure TframeDefaults.btnLanguageRefreshClick(Sender: TObject);
+procedure TframeDefaults.btnLanguageRefresh2Click(Sender: TObject);
 begin
   RefreshLanguages;
   ShowLanguages;
-  Self.Refresh; //refresh to make labels not disappear in Vista
+  //FrmPopUMain.
 end;
 
 procedure TframeDefaults.btnTestClick(Sender: TObject);
@@ -214,14 +232,91 @@ begin
   frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
-
-procedure TframeDefaults.FrameResize(Sender: TObject);
+procedure TframeDefaults.AlignLabels();
+const
+  BTN_IMG_OFFSET = 30;
+  BTN_REFRESH_MIN_WIDTH = 99;
+  BTN_DOT_MIN_WIDTH = 19;
+  BTN_TEST_MIN_WIDTH = 74;
+  BTN_SPACING = 8;
+var
+  testButtonsWidth : integer;
 begin
-    cmbLanguage.Width := Self.ClientWidth - btnLanguageRefresh.Width - 20;
-    edProgram.Width   := Self.ClientWidth - btnLanguageRefresh.Width - 20;
-    edDefSound.Width  := Self.ClientWidth - btnLanguageRefresh.Width - 20;
-    edIniFolder.Width := Self.ClientWidth - btnStorageLoc.Width - 20;
-    Self.Refresh; //refresh to make labels not disappear in Vista
+  // Buttons need to be at least as big as their captions
+  lblTester.Caption := btnLanguageRefresh.Caption;
+  btnLanguageRefresh.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
+
+  lblTester.Caption := btnTest.Caption;
+  btnTest.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
+
+  lblTester.Caption := btnSndTest.Caption;
+  btnSndTest.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
+
+  lblTester.Caption := '...';
+  btnEdProgram.ClientWidth  := Max(lblTester.Width + 4, BTN_DOT_MIN_WIDTH);
+  btnEdDefSound.ClientWidth := Max(lblTester.Width + 4, BTN_DOT_MIN_WIDTH);
+
+  testButtonsWidth := Max(btnTest.Width, btnSndTest.Width);
+  if (testButtonsWidth + btnEdProgram.Width + BTN_SPACING) > btnLanguageRefresh.Width then
+  begin
+    //width determined by test buttons width
+    btnTest.Width  := Max(testButtonsWidth, BTN_TEST_MIN_WIDTH);
+    btnSndTest.Width := btnTest.Width;
+    btnLanguageRefresh.Width := testButtonsWidth + btnEdProgram.Width + BTN_SPACING;
+  end else begin
+    // width determined by language refresh button width
+    btnLanguageRefresh.Width := Max(btnLanguageRefresh.Width, BTN_REFRESH_MIN_WIDTH);
+    btnTest.Width := btnLanguageRefresh.Width - btnEdProgram.Width - BTN_SPACING;
+    btnSndTest.Width := btnTest.Width;
+  end;
+
+  btnLanguageRefresh.Left := self.ClientWidth - btnLanguageRefresh.width;
+  btnTest.Left := self.ClientWidth - btnTest.Width;
+  btnSndTest.Left := self.ClientWidth - btnSndTest.Width;
+  btnEdProgram.Left := btnTest.left - BTN_SPACING - btnEdProgram.width;
+  btnEdDefSound.Left := btnSndTest.Left - BTN_SPACING - btnEdDefSound.Width;
+
+
+  edProgram.width   := Self.ClientWidth - btnLanguageRefresh.Width - BTN_SPACING;
+  edDefSound.width  := Self.ClientWidth - btnLanguageRefresh.Width - BTN_SPACING;
+
+
+
+  cmbLanguage.Width := Self.ClientWidth - btnLanguageRefresh.Width - BTN_SPACING;
+  edIniFolder.Width := Self.ClientWidth - btnStorageLoc.Width - BTN_SPACING;
+
+  cmbLanguage.Top := lblLang.Height + lblLang.Margins.Bottom;
+  btnLanguageRefresh.Height := cmbLanguage.Height;
+  btnLanguageRefresh.Top := cmbLanguage.Top;
+  panLang.Height := cmbLanguage.Top + cmbLanguage.Height + cmbLanguage.Margins.Bottom + 6;
+
+  edProgram.Top := lblProgram.Height + lblProgram.Margins.Bottom;
+  btnEdProgram.Top := edProgram.Top;
+  btnEdProgram.Height := cmbLanguage.Height;
+  btnTest.Top := btnEdProgram.Top;
+  btnTest.Height := btnEdProgram.Height;
+  panProg.Height := btnEdProgram.Top + btnEdProgram.Height + btnEdProgram.Margins.Bottom + 6;
+
+  edDefSound.Top := lblSound.Top + lblSound.Height + lblSound.Margins.Bottom;
+  btnEdDefSound.Top := edDefSound.Top;
+  btnEdDefSound.Height := edDefSound.Height;
+  btnSndTest.Top := btnEdDefSound.Top;
+  btnSndTest.Height := btnEdDefSound.Height;
+  panSnd.Height := edDefSound.Top + edDefSound.Height + edDefSound.Margins.Bottom + 6;
+
+  edIniFolder.Top := lblIni.Top + lblIni.Height + lblIni.Margins.Bottom;
+  btnStorageLoc.Top := edIniFolder.Top;
+  btnStorageLoc.Height := edIniFolder.Height;
+  panlIniFolder.Height := edIniFolder.Top + edIniFolder.Height + edIniFolder.Margins.Bottom + 6;
+
+
+end;
+
+procedure TframeDefaults.FrameResize(Sender : TObject);
+begin
+  AlignLabels();
 end;
 
 end.
+
+

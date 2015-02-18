@@ -26,8 +26,9 @@ The GNU GPL can be found at:
 interface
 
 uses
-  Windows, SysUtils, Classes, ImgList, Controls, Menus, ActnPopupCtrl,
-  CustomizeDlg, Graphics, ExtCtrls, Forms, ActnMan, Dialogs;
+  Windows, SysUtils, Classes, ImgList, Controls, Menus,
+  CustomizeDlg, Graphics, ExtCtrls, Forms, ActnMan, Dialogs,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnPopup;
 
 const
   // imlPop
@@ -71,15 +72,15 @@ type
   Tdm = class(TDataModule)
     imlActions: TImageList;
     imlOptions: TImageList;
-    mnuToolbar: TPopupActionBarEx;
+    mnuToolbar: TPopupActionBar;
     Customize1: TMenuItem;
-    mnuMail: TPopupActionBarEx;
+    mnuMail: TPopupActionBar;
     Preview1: TMenuItem;
     Delete1: TMenuItem;
     Reply1: TMenuItem;
     N6: TMenuItem;
     mnuRuleFromDelete: TMenuItem;
-    mnuTray: TPopupActionBarEx;
+    mnuTray: TPopupActionBar;
     ShowMessages2: TMenuItem;
     Check1: TMenuItem;
     New1: TMenuItem;
@@ -109,7 +110,7 @@ type
     N1: TMenuItem;
     SelectSpamMessages1: TMenuItem;
     mnuSuspendSound: TMenuItem;
-    mnuColumns: TPopupActionBarEx;
+    mnuColumns: TPopupActionBar;
     mnuColFrom: TMenuItem;
     mnuColTo: TMenuItem;
     mnuColSubject: TMenuItem;
@@ -133,12 +134,16 @@ type
     mnuRuleSubjectDelete: TMenuItem;
     mnuRuleSubjectSpam: TMenuItem;
     imlLtDk16: TImageList;
+    imlActionsDisabled: TImageList;
+    mnuShowInGroups: TMenuItem;
+    N2: TMenuItem;
     procedure mnuColumnsClick(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure mnuSortClick(Sender: TObject);
     procedure mnuSpamLastClick(Sender: TObject);
+    procedure mnuShowInGroupsClick(Sender: TObject);
   private
     { Private declarations }
     FBitmap : TBitmap;
@@ -293,7 +298,7 @@ begin
       CaptionOptionsCombo.Items[i] := Translate(CaptionOptionsCombo.Items[i]);
     CaptionOptionsCombo.ItemIndex := old;
     // move some labels
-    Label2.Left := ActionBarList.Left + ActionBarList.Width - Label2.Width;
+//    Label2.Left := ActionBarList.Left + ActionBarList.Width - Label2.Width;
     ShowTipsChk.Width := 280;
     ShortCutTipsChk.Width := 280;
     // show
@@ -335,6 +340,11 @@ procedure Tdm.TimerTimer(Sender: TObject);
 begin
   if frmPopUMain.AllowAutoCheck then
     frmPopUMain.CheckAllMail;
+end;
+
+procedure Tdm.mnuShowInGroupsClick(Sender: TObject);
+begin
+  //todo
 end;
 
 procedure Tdm.mnuSortClick(Sender: TObject);

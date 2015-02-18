@@ -28,14 +28,14 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, SimpleTimer, ComCtrls, Buttons, ToolWin,
-  ActnMan, ActnCtrls, TntComCtrls;
+  ActnMan, ActnCtrls;
 
 type
   TfrmInfo = class(TForm)
     panInfoBorder: TPanel;
     pgInfo: TPageControl;
     tsNewMail: TTabSheet;
-    lvInfoNew: TTntListView;
+    lvInfoNew: TListView;
     tsSummary: TTabSheet;
     lvInfoSummary: TListView;
     panCloseX: TPanel;
