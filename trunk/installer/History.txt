@@ -5,6 +5,14 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+Version 5.1.1
+=============
+Bug Fixes
+---------
+ * "Run/test email client" for last account would fail on 5.1.0
+ * Accounts Authentication Mode dropdown was not translatable.
+ * French (Canada) translation updated.
+ * About tab sub-tabs were not sizing correctly in 5.1.0
 
 Version 5.1.0
 =============
