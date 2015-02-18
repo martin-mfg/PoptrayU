@@ -23,26 +23,14 @@ The GNU GPL can be found at:
   http://www.gnu.org/copyleft/gpl.html
 -------------------------------------------------------------------------------}
 
+{$R 'icons.res' 'icons.rc'}
 {$R 'PopTrayXP.res' 'PopTrayXP.rc'}
 
 // Since PopTrayU only runs on Windows, turn off warnings for platform
 // specific calls like DebugHook.
 {$WARN SYMBOL_PLATFORM OFF}
-//{$DEFINE LOG4D}
-
-// dontTouchUses
 
 uses
-  {$ifdef madExcept}
-  madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,
-  {$endif }
-  {$IFDEF LOG4D}
-  Log4D,
-  {$ENDIF LOG4D}
   Forms,
   Windows,
   SysUtils,
@@ -53,8 +41,9 @@ uses
   uFrameInterval in 'uFrameInterval.pas' {frameInterval: TFrame},
   uFrameDefaults in 'uFrameDefaults.pas' {frameDefaults: TFrame},
   uFrameGeneralOptions in 'uFrameGeneralOptions.pas' {frameGeneralOptions: TFrame},
-  uFrameMainWindowOptions in 'uFrameMainWindowOptions.pas' {frameMainWindowOptions: TFrame},
+  uFrameAdvancedInterface in 'uFrameAdvancedInterface.pas' {frameAdvancedInterface: TFrame},
   uFrameAdvancedOptions in 'uFrameAdvancedOptions.pas' {frameAdvancedOptions: TFrame},
+  uFrameAdvancedMisc in 'uFrameAdvancedMisc.pas' {frameAdvancedMisc: TFrame},
   uFrameMouseButtons in 'uFrameMouseButtons.pas' {frameMouseButtons: TFrame},
   uFrameHotKeys in 'uFrameHotKeys.pas' {frameHotKeys: TFrame},
   uFramePlugins in 'uFramePlugins.pas' {framePlugins: TFrame},
@@ -66,58 +55,21 @@ uses
   uGlobal in 'uGlobal.pas',
   uPOP3 in 'uPOP3.pas',
   uIMAP4 in 'uIMAP4.pas',
-  uMailItems in 'uMailItems.pas',
+  uObjects in 'uObjects.pas',
   RegExpr in 'RegExpr.pas',
-  uFontUtils in 'uFontUtils.pas',
+  uHeaderDecoder in 'uHeaderDecoder.pas',
+  uCodePageConverter in 'uCodePageConverter.pas',
+  uFSUtils in 'uFSUtils.pas',
   uHtmlDecoder in 'uHtmlDecoder.pas',
-  uTranslate in 'uTranslate.pas',
-  unCustomImageDrawHook in 'unCustomImageDrawHook.pas',
-  uIniSettings in 'uIniSettings.pas',
-  Vcl.Themes,
-  Vcl.Styles,
-  DateTimePickers in 'DateTimePickers.pas',
-  Vcl.PlatformVclStylesActnCtrls in 'Vcl.PlatformVclStylesActnCtrls.pas',
-  uTranslateDebugWindow in 'uTranslateDebugWindow.pas' {TranslateDebugWindow},
-  uWebBrowserTamed in 'uWebBrowserTamed.pas',
-  uRegExp in 'uRegExp.pas',
-  uAccounts in 'uAccounts.pas',
-  uRules in 'uRules.pas',
-  uMailManager in 'uMailManager.pas',
-  uRulesManager in 'uRulesManager.pas',
-  uRulesForm in 'uRulesForm.pas' {RulesForm},
-  uAccountsForm in 'uAccountsForm.pas' {AccountsForm},
-  uPositioning in 'uPositioning.pas',
-  uOptionsForm in 'uOptionsForm.pas' {OptionsForm},
-  uAboutForm in 'uAboutForm.pas' {AboutForm},
-  uFrameRulesOptions in 'uFrameRulesOptions.pas' {FrameRulesOptions: TFrame},
-  uFramePreviewOptions in 'uFramePreviewOptions.pas' {FramePreviewOptions: TFrame},
-  OKCANCL2 in 'c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS' {OKRightDlg},
-  uCustomColorDialog in 'uCustomColorDialog.pas' {CustomColorDialog},
-  uConstants in 'uConstants.pas';
+  uTranslate in 'uTranslate.pas';
 
 {$R *.RES}
 
 var
   hFirstWin : HWND;
   param : integer;
-{$IFDEF LOG4D}
-  Logger : TLogLogger;
-{$ENDIF LOG4D}
+
 begin
-{$IFDEF LOG4D}
-  TLogBasicConfigurator.Configure;
-
-  // set the log level
-  TLogLogger.GetRootLogger.Level := All;
-
-  // create a named logger
-  Logger := TLogLogger.GetLogger('poptrayuLogger');
-  Logger.addAppender(TLogFileAppender.Create('filelogger','log4d.log'));
-
-
-{$ENDIF LOG4D}
-
-
   if not ParamSwitch('MULTIPLE') then
   begin
     // check for previous instance
@@ -162,13 +114,8 @@ begin
   // running, or if we are running in the debugger. In these cases, continue
   // initialization and start our new instance of the App/UI/etc.
   Application.Initialize;
-  // MainFormOnTaskBar this must be false to prevent child forms from being
-  // always on top of the main form. http://qc.embarcadero.com/wc/qcmain.aspx?d=49410
-  Application.MainFormOnTaskBar := false;
   Application.ShowMainForm := False;
   Application.Title := 'PopTrayU'; //App Title on Windows Taskbar
-  //if ParamSwitch('TRANSLATE') then
-  //  Application.CreateForm(TTranslateDebugWindow, TranslateDebugWindow);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfrmPopUMain, frmPopUMain);
   Application.Run;

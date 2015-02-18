@@ -17,7 +17,7 @@ object frameWhiteBlack: TframeWhiteBlack
   object lblWhiteList: TLabel
     Left = 0
     Top = 0
-    Width = 58
+    Width = 375
     Height = 13
     Align = alTop
     Alignment = taCenter
@@ -32,7 +32,7 @@ object frameWhiteBlack: TframeWhiteBlack
   object lblBlackList: TLabel
     Left = 0
     Top = 74
-    Width = 57
+    Width = 375
     Height = 13
     Align = alTop
     Alignment = taCenter

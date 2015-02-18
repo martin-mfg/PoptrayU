@@ -27,10 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, ExtCtrls, uConstants;
-
-type
-  TEnableSaveOptionsFunction = procedure of object;
+  Dialogs, StdCtrls, ExtCtrls;
 
 type
   TframeWhiteBlack = class(TFrame)
@@ -47,49 +44,31 @@ type
     procedure memBlackListExit(Sender: TObject);
   private
     { Private declarations }
-    funcEnableSaveBtn : TEnableSaveOptionsFunction;
-    procedure OnWhiteListUpdated(var Msg: TMessage); message UM_RELOAD_WHITELIST;
-    procedure OnBlackListUpdated(var Msg: TMessage); message UM_RELOAD_BLACKLIST;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent); override;
   end;
 
 implementation
 
-uses uGlobal, uTranslate, System.UITypes, uMain;
+uses uMain, uGlobal, uTranslate;
 
 {$R *.dfm}
 
-constructor TframeWhiteBlack.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+constructor TframeWhiteBlack.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
-  funcEnableSaveBtn := SaveButtonProc;
-
-
+  inherited;
   Options.Busy := True;
+  uTranslate.TranslateFrame(self);
   memWhiteList.Lines.Text := Options.WhiteList.Text;
   memBlackList.Lines.Text := Options.BlackList.Text;
   Options.Busy := False;
 
-  lblWhiteList.Font.Assign(Options.GlobalFont);
+  lblWhiteList.Font := Options.GlobalFont;
+  lblBlackList.Font := Options.GlobalFont;
+
   with lblWhiteList.Font do Style := Style + [fsBold];
-
-  lblBlackList.Font := lblWhiteList.Font;
-
-  TranslateComponentFromEnglish(self);
-
-
-end;
-
-procedure TframeWhiteBlack.OnWhiteListUpdated(var Msg: TMessage);
-begin
-  memWhiteList.Lines.Text := Options.WhiteList.Text;
-end;
-
-procedure TframeWhiteBlack.OnBlackListUpdated(var Msg: TMessage);
-begin
-  memBlackList.Lines.Text := Options.BlackList.Text;
+  with lblBlackList.Font do Style := Style + [fsBold];
 end;
 
 procedure TframeWhiteBlack.FrameResize(Sender: TObject);
@@ -102,8 +81,9 @@ procedure TframeWhiteBlack.memListChange(Sender: TObject);
 begin
   if not Options.Busy then
   begin
-    // enable save button
-    funcEnableSaveBtn();
+    // butons
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 

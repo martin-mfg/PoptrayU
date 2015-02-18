@@ -57,12 +57,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, ImgList, PngSpeedButton,
-  Vcl.Imaging.pngimage, PngBitBtn;
-
-type
-  TEnableSaveOptionsFunction = procedure of object;
-
+  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, ImgList;
 
 type
 
@@ -70,85 +65,62 @@ type
 
   TframeVisualAppearance = class(TFrame)
     Label1: TLabel;
+    lblListboxFontSample: TLabel;
     btnFontChange: TSpeedButton;
+    listboxBgColorBox: TColorBox;
+    listboxFgColorBox: TColorBox;
+    resetListboxBtn: TSpeedButton;
+    imgFg: TImage;
+    imgBg: TImage;
     btnGlobalFont: TSpeedButton;
     btnVerticalTabFont: TSpeedButton;
-    lblFontListbox: TLabel;
-    lblFontVertical: TLabel;
-    lblFontGlobal: TLabel;
-    imgLtDk: TImageList;
-    resetListboxBtn: TPngSpeedButton;
-    cmbVclStyle: TComboBox;
-    lblTheme: TLabel;
-    btnLoadTheme: TPngBitBtn;
-    chkInvertColors: TCheckBox;
-    CategoryPanelGroup1: TCategoryPanelGroup;
-    catTheme: TCategoryPanel;
-    CategoryPanel2: TCategoryPanel;
+    lblVerticalTabsSample: TLabel;
+    lblGlobalSample: TLabel;
+    cmbToolbarColors: TComboBox;
     Label2: TLabel;
-    Label6: TLabel;
-    SpeedButton1: TSpeedButton;
-    Label7: TLabel;
-    Label8: TLabel;
-    SpeedButton2: TSpeedButton;
-    btnMsgListColors: TPngSpeedButton;
-    panSamplePlainText: TPanel;
-    Label9: TLabel;
-    Label10: TLabel;
-    lblFontPreview: TLabel;
-    btnPreviewFont: TSpeedButton;
-    panSampleGlobalFont: TPanel;
-    panSampleVerticalFont: TPanel;
-    panSampleListboxFont: TPanel;
-    BtnPreviewColors: TPngSpeedButton;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    imgVisualDk: TImageList;
+    imgVisualLt: TImageList;
     procedure btnFontChangeClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure resetListboxBtn1Click(Sender: TObject);
-    procedure cmbVclStyleChange(Sender: TObject);
-    procedure btnLoadThemeClick(Sender: TObject);
-    procedure btnMsgListColorsClick(Sender: TObject);
+    procedure listboxBgColorBoxChange(Sender: TObject);
+    procedure listboxFgColorBoxChange(Sender: TObject);
+    procedure resetListboxBtnClick(Sender: TObject);
+    procedure cmbToolbarColorsChange(Sender: TObject);
   private
     { Private declarations }
-    funcEnableSaveBtn : TEnableSaveOptionsFunction;
-    procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent); override;
     procedure SetColors();
   end;
 
-  procedure LoadVisualStyleFromDisk(const FileName: string);
 
 
 implementation
 
-uses uMain, uGlobal, StrUtils, uRCUtils, uFontUtils, uTranslate, uDM,
-  Vcl.Themes, DateTimePickers, Math, uPositioning, uCustomColorDialog,
-  uConstants;
+uses uMain, uGlobal, StrUtils, uRCUtils, uFSUtils, uTranslate, uDM;
 
 {$R *.dfm}
-  //TToolbarScheme = (schemeNormal = 0, schemeTwilight = 1);
 
-constructor TframeVisualAppearance.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+constructor TframeVisualAppearance.Create(AOwner: TComponent);
 var
   i: integer;
 begin
-  inherited Create(AOwner);
-  funcEnableSaveBtn := SaveButtonProc;
+  inherited;
+  TranslateFrame(self);
+  for i := 0 to cmbToolbarColors.Items.Count-1 do
+    ChangeItem(cmbToolbarColors,i,TranslateDir(cmbToolbarColors.Items[i],FromEnglish));
 
   // Options to screen
 
   // Global Font
-  Self.Font.Assign(Options.GlobalFont);
-
-  CategoryPanelGroup1.HeaderFont.Assign(Options.GlobalFont);
-  CategoryPanelGroup1.HeaderFont.Style := CategoryPanelGroup1.HeaderFont.Style + [fsBold];
-  CategoryPanelGroup1.HeaderFont.Size := Options.GlobalFont.Size;
-
-  panSampleGlobalFont.Font.Assign(Options.GlobalFont);
-  panSampleGlobalFont.Caption := panSampleGlobalFont.Font.Name;
+  lblGlobalSample.Font.Assign(Options.GlobalFont);
+  lblGlobalSample.Caption := lblGlobalSample.Font.Name;
   
   btnFontChange.Font.Assign(Options.GlobalFont);
   btnGlobalFont.Font.Assign(Options.GlobalFont);
@@ -156,68 +128,27 @@ begin
   resetListboxBtn.Font.Assign(Options.GlobalFont);
 
   // Vertical Font
-  panSampleVerticalFont.Font.Assign(Options.VerticalFont);
-  panSampleVerticalFont.Caption := panSampleVerticalFont.Font.Name;
+  lblVerticalTabsSample.Font.Assign(Options.VerticalFont);
+  lblVerticalTabsSample.Caption := lblVerticalTabsSample.Font.Name;
 
   // Listbox Fonts/Colors
-  panSampleListboxFont.Font.Assign(Options.ListboxFont);
-  panSampleListboxFont.Caption := panSampleListboxFont.Font.Name;
-  panSampleListboxFont.Color := Options.ListboxBg;
+  lblListboxFontSample.Font.Assign(Options.ListboxFont);
+  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
+  {$IFNDEF FPC}
+  // Setting the background to not-transparent is only needed for Delphi
+  // (not lazarus). Having this line execute in Lazarus causes the Font to
+  // be ignored. Could be a bug in Lazarus?
+  lblListboxFontSample.Transparent := false;
+  {$ENDIF}
+  lblListboxFontSample.Color := Options.ListboxBg;
+  listboxFgColorBox.Selected := lblListboxFontSample.Font.Color;
+  listboxBgColorBox.Selected := lblListboxFontSample.Color;
 
-  // Preview Font
-  panSamplePlainText.Font.Assign(Options.PreviewFont);
-  panSamplePlainText.Caption := panSamplePlainText.Font.Name;
-  panSamplePlainText.Color := Options.PreviewBgColor;
-
-  chkInvertColors.Checked := Options.ToolbarColorScheme = schemeDark;
+  cmbToolbarColors.ItemIndex := Options.ToolbarColorScheme;
 
   SetColors();
 
-  i := cmbVclStyle.Items.IndexOf(Options.VisualStyleFilename);
-  if i > -1 then begin
-    cmbVclStyle.ItemIndex := i;
-  end else begin
-    i := cmbVclStyle.Items.Add(Options.VisualStyleFilename);
-    cmbVclStyle.ItemIndex := i;
-  end;
-
-  TranslateComponentFromEnglish(self);
-  AlignLabels();
-
   Refresh;
-
-end;
-
-procedure TframeVisualAppearance.AlignLabels();
-var
-  labelHeight : integer;
-  widest, right : integer;
-begin
-  labelHeight := lblTheme.Height;
-
-  cmbVclStyle.Left := CalcPosToRightOf(lblTheme);
-  cmbVclStyle.Width := btnLoadTheme.Left - cmbVclStyle.Left - 10;
-  btnLoadTheme.Height := cmbVclStyle.Height;
-  chkInvertColors.Height := labelHeight;
-  chkInvertColors.Top := calcPosBelow(cmbVclStyle);
-  catTheme.ClientHeight := calcPosBelow(chkInvertColors);
-
-  widest := lblFontGlobal.Width;
-  if lblFontVertical.Width > widest then widest := lblFontVertical.Width;
-  if lblFontListbox.Width > widest then widest := lblFontListbox.Width;
-  if lblFontPreview.Width > widest then widest := lblFontPreview.Width;
-  right := btnGlobalFont.Left - 6;
-
-  panSampleGlobalFont.Left    := lblFontGlobal.Left + widest + 4;
-  panSampleVerticalFont.Left  := lblFontGlobal.Left + widest + 4;
-  panSampleListboxFont.Left   := lblFontGlobal.Left + widest + 4;
-  panSamplePlainText.Left     := lblFontGlobal.Left + widest + 4;
-
-  panSampleGlobalFont.Width       := right - panSampleGlobalFont.Left;
-  panSampleVerticalFont.Width := right - panSampleVerticalFont.Left;
-  panSampleListboxFont.Width  := right - panSampleListboxFont.Left - btnMsgListColors.Width - 6;
-  panSamplePlainText.Width    := right - panSamplePlainText.Left - btnPreviewFont.Width - 6;
-
 
 end;
 
@@ -226,12 +157,23 @@ begin
   btnGlobalFont.Glyph := Nil;
   btnFontChange.Glyph := Nil;
   btnVerticalTabFont.Glyph := Nil;
+  resetListboxBtn.Glyph := Nil;
 
-  //toolbar color scheme = 0 or 1
-  imgLtDk.GetBitmap(Options.ToolbarColorScheme, btnGlobalFont.Glyph);
-  imgLtDk.GetBitmap(Options.ToolbarColorScheme, btnFontChange.Glyph);
-  imgLtDk.GetBitmap(Options.ToolbarColorScheme, btnVerticalTabFont.Glyph);
-
+  if (frmPopUMain.MailToolBar.ColorMap = frmPopUMain.TwilightColorMap1) then begin
+    imgVisualDk.GetBitmap(0, btnGlobalFont.Glyph);
+    imgVisualDk.GetBitmap(0, btnFontChange.Glyph);
+    imgVisualDk.GetBitmap(0, btnVerticalTabFont.Glyph);
+    imgVisualDk.GetBitmap(1, resetListboxBtn.Glyph);
+    imgVisualDk.GetIcon(2, imgFg.Picture.Icon);
+    imgVisualDk.GetIcon(3, imgBg.Picture.Icon);
+  end else begin
+    imgVisualLt.GetBitmap(0, btnGlobalFont.Glyph);
+    imgVisualLt.GetBitmap(0, btnFontChange.Glyph);
+    imgVisualLt.GetBitmap(0, btnVerticalTabFont.Glyph);
+    imgVisualLt.GetBitmap(1, resetListboxBtn.Glyph);
+    imgVisualLt.GetIcon(2, imgFg.Picture.Icon);
+    imgVisualLt.GetIcon(3, imgBg.Picture.Icon);
+  end;
   frmPopUMain.LoadSkin();
   Self.Repaint;
 end;
@@ -241,24 +183,23 @@ begin
   if not Options.Busy then
   begin
     // screen to options
-    Options.ListboxFont.Assign(panSampleListboxFont.Font);
-    Options.ListboxBg := panSampleListboxFont.Color;
+    Options.ListboxFont.Assign(lblListboxFontSample.Font);
+    Options.ListboxBg := lblListboxFontSample.Color;
 
-    frmPopUMain.lvMail.Font.Assign(panSampleListboxFont.Font);
-    frmPopUMain.lvMail.Color := panSampleListboxFont.Color;
+    frmPopUMain.lvMail.Font.Assign(lblListboxFontSample.Font);
+    frmPopUMain.lvMail.Color := lblListboxFontSample.Color;
 
-    Options.GlobalFont.Assign(panSampleGlobalFont.Font);
-    Options.VerticalFont.Assign(panSampleVerticalFont.Font);
-    Options.PreviewFont.Assign(panSamplePlainText.Font);
-    Options.PreviewBgColor := panSamplePlainText.Color;
+    Options.GlobalFont.Assign(lblGlobalSample.Font);
+    Options.VerticalFont.Assign(lblVerticalTabsSample.Font);
 
-    Options.ToolbarColorScheme := IfThen(chkInvertColors.Checked, schemeDark, schemeLight);
+    Options.ToolbarColorScheme := (cmbToolbarColors.ItemIndex);
 
     frmPopUMain.UpdateFonts();
     SetColors();
 
-    // enable save button
-    funcEnableSaveBtn();
+    // buttons
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 
@@ -284,23 +225,18 @@ begin
     begin
       if sender = btnFontChange then
       begin
-        panSampleListboxFont.Font := fntDlg.Font;
-
+        lblListboxFontSample.Font := fntDlg.Font;
+        lblListboxFontSample.Caption := fntDlg.Font.Name;
       end
       else if sender = btnGlobalFont then
       begin
-        panSampleGlobalFont.Font := fntDlg.Font;
-        panSampleGlobalFont.Caption := fntDlg.Font.Name;
+        lblGlobalSample.Font := fntDlg.Font;
+        lblGlobalSample.Caption := fntDlg.Font.Name;
       end
       else if sender = btnVerticalTabFont then
       begin
-        panSampleVerticalFont.Font := fntDlg.Font;
-        panSampleVerticalFont.Caption := fntDlg.Font.Name;
-      end
-      else if sender = btnPreviewFont then
-      begin
-        panSamplePlainText.Font := fntDlg.Font;
-        panSamplePlainText.Caption := fntDlg.Font.Name;
+        lblVerticalTabsSample.Font := fntDlg.Font;
+        lblVerticalTabsSample.Caption := fntDlg.Font.Name;
       end;
 
       OptionsChange(Sender);
@@ -310,139 +246,48 @@ begin
   end;
 end;
 
-procedure TframeVisualAppearance.resetListboxBtn1Click(Sender: TObject);
+procedure TframeVisualAppearance.listboxBgColorBoxChange(Sender: TObject);
+begin
+   lblListboxFontSample.Color := listboxBgColorBox.Selected;
+   OptionsChange(listboxBgColorBox);
+end;
+
+procedure TframeVisualAppearance.listboxFgColorBoxChange(Sender: TObject);
+begin
+    lblListboxFontSample.Font.Color := listboxFgColorBox.Selected;
+    OptionsChange(listboxFgColorBox);
+end;
+
+procedure TframeVisualAppearance.resetListboxBtnClick(Sender: TObject);
 var
   defaultFont : string;
   font : TFont;
 begin
-  panSampleListboxFont.Color := Graphics.clWindow;
-  panSampleListboxFont.Font.Color := Graphics.clWindowText;
+  lblListboxFontSample.Color := Graphics.clWindow;
+  lblListboxFontSample.Font.Color := Graphics.clWindowText;
   defaultFont := IfThen(IsWinVista(), DEFAULT_FONT_VISTA, DEFAULT_FONT_XP);
 
   font := StringToFont(defaultFont);
-  panSampleListboxFont.Font.Assign(font);
-  panSampleListboxFont.Caption := panSampleListboxFont.Font.Name;
+  lblListboxFontSample.Font.Assign(font);
+  lblListboxFontSample.Caption := lblListboxFontSample.Font.Name;
   //FreeAndNil(font);
 
   //font := StringToFont(defaultFont);
-  panSampleGlobalFont.Font.Assign(font);
-  panSampleGlobalFont.Caption := panSampleGlobalFont.Font.Name;
+  lblGlobalSample.Font.Assign(font);
+  lblGlobalSample.Caption := lblGlobalSample.Font.Name;
   FreeAndNil(font);
 
   font := StringToFont(DEFAULT_FONT_VERTICAL);
-  panSampleVerticalFont.Font.Assign(font);
-  panSampleVerticalFont.Caption := panSampleVerticalFont.Font.Name;
-  FreeAndNil(font);
-
-  font := StringToFont(DEFAULT_FONT_PREVIEW);
-  panSamplePlainText.Font.Assign(font);
-  panSamplePlainText.Caption := panSamplePlainText.Font.Name;
+  lblVerticalTabsSample.Font.Assign(font);
+  lblVerticalTabsSample.Caption := lblVerticalTabsSample.Font.Name;
   FreeAndNil(font);
 
   OptionsChange(resetListboxBtn);
 end;
 
-procedure LoadVisualStyleFromDisk(const FileName: string);
-var
-  styleInfo : TStyleInfo;
+procedure TframeVisualAppearance.cmbToolbarColorsChange(Sender: TObject);
 begin
-    if (FileName <> '') and (FileExists(FileName)) then
-    begin
-      if TStyleManager.IsValidStyle(FileName, styleInfo) then
-      begin
-        try
-          TStyleManager.LoadFromFile(FileName);
-        except
-          on E: EDuplicateStyleException do ; //ignore
-        end;
-        TStyleManager.TrySetStyle(styleInfo.Name, False);
-      end
-      else
-      begin
-        TStyleManager.TrySetStyle('Windows', False);
-      end;
-    end else begin
-      // Style is either a built-in style, or a file that is missing/removed.
-      // Try setting as a built-in style
-      TStyleManager.TrySetStyle(FileName, False);
-    end;
-end;
-
-procedure TframeVisualAppearance.btnLoadThemeClick(Sender: TObject);
-var
-  openDialog : TOpenDialog;
-  i : integer;
-begin
-  openDialog := TOpenDialog.Create(self);
-  openDialog.Options := [ofFileMustExist];
-  openDialog.Filter := 'VCL Visual Style|*.vsf';
-
-  // Show Open Dialog
-  if openDialog.Execute then
-  begin
-    // user pressed ok
-    LoadVisualStyleFromDisk(openDialog.FileName);
-
-    Options.VisualStyleFilename := openDialog.FileName;
-
-    // add new style to combo-box if not already in it
-    i := cmbVclStyle.Items.IndexOf(Options.VisualStyleFilename);
-    if i < 0 then
-      i := cmbVclStyle.Items.Add(Options.VisualStyleFilename);
-    cmbVclStyle.ItemIndex := i;
-
-    OptionsChange(btnLoadTheme);
-
-  end; //else user pressed cancel on open dialog...do nothing
-
-  openDialog.Free;
-end;
-
-
-procedure TframeVisualAppearance.btnMsgListColorsClick(Sender: TObject);
-var
-  dlg : TCustomColorDialog;
-  previewPanel : TPanel;
-begin
-  dlg := TCustomColorDialog.Create(self);
-
-  if (Sender = btnMsgListColors) then
-    previewPanel := panSampleListboxFont
-  else if (Sender = BtnPreviewColors) then
-    previewPanel := panSamplePlainText;
-
-  dlg.DefaultForeColor := clWindowText;
-  dlg.DefaultBackColor := clWindow;
-
-  dlg.ForeColor := previewPanel.Font.Color;
-  dlg.BackColor := previewPanel.Color;
-
-  TranslateComponentFromEnglish(dlg);
-  dlg.PreviewCaption := Translate('Preview');
-  dlg.Font := Options.GlobalFont;
-  dlg.PreviewFont := previewPanel.Font;
-  //dlg.FormResize(self);
-
-  dlg.ShowModal;
-  if dlg.ModalResult = mrOk then begin
-    previewPanel.Font.Color := dlg.ForeColor;
-    previewPanel.Color := dlg.BackColor;
-
-    OptionsChange(Sender);
-  end;
-  dlg.Free;
-end;
-
-procedure TframeVisualAppearance.cmbVclStyleChange(Sender: TObject);
-begin
-  try
-    TStyleManager.SetStyle(cmbVclStyle.Text);
-  except on e: ECustomStyleException do
-    LoadVisualStyleFromDisk(cmbVclStyle.Text);
-  end;
-    Options.VisualStyleFilename := cmbVclStyle.Text;
-    OptionsChange(btnLoadTheme);
+  OptionsChange(cmbToolbarColors);
 end;
 
 end.
-
