@@ -210,7 +210,7 @@ Log Rules=Journaliser l'utilisation des règles
 Login:=Nom d'utilisateur :
 Mail Info=Information sur le courriel
 Mail=Courriel
-MAPI instead of mailto:=Utiliser MAPI au lieu de mailto :
+MAPI instead of mailto:=Utiliser MAPI au lieu de mailto
 Mark as Spam=Identifier comme pourriel
 Mark as Viewed=Identifier comme ayant été visualisé
 Mark the selected messages as Spam.=Identifier comme pourriels les messages sélectionnés.
@@ -270,7 +270,7 @@ Open Message=Ouvrir le courriel sélectionné avec Outlook Express~ou avec une v
 Options ...=Options...
 Options=Options
 Other=Autre 
-Password Protect=Utiliser le mot de passe suivant
+Password Protect=Utiliser le mot de passe suivant :
 Password:=Mot de passe :
 Paste=Coller
 Play Sound=Signal sonore 
@@ -612,7 +612,7 @@ Button Text=Texte du bouton
 Caption Text=Texte du sous-titrage
 Changes the appearance of Date/Time for emails in the Main Window message list.=Si cette case cochée, la présentation de la date et de l'heure des courriels dans la fenêtre principale sera modifiée.
 Charcoal Dark Slate=Ardoise foncée couleur charbon
-Communicate using MAPI instead of mailto:=Utilisation de MAPI au lieu de mailto :
+Communicate using MAPI instead of mailto:=Utilisation de MAPI au lieu de mailto
 Confirm Deletion=Corfirmer la suppression
 Connection Settings=Paramètres de la connexion
 Cream=Crème
@@ -714,7 +714,7 @@ Window Text=Texte de la fenêtre
 Windows=Windows
 With this option enabled, certain images will be replaced with ones better suited to dark background colors.=Si cette option est activée, certaines images seront remplacées pour mieux s'agences aux couleurs de l'arrière-plan.
 Yellow=Jaune
-Error Display=Signalement d'une erreur
+Error Display:=Signalement d'une erreur :
 
 
 
