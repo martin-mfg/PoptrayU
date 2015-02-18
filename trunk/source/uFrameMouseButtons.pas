@@ -30,15 +30,12 @@ uses
   Dialogs, StdCtrls;
 
 type
-  TEnableSaveOptionsFunction = procedure of object;
-
-type
   TframeMouseButtons = class(TFrame)
     lblLeft: TLabel;
     lblRight: TLabel;
     lblMiddle: TLabel;
     lblDouble: TLabel;
-    lblMouseAction: TLabel;
+    Label13: TLabel;
     cmbLeftClick: TComboBox;
     cmbRightClick: TComboBox;
     cmbMiddleClick: TComboBox;
@@ -52,11 +49,9 @@ type
     procedure OptionsChange(Sender: TObject);
   private
     { Private declarations }
-    funcEnableSaveBtn : TEnableSaveOptionsFunction;
-    procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent); override;
   end;
 
 implementation
@@ -67,21 +62,19 @@ uses uMain, uGlobal, uTranslate;
 
 { TframeMouseButtons }
 
-constructor TframeMouseButtons.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+constructor TframeMouseButtons.Create(AOwner: TComponent);
 var
-  i, lblOffset : integer;
+  i : integer;
   st : string;
   max : TLabel;
-  maxWidth : integer;
 begin
-  inherited Create(AOwner);
-  funcEnableSaveBtn := SaveButtonProc;
-
+  inherited;
   Options.Busy := True;
+  TranslateFrame(self);
   // fill action drop-downs
   for i := Low(Actions) to High(Actions) do
   begin
-    st := Actions[i];
+    st := Translate(Actions[i]);
     cmbLeftClick.Items.Add(st);
     cmbRightClick.Items.Add(st);
     cmbMiddleClick.Items.Add(st);
@@ -98,23 +91,7 @@ begin
   cmbShiftLeftClick.ItemIndex := Options.ShiftLeftClick;
   cmbShiftRightClick.ItemIndex := Options.ShiftRightClick;
   cmbShiftMiddleClick.ItemIndex := Options.ShiftMiddleClick;
-  Options.Busy := False;
-
-  Self.Font.Assign(Options.GlobalFont);
-
-  TranslateComponentFromEnglish(Self);
-  AlignLabels();
-end;
-
-
-
-procedure TframeMouseButtons.AlignLabels();
-var
-  lblOffset : integer;
-  max : TLabel;
-  maxWidth : integer;
-begin
- // re-align
+  // re-align
   max := lblLeft;
   if lblRight.Width > max.Width then max := lblRight;
   if lblMiddle.Width > max.Width then max := lblMiddle;
@@ -122,8 +99,7 @@ begin
   if lblSLeft.Width > max.Width then max := lblSLeft;
   if lblSRight.Width > max.Width then max := lblSRight;
   if lblSMiddle.Width > max.Width then max := lblSMiddle;
-
-  max.Left := 4;
+  max.Left := 2;
   lblLeft.Left := max.Left + max.Width - lblLeft.Width;
   lblRight.Left := max.Left + max.Width - lblRight.Width;
   lblMiddle.Left := max.Left + max.Width - lblMiddle.Width;
@@ -131,8 +107,6 @@ begin
   lblSLeft.Left := max.Left + max.Width - lblSLeft.Width;
   lblSRight.Left := max.Left + max.Width - lblSRight.Width;
   lblSMiddle.Left := max.Left + max.Width - lblSMiddle.Width;
-
-
   cmbLeftClick.Left := max.Left + max.Width + 4;
   cmbRightClick.Left := max.Left + max.Width + 4;
   cmbMiddleClick.Left := max.Left + max.Width + 4;
@@ -141,25 +115,7 @@ begin
   cmbShiftRightClick.Left := max.Left + max.Width + 4;
   cmbShiftMiddleClick.Left := max.Left + max.Width + 4;
 
-  cmbLeftClick.Top := lblMouseAction.Top + lblMouseAction.Height + 4;
-  cmbRightClick.Top := cmbLeftClick.Top + cmbLeftClick.Height + 4;
-  cmbMiddleClick.Top := cmbRightClick.Top + cmbRightClick.Height + 4;
-  cmbDblClick.Top := cmbMiddleClick.Top + cmbMiddleClick.Height + 4;
-  cmbShiftLeftClick.Top := cmbDblClick.Top + cmbDblClick.Height + 4;
-  cmbShiftRightClick.Top := cmbShiftLeftClick.Top + cmbShiftLeftClick.Height + 4;
-  cmbShiftMiddleClick.Top := cmbShiftRightClick.Top + cmbShiftRightClick.Height + 4;
-
-  lblOffset := (cmbLeftClick.Height - lblLeft.Height ) div 2;
-
-  lblLeft.Top := cmbLeftClick.Top + lblOffset;
-  lblRight.Top := cmbRightClick.Top + lblOffset;
-  lblMiddle.Top := cmbMiddleClick.Top + lblOffset;
-  lblDouble.Top := cmbDblClick.Top + lblOffset;
-  lblSLeft.Top := cmbShiftLeftClick.Top + lblOffset;
-  lblSRight.Top := cmbShiftRightClick.Top + lblOffset;
-  lblSMiddle.Top := cmbShiftMiddleClick.Top + lblOffset;
-
-  lblMouseAction.Left := cmbLeftClick.Left + ((cmbLeftClick.Width - lblMouseAction.Width) div 2);
+  Options.Busy := False;
 end;
 
 procedure TframeMouseButtons.OptionsChange(Sender: TObject);
@@ -174,9 +130,9 @@ begin
     Options.ShiftLeftClick := cmbShiftLeftClick.ItemIndex;
     Options.ShiftRightClick := cmbShiftRightClick.ItemIndex;
     Options.ShiftMiddleClick := cmbShiftMiddleClick.ItemIndex;
-
-    // enable save button
-    funcEnableSaveBtn();
+    // buttons
+    frmPopUMain.btnSaveOptions.Enabled := True;
+    frmPopUMain.btnCancel.Enabled := True;
   end;
 end;
 

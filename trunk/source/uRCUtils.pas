@@ -10,9 +10,10 @@ interface
 
 uses
   Windows, SysUtils, Graphics, Forms, Buttons, StdCtrls, Controls, Types,
-  Classes, Dialogs, TypInfo, ActnCtrls, CommCtrl, ComCtrls, System.UITypes;
+  Classes, Dialogs, TypInfo, TntForms, TntComCtrls, ActnCtrls, CommCtrl;
 
 type
+  TSetOfChar = set of char;
   TKeyboardLight = (klNumLock,klCapsLock,klScrollLock);
 
 // files
@@ -26,8 +27,8 @@ function TempFileName(FileName : string) : string;
 function CheckWildcard(text,subtext : string) : boolean;
 function StrBefore(str,substr : string) : string;
 function StrAfter(str,substr : string) : string;
-function HexEncodeSpecialChars(str : string; encodeLineBreaks: boolean) : string;
-function SanitizeFileName(unsanitizedFileName : string) : string;
+function CharsToHex(str : string; chars : TSetOfChar) : string;
+function CharsReplace(str : string; chars : TSetOfChar; ReplaceChar : char) : string;
 function RemoveBlankLines(st : string) : string;
 function LoCase(ch : char) : char;
 
@@ -42,7 +43,7 @@ function ExpandWidth(st : string; width : integer) : string;
 function ReduceWidth(st : string; width : integer) : string;
 function ForceWidth(st : string; width : integer) : string;
 function WindowsVersion : string;
-function WindowAt(Form : TForm; Left,Top : integer) : boolean;
+function WindowAt(Form : TTntForm; Left,Top : integer) : boolean;
 function IsWinXP : boolean;
 function IsWinVista : boolean;
 procedure SwapOutMemory;
@@ -106,7 +107,7 @@ procedure AutoSizeAllCheckBox(Control : TWinControl);
 // misc. from uMain
 function NumOnly(st : string) : integer;
 function CompareInt(st1,st2 : string) : integer;
-function CompareDateRC(st1,st2 : string) : integer;
+function CompareDate(st1,st2 : string) : integer;
 function StripSubjectPrefix(const st : string) : string;
 function StringToColorDef(st : string; DefColor : TColor) : TColor;
 function StringToColorDef2(st : string; DefColor : TColor) : TColor;
@@ -114,10 +115,8 @@ function ColorToString2(Color : TColor) : string;
 function DarkColor(col : TColor) : Boolean;
 function MixColors(col1,col2 : TColor) : TColor;
 procedure ClearImpairedCode(var str : string);
-procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : integer);
+procedure SetColumnImage(lv : TTntListView; ColumnIndex,ImageIndex : integer);
 procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word);
-
-function GetAppVersionStr: string;
 
 const
   HH_DISPLAY_TOPIC = $0000;
@@ -126,7 +125,7 @@ const
 
 implementation
 
-uses ShellAPI, Mapi, StrUtils, uTranslate;
+uses ShellAPI, Mapi, StrUtils;
 
 const
   INTERNET_CONNECTION_MODEM           = $01;
@@ -278,58 +277,32 @@ begin
   end;
 end;
 
-// Hex encodes special characters (for sending emails)
-function HexEncodeSpecialChars(str : string; encodeLineBreaks: boolean) : string;
-const
-  CHARS_TO_ENCODE : set of char = [' ','&','%','=','?','"'];
-  CHARS_WITH_LINE_BREAKS : set of char = [' ','&','%','=','?','"', #13,#10];
+function CharsToHex(str : string; chars : TSetOfChar) : string;
 var
   i : integer;
-  charsToConvert : set of char;
 begin
   Result := '';
-  if encodeLineBreaks then charsToConvert := CHARS_WITH_LINE_BREAKS
-  else charsToConvert := CHARS_TO_ENCODE;
-
-  // TODO: this might actually be more efficient with TStringBuilder because
-  // it's only appending one character at a time?
   for i := 1 to length(str) do
   begin
-    if CharInSet(str[i],charsToConvert) then
+    if str[i] in chars then
       Result := Result + '%' + IntToHex(Ord(str[i]),2)
     else
       Result := Result + str[i];
   end;
 end;
 
-// Eliminates invalid characters from a filename
-function SanitizeFileName(unsanitizedFileName : string) : string;
-const
-  invalidChars : set of char = [ '"', //double quote
-                                 '/', //forward slash
-                                 '*', //wildcard
-                                 '\', //backslash
-                                 '<', //angle bracket1
-                                 '>', //angle bracket2
-                                 '|', //vertical bar
-                                 ':', //colon
-                                 '?'];//questionmark
-  replacementChar : char = ' ';
+function CharsReplace(str : string; chars : TSetOfChar; ReplaceChar : char) : string;
 var
   i : integer;
 begin
   Result := '';
-  for i := 1 to length(unsanitizedFileName) do
+  for i := 1 to length(str) do
   begin
-    // CharInSet will fail for characters outside of ANSI range, but none of
-    // the characters in our search set are non-ansi so this is safe.
-    if CharInSet(unsanitizedFileName[i], invalidChars) then
-      Result := Result + replacementChar
+    if str[i] in chars then
+      Result := Result + ReplaceChar
     else
-      Result := Result + unsanitizedFileName[i];
+      Result := Result + str[i];
   end;
-
-  //Result := Trim(Result);
 end;
 
 function RemoveBlankLines(st : string) : string;
@@ -372,7 +345,7 @@ end;
 
 //--------------------------------------------------------------------- misc ---
 
-function PlaySound(pszSound: PChar; hmod: HMODULE; fdwSound: DWORD): BOOL; stdcall; external 'winmm.dll' name 'PlaySoundW';
+function PlaySound(pszSound: PChar; hmod: HMODULE; fdwSound: DWORD): BOOL; stdcall; external 'winmm.dll' name 'PlaySoundA';
 
 procedure PlayWav(FileName : TFileName);
 const
@@ -430,9 +403,9 @@ end;
 
 procedure ShowMemo(ACaption,AMsg : string; AWidth : integer = 400; AHeight : integer = 300);
 var
-  frm : TForm;
+  frm : TTntForm;
 begin
-  frm := TForm.CreateNew(Application);
+  frm := TTntForm.CreateNew(Application);
   with frm do
   begin
     Caption := ACaption;
@@ -608,7 +581,7 @@ begin
   result := 'Windows '+strVersion + ' ' + strAdditional + ' '+strBuild;
 end;
 
-function WindowAt(Form : TForm; Left,Top : integer) : boolean;
+function WindowAt(Form : TTntForm; Left,Top : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // See if there is a window at the specified location
 var
@@ -620,8 +593,8 @@ begin
     if Application.Components[i] is Form.ClassType then
     begin
       if (Application.Components[i] <> Form) and
-         ((Application.Components[i] as TForm).Left = Left) and
-         ((Application.Components[i] as TForm).Top = Top) then
+         ((Application.Components[i] as TTntForm).Left = Left) and
+         ((Application.Components[i] as TTntForm).Top = Top) then
       begin
         Result := True;
         Break;
@@ -900,7 +873,7 @@ begin
   begin
     HHLib := LoadLibrary('HHCtrl.ocx');
     if (HHLib <> 0) then
-      HtmlHelpProc := GetProcAddress(HHLib, 'HtmlHelpW');
+      HtmlHelpProc := GetProcAddress(HHLib, 'HtmlHelpA');
   end;
   // call help it successfull
   if not Assigned(HtmlHelpProc) then
@@ -953,8 +926,8 @@ begin
   for i := low(FileNames) to high(FileNames) do
   begin
     files[i].nPosition := i;
-    files[i].lpszPathName := PAnsiChar(FileNames[i]);
-    files[i].lpszFileName := PAnsiChar(FileNames[i]);
+    files[i].lpszPathName := PChar(FileNames[i]);
+    files[i].lpszFileName := PChar(FileNames[i]);
   end;
 
   with MapiMessage do
@@ -979,15 +952,14 @@ end;
 var
   MapiMessage : TMapiMessage;  // must be global?
 
-// TODO: this MAPI function is ANSI not unicode
 function MAPISendMessage(h : HWND; const ToAddress,Subject,Body : string) : boolean;
 var
   Recips : TMapiRecipDesc;
-  pToAddress,pSubject,pBody : PAnsiChar;
+  pToAddress,pSubject,pBody : pchar;
 begin
-  pToAddress := StrNew(PAnsiChar(ToAddress));
-  pSubject := StrNew(PAnsiChar(Subject));
-  pBody := StrNew(PAnsiChar(Body));
+  pToAddress := StrNew(PChar(ToAddress));
+  pSubject := StrNew(PChar(Subject));
+  pBody := StrNew(PChar(Body));
   try
     Recips.ulRecipClass := MAPI_TO;
     Recips.lpszName := '';
@@ -1007,7 +979,7 @@ begin
       nFileCount         := 0;
       lpFiles            := nil;
     end;
-    Result := MapiSendMail(0, h, MapiMessage,
+    Result := MapiSendMail2(0, h, MapiMessage,
                  MAPI_DIALOG or MAPI_LOGON_UI or MAPI_NEW_SESSION, 0) <> 99;
   finally
     StrDispose(pToAddress);
@@ -1226,19 +1198,17 @@ end;
 
 procedure AutoSizeCheckBox(chkBox : TCheckBox); overload;
 var
-  canvas1 : TControlCanvas;
+  canvas2 : TControlCanvas;
 begin
-  canvas1 := TControlCanvas.Create;
+  canvas2 := TControlCanvas.Create;
   try
-    canvas1.Control := chkBox;
-    canvas1.Font.Assign(chkBox.Font);
+    canvas2.Control := chkBox;
+    canvas2.Font.Assign(chkBox.Font);
     chkBox.Width := GetSystemMetrics(SM_CXMENUCHECK) +
-      GetSystemMetrics(SM_CXEDGE) +
-      canvas1.TextWidth(chkBox.Caption);
-    //chkBox.Height := canvas1.TextHeight(chkBox.Caption);
-
+      GetSystemMetrics(SM_CXEDGE) + 
+      canvas2.TextWidth(chkBox.Caption);
   finally
-    canvas1.Free;
+    canvas2.Free;
   end;
 end;
 
@@ -1254,7 +1224,6 @@ begin
     Canvas.Handle := GetDC(0);
     DrawText(Canvas.Handle, PChar(chkBox.Caption), Length(chkBox.Caption), Rect, DT_CALCRECT);
     chkBox.Width := Rect.Right - Rect.Left + 20;
-    chkBox.Height := Rect.Height;
   finally
     Canvas.Free;
   end;
@@ -1294,7 +1263,7 @@ begin
   end;
 end;
 
-function CompareDateRC(st1,st2 : string) : integer;
+function CompareDate(st1,st2 : string) : integer;
 var
   date1,date2 : TDateTime;
 begin
@@ -1404,7 +1373,7 @@ end;
 
 
 
-procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : integer);
+procedure SetColumnImage(lv : TTntListView; ColumnIndex,ImageIndex : integer);
 var
   Column : TLVColumn; //uses CommCtrl
 begin
@@ -1432,44 +1401,6 @@ begin
         ToolBar.ActionClient.Items[i].Control.Action.Execute;
 end;
 
-// This function is courtesy of Chris Rolliston
-// see http://delphihaven.wordpress.com/2012/12/08/retrieving-the-applications-version-string/
-//
-function GetAppVersionStr: string;
-const
-  VS_FF_DEBUG_STRING = 'Beta Release';
-var
-  Exe: string;
-  Size, Handle: DWORD;
-  Buffer: TBytes;
-  FixedPtr: PVSFixedFileInfo;
-begin
-  Exe := ParamStr(0);
-  Size := GetFileVersionInfoSize(PChar(Exe), Handle);
-  if Size = 0 then
-    RaiseLastOSError;
-  SetLength(Buffer, Size);
-  if not GetFileVersionInfo(PChar(Exe), Handle, Size, Buffer) then
-    RaiseLastOSError;
-  if not VerQueryValue(Buffer, '\', Pointer(FixedPtr), Size) then
-    RaiseLastOSError;
-//  Result := Format('%d.%d.%d.%d',
-//    [LongRec(FixedPtr.dwFileVersionMS).Hi,  //major
-//     LongRec(FixedPtr.dwFileVersionMS).Lo,  //minor
-//     LongRec(FixedPtr.dwFileVersionLS).Hi,  //release
-//     LongRec(FixedPtr.dwFileVersionLS).Lo]) //build
-
-  Result := Format('%d.%d.%d',
-    [LongRec(FixedPtr.dwFileVersionMS).Hi,  //major
-     LongRec(FixedPtr.dwFileVersionMS).Lo,  //minor
-     LongRec(FixedPtr.dwFileVersionLS).Hi
-     ,LongRec(FixedPtr.dwFileVersionLS).Lo
-     ]); //release
-
-  //If Debug Flag
-  if FixedPtr.dwFileFlags and VS_FF_DEBUG <> 0 then
-    Result := Result + ' (' + Translate(VS_FF_DEBUG_STRING)+')';
-end;
 
 end.
 

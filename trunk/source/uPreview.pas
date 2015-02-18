@@ -30,19 +30,18 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Buttons, ExtCtrls, ComCtrls, StrUtils, Menus, Printers, Tabs,
   ImgList, ToolWin, ActnMan, ActnCtrls, ActnList, XPStyleActnCtrls,
-  IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
-  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw,
-  IdAttachment, IdText, IdAttachmentFile,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnPopup, System.Actions,
-  uAccounts, uMailItems, uWebBrowserTamed;
+  ActnPopupCtrl, IdBaseComponent, IdMessage, StdActns, BandActn, RichEdit,
+  SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw, uHeaderDecoder,
+  {$IFNDEF INDY9} IdAttachment, IdText, IdAttachmentFile, {$ENDIF} // for Indy10
+  TntForms, TntStdCtrls, RegExpr, TntComCtrls;
 
 type
-  TfrmPreview = class(TForm)
+  TfrmPreview = class(TTntForm)
     panOK: TPanel;
     panPreviewFrom: TPanel;
     btnOK: TBitBtn;
-    lblFrom: TLabel;
-    edFrom: TEdit;
+    Label1: TTntLabel;
+    edFrom: TTntEdit;
     tsMessageParts: TTabSet;
     lvAttachments: TListView;
     spltAttachemnts: TSplitter;
@@ -57,8 +56,8 @@ type
     panProgress: TPanel;
     btnStop: TSpeedButton;
     Progress: TProgressBar;
-    lblProgress: TLabel;
-    mnuPreviewToolbar: TPopupActionBar;
+    lblProgress: TTntLabel;
+    mnuPreviewToolbar: TPopupActionBarEx;
     Customize1: TMenuItem;
     Msg: TIdMessage;
     actAttachmentOpen: TAction;
@@ -69,7 +68,7 @@ type
     Save2: TMenuItem;
     N2: TMenuItem;
     SaveAllAttachments2: TMenuItem;
-    mnuEdit: TPopupActionBar;
+    mnuEdit: TPopupActionBarEx;
     actEditCut: TEditCut;
     actEditCopy: TEditCopy;
     actEditPaste: TEditPaste;
@@ -91,22 +90,22 @@ type
     ReadOnly1: TMenuItem;
     actCustomize: TAction;
     panPreviewTo: TPanel;
-    lblTo: TLabel;
-    edTo: TEdit;
+    Label2: TTntLabel;
+    edTo: TTntEdit;
     panPreviewDate: TPanel;
-    lblDate: TLabel;
-    edDate: TEdit;
+    Label4: TTntLabel;
+    edDate: TTntEdit;
     panPreviewSubject: TPanel;
-    lblSubject: TLabel;
-    edSubject: TEdit;
+    Label3: TTntLabel;
+    edSubject: TTntEdit;
     panPreviewXMailer: TPanel;
-    lblXMailer: TLabel;
-    edXMailer: TEdit;
+    Label5: TTntLabel;
+    edXMailer: TTntEdit;
     panPreviewCC: TPanel;
-    lblCC: TLabel;
-    edCC: TEdit;
+    Label6: TTntLabel;
+    edCC: TTntEdit;
     imgPreview: TImage;
-    memMail: TRichEdit;
+    memMail: TTntRichEdit;
     actOpenMessage: TAction;
     WebBrowser1: TWebBrowser;
     actImageToggle: TAction;
@@ -114,10 +113,6 @@ type
     ShowImages2: TMenuItem;
     N1: TMenuItem;
     imlActionsDark: TImageList;
-    imlEditImages: TImageList;
-    lblStatusText: TLabel;
-    FindDialog1: TFindDialog;
-    Find1: TMenuItem;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -151,18 +146,9 @@ type
     procedure actOpenMessageExecute(Sender: TObject);
     procedure LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser;
       RawHtml: string);
-    procedure tsMessagePartsDrawTab(Sender: TObject; TabCanvas: TCanvas;
-      R: TRect; Index: Integer; Selected: Boolean);
-    procedure WebBrowser1StatusTextChange(ASender: TObject;
-      const Text: WideString);
-    procedure WebBrowser1BeforeNavigate2(ASender: TObject;
-      const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+    procedure WebBrowser1BeforeNavigate2(Sender: TObject;
+      const pDisp: IDispatch; var URL, Flags, TargetFrameName, PostData,
       Headers: OleVariant; var Cancel: WordBool);
-    procedure WebBrowser1NewWindow3(ASender: TObject; var ppDisp: IDispatch;
-      var Cancel: WordBool; dwFlags: Cardinal; const bstrUrlContext,
-      bstrUrl: WideString);
-    procedure Find1Click(Sender: TObject);
-    procedure FindDialog1Find(Sender: TObject);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -172,31 +158,27 @@ type
     FCustomized : boolean;
     FEnter : boolean;
     HtmlImagesEnabled : boolean;
-    browserShowingHeaders : boolean;
     procedure DeleteTempFiles;
     procedure AddFileToDelete(FileName : string);
     procedure LoadActionManager;
     procedure SaveActionManager;
-    procedure SaveDialogTypeChange(Sender:TObject);
   public
     { Public declarations }
     FTab : integer;    
     FStop : Boolean;
     FDecoded : boolean;
     IniName : string;
-    FMsg : TMailItem;
-    FAccount : TAccount;
-    FUID : string; //TODO: may no longer be needed?
+    FAccountNum,FMsgNum : integer;
+    FUID : string;
     FReplyTo : string;
     FRawMsg : string;
-    FBody : string;
+    FBody : widestring;
     FHtml : string;
     FProtected : boolean;
     procedure GetINI;
     procedure SaveINI;
     function AttachmentIcon(filename : string) : integer;
     procedure ShowMsg;
-    procedure SelectSpamTab;
   end;
 
 const
@@ -211,10 +193,8 @@ implementation
 {$R *.DFM}
 
 uses
-  uRCUtils, uMain, uDM, uGlobal, uTranslate, System.UITypes,
-  IniFiles, ShellAPI, CommCtrl, TypInfo, uHtmlDecoder, uIniSettings,
-  RegularExpressions, EncdDecd, MSHTML, Variants, System.Types,
-  IdAttachmentMemory, IdGlobal, IdGlobalProtocols, CommDlg, Dlgs;
+  uRCUtils, uMain, uDM, uGlobal, uTranslate,
+  IniFiles, ShellAPI, CommCtrl, TypInfo, uCodePageConverter, uHtmlDecoder;
 
 const
   iconNone = 0;
@@ -265,7 +245,11 @@ begin
   begin
     if Msg.MessageParts.Items[i] is TIdAttachment then
     begin
-      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachmentFile).StoredPathName);
+      {$IFDEF INDY9}
+      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachment).StoredPathName); //Indy9
+      {$ELSE}
+      DeleteFile((Msg.MessageParts.Items[i] as TIdAttachmentFile).StoredPathName);  //Changed for Indy10
+      {$ENDIF}
     end;
   end;
   // delete execute temp files
@@ -310,10 +294,7 @@ begin
           S2.Position := 0;
           ObjectTextToBinary(S2,S3);
           S3.Position := 0;
-            Try
-              ActionManagerPreview.LoadFromStream(S3);
-            Except on EAccessViolation do begin end;
-            End;
+          ActionManagerPreview.LoadFromStream(S3);
         finally
           S3.Free;
         end;
@@ -366,7 +347,6 @@ procedure TfrmPreview.GetINI;
 var
   Ini : TIniFile;
   NewLeft,NewTop,cnt : integer;
-  tabType : DefaultTabType;
 begin
   // load toolbar
   LoadActionManager;
@@ -378,7 +358,6 @@ begin
     actEditReadOnly.Checked := memMail.ReadOnly;
     HtmlImagesEnabled := Ini.ReadBool('Preview','ShowImages',True);
     actImageToggle.Checked := HtmlImagesEnabled;
-    (WebBrowser1 as TWebBrowserTamed).ImagesOn := HtmlImagesEnabled;
     // pos/size
     Self.Width := Ini.ReadInteger('Preview','Width',Self.Width);
     Self.Height := Ini.ReadInteger('Preview','Height',Self.Height);
@@ -423,44 +402,10 @@ begin
     SetSetProp(memMail.Font,'Style',Ini.ReadString('Preview','FontStyle',''));
     memMail.Font.Charset := Ini.ReadInteger('Preview','FontCharset',DEFAULT_CHARSET);
     // tab
-    tabType := DefaultTabType(Ini.ReadInteger('Preview','DefaultPreviewTab',Integer(TAB_LAST_USED)));
-    if (tabType = TAB_LAST_USED) then begin
-      FTab := Ini.ReadInteger('Preview','Tab',BODY_TAB);
-    end else begin
-      case (tabType) of
-        TAB_HTML:       FTab := HTML_TAB;
-        TAB_PLAIN_TEXT: FTab := BODY_TAB;
-        TAB_RAW:        FTab := RAW_TAB;
-      end;
-    end;
-
-    // If HTML preview mode is disabled in options/inifile
-    if (Options.DisableHtmlPreview) then begin
-      // disable the HTML preview tab
-      //tsMessageParts.Tabs[HTML_TAB].enabled := false;
-      // and if the current tab is the html tab, change it to a non-disabled tab
-      if (FTab = HTML_TAB) then FTab := BODY_TAB;
-    end;
-
-    if (FTab <> HTML_TAB) then WebBrowser1.Hide;
+    FTab := Ini.ReadInteger('Preview','Tab',BODY_TAB);
   finally
      Ini.Free;
   end;
-end;
-
-procedure TfrmPreview.SelectSpamTab;
-var
-  tabType : DefaultTabType;
-begin
-    tabType := Options.DefaultSpamTab;
-    if (tabType <> TAB_LAST_USED) then
-    begin
-      case (tabType) of
-        TAB_HTML:       FTab := HTML_TAB;
-        TAB_PLAIN_TEXT: FTab := BODY_TAB;
-        TAB_RAW:        FTab := RAW_TAB;
-      end;
-    end;
 end;
 
 procedure TfrmPreview.SaveINI;
@@ -485,7 +430,6 @@ begin
       Ini.WriteInteger('Preview','Height',Self.Height);
     end;
     // font
-    Options.PreviewFont.Assign(memMail.Font);
     Ini.WriteString('Preview','FontName',memMail.Font.Name);
     Ini.WriteInteger('Preview','FontSize',memMail.Font.Size);
     Ini.WriteInteger('Preview','FontColor',memMail.Font.Color);
@@ -526,31 +470,26 @@ begin
     Result := iconNone;
 end;
 
-
 procedure TfrmPreview.ShowMsg;
 ////////////////////////////////////////////////////////////////////////////////
 // Show the Message in the preview form
 var
-  i, strLen : integer;
-  numMsgParts : integer;
-  attachmentid, toReplace, encodedAttachment, attachmentcontent, aname, mimetype: string;
-  cidnum, msgpart : integer;
-  cids: TMatchCollection;
-  //cid: TMatch;
-  stream: TMemoryStream;
-  attachment: TIdAttachment;
-  attachmentStream: TStream;
+  i, strLen, charsetPos: integer;
+  aname, mimetype, charsetStr, tempAnsi: string;
+  decodedSubject, tempWideStr: WideString;
 begin
-  numMsgParts := 0;
   try
+    decodedSubject := DecodeHeader(Msg.Subject);
+    if (Msg.Subject <> '') then
+      Self.Caption := decodedSubject;
     // fixed headers
-    edFrom.Text := Msg.From.Text;
+    edFrom.Text := DecodeHeader(Msg.From.Text);
     if Msg.ReplyTo.Count>0 then
-      FReplyTo := (Msg.ReplyTo[0].Address)
+      FReplyTo := DecodeHeader(Msg.ReplyTo[0].Address)
     else
-      FReplyTo := (Msg.From.Address);
-    edTo.Text := (Msg.Recipients.EMailAddresses);
-    edSubject.Text := Msg.Subject;//decodedSubject;
+      FReplyTo := DecodeHeader(Msg.From.Address);
+    edTo.Text := DecodeHeader(Msg.Recipients.EMailAddresses);
+    edSubject.Text := decodedSubject; 
     if (Msg.Date < 1 ) then
       edDate.Text := ''
     else
@@ -574,8 +513,15 @@ begin
       // with attachments
       if Msg.MessageParts.Items[0] is TidText then
       begin
+        charsetPos := Pos('charset=', Msg.MessageParts.Items[0].ContentType);
+        if charsetPos > 0 then
+        begin
+          charsetStr :=ExtractCharset(Msg.MessageParts.Items[0].ContentType);
+          tempAnsi := TidText(Msg.MessageParts.Items[0]).Body.Text;
+          tempWideStr := ConvertToWideString(tempAnsi, charsetStr);
+          FBody := FBody + tempWideStr;
+        end else
           FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
-          Inc(numMsgParts);
       end
       else if Msg.MessageParts.Items[0] is TIdAttachment then
         FBody := FBody + #13#10+uTranslate.Translate('Attachment:')+' '+
@@ -583,22 +529,16 @@ begin
 
       if Msg.MessageParts.Items[1] is TidText then
       begin
-        // This CAN be HTML part that came after a plain-text part here...
-        // but it also could be plain-text after an attachment or something.
-        // HTML part after plain-text part should be ignored in plain-text view
-
-        //if numMsgParts > 0 then
-          //FBody := FBody + '--- Next Message Part ---'+#13#10;
-
-        if AnsiStartsStr('text/html',Msg.MessageParts.Items[1].ContentType) then begin
-          if numMsgParts = 0 then
-            FBody := FBody +
-              ConvertHtmlToPlaintext(TidText(Msg.MessageParts.Items[1]).Body.Text);
-            //FHtml := TidText(Msg.MessageParts.Items[1]).Body.Text;
+        charsetPos := Pos('charset=',Msg.MessageParts.Items[1].ContentType);
+        if charsetPos > 0 then
+        begin
+          charsetStr :=ExtractCharset(Msg.MessageParts.Items[1].ContentType);
+          tempAnsi := TidText(Msg.MessageParts.Items[1]).Body.Text;
+          tempWideStr := ConvertToWideString(tempAnsi, charsetStr);
+          FBody := FBody + tempWideStr;
         end
-        else begin
+        else
           FBody := FBody + TidText(Msg.MessageParts.Items[1]).Body.Text;
-        end;
       end;
 
       lvAttachments.Show;
@@ -634,46 +574,8 @@ begin
             if i = 0 then aname := 'Body' else aname := 'Text';
             if mimetype = 'text/html' then
             begin
-              aname := 'Message.htm';  //@TODO this should probably be the "real" attachment name?
+              aname := 'Message.htm';
               FHtml := TidText(Msg.MessageParts.Items[i]).Body.Text;
-
-              // put image directly into the html as base64 so it'll show up in IE
-              // 7/7/2014 - Took out @ sign in regular expression to make Sprint MMS pictures work that
-              // use malformed format <img src="cid:CAM009241.jpg" type="image/jpeg">
-              if (TRegEx.IsMatch(FHtml,'cid:(.*?)[\w.]*')) then begin
-                // has embedded image(s)
-                cids := TRegEx.Matches(FHtml, 'cid:(?P<contentident>(.*?)[\w.]*)'); //eg: cid:image001.png@01CE6143.C41AB1F0
-                for cidnum := 0 to cids.Count-1 do begin
-                  // the part of FHtml that we will replace with the image data
-                  toReplace := cids[cidnum].Value;
-                  // the content id string we are looking for in the Indy ContentID field
-                  attachmentid := '<'+cids[cidnum].Groups['contentident'].Value+'>'; //eg: <image001.png@01CE6143.C41AB1F0>
-
-                  // find the attachment with the matching cid
-                  for msgpart := 0 to Msg.MessageParts.Count - 1 do begin
-                    if (Msg.MessageParts.Items[msgpart] is TIdAttachment) and
-                       (Msg.MessageParts.Items[msgpart].ContentID = attachmentid) then
-                    begin
-                      // convert attachment file to base64 string
-                      stream := TMemoryStream.Create;
-                      try
-                        TidAttachmentFile(Msg.MessageParts.Items[msgpart]).SaveToStream(stream);
-                        encodedAttachment := string(EncodeBase64(stream.Memory, stream.Size)); //encode returns an ansi string
-                      finally
-                        stream.Free;
-                      end;
-
-                      // this is what goes in the SRC tag in the HTML
-                      attachmentcontent := 'data:'+Msg.MessageParts.Items[msgpart].ContentType+
-                        ';base64,' + encodedAttachment;
-
-                      //replace CID with actual image data
-                      FHtml := StringReplace(FHtml, toReplace, attachmentcontent, []);
-                      break; // cid has been found and replaced, now skip to next image tag
-                    end;
-                  end;
-                end;
-              end;
             end;
           end;
           with lvAttachments.Items.Add do
@@ -698,62 +600,30 @@ begin
           FBody := FBody + Msg.Body.Text;
           if (Msg.MessageParts.Count>0) then
           begin
+            FHtml := TidText(Msg.MessageParts.Items[0]).Body.Text;
             if (Msg.MessageParts.Items[0] is TidText) then
             begin
-              FHtml := TidText(Msg.MessageParts.Items[0]).Body.Text;
               if TidText(Msg.MessageParts.Items[0]).Body <> Msg.Body then
               begin
                 // This case happens both for plain text and html messages with
                 // only one part and no attachments
                 FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
 
-                if (NOT AnsiContainsStr(Msg. ContentType, 'text/html')) then
-                  if (NOT AnsiContainsStr(Msg. ContentType, 'multipart/mixed')) then //fixes bug - some html email showing as plain text
-                    FHtml := '' //empty string = show plain-text view on HTML pane
+                if (NOT AnsiContainsStr(Msg.ContentType, 'text/html')) then
+                  FHtml := '' //empty string = show plain-text view on HTML pane
                 else begin
                   //HTML only message, convert to plaintext
                   FBody := ConvertHtmlToPlaintext(FBody);
+                  FBody := AnsiStringToWideString(FBody, Msg.CharSet);
 
                 end;
               end;
             end
             else
-            begin  // single part message, but the message part is an attachment not text
+            begin
               FBody := FBody + uTranslate.Translate('Attachment:')+' ['+
                                 TidAttachment(Msg.MessageParts.Items[0]).FileName+']';
-
-              if mimetype <> 'multipart/mixed' then
-              begin
-                // only message part is a text attachment.
-                if ( TidAttachment(Msg.MessageParts.Items[0]).ContentType = 'text/plain' ) then
-                begin
-                  //TODO: refactor...roughly like so:
-                  //FBody := FBody + GetTextAttachment(TidAttachment(Msg.MessageParts.Items[0]));
-
-                  attachment := TIdAttachment(Msg.MessageParts.Items[0]);
-                  attachmentStream := attachment.OpenLoadStream;
-                  try
-                    FBody := FBody + #13#10#13#10 + ReadStringFromStream(attachmentStream, -1, CharsetToEncoding(attachment.Charset));
-                  finally
-                    attachment.CloseLoadStream;
-                  end;
-                end else begin
-                  //only message part is a non-text attachment.
-
-                end;
-
-                lvAttachments.Show;
-                spltAttachemnts.Show;
-                with lvAttachments.Items.Add do
-                begin
-                  Caption := TIdAttachment(Msg.MessageParts.Items[0]).FileName;
-                  ImageIndex := AttachmentIcon(aname);
-                  StateIndex := i;
-                  //Hint := mimetype;
-                end;
-              end;
-
-              FHtml := Msg.Body.Text;
+              FHtml := Msg.Body.Text; //TODO: display attachment in HTML view?
             end;
           end
           else begin
@@ -777,9 +647,7 @@ begin
             else begin
               {otherwise, presume it's HTML, leave as is}
               FHtml := Msg.Body.Text;
-              FBody := '-- Converted from html by PopTrayU --' + #13#10 +
-                RemoveAllTags(Msg.Body.Text);
-              //FBody := ConvertHtmlToPlaintext(Msg.Body.Text);  //leaves all kinds of CSS everywhere
+              FBody := RemoveAllTags(Msg.Body.Text);
             end;
           end;
         except
@@ -802,7 +670,7 @@ begin
       tsMessageParts.TabIndex := FTab;
     panProgress.Visible := False;
     Screen.Cursor := crDefault;
-    FAccount.Prot.Disconnect;
+    Accounts[FAccountNum-1].Prot.Disconnect;
   finally
     btnOK.Enabled := True;
     btnOK.SetFocus;
@@ -818,8 +686,6 @@ procedure TfrmPreview.FormCreate(Sender: TObject);
 var
   mask: Word;
   i : integer;
-  labelHeight : integer;
-  vMargin : integer;
 begin
   // rich edit with URLs
   mask := SendMessage(Handle, EM_GETEVENTMASK, 0, 0);
@@ -834,133 +700,33 @@ begin
   edXMailer.Text := '';
   panPreviewCC.Visible := False;
   panPreviewXMailer.Visible := False;
-
-  TranslateComponentFromEnglish(self);
-  // translate tab names
+  // translate extras
   for i := 0 to tsMessageParts.Tabs.Count-1 do
     tsMessageParts.Tabs[i] := Translate(tsMessageParts.Tabs[i]);
   // action manager
-  FToolbarFileName := uIniSettings.IniPath +'Preview.customize';
+  FToolbarFileName := ExtractFilePath(Application.ExeName)+'Preview.customize';
   FCustomized := False;
-
-  edFrom.AutoSize := true;
 
   self.Font := Options.GlobalFont;
   tsMessageParts.Font := Options.GlobalFont;
-  lblFrom.Font := Options.GlobalFont;
-  lblProgress.Font := Options.GlobalFont;
-  lblTo.Font := Options.GlobalFont;
-  lblDate.Font := Options.GlobalFont;
-  lblSubject.Font := Options.GlobalFont;
-  lblCC.Font := Options.GlobalFont;
-  lblStatusText.Font := Options.GlobalFont;
-  lblXMailer.Font := Options.GlobalFont;
+  Label1.Font := Options.GlobalFont;
+  Label2.Font := Options.GlobalFont;
+  Label3.Font := Options.GlobalFont;
+  Label4.Font := Options.GlobalFont;
+  Label5.Font := Options.GlobalFont;
+  Label6.Font := Options.GlobalFont;
 
-  memMail.Font := Options.PreviewFont;
-  memMail.Color := Options.PreviewBgColor;
-  lvAttachments.Font := Options.PreviewFont;
-  lvAttachments.Color := Options.PreviewBgColor;
+  with Label1.Font do Style := Style + [fsBold];
+  with Label2.Font do Style := Style + [fsBold];
+  with Label3.Font do Style := Style + [fsBold];
+  with Label4.Font do Style := Style + [fsBold];
+  with Label5.Font do Style := Style + [fsBold];
+  with Label6.Font do Style := Style + [fsBold];
 
-  edFrom.Font := Options.GlobalFont;
-  edTo.Font := Options.GlobalFont;
-
-  with lblFrom.Font do Style := Style + [fsBold];
-  with lblTo.Font do Style := Style + [fsBold];
-  with lblDate.Font do Style := Style + [fsBold];
-  with lblSubject.Font do Style := Style + [fsBold];
-  with lblCC.Font do Style := Style + [fsBold];
-  with lblProgress.Font do Style := Style + [fsBold];
-  with lblStatusText.Font do Style := Style + [fsBold];
-  with lblXMailer.Font do Style := Style + [fsBold];
-
-
-  labelHeight := - Options.GlobalFont.Height + lblFrom.Margins.Top + lblFrom.Margins.Bottom;  //height returned is negative when align with margins is false.
-
-
-  panPreviewFrom.Height := labelHeight;
-  lblFrom.Height := labelHeight;
-  edFrom.Height := labelHeight;
-
-  panPreviewTo.Top := panPreviewFrom.Top + panPreviewFrom.Height;
-  panPreviewTo.Height := labelHeight;
-  lblTo.Height := labelHeight;
-  edTo.Height := labelHeight;
-
-  panPreviewCC.Top := panPreviewTo.Top + panPreviewTo.Height;
-  panPreviewCC.Height := labelHeight;
-  lblCC.Height := labelHeight;
-  edCC.Height := labelHeight;
-
-  panPreviewDate.Top := panPreviewCC.Top + panPreviewCC.Height;
-  panPreviewDate.Height := labelHeight;
-  lblDate.Height := labelHeight;
-  edDate.Height := labelHeight;
-
-  panPreviewSubject.Top := panPreviewDate.Top + panPreviewDate.Height;
-  panPreviewSubject.Height := labelHeight;
-  lblSubject.Height := labelHeight;
-  edSubject.Height := labelHeight;
-
-  panPreviewXMailer.Top := panPreviewSubject.Top + panPreviewSubject.Height;
-  panPreviewXMailer.Height := labelHeight;
-  lblXMailer.Height := labelHeight;
-  edXMailer.Height := labelHeight;
-
-  if (Options.ToolbarColorScheme = schemeDark) then
-    toolbarPreview.ActionManager.images := imlActionsDark
-  else
-    toolbarPreview.ActionManager.Images := imlActions;
-
-  //Replace TWebBrowser with extended TWebBrowser that disables images
-  //TODO: destructor this created object
-  WebBrowser1 := TWebBrowserTamed.Create(self);
-  TControl(WebBrowser1).Parent := Self;
-  WebBrowser1.Align := alClient;
-  WebBrowser1.OnBeforeNavigate2 := WebBrowser1BeforeNavigate2;
-  WebBrowser1.OnNewWindow3 := WebBrowser1NewWindow3;
-  WebBrowser1.OnStatusTextChange := WebBrowser1StatusTextChange;
-
-end;
-
-procedure TfrmPreview.Find1Click(Sender: TObject);
-begin
-  FindDialog1.Position :=
-    Point(memMail.Left + memMail.Width, memMail.Top);
-  FindDialog1.Execute;
-end;
-
-procedure TfrmPreview.FindDialog1Find(Sender: TObject);
-var
-  FoundAt: LongInt;
-  StartPos, ToEnd: Integer;
-  mySearchTypes : TSearchTypes;
-  //myFindOptions : TFindOptions;
-begin
-  mySearchTypes := [];
-  with memMail do
-  begin
-    if frMatchCase in FindDialog1.Options then
-       mySearchTypes := mySearchTypes + [stMatchCase];
-    if frWholeWord in FindDialog1.Options then
-       mySearchTypes := mySearchTypes + [stWholeWord];
-    { Begin the search after the current selection, if there is one. }
-    { Otherwise, begin at the start of the text. }
-    if SelLength <> 0 then
-      StartPos := SelStart + SelLength
-    else
-      StartPos := 0;
-    { ToEnd is the length from StartPos through the end of the
-      text in the rich edit control. }
-    ToEnd := Length(Text) - StartPos;
-    FoundAt :=
-      FindText(FindDialog1.FindText, StartPos, ToEnd, mySearchTypes);
-    if FoundAt <> -1 then
-    begin
-      SetFocus;
-      SelStart := FoundAt;
-      SelLength := Length(FindDialog1.FindText);
-    end
-    else Beep;
+  toolbarPreview.ActionManager.Images := imlActions;
+  toolbarPreview.ColorMap := frmPopUMain.SchemeNumToColorMap(Options.ToolbarColorScheme);
+  if (toolbarPreview.ColorMap = frmPopUMain.TwilightColorMap1) then begin
+    toolbarPreview.ActionManager.images := imlActionsDark;
   end;
 end;
 
@@ -1017,18 +783,11 @@ begin
   end
   else if NewTab = HTML_TAB then
   begin
-    if (Options.DisableHtmlPreview) then begin
-      AllowChange := false;
-      WebBrowser1.Hide;
-      Exit;
-    end;
-
     if (btnOK.Enabled) then btnOK.SetFocus;
     if (FHtml = '') then
     begin
       //email is not HTML, so display email as text on HTML tab
       if (btnOK.Enabled) then btnOK.SetFocus;
-      WebBrowser1.Hide;
       memMail.Visible := True;
       memMail.Lines.Clear;
       memMail.Lines.Add(FBody);
@@ -1070,31 +829,15 @@ begin
     end;
     WebBrowser1.Hide;
   end;
-  FTab := NewTab;
 end;
 
-{ In order to make the HTML tab appear disabled, the style for the TTabSet must
-  be set to Owner Draw, and we have to have this method to decide when to draw
-  the tab disabled and when to draw the label enabled}
-procedure TfrmPreview.tsMessagePartsDrawTab(Sender: TObject; TabCanvas: TCanvas;
-  R: TRect; Index: Integer; Selected: Boolean);
-var
-  S : String;
-begin
-  TabCanvas.Font.Color := clWindowText;
-  if (Options.DisableHtmlPreview) AND (Index = HTML_TAB) then
-    TabCanvas.Font.Color := clGrayText;
-  S := ' ' + tsMessageParts.Tabs.Strings[Index] + ' ';
-  TabCanvas.TextRect(R, S, [tfCenter, tfVerticalCenter, tfSingleLine]);
-
-end;
 
 procedure TfrmPreview.LoadHtmlIntoBrowser(BrowserComponent: TWebBrowser; RawHtml: string);
 ////////////////////////////////////////////////////////////////////////////////
 // Loads static HTML into a web browser component.
-//const
-  //imgTag = '(?i)<img[^>]+>';//'(?i)<img[^>]+/(img)?>';
-  //mapTag = '(?i)</img[^>]+>';
+const
+  imgTag = '(?i)<img[^>]+>';//'(?i)<img[^>]+/(img)?>';
+  mapTag = '(?i)</img[^>]+>';
 var
   sl: TStringList;
   ms: TMemoryStream;
@@ -1113,12 +856,17 @@ begin
 
         if (NOT HtmlImagesEnabled) then
           begin
+            //cleanedtext := RemoveImageTags(RawHtml);
+            //sl.Text := cleanedtext;
+            //sl.SaveToStream(ms);
             SantitizeHtml(RawHtml, ms);
         end
         else begin
-          ms.WriteBuffer(Pointer(rawHtml)^, Length(rawHtml)* SizeOf(Char));
+          ms.WriteBuffer(Pointer(rawHtml)^, Length(rawHtml));
         end;
 
+        //sl.Text := cleanedtext;
+        //sl.SaveToStream(ms);
         ms.Seek(0, 0);
         (BrowserComponent.Document as IPersistStreamInit).Load(TStreamAdapter.Create(ms)) ;
       finally
@@ -1128,39 +876,7 @@ begin
       sl.Free;
     end;
   end;
-  browserShowingHeaders := false;
 end;
-
-
-procedure TfrmPreview.SaveDialogTypeChange(Sender:TObject);
-var
-  buf: array [0..MAX_PATH] of char;
-  filename: string;
-  dlg: TSaveDialog;
-  handle: THandle;
-begin
-  dlg := (Sender as TSaveDialog);                           // get a pointer to the open dialog
-  handle := GetParent(dlg.Handle);                          // Send the message to the dialogs parent so it can handle it the normal way
-  SendMessage(handle, CDM_GETSPEC, MAX_PATH,integer(@buf)); // get the currently entered filename
-  filename := buf;
-
-  // change the extension to the correct one
-  case dlg.FilterIndex of
-    1:
-      filename := ChangeFileExt(filename,'.eml');
-    2:
-      filename := ChangeFileExt(filename,'.txt');
-    3:
-      filename := ChangeFileExt(filename,'.msg');
-    4:
-      filename := ChangeFileExt(filename,'.mht');
-    5:
-      filename := ChangeFileExt(filename,'');
-  end;
-  // finally, change the currently selected filename in the dialog
-  SendMessage(handle,CDM_SETCONTROLTEXT,edt1,integer(PChar(filename)));
-end;
-
 
 procedure TfrmPreview.actSaveExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
@@ -1172,13 +888,12 @@ begin
   SaveDialog := TSaveDialog.Create(nil);
   try
     // prepare save dialog
-    SaveDialog.DefaultExt := 'eml|txt|msg|mht';
-    SaveDialog.Filter := 'Outlook Express (*.eml)|*.eml|Text File (*.txt)|*.txt|E-Mail Message (*.msg)|*.msg|MHTML Document (*.mht)|*.mht|All Files (*.*)|*.*';
+    SaveDialog.DefaultExt := 'eml|txt|msg|';
+    SaveDialog.Filter := 'Outlook Express (*.eml)|*.eml|Text File (*.txt)|*.txt|E-Mail Message (*.msg)|*.msg|All Files (*.*)|*.*';
     SaveDialog.Options := [ofOverwritePrompt];
     SaveDialog.FileName := Copy(edSubject.Text,LastDelimiter(':',edSubject.Text)+1,
                                 Length(edSubject.Text)-LastDelimiter(':',edSubject.Text));
-    SaveDialog.FileName := SanitizeFileName(SaveDialog.FileName);
-    SaveDialog.OnTypeChange := SaveDialogTypeChange;
+    SaveDialog.FileName := Trim(CharsReplace(SaveDialog.FileName,['"','.','/','*','\','<','>'],' '));
     // run it
     if SaveDialog.Execute then
     begin
@@ -1191,7 +906,7 @@ begin
           MsgLines.Add('Subject: '+edSubject.Text);
           MsgLines.Add(StringOfChar('-',70)+#13#10);
           MsgLines.Add(memMail.Lines.Text);
-          MsgLines.SaveToFile(SaveDialog.FileName, TEncoding.UTF8); //TODO should we have an option to make this current code page vs utf8?
+          MsgLines.SaveToFile(SaveDialog.FileName);
         finally
           MsgLines.Free;
         end;
@@ -1200,7 +915,7 @@ begin
         MsgLines := TStringlist.Create;
         try
           MsgLines.Add(FRawMsg);
-          MsgLines.SaveToFile(SaveDialog.FileName, TEncoding.UTF8); //TODO should we have an option to make this current code page vs utf8?
+          MsgLines.SaveToFile(SaveDialog.FileName);
         finally
           MsgLines.Free;
         end;
@@ -1212,115 +927,57 @@ begin
 end;
 
 
-function BasicHTMLEncode(const Data: string): string;
-var
-  i: Integer;
-begin
 
-  result := '';
-  for i := 1 to length(Data) do
-    case Data[i] of
-      '<': result := result + '&lt;';
-      '>': result := result + '&gt;';
-      '&': result := result + '&amp;';
-      '"': result := result + '&quot;';
-    else
-      result := result + Data[i];
-    end;
-
-end;
 
 procedure TfrmPreview.actPrintExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Print
 var
   i,h : Integer;
-  vaIn, vaOut: OleVariant;
-  printDialog: TPrintDialog;
-  Range: IHTMLTxtRange;
 begin
-  if (FTab = HTML_TAB) and (FHtml <> '') then begin
-    // Add message headers to beginning of HTML document so they print too
-    if (browserShowingHeaders = false) then begin
-      Range := ((WebBrowser1.Document AS IHTMLDocument2).body AS IHTMLBodyElement).createTextRange;
-      Range.Collapse(True); //Set insert position to beginning of document
-      Range.PasteHTML('<b>'+Translate('From')+'</b>:  '+BasicHTMLEncode(edFrom.Text)+'<br>'+
-        '<b>'+Translate('To')+'</b>:  '+BasicHTMLEncode(edTo.Text)+'<br>'+
-        '<b>'+Translate('Date')+'</b>:  '+BasicHTMLEncode(edDate.Text)+'<br>'+
-        '<b>'+Translate('Subject')+'</b>:  '+BasicHTMLEncode(edSubject.Text)+'<hr>') ;
-      browserShowingHeaders := true;
-    end;
-
-    vaIn := VarArrayCreate([0,1], varOleStr);
-    vaIn[0] := VarAsType('header', VarOleStr); //header
-    vaIn[1] := VarAsType('footer', VarOleStr); //footer
-
-
-    // Show print-preview dialog allowing user to print
-    WebBrowser1.ControlInterface.ExecWB(OLECMDID_PRINTPREVIEW,
-      OLECMDEXECOPT_DONTPROMPTUSER, vaIn, vaOut);
-
-    exit; //Skip Non-HTML print
-  end;
-
-  // Create a printer selection dialog
-  printDialog := TPrintDialog.Create(Self);
-
-  // Set up print dialog options
-  printDialog.MinPage := 1;     // First allowed page number
-  printDialog.MaxPage := 1;     // Highest allowed page number
-  printDialog.ToPage  := 1;     // 1 to ToPage page range allowed
-  printDialog.Options := [poPageNums];    // Allow page range selection
-
-  // if the user has selected a printer (or default), then print!
-  if printDialog.Execute then
+  with Printer do
   begin
+    BeginDoc;
 
-    with Printer do
-    begin
-      BeginDoc;
+    Canvas.Font.Name := 'Courier New';
+    Canvas.Font.Size := 11;
+    // from
+    Canvas.Font.Style := [fsBold];
+    Canvas.TextOut(100,100,Translate('From')+':  ');
+    Canvas.Font.Style := [];
+    Canvas.TextOut(100+Canvas.TextWidth(Translate('From')+':  '),100,edFrom.Text);
+    h := Canvas.TextHeight(Translate('From')+':  '+edFrom.Text);
+    // to
+    Canvas.Font.Style := [fsBold];
+    Canvas.TextOut(100,100+h,Translate('To')+':  ');
+    Canvas.Font.Style := [];
+    Canvas.TextOut(100+Canvas.TextWidth(Translate('To')+':  '),100+h,edTo.Text);
+    h := h + Canvas.TextHeight(Translate('To')+':  '+edTo.Text);
+    // date
+    Canvas.Font.Style := [fsBold];
+    Canvas.TextOut(100,100+h,Translate('Date')+':  ');
+    Canvas.Font.Style := [];
+    Canvas.TextOut(100+Canvas.TextWidth(Translate('Date')+':  '),100+h,edDate.Text);
+    h := h + Canvas.TextHeight(Translate('Date')+':  '+edDate.Text);
+    // subject
+    Canvas.Font.Style := [fsBold];
+    Canvas.TextOut(100,100+h,Translate('Subject')+':  ');
+    Canvas.Font.Style := [];
+    Canvas.TextOut(100+Canvas.TextWidth(Translate('Subject')+':  '),100+h,edSubject.Text);
+    h := h + Canvas.TextHeight(Translate('Subject')+':  '+edSubject.Text);
+    // line
+    h := h + 15;
+    Canvas.Brush.Color := clBlack;
+    Canvas.Rectangle(100,100+h,(Pagewidth - 100),100+h+5);
+    h := h + 30;
+    Canvas.Brush.Color := clWhite;
+    // body
+    Canvas.Font.Size := 9;
+    for i := 0 to memMail.Lines.Count do
+     Canvas.TextOut(100,100+h + (i * Canvas.TextHeight(memMail.Lines.Strings[i])),
+                                 memMail.Lines.Strings[i]);
 
-      Canvas.Font.Name := 'Courier New';
-      Canvas.Font.Size := 11;
-      // from
-      Canvas.Font.Style := [fsBold];
-      Canvas.TextOut(100,100,Translate('From')+':  ');
-      Canvas.Font.Style := [];
-      Canvas.TextOut(100+Canvas.TextWidth(Translate('From')+':  '),100,edFrom.Text);
-      h := Canvas.TextHeight(Translate('From')+':  '+edFrom.Text);
-      // to
-      Canvas.Font.Style := [fsBold];
-      Canvas.TextOut(100,100+h,Translate('To')+':  ');
-      Canvas.Font.Style := [];
-      Canvas.TextOut(100+Canvas.TextWidth(Translate('To')+':  '),100+h,edTo.Text);
-      h := h + Canvas.TextHeight(Translate('To')+':  '+edTo.Text);
-      // date
-      Canvas.Font.Style := [fsBold];
-      Canvas.TextOut(100,100+h,Translate('Date')+':  ');
-      Canvas.Font.Style := [];
-      Canvas.TextOut(100+Canvas.TextWidth(Translate('Date')+':  '),100+h,edDate.Text);
-      h := h + Canvas.TextHeight(Translate('Date')+':  '+edDate.Text);
-      // subject
-      Canvas.Font.Style := [fsBold];
-      Canvas.TextOut(100,100+h,Translate('Subject')+':  ');
-      Canvas.Font.Style := [];
-      Canvas.TextOut(100+Canvas.TextWidth(Translate('Subject')+':  '),100+h,edSubject.Text);
-      h := h + Canvas.TextHeight(Translate('Subject')+':  '+edSubject.Text);
-      // line
-      h := h + 15;
-      Canvas.Brush.Color := clBlack;
-      Canvas.Rectangle(100,100+h,(Pagewidth - 100),100+h+5);
-      h := h + 30;
-      Canvas.Brush.Color := clWhite;
-      // body
-      Canvas.Font.Size := 9;
-      for i := 0 to memMail.Lines.Count do
-        Canvas.TextOut(100,100+h + (i * Canvas.TextHeight(memMail.Lines.Strings[i])),
-                       memMail.Lines.Strings[i]);
-
-      EndDoc;
-    end;
-
+    EndDoc;
   end;
 end;
 
@@ -1363,13 +1020,21 @@ begin
         end;
       end;
     end;
-    // Only hide, not delete as first pass so FAccount isn't deleted before
-    // deleting.
-    Self.Hide;
     // delete it
-    frmPopUMain.DeleteOneMailItem(FAccount,FMsg);
+    if frmPopUMain.DeleteMail(FAccountNum,FMsgNum,FUID) then
+    begin
+      // first hide instead of close, or FAccountNum will get destroyed
+      Self.Hide;
+      // re-check (and delete)
+      if not Options.DeleteNextCheck then
+      begin
+        frmPopUMain.ShowIcon(FAccountNum,itChecking);
+        if frmPopUMain.CheckMail(FAccountNum,false,true) < 0 then
+          frmPopUMain.lvMail.Clear;
+      end;
+    end;
     // now close (and free) window
-    Self.Close; //Saw a memory access error here in the debugger.
+    Self.Close;
   end;
 
 end;
@@ -1411,7 +1076,7 @@ begin
       else begin
         if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdText then
         begin
-          (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdText).Body.SaveToFile(SaveDialog.FileName); //TODO - should this be unicode overloaded?
+          (Msg.MessageParts[lvAttachments.Selected.StateIndex] as TIdText).Body.SaveToFile(SaveDialog.FileName);
         end
         else
           MessageDlg(uTranslate.Translate('Unknown Attachment Type.'), mtError, [mbOK], 0);
@@ -1432,7 +1097,7 @@ begin
   // check for malicious filetype
   if lvAttachments.Selected.ImageIndex in [iconEXE,iconWarning] then
   begin
-    MessageDlg(uTranslate.Translate('Because of the Security Risk, PopTrayU doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
+    MessageDlg(uTranslate.Translate('Because of the Security Risk, PopTray doesn''t allow the opening of Executable files.'), mtError, [mbOK], 0);
   end
   else begin
     if Msg.MessageParts[lvAttachments.Selected.StateIndex] is TIdAttachment then
@@ -1513,13 +1178,8 @@ end;
 procedure TfrmPreview.actShowImagesExecute(Sender: TObject);
 begin
   HtmlImagesEnabled := actImageToggle.Checked;
-  (WebBrowser1 as TWebBrowserTamed).ImagesOn := HtmlImagesEnabled;
-
-  if (FTab = HTML_TAB) then begin
-    WebBrowser1.Visible := true;
+  if (WebBrowser1.Visible) then
     LoadHtmlIntoBrowser(WebBrowser1, FHtml);
-  end;
-
 end;
 
 procedure TfrmPreview.actCustomizeExecute(Sender: TObject);
@@ -1532,8 +1192,6 @@ procedure TfrmPreview.FormResize(Sender: TObject);
 begin
   panProgress.Left := (memMail.Width div 2) - (panProgress.Width div 2);
   panProgress.Top := memMail.Top + (memMail.Height div 2) - (panProgress.Height div 2);
-
-  lblStatusText.Top := panOK.Height - lblStatusText.Height;
 end;
 
 procedure TfrmPreview.FormKeyUp(Sender: TObject; var Key: Word;
@@ -1550,7 +1208,7 @@ end;
 
 procedure TfrmPreview.edEnter(Sender: TObject);
 begin
-  (Sender as TEdit).SelectAll;
+  (Sender as TTntEdit).SelectAll;
   FEnter := True;
 end;
 
@@ -1559,7 +1217,7 @@ procedure TfrmPreview.edMouseDown(Sender: TObject;
 begin
   if FEnter then
   begin
-   (Sender as TEdit).SelectAll;
+   (Sender as TTntEdit).SelectAll;
    FEnter := False;
   end;
 end;
@@ -1574,42 +1232,24 @@ begin
   MsgLines := TStringlist.Create;
   try
     MsgLines.Add(FRawMsg);
-    fName := ExtractFilePath(IniName)+Options.TempEmailFilename;
-    MsgLines.SaveToFile(fname); //TODO: should this be unicode?
+    fName := ExtractFilePath(IniName)+'temp.eml';
+    MsgLines.SaveToFile(fname);
     ExecuteFile(fname,'','',SW_NORMAL);
   finally
     MsgLines.Free;
   end;
 end;
 
-procedure TfrmPreview.WebBrowser1BeforeNavigate2(ASender: TObject;
-  const pDisp: IDispatch; const URL, Flags, TargetFrameName, PostData,
+procedure TfrmPreview.WebBrowser1BeforeNavigate2(Sender: TObject;
+  const pDisp: IDispatch; var URL, Flags, TargetFrameName, PostData,
   Headers: OleVariant; var Cancel: WordBool);
 begin
-  if (AnsiStartsStr('http://', URL) or AnsiStartsStr('https://', URL)) then begin
+  if (AnsiStartsStr('http://', URL)) then begin
     // Open link in default browser instead of this window
     Cancel := True;
     WebBrowser1.Stop;
     ShellExecute(0, nil, PChar(String(Url)), nil, nil, SW_SHOWNORMAL);
   end;
-end;
-
-procedure TfrmPreview.WebBrowser1NewWindow3(ASender: TObject;
-  var ppDisp: IDispatch; var Cancel: WordBool; dwFlags: Cardinal;
-  const bstrUrlContext, bstrUrl: WideString);
-begin
-    Cancel := True;
-    WebBrowser1.Stop;
-    ShellExecute(0, nil, PChar(String(bstrUrl)), nil, nil, SW_SHOWNORMAL);
-end;
-
-procedure TfrmPreview.WebBrowser1StatusTextChange(ASender: TObject;
-  const Text: WideString);
-begin
-  if (Text = 'Done') then
-    lblStatusText.Caption := ''
-  else
-    lblStatusText.Caption := Text;
 end;
 
 end.

@@ -30,7 +30,6 @@ type
   TAuthType = (autoAuth = 0, password = 1, apop = 2, sasl = 3);
   TsslVer = (sslAuto = 0, sslv2 = 1, sslv3 = 2, tlsv1 = 3, tlsv11 = 4, tlsv12 = 5 );
   TPluginWorkEvent = procedure(const AWorkCount: Integer) of object;
-  TProtocolType = (protPOP3 = 0, protIMAP4 = 1, protOTHER = 2);
 
   TPlugin = class(TObject)
   public
@@ -61,7 +60,6 @@ type
 
   TPluginProtocol = class(TPlugin)
   public
-    ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
     FProtocols       : function : ShortString; stdcall;
     FConnect         : procedure (Server : PChar; Port : integer; Protocol,UserName,Password : PChar; Timeout : integer); stdcall;
@@ -81,9 +79,6 @@ type
     FPluginSupportsSSL : function : boolean; stdcall;
     FPluginSupportsSASL : function : boolean; stdcall;
     FPluginSupportsAPOP : function : boolean; stdcall;
-    FSupportsUIDL : function : boolean; stdcall;
-    FCountMessages: function : LongInt; stdcall;
-    FExpunge : procedure (); stdcall;
     function Protocols : ShortString; virtual;
     procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); virtual;
     procedure Disconnect; virtual;
@@ -103,10 +98,6 @@ type
     function PluginSupportsSSL : boolean; virtual; //Should return true if SSL plugin is installed correctly.
     function PluginSupportsAPOP : boolean; virtual;
     function PluginSupportsSASL : boolean; virtual;
-    function SupportsUIDL(): boolean; virtual;
-    function CountMessages(): LongInt; virtual;
-    procedure Expunge; virtual;
-    function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
   end;
 
 var
@@ -298,38 +289,10 @@ begin
     Result := false;
 end;
 
-function TPluginProtocol.SupportsUIDL: boolean;
-begin
-  if Assigned(FSupportsUIDL) then
-    Result := FSupportsUIDL()
-  else
-    Result := false;
-end;
-
-function TPluginProtocol.CountMessages: LongInt;
-begin
-  if Assigned(FCountMessages) then
-    Result := FCountMessages()
-  else
-    Result := -1;
-end;
-
 procedure TPluginProtocol.SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password; const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false);
 begin
   if Assigned(FSetSSLOptions) then
     FSetSSLOptions(useSSLorTLS, authType, sslVersion, startTLS);
 end;
-
-procedure TPluginProtocol.Expunge();
-begin
-  if Assigned(FExpunge) then
-    FExpunge();
-end;
-
-function TPluginProtocol.DeleteMsgsByUID(const uidList: array of String): boolean;
-begin
-    Result := false;
-end;
-
 
 end.

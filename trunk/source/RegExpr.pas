@@ -101,9 +101,9 @@ uses
 
 type
  {$IFDEF UniCode}
- PRegExprChar = PChar; //PWideChar
- RegExprString = string; //WideString
- REChar = Char; //WideChar
+ PRegExprChar = PWideChar;
+ RegExprString = WideString;
+ REChar = WideChar;
  {$ELSE}
  PRegExprChar = PChar;
  RegExprString = AnsiString; //###0.952 was string

@@ -1,4 +1,4 @@
-unit uIMAP4;
+library ProtocolIMAP4;
 
 {-------------------------------------------------------------------------------
 POPTRAYU Copyright (C) 2012-2013 Jessica Brown
@@ -16,7 +16,6 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 -------------------------------------------------------------------------------}
-interface
 
 uses
   Windows,
@@ -25,7 +24,7 @@ uses
   IdMessage,
   IdIMAP4,
   IdSSLOpenSSL,
-  uPlugins,
+  uPlugins in '..\..\uPlugins.pas',
   IdSASL_CRAM_MD5,
   IdSASLLogin,
   IdSASL_CRAM_SHA1,
@@ -40,48 +39,80 @@ uses
   IdExplicitTLSClientServerBase,
   IdStackConsts;
 
+// general
+function InterfaceVersion : integer; stdcall; forward;
+procedure Init;  stdcall; forward;
+function PluginType : TPluginType; stdcall; forward;
+function PluginName : ShortString; stdcall; forward;
+procedure ShowOptions; stdcall; forward;
+procedure Unload; stdcall; forward;
+procedure FreePChar(var p : PChar); stdcall; forward;
+// protocol
+function Protocols : ShortString; stdcall; forward;
+procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); stdcall; forward;
+procedure Disconnect; stdcall; forward;
+function Connected : boolean; stdcall; forward;
+function CheckMessages : integer; stdcall; forward;
+function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; stdcall; forward;
+function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; stdcall; forward;
+function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; stdcall; forward;
+function RetrieveMsgSize(const MsgNum : integer) : integer; stdcall; forward;
+function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; stdcall; forward;
+function Delete(const MsgNum : integer) : boolean; stdcall; forward;
+procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); stdcall; forward;
+function LastErrorMsg : PChar; stdcall; forward;
+function PluginSupportsSSL : boolean; stdcall; forward;
+function PluginSupportsAPOP : boolean; stdcall; forward;
+function PluginSupportsSASL : boolean; stdcall; forward;
+procedure SetSSLOptions(
+  const useSSLorTLS : boolean;
+  const authType : TAuthType = password;
+  const sslVersion : TsslVer = sslAuto;
+  const startTLS : boolean = false); stdcall; forward;
 
+
+exports
+  InterfaceVersion,
+  // general
+  Init,
+  PluginType,
+  PluginName,
+  ShowOptions,
+  FreePChar,
+  Unload,
+  // protocol
+  Protocols,
+  Connect,
+  Disconnect,
+  Connected,
+  CheckMessages,
+  RetrieveHeader,
+  RetrieveRaw,
+  RetrieveTop,
+  RetrieveMsgSize,
+  UIDL,
+  Delete,
+  SetOnWork,
+  LastErrorMsg,
+  SetSSLOptions,
+  PluginSupportsSSL,
+  PluginSupportsAPOP,
+  PluginSupportsSASL;
 
 type
-  TPluginIMAP4 = class(TPluginProtocol)
-  private
-    procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
+  TIMAPWorkObject = class(TObject)
   public
-    // general
-    IMAP : TIdIMAP4;
-    constructor Create;
-    // protocol
-    function Protocols : ShortString; override;
-    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
-    procedure Disconnect; override;
-    function Connected : boolean; override;
-    function CheckMessages : integer; override;
-    function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; override;
-    function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
-    function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
-    function RetrieveMsgSize(const MsgNum : integer) : integer; override;
-    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; override;
-    function Delete(const MsgNum : integer) : boolean; override;
-    procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
-    function LastErrorMsg : PChar; override;
-    function PluginSupportsSSL : boolean; override;
-    function PluginSupportsAPOP : boolean; override;
-    function PluginSupportsSASL : boolean; override;
-    procedure SetSSLOptions(
-      const useSSLorTLS : boolean;
-      const authType : TAuthType = password;
-      const sslVersion : TsslVer = sslAuto;
-      const startTLS : boolean = false); override;
-    destructor Destroy; override;
+    OnWork : TPluginWorkEvent;
+    procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
   end;
-
-
-implementation
-
 var
-    Msg : TIdMessage;
+  IMAP : TIdIMAP4;
+  Msg : TIdMessage;
+  //SSL : TIdSSLIOHandlerSocketOpenSSL;
+  IMAPWorkObject : TIMAPWorkObject;
 
     mSSL : TIdSSLIOHandlerSocketOpenSSL;
+    //mTimeout : integer;
     mSSLDisabled : boolean = false;
 
     mIdUserPassProvider: TIdUserPassProvider;
@@ -96,7 +127,6 @@ var
 
     mLastErrorMsg : AnsiString;
     mHasErrorToReport : boolean;
-
 //------------------------------------------------------------------ helpers ---
 
 function WordAfterStr(str,substr : string) : string;
@@ -114,7 +144,12 @@ end;
 
 //---------------------------------------------------------- general exports ---
 
-constructor TPluginIMAP4.Create;
+function InterfaceVersion : integer; stdcall;
+begin
+  Result := 1;
+end;
+
+procedure Init;
 var
   DLL1, DLL2 : THandle;
 begin
@@ -123,8 +158,8 @@ begin
   Msg := TIdMessage.Create(nil);
   Msg.NoEncode := True;
   Msg.NoDecode := True;
-
-  IMAP.OnWork := IMAPWork;
+  IMAPWorkObject := TIMAPWorkObject.Create;
+  IMAP.OnWork := IMAPWorkObject.IMAPWork;
 
 
   DLL1 := LoadLibrary('libeay32.dll');
@@ -191,7 +226,22 @@ begin
 
 end;
 
-destructor TPluginIMAP4.Destroy;
+function PluginType : TPluginType;
+begin
+  Result := piProtocol;
+end;
+
+function PluginName : ShortString;
+begin
+  Result := 'IMAP4 (Indy10)';
+end;
+
+procedure ShowOptions;
+begin
+  MessageBox(0,'IMAP Plugin For PopTrayU 4.1+','IMAP',MB_OK);
+end;
+
+procedure Unload;
 begin
   if (not mSSLDisabled) then begin
     mIdUserPassProvider.Free;
@@ -207,17 +257,25 @@ begin
   end;
 
   IMAP.Free;
+  IMAPWorkObject.Free;
   Msg.Free;
+end;
+
+procedure FreePChar(var p : PChar); stdcall;
+// Have to free the PChars from inside the DLL
+begin
+  StrDispose(p);
+  p := nil;
 end;
 
 //--------------------------------------------------------- protocol exports ---
 
-function TPluginIMAP4.Protocols : ShortString;
+function Protocols : ShortString;
 begin
   Result := 'IMAP4:143';
 end;
 
-procedure TPluginIMAP4.Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
+procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
 begin
   IMAP.Host := Server;
   IMAP.Port := Port;
@@ -261,7 +319,7 @@ begin
 end;
 
 
-function TPluginIMAP4.LastErrorMsg : PChar;
+function LastErrorMsg : PChar;
 begin
   if (mHasErrorToReport) then
     Result := PAnsiChar(mLastErrorMsg)
@@ -269,39 +327,39 @@ begin
   mHasErrorToReport := false;
 end;
 
-function TPluginIMAP4.PluginSupportsSSL : boolean;
+function PluginSupportsSSL : boolean;
 begin
   Result := not mSSLDisabled;
 end;
 
-function TPluginIMAP4.PluginSupportsAPOP : boolean;
+function PluginSupportsAPOP : boolean;
 begin
   Result := false;
 end;
 
-function TPluginIMAP4.PluginSupportsSASL : boolean;
+function PluginSupportsSASL : boolean;
 begin
   Result := false;
 end;
 
 
-procedure TPluginIMAP4.Disconnect;
+procedure Disconnect;
 begin
   IMAP.IOHandler.InputBuffer.clear;
   IMAP.Disconnect;
 end;
 
-function TPluginIMAP4.Connected : boolean;
+function Connected : boolean;
 begin
   Result := IMAP.Connected;
 end;
 
-function TPluginIMAP4.CheckMessages : integer;
+function CheckMessages : integer;
 begin
   Result := IMAP.MailBox.TotalMsgs;
 end;
 
-function TPluginIMAP4.RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;
+function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;
 begin
   Msg.Clear;
   Result := IMAP.RetrieveHeader(MsgNum,Msg);
@@ -309,7 +367,7 @@ begin
     pHeader := Msg.Headers.GetText;
 end;
 
-function TPluginIMAP4.RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean;
+function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean;
 begin
   Msg.Clear;
   Result := IMAP.Retrieve(MsgNum,Msg);
@@ -317,7 +375,7 @@ begin
     pRawMsg := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
 end;
 
-function TPluginIMAP4.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
+function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
 //var
 //  st : string;
 begin
@@ -348,12 +406,12 @@ begin
   end;
 end;
 
-function TPluginIMAP4.RetrieveMsgSize(const MsgNum : integer) : integer;
+function RetrieveMsgSize(const MsgNum : integer) : integer;
 begin
   Result := IMAP.RetrieveMsgSize(MsgNum);
 end;
 
-function TPluginIMAP4.UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
+function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
 var
   st,UID : string;
   i, nCount : integer;
@@ -379,20 +437,20 @@ begin
   end;
 end;
 
-function TPluginIMAP4.Delete(const MsgNum : integer) : boolean;
+function Delete(const MsgNum : integer) : boolean;
 begin
   Result := IMAP.DeleteMsgs([MsgNum]);
   IMAP.ExpungeMailBox;
 end;
 
-procedure TPluginIMAP4.SetOnWork(const OnWorkProc : TPluginWorkEvent);
+procedure SetOnWork(const OnWorkProc : TPluginWorkEvent);
 begin
-  OnWork := OnWorkProc;
+  IMAPWorkObject.OnWork := OnWorkProc;
 end;
 
 { TIMAPWorkObject }
 
-procedure TPluginIMAP4.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
+procedure TIMAPWorkObject.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
 begin
   if Assigned(OnWork) then
     OnWork(AWorkCount);
@@ -401,7 +459,7 @@ end;
 
 
 // called right before connecting.
-procedure TPluginIMAP4.SetSSLOptions(
+procedure SetSSLOptions(
   const useSSLorTLS : boolean;
   const authType : TAuthType = password;
   const sslVersion : TsslVer = sslAuto;

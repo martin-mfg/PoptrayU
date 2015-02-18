@@ -1,58 +1,5 @@
 unit uHtmlDecoder;
 
-{-------------------------------------------------------------------------------
-HTML Decoder Class
-Copyright © 2012-2013 Jessica Brown
-All Rights Reserved.
-
- * Source code in this *file* is dual licensed; you can use it under the terms
- * of either the GPL, or the BSD license, at your option.
- *
- * I. GPL:
- *
- * This file is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This file is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * The GNU GPL can be found at:
- *   http://www.gnu.org/copyleft/gpl.html
- *
- * Alternatively,
- *
- * II. BSD license:
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
--------------------------------------------------------------------------------}
-
 interface
   uses Classes;
 
@@ -61,12 +8,13 @@ interface
   function RemoveImageTags(source : string) : string;
   procedure WriteStringToStream(stream: TStream; const appendText: string);
   procedure SantitizeHtml(source: string; outStream: TStream);
+  function HTMLDecode2(const AStr: String): String;
   function ConvertHtmlToPlaintext(S : string) : string;
   function FilterCSS(const input : String) : String;
 
 
 implementation
-  uses SysUtils, StrUtils, System.RegularExpressions,
+  uses SysUtils, StrUtils,
   HtmlParser, DomCore, Formatter;
 
 function RemoveAllTagsBasic(source: string): string;
@@ -97,8 +45,6 @@ const
 var
   TagBegin, TagEnd, TagLength, MatchTagStart: integer;
   tagStart : string;
-//  betweenTagsStr : string;
-//  nextTagStart : integer;
 begin
   TagBegin := Pos( '<', source);      // search position of first <
 
@@ -125,35 +71,18 @@ begin
         TagEnd := PosEx('>', source, MatchTagStart); // Move tag end to matched close tag
         TagLength := TagEnd - TagBegin + 1;
       end;
-    end else if
-      (AnsiCompareText( AnsiLeftStr(tagStart, Length(PARA_TAG_START)), PARA_TAG_START ) = 0) OR
-      (AnsiCompareText( AnsiLeftStr(tagStart, Length(BR_TAG_START)), BR_TAG_START ) = 0)
-      then begin
-        Insert(''+#13+'N'+#10, source, TagBegin); //Extra N inserted so this won't get eaten by the regex below
+    end else if AnsiCompareText( AnsiLeftStr(tagStart, Length(PARA_TAG_START)),
+      PARA_TAG_START ) = 0 then begin
+        Insert(''+#13#10, source, TagBegin);
         Inc(TagBegin);
         Inc(TagBegin);
-        Inc(TagBegin);//for the N
       //end;
     end;
 
     Delete(source, TagBegin, TagLength);     // delete the tag
-    //nextTagStart := Pos('<', source);
-    //betweenTagsStr := AnsiMidStr(source, TagBegin, nextTagStart);
-    //if Trim(betweenTagsStr) = '' then
-    //Delete(source, TagBegin, nextTagStart);     // delete the empty stuff
-
     TagBegin:= Pos( '<', source);            // search for next <
 
   end;
-
-
-  //Remove excess whitespace
-  source := TRegEx.Replace(source, '('+#13#10+'[ \t]*){2,}',#13#10);
-
-  source := StringReplace(source, #13+'N'+#10, #13#10, [rfReplaceAll]); //return the real paragraph marks
-
-  source := StringReplace(source, '&nbsp;', ' ', [rfReplaceAll]);
-  source := StringReplace(source, '&copy;', '©', [rfReplaceAll]);
 
   Result := source;                   // give the result
 end;
@@ -367,6 +296,173 @@ begin
     TagBegin:= PosEx( 'url', Result, TagBegin);
   end;
 
+end;
+
+// This function is mostly the html decoder from HTTPApp.PAS (included w/ delphi)
+// But it has been modified to not barf on unknown items like &copy;
+function HTMLtoPlainText(const AStr: String): String;
+var
+  Sp, Rp, Cp, Tp: PChar;
+  S: String;
+  I, Code: Integer;
+begin
+  SetLength(Result, Length(AStr));
+  Sp := PChar(AStr);
+  Rp := PChar(Result);
+  Cp := Sp;
+  try
+    while Sp^ <> #0 do
+    begin
+      case Sp^ of
+        '&': begin
+               Cp := Sp;
+               Inc(Sp);
+               case Sp^ of
+                 'a': if AnsiStrPos(Sp, 'amp;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp, 3);
+                        Rp^ := '&';
+                      end;
+                 'l',
+                 'g': if (AnsiStrPos(Sp, 'lt;') = Sp) or (AnsiStrPos(Sp, 'gt;') = Sp) then { do not localize }
+                      begin
+                        Cp := Sp;
+                        Inc(Sp, 2);
+                        while (Sp^ <> ';') and (Sp^ <> #0) do
+                          Inc(Sp);
+                        if Cp^ = 'l' then
+                          Rp^ := '<'
+                        else
+                          Rp^ := '>';
+                      end;
+                 'q': if AnsiStrPos(Sp, 'quot;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp,4);
+                        Rp^ := '"';
+                      end;
+                 '#': begin
+                        Tp := Sp;
+                        Inc(Tp);
+                        while (Sp^ <> ';') and (Sp^ <> #0) do
+                          Inc(Sp);
+                        SetString(S, Tp, Sp - Tp);
+                        Val(S, I, Code);
+                        Rp^ := Chr((I));
+                      end;
+                 // ADDITIONAL CASES ADDED:
+                 'c': if AnsiStrPos(Sp, 'copy;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp,4);
+                        Rp^ := '©'; //copyright symbol
+                      end;
+                 // END ADDED
+                 else
+                 // change to how we handle unknown entities. instead of
+                 // throwing an error, leave them unconverted.
+                   //raise EConvertError.CreateFmt(sInvalidHTMLEncodedChar,
+                   //  [Cp^ + Sp^, Cp - PChar(AStr)])
+                   Rp^ := '&';
+                   Inc(Rp);
+                   Rp^ := Sp^; //added
+               end;
+           end
+      else
+        Rp^ := Sp^;
+      end;
+      Inc(Rp);
+      Inc(Sp);
+    end;
+  except
+    on E:EConvertError do
+      //raise EConvertError.CreateFmt(sInvalidHTMLEncodedChar,
+      //  [Cp^ + Sp^, Cp - PChar(AStr)])
+      Rp^ := Sp^;//added
+  end;
+  SetLength(Result, Rp - PChar(Result));
+end;
+
+
+// This function is mostly the html decoder from HTTPApp.PAS (included w/ delphi)
+// But it has been modified to not barf on unknown items like &copy;
+function HTMLDecode2(const AStr: String): String;
+var
+  Sp, Rp, Cp, Tp: PChar;
+  S: String;
+  I, Code: Integer;
+begin
+  SetLength(Result, Length(AStr));
+  Sp := PChar(AStr);
+  Rp := PChar(Result);
+  Cp := Sp;
+  try
+    while Sp^ <> #0 do
+    begin
+      case Sp^ of
+        '&': begin
+               Cp := Sp;
+               Inc(Sp);
+               case Sp^ of
+                 'a': if AnsiStrPos(Sp, 'amp;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp, 3);
+                        Rp^ := '&';
+                      end;
+                 'l',
+                 'g': if (AnsiStrPos(Sp, 'lt;') = Sp) or (AnsiStrPos(Sp, 'gt;') = Sp) then { do not localize }
+                      begin
+                        Cp := Sp;
+                        Inc(Sp, 2);
+                        while (Sp^ <> ';') and (Sp^ <> #0) do
+                          Inc(Sp);
+                        if Cp^ = 'l' then
+                          Rp^ := '<'
+                        else
+                          Rp^ := '>';
+                      end;
+                 'q': if AnsiStrPos(Sp, 'quot;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp,4);
+                        Rp^ := '"';
+                      end;
+                 '#': begin
+                        Tp := Sp;
+                        Inc(Tp);
+                        while (Sp^ <> ';') and (Sp^ <> #0) do
+                          Inc(Sp);
+                        SetString(S, Tp, Sp - Tp);
+                        Val(S, I, Code);
+                        Rp^ := Chr((I));
+                      end;
+                 // ADDITIONAL CASES ADDED:
+                 'c': if AnsiStrPos(Sp, 'copy;') = Sp then  { do not localize }
+                      begin
+                        Inc(Sp,4);
+                        Rp^ := '©'; //copyright symbol
+                      end;
+                 // END ADDED
+                 else
+                 // change to how we handle unknown entities. instead of
+                 // throwing an error, leave them unconverted.
+                   //raise EConvertError.CreateFmt(sInvalidHTMLEncodedChar,
+                   //  [Cp^ + Sp^, Cp - PChar(AStr)])
+                   Rp^ := '&';
+                   Inc(Rp);
+                   Rp^ := Sp^; //added
+               end;
+           end
+      else
+        Rp^ := Sp^;
+      end;
+      Inc(Rp);
+      Inc(Sp);
+    end;
+  except
+    on E:EConvertError do
+      //raise EConvertError.CreateFmt(sInvalidHTMLEncodedChar,
+      //  [Cp^ + Sp^, Cp - PChar(AStr)])
+      Rp^ := Sp^;//added
+  end;
+  SetLength(Result, Rp - PChar(Result));
 end;
 
 

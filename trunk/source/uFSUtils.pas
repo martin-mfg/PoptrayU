@@ -51,24 +51,84 @@ All Rights Reserved.
  * SUCH DAMAGE.
 -------------------------------------------------------------------------------}
 
-unit uFontUtils;
+unit uFSUtils;
 
 interface
   uses Graphics;
 
+  function GetDataStoragePath( commandLinePath : string = '' ) : string;
   function StringToFont( sFont : String ) : TFont; overload;
   function StringToFont( persistedFont : String; const backupFont : String ) : TFont; overload;
   function FontToString( Font : TFont ) : String;
 
 implementation
-  uses Dialogs, Windows, SysUtils, Forms, System.UITypes;
+  uses SHFolder, Dialogs, Windows, Registry, SysUtils, Forms;
+
+{------------------------------------------------------------------------------}
+{ Helper function to access the shell command to get special folders           }
+{ paths, such as appdata, program files, my documents, etc.                    }
+{------------------------------------------------------------------------------}
+function GetSpecialFolderPath(folder : integer) : string;
+var
+  path: array [0..MAX_PATH] of char;
+begin
+   if Succeeded(SHGetFolderPath(0,folder,0,0,@path[0])) then
+     Result := path else Result := '';
+end;
+
+{------------------------------------------------------------------------------}
+{ Function to determine the place where the app should store user data. Uses   }
+{ in precedence (1) Command line parameter (2) Registry setting for location   }
+{ (3) App's folder, usually in program files.                                  }
+{------------------------------------------------------------------------------}
+function GetDataStoragePath( commandLinePath : string = '' ) : string;
+var
+   Registry: TRegistry;
+   iniLocation: Integer;
+begin
+  // If the user specified the ini folder on the command line, this takes
+  // precedence over the registry setting.
+  if (commandLinePath <> '') then
+    Result := commandLinePath
+  else
+  begin
+    // If PopTrayU key exists in registry, use it to determine where the
+    // poptray.ini file is located.
+
+    Registry := TRegistry.Create;
+    try
+      Registry.RootKey := HKEY_LOCAL_MACHINE;
+      if Registry.OpenKey('SOFTWARE\PopTrayU', false) then
+      begin
+        if Registry.ValueExists('IniPath') then
+        begin
+          iniLocation := Registry.ReadInteger('IniPath');
+          Registry.CloseKey;
+          if (iniLocation = CSIDL_APPDATA) or (iniLocation = CSIDL_COMMON_APPDATA) then
+            Result := GetSpecialFolderPath(iniLocation)+ '\PopTrayU\';
+          //else iniLocation should be program files, so fall through.
+        end;
+      end;
+    finally
+      Registry.Free;
+    end;
+
+    // if we haven't already set the path, default to the path of this app
+    if Length(Result) = 0 then
+      Result := ExtractFilePath(Application.ExeName);
+  end;
+
+  // make sure path ends in backslash
+  if Copy(Result,Length(Result),1) <> '\' then Result := Result + '\';
+end;
+
+
 
 const
   STR_BOLD    = '|Bold';
   STR_ITALIC  = '|Italic';
   STR_ULINE   = '|Underline';
   STR_STIRKE  = '|Strikeout';
-
 
 {------------------------------------------------------------------------------}
 { Helper function to convert a serialized representation of a font back into   }
@@ -158,8 +218,6 @@ begin
   Result := Format( '%s, %d, [%s], [%s]',
     [ Font.Name, Font.Size, fontStyle, ColorToString( Font.Color ) ] );
 end;
-
-
 
 
 end.

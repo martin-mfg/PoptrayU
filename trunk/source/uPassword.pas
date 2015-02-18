@@ -32,14 +32,13 @@ uses
 type
   TfrmPassword = class(TForm)
     Image1: TImage;
-    lblEnterPw: TLabel;
+    Label1: TLabel;
     edPass: TEdit;
     btnOK: TBitBtn;
     btnCancel: TBitBtn;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    procedure AlignLabels();
   public
     { Public declarations }
   end;
@@ -49,37 +48,15 @@ var
 
 implementation
 
-uses uMain, uGlobal, Math;
+uses uMain, uGlobal;
 
 {$R *.dfm}
 
 procedure TfrmPassword.FormShow(Sender: TObject);
 begin
   self.Font := Options.GlobalFont;
-  AlignLabels();
   SetForegroundWindow(Handle);
   frmPopUMain.HideForm;
-end;
-
-procedure TfrmPassword.AlignLabels();
-begin
-  edPass.Top := Max(36, lblEnterPw.Top + lblEnterPw.Height + 6);
-  btnOk.Top := edPass.Top;
-  btnCancel.Top := edPass.Top;
-
-  btnOk.Height := edPass.Height;
-  btnCancel.Height := edPass.Height;
-  self.ClientHeight := edPass.Top + edPass.Height + 10;
-
-  canvas.Font := self.Font;
-  btnOk.Left := edPass.Left + edPass.Width + 10;
-  btnOk.ClientWidth := Max(Canvas.TextWidth(btnOK.Caption) + 35, btnOk.ClientWidth);
-
-  btnCancel.Left := btnOk.Left + btnOk.Width + 10;
-  btnCancel.ClientWidth := Max(Canvas.TextWidth(btnCancel.Caption) + 35, btnCancel.ClientWidth);
-
-  self.Width := Max(lblEnterPw.Left + lblEnterPw.Width, btnCancel.Left + btnCancel.Width) + 15;
-
 end;
 
 end.
