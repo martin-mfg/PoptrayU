@@ -27,13 +27,17 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ImgList, ComCtrls, Menus, ActnPopupCtrl;
+  Dialogs, StdCtrls, ImgList, ComCtrls, Menus, ActnPopup,
+  Vcl.PlatformDefaultStyleActnCtrls;
+
+type
+  TEnableSaveOptionsFunction = procedure of object;
 
 type
   TframePlugins = class(TFrame)
     lvPlugins: TListView;
     imlPlugins: TImageList;
-    mnuPlugins: TPopupActionBarEx;
+    mnuPlugins: TPopupActionBar;
     PluginOptions1: TMenuItem;
     N1: TMenuItem;
     Refresh1: TMenuItem;
@@ -47,12 +51,12 @@ type
     procedure lvPluginsDblClick(Sender: TObject);
   private
     { Private declarations }
-    FBusy : boolean;
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
     procedure Refresh;
     procedure ShowOptions;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
     destructor Destroy; override;
   end;
 
@@ -99,11 +103,12 @@ end;
 
 { TframePlugins }
 
-constructor TframePlugins.Create(AOwner: TComponent);
+constructor TframePlugins.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
-  inherited;
-  TranslateFrame(self);
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
   Refresh;
+  TranslateComponentFromEnglish(self);
 end;
 
 procedure TframePlugins.Refresh;
@@ -144,7 +149,7 @@ begin
     while res = 0 do
     begin
       // load DLL
-      hPlugin := LoadLibrary(PAnsiChar(ExtractFilePath(Application.ExeName)+'plugins\'+srec.Name));
+      hPlugin := LoadLibrary(PChar(ExtractFilePath(Application.ExeName)+'plugins\'+srec.Name));
       // skip old interface verson
       fInterfaceVersion := GetProcAddress(hPlugin, 'InterfaceVersion');
       if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
@@ -233,8 +238,8 @@ begin
     // buttons
     if  tmpPluginCount <> length(plugins) then
     begin
-      frmPopUMain.btnSaveOptions.Enabled := True;
-      frmPopUMain.btnCancel.Enabled := True;
+      // enable save button
+      funcEnableSaveBtn();
     end;
 
   finally
@@ -274,13 +279,12 @@ begin
             Plugins[i].Init
           else
             Plugins[i].Unload;
-          // buttons
-          frmPopUMain.btnSaveOptions.Enabled := True;
-          frmPopUMain.btnCancel.Enabled := True;
+          // enable save button
+          funcEnableSaveBtn();
         end;
       end;
       // refresh protocols
-      frmPopUMain.RefreshProtocols;
+      frmPopUMain.AccountsForm.RefreshProtocols;
     end;
   end;
 end;
