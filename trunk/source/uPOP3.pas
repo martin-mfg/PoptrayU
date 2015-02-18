@@ -22,7 +22,7 @@ interface
 uses
   Classes, SysUtils,
   IdPOP3, IdMessage, IdComponent, IdExplicitTLSClientServerBase,
-  uPlugins, Dialogs;
+  uPlugins, Dialogs, IdAttachment;
 
 type
   TPluginPOP3 = class(TPluginProtocol)
@@ -32,6 +32,7 @@ type
     {$ELSE}
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //indy10
     {$ENDIF}
+    procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     procedure ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
     procedure OnHttpConnected(Sender: TObject);
   public
@@ -60,6 +61,8 @@ type
     function PluginSupportsSSL : boolean; override;
     function PluginSupportsAPOP : boolean; override;
     function PluginSupportsSASL : boolean; override;
+    function SupportsUIDL(): boolean; override;
+    function CountMessages(): LongInt; override;
   end;
 
 implementation
@@ -68,8 +71,11 @@ implementation
     IdHTTP, IdStackConsts, IdSSLOpenSSL, Windows,
     IdSASL_CRAM_MD5, IdSASLLogin, IdSASL_CRAM_SHA1, IdUserPassProvider, //SASL
     IdSASLUserPass, IdSASLPlain, IdSASLSKey,                            //SASL
-    IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous            //SASL
-    ;
+    IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous,           //SASL
+    IdException, IdSASLCollection, IdExceptionCore, IdStack,
+    IdLogFile, IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3;
+  const
+    debugPop = false;
   var
     mSSL : TIdSSLIOHandlerSocketOpenSSL;
     mTimeout : integer;
@@ -85,9 +91,11 @@ implementation
     IdSASLAnonymous: TIdSASLAnonymous;
     IdSASLExternal: TIdSASLExternal;
 
-    mLastErrorMsg : AnsiString;
+    mLastErrorMsg : string;
     mHasErrorToReport : boolean;
 
+    DebugLogger : TIdLogFile;
+    autoAuthMode : boolean;
 
 { TPluginPOP3 }
 
@@ -97,13 +105,22 @@ var
 begin
   Self.PluginType := piProtocol;
   Self.Name := 'POP3';
+  Self.ProtocolType := protPOP3;
   POP := TidPOP3.Create(nil);
   {$IFDEF INDY9}
   Pop.MaxLineLength := 64*1024; //Indy9
   {$ELSE}
   //Pop.IOHandler.MaxLineLength := 64*1024; //Do not need for Indy10?
   {$ENDIF}
+  autoAuthMode := true;
 
+  if (debugPop) then
+  begin
+    DebugLogger := TIdLogFile.Create(Nil);
+    DebugLogger.Filename:= 'c:\temp\pop_debug.log';
+    DebugLogger.Active:= True;
+    POP.Intercept:= TIdConnectionIntercept(DebugLogger);
+  end;
 
   DLL1 := LoadLibrary('libeay32.dll');
   if DLL1 = 0 then begin
@@ -206,6 +223,8 @@ begin
 end;
 
 procedure TPluginPOP3.Connect(Server: PChar; Port: integer; Protocol,UserName, Password: PChar; TimeOut: integer);
+var
+  doneTryingConnectionModes: boolean;
 begin
   if (mSSLDisabled and mHasErrorToReport) then begin
     // error already logged in SSL options, return to avoid trying to connect
@@ -230,24 +249,44 @@ begin
   mTimeout := TimeOut;
 
 
-  {$IFDEF INDY9}
-  POP.Connect(TimeOut);
-  //TODO: if indy9 is ever used again, does not handle APOP auth errors.
-  {$ELSE}  //INDY10
   Pop.ConnectTimeout := TimeOut;
-  try
-    POP.Connect();
-  except
-    on e : EIdDoesNotSupportAPOP do begin
-      mHasErrorToReport := true;
-      mLastErrorMsg := 'Server does not support APOP Authentication. Please fix account settings.';
+  Pop.ReadTimeout := TimeOut;
+
+  Repeat
+    doneTryingConnectionModes := true;
+    try
+      POP.Connect();
+    except
+      on e : EIdDoesNotSupportAPOP do begin
+        mHasErrorToReport := true;
+        mLastErrorMsg := 'Server does not support APOP Authentication. Advanced account settings need to be modified.';
+      end;
+      on e : EIdSASLNotSupported do begin
+        if (autoAuthMode) then begin
+          // change connection mode (internally) to PASS since AUTH failed, and retry.
+          POP.AuthType := patUserPass;
+          doneTryingConnectionModes := false;
+        end
+        else begin
+            mHasErrorToReport := true;
+            mLastErrorMsg := 'Server does not support SASL Authentication mode. Advanced account settings need to be modified.';
+        end;
+      end;
+      on e : EIdHostRequired do begin
+        mHasErrorToReport := true;
+        mLastErrorMsg := 'Server is a required field, and may not be blank.';
+      end;
+      on e : EIdReadTimeout do begin
+        mHasErrorToReport := true;
+        mLastErrorMsg := 'Server did not respond in a reasonable amount of time. Unable to connect.';
+      end;
+      on e : EIdSocketError do begin
+         mHasErrorToReport := true;
+        mLastErrorMsg := 'Socket Error. Unable to connect.'+e.Message;
+      end;
     end;
-    //on e : EIdSASLNotSupported do begin // not tested! this could be the wrong error code?
-    //  mHasErrorToReport := true;
-    //  mLastErrorMsg := 'Server does not support SASL Authentication. Please fix account settings.';
-    //end;
-  end;
-  {$ENDIF}
+  Until doneTryingConnectionModes;
+
 
   // Set timeout for send/receive for SSL/TLS connections only.
   if (POP.UseTLS <> utNoTLSSupport) then begin
@@ -256,10 +295,11 @@ begin
   end;
 end;
 
+
 function TPluginPOP3.LastErrorMsg : PChar;
 begin
   if (mHasErrorToReport) then
-    Result := PAnsiChar(mLastErrorMsg)
+    Result := PChar(mLastErrorMsg)
   else Result := nil;
   mHasErrorToReport := false;
 end;
@@ -269,7 +309,7 @@ begin
   if POP.Connected then
   begin
     POP.IOHandler.InputBuffer.clear; //Indy10 - need to clear input buffer to avoid already connected errors later.
-    POP.Disconnect;
+    POP.Disconnect(false);
   end;
 end;
 
@@ -278,8 +318,7 @@ begin
   if POP.Connected then
   begin
     POP.IOHandler.InputBuffer.clear;
-    //if POP.SendCmd('QUIT',wsOK) = wsOk then      //removed for indy10
-      POP.Disconnect;
+    POP.Disconnect(true);
   end;
 end;
 
@@ -293,13 +332,26 @@ begin
   Result := POP.CheckMessages;
 end;
 
+procedure TPluginPOP3.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
+begin
+  AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
+end;
+
 function TPluginPOP3.RetrieveHeader(const MsgNum: integer; var pHeader: PChar): boolean;
 var
   AMsg : TIdMessage;
 begin
   AMsg := TIdMessage.Create(nil);
+  AMsg.OnCreateAttachment := IdMessage1CreateAttachment;
+
+  POP.IOHandler.MaxLineAction := maSplit;
+
   try
+    try
     Result := POP.RetrieveHeader(MsgNum,AMsg);
+    except on e : Exception do
+      Result := false;
+    end;
   finally
     pHeader := AMsg.Headers.GetText;
     AMsg.Free;
@@ -311,9 +363,18 @@ var
   RawMsg : TStringList;
 begin
   RawMsg := TStringList.Create;
+
+  POP.IOHandler.MaxLineAction := maSplit;
+
   try
-    Result := POP.RetrieveRaw(MsgNum,RawMsg);
-    pRawMsg := RawMsg.GetText;
+    try
+      Result := POP.RetrieveRaw(MsgNum,RawMsg);
+      pRawMsg := RawMsg.GetText;
+    except on E : Exception do
+      begin
+        Result := false;
+      end;
+    end;
   finally
     RawMsg.Free;
   end;
@@ -323,17 +384,17 @@ function TPluginPOP3.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PCh
 var
   Dest : TStringList;
 begin
+
+  POP.IOHandler.MaxLineAction := maSplit;
+
   // send TOP command
-  Result := POP.SendCmd('TOP '+IntToStr(MsgNum)+' '+IntToStr(LineCount)) = wsOk;
+  POP.SendCmd('TOP '+IntToStr(MsgNum)+' '+IntToStr(LineCount));
+  Result := POP.LastCmdResult.Code = '+OK';
   if Result then
   begin
     Dest := TStringList.Create;
     try
-      {$IFDEF INDY9}
-      POP.Capture(Dest); //Indy9
-      {$ELSE}
-      POP.IOHandler.Capture(Dest); //Indy10 - add IOHandler
-      {$ENDIF}
+      POP.IOHandler.Capture(Dest);
       pDest := Dest.GetText;
     finally
       Dest.Free;
@@ -353,13 +414,44 @@ begin
   UIDLs := TStringList.Create;
   try
     Result := POP.UIDL(UIDLs,MsgNum);
-    {Result := POP.SendCmd('UIDa') = wsOk; // simulate server that doesn't support UIDL
-    if Result then
-      POP.Capture(UIDLs);}
     pUIDL := UIDLs.GetText;
   finally
     UIDLs.Free;
   end;
+end;
+
+// This method expects to already be connected.
+// Returns true if server supports UIDL, false otherwise
+//
+// If CAPA(bilities) is not supported by the server, we can get a false result
+// that UIDL is not supported. Querying UIDL (with no parameter) is very slow
+// for a large inbox. Most servers support both UIDL and CAPA, so this will
+// be very fast in the average case, and only a little slower if UIDL is not
+// supported or CAPA is not supported.
+//
+function TPluginPOP3.SupportsUIDL(): boolean;
+//var
+  //capaSupport : boolean;
+begin
+  if (POP.HasCAPA) then begin
+    //Result := POP.SendCmd('CAPA UIDL',ST_OK)=ST_OK; {Do not Localize}
+    Result := POP.Capabilities.IndexOf('UIDL') <> -1;
+  end
+  else begin
+    // if inbox is empty "-ERR There's no message 1" is expected.
+    Result := POP.SendCmd('UIDL 1',ST_OK)=ST_OK; {Do not Localize}
+    if (Result = true) then exit; //UIDL succeeded for msg 1
+
+    // Most reliable (but slowest) way: Return value of UIDL is +OK followed by
+    // a list of UIDLs or -ERR if UIDL is not supported.
+    Result := POP.SendCmd('UIDL', ST_OK)=ST_OK; {Do not Localize}
+  end;
+
+end;
+
+function TPluginPOP3.CountMessages(): LongInt;
+begin
+  Result:=POP.CheckMessages();
 end;
 
 function TPluginPOP3.Delete(const MsgNum: integer): boolean;
@@ -424,6 +516,10 @@ begin
     POP.UseTLS := utNoTLSSupport;
   end;
 
+  if (authType = autoAuth) then
+    autoAuthMode := true
+  else autoAuthMode := false;
+
   case (authType) of
     autoAuth:
       if (not mSSLDisabled)
@@ -436,8 +532,8 @@ begin
     sasl:
       if (not mSSLDisabled) then
         POP.AuthType := patSASL;
-    else
-      POP.AuthType := DEF_ATYPE; //i.e. password
+      else
+        POP.AuthType := DEF_ATYPE; //i.e. password
   end;
 
   if (mSSLDisabled and useSSLorTLS) then begin
@@ -466,3 +562,4 @@ begin
 end;
 
 end.
+

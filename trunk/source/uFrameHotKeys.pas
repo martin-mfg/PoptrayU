@@ -27,12 +27,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, Vcl.Imaging.pngimage;
+
+type
+  TEnableSaveOptionsFunction = procedure of object;
 
 type
   TframeHotKeys = class(TFrame)
-    Label25: TLabel;
-    Label26: TLabel;
+    lblAction: TLabel;
+    lblHotkey: TLabel;
     cmbAction1: TComboBox;
     cmbAction2: TComboBox;
     cmbAction3: TComboBox;
@@ -44,15 +47,17 @@ type
     imgInfo: TImage;
     labelHotKeyInfo: TLabel;
     InfoPanel: TPanel;
-    imlHotKeys: TImageList;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
+    procedure AlignLabels;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
   end;
 
 implementation
@@ -63,18 +68,18 @@ uses uMain, uGlobal, uTranslate;
 
 { TframeHotKeys }
 
-constructor TframeHotKeys.Create(AOwner: TComponent);
+constructor TframeHotKeys.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 var
   i : integer;
   st : string;
 begin
-  inherited;
-  TranslateFrame(self);
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
 
   // fill action dropdowns
   for i := Low(Actions) to High(Actions) do
   begin
-    st := Translate(Actions[i]);
+    st := Actions[i];
     cmbAction1.Items.Add(st);
     cmbAction2.Items.Add(st);
     cmbAction3.Items.Add(st);
@@ -92,12 +97,28 @@ begin
   hkHotKey4.HotKey := Options.HotKey4;
   Options.Busy := False;
 
-  if (Options.ToolbarColorScheme = 0) then
-    imlHotKeys.GetIcon(0, imgInfo.Picture.Icon)
-  else
-    imlHotKeys.GetIcon(1, imgInfo.Picture.Icon);
+  Self.Font.Assign(Options.GlobalFont);
 
+  TranslateComponentFromEnglish(Self);
+  AlignLabels();
   //TODO: autosize info panel... InfoPanel.Height := labelHotKeyInfo.Height + 4;
+end;
+
+procedure TframeHotKeys.FrameResize(Sender: TObject);
+begin
+  InfoPanel.Height := labelHotKeyInfo.Top + labelHotKeyInfo.Height + 5;
+  self.Height := InfoPanel.Top + InfoPanel.Height + 10;
+
+  if (lblHotkey.Width > hkHotKey1.Width) then begin
+    // outside edge align columns
+    lblAction.Left := cmbAction1.Left;
+    lblHotkey.Left := hkHotKey1.Left + hkHotKey1.Width - lblHotkey.Width;
+  end else begin
+    // center align columns
+    lblAction.Left := cmbAction1.Left + ((cmbAction1.Width - lblAction.Width) div 2);
+    lblHotkey.Left := hkHotKey1.Left + ((hkHotKey1.Width - lblHotkey.Width) div 2);
+  end;
+
 end;
 
 procedure TframeHotKeys.OptionsChange(Sender: TObject);
@@ -113,10 +134,36 @@ begin
     Options.HotKey2 := hkHotKey2.HotKey;
     Options.HotKey3 := hkHotKey3.HotKey;
     Options.HotKey4 := hkHotKey4.HotKey;
-    // buttons
-    frmPopUMain.btnSaveOptions.Enabled := True;
-    frmPopUMain.btnCancel.Enabled := True;
+
+    // enable save button
+    funcEnableSaveBtn();
   end;
+end;
+
+procedure TframeHotKeys.AlignLabels();
+const
+  vMargin = 4;
+begin
+
+  cmbAction1.Top := lblAction.Top + lblAction.Height + vMargin;
+  cmbAction2.Top := cmbAction1.Top + cmbAction1.Height + vMargin;
+  cmbAction3.Top := cmbAction2.Top + cmbAction2.Height + vMargin;
+  cmbAction4.Top := cmbAction3.Top + cmbAction3.Height + vMargin;
+
+  hkHotKey1.Top := cmbAction1.Top;
+  hkHotKey2.Top := cmbAction2.Top;
+  hkHotKey3.Top := cmbAction3.Top;
+  hkHotKey4.Top := cmbAction4.Top;
+
+  hkHotKey1.Height := cmbAction1.Height;
+  hkHotKey2.Height := cmbAction2.Height;
+  hkHotKey3.Height := cmbAction3.Height;
+  hkHotKey4.Height := cmbAction4.Height;
+
+  InfoPanel.Top := cmbAction4.Top + cmbAction4.Height + vMargin;
+  InfoPanel.Height := labelHotKeyInfo.Top + labelHotKeyInfo.Height + 5;
+  self.Height := InfoPanel.Top + InfoPanel.Height + 10;
+
 end;
 
 procedure TframeHotKeys.HelpMouseDown(Sender: TObject;

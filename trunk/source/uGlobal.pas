@@ -25,7 +25,12 @@ The GNU GPL can be found at:
 
 interface
 
-uses Classes, ExtCtrls, Contnrs, SysUtils, uPlugins, uObjects, Graphics;
+uses Classes, ExtCtrls, Contnrs, SysUtils, Graphics;
+// Avoid internal dependencies in this class so other classes are testable.
+
+type
+  DefaultTabType = ( TAB_LAST_USED=-1, TAB_HTML=0, TAB_PLAIN_TEXT=2, TAB_RAW=3);
+
 var
   Options : record
     Busy : boolean;
@@ -35,8 +40,8 @@ var
     // defaults
     MailProgram : string;
     DefSound : string;
-    Languages : array of string;
-    Language : integer;
+    Languages : array of string; // names of all available languages IN ENGLILSH.
+    Language : integer; // language currently in use (indexed into languages array)
     // general options
     StartUp : boolean;
     Minimized : boolean;
@@ -58,7 +63,7 @@ var
     GetBody : boolean;
     GetBodyLines : integer;
     GetBodySize : integer;
-    // advanced - interface
+    // advanced - main window
     CheckingIcon : integer;
     ShowViewed : boolean;
     CloseMinimize : boolean;
@@ -75,6 +80,8 @@ var
     HideViewed : boolean;
     DoubleClickDelay : boolean;
     ShowWhileChecking : boolean;
+    ToolbarSpamAction : integer;
+    AutoClosePreviewWindows : boolean;
     // advanced - misc
     UseMAPI : boolean;
     LogRules : boolean;
@@ -116,8 +123,42 @@ var
     GlobalFont : TFont;
     VerticalFont : TFont;
     UseCustomFonts : boolean;
+    DefaultFont : integer;
     ToolbarColorScheme : integer;
+    VisualStyleFilename : string;
+    UseCustomDateFormat : boolean;
+    CustomDateFormatString : string;
+    //preview
+    DisableHtmlPreview: boolean;
+    PreviewFont : TFont;
+    DefaultPreviewTab : DefaultTabType;
+    DefaultSpamTab : DefaultTabType;
+    ShowImages : boolean;
+    PreviewBgColor : TColor;
+    //misc
+    TempEmailFilename : string; //includes extension
+    ShowNewestMessagesOnly : boolean;
+    NumNewestMsgToShow : integer;
   end;
+
+  HelpFileName : TFileName; // Path+filename to the Help File
+
+type
+  TOptionsPanelName = (
+    optNone = -1,
+    optDefaults = 0,
+    optInterval = 1,
+    optGeneralOptions = 2,
+    optMainWindow = 3,
+    optPreview = 4,
+    optRules = 5,
+    optWhiteBlackList = 6,
+    optVisualAppearance = 7,
+    optMouseButtons = 8,
+    optHotKeys = 9,
+    optAdvancedOptions = 10,
+    optPlugins = 11
+    );
 
 const
   // checking icon
@@ -125,9 +166,10 @@ const
   ciLightning = 1;
   ciStar = 2;
   ciAnimatedStar = 3;
+
   // options
-  optInterval = 0;
-  optDefaults = 1;
+{  optDefaults = 0;
+  optInterval = 1;
   optGeneralOptions = 2;
   optAdvancedOptions = 3;
   optAdvancedInterface = 4;
@@ -136,18 +178,19 @@ const
   optHotKeys = 7;
   optWhiteBlackList = 8;
   optPlugins = 9;
-  optVisualAppearance = 10;
+  optVisualAppearance = 10; }
+
+  // Spam Actions
+  optSpamActNone = 0;
+  optSpamActDelSpam = 1;
+  optSpamActMarkSpam = 2;
+
+  // Toolbar Color Schemes
+  schemeLight = 0;
+  schemeDark = 1;
 
 
-type
-  TProtocol = record
-    Name : string;
-    Port : integer;
-    Prot : TPluginProtocol;
-  end;
 
-var
-  Protocols : array of TProtocol;
 
 const
   Actions : array[0..15] of string =
@@ -167,6 +210,9 @@ type
               cmdAutoCheckOn,cmdAutoCheckOff,cmdSoundOn,cmdSoundOff);
 
 function StrToAction(st: string): TCommand;
+
+var
+  FBusy : boolean;
 
 implementation
 
@@ -202,6 +248,7 @@ initialization
   Options.GlobalFont := TFont.Create;
   Options.VerticalFont := TFont.Create;
   Options.ListboxFont := TFont.Create;
+  Options.PreviewFont := TFont.Create;
 
 finalization
   Options.WhiteList.Free;
@@ -209,5 +256,5 @@ finalization
   Options.GlobalFont.Free;
   Options.VerticalFont.Free;
   Options.ListboxFont.Free;
-
+  Options.PreviewFont.Free
 end.
