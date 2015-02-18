@@ -30,6 +30,13 @@ uses
   Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls;
 
 type
+  TEnableSaveOptionsFunction = procedure of object;
+
+const
+  DELETE_IMMEDIATELY = 0;
+  DELETE_NEXT_CHECK = 1;
+
+type
   TframeInterval = class(TFrame)
     lblMinutes: TLabel;
     edTime: TEdit;
@@ -38,13 +45,18 @@ type
     chkDontCheckTimes: TCheckBox;
     dtStart: TDateTimePicker;
     dtEnd: TDateTimePicker;
-    grpInterval: TGroupBox;
     radioCheckEvery: TRadioButton;
     radioNever: TRadioButton;
     radioTimerAccount: TRadioButton;
     chkOnline: TCheckBox;
-    grpExcept: TGroupBox;
     chkCheckWhileMinimized: TCheckBox;
+    CategoryPanelGroup1: TCategoryPanelGroup;
+    catMailCheckFreq: TCategoryPanel;
+    catIntervalConditions: TCategoryPanel;
+    catCheckActions: TCategoryPanel;
+    cmbDeleteNextCheck: TComboBox;
+    lblDeleteNextCheck: TLabel;
+    chkDeleteConfirm: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -54,27 +66,32 @@ type
     procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
+    procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
   end;
 
 implementation
 
-uses uMain, uGlobal, uRCUtils, uTranslate;
+uses uMain, uGlobal, uRCUtils, uTranslate, uPositioning;
 
 {$R *.dfm}
 
 //-----------------------------------------------------------------[ public ]---
 
-constructor TframeInterval.Create(AOwner: TComponent);
+constructor TframeInterval.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
-  inherited;
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
+
   Options.Busy := True;
-  uTranslate.TranslateFrame(self);
   edTime.Tag := 1;
   // options to screen
-  edTime.Text := FloatToStr(Options.Interval);
+  if (Options.Interval > 0) then begin
+    edTime.Text := FloatToStr(Options.Interval);
+  end;
   radioTimerAccount.Checked := Options.TimerAccount;
   if NOT radioTimerAccount.Checked then
   begin
@@ -84,6 +101,13 @@ begin
   edTime.Enabled := radioCheckEvery.Checked;
   UpDown.Enabled := radioCheckEvery.Checked;
 
+  if radioNever.Checked then
+  begin
+    // set DISABLED timer interval to default value
+    edTime.Text := '5';
+    UpDown.Position := 5;
+  end;
+
   chkOnline.Checked := Options.Online;
 
   chkCheckWhileMinimized.Checked := Options.CheckWhileMinimized;
@@ -91,18 +115,26 @@ begin
   chkDontCheckTimes.Checked := Options.DontCheckTimes;
   dtStart.Time := Options.DontCheckStart;
   dtEnd.Time := Options.DontCheckEnd;
-  // autosize
-  AutoSizeCheckBox(radioCheckEvery);
-  edTime.Left := radioCheckEvery.Left + radioCheckEvery.Width + 4;
-  UpDown.Left := edTime.Left + edTime.Width;
-  lblMinutes.Left := UpDown.Left + UpDown.Width + 4;
 
-  AutoSizeCheckBox(chkDontCheckTimes);
-  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
-  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
-  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+  if (Options.DeleteNextCheck) then
+    cmbDeleteNextCheck.ItemIndex := DELETE_NEXT_CHECK
+  else
+    cmbDeleteNextCheck.ItemIndex := DELETE_IMMEDIATELY;
+
+  chkDeleteConfirm.Checked := Options.DeleteConfirm;
+
 
   Options.Busy := False;
+
+  self.Font.Assign(Options.GlobalFont);
+
+  CategoryPanelGroup1.HeaderFont.Assign(Options.GlobalFont);
+  CategoryPanelGroup1.HeaderFont.Style := CategoryPanelGroup1.HeaderFont.Style + [fsBold];
+  CategoryPanelGroup1.HeaderFont.Size := Options.GlobalFont.Size;
+
+  TranslateComponentFromEnglish(self);
+
+  AlignLabels();
 end;
 
 
@@ -113,7 +145,11 @@ begin
   if not Options.Busy then
   begin
     // screen to options
-    Options.Interval := StrToFloatDef(edTime.Text,5); //UpDown.Position;
+    if (radioNever.Checked) then
+      Options.Interval := 0
+    else
+      Options.Interval := StrToFloatDef(edTime.Text,5); //UpDown.Position;
+
     Options.TimerAccount := radioTimerAccount.Checked;
 
     Options.Online := chkOnline.Checked;
@@ -122,37 +158,24 @@ begin
     Options.DontCheckStart := dtStart.Time;
     Options.DontCheckEnd := dtEnd.Time;
 
+    Options.DeleteNextCheck := cmbDeleteNextCheck.ItemIndex = DELETE_NEXT_CHECK;
+    Options.DeleteConfirm := chkDeleteConfirm.Checked;
+
     // buttons
     if (Sender = edTime) and (edTime.Tag = 1) then
       edTime.Tag := 0
     else
     begin
-      frmPopUMain.btnSaveOptions.Enabled := True;
-      frmPopUMain.btnCancel.Enabled := True;
+      // enable save button
+      funcEnableSaveBtn();
     end;
   end;
 
-  frmPopUMain.panIntervalAccount.Visible := Options.TimerAccount;
+  frmPopUMain.AccountsForm.panIntervalAccount.Visible := Options.TimerAccount;
 
   edTime.Enabled := radioCheckEvery.Checked;
   UpDown.Enabled := radioCheckEvery.Checked;
 
-  // autosize
-  self.Font := Options.GlobalFont;
-  AutoSizeCheckBox(radioCheckEvery);
-  edTime.Left := radioCheckEvery.Left + radioCheckEvery.Width + 4;
-  UpDown.Left := edTime.Left + edTime.Width;
-  lblMinutes.Left := UpDown.Left + UpDown.Width + 4;
-
-  AutoSizeCheckBox(chkDontCheckTimes);
-  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
-  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
-  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
-
-  AutoSizeCheckBox(chkCheckWhileMinimized);
-  AutoSizeCheckBox(chkOnline);
-  AutoSizeCheckBox(radioNever);
-  AutoSizeCheckBox(radioTimerAccount);
 end;
 
 procedure TframeInterval.HelpMouseDown(Sender: TObject;
@@ -178,15 +201,71 @@ end;
 
 procedure TframeInterval.radioNeverClick(Sender: TObject);
 begin
-  UpDown.Position := 0;
-  UpDown.Associate := edTime;
   OptionsChange(UpDown);
+end;
+
+procedure TframeInterval.AlignLabels();
+var
+  labelHeight : integer;
+begin
+  labelHeight := lblAnd.Height;
+
+  // Mail Check Category
+  AutoSizeCheckBox(radioCheckEvery);
+  edTime.Top := radioCheckEvery.Top;
+  edTime.Height := labelHeight;
+  edTime.Left := radioCheckEvery.Left + radioCheckEvery.Width + 4;
+  UpDown.Height := edTime.Height;
+  UpDown.Top := edTime.Top;
+  UpDown.Left := edTime.Left + edTime.Width;
+  lblMinutes.Top := radioCheckEvery.Top;
+  lblMinutes.Left := CalcPosToRightOf(UpDown);
+  radioNever.Height := labelHeight;
+  radioNever.Top := calcPosBelow(radioCheckEvery);
+  radioTimerAccount.Height := labelHeight;
+  radioTimerAccount.Top := calcPosBelow(radioNever);
+  catMailCheckFreq.ClientHeight := calcPosBelow(radioTimerAccount);
+
+  // Automatic Check Conditions Cateory
+  chkOnline.Height := labelHeight;
+  chkCheckWhileMinimized.Top := calcPosBelow(chkOnline);
+  chkCheckWhileMinimized.Height := labelHeight;
+  AutoSizeCheckBox(chkDontCheckTimes);
+  chkDontCheckTimes.Top := calcPosBelow(chkCheckWhileMinimized);
+  chkDontCheckTimes.Height := labelHeight;
+  dtStart.Top := chkDontCheckTimes.Top;
+  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 2;
+  dtStart.Height := labelHeight;
+  lblAnd.Top := chkDontCheckTimes.Top;
+  lblAnd.Left := dtStart.Left + dtStart.Width + 4;
+  dtEnd.Top := chkDontCheckTimes.Top;
+  dtEnd.Height := labelHeight;
+  dtEnd.Left := lblAnd.Left + lblAnd.Width + 4;
+  catIntervalConditions.ClientHeight := calcPosBelow(dtStart);
+
+  // Check Actions Category
+  AutosizeCombobox(cmbDeleteNextCheck);
+  if (lblDeleteNextCheck.Width + cmbDeleteNextCheck.Width + 6 < self.Width) then begin
+    lblDeleteNextCheck.Top := 9;
+    cmbDeleteNextCheck.Top := 6;
+    cmbDeleteNextCheck.Left := CalcPosToRightOf(lblDeleteNextCheck);
+  end else begin
+    // wrap
+    lblDeleteNextCheck.Top := 6;
+    cmbDeleteNextCheck.Left := lblDeleteNextCheck.Left;
+    cmbDeleteNextCheck.Top := calcPosBelow(lblDeleteNextCheck);
+  end;
+  chkDeleteConfirm.Height := labelHeight;
+  chkDeleteConfirm.Top := calcPosBelow(cmbDeleteNextCheck);
+  catCheckActions.ClientHeight := calcPosBelow(chkDeleteConfirm) + 3;
+
+
 end;
 
 procedure TframeInterval.FrameResize(Sender: TObject);
 begin
-    Self.Refresh; //refresh to make labels not disappear in Vista
-  //lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+  inherited;
+  AlignLabels();
 end;
 
 end.

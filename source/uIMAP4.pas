@@ -22,30 +22,20 @@ uses
   Windows,
   SysUtils,
   IdComponent,
+  IdGlobal,
   IdMessage,
   IdIMAP4,
-  IdSSLOpenSSL,
   uPlugins,
-  IdSASL_CRAM_MD5,
-  IdSASLLogin,
-  IdSASL_CRAM_SHA1,
-  IdUserPassProvider,
-  IdSASLUserPass,
-  IdSASLPlain,
-  IdSASLSKey,
-  IdSASLOTP,
-  IdSASLExternal,
-  IdSASLDigest,
-  IdSASLAnonymous,
-  IdExplicitTLSClientServerBase,
-  IdStackConsts;
-
-
+  IdStackConsts,
+  Classes,
+  IdAttachment, IdAttachmentMemory;
 
 type
   TPluginIMAP4 = class(TPluginProtocol)
   private
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
+    procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
+
   public
     // general
     IMAP : TIdIMAP4;
@@ -54,6 +44,7 @@ type
     function Protocols : ShortString; override;
     procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
     procedure Disconnect; override;
+    procedure DisconnectWithQuit; override;
     function Connected : boolean; override;
     function CheckMessages : integer; override;
     function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; override;
@@ -67,16 +58,38 @@ type
     function PluginSupportsSSL : boolean; override;
     function PluginSupportsAPOP : boolean; override;
     function PluginSupportsSASL : boolean; override;
+    function SupportsUIDL(): boolean; override;
+    function CountMessages(): LongInt; override;
     procedure SetSSLOptions(
       const useSSLorTLS : boolean;
       const authType : TAuthType = password;
       const sslVersion : TsslVer = sslAuto;
       const startTLS : boolean = false); override;
     destructor Destroy; override;
+    procedure Expunge; override;
+    function DeleteMsgsByUID(const uidList: array of String): boolean; override;
   end;
 
 
 implementation
+uses
+  IdLogBase, IdLogFile, IdIntercept, uIniSettings,
+  IdSASL_CRAM_MD5,
+  IdSASLLogin,
+  IdSASL_CRAM_SHA1,
+  IdUserPassProvider,
+  IdSASLUserPass,
+  IdSASLPlain,
+  IdSASLSKey,
+  IdSASLOTP,
+  IdSASLExternal,
+  IdSASLDigest,
+  IdSASLAnonymous,
+  IdExplicitTLSClientServerBase,
+  IdSSLOpenSSL;
+
+const
+  debugImap = false;
 
 var
     Msg : TIdMessage;
@@ -94,8 +107,10 @@ var
     mIdSASLAnonymous: TIdSASLAnonymous;
     mIdSASLExternal: TIdSASLExternal;
 
-    mLastErrorMsg : AnsiString;
+    mLastErrorMsg : string;
     mHasErrorToReport : boolean;
+    DebugLogger : TIdLogFile;
+
 
 //------------------------------------------------------------------ helpers ---
 
@@ -117,15 +132,32 @@ end;
 constructor TPluginIMAP4.Create;
 var
   DLL1, DLL2 : THandle;
+  //idLogFile1 : TidLogFile;//DEBUG - logging.
 begin
-  // init code goes here
+  Self.PluginType := piProtocol;
+  Self.Name := 'IMAP';
+  Self.ProtocolType := protIMAP4;
   IMAP := TIdIMAP4.Create(nil);
   Msg := TIdMessage.Create(nil);
+  Msg.OnCreateAttachment := IdMessage1CreateAttachment;
   Msg.NoEncode := True;
   Msg.NoDecode := True;
 
-  IMAP.OnWork := IMAPWork;
+  //LogFile1 := TidLogFile.Create(nil);//DEBUG - logging.
+  //idLogFile1.Filename := 'C:\temp\indy_imap_log.txt';
+  //idLogFile1.active := True;
+  //AP.Intercept := idLogFile1;//DEBUG - logging.
 
+  IMAP.OnWork := IMAPWork;
+  IMAP.MilliSecsToWaitToClearBuffer := 10;
+
+  if (debugImap) then
+  begin
+    DebugLogger := TIdLogFile.Create(Nil);
+    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug.log';
+    DebugLogger.Active:= True;
+    IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
+  end;
 
   DLL1 := LoadLibrary('libeay32.dll');
   if DLL1 = 0 then begin
@@ -145,6 +177,10 @@ begin
     mSSL := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
     mSSL.SSLOptions.Mode := sslmClient;
     mSSL.PassThrough := False;
+    mSSL.MaxLineAction := maException;
+    mSSL.SSLOptions.VerifyMode := [];
+    mSSL.SSLOptions.VerifyDepth := 0;
+
 
     mIdUserPassProvider := TIdUserPassProvider.Create(IMAP);
 
@@ -186,6 +222,7 @@ begin
     IMAP.SASLMechanisms.Add.SASL := mIdSASLLogin;
     IMAP.SASLMechanisms.Add.SASL := mIdSASLPlain;
 
+
   end;
 
 
@@ -223,40 +260,22 @@ begin
   IMAP.Port := Port;
   IMAP.Username := Username;
   IMAP.Password := Password;
-  IMAP.IOHandler := nil;
 
   if (not mSSLDisabled) then begin
     mIdUserPassProvider.Username := Username;
     mIdUserPassProvider.Password:= Password;
   end;
 
-  {$IFDEF INDY9}
-  IMAP.Connect(TimeOut);
-  //TODO: if indy9 is ever used again, does not handle APOP auth errors.
-  {$ELSE}  //INDY10
-  IMAP.ConnectTimeout := TimeOut;
+  IMAP.ConnectTimeout := TimeOut; // ConnectTimeout expects milliseconds
+  IMAP.ReadTimeout := TimeOut;
+  IMAP.Connect(false);
 
-  IMAP.Connect(False);
-
-  if (IMAP.IOHandler = mSSL) then begin  //SSL socket read/write timeout
-    IMAP.Socket.Binding.SetSockOpt(Id_SOL_TCP, Id_SO_SNDTIMEO, TimeOut);
-    IMAP.Socket.Binding.SetSockOpt(Id_SOL_TCP, Id_SO_RCVTIMEO, TimeOut);
-  end;
-  IMAP.Login;
-  {$ENDIF}
-
-  //try
-  //except
-    //on e : EIdDoesNotSupportAPOP do begin
-    //  mHasErrorToReport := true;
-    //  mLastErrorMsg := 'Server does not support APOP Authentication. Please fix account settings.';
-    //end;
-    //on e : EIdSASLNotSupported do begin // not tested! this could be the wrong error code?
-    //  mHasErrorToReport := true;
-    //  mLastErrorMsg := 'Server does not support SASL Authentication. Please fix account settings.';
-    //end;
+  //if (IMAP.IOHandler = mSSL) then begin  //SSL socket read/write timeout
+    //IMAP.Socket.Binding.SetSockOpt(Id_SOL_TCP, Id_SO_SNDTIMEO, TimeOut*1000);
+    //IMAP.Socket.Binding.SetSockOpt(Id_SOL_TCP, Id_SO_RCVTIMEO, TimeOut*1000);
   //end;
 
+  IMAP.Login;
   IMAP.SelectMailBox('INBOX');
 end;
 
@@ -264,7 +283,7 @@ end;
 function TPluginIMAP4.LastErrorMsg : PChar;
 begin
   if (mHasErrorToReport) then
-    Result := PAnsiChar(mLastErrorMsg)
+    Result := PChar(mLastErrorMsg)
   else Result := nil;
   mHasErrorToReport := false;
 end;
@@ -281,14 +300,23 @@ end;
 
 function TPluginIMAP4.PluginSupportsSASL : boolean;
 begin
-  Result := false;
+  Result := true;
 end;
 
 
 procedure TPluginIMAP4.Disconnect;
 begin
   IMAP.IOHandler.InputBuffer.clear;
-  IMAP.Disconnect;
+  IMAP.Disconnect(false);
+end;
+
+procedure TPluginIMAP4.DisconnectWithQuit;
+begin
+  if IMAP.Connected then
+  begin
+    IMAP.IOHandler.InputBuffer.clear;
+    IMAP.Disconnect(true);
+  end;
 end;
 
 function TPluginIMAP4.Connected : boolean;
@@ -304,6 +332,7 @@ end;
 function TPluginIMAP4.RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;
 begin
   Msg.Clear;
+  IMAP.IOHandler.MaxLineAction := maSplit;
   Result := IMAP.RetrieveHeader(MsgNum,Msg);
   if Result then
     pHeader := Msg.Headers.GetText;
@@ -312,39 +341,43 @@ end;
 function TPluginIMAP4.RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean;
 begin
   Msg.Clear;
+  IMAP.IOHandler.MaxLineAction := maSplit;
   Result := IMAP.Retrieve(MsgNum,Msg);
   if Result then
     pRawMsg := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
 end;
 
 function TPluginIMAP4.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
-//var
-//  st : string;
+var
+  st : string;
 begin
   Msg.Clear;
+  IMAP.IOHandler.MaxLineAction := maSplit;
   // get header
   Result := IMAP.RetrieveHeader(MsgNum,Msg);
   if Result then
   begin
     // get first LineCount*70 octets
-    IMAP.RetrievePeek(MsgNum, Msg);      //Temp replacement
-{
     IMAP.WriteLn('xx FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
                  IntToStr(LineCount*70)+'>');
-    Result := IMAP.GetLineResponse('xx',[wsOK]) = wsOK;
+    //Result := IMAP.GetLineResponse('xx',[wsOK]) = wsOK;    //indy9
+    Result := IMAP.LastCmdResult.Code = 'OK';                //indy10
+
     if Result then
     begin
       Msg.Body.Clear;
-      st := IMAP.ReadlnWait; //Changed from ReadLn indy9
+      IMAP.IOHandler.ReadLn; // skip the first line, it's the response
+        // acknowledging the fetch command, not part of the body
+      st := IMAP.IOHandler.ReadLn;
       while Copy(st,1,3) <> 'xx ' do
       begin
         Msg.Body.Add(st);
-        st := IMAP.ReadlnWait; //Changed from ReadLn indy9;
+        st := IMAP.IOHandler.ReadLn;
       end;
       // delete last line
       Msg.Body.Strings[Msg.Body.Count-1] := '';
       pDest := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
-    end; }
+    end;
   end;
 end;
 
@@ -358,23 +391,26 @@ var
   st,UID : string;
   i, nCount : integer;
 begin
+
   if MsgNum > -1 then
   begin
     Result := IMAP.GetUID(MsgNum, UID);
-    st := IntToStr(MsgNum) + ' ' +IMAP.MailBox.UIDValidity + '_' + UID;
+    st := IntToStr(MsgNum) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity*);
     pUIDL := StrNew(PChar(st));
   end
-  else begin
+  else begin  //get a list of all UIDs in mailbox
     st := '';
-    nCount := IMAP.MailBox.TotalMsgs;
-    for i := 0 to nCount-1 do
+    nCount := IMAP.MailBox.TotalMsgs; //number of messages on the server
+    for i := 1 to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
-      IMAP.GetUID(nCount, UID); //changed MsgNum to nCount. MsgNum doesn't make sense (b/c we know it's -1)
+      UID := '';
+      IMAP.GetUID(i, UID);
       if UID <> '' then
-        st := st + IntToStr(i+1) + ' ' + IMAP.MailBox.UIDValidity + '_' + UID + #13#10;
+        st := st + IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *)+ #13#10;
 
     end;
     pUIDL := StrNew(PChar(Trim(st)));
+    //OutputDebugString(PChar(pUIDL));
     Result := True;
   end;
 end;
@@ -382,8 +418,13 @@ end;
 function TPluginIMAP4.Delete(const MsgNum : integer) : boolean;
 begin
   Result := IMAP.DeleteMsgs([MsgNum]);
+end;
+
+procedure  TPluginIMAP4.Expunge();
+begin
   IMAP.ExpungeMailBox;
 end;
+
 
 procedure TPluginIMAP4.SetOnWork(const OnWorkProc : TPluginWorkEvent);
 begin
@@ -407,9 +448,15 @@ procedure TPluginIMAP4.SetSSLOptions(
   const sslVersion : TsslVer = sslAuto;
   const startTLS : boolean = false);
 begin
-  if (not mSSLDisabled) and (useSSLorTLS) then 
+  if (not mSSLDisabled) and (useSSLorTLS) then
   begin
+    if (IMAP.Connected) then begin
+      IMAP.IOHandler.InputBuffer.clear;
+      IMAP.Disconnect();
+    end;
+
     IMAP.IOHandler := mSSL;
+
 
     case (sslVersion) of
       sslAuto :  mSSL.SSLOptions.Method := sslvSSLv23;// 23 = special value, means auto
@@ -432,17 +479,17 @@ begin
   end;
 
   case (authType) of
-    //autoAuth:
-    //  if (not mSSLDisabled)
-    //    then IMAP.AuthType := iatSASL
-    //  else IMAP.AuthType := DEF_IMAP4_AUTH;
+    autoAuth:
+      if (not mSSLDisabled)
+        then IMAP.AuthType := iatSASL
+      else IMAP.AuthType := DEF_IMAP4_AUTH;
     password:
       IMAP.AuthType := iatUserPass;
     //apop:
     //  IMAP.AuthType := iatAPOP;
-    //sasl:
-    //  if (not mSSLDisabled) then
-    //    IMAP.AuthType := iatSASL;
+    sasl:
+      if (not mSSLDisabled) then
+        IMAP.AuthType := iatSASL;
     else
       IMAP.AuthType := DEF_IMAP4_AUTH; //i.e. password
   end;
@@ -454,8 +501,32 @@ begin
 end;
 
 
-end.
+// This method expects to already be connected.
+// Returns true if server supports UIDL, false otherwise
+function TPluginIMAP4.SupportsUIDL(): boolean;
+begin
+  Result:=true;
+end;
+
+function TPluginIMAP4.CountMessages(): LongInt;
+begin
+  if IMAP.SelectMailBox('INBOX') then
+    Result := IMAP.MailBox.TotalMsgs
+  else Result := -1;
+end;
+
+function TPluginIMAP4.DeleteMsgsByUID(const uidList: array of String): boolean;
+begin
+  Result := IMAP.UIDDeleteMsgs(uidList);
+end;
+
+procedure TPluginIMAP4.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
+begin
+  AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
+end;
 
 
 // Exceptions for IMAP:EIdIMAP4ServerException, EIdIMAP4ImplicitTLSRequiresSSL,
 // EIdReplyIMAP4Error
+
+end.

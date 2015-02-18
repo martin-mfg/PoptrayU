@@ -30,109 +30,106 @@ uses
   Dialogs, StdCtrls, ExtCtrls, uTranslate;
 
 type
+  TEnableSaveOptionsFunction = procedure of object;
+
+type
   TframeAdvancedOptions = class(TFrame)
     lblTimeOut: TLabel;
     lblSeconds: TLabel;
     chkIgnoreRetrieveErrors: TCheckBox;
-    chkShowErrorsInBalloons: TCheckBox;
     edTimeOut: TEdit;
     chkQuickCheck: TCheckBox;
-    chkRetrieveTop: TCheckBox;
-    edTopLines: TEdit;
     chkNoError: TCheckBox;
-    chkGetBody: TCheckBox;
-    edGetBodyLines: TEdit;
-    lblGetBodyLines: TLabel;
-    chkGetBodySize: TCheckBox;
-    edGetBodySize: TEdit;
-    lblGetBodySize: TLabel;
-    chkGetBodyLines: TCheckBox;
-    lblError: TLabel;
-    lblPop: TLabel;
     chkSafeDelete: TCheckBox;
-    lblMsgDl: TLabel;
+    CategoryPanelGroup1: TCategoryPanelGroup;
+    catAdvProt: TCategoryPanel;
+    catErrHandling: TCategoryPanel;
+    catMailClient: TCategoryPanel;
+    chkUseMAPI: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
+    procedure AlignLabels;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
   end;
 
 implementation
 
-uses uMain, uGlobal, uRCUtils;
+uses uMain, uGlobal, uRCUtils, System.UITypes, uPositioning;
 
 {$R *.dfm}
 
 { TframeAdvancedConnection }
 
-constructor TframeAdvancedOptions.Create(AOwner: TComponent);
+constructor TframeAdvancedOptions.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
-  inherited;
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
+
   Options.Busy := True;
-  uTranslate.TranslateFrame(self);
   // options to screen
   edTimeOut.Text := IntToStr(Options.TimeOut);
   chkQuickCheck.Checked := Options.QuickCheck;
   chkSafeDelete.Checked := Options.SafeDelete;
+
   chkNoError.Checked := Options.NoError;
   chkIgnoreRetrieveErrors.Checked := Options.IgnoreRetrieveErrors;
-  chkShowErrorsInBalloons.Checked := Options.ShowErrorsInBalloons;
-  chkRetrieveTop.Checked := Options.TopLines>0;
-  if chkRetrieveTop.Checked then edTopLines.Text := IntToStr(Options.TopLines);
-  chkGetBody.Checked := Options.GetBody;
-  chkGetBodySize.Checked := Options.GetBodySize > 0;
-  if chkGetBodySize.Checked then edGetBodySize.Text := IntToStr(Options.GetBodySize);
-  chkGetBodyLines.Checked := Options.GetBodyLines > 0;
-  if chkGetBodyLines.Checked then edGetBodyLines.Text := IntToStr(Options.GetBodyLines);
 
-  // Fix fonts
-  lblPop.Font := Options.GlobalFont;
-  lblError.Font := Options.GlobalFont;
-  lblMsgDl.Font := Options.GlobalFont;
-  lblPop.Font.Style := lblPop.Font.Style + [fsBold];
-  lblError.Font.Style := lblError.Font.Style + [fsBold];
-  lblMsgDl.Font.Style := lblMsgDl.Font.Style + [fsBold];
+  chkUseMAPI.Checked := Options.UseMAPI;
 
   // autosize
-  self.Font := Options.GlobalFont;
-  AutoSizeAllCheckBox(Self);
+  Options.Busy := False;
 
-  edTopLines.Left := chkRetrieveTop.Left + chkRetrieveTop.Width + 4;
+  self.Font.Assign(Options.GlobalFont);
+
+  CategoryPanelGroup1.HeaderFont.Assign(Options.GlobalFont);
+  CategoryPanelGroup1.HeaderFont.Style := CategoryPanelGroup1.HeaderFont.Style + [fsBold];
+  CategoryPanelGroup1.HeaderFont.Size := Options.GlobalFont.Size;
+
+  TranslateComponentFromEnglish(self);
+
+  AlignLabels();
+end;
+
+procedure TframeAdvancedOptions.AlignLabels;
+var
+  labelHeight : Integer;
+begin
+  //AutoSizeAllCheckBox(Self);
   edTimeOut.Left := lblTimeOut.Left + lblTimeOut.Width + 4;
   lblSeconds.Left := edTimeOut.Left + edTimeOut.Width + 4;
-  edGetBodySize.Left := chkGetBodySize.Left + chkGetBodySize.Width + 4;
-  lblGetBodySize.Left := edGetBodySize.Left + edGetBodySize.Width + 4;
-  edGetBodyLines.Left := chkGetBodyLines.Left + chkGetBodyLines.Width + 4;
-  lblGetBodyLines.Left := edGetBodyLines.Left + edGetBodyLines.Width + 4;
 
 
+  labelHeight := lblSeconds.Height; // height of checkboxes should be set to height of an autosized label
+  chkNoError.Height := labelHeight;
 
-  Options.Busy := False;
+  chkIgnoreRetrieveErrors.Height := labelHeight;
+  chkIgnoreRetrieveErrors.Top := calcPosBelow(chkNoError);
+  catErrHandling.ClientHeight := calcPosBelow(chkIgnoreRetrieveErrors);
+
+
+  chkQuickCheck.Height := labelHeight;
+  chkSafeDelete.Height := labelHeight;
+
+  chkQuickCheck.Top := calcPosBelow(edTimeOut);
+  chkSafeDelete.Top := calcPosBelow(chkQuickCheck);
+  catAdvProt.ClientHeight := calcPosBelow(chkSafeDelete);
+
+  chkUseMAPI.Height := labelHeight;
+  catMailClient.ClientHeight := calcPosBelow(chkUseMAPI);
+
+  CategoryPanelGroup1.Height := self.Height;
+
 end;
 
 procedure TframeAdvancedOptions.OptionsChange(Sender: TObject);
 begin
-  // show top lines
-  EnableControl(edTopLines,chkRetrieveTop.Checked);
-  // get body
-  if not chkGetBody.Checked then
-  begin
-    chkGetBodySize.Checked := false;
-    chkGetBodyLines.Checked := false;
-  end;
-  // get body size
-  chkGetBodySize.Enabled := chkGetBody.Checked;
-  lblGetBodySize.Enabled := chkGetBody.Checked;
-  EnableControl(edGetBodySize,chkGetBodySize.Checked);
-  // get body lines
-  chkGetBodyLines.Enabled := chkGetBody.Checked;
-  lblGetBodyLines.Enabled := chkGetBody.Checked;
-  EnableControl(edGetBodyLines,chkGetBodyLines.Checked);
+
   // other options
   if not Options.Busy then
   begin
@@ -141,36 +138,13 @@ begin
     Options.QuickCheck := chkQuickCheck.Checked;
     Options.SafeDelete := chkSafeDelete.Checked;
 
+    Options.UseMAPI := chkUseMAPI.Checked;
+
     Options.NoError := chkNoError.Checked;
     Options.IgnoreRetrieveErrors := chkIgnoreRetrieveErrors.Checked;
-    Options.ShowErrorsInBalloons := chkShowErrorsInBalloons.Checked;
 
-    Options.TopLines := StrToIntDef(edTopLines.Text,0);
-    Options.GetBody := chkGetBody.Checked;
-    Options.GetBodyLines := StrToIntDef(edGetBodyLines.Text,0);
-    Options.GetBodySize := StrToIntDef(edGetBodySize.Text,0);
-    // get body size
-    if edTopLines.Enabled and (Sender=chkRetrieveTop) then edTopLines.Text := '50';
-    if not edTopLines.Enabled then edTopLines.Text := '';
-    // get body size
-    if edGetBodySize.Enabled and (Sender=chkGetBodySize) then edGetBodySize.Text := '20';
-    if not edGetBodySize.Enabled then edGetBodySize.Text := '';
-    // get body lines
-    if edGetBodyLines.Enabled and (Sender=chkGetBodyLines) then edGetBodyLines.Text := '50';
-    if not edGetBodyLines.Enabled then edGetBodyLines.Text := '';
-    // rules area
-    if Options.GetBody then
-    begin
-      if TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) <> 'Body' then
-        frmPopUMain.cmbRuleArea.Items.Add(uTranslate.Translate('Body'));
-    end
-    else begin
-      if TranslateToEnglish(frmPopUMain.cmbRuleArea.Items[frmPopUMain.cmbRuleArea.Items.Count-1]) = 'Body' then
-        frmPopUMain.cmbRuleArea.Items.Delete(frmPopUMain.cmbRuleArea.Items.Count-1);
-    end;
-    // enable buttons
-    frmPopUMain.btnSaveOptions.Enabled := True;
-    frmPopUMain.btnCancel.Enabled := True;
+    // enable save button
+    funcEnableSaveBtn();
   end;
 end;
 
@@ -178,11 +152,6 @@ procedure TframeAdvancedOptions.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
-end;
-
-procedure TframeAdvancedOptions.FrameResize(Sender: TObject);
-begin
-    Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 end.

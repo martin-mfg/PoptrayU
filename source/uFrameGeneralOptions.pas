@@ -27,7 +27,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, StdCtrls, ExtCtrls;
+  Dialogs, StdCtrls, ExtCtrls, System.UITypes, Vcl.Grids, Vcl.ValEdit;
+
+type
+  TEnableSaveOptionsFunction = procedure of object;
 
 type
   TframeGeneralOptions = class(TFrame)
@@ -41,44 +44,44 @@ type
     lblFirstWait: TLabel;
     edFirstWait: TEdit;
     lblSeconds: TLabel;
-    lblStartup: TLabel;
-    lblTray: TLabel;
-    lblNewMsg: TLabel;
     cmbCheckingIcon: TComboBox;
     lblTrayIcon: TLabel;
     lblAdvInfoDelay: TLabel;
-    chkAdvInfo: TCheckBox;
+    chkDeluxeBalloon: TCheckBox;
     edAdvInfoDelay: TEdit;
     lblAdvInfoShowFor: TLabel;
+    CategoryPanelGroup1: TCategoryPanelGroup;
+    catStartup: TCategoryPanel;
+    catTrayIcon: TCategoryPanel;
+    catNotification: TCategoryPanel;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure FrameResize(Sender: TObject);
   private
     { Private declarations }
+    funcEnableSaveBtn : TEnableSaveOptionsFunction;
     procedure ShowFirstWait;
+    procedure AlignLabels;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
   end;
 
 implementation
 
-uses uMain, uGlobal, uRCUtils, uTranslate;
+uses uMain, uGlobal, uRCUtils, uTranslate, uPositioning;
 
 {$R *.dfm}
 
 { TframeGeneralOptions }
 
-constructor TframeGeneralOptions.Create(AOwner: TComponent);
-var
-  i : integer;
+constructor TframeGeneralOptions.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
-  inherited;
+  inherited Create(AOwner);
+  funcEnableSaveBtn := SaveButtonProc;
+
   Options.Busy := True;
-  TranslateFrame(self);
-  for i := 0 to cmbCheckingIcon.Items.Count-1 do
-    cmbCheckingIcon.Items[i] := Translate(cmbCheckingIcon.Items[i]);
   // options to screen
   chkStartUp.Checked := Options.StartUp;
   edFirstWait.Text := IntToStr(Options.FirstWait);
@@ -89,31 +92,126 @@ begin
   cmbCheckingIcon.ItemIndex := Options.CheckingIcon;
   chkShowForm.Checked := Options.ShowForm;
   chkBalloon.Checked := Options.Balloon;
-  chkAdvInfo.Checked := Options.AdvInfo;
+  chkDeluxeBalloon.Checked := Options.AdvInfo;
   edAdvInfoDelay.Text := IntToStr(Options.AdvInfoDelay);
+  Options.Busy := False;
 
-  // Fix non-cascadable fonts
-  lblStartup.Font := Options.GlobalFont;
-  lblTray.Font := Options.GlobalFont;
-  lblNewMsg.Font := Options.GlobalFont;
-  lblStartup.Font.Style := lblStartup.Font.Style + [fsBold];
-  lblTray.Font.Style := lblTray.Font.Style + [fsBold];
-  lblNewMsg.Font.Style := lblNewMsg.Font.Style + [fsBold];
 
-  // autosize
-  self.Font := Options.GlobalFont;
-  AutoSizeAllCheckBox(Self);
+  // Fix fonts
+  self.Font.Assign(Options.GlobalFont);
 
-  edFirstWait.Left := lblFirstWait.Left + lblFirstWait.Width + 4;
-  lblSeconds.Left := edFirstWait.Left + edFirstWait.Width + 4;
-  cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + 4;
+  CategoryPanelGroup1.HeaderFont.Assign(Options.GlobalFont);
+  CategoryPanelGroup1.HeaderFont.Style := CategoryPanelGroup1.HeaderFont.Style + [fsBold];
+  CategoryPanelGroup1.HeaderFont.Size := Options.GlobalFont.Size;
 
-  lblAdvInfoShowFor.Left := chkAdvInfo.Left + chkAdvInfo.Width + 2;
-  edAdvInfoDelay.Left := lblAdvInfoShowFor.Left + lblAdvInfoShowFor.Width + 2;
-  lblAdvInfoDelay.Left := edAdvInfoDelay.Left + edAdvInfoDelay.Width + 2;
+  TranslateComponentFromEnglish(self);
+  AlignLabels();
+
 
   ShowFirstWait;
-  Options.Busy := False;
+
+end;
+
+procedure TframeGeneralOptions.FrameResize(Sender: TObject);
+begin
+  AlignLabels();
+end;
+
+procedure TframeGeneralOptions.AlignLabels;
+const
+  vMargin = 3;
+  hMargin = 10;
+  gutter = 4;
+  indentSubItemsAmount = 30;
+var
+  labelHeight : Integer;
+  flowDirection : TFlowStyle;
+begin
+  AutoSizeCheckBox(chkDeluxeBalloon); // b/c this one has a label to it's right
+  AutosizeCombobox(cmbCheckingIcon, 110);
+
+  labelHeight := lblFirstWait.Height;
+
+  chkStartUp.Height := labelHeight;              // Row 1
+  chkMinimized.Height := labelHeight;            // Row 3
+
+  chkRotateIcon.Height := labelHeight;
+  chkResetTray.Height := labelHeight;
+
+  chkAnimated.Height := labelHeight;
+  chkShowForm.Height := labelHeight;
+  chkBalloon.Height := labelHeight;
+  chkDeluxeBalloon.Height := labelHeight;
+
+  // Startup section Labels
+
+  //chkStartUp.Top := (default)                  // Row 1
+    edFirstWait.Top := calcPosBelow(chkStartUp); // Row 2
+    lblFirstWait.Top := edFirstWait.Top + 3;
+    lblSeconds.Top := edFirstWait.Top + 3;
+  chkMinimized.Top := calcPosBelow(edFirstWait); // Row 3
+  catStartup.ClientHeight := calcPosBelow(chkMinimized);
+
+  // Tray Icon section labels
+  //chkRotateIcon.Top := (default)
+  chkResetTray.Top := calcPosBelow(chkRotateIcon);
+  cmbCheckingIcon.Top := calcPosBelow(chkResetTray);
+  cmbCheckingIcon.Left := CalcPosToRightOf(lblTrayIcon);
+  lblTrayIcon.Top := cmbCheckingIcon.Top + 3;
+  catTrayIcon.ClientHeight := calcPosBelow(cmbCheckingIcon) + 3; //extra margin to look more even with other components
+
+  // new message notification section labels
+  //chkAnimated.Top := (default)
+  chkShowForm.Top := calcPosBelow(chkAnimated);
+  chkBalloon.Top := calcPosBelow(chkShowForm);
+  chkDeluxeBalloon.Top := calcPosBelow(chkBalloon);
+    edAdvInfoDelay.Top := chkDeluxeBalloon.Top - 3;
+    lblAdvInfoDelay.Top := chkDeluxeBalloon.Top;
+    lblAdvInfoShowFor.Top := chkDeluxeBalloon.Top;
+  catNotification.ClientHeight := calcPosBelow(edAdvInfoDelay);
+
+  // Left-right positioning
+  if (Application.BiDiMode = bdLeftToRight) then begin
+    // left align - Western languages
+    //lblStartup.Left := gutter;
+    //chkStartUp.Left := gutter;
+    //chkMinimized.Left := gutter;
+
+    cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + hMargin;
+
+    lblAdvInfoShowFor.Left := chkDeluxeBalloon.Left + chkDeluxeBalloon.Width + hMargin + hMargin;
+
+    edFirstWait.Left := lblFirstWait.Left + lblFirstWait.Width + 3;
+    lblSeconds.Left := edFirstWait.Left + edFirstWait.Width + 3;
+    cmbCheckingIcon.Left := lblTrayIcon.Left + lblTrayIcon.Width + 3;
+
+    lblAdvInfoShowFor.Left := chkDeluxeBalloon.Left + chkDeluxeBalloon.Width + 3;
+    edAdvInfoDelay.Left := lblAdvInfoShowFor.Left + lblAdvInfoShowFor.Width + 3;
+    lblAdvInfoDelay.Left := edAdvInfoDelay.Left + edAdvInfoDelay.Width + 3;
+
+  end else begin
+    // Right align - RTL languages (Hebrew, Arabic)
+
+    chkStartUp.Left      := Self.Width - chkStartUp.Width - gutter;
+      lblFirstWait.Left    := Self.Width - lblFirstWait.Width - gutter - indentSubItemsAmount;
+      edFirstWait.Left   := lblFirstWait.Left - edFirstWait.Width - vMargin;
+      lblSeconds.Left    := edFirstWait.Left - lblSeconds.Width - vMargin;
+    chkMinimized.Left    := Self.Width - chkMinimized.Width - gutter;
+
+    chkRotateIcon.Left   := Self.Width - chkRotateIcon.Width - gutter;
+    chkResetTray.Left    := Self.Width - chkResetTray.Width - gutter;
+      lblTrayIcon.Left     := Self.Width - lblTrayIcon.Width - gutter - indentSubItemsAmount; //indent
+      cmbCheckingIcon.Left := lblTrayIcon.Left - cmbCheckingIcon.Width - hMargin; //to left of lblTrayIcon
+
+    chkAnimated.Left         := Self.Width - chkAnimated.Width - gutter;
+    chkShowForm.Left         := Self.Width - chkShowForm.Width - gutter;
+    chkDeluxeBalloon.Left    := Self.Width - chkDeluxeBalloon.Width - gutter - indentSubItemsAmount;
+      lblAdvInfoShowFor.Left := chkDeluxeBalloon.Left - lblAdvInfoShowFor.Width - 10;
+      edAdvInfoDelay.Left    := lblAdvInfoShowFor.Left - edAdvInfoDelay.Width - 3;
+      lblAdvInfoDelay.Left := edAdvInfoDelay.Left - lblAdvInfoDelay.Width - 3;
+
+  end;
+
 end;
 
 procedure TframeGeneralOptions.ShowFirstWait;
@@ -137,10 +235,10 @@ end;
 procedure TframeGeneralOptions.OptionsChange(Sender: TObject);
 begin
   // Enable/disable controls
-  EnableControl(chkAdvInfo, chkBalloon.Checked);
-  EnableControl(edAdvInfoDelay,chkAdvInfo.Checked AND chkBalloon.Checked);
-  lblAdvInfoShowFor.Enabled := chkAdvInfo.Checked AND chkBalloon.Checked;
-  lblAdvInfoDelay.Enabled := chkAdvInfo.Checked AND chkBalloon.Checked;
+  EnableControl(chkDeluxeBalloon, chkBalloon.Checked);
+  EnableControl(edAdvInfoDelay,chkDeluxeBalloon.Checked AND chkBalloon.Checked);
+  lblAdvInfoShowFor.Enabled := chkDeluxeBalloon.Checked AND chkBalloon.Checked;
+  lblAdvInfoDelay.Enabled := chkDeluxeBalloon.Checked AND chkBalloon.Checked;
 
   if not Options.Busy then
   begin
@@ -154,12 +252,12 @@ begin
     Options.CheckingIcon := cmbCheckingIcon.ItemIndex;
     Options.ShowForm := chkShowForm.Checked;
     Options.Balloon := chkBalloon.Checked;
-    Options.AdvInfo := chkAdvInfo.Checked;
+    Options.AdvInfo := chkDeluxeBalloon.Checked;
     Options.AdvInfoDelay := StrToIntDef(edAdvInfoDelay.Text,0);
     ShowFirstWait;
-    // buttons
-    frmPopUMain.btnSaveOptions.Enabled := True;
-    frmPopUMain.btnCancel.Enabled := True;
+
+    // enable save button
+    funcEnableSaveBtn();
   end;
 end;
 
@@ -167,11 +265,6 @@ procedure TframeGeneralOptions.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   frmPopUMain.QuickHelp(Sender, Button, Shift, X, Y);
-end;
-
-procedure TframeGeneralOptions.FrameResize(Sender: TObject);
-begin
-    Self.Refresh; //refresh to make labels not disappear in Vista
 end;
 
 end.
