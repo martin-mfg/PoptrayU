@@ -125,6 +125,10 @@ function TMailItems.FindMessage(MsgNum: Integer): TMailItem;
 var
   i : Integer;
 begin
+  if MsgNum < 0 then begin
+    Result := nil;
+    exit;
+  end;
   if NOT Options.ShowNewestMessagesOnly  then begin
     try
       Result := Items[MsgNum-1];
