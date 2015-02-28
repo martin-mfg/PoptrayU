@@ -232,8 +232,7 @@ type
     procedure ShowIcon(account : TAccount; IconType : TIconType);
     function ExecuteProgram(account : TAccount = nil) : boolean;
     procedure CheckAllMail;
-    function CheckMail(account : TAccount; Notify : boolean; ShowIt : boolean) : integer; overload;
-    function CheckMail(num : integer; Notify : boolean; ShowIt : boolean) : integer; overload;
+    function CheckMail(account : TAccount; Notify : boolean; ShowIt : boolean) : integer; 
     procedure ShowMailMessage(account : TAccount; i : integer);
     procedure ShowMail(account : TAccount; ClearIt : boolean);
     procedure SendMail(const ToAddress,Subject,Body : string);
@@ -285,7 +284,7 @@ type
     procedure Preview(MailItem : TMailItem; Account : TAccount);
     procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     function DeleteMails(account: TAccount; var DelCount : integer) : boolean;
-    function GetUIDs(const acctno : integer; var UIDLs : TStringList) : boolean;
+    function GetUIDs(account: TAccount; var UIDLs : TStringList) : boolean;
     function GetUID(account: TAccount; msgnum : integer) : string;
     function CheckUID(account: TAccount; msgnum : integer; UID : string='') : boolean;
     procedure MarkViewed(num : integer = -1);
@@ -701,7 +700,7 @@ begin
     begin
       if (not Accounts[num-1].DontCheckTimes) or (Accounts[num-1].DontCheckTimes
       and not BetweenTimes(Accounts[num-1])) then
-        CheckMail(num,not FNotified,True)
+        CheckMail(Accounts[num-1],not FNotified,True)
       else
       begin
         Accounts[num-1].Status := Translate('Skipped Checking')+HintSep+TimeToStr(Now);
@@ -780,14 +779,7 @@ begin
   Result := 0; // Indicate success
 end;
 
-// TEMP: Until CheckMail is re-written to not be based off account num we need an alt. signature
-// for deleting from preview window
 function TfrmPopUMain.CheckMail(Account : TAccount; Notify : boolean; ShowIt : boolean) : integer;
-begin
-  CheckMail(Account.AccountNum, Notify, ShowIt); //TODO: pass objects
-end;
-
-function TfrmPopUMain.CheckMail(num : integer; Notify : boolean; ShowIt : boolean) : integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Check for mail on 1 account
 var
@@ -804,11 +796,8 @@ var
   ForceShow : boolean;
   firstMsgToDownload : integer;
 
-  account : TAccount;
 begin
   Result := 0;
-
-  account := Accounts[num-1];
 
   // check if online
   if Options.Online then
@@ -879,7 +868,7 @@ begin
         begin //QUICKCHECK
           UIDLs := TStringList.Create;
           try
-            quickchecking := GetUIDs(num,UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+            quickchecking := GetUIDs(account,UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
             if quickchecking then
             begin
               // clear all msgnums
@@ -905,7 +894,7 @@ begin
               if account.Mail.DeleteAllMsgNum(-1) then
                 ForceShow := True;
               // mismatch
-              if ShowIt and Options.ShowWhileChecking and (tabMail.TabIndex+1=num) then
+              if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
               begin
                 for i := 0 to lvMail.Items.Count-1 do
                 begin
@@ -1811,20 +1800,20 @@ begin
 end;
 
 // @Return true if account supports UIDL
-function TfrmPopUMain.GetUIDs(const acctno: integer; var UIDLs : TStringList): boolean;
+function TfrmPopUMain.GetUIDs(account : TAccount; var UIDLs : TStringList): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Get list of UIDS. Must be connected.
 var
   pUIDL : PChar;
 begin
   try
-    if Accounts[acctno-1].UIDLSupported then
+    if account.UIDLSupported then
     begin
-      Result := Accounts[acctno-1].Prot.UIDL(pUIDL);
+      Result := account.Prot.UIDL(pUIDL);
       UIDLs.SetText(pUIDL);
-      Accounts[acctno-1].Prot.FreePChar(pUIDL);
+      account.Prot.FreePChar(pUIDL);
       if not Result then
-        Accounts[acctno-1].UIDLSupported := False;
+        account.UIDLSupported := False;
     end
     else begin
       Result := False;
@@ -3075,7 +3064,7 @@ begin
       // because it's during no-check hours for that account)
       if (not Accounts[acc-1].DontCheckTimes) or (Accounts[acc-1].DontCheckTimes
       and not BetweenTimes(Accounts[acc-1])) then
-        CheckMail(acc, not FNotified,True)
+        CheckMail(Accounts[acc-1], not FNotified,True)
       else
       begin
         // Account is "sleeping"
@@ -3192,7 +3181,7 @@ begin
                            DeleteSpam(Accounts[num-1],false);
     cmdMarkViewed      : actMarkViewed.Execute;
     cmdCheckFirst      : begin
-                           CheckMail(1,True,True);
+                           CheckMail(Accounts[0],True,True);
                            CallNotifyPlugins;
                          end;
     cmdStopChecking    : StopAll;
@@ -4102,7 +4091,7 @@ begin
   else begin
     if Options.SafeDelete and not Accounts[tabMail.TabIndex].UIDLSupported then
       warning := Translate('WARNING: This account does NOT support Safe Delete.')+ #13#10#13#10;
-    SaveTab := tabMail.TabIndex+1;
+    SaveTab := tabMail.TabIndex+1; //TODO: tabToAccount
     Accounts[SaveTab-1].Error := False;
     if lvMail.SelCount = 1 then
     begin
@@ -4146,7 +4135,7 @@ begin
       if not Options.DeleteNextCheck then
       begin
         // recheck and delete
-        if CheckMail(SaveTab,False,True) < 0 then
+        if CheckMail(Accounts[SaveTab-1],False,True) < 0 then
           lvMail.Clear;
         CallNotifyPlugins;
       end;
@@ -4309,7 +4298,7 @@ begin
   FShiftClick := GetKeyState(VK_SHIFT) < 0;
   if tabMail.TabIndex >= 0 then
   begin
-    CheckMail(tabMail.TabIndex+1,True,True);
+    CheckMail(Accounts[tabMail.TabIndex],True,True);   //TODO: tabToAccount
     CallNotifyPlugins;
   end;
 end;
