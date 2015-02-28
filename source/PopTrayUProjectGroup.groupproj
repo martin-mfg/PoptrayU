@@ -18,18 +18,6 @@
         <Projects Include="dunit\PopTrayUTestSuite.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\..\..\..\Indy10\System\IndySystem180.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="..\..\..\..\Indy10\Protocols\dclIndyProtocols170.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="..\..\..\..\Indy10\Protocols\IndyProtocols180.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="..\..\..\..\Indy10\Core\IndyCore180.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -83,50 +71,14 @@
     <Target Name="PopTrayUTestSuite:Make">
         <MSBuild Projects="dunit\PopTrayUTestSuite.dproj" Targets="Make"/>
     </Target>
-    <Target Name="IndySystem180">
-        <MSBuild Projects="..\..\..\..\Indy10\System\IndySystem180.dproj"/>
-    </Target>
-    <Target Name="IndySystem180:Clean">
-        <MSBuild Projects="..\..\..\..\Indy10\System\IndySystem180.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="IndySystem180:Make">
-        <MSBuild Projects="..\..\..\..\Indy10\System\IndySystem180.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="dclIndyProtocols170">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\dclIndyProtocols170.dproj"/>
-    </Target>
-    <Target Name="dclIndyProtocols170:Clean">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\dclIndyProtocols170.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="dclIndyProtocols170:Make">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\dclIndyProtocols170.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="IndyProtocols180">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\IndyProtocols180.dproj"/>
-    </Target>
-    <Target Name="IndyProtocols180:Clean">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\IndyProtocols180.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="IndyProtocols180:Make">
-        <MSBuild Projects="..\..\..\..\Indy10\Protocols\IndyProtocols180.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="IndyCore180">
-        <MSBuild Projects="..\..\..\..\Indy10\Core\IndyCore180.dproj"/>
-    </Target>
-    <Target Name="IndyCore180:Clean">
-        <MSBuild Projects="..\..\..\..\Indy10\Core\IndyCore180.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="IndyCore180:Make">
-        <MSBuild Projects="..\..\..\..\Indy10\Core\IndyCore180.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="PopTrayU;HTMLP;CoolTrayIcon_D140;Log4Dproject;PopTrayUTestSuite;IndySystem180;dclIndyProtocols170;IndyProtocols180;IndyCore180"/>
+        <CallTarget Targets="PopTrayU;HTMLP;CoolTrayIcon_D140;Log4Dproject;PopTrayUTestSuite"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="PopTrayU:Clean;HTMLP:Clean;CoolTrayIcon_D140:Clean;Log4Dproject:Clean;PopTrayUTestSuite:Clean;IndySystem180:Clean;dclIndyProtocols170:Clean;IndyProtocols180:Clean;IndyCore180:Clean"/>
+        <CallTarget Targets="PopTrayU:Clean;HTMLP:Clean;CoolTrayIcon_D140:Clean;Log4Dproject:Clean;PopTrayUTestSuite:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="PopTrayU:Make;HTMLP:Make;CoolTrayIcon_D140:Make;Log4Dproject:Make;PopTrayUTestSuite:Make;IndySystem180:Make;dclIndyProtocols170:Make;IndyProtocols180:Make;IndyCore180:Make"/>
+        <CallTarget Targets="PopTrayU:Make;HTMLP:Make;CoolTrayIcon_D140:Make;Log4Dproject:Make;PopTrayUTestSuite:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
