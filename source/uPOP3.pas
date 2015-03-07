@@ -73,7 +73,8 @@ implementation
     IdSASLUserPass, IdSASLPlain, IdSASLSKey,                            //SASL
     IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous,           //SASL
     IdException, IdSASLCollection, IdExceptionCore, IdStack,
-    IdLogFile, IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3;
+    IdLogFile, IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3,
+    uIniSettings;
   const
     debugPop = false;
   var
@@ -117,7 +118,7 @@ begin
   if (debugPop) then
   begin
     DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= 'c:\temp\pop_debug.log';
+    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'pop_debug.log';
     DebugLogger.Active:= True;
     POP.Intercept:= TIdConnectionIntercept(DebugLogger);
   end;
