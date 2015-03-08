@@ -71,10 +71,10 @@
         <DCC_N>true</DCC_N>
         <DCC_F>false</DCC_F>
         <DebugSourcePath>$(DELPHI)\Comp\Indy\Source;C:\Delphi6\Comp\Indy\Source\;C:\Program Files\Indy 9 for Delphi 6\Source;$(DebugSourcePath)</DebugSourcePath>
-        <DCC_DcuOutput>C:\code\poptray\branches\xe4\source\output\dcu\</DCC_DcuOutput>
-        <DCC_ExeOutput>C:\code\poptray\branches\xe4\source\output\</DCC_ExeOutput>
-        <DCC_DcpOutput>C:\code\poptray\branches\xe4\source\output\dcp\</DCC_DcpOutput>
-        <DCC_BplOutput>C:\code\poptray\branches\xe4\source\output\bpl\</DCC_BplOutput>
+        <DCC_DcuOutput>C:\code\poptray\trunk\source\output\dcu\</DCC_DcuOutput>
+        <DCC_ExeOutput>C:\code\poptray\trunk\source\output\</DCC_ExeOutput>
+        <DCC_DcpOutput>C:\code\poptray\trunk\source\output\dcp\</DCC_DcpOutput>
+        <DCC_BplOutput>C:\code\poptray\trunk\source\output\bpl\</DCC_BplOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <VerInfo_Release>0</VerInfo_Release>
@@ -104,11 +104,12 @@
         <DCC_Optimize>false</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Release>2</VerInfo_Release>
+        <DCC_DcuOutput>C:\code\poptray\trunk\source\output\dcu\</DCC_DcuOutput>
+        <DCC_ExeOutput>C:\code\poptray\trunk\source\output\</DCC_ExeOutput>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Build>6</VerInfo_Build>
-        <DCC_BplOutput>C:\code\poptray\branches\xe4\source\output\bpl\</DCC_BplOutput>
-        <DCC_DcpOutput>C:\code\poptray\branches\xe4\source\output\dcp\</DCC_DcpOutput>
+        <DCC_BplOutput>C:\code\poptray\trunk\source\output\bpl\</DCC_BplOutput>
+        <DCC_DcpOutput>C:\code\poptray\trunk\source\output\dcp\</DCC_DcpOutput>
         <DCC_UnitSearchPath>C:\code\poptray\branches\xe4\source\log4d;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <Debugger_RunParams>/MULTIPLE /TRANSLATE</Debugger_RunParams>
         <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
