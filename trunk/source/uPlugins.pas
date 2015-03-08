@@ -20,7 +20,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 interface
 
 uses
-  SysUtils;
+  SysUtils, System.Generics.Collections, IdMailBox, IdMessage;
 
 const
   INTERFACE_VERSION = 1;
@@ -107,6 +107,9 @@ type
     function CountMessages(): LongInt; virtual;
     procedure Expunge; virtual;
     function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
+    function GetUnseenUids(): TLongIntArray;  virtual;
+    function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; virtual;
+    function RetrieveMsgSizeByUID(const AMsgUID : String) : integer; virtual;
   end;
 
 var
@@ -331,5 +334,19 @@ begin
     Result := false;
 end;
 
+function TPluginProtocol.GetUnseenUids(): TLongIntArray;
+begin
+  Result := nil;
+end;
+
+function TPluginProtocol.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
+begin
+  Result := false;
+end;
+
+function TPluginProtocol.RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
+begin
+  Result := -1;
+end;
 
 end.
