@@ -632,7 +632,7 @@ begin
     end;
   end;
   account.Prot := Protocols[found].Prot;
-  account.Prot.SetOnWork(frmPopUMain.OnProtWork);
+  account.Prot.SetOnWork(frmPopUMain.OnPreviewDownloadProgressChange);
 end;
 
 
