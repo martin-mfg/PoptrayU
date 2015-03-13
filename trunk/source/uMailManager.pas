@@ -7,14 +7,14 @@ uses
   uPlugins, uPreview, uMailItems,
   IdResourceStringsProtocols, IdMessage, IdComponent;
 
-type
-  TMailManager = Class (TComponent) //Changed from TObject
-  private
-    FPreview : Boolean;
-    FMsgRead : integer;
+//type
+  //TMailManager = Class (TComponent) //Changed from TObject
+  //private
+    //FPreview : Boolean;
+    //FMsgRead : integer;
 
 
-  end;
+  //end;
 
 implementation
   uses

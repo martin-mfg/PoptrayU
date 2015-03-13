@@ -34,7 +34,7 @@ uses
   SHDocVw_TLB, ActiveX, OleCtrls, SHDocVw,
   IdAttachment, IdText, IdAttachmentFile,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnPopup, System.Actions,
-  uAccounts, uMailItems, uWebBrowserTamed;
+  uAccounts, uMailItems, uWebBrowserTamed, IdComponent, PngImageList;
 
 type
   TfrmPreview = class(TForm)
@@ -113,11 +113,13 @@ type
     ShowImages1: TMenuItem;
     ShowImages2: TMenuItem;
     N1: TMenuItem;
-    imlActionsDark: TImageList;
     imlEditImages: TImageList;
     lblStatusText: TLabel;
     FindDialog1: TFindDialog;
     Find1: TMenuItem;
+    ActMarkRead: TAction;
+    ActMarkUnread: TAction;
+    imlActionsPng: TPngImageList;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -163,6 +165,8 @@ type
       bstrUrl: WideString);
     procedure Find1Click(Sender: TObject);
     procedure FindDialog1Find(Sender: TObject);
+    procedure ActMarkReadExecute(Sender: TObject);
+    procedure ActMarkUnreadExecute(Sender: TObject);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -171,6 +175,14 @@ type
     FToolbarFileName : string;
     FCustomized : boolean;
     FEnter : boolean;
+    FMsg : TMailItem;
+    FUID : string; //TODO: may no longer be needed?
+    FReplyTo : string;
+    FTab : integer;
+    FBody : string;
+    FHtml : string;
+    FProtected : boolean;
+    FDecoded : boolean;
     HtmlImagesEnabled : boolean;
     browserShowingHeaders : boolean;
     procedure DeleteTempFiles;
@@ -178,25 +190,25 @@ type
     procedure LoadActionManager;
     procedure SaveActionManager;
     procedure SaveDialogTypeChange(Sender:TObject);
+
   public
     { Public declarations }
-    FTab : integer;    
+
     FStop : Boolean;
-    FDecoded : boolean;
-    IniName : string;
-    FMsg : TMailItem;
     FAccount : TAccount;
-    FUID : string; //TODO: may no longer be needed?
-    FReplyTo : string;
     FRawMsg : string;
-    FBody : string;
-    FHtml : string;
-    FProtected : boolean;
-    procedure GetINI;
-    procedure SaveINI;
+
+    procedure LoadPreviewIni;
+    procedure SavePreviewIni;
+    procedure SaveINItoFile(const filename : String);
+    procedure LoadPreviewIniFile(const filename : String);
     function AttachmentIcon(filename : string) : integer;
     procedure ShowMsg;
     procedure SelectSpamTab;
+    procedure conditionallyEnableDeleteButton;
+    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
+    procedure EnableImapOptions(enable : boolean);
+    procedure LoadMailMessage(MailItem : TMailItem);
   end;
 
 const
@@ -214,7 +226,8 @@ uses
   uRCUtils, uMain, uDM, uGlobal, uTranslate, System.UITypes,
   IniFiles, ShellAPI, CommCtrl, TypInfo, uHtmlDecoder, uIniSettings,
   RegularExpressions, EncdDecd, MSHTML, Variants, System.Types,
-  IdAttachmentMemory, IdGlobal, IdGlobalProtocols, CommDlg, Dlgs;
+  IdAttachmentMemory, IdGlobal, IdGlobalProtocols, CommDlg, Dlgs,
+  IdMessageClient, IdIMAP4, uIMAP4;
 
 const
   iconNone = 0;
@@ -228,10 +241,56 @@ const
   iconMusic = 8;
   iconMovie = 9;
 
+
+
 function Translate(english : string) : string;
 begin
   Result := uTranslate.Translate(english);
 end;
+
+
+// enables the delete button if the message has a valid UID for safe deletion.
+procedure TfrmPreview.conditionallyEnableDeleteButton();
+begin
+  if (FUID <> '') and (Copy(FUID,1,5) <> 'Error') and Options.SafeDelete then
+  begin
+    actDelete.Enabled := True;
+    actDelete.Hint := Translate('Delete this message from server');
+  end
+  else begin
+    actDelete.Enabled := False;
+    actDelete.Hint := Translate('Delete Button only available when using Safe Delete option');
+  end;
+end;
+
+
+procedure TfrmPreview.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
+var
+  MessageClient : TIdMessageClient;
+  LIOHandler: TIdIOHandlerStreamMsg;
+begin
+  LIOHandler := TIdIOHandlerStreamMsg.Create(nil, AStream);
+  try
+    LIOHandler.FreeStreams := False;
+    LIOHandler.MaxLineAction := TIdMaxLineAction.maSplit;
+
+    MessageClient := TIdMessageClient.Create(Self);
+    MessageClient.OnWork := frmPopUMain.OnProcessWork;
+    MessageClient.IOHandler := LIOHandler;
+
+    try
+      MessageClient.IOHandler.Open;
+      MessageClient.ProcessMessage(AMsg, AHeaderOnly);
+    finally
+      MessageClient.IOHandler := nil;
+    end;
+  finally
+    MessageClient.Free;
+    LIOHandler.Free;
+  end;
+end;
+
+
 
 procedure TfrmPreview.WndProc(var Message: TMessage);
 var
@@ -294,34 +353,38 @@ var
 begin
   if FileExists(FToolbarFileName) then
   begin
-    S := TFileStream.Create(FToolbarFileName, fmOpenRead or fmShareDenyWrite);
     try
-      S2 := TMemoryStream.Create;
+      S := TFileStream.Create(FToolbarFileName, fmOpenRead or fmShareDenyWrite);
       try
-        ObjectBinaryToText(S,S2);
-        S2.Position := 0;
-        SetLength(st,S2.Size);
-        S2.Read(st[1],S2.Size);
-        st := AnsiReplaceStr(st,'frmPreviewInstance',Self.Name);
-        S2.Clear;
-        S2.Write(st[1],Length(st));
-        S3 := TMemoryStream.Create;
+        S2 := TMemoryStream.Create;
         try
+          ObjectBinaryToText(S,S2);
           S2.Position := 0;
-          ObjectTextToBinary(S2,S3);
-          S3.Position := 0;
-            Try
-              ActionManagerPreview.LoadFromStream(S3);
-            Except on EAccessViolation do begin end;
-            End;
+          SetLength(st,S2.Size);
+          S2.Read(st[1],S2.Size);
+          st := AnsiReplaceStr(st,'frmPreviewInstance',Self.Name);
+          S2.Clear;
+          S2.Write(st[1],Length(st));
+          S3 := TMemoryStream.Create;
+          try
+            S2.Position := 0;
+            ObjectTextToBinary(S2,S3);
+            S3.Position := 0;
+              Try
+                ActionManagerPreview.LoadFromStream(S3);
+              Except on EAccessViolation do begin end;
+              End;
+          finally
+            S3.Free;
+          end;
         finally
-          S3.Free;
+          S2.Free;
         end;
       finally
-        S2.Free;
+        S.Free;
       end;
-    finally
-      S.Free;
+    Except on E : Exception do
+      ShowTranslatedDlg(Translate('Error loading toolbar customizations. (PopTrayU error #418'), mtError, [mbOK], 0);
     end;
   end;
 end;
@@ -361,8 +424,12 @@ begin
   end;
 end;
 
+procedure TfrmPreview.LoadPreviewIni;
+begin
+  self.LoadPreviewIniFile(uIniSettings.IniName);
+end;
 
-procedure TfrmPreview.GetINI;
+procedure TfrmPreview.LoadPreviewIniFile(const filename : String);
 var
   Ini : TIniFile;
   NewLeft,NewTop,cnt : integer;
@@ -371,7 +438,7 @@ begin
   // load toolbar
   LoadActionManager;
   // load from ini
-  Ini := TIniFile.Create(IniName);
+  Ini := TIniFile.Create(filename);
   try
     // options
     memMail.ReadOnly := Ini.ReadBool('Preview','ReadOnly',True);
@@ -463,14 +530,19 @@ begin
     end;
 end;
 
-procedure TfrmPreview.SaveINI;
+procedure TfrmPreview.SavePreviewIni;
+begin
+  SaveINItoFile(uIniSettings.IniName);
+end;
+
+procedure TfrmPreview.SaveINItoFile(const filename : String);
 var
   Ini : TIniFile;
 begin
   // save toolbar
   SaveActionManager;
   // save to ini
-  Ini := TIniFile.Create(IniName);
+  Ini := TIniFile.Create(filename);
   try
     // options
     Ini.WriteBool('Preview','ReadOnly',memMail.ReadOnly);
@@ -906,10 +978,10 @@ begin
   lblXMailer.Height := labelHeight;
   edXMailer.Height := labelHeight;
 
-  if (Options.ToolbarColorScheme = schemeDark) then
-    toolbarPreview.ActionManager.images := imlActionsDark
-  else
-    toolbarPreview.ActionManager.Images := imlActions;
+  //if (Options.ToolbarColorScheme = schemeDark) then
+  //  toolbarPreview.ActionManager.images := imlActionsDark
+  //else
+  //  toolbarPreview.ActionManager.Images := imlActionsPng;
 
   //Replace TWebBrowser with extended TWebBrowser that disables images
   //TODO: destructor this created object
@@ -966,7 +1038,7 @@ end;
 
 procedure TfrmPreview.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  SaveINI;
+  SavePreviewIni;
   DeleteTempFiles;
   Action := caFree;
 end;
@@ -1510,6 +1582,31 @@ begin
   memMail.ReadOnly := actEditReadOnly.Checked;
 end;
 
+procedure TfrmPreview.ActMarkReadExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+  AFlags : TIdMessageFlagsSet;
+begin
+  if FAccount.IsImap then begin
+    if not FAccount.Prot.Connected then
+      frmPopUMain.ConnectAccount(FAccount);
+    FAccount.Prot.MakeRead(FUID, true);
+  end;
+end;
+
+procedure TfrmPreview.ActMarkUnreadExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+  AFlags : TIdMessageFlagsSet;
+begin
+  if FAccount.IsImap then begin
+    if not FAccount.Prot.Connected then
+      frmPopUMain.ConnectAccount(FAccount);
+    FAccount.Prot.MakeRead(FUID, false);
+  end;
+end;
+
+
 procedure TfrmPreview.actShowImagesExecute(Sender: TObject);
 begin
   HtmlImagesEnabled := actImageToggle.Checked;
@@ -1574,7 +1671,7 @@ begin
   MsgLines := TStringlist.Create;
   try
     MsgLines.Add(FRawMsg);
-    fName := ExtractFilePath(IniName)+Options.TempEmailFilename;
+    fName := uIniSettings.IniPath+Options.TempEmailFilename;
     MsgLines.SaveToFile(fname); //TODO: should this be unicode?
     ExecuteFile(fname,'','',SW_NORMAL);
   finally
@@ -1610,6 +1707,28 @@ begin
     lblStatusText.Caption := ''
   else
     lblStatusText.Caption := Text;
+end;
+
+procedure TfrmPreview.EnableImapOptions(enable : boolean);
+begin
+  ActMarkRead.Enabled := enable;
+  ActMarkUnread.Enabled := enable;
+end;
+
+procedure TfrmPreview.LoadMailMessage(MailItem : TMailItem);
+begin
+  FMsg := MailItem;
+  FProtected := MailItem.Protect;
+  FUID := MailItem.UID;
+  FDecoded := False;
+
+  conditionallyEnableDeleteButton(); //based on whether or not a UID is valid (and Options.SafeDelete)
+  btnOK.Enabled := False;
+
+  // force tab to plaintext for spam msgs
+  if (MailItem.Spam) then
+    frmPreview.SelectSpamTab;
+
 end;
 
 end.

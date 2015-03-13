@@ -250,7 +250,7 @@ type
     procedure OnSetLanguage();
   private
     { Private declarations }
-    FMsgSize,FMsgRead : integer;
+    FMsgRead : integer;
     FPreview : Boolean;
     FShownRules : Boolean;
     FShutDown : Boolean;
@@ -282,7 +282,7 @@ type
 
     // mail messages
     procedure Preview(MailItem : TMailItem; Account : TAccount);
-    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
+//    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     function DeleteMails(account: TAccount; var DelCount : integer) : boolean;
     function GetUIDs(account: TAccount; var UIDLs : TStringList) : boolean;
     function GetUID(account: TAccount; msgnum : integer) : string;
@@ -292,10 +292,12 @@ type
     function SelectedMailItem(Item : TListItem = nil) : TMailItem;
     procedure RunMessage(account: TAccount; msgnum: integer);
     function GetMessageHeader(account : TAccount; msgnum : integer) : boolean;
+    function GetMessageHeaderByUID(account : TAccount; uid : string) : boolean;
     procedure SetSelectedMailItemStatus(Statusses : TMailItemStatusSet; SetIt : boolean);
     function CountSelectedMailItemStatus(Statusses: TMailItemStatusSet) : integer;
     function DoFullAccountCheck(account : TAccount) : integer;
     function DoFullAccountCheckRecentOnly(account : TAccount) : integer;
+    function DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
     // visual
     function GetTrayColor(num : integer) : TColor;
     procedure UpdateTrayIcon;
@@ -314,7 +316,7 @@ type
 
     // procedural
     procedure Quit;
-    procedure ConnectAccount(Account : TAccount);
+
     procedure RunQueue;
     procedure RegisterTheHotKeys;
     procedure UnRegisterTheHotKeys;
@@ -338,18 +340,22 @@ type
     procedure OnAccountTimer(Sender: TObject);
     procedure OnFirstWait(Sender: TObject);
     procedure OnHint(Sender : TObject);
-    procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual;
+
     procedure OnMinimize(Sender: TObject);
 
     procedure SetColumnGroups();
     procedure AddFormToTab(parentTab : TTabSheet; form : TForm);
+
   public
     FKB : string; //UI label for kilobytes in the current language
 
-    procedure OnProtWork(const AWorkCount: Integer);  //TODO: this used to be private
     procedure SwitchTimer; //TODO: this used to be private
     procedure TestAccount(account : TAccount);
     procedure OptionsRefresh();
+
+    procedure OnProtWork(const AWorkCount: Integer); //todo can this be made private later?
+    procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual;
+    procedure ConnectAccount(Account : TAccount);
   published
     Destructor  Destroy; override;
   end;
@@ -380,7 +386,7 @@ uses
   IniFiles,  ShellAPI,  StrUtils, Types, uFrameVisualAppearance,
   IdEMailAddress, IdResourceStrings, uTranslate, uIniSettings, uFontUtils,
   IdReplyPOP3, IdExceptionCore, uRegExp, IdIOHandler, Math, OtlParallel,
-  DateUtils;
+  DateUtils, IdMailBox;
 
 
 
@@ -390,8 +396,8 @@ const
   sdDesc = -1;
 
   // lvMail columns
-  colID = 4;
-  colDate = 5;
+  colID = 4;    // for the ID of the message on the server
+  colDate = 5;  // for the internal representation of the date (not the display version)
   NOSORT = -1;
 
   DONT_MARK_AS_VIEWED = false;
@@ -766,8 +772,61 @@ begin
   account.LastMsgCount := mailcount;
   if mailcount>0 then
     for i := firstMsgToDownload to mailcount do
+  begin
+    if not GetMessageHeader(account,i) then
     begin
-      if not GetMessageHeader(account,i) then
+      Result := -1; // signal checking error
+      //break //commenting out to allow checking additional msgs after an error containing message
+    end;
+    // progress
+    Progress.Position := i;
+    Application.ProcessMessages;
+  end;
+  Result := 0; // Indicate success
+end;
+
+
+function TfrmPopUMain.DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
+var
+  i, msgNum : integer;          // loop counter
+  mailcount : integer;  // How many new messages are on the server
+  uidList : TIntArray;
+begin
+  // clear visual list - if current tab is showing this account
+  if Accounts[tabMail.TabIndex] = account then
+    lvMail.Items.Clear;
+  // normal check (non-quick)
+  mailcount := 0;//account.Prot.CheckMessages; // get number of messages
+  account.Mail.Clear;
+
+
+  // 1. imap.SelectInbox();
+  // 2. List<long> uids = imap.Search(Flag.Unseen);
+  // 3. foreach (long uid in uids)
+    // 3a. eml = imap.GetMessageByUID(uid)
+    // 3b. parse email and deal with it
+
+  if (account.Prot.ProtocolType <> protIMAP4) then
+    exit;
+
+
+  uidList := account.Prot.GetUnseenUids();
+
+  if Assigned(uidList) then begin
+    mailcount := Length(uidList);
+  end;
+
+  if mailcount>0 then begin
+    account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('unread message(s)')+'...';
+    StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+
+    Progress.Max := mailcount;
+    account.LastMsgCount := mailcount;
+
+    for i := mailcount -1 downto 0 do
+    begin
+      //msgNum := uidList[i]
+      if not GetMessageHeaderByUID(account,IntToStr(uidList[i])) then
       begin
         Result := -1; // signal checking error
         //break //commenting out to allow checking additional msgs after an error containing message
@@ -776,7 +835,10 @@ begin
       Progress.Position := i;
       Application.ProcessMessages;
     end;
-  Result := 0; // Indicate success
+    Result := 0; // Indicate success
+  end;
+
+
 end;
 
 function TfrmPopUMain.CheckMail(Account : TAccount; Notify : boolean; ShowIt : boolean) : integer;
@@ -861,6 +923,7 @@ begin
 
       try
 
+//DoFullAccountCheckUnseenOnly(account); //!!!!!!!!!!!!! for testing only
 
         // quick check (Shift-click causes a full check instead)
         quickchecking := false;
@@ -872,7 +935,7 @@ begin
             if quickchecking then
             begin
               // clear all msgnums
-              account.Mail.SetAllMsgNum(-1);
+              account.Mail.ClearAllMsgNums();
               if Notify then
               begin
                 account.Mail.SetAllNew(false);
@@ -891,8 +954,9 @@ begin
                 end;
               end;
               // delete the mailitems no longer on server
-              if account.Mail.DeleteAllMsgNum(-1) then
-                ForceShow := True;
+              if account.Mail.RemoveDeletedMessages() then begin//removes all msgs with MsgNum = -1
+                ForceShow := True; //ForceShow is set if messages were removed from the list because they are not on the server (eg: deleted)
+              end;
               // mismatch
               if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
               begin
@@ -1053,29 +1117,32 @@ end;
 
 // Adds an individual email message to the listview of new/read emails
 procedure TfrmPopUMain.ShowMailMessage(account : TAccount; i : integer);
+var
+  mailItem : TMailItem;
 begin
+  mailItem := account.Mail[i];
 
   // Messages that have already been seen are hidden if "Hide Viewed Messages"
   // is selected in options.
-  if not( Options.HideViewed and account.Mail[i].Viewed ) then
+  if not( Options.HideViewed and mailItem.Viewed ) then
   begin
     with lvMail.Items.Add do
     begin
       // icon
-      ImageIndex := GetStatusIcon(account.Mail[i]);
-      if account.Mail[i].Viewed then
+      ImageIndex := GetStatusIcon(mailItem);
+      if mailItem.Viewed then
         StateIndex := -1
       else
         StateIndex := 1;
       // listview info
-      Caption := account.Mail[i].From;
-      SubItems.Add(account.Mail[i].MailTo);
-      SubItems.Add(account.Mail[i].Subject);
-      SubItems.Add(account.Mail[i].DateStr);
-      SubItems.Add(IntToStr(account.Mail[i].Size) + ' ' + FKB);
-      SubItems.Add(IntToStr(account.Mail[i].MsgNum)); //colID
-      SubItems.Add(FloatToStr(account.Mail[i].Date)); //colDate
-
+      Caption := mailItem.From;
+      SubItems.Add(mailItem.MailTo);
+      SubItems.Add(mailItem.Subject);
+      SubItems.Add(mailItem.DateStr);
+      SubItems.Add(IntToStr(mailItem.Size) + ' ' + FKB);
+      SubItems.Add(IntToStr(mailItem.MsgNum)); //colID
+      SubItems.Add(FloatToStr(mailItem.Date)); //colDate
+      Data := mailItem;
     end;
   end;
 end;
@@ -1191,7 +1258,7 @@ begin
     if Accounts[tabMail.TabIndex]=Account then begin
       for i := 0 to lvMail.Items.Count-1 do
       begin
-        if StrToInt(lvMail.Items[i].SubItems[colID]) = MailItem.MsgNum then
+        if lvMail.Items[i].Data = MailItem then
           lvMail.Items[i].ImageIndex := mToDelete;
       end;
     end;
@@ -1501,7 +1568,27 @@ begin
   Application.ProcessMessages;
 end;
 
+procedure TfrmPopUMain.OnProtWork(const AWorkCount: Integer);
+begin
+  if FPreview and not(FMinimized) and Assigned(frmPreview) then
+  begin
+    frmPreview.Progress.StepBy(AWorkCount-FMsgRead);
+    FMsgRead := AWorkCount;
+    Application.ProcessMessages;
+    if frmPreview.FStop then
+    begin
+      frmPreview.FAccount.Prot.SetOnWork(nil);
+      frmPreview.FAccount.Prot.Disconnect;
+      Abort;
+    end;
+  end;
+end;
 
+procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode;
+   AWorkCount: Int64);
+begin
+  OnProtWork(AWorkCount);
+end;
 
 // ----------------------------------------------------------- mail messages ---
 
@@ -1509,6 +1596,7 @@ procedure TfrmPopUMain.Preview(MailItem : TMailItem; Account : TAccount);
 ////////////////////////////////////////////////////////////////////////////////
 // Open preview window and download the message
 var
+  mMsgSize : integer;
   i : integer;
   RawMsg : TStringList;
   TmpStream : TMemoryStream;
@@ -1530,210 +1618,175 @@ begin
     Exit;
   end;
 
-  with Account.Prot do
-  begin
-    SetOnWork(OnProtWork);
-    // connect
-    if Connected then Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
-    Screen.Cursor := crHourGlass;
-    if not Connected then
-      ConnectAccount(Account);
-    Screen.Cursor := crDefault;
+
+
+  Account.Prot.SetOnWork(OnProtWork);
+  // connect
+  Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
+  if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
+  if not Account.Prot.Connected then
+    ConnectAccount(Account);
+  Screen.Cursor := crDefault;
+
+
+
+
+  try
+    // show window
+    frmPreview := TfrmPreview.Create(Application);
+    if Options.OnTop then begin
+      frmPreview.FormStyle := fsStayOnTop
+    end;
+    frmPreview.LoadPreviewIni();
+    frmPreview.FAccount := Account;
+
+    frmPreview.LoadMailMessage(MailItem);
+
+
+    TranslateForm(frmPreview);
+    frmPreview.Caption := Translate('Preview') + ' - PopTrayU';
+    frmPreview.Show;
+
+    Application.ProcessMessages;
+
+
+    // progress
+    frmPreview.FStop := False;
+    FPreview := True;
+    frmPreview.panProgress.Visible := True;
+    frmPreview.Progress.Position := 0;
+    // get message
     try
-      // show window
-      frmPreview := TfrmPreview.Create(Application);
-      if Options.OnTop then begin
-        frmPreview.FormStyle := fsStayOnTop
+      if Account.IsImap() then
+        mMsgSize := Account.Prot.RetrieveMsgSizeByUID(MailItem.UID)
+      else
+        mMsgSize := Account.Prot.RetrieveMsgSize(MailItem.MsgNum);
+
+      if (mMsgSize < 0) then begin
+        raise Exception.Create('No Such Message (PopTrayU Error 1804)'); //todo: this prevents TProgressBar out of range from showing as the error. but the string printed is not from this message.
       end;
-      frmPreview.IniName := uIniSettings.IniName;
-      frmPreview.GetINI;
-      frmPreview.FAccount := Account;
-      frmPreview.FMsg := MailItem;
-      frmPreview.FProtected := MailItem.Protect;
-      frmPreview.btnOK.Enabled := False;
-      if (MailItem.UID <> '') and (Copy(MailItem.UID,1,5) <> 'Error') and
-         Options.SafeDelete then
-      begin
-        frmPreview.actDelete.Enabled := True;
-        frmPreview.actDelete.Hint := Translate('Delete this message from server');
-        frmPreview.FUID := MailItem.UID;
-      end
-      else begin
-        frmPreview.actDelete.Enabled := False;
-        frmPreview.actDelete.Hint := Translate('Delete Button only available when using Safe Delete option');
-      end;
-
-
-      // NEW - force tab to plaintext for spam msgs
-      if (MailItem.Spam) then
-        frmPreview.SelectSpamTab;
-
-      TranslateForm(frmPreview);
-      frmPreview.Caption := Translate('Preview') + ' - PopTrayU';
-      frmPreview.Show;
-
-      Application.ProcessMessages;
-      // progress
-      frmPreview.FStop := False;
-      FPreview := True;
-      frmPreview.panProgress.Visible := True;
-      frmPreview.Progress.Position := 0;
-      // get message
+      frmPreview.Progress.Max := mMsgSize;
+      RawMsg := TStringList.Create;
       try
-
-        FMsgSize := RetrieveMsgSize(MailItem.MsgNum);
-        if (FMsgSize < 0) then begin
-          raise Exception.Create('No Such Message (PopTrayU Error 1804)'); //todo: this prevents TProgressBar out of range from showing as the error. but the string printed is not from this message.
-        end;
-        frmPreview.Progress.Max := FMsgSize;
-        RawMsg := TStringList.Create;
+        frmPreview.lblProgress.Caption := Translate('Downloading...');
+        if Options.TopLines>0 then
+          Account.Prot.RetrieveTop(MailItem.MsgNum,Options.TopLines,pRawMsg)
+        else
+          Account.Prot.RetrieveRaw(MailItem.MsgNum,pRawMsg);
+        RawMsg.SetText(pRawMsg);
+        Account.Prot.FreePChar(pRawMsg);
+        frmPreview.FRawMsg := RawMsg.Text;
+        // delims
+        for i := 0 to RawMsg.Count-1 do
+          if RawMsg[i]='.' then RawMsg[i] := '. ';
+        RawMsg.Add('.');
+        // process message
+        TmpStream := TMemoryStream.Create;
         try
-          frmPreview.lblProgress.Caption := Translate('Downloading...');
-          if Options.TopLines>0 then
-            RetrieveTop(MailItem.MsgNum,Options.TopLines,pRawMsg)
-          else
-            RetrieveRaw(MailItem.MsgNum,pRawMsg);
-          RawMsg.SetText(pRawMsg);
-          FreePChar(pRawMsg);
-          frmPreview.FRawMsg := RawMsg.Text;
-          // delims
-          for i := 0 to RawMsg.Count-1 do
-            if RawMsg[i]='.' then RawMsg[i] := '. ';
-          RawMsg.Add('.');
-          // process message
-          TmpStream := TMemoryStream.Create;
+          frmPreview.lblProgress.Caption := Translate('Processing...');
+          RawMsg.SaveToStream(TmpStream);
+          TmpStream.Position := 0;
           try
-            frmPreview.lblProgress.Caption := Translate('Processing...');
-            RawMsg.SaveToStream(TmpStream);
-            TmpStream.Position := 0;
-            try
-              {$IFDEF INDY9}
-              frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
-              {$ENDIF}
-              ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
-            except
-              on e : EIdEmailParseError do
+            {$IFDEF INDY9}
+            frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
+            {$ENDIF}
+            frmPreview.ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
+          except
+            on e : EIdEmailParseError do
+            begin
+              // ignore '@ outside address' error in Indy 9
+              frmPreview.Msg.From.Name := frmPreview.Msg.Headers.Values['From'];
+              frmPreview.Msg.Date := GMTToLocalDateTime(frmPreview.Msg.Headers.Values['Date']);
+            end;
+            on E: Exception do
+            begin
+              if E.Message = RSUnevenSizeInDecodeStream then
               begin
-                // ignore '@ outside address' error in Indy 9
-                frmPreview.Msg.From.Name := frmPreview.Msg.Headers.Values['From'];
-                frmPreview.Msg.Date := GMTToLocalDateTime(frmPreview.Msg.Headers.Values['Date']);
-              end;
-              on E: Exception do
-              begin
-                if E.Message = RSUnevenSizeInDecodeStream then
-                begin
-                  // TODO delete files
-                  frmPreview.lblProgress.Caption := Translate('Re-Processing...');
-                  // remove #13 from end of lines
-                  for i := 0 to RawMsg.Count-1 do
-                    if RightStr(RawMsg[i],1) = #13 then
-                      RawMsg[i] := Copy(RawMsg[i],1,Length(RawMsg[i])-1);
-                  TmpStream.Position := 0;
-                  RawMsg.SaveToStream(TmpStream);
-                  TmpStream.Position := 0;
-                  // try again
-                  frmPreview.Msg.Clear;
-                  try
-                    ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
-                  except
-                    // ignore
-                  end;
-                end
-                else begin
-                  if not (E is EAbort) and not Options.IgnoreRetrieveErrors  then
-                    ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
-                                 Translate(E.Message), mtError, [mbOK], 0);
+                // TODO delete files
+                frmPreview.lblProgress.Caption := Translate('Re-Processing...');
+                // remove #13 from end of lines
+                for i := 0 to RawMsg.Count-1 do
+                  if RightStr(RawMsg[i],1) = #13 then
+                    RawMsg[i] := Copy(RawMsg[i],1,Length(RawMsg[i])-1);
+                TmpStream.Position := 0;
+                RawMsg.SaveToStream(TmpStream);
+                TmpStream.Position := 0;
+                // try again
+                frmPreview.Msg.Clear;
+                try
+                  frmPreview.ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
+                except
+                  // ignore
                 end;
+              end
+              else begin
+                if not (E is EAbort) and not Options.IgnoreRetrieveErrors  then
+                  ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
+                               Translate(E.Message), mtError, [mbOK], 0);
               end;
             end;
-          finally
-            TmpStream.Free;
           end;
         finally
-          RawMsg.Free;
-        end;
-      except
-        on E : Exception do
-        begin
-          //frmPreview.btnOK.Enabled := True;
-          //frmPreview.btnOK.SetFocus;
-          if frmPreview.FStop then
-          begin
-            frmPreview.Close;
-            FreeAndNil(frmPreview);
-          end
-          else begin
-            if not Options.IgnoreRetrieveErrors then
-            begin
-              ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
-                           Translate(E.Message), mtError, [mbOK], 0);
-              frmPreview.Close;
-              FreeAndNil(frmPreview);
-            end
-            else begin
-              //frmPreview.panProgress.Hide;
-              Account.Status := Translate('Unable to Retrieve message.')+' '+
-                 Translate(E.Message);
-              StatusBar.Panels[0].Text := ' '+Account.Status; //have to hard-push the status onto the GUI
-              frmPreview.Close;
-              FreeAndNil(frmPreview);
-            end;
-          end;
-          Exit;
-        end;
-      end;
-      // show contents
-      try
-        frmPreview.ShowMsg;
-        // Bug Workaround: once the form has set the subject override the
-        // displayed subject with the correct unicode version.
-        if (MailItem.Subject <> '') then begin
-          frmPreview.Caption := MailItem.Subject;
-          frmPreview.edSubject.Text := MailItem.Subject;
+          TmpStream.Free;
         end;
       finally
-        FPreview := False;
+        RawMsg.Free;
+      end;
+    except
+      on E : Exception do
+      begin
+        //frmPreview.btnOK.Enabled := True;
+        //frmPreview.btnOK.SetFocus;
+        if frmPreview.FStop then
+        begin
+          frmPreview.Close;
+          FreeAndNil(frmPreview);
+        end
+        else begin
+          if not Options.IgnoreRetrieveErrors then
+          begin
+            ShowTranslatedDlg(Translate('Unable to Retrieve message.')+#13#10#13#10+
+                         Translate(E.Message), mtError, [mbOK], 0);
+          end
+          else begin
+            //frmPreview.panProgress.Hide;
+            Account.Status := Translate('Unable to Retrieve message.')+' '+
+               Translate(E.Message);
+            StatusBar.Panels[0].Text := ' '+Account.Status; //have to hard-push the status onto the GUI
+          end;
+          frmPreview.Close;
+          FreeAndNil(frmPreview);
+        end;
+        Exit;
+      end;
+    end;
+    // show contents
+    try
+      frmPreview.ShowMsg;
+      // Bug Workaround: once the form has set the subject override the
+      // displayed subject with the correct unicode version.
+      if (MailItem.Subject <> '') then begin
+        frmPreview.Caption := MailItem.Subject;
+        frmPreview.edSubject.Text := MailItem.Subject;
       end;
     finally
-      Screen.Cursor := crDefault;
-      if Connected then Disconnect;
-    end;
-  end;
-end;
-
-// todo: could this method be extracted elsewhere?
-procedure TfrmPopUMain.ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
-var
-  MessageClient : TIdMessageClient;
-  LIOHandler: TIdIOHandlerStreamMsg;
-begin
-  LIOHandler := TIdIOHandlerStreamMsg.Create(nil, AStream);
-  try
-    LIOHandler.FreeStreams := False;
-    LIOHandler.MaxLineAction := TIdMaxLineAction.maSplit;
-
-    MessageClient := TIdMessageClient.Create(Self);
-    MessageClient.OnWork := OnProcessWork;
-    MessageClient.IOHandler := LIOHandler;
-
-    try
-      MessageClient.IOHandler.Open;
-      MessageClient.ProcessMessage(AMsg, AHeaderOnly);
-    finally
-      MessageClient.IOHandler := nil;
+      FPreview := False;
     end;
   finally
-    MessageClient.Free;
-    LIOHandler.Free;
+    Screen.Cursor := crDefault;
+    if Account.Prot.Connected then Account.Prot.Disconnect;
   end;
+
 end;
+
 
 function TfrmPopUMain.DeleteMails(account : TAccount; var DelCount : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
-// Delete all mail marked as 'ToDelete'
+// Delete all mail marked as 'ToDelete' from "account" specified as parameter.
 //
 // @Return true if messages were successfully deleted. False if safe delete
 //         prevented one or more messages from being deleted.
+// DelCount is an OUTPUT parameter - it returns the number of items deleted.
 var
   i : integer;
   uidList : TStringList;
@@ -1781,6 +1834,7 @@ begin
               else begin
                 // safe delete failed
                 Result := False;
+                account.Status := 'Safe Delete Failed for "'+ account.Mail[i].Subject + '", but '+  IntToStr(DelCount)+' '+Translate('message(s) deleted.');
                 Exit;
               end;
             end;
@@ -1857,7 +1911,6 @@ begin
   end;
 end;
 
-//TODO: instead of account num, pass an account object here
 function TfrmPopUMain.CheckUID(account: TAccount; msgnum: integer; UID : string=''): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Check if current UID and stored UID is the same.  Must be connected
@@ -1865,6 +1918,11 @@ var
   MailItem : TMailItem;
 begin
   MailItem := account.Mail.FindMessage(msgnum);
+  if (MailItem = nil) then begin    //added debug
+    //ErrorMsg(account,'DEBUG:',Translate('UID Not Found for msgnum: '+IntToStr(msgnum)),Options.NoError);
+    Result := false;
+    exit;
+  end;
   // default param
   if UID='' then UID := MailItem.UID;
   // compare UID
@@ -1944,7 +2002,7 @@ begin
   if Item = nil then
     Result := nil
   else
-    Result := Accounts[tabMail.TabIndex].Mail.FindMessage(StrToInt(Item.SubItems[colID]));
+    Result := Item.Data; //Accounts[tabMail.TabIndex].Mail.FindMessage(StrToInt(Item.SubItems[colID]));
 end;
 
 // Loads an email (selected in the message list) in the user's email client.
@@ -2145,6 +2203,96 @@ begin
   Result := True;
 
   FreeAndNil(MsgHeader);
+end;
+
+function TfrmPopUMain.GetMessageHeaderByUID(account : TAccount; uid : string) : boolean;
+var
+  MsgSize : integer;
+  MsgID : string;
+  pHeader : PChar;
+  MailItem : TMailItem;
+  ret : boolean;
+  split : cardinal;
+  MsgHeader : TIdMessage; //experimental, moved from class variable
+  msgNum : integer;
+begin
+  // check for stop
+  if FStop then
+  begin
+    account.Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now);;
+    account.Error := True;
+    Result := false;
+    Exit;
+  end;
+
+  MsgHeader := TIdMessage.Create(Self);
+  account.Prot.UIDRetrievePeekHeader(uid,MsgHeader);
+
+  msgNum := 99887766;
+
+  // get size
+  MsgSize := account.Prot.RetrieveMsgSize(msgnum) div 1024 +1;
+
+
+  // store header details in mail item
+  MailItem := account.Mail.Add;
+  MailItem.MsgNum := msgNum;
+  if MsgHeader.From.Name = '' then
+    MailItem.From := MsgHeader.From.Text
+  else
+    MailItem.From := MsgHeader.From.Name;
+  MailItem.Address := MsgHeader.From.Address;
+  if MsgHeader.ReplyTo.Count>0 then
+    MailItem.ReplyTo := MsgHeader.ReplyTo[0].Address;
+  MailItem.MailTo := MsgHeader.Recipients.EMailAddresses;
+  MailItem.Subject := MsgHeader.Subject;
+  MailItem.Date := MsgHeader.Date;
+  if int(MsgHeader.Date)=0 then
+    MailItem.DateStr := Copy(MsgHeader.Headers.Values['Date'],1,16)
+  else begin
+    if (Options.UseCustomDateFormat) then
+      DateTimeToString(MailItem.DateStr, Options.CustomDateFormatString, MsgHeader.Date)
+    else
+      MailItem.DateStr := DateTimeToStr(MsgHeader.Date);
+
+
+  end;
+  MailItem.Size := MsgSize;
+  if integer(MsgHeader.Priority) = 255 then
+    MailItem.Priority := mpNormal
+  else
+    MailItem.Priority := TMessagePriority(MsgHeader.Priority);
+  MailItem.HasAttachment := HasAttachment(MsgHeader);
+  MailItem.MsgID := MsgID;
+  if Options.SafeDelete then
+    MailItem.UID := uid;//GetUID(account,msgnum);
+  //MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
+  MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
+  //MailItem.New := not MailItem.Viewed ;//JRWTESTING
+  MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
+  MailItem.Important := False;
+  MailItem.Spam := False;
+  MailItem.TrayColor := -1;
+  // rules
+  RulesManager.CheckRules(MailItem,MsgHeader,account);
+  // notify plugin
+  with MailItem do
+  begin
+    NotifyPluginMessage(From,MailTo,Subject,MsgHeader.Date,Viewed,New,Important,Spam);
+    NotifyPluginMsgBody(MsgHeader.Headers.Text,MsgHeader.Body.Text);
+  end;
+  // show
+  if Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then
+  begin
+    ShowMailMessage(account,account.Mail.Count-1);
+    if not lvMail.Focused and (FSortColumn = NOSORT) then
+      lvMail.Items[lvMail.Items.Count-1].MakeVisible(true);
+  end;
+  // success
+  Result := True;
+
+  FreeAndNil(MsgHeader);
+
 end;
 
 
@@ -3421,27 +3569,7 @@ begin
   end;
 end;
 
-procedure TfrmPopUMain.OnProtWork(const AWorkCount: Integer);
-begin
-  if FPreview and not(FMinimized) and Assigned(frmPreview) then
-  begin
-    frmPreview.Progress.StepBy(AWorkCount-FMsgRead);
-    FMsgRead := AWorkCount;
-    Application.ProcessMessages;
-    if frmPreview.FStop then
-    begin
-      frmPreview.FAccount.Prot.SetOnWork(nil);
-      frmPreview.FAccount.Prot.Disconnect;
-      Abort;
-    end;
-  end;
-end;
 
-procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode;
-   {$IFDEF INDY9}const AWorkCount: Integer{$ELSE}AWorkCount: Int64{$ENDIF});
-begin
-  OnProtWork(AWorkCount);
-end;
 
 procedure TfrmPopUMain.OnCloseFree(Sender: TObject; var Action: TCloseAction);
 begin
@@ -4145,16 +4273,15 @@ end;
 
 procedure TfrmPopUMain.actPreviewExecute(Sender: TObject);
 var
-  msgnum : integer;
+  //msgnum : integer;
   accountNum : integer;
   MailItem : TMailItem;
 begin
   if lvMail.Selected = nil then
     ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
   else
-    msgnum := StrToInt(lvMail.Selected.SubItems[colID]);
-    accountNum := tabMail.TabIndex; //Accounts[num-1]
-    MailItem := Accounts[accountNum].Mail.FindMessage(msgnum);
+    accountNum := tabMail.TabIndex;             //TODO: tabToAccount
+    MailItem := lvMail.Selected.Data;
     Preview(MailItem, Accounts[accountNum]);
 end;
 
