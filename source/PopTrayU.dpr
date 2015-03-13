@@ -30,6 +30,7 @@ The GNU GPL can be found at:
 {$WARN SYMBOL_PLATFORM OFF}
 //{$DEFINE LOG4D}
 
+
 // dontTouchUses
 
 uses

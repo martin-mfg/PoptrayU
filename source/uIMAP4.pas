@@ -69,10 +69,11 @@ type
     destructor Destroy; override;
     procedure Expunge; override;
     function DeleteMsgsByUID(const uidList: array of String): boolean; override;
-    function GetUnseenUids(): TLongIntArray; override;
+    function GetUnseenUids(): TIntArray; override;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; override;
     function RetrieveMsgSizeByUID(const AMsgUID : String) : integer; override;
     function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean; override;
+    function MakeRead(const uid : string; isRead : boolean): boolean; override;
   end;
 
 
@@ -96,7 +97,7 @@ uses
   IdSSLOpenSSL;
 
 const
-  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = false;
 
 var
     Msg : TIdMessage;
@@ -542,7 +543,8 @@ begin
   AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
 end;
 
-function TPluginIMAP4.GetUnseenUids(): TLongIntArray;
+
+function TPluginIMAP4.GetUnseenUids(): TIntArray;
 var
   SearchInfo: array of TIdIMAP4SearchRec;
   I : integer;
@@ -566,43 +568,32 @@ begin
   // if the mailbox selection succeed, then...
   if IMAP.SelectMailBox('INBOX') then
   begin
-    // set length of the search criteria to 1
-    SetLength(SearchInfo, 1);
-    // the SearchKey set to skBody means to search only in message body texts
-    // for more options and explanation, see comments at the TIdIMAP4SearchKey
-    // enumeration in the IdIMAP4.pas unit
+    SetLength(SearchInfo, 1); // set length of the search criteria to 1
     SearchInfo[0].SearchKey := skUnseen;
-    // term you want to search
-    //SearchInfo[0].Text := 'Search term';
+    // TODO: to expand this search key idea to do a full gmail style body text search see
+    // http://stackoverflow.com/questions/13612968/how-to-search-for-a-specific-e-mail-message-in-imap-mailbox
 
-    // if the search in the selected mailbox succeed, then...
-    if IMAP.UIDSearchMailBox(SearchInfo) then    //todo UIDSearchMailbox
+    if IMAP.UIDSearchMailBox(SearchInfo) then
     begin
       Result := IMAP.MailBox.SearchResult;
 
-
+// this section here can be removed later, it is for debugging
 
       // iterate the search results
       for I := 0 to High(IMAP.MailBox.SearchResult) do
       begin
-       (* // make an instance of the message object
-        MsgObject := TIdMessage.Create(nil);
-        try
-          // try to retrieve currently iterated message from search results
-          // and if this succeed you can work with the MsgObject
-          if IMAP.RetrievePeek(IMAP.MailBox.SearchResult[I],
-            MsgObject) then
-          begin
-            Logger.Debug(MsgObject.Subject);
-            // here you have retrieved message in the MsgObject variable, so
-            // let's do what what you need with the >> MsgObject <<
-          end;
-        finally
-          MsgObject.Free;
-        end;   *)
+        //// make an instance of the message object
+        //MsgObject := TIdMessage.Create(nil);
+        //try
+        //  if IMAP.RetrievePeek(IMAP.MailBox.SearchResult[I], MsgObject) then begin
+        //    Logger.Debug(MsgObject.Subject);
+        //  end;
+        //finally
+        //  MsgObject.Free;
+        //end;
         Logger.Debug( IntToStr(Result[i]));
       end;
-
+// end debug section
 
     end;
   end;
@@ -614,62 +605,30 @@ begin
   Result := IMAP.UIDRetrieveEnvelope(UID, outMsg);
 end;
 
-
-
-{ // gmail style body text search
-  // http://stackoverflow.com/questions/13612968/how-to-search-for-a-specific-e-mail-message-in-imap-mailbox
-
+//------------------------------------------------------------------------------
+// Changes the "read" or "seen" status on a message. Expects connection to
+// already be open.
+//------------------------------------------------------------------------------
+function TPluginIMAP4.MakeRead(const uid : string; isRead : boolean) : boolean;
 var
-  // in this example is not shown how to connect to Gmail IMAP server but
-  // it's expected that the IMAPClient object is already connected there
-  IMAPClient: TIdIMAP4;
-
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  I: Integer;
-  MsgObject: TIdMessage;
-  SearchInfo: array of TIdIMAP4SearchRec;
+  flags : TidMessageFlagsSet;
 begin
-  // if the mailbox selection succeed, then...
-  if IMAPClient.SelectMailBox('INBOX') then
-  begin
-    // set length of the search criteria to 1
-    SetLength(SearchInfo, 1);
-    // the SearchKey set to skBody means to search only in message body texts
-    // for more options and explanation, see comments at the TIdIMAP4SearchKey
-    // enumeration in the IdIMAP4.pas unit
-    SearchInfo[0].SearchKey := skBody;
-    // term you want to search
-    SearchInfo[0].Text := 'Search term';
+  IMAP.UIDRetrieveFlags(uid, flags);
+  if (isRead) then
+    IMAP.UIDStoreFlags(uid, sdReplace, flags + [mfSeen])
+  else
+    IMAP.UIDStoreFlags(uid, sdReplace, flags - [mfSeen]);
 
-    // if the search in the selected mailbox succeed, then...
-    if IMAPClient.SearchMailBox(SearchInfo) then
-    begin
-      // iterate the search results
-      for I := 0 to High(IMAPClient.MailBox.SearchResult) do
-      begin
-        // make an instance of the message object
-        MsgObject := TIdMessage.Create(nil);
-        try
-          // try to retrieve currently iterated message from search results
-          // and if this succeed you can work with the MsgObject
-          if IMAPClient.Retrieve(IMAPClient.MailBox.SearchResult[I],
-            MsgObject) then
-          begin
-            // here you have retrieved message in the MsgObject variable, so
-            // let's do what what you need with the >> MsgObject <<
-          end;
-        finally
-          MsgObject.Free;
-        end;
-      end;
-    end;
-  end;
+    //TODO: this way is more efficient but doesn't work yet b/c of a bug in indy
+//  if (isRead) then
+//    IMAP.UIDStoreFlags(uid, sdAddSilent, [mfSeen])
+//  else
+//    IMAP.UIDStoreFlags(uid, sdRemoveSilent, [mfSeen]);
+
+  Result := true;
 end;
 
 
-
-}
 
 // Exceptions for IMAP:EIdIMAP4ServerException, EIdIMAP4ImplicitTLSRequiresSSL,
 // EIdReplyIMAP4Error

@@ -70,9 +70,9 @@ type
     function FindMessage(MsgNum: Integer): TMailItem;
     function FindUID(UID: string): TMailItem;
     function FindUIDWithDuplicates(UID: string): TMailItem;
-    procedure SetAllMsgNum(Value : integer);
+    procedure ClearAllMsgNums();
     procedure SetAllNew(Value: boolean);
-    function DeleteAllMsgNum(MsgNum : integer) : boolean;
+    function RemoveDeletedMessages() : boolean;
   end;
 
 implementation
@@ -125,7 +125,7 @@ function TMailItems.FindMessage(MsgNum: Integer): TMailItem;
 var
   i : Integer;
 begin
-  if MsgNum < 0 then begin
+  if (MsgNum < 1) or (MsgNum > self.Count) then begin
     Result := nil;
     exit;
   end;
@@ -169,7 +169,7 @@ end;
 function TMailItems.FindUIDWithDuplicates(UID: string): TMailItem;
 ////////////////////////////////////////////////////////////////////////////////
 // Find message with UID - non-unique UID allowed according to RFC1939
-// NOTE: Call SetAllMsgNum(-1) before using this method
+// NOTE: Call ClearAllMsgNums() before using this method
 var
   i : Integer;
 begin
@@ -181,14 +181,14 @@ begin
   Result := nil;
 end;
 
-procedure TMailItems.SetAllMsgNum(Value: integer);
+procedure TMailItems.ClearAllMsgNums();
 ////////////////////////////////////////////////////////////////////////////////
 // Set all items MsgNum property
 var
   i : integer;
 begin
   for i := 0 to Count-1 do
-    Items[i].MsgNum := Value;
+    Items[i].MsgNum := -1;
 end;
 
 procedure TMailItems.SetAllNew(Value: boolean);
@@ -201,10 +201,11 @@ begin
     Items[i].New := Value;
 end;
 
-function TMailItems.DeleteAllMsgNum(MsgNum : integer) : boolean;
+function TMailItems.RemoveDeletedMessages() : boolean;
 ////////////////////////////////////////////////////////////////////////////////
-// Delete all items with the specified MsgNum. This is mainly used to delete
-// all messages no longer on the server (indicated by msgnum = -1)
+// Deletes all items with MsgNum = -1. This is used to delete
+// all messages no longer on the server
+// @Return - True if messages were removed, false if no changes
 var
   mailItem : TMailItem;
 begin

@@ -107,9 +107,11 @@ type
     function CountMessages(): LongInt; virtual;
     procedure Expunge; virtual;
     function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
-    function GetUnseenUids(): TLongIntArray;  virtual;
+    function GetUnseenUids(): TIntArray;  virtual;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; virtual;
     function RetrieveMsgSizeByUID(const AMsgUID : String) : integer; virtual;
+    function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean; virtual;
+    function MakeRead(const uid : string; isRead : boolean): boolean; virtual;
   end;
 
 var
@@ -334,7 +336,7 @@ begin
     Result := false;
 end;
 
-function TPluginProtocol.GetUnseenUids(): TLongIntArray;
+function TPluginProtocol.GetUnseenUids(): TIntArray;
 begin
   Result := nil;
 end;
@@ -347,6 +349,16 @@ end;
 function TPluginProtocol.RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
 begin
   Result := -1;
+end;
+
+function TPluginProtocol.RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
+begin
+  result := false;
+end;
+
+function TPluginProtocol.MakeRead(const uid : string; isRead : boolean): boolean;
+begin
+  result := false;
 end;
 
 end.
