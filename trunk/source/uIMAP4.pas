@@ -32,7 +32,7 @@ uses
   IdMailbox;
 
 type
-  TPluginIMAP4 = class(TProtocol)
+  TProtocolIMAP4 = class(TProtocol)
   private
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
@@ -66,7 +66,7 @@ type
       const sslVersion : TsslVer = sslAuto;
       const startTLS : boolean = false); override;
     destructor Destroy; override;
-    procedure Expunge; override;
+    procedure Expunge; //override;
     function DeleteMsgsByUID(const uidList: array of String): boolean; override;
     function GetUnseenUids(): TIntArray; override;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; override;
@@ -136,7 +136,7 @@ end;
 
 //---------------------------------------------------------- general exports ---
 
-constructor TPluginIMAP4.Create;
+constructor TProtocolIMAP4.Create;
 var
   DLL1, DLL2 : THandle;
   //idLogFile1 : TidLogFile;//DEBUG - logging.
@@ -230,7 +230,7 @@ begin
 
 end;
 
-destructor TPluginIMAP4.Destroy;
+destructor TProtocolIMAP4.Destroy;
 begin
   if (not mSSLDisabled) then begin
     mIdUserPassProvider.Free;
@@ -250,7 +250,7 @@ begin
 end;
 
 
-procedure TPluginIMAP4.Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
+procedure TProtocolIMAP4.Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
 begin
   IMAP.Host := Server;
   IMAP.Port := Port;
@@ -276,7 +276,7 @@ begin
 end;
 
 
-function TPluginIMAP4.LastErrorMsg : PChar;
+function TProtocolIMAP4.LastErrorMsg : PChar;
 begin
   if (mHasErrorToReport) then
     Result := PChar(mLastErrorMsg)
@@ -284,29 +284,29 @@ begin
   mHasErrorToReport := false;
 end;
 
-function TPluginIMAP4.SupportsSSL : boolean;
+function TProtocolIMAP4.SupportsSSL : boolean;
 begin
   Result := not mSSLDisabled;
 end;
 
-function TPluginIMAP4.SupportsAPOP : boolean;
+function TProtocolIMAP4.SupportsAPOP : boolean;
 begin
   Result := false;
 end;
 
-function TPluginIMAP4.SupportsSASL : boolean;
+function TProtocolIMAP4.SupportsSASL : boolean;
 begin
   Result := true;
 end;
 
 
-procedure TPluginIMAP4.Disconnect;
+procedure TProtocolIMAP4.Disconnect;
 begin
   IMAP.IOHandler.InputBuffer.clear;
   IMAP.Disconnect(false);
 end;
 
-procedure TPluginIMAP4.DisconnectWithQuit;
+procedure TProtocolIMAP4.DisconnectWithQuit;
 begin
   if IMAP.Connected then
   begin
@@ -315,17 +315,17 @@ begin
   end;
 end;
 
-function TPluginIMAP4.Connected : boolean;
+function TProtocolIMAP4.Connected : boolean;
 begin
   Result := IMAP.Connected;
 end;
 
-function TPluginIMAP4.CheckMessages : integer;
+function TProtocolIMAP4.CheckMessages : integer;
 begin
   Result := IMAP.MailBox.TotalMsgs;
 end;
 
-function TPluginIMAP4.RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;
+function TProtocolIMAP4.RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;
 begin
   Msg.Clear;
   IMAP.IOHandler.MaxLineAction := maSplit;
@@ -334,7 +334,7 @@ begin
     pHeader := Msg.Headers.GetText;
 end;
 
-function TPluginIMAP4.RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean;
+function TProtocolIMAP4.RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean;
 begin
   Msg.Clear;
   IMAP.IOHandler.MaxLineAction := maSplit;
@@ -343,7 +343,7 @@ begin
     pRawMsg := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
 end;
 
-function TPluginIMAP4.RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
+function TProtocolIMAP4.RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
 begin
   Msg.Clear;
   IMAP.IOHandler.MaxLineAction := maSplit;
@@ -352,7 +352,7 @@ begin
     pRawMsg := StrNew(PChar(Msg.Headers.Text+#13#10+Msg.Body.Text));
 end;
 
-function TPluginIMAP4.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
+function TProtocolIMAP4.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
 var
   st : string;
 begin
@@ -386,17 +386,17 @@ begin
   end;
 end;
 
-function TPluginIMAP4.RetrieveMsgSize(const MsgNum : integer) : integer;
+function TProtocolIMAP4.RetrieveMsgSize(const MsgNum : integer) : integer;
 begin
   Result := IMAP.RetrieveMsgSize(MsgNum);
 end;
 
-function TPluginIMAP4.RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
+function TProtocolIMAP4.RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
 begin
   Result := IMAP.UIDRetrieveMsgSize(AMsgUID);
 end;
 
-function TPluginIMAP4.UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
+function TProtocolIMAP4.UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
 var
   st,UID : string;
   i, nCount : integer;
@@ -425,25 +425,25 @@ begin
   end;
 end;
 
-function TPluginIMAP4.Delete(const MsgNum : integer) : boolean;
+function TProtocolIMAP4.Delete(const MsgNum : integer) : boolean;
 begin
   Result := IMAP.DeleteMsgs([MsgNum]);
 end;
 
-procedure  TPluginIMAP4.Expunge();
+procedure  TProtocolIMAP4.Expunge();
 begin
   IMAP.ExpungeMailBox;
 end;
 
 
-procedure TPluginIMAP4.SetOnWork(const OnWorkProc : TPluginWorkEvent);
+procedure TProtocolIMAP4.SetOnWork(const OnWorkProc : TPluginWorkEvent);
 begin
   OnWork := OnWorkProc;
 end;
 
 { TIMAPWorkObject }
 
-procedure TPluginIMAP4.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
+procedure TProtocolIMAP4.IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
 begin
   if Assigned(OnWork) then
     OnWork(AWorkCount);
@@ -452,7 +452,7 @@ end;
 
 
 // called right before connecting.
-procedure TPluginIMAP4.SetSSLOptions(
+procedure TProtocolIMAP4.SetSSLOptions(
   const useSSLorTLS : boolean;
   const authType : TAuthType = password;
   const sslVersion : TsslVer = sslAuto;
@@ -513,30 +513,30 @@ end;
 
 // This method expects to already be connected.
 // Returns true if server supports UIDL, false otherwise
-function TPluginIMAP4.SupportsUIDL(): boolean;
+function TProtocolIMAP4.SupportsUIDL(): boolean;
 begin
   Result:=true;
 end;
 
-function TPluginIMAP4.CountMessages(): LongInt;
+function TProtocolIMAP4.CountMessages(): LongInt;
 begin
   if IMAP.SelectMailBox('INBOX') then
     Result := IMAP.MailBox.TotalMsgs
   else Result := -1;
 end;
 
-function TPluginIMAP4.DeleteMsgsByUID(const uidList: array of String): boolean;
+function TProtocolIMAP4.DeleteMsgsByUID(const uidList: array of String): boolean;
 begin
   Result := IMAP.UIDDeleteMsgs(uidList);
 end;
 
-procedure TPluginIMAP4.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
+procedure TProtocolIMAP4.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
 begin
   AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
 end;
 
 
-function TPluginIMAP4.GetUnseenUids(): TIntArray;
+function TProtocolIMAP4.GetUnseenUids(): TIntArray;
 var
   SearchInfo: array of TIdIMAP4SearchRec;
   I : integer;
@@ -592,7 +592,7 @@ begin
 
 end;
 
-function TPluginIMAP4.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
+function TProtocolIMAP4.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
 begin
   Result := IMAP.UIDRetrieveEnvelope(UID, outMsg);
 end;
@@ -601,7 +601,7 @@ end;
 // Changes the "read" or "seen" status on a message. Expects connection to
 // already be open.
 //------------------------------------------------------------------------------
-function TPluginIMAP4.MakeRead(const uid : string; isRead : boolean) : boolean;
+function TProtocolIMAP4.MakeRead(const uid : string; isRead : boolean) : boolean;
 var
   flags : TidMessageFlagsSet;
 begin

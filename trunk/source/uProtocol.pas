@@ -52,12 +52,12 @@ type
     function LastErrorMsg : PChar; virtual;
     procedure SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password;
       const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false); virtual;
-    function SupportsSSL : boolean; virtual; abstract; //Should return true if SSL plugin is installed correctly.
-    function SupportsAPOP : boolean; virtual; abstract;
-    function SupportsSASL : boolean; virtual; abstract;
+    function SupportsSSL(): boolean; virtual; abstract; //Should return true if SSL plugin is installed correctly.
+    function SupportsAPOP(): boolean; virtual; abstract;
+    function SupportsSASL(): boolean; virtual; abstract;
     function SupportsUIDL(): boolean; virtual; abstract;
     function CountMessages(): LongInt; virtual;
-    procedure Expunge; virtual;
+    //procedure Expunge; virtual;
     function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
     function GetUnseenUids(): TIntArray;  virtual;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; virtual;
@@ -169,11 +169,11 @@ begin
     FSetSSLOptions(useSSLorTLS, authType, sslVersion, startTLS);
 end;
 
-procedure TProtocol.Expunge();
-begin
-  if Assigned(FExpunge) then
-    FExpunge();
-end;
+//procedure TProtocol.Expunge();
+//begin
+//  if Assigned(FExpunge) then
+//    FExpunge();
+//end;
 
 function TProtocol.DeleteMsgsByUID(const uidList: array of String): boolean;
 begin
