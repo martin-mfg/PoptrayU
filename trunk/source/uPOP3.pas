@@ -38,7 +38,6 @@ type
   public
     POP : TIdPOP3;
     constructor Create;
-    function Protocols : ShortString; override;
     procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
@@ -58,9 +57,9 @@ type
       const startTLS : boolean = false); override;
     destructor Destroy; override;
     function LastErrorMsg : PChar; override;
-    function PluginSupportsSSL : boolean; override;
-    function PluginSupportsAPOP : boolean; override;
-    function PluginSupportsSASL : boolean; override;
+    function SupportsSSL : boolean; override;
+    function SupportsAPOP : boolean; override;
+    function SupportsSASL : boolean; override;
     function SupportsUIDL(): boolean; override;
     function CountMessages(): LongInt; override;
   end;
@@ -190,16 +189,10 @@ end;
 
 // SSL options will be disabled for this protocol if the SSL plugin dlls
 // did not load correctly in the constructor.
-function TPluginPOP3.PluginSupportsSSL : boolean;
+function TPluginPOP3.SupportsSSL : boolean;
 begin
   Result := not mSSLDisabled;
 end;
-
-function TPluginPOP3.Protocols: ShortString;
-begin
-  Result := 'POP3:110';
-end;
-
 
 procedure TPluginPOP3.ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
 begin
@@ -471,12 +464,12 @@ begin
   OnWork := OnWorkProc;
 end;
 
-function TPluginPOP3.PluginSupportsAPOP : boolean;
+function TPluginPOP3.SupportsAPOP : boolean;
 begin
   Result := true;
 end;
 
-function TPluginPOP3.PluginSupportsSASL : boolean;
+function TPluginPOP3.SupportsSASL : boolean;
 begin
   Result := true;
 end;

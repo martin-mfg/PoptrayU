@@ -17,7 +17,6 @@ type
     Name : string;
     ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
-    FProtocols       : function : ShortString; stdcall;
     FConnect         : procedure (Server : PChar; Port : integer; Protocol,UserName,Password : PChar; Timeout : integer); stdcall;
     FDisconnect      : procedure; stdcall;
     FDisconnectWithQuit: procedure; stdcall;
@@ -38,12 +37,11 @@ type
     FSupportsUIDL : function : boolean; stdcall;
     FCountMessages: function : LongInt; stdcall;
     FExpunge : procedure (); stdcall;
-    function Protocols : ShortString; virtual;
-    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); virtual;
-    procedure Disconnect; virtual;
-    procedure DisconnectWithQuit; virtual;
-    function Connected : boolean;  virtual;
-    function CheckMessages : integer; virtual;
+    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); virtual; abstract;
+    procedure Disconnect; virtual; abstract;
+    procedure DisconnectWithQuit; virtual; abstract;
+    function Connected : boolean;  virtual; abstract;
+    function CheckMessages : integer; virtual; abstract;
     function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; virtual;
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual;
@@ -54,10 +52,10 @@ type
     function LastErrorMsg : PChar; virtual;
     procedure SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password;
       const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false); virtual;
-    function PluginSupportsSSL : boolean; virtual; //Should return true if SSL plugin is installed correctly.
-    function PluginSupportsAPOP : boolean; virtual;
-    function PluginSupportsSASL : boolean; virtual;
-    function SupportsUIDL(): boolean; virtual;
+    function SupportsSSL : boolean; virtual; abstract; //Should return true if SSL plugin is installed correctly.
+    function SupportsAPOP : boolean; virtual; abstract;
+    function SupportsSASL : boolean; virtual; abstract;
+    function SupportsUIDL(): boolean; virtual; abstract;
     function CountMessages(): LongInt; virtual;
     procedure Expunge; virtual;
     function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
@@ -92,49 +90,6 @@ end;
 
 { TProtocol }
 
-
-function TProtocol.Protocols: ShortString;
-begin
-  Result := '';
-  if Assigned(FProtocols) then
-    Result := FProtocols;
-end;
-
-procedure TProtocol.Connect(Server: PChar; Port: integer; Protocol,UserName, Password: PChar; TimeOut : integer);
-begin
-  if Assigned(FConnect) then
-    FConnect(Server, Port, Protocol, UserName, Password, Timeout)
-  else
-    raise Exception.Create('Plug-in Error: No Protocol to use in Connect');
-end;
-
-procedure TProtocol.Disconnect;
-begin
-  if Assigned(FDisconnect) then
-    FDisconnect;
-end;
-
-procedure TProtocol.DisconnectWithQuit;
-begin
-  if Assigned(FDisconnectWithQuit) then
-    FDisconnectWithQuit
-  else if Assigned(FDisconnect) then
-    FDisconnect;
-end;
-
-function TProtocol.Connected: boolean;
-begin
-  Result := False;
-  if Assigned(FConnected) then
-    Result := FConnected;
-end;
-
-function TProtocol.CheckMessages: integer;
-begin
-  Result := -1;
-  if Assigned(FCheckMessages) then
-    Result := FCheckMessages;
-end;
 
 function TProtocol.RetrieveHeader(const MsgNum: integer; var pHeader: PChar): boolean;
 begin
@@ -198,38 +153,6 @@ begin
     Result := FLastErrorMsg()
   else
     Result := nil;
-end;
-
-function TProtocol.PluginSupportsSSL: boolean;
-begin
-  if Assigned(FPluginSupportsSSL) then
-    Result := FPluginSupportsSSL()
-  else
-    Result := false;
-end;
-
-function TProtocol.PluginSupportsSASL: boolean;
-begin
-  if Assigned(FPluginSupportsSASL) then
-    Result := FPluginSupportsSASL()
-  else
-    Result := false;
-end;
-
-function TProtocol.PluginSupportsAPOP: boolean;
-begin
-  if Assigned(FPluginSupportsAPOP) then
-    Result := FPluginSupportsAPOP()
-  else
-    Result := false;
-end;
-
-function TProtocol.SupportsUIDL: boolean;
-begin
-  if Assigned(FSupportsUIDL) then
-    Result := FSupportsUIDL()
-  else
-    Result := false;
 end;
 
 function TProtocol.CountMessages: LongInt;

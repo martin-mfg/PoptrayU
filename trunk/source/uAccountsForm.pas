@@ -245,7 +245,7 @@ begin
 
   // If the plugin does not support SSL, do not allow user to click on
   // options that require SSL encryption.
-  if (account.Prot.PluginSupportsSSL = false)
+  if (account.Prot.SupportsSSL = false)
   then begin
     chkSSL.Enabled := false;
     cmbSslVer.Enabled := false;
@@ -263,11 +263,11 @@ begin
   cmbAuthType.Items.Clear;
   idxAuto := cmbAuthType.Items.AddObject(Translate('Auto'),TObject(autoAuth));
   idxPw := cmbAuthType.Items.AddObject(Translate('Password'),TObject(password));
-  if (account.Prot.PluginSupportsAPOP) then
+  if (account.Prot.SupportsAPOP) then
     idxApop := cmbAuthType.Items.AddObject(Translate('APOP'),TObject(apop))
   else
     idxApop := -1;
-  if (account.Prot.PluginSupportsSSL and account.Prot.PluginSupportsSASL) then
+  if (account.Prot.SupportsSSL and account.Prot.SupportsSASL) then
     idxSasl := cmbAuthType.Items.AddObject(Translate('SASL'),TObject(sasl))
   else
     idxSasl := -1;

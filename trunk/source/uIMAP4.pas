@@ -42,7 +42,6 @@ type
     IMAP : TIdIMAP4;
     constructor Create;
     // protocol
-    function Protocols : ShortString; override;
     procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
@@ -56,9 +55,9 @@ type
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
     function LastErrorMsg : PChar; override;
-    function PluginSupportsSSL : boolean; override;
-    function PluginSupportsAPOP : boolean; override;
-    function PluginSupportsSASL : boolean; override;
+    function SupportsSSL : boolean; override;
+    function SupportsAPOP : boolean; override;
+    function SupportsSASL : boolean; override;
     function SupportsUIDL(): boolean; override;
     function CountMessages(): LongInt; override;
     procedure SetSSLOptions(
@@ -250,12 +249,6 @@ begin
   Msg.Free;
 end;
 
-//--------------------------------------------------------- protocol exports ---
-
-function TPluginIMAP4.Protocols : ShortString;
-begin
-  Result := 'IMAP4:143';
-end;
 
 procedure TPluginIMAP4.Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
 begin
@@ -291,17 +284,17 @@ begin
   mHasErrorToReport := false;
 end;
 
-function TPluginIMAP4.PluginSupportsSSL : boolean;
+function TPluginIMAP4.SupportsSSL : boolean;
 begin
   Result := not mSSLDisabled;
 end;
 
-function TPluginIMAP4.PluginSupportsAPOP : boolean;
+function TPluginIMAP4.SupportsAPOP : boolean;
 begin
   Result := false;
 end;
 
-function TPluginIMAP4.PluginSupportsSASL : boolean;
+function TPluginIMAP4.SupportsSASL : boolean;
 begin
   Result := true;
 end;
