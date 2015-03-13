@@ -21,7 +21,7 @@ interface
 
 
 const
-  INTERFACE_VERSION = 1;
+  INTERFACE_VERSION = 3;
 
 type
   TPluginType = (piNotify, piProtocol, piRuleAction);
