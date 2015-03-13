@@ -22,10 +22,10 @@ interface
 uses
   Classes, SysUtils,
   IdPOP3, IdMessage, IdComponent, IdExplicitTLSClientServerBase,
-  uPlugins, Dialogs, IdAttachment;
+  uProtocol, Dialogs, IdAttachment;
 
 type
-  TPluginPOP3 = class(TPluginProtocol)
+  TPluginPOP3 = class(TProtocol)
   private
     {$IFDEF INDY9}
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
@@ -104,7 +104,6 @@ constructor TPluginPOP3.Create;
 var
   DLL1, DLL2 : THandle;
 begin
-  Self.PluginType := piProtocol;
   Self.Name := 'POP3';
   Self.ProtocolType := protPOP3;
   POP := TidPOP3.Create(nil);

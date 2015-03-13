@@ -94,7 +94,8 @@ uses
   uFramePreviewOptions in 'uFramePreviewOptions.pas' {FramePreviewOptions: TFrame},
   OKCANCL2 in 'c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS' {OKRightDlg},
   uCustomColorDialog in 'uCustomColorDialog.pas' {CustomColorDialog},
-  uConstants in 'uConstants.pas';
+  uConstants in 'uConstants.pas',
+  uProtocol in 'uProtocol.pas';
 
 {$R *.RES}
 
