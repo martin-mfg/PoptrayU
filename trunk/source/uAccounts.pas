@@ -85,6 +85,8 @@ type
     function CountNew(): integer;
     function CountUnviewed(): integer;
     function CountStatus(statusses : TMailItemStatusSet): integer;
+
+    function IsImap() : boolean;
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -192,6 +194,15 @@ begin
   else inherited AssignTo(Dest);
 end;   *)
 
+//------------------------------------------------------------------------------
+// IsImap
+//------------------------------------------------------------------------------
+function TAccount.IsImap() : boolean;
+begin
+  Result := false;
+  if (Prot.ProtocolType = protIMAP4)
+    then Result := true;
+end;
 
 
 //------------------------------------------------------------------------------
