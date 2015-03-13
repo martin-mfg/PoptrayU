@@ -73,7 +73,6 @@ object frmPopUMain: TfrmPopUMain
           Width = 497
           Height = 338
           Align = alClient
-          Images = dm.imlTabs
           TabOrder = 0
           OnChange = tabMailChange
           OnChanging = tabMailChanging
@@ -119,7 +118,6 @@ object frmPopUMain: TfrmPopUMain
             RowSelect = True
             ParentShowHint = False
             ShowHint = True
-            SmallImages = dm.imlListView
             TabOrder = 0
             ViewStyle = vsReport
             OnColumnClick = lvMailColumnClick
@@ -151,7 +149,6 @@ object frmPopUMain: TfrmPopUMain
             HorzSeparator = False
             ParentFont = False
             ParentShowHint = False
-            PopupMenu = dm.mnuToolbar
             ShowHint = True
             Spacing = 4
             VertMargin = 4
@@ -562,7 +559,6 @@ object frmPopUMain: TfrmPopUMain
     Top = 257
   end
   object TrayIcon: TCoolTrayIcon
-    IconList = dm.imlTray
     CycleInterval = 1500
     Icon.Data = {
       0000010001001010200000000000680400001600000028000000100000002000
@@ -685,8 +681,6 @@ object frmPopUMain: TfrmPopUMain
             ImageIndex = 12
           end>
       end>
-    DisabledImages = dm.imlActionsDisabled
-    Images = dm.imlActions
     Left = 460
     Top = 212
     StyleName = 'XP Style'

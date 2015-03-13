@@ -1687,17 +1687,14 @@ begin
           RawMsg.SaveToStream(TmpStream);
           TmpStream.Position := 0;
           try
-            {$IFDEF INDY9}
-            frmPreview.Msg.MIMEBoundary.Push('somejunk'); // bug in Indy when no boundary and "--" in body.
-            {$ENDIF}
             frmPreview.ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
           except
-            on e : EIdEmailParseError do
-            begin
-              // ignore '@ outside address' error in Indy 9
-              frmPreview.Msg.From.Name := frmPreview.Msg.Headers.Values['From'];
-              frmPreview.Msg.Date := GMTToLocalDateTime(frmPreview.Msg.Headers.Values['Date']);
-            end;
+//            on e : EIdEmailParseError do
+//            begin
+//              // ignore '@ outside address' error in Indy 9
+//              frmPreview.Msg.From.Name := frmPreview.Msg.Headers.Values['From'];
+//              frmPreview.Msg.Date := GMTToLocalDateTime(frmPreview.Msg.Headers.Values['Date']);
+//            end;
             on E: Exception do
             begin
               if E.Message = RSUnevenSizeInDecodeStream then
@@ -1802,7 +1799,7 @@ begin
       account.Status := Translate('Deleting...');
       try
         //TPluginIMAP4
-        if (account.Prot.ProtocolType = protIMAP4) then begin
+        if account.IsImap() then begin
           // On IMAP you can delete multiple messages in one pass, AND
           // you can delete them by UID directly without checking MsgNum->UID
 
@@ -1819,7 +1816,7 @@ begin
 
           account.Prot.DeleteMsgsByUID(uidList.ToStringArray);
           uidList.Free;
-          Expunge(); // Make deletions permanant on server
+          (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
         end
         else begin // POP3 or "custom" protocol plugin
           for i := 0 to account.Mail.Count-1 do
@@ -3681,11 +3678,11 @@ begin
   SetLength(Protocols,2);
   Protocols[0].Name := 'POP3';
   Protocols[0].Port := 110;
-  Protocols[0].Prot := TPluginPOP3.Create;
+  Protocols[0].Prot := TProtocolPOP3.Create;
 
   Protocols[1].Name := 'IMAP4';
   Protocols[1].Port := 143;
-  Protocols[1].Prot := TPluginIMAP4.Create;
+  Protocols[1].Prot := TProtocolIMAP4.Create;
 
   // Load toolbar customizations
   if FileExists(ToolbarName) then

@@ -25,7 +25,7 @@ uses
   uProtocol, Dialogs, IdAttachment;
 
 type
-  TPluginPOP3 = class(TProtocol)
+  TProtocolPOP3 = class(TProtocol)
   private
     {$IFDEF INDY9}
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
@@ -97,9 +97,9 @@ implementation
     DebugLogger : TIdLogFile;
     autoAuthMode : boolean;
 
-{ TPluginPOP3 }
+{ TProtocolPOP3 }
 
-constructor TPluginPOP3.Create;
+constructor TProtocolPOP3.Create;
 var
   DLL1, DLL2 : THandle;
 begin
@@ -189,12 +189,12 @@ end;
 
 // SSL options will be disabled for this protocol if the SSL plugin dlls
 // did not load correctly in the constructor.
-function TPluginPOP3.SupportsSSL : boolean;
+function TProtocolPOP3.SupportsSSL : boolean;
 begin
   Result := not mSSLDisabled;
 end;
 
-procedure TPluginPOP3.ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
+procedure TProtocolPOP3.ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
 begin
 {  case AStatus of
     hsResolving: ShowMessage('resolving...');
@@ -206,7 +206,7 @@ begin
   //Update;
 end;
 
-procedure TPluginPOP3.OnHttpConnected(Sender: TObject);
+procedure TProtocolPOP3.OnHttpConnected(Sender: TObject);
 begin
 {  with TIdHTTP(Sender).Socket.Binding do
   begin
@@ -215,7 +215,7 @@ begin
   end; }
 end;
 
-procedure TPluginPOP3.Connect(Server: PChar; Port: integer; Protocol,UserName, Password: PChar; TimeOut: integer);
+procedure TProtocolPOP3.Connect(Server: PChar; Port: integer; Protocol,UserName, Password: PChar; TimeOut: integer);
 var
   doneTryingConnectionModes: boolean;
 begin
@@ -289,7 +289,7 @@ begin
 end;
 
 
-function TPluginPOP3.LastErrorMsg : PChar;
+function TProtocolPOP3.LastErrorMsg : PChar;
 begin
   if (mHasErrorToReport) then
     Result := PChar(mLastErrorMsg)
@@ -297,7 +297,7 @@ begin
   mHasErrorToReport := false;
 end;
 
-procedure TPluginPOP3.Disconnect;
+procedure TProtocolPOP3.Disconnect;
 begin
   if POP.Connected then
   begin
@@ -306,7 +306,7 @@ begin
   end;
 end;
 
-procedure TPluginPOP3.DisconnectWithQuit;
+procedure TProtocolPOP3.DisconnectWithQuit;
 begin
   if POP.Connected then
   begin
@@ -315,22 +315,22 @@ begin
   end;
 end;
 
-function TPluginPOP3.Connected: boolean;
+function TProtocolPOP3.Connected: boolean;
 begin
   Result := POP.Connected;
 end;
 
-function TPluginPOP3.CheckMessages: integer;
+function TProtocolPOP3.CheckMessages: integer;
 begin
   Result := POP.CheckMessages;
 end;
 
-procedure TPluginPOP3.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
+procedure TProtocolPOP3.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
 begin
   AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
 end;
 
-function TPluginPOP3.RetrieveHeader(const MsgNum: integer; var pHeader: PChar): boolean;
+function TProtocolPOP3.RetrieveHeader(const MsgNum: integer; var pHeader: PChar): boolean;
 var
   AMsg : TIdMessage;
 begin
@@ -351,7 +351,7 @@ begin
   end;
 end;
 
-function TPluginPOP3.RetrieveRaw(const MsgNum: integer; var pRawMsg: PChar): boolean;
+function TProtocolPOP3.RetrieveRaw(const MsgNum: integer; var pRawMsg: PChar): boolean;
 var
   RawMsg : TStringList;
 begin
@@ -373,7 +373,7 @@ begin
   end;
 end;
 
-function TPluginPOP3.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
+function TProtocolPOP3.RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean;
 var
   Dest : TStringList;
 begin
@@ -395,12 +395,12 @@ begin
   end;
 end;
 
-function TPluginPOP3.RetrieveMsgSize(const MsgNum: integer): integer;
+function TProtocolPOP3.RetrieveMsgSize(const MsgNum: integer): integer;
 begin
   Result := POP.RetrieveMsgSize(MsgNum);
 end;
 
-function TPluginPOP3.UIDL(var pUIDL : PChar; const MsgNum: integer = -1): boolean;
+function TProtocolPOP3.UIDL(var pUIDL : PChar; const MsgNum: integer = -1): boolean;
 var
   UIDLs : TStringList;
 begin
@@ -422,7 +422,7 @@ end;
 // be very fast in the average case, and only a little slower if UIDL is not
 // supported or CAPA is not supported.
 //
-function TPluginPOP3.SupportsUIDL(): boolean;
+function TProtocolPOP3.SupportsUIDL(): boolean;
 //var
   //capaSupport : boolean;
 begin
@@ -442,40 +442,40 @@ begin
 
 end;
 
-function TPluginPOP3.CountMessages(): LongInt;
+function TProtocolPOP3.CountMessages(): LongInt;
 begin
   Result:=POP.CheckMessages();
 end;
 
-function TPluginPOP3.Delete(const MsgNum: integer): boolean;
+function TProtocolPOP3.Delete(const MsgNum: integer): boolean;
 begin
   Result := POP.Delete(MsgNum);
 end;
 
-procedure TPluginPOP3.POPWork(Sender: TObject; AWorkMode: TWorkMode;
+procedure TProtocolPOP3.POPWork(Sender: TObject; AWorkMode: TWorkMode;
   {$IFDEF INDY9} const AWorkCount: Integer {$ELSE} AWorkCount: Int64 {$ENDIF});
 begin
   if Assigned(OnWork) then
     OnWork(AWorkCount);
 end;
 
-procedure TPluginPOP3.SetOnWork(const OnWorkProc: TPluginWorkEvent);
+procedure TProtocolPOP3.SetOnWork(const OnWorkProc: TPluginWorkEvent);
 begin
   OnWork := OnWorkProc;
 end;
 
-function TPluginPOP3.SupportsAPOP : boolean;
+function TProtocolPOP3.SupportsAPOP : boolean;
 begin
   Result := true;
 end;
 
-function TPluginPOP3.SupportsSASL : boolean;
+function TProtocolPOP3.SupportsSASL : boolean;
 begin
   Result := true;
 end;
 
 // called right before connecting.
-procedure TPluginPOP3.SetSSLOptions(
+procedure TProtocolPOP3.SetSSLOptions(
   const useSSLorTLS : boolean;
   const authType : TAuthType = password;
   const sslVersion : TsslVer = sslAuto;
@@ -536,7 +536,7 @@ begin
 end;
 
 
-destructor TPluginPOP3.Destroy;
+destructor TProtocolPOP3.Destroy;
 begin
   if (not mSSLDisabled) then begin
     IdUserPassProvider.Free;
