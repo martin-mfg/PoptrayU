@@ -83,22 +83,22 @@ begin
       FMessageBody := nil;
     end;
   // protocol functions
-  if (Plugins[PlugNum] is TPluginProtocol) then
-    with (Plugins[PlugNum] as TPluginProtocol) do
-    begin
-      FProtocols := nil;
-      FConnect := nil;
-      FDisconnect := nil;
-      FConnected := nil;
-      FCheckMessages := nil;
-      FRetrieveHeader := nil;
-      FRetrieveRaw := nil;
-      FRetrieveTop := nil;
-      FRetrieveMsgSize := nil;
-      FUIDL := nil;
-      FDelete := nil;
-      FSetOnWork := nil;
-    end;
+//  if (Plugins[PlugNum] is TPluginProtocol) then
+//    with (Plugins[PlugNum] as TPluginProtocol) do
+//    begin
+//      FProtocols := nil;
+//      FConnect := nil;
+//      FDisconnect := nil;
+//      FConnected := nil;
+//      FCheckMessages := nil;
+//      FRetrieveHeader := nil;
+//      FRetrieveRaw := nil;
+//      FRetrieveTop := nil;
+//      FRetrieveMsgSize := nil;
+//      FUIDL := nil;
+//      FDelete := nil;
+//      FSetOnWork := nil;
+//    end;
 end;
 
 { TframePlugins }
@@ -176,7 +176,7 @@ begin
       // plugin object
       case ThePluginType of
         piNotify   : Plugin := TPluginNotify.Create;
-        piProtocol : Plugin := TPluginProtocol.Create;
+        //piProtocol : Plugin := TPluginProtocol.Create;
       else
         Plugin := TPlugin.Create;
       end;
@@ -196,22 +196,22 @@ begin
         (Plugin as TPluginNotify).FMessageBody := GetProcAddress(hPlugin,'MessageBody');
       end;
       // protocol
-      if (Plugin is TPluginProtocol) then
-      begin
-        (Plugin as TPluginProtocol).FProtocols := GetProcAddress(hPlugin,'Protocols');
-        (Plugin as TPluginProtocol).FConnect := GetProcAddress(hPlugin,'Connect');
-        (Plugin as TPluginProtocol).FDisconnect := GetProcAddress(hPlugin,'Disconnect');
-        (Plugin as TPluginProtocol).FConnected := GetProcAddress(hPlugin,'Connected');
-        (Plugin as TPluginProtocol).FCheckMessages := GetProcAddress(hPlugin,'CheckMessages');
-        (Plugin as TPluginProtocol).FRetrieveHeader := GetProcAddress(hPlugin,'RetrieveHeader');
-        (Plugin as TPluginProtocol).FRetrieveRaw := GetProcAddress(hPlugin,'RetrieveRaw');
-        (Plugin as TPluginProtocol).FRetrieveTop := GetProcAddress(hPlugin,'RetrieveTop');
-        (Plugin as TPluginProtocol).FRetrieveMsgSize := GetProcAddress(hPlugin,'RetrieveMsgSize');
-        (Plugin as TPluginProtocol).FUIDL := GetProcAddress(hPlugin,'UIDL');
-        (Plugin as TPluginProtocol).FDelete := GetProcAddress(hPlugin,'Delete');
-        (Plugin as TPluginProtocol).FSetOnWork := GetProcAddress(hPlugin,'SetOnWork');
-        (Plugin as TPluginProtocol).FLastErrorMsg := GetProcAddress(hPlugin,'LastErrorMsg');
-      end;
+//      if (Plugin is TPluginProtocol) then
+//      begin
+//        (Plugin as TPluginProtocol).FProtocols := GetProcAddress(hPlugin,'Protocols');
+//        (Plugin as TPluginProtocol).FConnect := GetProcAddress(hPlugin,'Connect');
+//        (Plugin as TPluginProtocol).FDisconnect := GetProcAddress(hPlugin,'Disconnect');
+//        (Plugin as TPluginProtocol).FConnected := GetProcAddress(hPlugin,'Connected');
+//        (Plugin as TPluginProtocol).FCheckMessages := GetProcAddress(hPlugin,'CheckMessages');
+//        (Plugin as TPluginProtocol).FRetrieveHeader := GetProcAddress(hPlugin,'RetrieveHeader');
+//        (Plugin as TPluginProtocol).FRetrieveRaw := GetProcAddress(hPlugin,'RetrieveRaw');
+//        (Plugin as TPluginProtocol).FRetrieveTop := GetProcAddress(hPlugin,'RetrieveTop');
+//        (Plugin as TPluginProtocol).FRetrieveMsgSize := GetProcAddress(hPlugin,'RetrieveMsgSize');
+//        (Plugin as TPluginProtocol).FUIDL := GetProcAddress(hPlugin,'UIDL');
+//        (Plugin as TPluginProtocol).FDelete := GetProcAddress(hPlugin,'Delete');
+//        (Plugin as TPluginProtocol).FSetOnWork := GetProcAddress(hPlugin,'SetOnWork');
+//        (Plugin as TPluginProtocol).FLastErrorMsg := GetProcAddress(hPlugin,'LastErrorMsg');
+//      end;
       // init
       Plugin.Init; //suggested by Attila / köszi Attilának
       // add to array

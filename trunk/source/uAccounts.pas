@@ -27,7 +27,7 @@ interface
 {$REGION '-- Interfaces --'}
 uses
   Classes, ExtCtrls, Contnrs, SysUtils, Graphics, uPlugins, uMailItems,
-  Generics.Collections;
+  Generics.Collections, uProtocol;
 
 type
   //------------------------------------------------------------------- Queue --
@@ -60,7 +60,7 @@ type
     Size : integer;
     Connecting : boolean;
     OldNum : integer; //for re-ordering accounts
-    Prot : TPluginProtocol;
+    Prot : TProtocol;
     UIDLSupported : boolean;
     Mail : TMailItems;
     UseSSLorTLS : boolean;

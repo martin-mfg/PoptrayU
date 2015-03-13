@@ -25,14 +25,14 @@ uses
   IdGlobal,
   IdMessage,
   IdIMAP4,
-  uPlugins,
+  uProtocol,
   IdStackConsts,
   Classes,
   IdAttachment, IdAttachmentMemory, System.Generics.Collections,
   IdMailbox;
 
 type
-  TPluginIMAP4 = class(TPluginProtocol)
+  TPluginIMAP4 = class(TProtocol)
   private
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
@@ -142,7 +142,6 @@ var
   DLL1, DLL2 : THandle;
   //idLogFile1 : TidLogFile;//DEBUG - logging.
 begin
-  Self.PluginType := piProtocol;
   Self.Name := 'IMAP';
   Self.ProtocolType := protIMAP4;
   IMAP := TIdIMAP4.Create(nil);

@@ -44,7 +44,7 @@ uses
 
   uGlobal, uPlugins, uPOP3, uIMAP4, uMailItems,
   uRules, uAccounts, uMailManager, uRulesManager, uRulesForm, uAccountsForm,
-  Vcl.DBGrids, uOptionsForm, uAboutForm, uConstants;
+  Vcl.DBGrids, uOptionsForm, uAboutForm, uConstants, uProtocol;
 
 
 
@@ -361,14 +361,14 @@ type
   end;
 
 type
-  TProtocol = record
+  TProtocolType = record
     Name : string;
     Port : integer;
-    Prot : TPluginProtocol;
+    Prot : TProtocol;
   end;
 
 var
-  Protocols : array of TProtocol;
+  Protocols : array of TProtocolType;
 
 var
   frmPopUMain: TfrmPopUMain;

@@ -60,7 +60,7 @@ uses
   System.Classes, System.Win.Registry, System.IniFiles, System.UITypes,
   Vcl.Dialogs, Vcl.Forms, Vcl.Graphics,
   WinApi.Windows, StrUtils, SHFolder,
-  uPlugins, uGlobal, uRCUtils, uMain, uTranslate, uDM, uMailItems,
+  uProtocol, uPlugins, uGlobal, uRCUtils, uMain, uTranslate, uDM, uMailItems,
   uFontUtils, uRules, uRulesManager, uAccounts, System.TypInfo, uConstants;
 
 // Forward function declarations
@@ -292,7 +292,7 @@ begin
       ThePluginType := TPluginType(Ini.ReadInteger('Plug-ins','PluginType'+IntToStr(i+1),0));
       case ThePluginType of
         piNotify   : Plugins[i] := TPluginNotify.Create;
-        piProtocol : Plugins[i] := TPluginProtocol.Create;
+        //piProtocol : Plugins[i] := TPluginProtocol.Create;
       end;
       Plugins[i].Name := Ini.ReadString('Plug-ins','PluginName'+IntToStr(i+1),'');
       Plugins[i].DLLName := Ini.ReadString('Plug-ins','PluginDLLName'+IntToStr(i+1),'');
@@ -323,27 +323,27 @@ begin
           (Plugins[i] as TPluginNotify).FMessageBody := GetProcAddress(Plugins[i].hPlugin,'MessageBody');
         end;
         // protocol
-        if (Plugins[i] is TPluginProtocol) then
-        begin
-          (Plugins[i] as TPluginProtocol).FProtocols := GetProcAddress(Plugins[i].hPlugin,'Protocols');
-          (Plugins[i] as TPluginProtocol).FConnect := GetProcAddress(Plugins[i].hPlugin,'Connect');
-          (Plugins[i] as TPluginProtocol).FDisconnect := GetProcAddress(Plugins[i].hPlugin,'Disconnect');
-          (Plugins[i] as TPluginProtocol).FDisconnectWithQuit := GetProcAddress(Plugins[i].hPlugin,'DisconnectWithQuit');
-          (Plugins[i] as TPluginProtocol).FConnected := GetProcAddress(Plugins[i].hPlugin,'Connected');
-          (Plugins[i] as TPluginProtocol).FCheckMessages := GetProcAddress(Plugins[i].hPlugin,'CheckMessages');
-          (Plugins[i] as TPluginProtocol).FRetrieveHeader := GetProcAddress(Plugins[i].hPlugin,'RetrieveHeader');
-          (Plugins[i] as TPluginProtocol).FRetrieveRaw := GetProcAddress(Plugins[i].hPlugin,'RetrieveRaw');
-          (Plugins[i] as TPluginProtocol).FRetrieveTop := GetProcAddress(Plugins[i].hPlugin,'RetrieveTop');
-          (Plugins[i] as TPluginProtocol).FRetrieveMsgSize := GetProcAddress(Plugins[i].hPlugin,'RetrieveMsgSize');
-          (Plugins[i] as TPluginProtocol).FUIDL := GetProcAddress(Plugins[i].hPlugin,'UIDL');
-          (Plugins[i] as TPluginProtocol).FDelete := GetProcAddress(Plugins[i].hPlugin,'Delete');
-          (Plugins[i] as TPluginProtocol).FSetOnWork := GetProcAddress(Plugins[i].hPlugin,'SetOnWork');
-          (Plugins[i] as TPluginProtocol).FLastErrorMsg := GetProcAddress(Plugins[i].hPlugin,'LastErrorMsg');
-          (Plugins[i] as TPluginProtocol).FSetSSLOptions := GetProcAddress(Plugins[i].hPlugin,'SetSSLOptions');
-          (Plugins[i] as TPluginProtocol).FPluginSupportsSSL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSSL');
-          (Plugins[i] as TPluginProtocol).FPluginSupportsAPOP := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsAPOP');
-          (Plugins[i] as TPluginProtocol).FPluginSupportsSASL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSASL');
-        end;
+//        if (Plugins[i] is TPluginProtocol) then
+//        begin
+//          (Plugins[i] as TPluginProtocol).FProtocols := GetProcAddress(Plugins[i].hPlugin,'Protocols');
+//          (Plugins[i] as TPluginProtocol).FConnect := GetProcAddress(Plugins[i].hPlugin,'Connect');
+//          (Plugins[i] as TPluginProtocol).FDisconnect := GetProcAddress(Plugins[i].hPlugin,'Disconnect');
+//          (Plugins[i] as TPluginProtocol).FDisconnectWithQuit := GetProcAddress(Plugins[i].hPlugin,'DisconnectWithQuit');
+//          (Plugins[i] as TPluginProtocol).FConnected := GetProcAddress(Plugins[i].hPlugin,'Connected');
+//          (Plugins[i] as TPluginProtocol).FCheckMessages := GetProcAddress(Plugins[i].hPlugin,'CheckMessages');
+//          (Plugins[i] as TPluginProtocol).FRetrieveHeader := GetProcAddress(Plugins[i].hPlugin,'RetrieveHeader');
+//          (Plugins[i] as TPluginProtocol).FRetrieveRaw := GetProcAddress(Plugins[i].hPlugin,'RetrieveRaw');
+//          (Plugins[i] as TPluginProtocol).FRetrieveTop := GetProcAddress(Plugins[i].hPlugin,'RetrieveTop');
+//          (Plugins[i] as TPluginProtocol).FRetrieveMsgSize := GetProcAddress(Plugins[i].hPlugin,'RetrieveMsgSize');
+//          (Plugins[i] as TPluginProtocol).FUIDL := GetProcAddress(Plugins[i].hPlugin,'UIDL');
+//          (Plugins[i] as TPluginProtocol).FDelete := GetProcAddress(Plugins[i].hPlugin,'Delete');
+//          (Plugins[i] as TPluginProtocol).FSetOnWork := GetProcAddress(Plugins[i].hPlugin,'SetOnWork');
+//          (Plugins[i] as TPluginProtocol).FLastErrorMsg := GetProcAddress(Plugins[i].hPlugin,'LastErrorMsg');
+//          (Plugins[i] as TPluginProtocol).FSetSSLOptions := GetProcAddress(Plugins[i].hPlugin,'SetSSLOptions');
+//          (Plugins[i] as TPluginProtocol).FPluginSupportsSSL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSSL');
+//          (Plugins[i] as TPluginProtocol).FPluginSupportsAPOP := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsAPOP');
+//          (Plugins[i] as TPluginProtocol).FPluginSupportsSASL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSASL');
+//        end;
         Plugins[i].Init;
       end;
     end;

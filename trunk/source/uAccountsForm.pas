@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
   PngBitBtn, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList,
-  uAccounts, uPlugins, Vcl.Grids, Vcl.ValEdit;
+  uAccounts, uProtocol, Vcl.Grids, Vcl.ValEdit;
 
 const
   UseDefaultSound = '[Use Default Sound]';
@@ -869,32 +869,32 @@ begin
   // clear all protocols (except POP3/IMAP)
   SetLength(Protocols,2);
 
-  cmbProtocol.Items.Text := 'POP3';
-  cmbProtocol.Items.Add('IMAP4');
+  cmbProtocol.Items.Text := Translate('POP3');
+  cmbProtocol.Items.Add(Translate('IMAP4'));
 
-  // new list of protocols
-  sl := TStringList.Create;
-  try
-    for i := Low(Plugins) to High(Plugins) do
-    begin
-      if Plugins[i].Enabled and (Plugins[i] is TPluginProtocol) then
-      begin
-        sl.Clear;
-        CommaSeparatedToStringList(sl,(Plugins[i] as TPluginProtocol).Protocols);
-        for j := 0 to sl.Count-1 do
-        begin
-          SetLength(Protocols,Length(Protocols)+1);
-          st := StrBefore(sl[j],':');
-          Protocols[Length(Protocols)-1].Name := st;
-          Protocols[Length(Protocols)-1].Port := StrToIntDef(StrAfter(sl[j],':'),-1);
-          Protocols[Length(Protocols)-1].Prot := (Plugins[i] as TPluginProtocol);
-          cmbProtocol.Items.Add(st);
-        end;
-      end;
-    end;
-  finally
-    sl.Free;
-  end;
+//  // new list of protocols
+//  sl := TStringList.Create;
+//  try
+//    for i := Low(Plugins) to High(Plugins) do
+//    begin
+//      if Plugins[i].Enabled and (Plugins[i] is TPluginProtocol) then
+//      begin
+//        sl.Clear;
+//        CommaSeparatedToStringList(sl,(Plugins[i] as TPluginProtocol).Protocols);
+//        for j := 0 to sl.Count-1 do
+//        begin
+//          SetLength(Protocols,Length(Protocols)+1);
+//          st := StrBefore(sl[j],':');
+//          Protocols[Length(Protocols)-1].Name := st;
+//          Protocols[Length(Protocols)-1].Port := StrToIntDef(StrAfter(sl[j],':'),-1);
+//          Protocols[Length(Protocols)-1].Prot := (Plugins[i] as TPluginProtocol);
+//          cmbProtocol.Items.Add(st);
+//        end;
+//      end;
+//    end;
+//  finally
+//    sl.Free;
+//  end;
 end;
 
 procedure TAccountsForm.EnableFields(EnableIt: Boolean);
