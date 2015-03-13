@@ -353,7 +353,7 @@ type
     procedure TestAccount(account : TAccount);
     procedure OptionsRefresh();
 
-    procedure OnProtWork(const AWorkCount: Integer); //todo can this be made private later?
+    procedure OnPreviewDownloadProgressChange(const AWorkCount: Integer); //todo can this be made private later?
     procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual;
     procedure ConnectAccount(Account : TAccount);
   published
@@ -1568,7 +1568,7 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmPopUMain.OnProtWork(const AWorkCount: Integer);
+procedure TfrmPopUMain.OnPreviewDownloadProgressChange(const AWorkCount: Integer);
 begin
   if FPreview and not(FMinimized) and Assigned(frmPreview) then
   begin
@@ -1587,7 +1587,7 @@ end;
 procedure TfrmPopUMain.OnProcessWork(Sender: TObject; AWorkMode: TWorkMode;
    AWorkCount: Int64);
 begin
-  OnProtWork(AWorkCount);
+  OnPreviewDownloadProgressChange(AWorkCount);
 end;
 
 // ----------------------------------------------------------- mail messages ---
@@ -1605,13 +1605,12 @@ begin
   // check if busy
   if FBusy then
   begin
-    if not Options.NoError then
+    if not Options.NoError then  //TODO: should this condition be eliminated and balloon regardless?
       Balloon('PopTrayU',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
     Exit;
   end;
 
-  // Sanity Check: If MailItem is null, we'd end up with a memory access
-  // exception later when it's referenced. In theory this should never happen.
+  // Sanity Check: Can't preview a mail item that doesn't exist.
   if (MailItem = nil) then begin
     if not Options.NoError then
       Balloon('PopTrayU',Translate('Error:')+' '+Translate('Message Not Found'),bitError,15); //TODO: add to Translation strings
@@ -1620,7 +1619,8 @@ begin
 
 
 
-  Account.Prot.SetOnWork(OnProtWork);
+  Account.Prot.SetOnWork(OnPreviewDownloadProgressChange);
+
   // connect
   Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
   if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
