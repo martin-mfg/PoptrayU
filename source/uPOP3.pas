@@ -27,11 +27,7 @@ uses
 type
   TProtocolPOP3 = class(TProtocol)
   private
-    {$IFDEF INDY9}
-    procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; const AWorkCount: Integer); //Indy9
-    {$ELSE}
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //indy10
-    {$ENDIF}
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     procedure ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
     procedure OnHttpConnected(Sender: TObject);
@@ -106,11 +102,6 @@ begin
   Self.Name := 'POP3';
   Self.ProtocolType := protPOP3;
   POP := TidPOP3.Create(nil);
-  {$IFDEF INDY9}
-  Pop.MaxLineLength := 64*1024; //Indy9
-  {$ELSE}
-  //Pop.IOHandler.MaxLineLength := 64*1024; //Do not need for Indy10?
-  {$ENDIF}
   autoAuthMode := true;
 
   if (debugPop) then

@@ -17,53 +17,27 @@ type
     Name : string;
     ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
-    FConnect         : procedure (Server : PChar; Port : integer; Protocol,UserName,Password : PChar; Timeout : integer); stdcall;
-    FDisconnect      : procedure; stdcall;
-    FDisconnectWithQuit: procedure; stdcall;
-    FConnected       : function : boolean; stdcall;
-    FCheckMessages   : function : integer; stdcall;
-    FRetrieveHeader  : function (const MsgNum : integer; var pHeader : PChar) : boolean; stdcall;
-    FRetrieveRaw     : function (const MsgNum : integer; var pRawMsg : PChar) : boolean; stdcall;
-    FRetrieveTop     : function (const MsgNum,LineCount: integer; var pDest: PChar) : boolean; stdcall;
-    FRetrieveMsgSize : function (const MsgNum : integer) : integer; stdcall;
-    FUIDL            : function (var pUIDL : PChar; const MsgNum : integer = -1) : boolean; stdcall;
-    FDelete          : function (const MsgNum : integer) : boolean; stdcall;
-    FSetOnWork       : procedure (const OnWorkProc : TPluginWorkEvent); stdcall;
-    FLastErrorMsg    : function : PChar; stdcall;
-    FSetSSLOptions   : procedure (const useSSLorTLS : boolean; const authType: TAuthType; sslVersion : TsslVer = sslAuto; startTLS : boolean = false); stdcall;
-    FPluginSupportsSSL : function : boolean; stdcall;
-    FPluginSupportsSASL : function : boolean; stdcall;
-    FPluginSupportsAPOP : function : boolean; stdcall;
-    FSupportsUIDL : function : boolean; stdcall;
-    FCountMessages: function : LongInt; stdcall;
-    FExpunge : procedure (); stdcall;
     procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); virtual; abstract;
     procedure Disconnect; virtual; abstract;
     procedure DisconnectWithQuit; virtual; abstract;
     function Connected : boolean;  virtual; abstract;
     function CheckMessages : integer; virtual; abstract;
-    function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; virtual;
-    function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual;
-    function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual;
-    function RetrieveMsgSize(const MsgNum : integer) : integer; virtual;
-    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; virtual;
-    function Delete(const MsgNum : integer) : boolean; virtual;
-    procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); virtual;
-    function LastErrorMsg : PChar; virtual;
+    function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; virtual; abstract;
+    function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual; abstract;
+    function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual; abstract;
+    function RetrieveMsgSize(const MsgNum : integer) : integer; virtual;  abstract;
+    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; virtual; abstract;
+    function Delete(const MsgNum : integer) : boolean; virtual; abstract;
+    procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); virtual; abstract;
+    function LastErrorMsg : PChar; virtual; abstract;
     procedure SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password;
-      const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false); virtual;
+      const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false); virtual; abstract;
     function SupportsSSL(): boolean; virtual; abstract; //Should return true if SSL plugin is installed correctly.
     function SupportsAPOP(): boolean; virtual; abstract;
     function SupportsSASL(): boolean; virtual; abstract;
     function SupportsUIDL(): boolean; virtual; abstract;
-    function CountMessages(): LongInt; virtual;
-    //procedure Expunge; virtual;
-    function DeleteMsgsByUID(const uidList: array of String): boolean; virtual;
-    function GetUnseenUids(): TIntArray;  virtual;
-    function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; virtual;
-    function RetrieveMsgSizeByUID(const AMsgUID : String) : integer; virtual;
-    function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean; virtual;
-    function MakeRead(const uid : string; isRead : boolean): boolean; virtual;
+    function CountMessages(): LongInt; virtual; abstract;
+    function MakeRead(const uid : string; isRead : boolean): boolean; virtual; abstract;
 
     //TODO: this should be eliminated if we can weed out enough of the no longer needed PChar's
     procedure FreePChar(var p : PChar);
@@ -88,121 +62,5 @@ begin
   p := nil;
 end;
 
-{ TProtocol }
-
-
-function TProtocol.RetrieveHeader(const MsgNum: integer; var pHeader: PChar): boolean;
-begin
-  if Assigned(FRetrieveHeader) then
-    Result := FRetrieveHeader(MsgNum,pHeader)
-  else
-    Result := False;
-end;
-
-function TProtocol.RetrieveRaw(const MsgNum: integer; var pRawMsg: PChar): boolean;
-begin
-  if Assigned(FRetrieveRaw) then
-    Result := FRetrieveRaw(MsgNum,pRawMsg)
-  else
-    Result := False;
-end;
-
-function TProtocol.RetrieveTop(const MsgNum, LineCount: integer; var pDest: PChar): boolean;
-begin
-  if Assigned(FRetrieveTop) then
-    Result := FRetrieveTop(MsgNum,LineCount,pDest)
-  else
-    Result := False;
-end;
-
-function TProtocol.RetrieveMsgSize(const MsgNum: integer): integer;
-begin
-  if Assigned(FRetrieveMsgSize) then
-    Result := FRetrieveMsgSize(MsgNum)
-  else
-    Result := -1;
-end;
-
-function TProtocol.UIDL(var pUIDL: PChar; const MsgNum: integer = -1): boolean;
-begin
-  if Assigned(FUIDL) then
-    Result := FUIDL(pUIDL,MsgNum)
-  else
-    Result := False;
-end;
-
-function TProtocol.Delete(const MsgNum: integer): boolean;
-begin
-  if Assigned(FDelete) then
-    Result := FDelete(MsgNum)
-  else
-    Result := False;
-end;
-
-procedure TProtocol.SetOnWork(const OnWorkProc: TPluginWorkEvent);
-begin
-  if Assigned(FSetOnWork) then
-    FSetOnWork(OnWorkProc);
-end;
-
-{ LastErrorMsg is called after each account check. The error message should
-  be cleared/reset at the beginning of the following account check.         }
-function TProtocol.LastErrorMsg: PChar;
-begin
-  if Assigned(FLastErrorMsg) then
-    Result := FLastErrorMsg()
-  else
-    Result := nil;
-end;
-
-function TProtocol.CountMessages: LongInt;
-begin
-  if Assigned(FCountMessages) then
-    Result := FCountMessages()
-  else
-    Result := -1;
-end;
-
-procedure TProtocol.SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password; const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false);
-begin
-  if Assigned(FSetSSLOptions) then
-    FSetSSLOptions(useSSLorTLS, authType, sslVersion, startTLS);
-end;
-
-//procedure TProtocol.Expunge();
-//begin
-//  if Assigned(FExpunge) then
-//    FExpunge();
-//end;
-
-function TProtocol.DeleteMsgsByUID(const uidList: array of String): boolean;
-begin
-    Result := false;
-end;
-
-function TProtocol.GetUnseenUids(): TIntArray;
-begin
-  Result := nil;
-end;
-
-function TProtocol.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
-begin
-  Result := false;
-end;
-
-function TProtocol.RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
-begin
-  Result := -1;
-end;
-
-function TProtocol.RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
-begin
-  result := false;
-end;
-
-function TProtocol.MakeRead(const uid : string; isRead : boolean): boolean;
-begin
-  result := false;
-end;
 
 end.
