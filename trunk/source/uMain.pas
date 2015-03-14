@@ -791,6 +791,7 @@ var
   i, msgNum : integer;          // loop counter
   mailcount : integer;  // How many new messages are on the server
   uidList : TIntArray;
+  imap : TProtocolIMAP4;
 begin
   // clear visual list - if current tab is showing this account
   if Accounts[tabMail.TabIndex] = account then
@@ -806,11 +807,12 @@ begin
     // 3a. eml = imap.GetMessageByUID(uid)
     // 3b. parse email and deal with it
 
-  if (account.Prot.ProtocolType <> protIMAP4) then
+  if (NOT account.IsImap) then
     exit;
 
+  imap := account.Prot as TProtocolIMAP4;
 
-  uidList := account.Prot.GetUnseenUids();
+  uidList := imap.GetUnseenUids();
 
   if Assigned(uidList) then begin
     mailcount := Length(uidList);
@@ -1617,17 +1619,7 @@ begin
     Exit;
   end;
 
-
-
   Account.Prot.SetOnWork(OnPreviewDownloadProgressChange);
-
-  // connect
-  Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
-  if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
-  if not Account.Prot.Connected then
-    ConnectAccount(Account);
-  Screen.Cursor := crDefault;
-
 
 
 
@@ -1645,20 +1637,31 @@ begin
 
     TranslateForm(frmPreview);
     frmPreview.Caption := Translate('Preview') + ' - PopTrayU';
-    frmPreview.Show;
+
 
     Application.ProcessMessages;
 
+
+      // connect
+  Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
+  if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
+  if not Account.Prot.Connected then
+    ConnectAccount(Account);
+  Screen.Cursor := crDefault;
+  Application.ProcessMessages;
+
+  frmPreview.Show;
 
     // progress
     frmPreview.FStop := False;
     FPreview := True;
     frmPreview.panProgress.Visible := True;
     frmPreview.Progress.Position := 0;
+
     // get message
     try
       if Account.IsImap() then
-        mMsgSize := Account.Prot.RetrieveMsgSizeByUID(MailItem.UID)
+        mMsgSize := (Account.Prot as TProtocolIMAP4).RetrieveMsgSizeByUID(MailItem.UID)
       else
         mMsgSize := Account.Prot.RetrieveMsgSize(MailItem.MsgNum);
 
@@ -1814,7 +1817,7 @@ begin
             end;
           end;
 
-          account.Prot.DeleteMsgsByUID(uidList.ToStringArray);
+          (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
           uidList.Free;
           (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
         end
@@ -2223,9 +2226,9 @@ begin
   end;
 
   MsgHeader := TIdMessage.Create(Self);
-  account.Prot.UIDRetrievePeekHeader(uid,MsgHeader);
+  (account.Prot as TProtocolIMAP4).UIDRetrievePeekHeader(uid,MsgHeader);
 
-  msgNum := 99887766;
+  msgNum := 99887766;//todo
 
   // get size
   MsgSize := account.Prot.RetrieveMsgSize(msgnum) div 1024 +1;
@@ -2263,10 +2266,10 @@ begin
   MailItem.MsgID := MsgID;
   if Options.SafeDelete then
     MailItem.UID := uid;//GetUID(account,msgnum);
-  //MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
-  MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
-  //MailItem.New := not MailItem.Viewed ;//JRWTESTING
-  MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
+  MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
+  //MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
+  MailItem.New := not MailItem.Viewed ;//JRWTESTING
+  //MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
   MailItem.Important := False;
   MailItem.Spam := False;
   MailItem.TrayColor := -1;

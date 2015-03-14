@@ -66,12 +66,12 @@ type
       const sslVersion : TsslVer = sslAuto;
       const startTLS : boolean = false); override;
     destructor Destroy; override;
-    procedure Expunge; //override;
-    function DeleteMsgsByUID(const uidList: array of String): boolean; override;
-    function GetUnseenUids(): TIntArray; override;
-    function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean; override;
-    function RetrieveMsgSizeByUID(const AMsgUID : String) : integer; override;
-    function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean; override;
+    procedure Expunge;
+    function DeleteMsgsByUID(const uidList: array of String): boolean;
+    function GetUnseenUids(): TIntArray;
+    function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
+    function RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
+    function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
     function MakeRead(const uid : string; isRead : boolean): boolean; override;
   end;
 
