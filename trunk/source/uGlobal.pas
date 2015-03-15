@@ -91,6 +91,8 @@ var
     DontCheckTimes : boolean;
     DontCheckStart : TDateTime;
     DontCheckEnd : TDateTime;
+    // Spam
+    DowloadFullMsgForPreview : boolean;
     // mouse buttons
     LeftClick : integer;
     RightClick : integer;

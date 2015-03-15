@@ -1605,7 +1605,7 @@ var
   pRawMsg : PChar;
 begin
   // check if busy
-  if FBusy then
+  if FBusy then  //todo: account.busy
   begin
     if not Options.NoError then  //TODO: should this condition be eliminated and balloon regardless?
       Balloon('PopTrayU',Translate('Error:')+' '+Translate('Still Busy Checking'),bitError,15);
@@ -1619,8 +1619,6 @@ begin
     Exit;
   end;
 
-  Account.Prot.SetOnWork(OnPreviewDownloadProgressChange);
-
 
 
   try
@@ -1632,6 +1630,7 @@ begin
     frmPreview.LoadPreviewIni();
     frmPreview.FAccount := Account;
 
+    // copies headers already downloaded
     frmPreview.LoadMailMessage(MailItem);
 
 
@@ -1641,16 +1640,20 @@ begin
 
     Application.ProcessMessages;
 
+    //--------------------------------------------------------------------------
+    // -- move to background thread -- GetConnection()
+    Account.Prot.SetOnWork(OnPreviewDownloadProgressChange);
 
-      // connect
-  Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
-  if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
-  if not Account.Prot.Connected then
-    ConnectAccount(Account);
-  Screen.Cursor := crDefault;
-  Application.ProcessMessages;
+    // connect
+    Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
+    if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
+    if not Account.Prot.Connected then
+      ConnectAccount(Account);
+    Screen.Cursor := crDefault;
+    Application.ProcessMessages;
+    //--------------------------------------------------------------------------
 
-  frmPreview.Show;
+    frmPreview.Show;
 
     // progress
     frmPreview.FStop := False;
@@ -1660,22 +1663,33 @@ begin
 
     // get message
     try
+      //--------------------------------------------------------------------------
+      // -- move to background thread --  GetMessageSizeInBytes() : Integer
       if Account.IsImap() then
         mMsgSize := (Account.Prot as TProtocolIMAP4).RetrieveMsgSizeByUID(MailItem.UID)
       else
         mMsgSize := Account.Prot.RetrieveMsgSize(MailItem.MsgNum);
+      //--------------------------------------------------------------------------
 
+      // Update UI (progress bar) based on message size
       if (mMsgSize < 0) then begin
         raise Exception.Create('No Such Message (PopTrayU Error 1804)'); //todo: this prevents TProgressBar out of range from showing as the error. but the string printed is not from this message.
       end;
-      frmPreview.Progress.Max := mMsgSize;
+      frmPreview.Progress.Max := mMsgSize; //Synchronize this
+      frmPreview.lblProgress.Caption := Translate('Downloading...');  //Synchronize this
+
+
       RawMsg := TStringList.Create;
       try
-        frmPreview.lblProgress.Caption := Translate('Downloading...');
+        //--------------------------------------------------------------------------
+        // -- move to background thread --  Download Message
+        // TODO: for IMAP download by UID.
         if Options.TopLines>0 then
           Account.Prot.RetrieveTop(MailItem.MsgNum,Options.TopLines,pRawMsg)
         else
           Account.Prot.RetrieveRaw(MailItem.MsgNum,pRawMsg);
+        //-------------------------------------------------------------------------
+
         RawMsg.SetText(pRawMsg);
         Account.Prot.FreePChar(pRawMsg);
         frmPreview.FRawMsg := RawMsg.Text;
@@ -1686,7 +1700,7 @@ begin
         // process message
         TmpStream := TMemoryStream.Create;
         try
-          frmPreview.lblProgress.Caption := Translate('Processing...');
+          frmPreview.lblProgress.Caption := Translate('Processing...'); //Synchronize
           RawMsg.SaveToStream(TmpStream);
           TmpStream.Position := 0;
           try
@@ -1701,9 +1715,8 @@ begin
             on E: Exception do
             begin
               if E.Message = RSUnevenSizeInDecodeStream then
-              begin
-                // TODO delete files
-                frmPreview.lblProgress.Caption := Translate('Re-Processing...');
+              begi
+                frmPreview.lblProgress.Caption := Translate('Re-Processing...');  //Synchronize
                 // remove #13 from end of lines
                 for i := 0 to RawMsg.Count-1 do
                   if RightStr(RawMsg[i],1) = #13 then
@@ -1712,9 +1725,9 @@ begin
                 RawMsg.SaveToStream(TmpStream);
                 TmpStream.Position := 0;
                 // try again
-                frmPreview.Msg.Clear;
+                frmPreview.Msg.Clear; //Synchronize
                 try
-                  frmPreview.ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);
+                  frmPreview.ProcessMessage(frmPreview.Msg,TmpStream,Options.TopLines>0);  //Synchronize
                 except
                   // ignore
                 end;
@@ -1762,7 +1775,7 @@ begin
     end;
     // show contents
     try
-      frmPreview.ShowMsg;
+      frmPreview.ShowMsg;   //Synchronize
       // Bug Workaround: once the form has set the subject override the
       // displayed subject with the correct unicode version.
       if (MailItem.Subject <> '') then begin

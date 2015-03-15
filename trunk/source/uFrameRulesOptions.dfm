@@ -24,11 +24,12 @@ object FrameRulesOptions: TFrameRulesOptions
     HeaderFont.Style = []
     TabOrder = 0
     object catStartup: TCategoryPanel
-      Top = 232
+      Top = 256
       Height = 68
       Caption = 'Whitelist/Blacklist'
       Color = clWindow
       TabOrder = 0
+      ExplicitTop = 232
       object lblBlacklistAct: TLabel
         Left = 6
         Top = 8
@@ -53,7 +54,7 @@ object FrameRulesOptions: TFrameRulesOptions
     end
     object catMsgDl: TCategoryPanel
       Top = 74
-      Height = 158
+      Height = 182
       Caption = 'Message Download Options'
       Color = clWindow
       TabOrder = 1
@@ -154,6 +155,20 @@ object FrameRulesOptions: TFrameRulesOptions
         Height = 21
         Hint = 'Number of message lines to preview.'
         TabOrder = 6
+        OnClick = OptionsChange
+      end
+      object chkDlForPreview: TCheckBox
+        Left = 6
+        Top = 120
+        Width = 389
+        Height = 17
+        Hint = 
+          'Retrieve complete message while checking,'#13#10'if message smaller th' +
+          'an specified size.'
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Download full message on Preview'
+        Enabled = False
+        TabOrder = 7
         OnClick = OptionsChange
       end
     end

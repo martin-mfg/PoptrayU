@@ -34,6 +34,7 @@ type
     edGetBodyLines: TEdit;
     edGetBodySize: TEdit;
     edTopLines: TEdit;
+    chkDlForPreview: TCheckBox;
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -132,6 +133,7 @@ begin
   chkGetBody.Height := labelHeight;
   chkGetBodySize.Height := labelHeight;
   chkGetBodyLines.Height := labelHeight;
+  chkDlForPreview.Height := labelHeight;
 
   chkRetrieveTop.Top := calcPosBelow(lblMsgDlInfo);
   edTopLines.Top := chkRetrieveTop.Top - 3;
@@ -146,7 +148,9 @@ begin
   lblGetBodyLines.Top := chkGetBodyLines.Top;
   edGetBodyLines.Top := chkGetBodyLines.Top - 3;
 
-  catMsgDl.ClientHeight := calcPosBelow(edGetBodyLines);
+  chkDlForPreview.Top := calcPosBelow(edGetBodyLines);
+
+  catMsgDl.ClientHeight := calcPosBelow(chkDlForPreview);
 
   // Whitelist/blacklist category
   cmbBlacklistAction.Left := CalcPosToRightOf(lblBlacklistAct);
