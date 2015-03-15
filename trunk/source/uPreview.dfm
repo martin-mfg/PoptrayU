@@ -79,6 +79,7 @@ object frmPreview: TfrmPreview
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 6
+    ExplicitTop = 123
   end
   object panOK: TPanel
     Left = 0
@@ -244,18 +245,18 @@ object frmPreview: TfrmPreview
     Spacing = 8
   end
   object panProgress: TPanel
-    Left = 153
-    Top = 192
-    Width = 285
-    Height = 64
+    Left = 72
+    Top = 226
+    Width = 364
+    Height = 66
     Alignment = taLeftJustify
     BevelWidth = 2
     Constraints.MinWidth = 250
     TabOrder = 9
     Visible = False
     DesignSize = (
-      285
-      64)
+      364
+      66)
     object btnStop: TSpeedButton
       Left = 13
       Top = 19
@@ -295,17 +296,18 @@ object frmPreview: TfrmPreview
     object lblProgress: TLabel
       Left = 92
       Top = 12
-      Width = 164
-      Height = 13
+      Width = 243
+      Height = 24
       Alignment = taCenter
       Anchors = [akLeft, akTop, akRight]
       AutoSize = False
       Caption = 'Downloading...'
+      ExplicitWidth = 214
     end
     object Progress: TProgressBar
       Left = 92
-      Top = 32
-      Width = 166
+      Top = 34
+      Width = 255
       Height = 17
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -531,10 +533,10 @@ object frmPreview: TfrmPreview
   object imlAttachments: TImageList
     Height = 32
     Width = 32
-    Left = 40
-    Top = 312
+    Left = 34
+    Top = 341
     Bitmap = {
-      494C01010A000E007C0020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A000E00840020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000008000000060000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000008854
       4600875345008854460088544600885446008955470088544600875345008854
@@ -2185,8 +2187,8 @@ object frmPreview: TfrmPreview
         ActionBar = toolbarPreview
       end>
     Images = imlActionsPng
-    Left = 288
-    Top = 312
+    Left = 330
+    Top = 348
     StyleName = 'XP Style'
     object actSave: TAction
       Category = 'Preview'
@@ -2330,10 +2332,10 @@ object frmPreview: TfrmPreview
     ColorDepth = cd32Bit
     Height = 24
     Width = 24
-    Left = 108
-    Top = 264
+    Left = 111
+    Top = 341
     Bitmap = {
-      494C01010C00A800E40018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010C00A800EC0018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3557,8 +3559,8 @@ object frmPreview: TfrmPreview
     Top = 140
   end
   object mnuAttachments: TPopupMenu
-    Left = 192
-    Top = 312
+    Left = 225
+    Top = 144
     object Open2: TMenuItem
       Action = actAttachmentOpen
       Default = True
@@ -3575,8 +3577,8 @@ object frmPreview: TfrmPreview
   end
   object mnuEdit: TPopupActionBar
     Images = imlActions
-    Left = 68
-    Top = 236
+    Left = 159
+    Top = 147
     object Undo1: TMenuItem
       Action = actEditUndo
     end
@@ -3623,10 +3625,10 @@ object frmPreview: TfrmPreview
   end
   object imlEditImages: TImageList
     ColorDepth = cd32Bit
-    Left = 240
-    Top = 272
+    Left = 175
+    Top = 340
     Bitmap = {
-      494C0101030008006C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010103000800740010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000000000000A0A0E3F9F3039BDF711175BB90000
@@ -3767,8 +3769,8 @@ object frmPreview: TfrmPreview
   end
   object FindDialog1: TFindDialog
     OnFind = FindDialog1Find
-    Left = 360
-    Top = 272
+    Left = 404
+    Top = 343
   end
   object imlActionsPng: TPngImageList
     Height = 24
@@ -4218,8 +4220,8 @@ object frmPreview: TfrmPreview
           5874536F667477617265007777772E696E6B73636170652E6F72679BEE3C1A00
           00000049454E44AE426082}
       end>
-    Left = 165
-    Top = 262
+    Left = 243
+    Top = 339
     Bitmap = {}
   end
 end

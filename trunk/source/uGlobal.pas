@@ -137,6 +137,7 @@ var
     DefaultSpamTab : DefaultTabType;
     ShowImages : boolean;
     PreviewBgColor : TColor;
+    ShowXMailer : boolean;
     //misc
     TempEmailFilename : string; //includes extension
     ShowNewestMessagesOnly : boolean;

@@ -24,6 +24,8 @@ type
     cmbSpamTab: TComboBox;
     chkShowImages: TCheckBox;
     catPlainText: TCategoryPanel;
+    catDisplayPreview: TCategoryPanel;
+    chkShowXMailer: TCheckBox;
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure OptionsChange(Sender: TObject);
@@ -65,6 +67,7 @@ begin
 
   chkDisableHtmlPreview.Checked := Options.DisableHtmlPreview;
   chkShowImages.Checked := Options.ShowImages;
+  chkShowXMailer.Checked := Options.ShowXMailer;
 
   Options.Busy := False;
 
@@ -110,6 +113,7 @@ begin
 
     Options.DisableHtmlPreview := chkDisableHtmlPreview.Checked;
     Options.ShowImages := chkShowImages.Checked;
+    Options.ShowXMailer := chkShowXMailer.Checked;
 
     // enable save button
     funcEnableSaveBtn();
@@ -135,6 +139,9 @@ begin
   chkShowImages.Height := labelHeight;
   chkShowImages.Top := calcPosBelow(chkDisableHtmlPreview);
   catHtmlTab.ClientHeight := calcPosBelow(chkShowImages);
+
+  chkShowXMailer.Height := labelHeight;
+  catDisplayPreview.ClientHeight := calcPosBelow(chkShowXMailer);
 
 end;
 

@@ -209,6 +209,7 @@ type
     procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     procedure EnableImapOptions(enable : boolean);
     procedure LoadMailMessage(MailItem : TMailItem);
+    procedure ShowProgressPanel();
   end;
 
 const
@@ -633,7 +634,7 @@ begin
       panPreviewCC.Visible := True;
       edCC.Text := Msg.CCList.EMailAddresses;
     end;
-    if Msg.Headers.Values['X-Mailer'] <> '' then
+    if Options.ShowXMailer and (Msg.Headers.Values['X-Mailer'] <> '') then
     begin
       panPreviewXMailer.Visible := True;
       edXMailer.Text := Msg.Headers.Values['X-Mailer'];
@@ -1729,6 +1730,13 @@ begin
   if (MailItem.Spam) then
     frmPreview.SelectSpamTab;
 
+end;
+
+procedure TFrmPreview.ShowProgressPanel();
+begin
+  panProgress.Visible := True;
+  panProgress.BringToFront;
+  Progress.Position := 0;
 end;
 
 end.
