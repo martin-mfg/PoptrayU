@@ -175,7 +175,7 @@ type
     FToolbarFileName : string;
     FCustomized : boolean;
     FEnter : boolean;
-    FMsg : TMailItem;
+    FMsg : TMailItem; //keep a reference to the mail item to make deleting it easier.
     FUID : string; //TODO: may no longer be needed?
     FReplyTo : string;
     FTab : integer;
@@ -1717,9 +1717,9 @@ end;
 
 procedure TfrmPreview.LoadMailMessage(MailItem : TMailItem);
 begin
-  FMsg := MailItem;
+  FMsg := MailItem;  //keep a reference to the mail item to make deleting it easier.
   FProtected := MailItem.Protect;
-  FUID := MailItem.UID;
+  FUID := MailItem.UID; // used to enable/disable delete AND for adding/removing flags
   FDecoded := False;
 
   conditionallyEnableDeleteButton(); //based on whether or not a UID is valid (and Options.SafeDelete)
