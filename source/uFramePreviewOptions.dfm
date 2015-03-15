@@ -22,23 +22,22 @@ object FramePreviewOptions: TFramePreviewOptions
     HeaderFont.Name = 'Tahoma'
     HeaderFont.Style = []
     TabOrder = 0
-    ExplicitHeight = 375
     object catPlainText: TCategoryPanel
-      Top = 184
+      Top = 239
       Height = 63
       Caption = 'Plain Text Preview'
       Color = clWindow
       TabOrder = 0
       Visible = False
-      ExplicitTop = 205
-      ExplicitWidth = 385
+      ExplicitTop = 262
     end
     object catHtmlTab: TCategoryPanel
-      Top = 96
+      Top = 151
       Height = 88
       Caption = 'HTML Preview'
       Color = clWindow
       TabOrder = 1
+      ExplicitTop = 174
       object chkDisableHtmlPreview: TCheckBox
         Left = 8
         Top = 4
@@ -63,12 +62,12 @@ object FramePreviewOptions: TFramePreviewOptions
       end
     end
     object catTabs: TCategoryPanel
-      Top = 0
+      Top = 55
       Height = 96
       Caption = 'Tabs'
       Color = clWindow
       TabOrder = 2
-      ExplicitWidth = 385
+      ExplicitTop = 78
       object lblDefaultTab: TLabel
         Left = 8
         Top = 8
@@ -114,6 +113,23 @@ object FramePreviewOptions: TFramePreviewOptions
           'HTML'
           'Plain Text'
           'Raw')
+      end
+    end
+    object catDisplayPreview: TCategoryPanel
+      Top = 0
+      Height = 55
+      Caption = 'Display Options'
+      Color = clWindow
+      TabOrder = 3
+      object chkShowXMailer: TCheckBox
+        Left = 8
+        Top = 4
+        Width = 389
+        Height = 17
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Show X-Mailer (when available)'
+        TabOrder = 0
+        OnClick = OptionsChange
       end
     end
   end

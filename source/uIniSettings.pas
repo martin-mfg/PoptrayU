@@ -385,6 +385,7 @@ begin
     Options.DefaultSpamTab := DefaultTabType(Ini.ReadInteger('Preview','DefaultSpamTab', Integer(TAB_PLAIN_TEXT)));
     Options.ShowImages := Ini.ReadBool('Preview','ShowImages',true);
     Options.PreviewBgColor := Ini.ReadInteger('Preview','PreviewBgColor',clWindow);
+    Options.ShowXMailer := Ini.ReadBool('Preview','ShowXMailer',false);
 
     // num accounts
     IniNumAccounts := Ini.ReadInteger('Options','NumAccounts',0);
@@ -573,6 +574,7 @@ begin
     Ini.WriteInteger('Preview','DefaultSpamTab',Integer(Options.DefaultSpamTab));
     Ini.WriteBool('Preview', 'ShowImages', Options.ShowImages);
     Ini.WriteInteger('Preview','PreviewBgColor', Options.PreviewBgColor);
+    Ini.ReadBool('Preview','ShowXMailer',Options.ShowXMailer);
 
   finally
      Ini.Free;

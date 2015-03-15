@@ -1658,8 +1658,7 @@ begin
     // progress
     frmPreview.FStop := False;
     FPreview := True;
-    frmPreview.panProgress.Visible := True;
-    frmPreview.Progress.Position := 0;
+    frmPreview.ShowProgressPanel(); //sync
 
     // get message
     try
@@ -1715,7 +1714,7 @@ begin
             on E: Exception do
             begin
               if E.Message = RSUnevenSizeInDecodeStream then
-              begi
+              begin
                 frmPreview.lblProgress.Caption := Translate('Re-Processing...');  //Synchronize
                 // remove #13 from end of lines
                 for i := 0 to RawMsg.Count-1 do
