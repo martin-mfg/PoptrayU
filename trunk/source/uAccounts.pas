@@ -87,6 +87,8 @@ type
     function CountStatus(statusses : TMailItemStatusSet): integer;
 
     function IsImap() : boolean;
+    procedure Connect();
+    procedure ConnectIfNeeded();
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -111,7 +113,7 @@ var
 
 ////////////////////////////////////////////////////////////////////////////////
 implementation
-uses uGlobal;
+uses uGlobal, IdException;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -143,6 +145,38 @@ begin
   FAccountNum := 0;    //not set
   FAccountIndex := -1; //not set
   LastMsgCount := 0;
+end;
+
+procedure TAccount.ConnectIfNeeded();
+begin
+  if not Prot.Connected then
+    Connect();
+end;
+
+procedure TAccount.Connect();
+var
+  aHost,aProtocol : string;
+  aUsername,aPassword : string;
+  aPort : integer;
+  errMsg : PChar;
+begin
+  aHost := Server;
+  aPort := Port;
+  aProtocol := Protocol;
+  aUsername := Login;
+  aPassword := Password;
+  self.Connecting := True;
+  try
+    self.Prot.SetSSLOptions(UseSSLorTLS, AuthType, SslVersion, StartTLS);
+    self.Prot.Connect(PChar(aHost),aPort,PChar(aProtocol),PChar(aUsername),PChar(aPassword), Options.TimeOut*1000);
+    errMsg := self.Prot.LastErrorMsg();
+    if (errMsg <> nil) then
+    begin
+      raise EIdException.Create(errMsg);
+    end;
+  finally
+    self.Connecting := False;
+  end;
 end;
 
 //------------------------------------------------------------------------------

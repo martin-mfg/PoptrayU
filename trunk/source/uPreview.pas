@@ -1589,8 +1589,7 @@ var
   AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
-    if not FAccount.Prot.Connected then
-      frmPopUMain.ConnectAccount(FAccount);
+    FAccount.ConnectIfNeeded();
     FAccount.Prot.MakeRead(FUID, true);
   end;
 end;
@@ -1601,8 +1600,7 @@ var
   AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
-    if not FAccount.Prot.Connected then
-      frmPopUMain.ConnectAccount(FAccount);
+    FAccount.ConnectIfNeeded();
     FAccount.Prot.MakeRead(FUID, false);
   end;
 end;
