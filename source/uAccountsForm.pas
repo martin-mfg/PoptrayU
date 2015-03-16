@@ -848,14 +848,16 @@ procedure TAccountsForm.actTestAccountExecute(Sender: TObject);
 var
   num : integer;
 begin
-  Screen.Cursor := crHourGlass;
+  actTestAccount.Enabled := false; // disable test account button until account test is done.
+  Screen.Cursor := crAppStart; //Pointer with background hourglass
   try
     num := tabAccounts.TabIndex+1;
     if num<=0 then Exit;
     SaveAccountEdits(Accounts[num-1]);
-    frmPopUMain.TestAccount(Accounts[num-1]);
+    Accounts[num-1].TestAccount();
   finally
     Screen.Cursor := crDefault;
+    actTestAccount.Enabled := true;
   end;
 end;
 
