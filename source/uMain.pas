@@ -355,7 +355,6 @@ type
 
     procedure OnPreviewDownloadProgressChange(const AWorkCount: Integer); //todo can this be made private later?
     procedure OnProcessWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); virtual;
-    procedure ConnectAccount(Account : TAccount);
   published
     Destructor  Destroy; override;
   end;
@@ -459,7 +458,7 @@ var
   sl : TStringList;
 begin
     try
-      ConnectAccount(account);
+      account.Connect();
       try
         msgcount := integer(account.Prot.CountMessages);
         info := Translate('Login OK') + sLineBreak;
@@ -897,8 +896,7 @@ begin
       Screen.Cursor := crHourGlass;
 
       // connect account
-      if not account.Prot.Connected then
-        ConnectAccount(account);
+      account.ConnectIfNeeded();
 
       // delete any mail marked for deletion
       try
@@ -918,10 +916,7 @@ begin
 
       ShowIcon(account,itChecking);
 
-      // have to reconnect after deleting for POP accounts in order for msg
-      // ids to update.
-      if not account.Prot.Connected then
-        ConnectAccount(account);
+      account.ConnectIfNeeded();
 
       try
 
@@ -1647,8 +1642,7 @@ begin
     // connect
     Screen.Cursor := crHourGlass;   //TODO: this should be threaded. not requiring an hourglass
     if Account.Prot.Connected then Account.Prot.Disconnect; //TODO: instead of disconnecting, make sure connection is in proper state
-    if not Account.Prot.Connected then
-      ConnectAccount(Account);
+    account.ConnectIfNeeded();
     Screen.Cursor := crDefault;
     Application.ProcessMessages;
     //--------------------------------------------------------------------------
@@ -2027,7 +2021,7 @@ begin
       f : TextFile;
     begin
       // connect
-      ConnectAccount(account);
+      account.ConnectIfNeeded();
       try
         // retrieve and save
         account.Prot.RetrieveRaw(msgnum,pMsg);
@@ -3143,32 +3137,6 @@ begin
   SavePosINI;
   SaveViewedMessageIDs;
   Application.Terminate;
-end;
-
-procedure TfrmPopUMain.ConnectAccount(Account : TAccount);
-var
-  aHost,aProtocol : string;
-  aUsername,aPassword : string;
-  aPort : integer;
-  errMsg : PChar;
-begin
-  aHost := Account.Server;
-  aPort := Account.Port;
-  aProtocol := Account.Protocol;
-  aUsername := Account.Login;
-  aPassword := Account.Password;
-  Account.Connecting := True;
-  try
-    Account.Prot.SetSSLOptions(Account.UseSSLorTLS, Account.AuthType, Account.SslVersion, Account.StartTLS);
-    Account.Prot.Connect(PChar(aHost),aPort,PChar(aProtocol),PChar(aUsername),PChar(aPassword), Options.TimeOut*1000);
-    errMsg := Account.Prot.LastErrorMsg();
-    if (errMsg <> nil) then
-    begin
-      raise EIdException.Create(errMsg);
-    end;
-  finally
-    Account.Connecting := False;
-  end;
 end;
 
 
