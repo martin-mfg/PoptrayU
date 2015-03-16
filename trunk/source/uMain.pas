@@ -350,7 +350,6 @@ type
     FKB : string; //UI label for kilobytes in the current language
 
     procedure SwitchTimer; //TODO: this used to be private
-    procedure TestAccount(account : TAccount);
     procedure OptionsRefresh();
 
     procedure OnPreviewDownloadProgressChange(const AWorkCount: Integer); //todo can this be made private later?
@@ -450,50 +449,6 @@ end;
 //------------------------------------------------------------------------------
 // Public
 //------------------------------------------------------------------------------
-
-procedure TfrmPopUMain.TestAccount(account: TAccount);
-var
-  msgcount : integer;
-  info,st : string;
-  sl : TStringList;
-begin
-    try
-      account.Connect();
-      try
-        msgcount := integer(account.Prot.CountMessages);
-        info := Translate('Login OK') + sLineBreak;
-        info := info + Translate('Message Count:')+' ' +IntToStr(msgcount) + sLineBreak + sLineBreak;
-        sl := TStringList.Create;
-        try
-          if ( account.Prot.SupportsUIDL ) then
-            st := Translate('Supported')
-          else st := Translate('NOT Supported');
-
-          info := info + Translate('Quick Checking and Safe Delete (UIDL):')+' '+st;
-        finally
-          sl.Free;
-        end;
-      finally
-        account.Prot.DisconnectWithQuit;
-        // TODO: GetWelcomeMessage was throwing an exception on GetResponse causing the connection not to be closed
-        // which appears to be worse than not having this info that I'm not sure actually shows anything.
-        //if Accounts[num-1].Port in [110,143] then
-          //info := GetWelcomeMessage(Accounts[num-1].Server,Accounts[num-1].Port) + sLineBreak + info;
-        Screen.Cursor := crDefault;
-        ShowMemo(Translate('Connection Info'),info,450,250);
-      end;
-    except
-      on e: EIdSocketError do
-      begin
-        info := Translate('Failure connecting to server.') + sLineBreak + e.Message;
-        if ( e.LastError = 11004 ) then info := info + Translate('Server found, but is not a mail server.');
-        ShowMemo(Translate('Connection Info'),info,450,250);
-      end;
-      on e : EIdException do begin
-        ShowMemo(Translate('Test Account'),Translate('An error occurred.')+ sLineBreak + e.Message,450,250);
-      end;
-    end;
-end;
 
 
 procedure TfrmPopUMain.ShowForm(MarkAsViewed : boolean = true);
