@@ -284,7 +284,6 @@ type
     procedure Preview(MailItem : TMailItem; Account : TAccount);
 //    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     function DeleteMails(account: TAccount; var DelCount : integer) : boolean;
-    function GetUIDs(account: TAccount; var UIDLs : TStringList) : boolean;
     function GetUID(account: TAccount; msgnum : integer) : string;
     function CheckUID(account: TAccount; msgnum : integer; UID : string='') : boolean;
     procedure MarkViewed(num : integer = -1);
@@ -298,6 +297,7 @@ type
     function DoFullAccountCheck(account : TAccount) : integer;
     function DoFullAccountCheckRecentOnly(account : TAccount) : integer;
     function DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
+    function DoQuickCheck(account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean) : integer;
     // visual
     function GetTrayColor(num : integer) : TColor;
     procedure UpdateTrayIcon;
@@ -797,6 +797,108 @@ begin
 
 end;
 
+function TfrmPopUMain.DoQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
+var
+  i : integer;          // loop counter
+  UIDLs : TStringList;
+  msgnum : integer;
+  UID : string;
+  MailItem : TMailItem;
+  quickchecking : boolean;
+  mailcount : integer;  // How many new messages have been found?
+  firstMsgToDownload : integer;
+begin
+          begin //QUICKCHECK
+          UIDLs := TStringList.Create;
+          try
+            quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+            if quickchecking then
+            begin
+              // clear all msgnums
+              account.Mail.ClearAllMsgNums();
+              if Notify then
+              begin
+                account.Mail.SetAllNew(false);
+                FTotalNew := Accounts.CountAllNew;
+              end;
+              // assign new nums
+              for i := 0 to UIDLs.Count-1 do
+              begin
+                msgnum := StrToInt(StrBefore(UIDLs[i],' '));
+                UID := StrAfter(UIDLs[i],' ');
+                MailItem := account.Mail.FindUIDWithDuplicates(UID);
+                if MailItem <> nil then
+                begin
+                  MailItem.MsgNum := msgnum;
+                  UIDLs[i] := '';
+                end;
+              end;
+              // delete the mailitems no longer on server
+              if account.Mail.RemoveDeletedMessages() then begin//removes all msgs with MsgNum = -1
+                ForceShow := True; //ForceShow is set if messages were removed from the list because they are not on the server (eg: deleted)
+              end;
+              // mismatch
+              if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
+              begin
+                for i := 0 to lvMail.Items.Count-1 do
+                begin
+                  MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
+                  if MailItem = nil then
+                  begin
+                    ForceShow := True;
+                    break;
+                  end;
+                end;
+              end;
+              // count new messages
+              mailcount := 0;
+              for i := 0 to UIDLs.Count-1 do
+                if UIDLs[i] <> '' then
+                  Inc(mailcount);
+              if mailcount>0 then
+                if (Options.ShowNewestMessagesOnly) then
+                  account.Status := Translate('Downloading newest')+' '+IntToStr(Math.Min(UIDLs.Count,Options.NumNewestMsgToShow))+' '+Translate('messages')+'...'
+                else
+                  account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('messages')+'...';
+              StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+              // go fetch the new messages
+              Progress.Max := UIDLs.Count;
+              if (Options.ShowNewestMessagesOnly) then
+                firstMsgToDownload := Math.Max(0, UIDLs.Count-Options.NumNewestMsgToShow)
+              else
+                firstMsgToDownload := 0;
+              for i := firstMsgToDownload to UIDLs.Count-1 do
+              begin
+                if UIDLs[i] <> '' then
+                begin
+                  msgnum := StrToInt(StrBefore(UIDLs[i],' '));
+                  if not GetMessageHeader(account,msgnum) then
+                  begin
+                    Result := -1;
+                    Break;
+                  end;
+                end;
+                // progress
+                Progress.Position := i;
+                Application.ProcessMessages;
+              end;
+              account.LastMsgCount := mailcount;
+
+               Result := 0; //ok
+
+            end
+            else begin
+              // if UIDL failed for some reason, revert to full-check.
+              Result := DoFullAccountCheck(account);
+            end;
+          finally
+            UIDLs.Free;
+          end;
+        end; //QUICKCHECK
+
+
+end;
+
 function TfrmPopUMain.CheckMail(Account : TAccount; Notify : boolean; ShowIt : boolean) : integer;
 ////////////////////////////////////////////////////////////////////////////////
 // Check for mail on 1 account
@@ -881,87 +983,7 @@ begin
         quickchecking := false;
         if Options.QuickCheck and not FShiftClick then
         begin //QUICKCHECK
-          UIDLs := TStringList.Create;
-          try
-            quickchecking := GetUIDs(account,UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
-            if quickchecking then
-            begin
-              // clear all msgnums
-              account.Mail.ClearAllMsgNums();
-              if Notify then
-              begin
-                account.Mail.SetAllNew(false);
-                FTotalNew := Accounts.CountAllNew;
-              end;
-              // assign new nums
-              for i := 0 to UIDLs.Count-1 do
-              begin
-                msgnum := StrToInt(StrBefore(UIDLs[i],' '));
-                UID := StrAfter(UIDLs[i],' ');
-                MailItem := account.Mail.FindUIDWithDuplicates(UID);
-                if MailItem <> nil then
-                begin
-                  MailItem.MsgNum := msgnum;
-                  UIDLs[i] := '';
-                end;
-              end;
-              // delete the mailitems no longer on server
-              if account.Mail.RemoveDeletedMessages() then begin//removes all msgs with MsgNum = -1
-                ForceShow := True; //ForceShow is set if messages were removed from the list because they are not on the server (eg: deleted)
-              end;
-              // mismatch
-              if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
-              begin
-                for i := 0 to lvMail.Items.Count-1 do
-                begin
-                  MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
-                  if MailItem = nil then
-                  begin
-                    ForceShow := True;
-                    break;
-                  end;
-                end;
-              end;
-              // count new messages
-              mailcount := 0;
-              for i := 0 to UIDLs.Count-1 do
-                if UIDLs[i] <> '' then
-                  Inc(mailcount);
-              if mailcount>0 then
-                if (Options.ShowNewestMessagesOnly) then
-                  account.Status := Translate('Downloading newest')+' '+IntToStr(Math.Min(UIDLs.Count,Options.NumNewestMsgToShow))+' '+Translate('messages')+'...'
-                else
-                  account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('messages')+'...';
-              StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
-              // go fetch the new messages
-              Progress.Max := UIDLs.Count;
-              if (Options.ShowNewestMessagesOnly) then
-                firstMsgToDownload := Math.Max(0, UIDLs.Count-Options.NumNewestMsgToShow)
-              else
-                firstMsgToDownload := 0;
-              for i := firstMsgToDownload to UIDLs.Count-1 do
-              begin
-                if UIDLs[i] <> '' then
-                begin
-                  msgnum := StrToInt(StrBefore(UIDLs[i],' '));
-                  if not GetMessageHeader(account,msgnum) then
-                  begin
-                    Result := -1;
-                    Break;
-                  end;
-                end;
-                // progress
-                Progress.Position := i;
-                Application.ProcessMessages;
-              end;
-              account.LastMsgCount := mailcount;
-
-
-
-            end;
-          finally
-            UIDLs.Free;
-          end;
+          Result := DoQuickCheck(account, Notify, ShowIt, ForceShow);
         end; //QUICKCHECK
 
         if not quickchecking then
@@ -1811,31 +1833,6 @@ begin
           DisconnectWithQuit;
       end;
     end;
-  end;
-end;
-
-// @Return true if account supports UIDL
-function TfrmPopUMain.GetUIDs(account : TAccount; var UIDLs : TStringList): boolean;
-////////////////////////////////////////////////////////////////////////////////
-// Get list of UIDS. Must be connected.
-var
-  pUIDL : PChar;
-begin
-  try
-    if account.UIDLSupported then
-    begin
-      Result := account.Prot.UIDL(pUIDL);
-      UIDLs.SetText(pUIDL);
-      account.Prot.FreePChar(pUIDL);
-      if not Result then
-        account.UIDLSupported := False;
-    end
-    else begin
-      Result := False;
-    end;
-  except
-    // server doesn't support UIDL
-    Result := False;
   end;
 end;
 

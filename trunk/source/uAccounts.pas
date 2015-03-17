@@ -90,6 +90,8 @@ type
     procedure Connect();
     procedure ConnectIfNeeded();
     procedure TestAccount();
+    function GetUIDs(var UIDLs : TStringList): boolean;
+
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -222,6 +224,31 @@ begin
     on e : EIdException do begin
       ShowMemo(Translate('Test Account'),Translate('An error occurred.')+ sLineBreak + e.Message,450,250); //synchronize
     end;
+  end;
+end;
+
+// @Return true if account supports UIDL
+function TAccount.GetUIDs(var UIDLs : TStringList): boolean;
+////////////////////////////////////////////////////////////////////////////////
+// Get list of UIDS for this account from server. Must be connected.
+var
+  pUIDL : PChar;
+begin
+  try
+    if self.UIDLSupported then
+    begin
+      Result := Prot.UIDL(pUIDL);
+      UIDLs.SetText(pUIDL);
+      Prot.FreePChar(pUIDL);
+      if not Result then
+        self.UIDLSupported := False;
+    end
+    else begin
+      Result := False;
+    end;
+  except
+    // server doesn't support UIDL
+    Result := False;
   end;
 end;
 
