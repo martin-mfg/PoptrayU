@@ -1,17 +1,17 @@
 object frameAdvancedOptions: TframeAdvancedOptions
   Left = 0
   Top = 0
-  Width = 390
-  Height = 452
+  Width = 451
+  Height = 304
   Align = alClient
   AutoSize = True
   TabOrder = 0
-  ExplicitHeight = 360
   object CategoryPanelGroup1: TCategoryPanelGroup
     Left = 0
     Top = 0
-    Width = 390
-    Height = 452
+    Width = 451
+    Height = 304
+    VertScrollBar.Tracking = True
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -26,7 +26,6 @@ object frameAdvancedOptions: TframeAdvancedOptions
     HeaderFont.Name = 'Tahoma'
     HeaderFont.Style = []
     TabOrder = 0
-    ExplicitHeight = 404
     object catAdvProt: TCategoryPanel
       Top = 0
       Height = 98
@@ -132,11 +131,9 @@ object frameAdvancedOptions: TframeAdvancedOptions
       Caption = 'External Mail Client'
       Color = clWindow
       TabOrder = 2
-      ExplicitTop = 331
-      ExplicitWidth = 371
       object chkUseMAPI: TCheckBox
         Left = 8
-        Top = 4
+        Top = 3
         Width = 373
         Height = 17
         Hint = 
@@ -145,6 +142,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Communicate using &MAPI instead of mailto:'
         TabOrder = 0
+        OnMouseDown = HelpMouseDown
       end
     end
   end

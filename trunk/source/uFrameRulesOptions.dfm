@@ -29,13 +29,13 @@ object FrameRulesOptions: TFrameRulesOptions
       Caption = 'Whitelist/Blacklist'
       Color = clWindow
       TabOrder = 0
-      ExplicitTop = 232
       object lblBlacklistAct: TLabel
-        Left = 6
-        Top = 8
+        Left = 4
+        Top = 7
         Width = 74
         Height = 13
         Caption = 'Blacklist Action:'
+        OnMouseDown = HelpMouseDown
       end
       object cmbBlacklistAction: TComboBox
         Left = 84
@@ -93,6 +93,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = 'Retrieve &Body while Checking'
         TabOrder = 0
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object chkGetBodyLines: TCheckBox
         Left = 24
@@ -103,6 +104,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = 'Limit download to the first'
         TabOrder = 1
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object chkGetBodySize: TCheckBox
         Left = 24
@@ -115,6 +117,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = 'Only download if size less than'
         TabOrder = 2
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object chkRetrieveTop: TCheckBox
         Left = 8
@@ -127,6 +130,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = '&Preview Top Lines'
         TabOrder = 3
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object edGetBodyLines: TEdit
         Left = 171
@@ -136,6 +140,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Hint = 'Maximum number of lines to download.'
         TabOrder = 4
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object edGetBodySize: TEdit
         Left = 193
@@ -147,6 +152,7 @@ object FrameRulesOptions: TFrameRulesOptions
           'an specified size.'
         TabOrder = 5
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object edTopLines: TEdit
         Left = 123
@@ -156,6 +162,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Hint = 'Number of message lines to preview.'
         TabOrder = 6
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object chkDlForPreview: TCheckBox
         Left = 6
@@ -170,6 +177,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Enabled = False
         TabOrder = 7
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
     end
     object catRules: TCategoryPanel
@@ -190,6 +198,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = 'Log &Rules'
         TabOrder = 0
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
       object chkDeleteConfirmProtected: TCheckBox
         Left = 8
@@ -203,6 +212,7 @@ object FrameRulesOptions: TFrameRulesOptions
         Caption = '&Extra Confirmation when Deleting Protected Messages'
         TabOrder = 1
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
     end
   end

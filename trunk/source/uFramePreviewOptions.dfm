@@ -29,7 +29,6 @@ object FramePreviewOptions: TFramePreviewOptions
       Color = clWindow
       TabOrder = 0
       Visible = False
-      ExplicitTop = 262
     end
     object catHtmlTab: TCategoryPanel
       Top = 151
@@ -37,7 +36,6 @@ object FramePreviewOptions: TFramePreviewOptions
       Caption = 'HTML Preview'
       Color = clWindow
       TabOrder = 1
-      ExplicitTop = 174
       object chkDisableHtmlPreview: TCheckBox
         Left = 8
         Top = 4
@@ -59,6 +57,7 @@ object FramePreviewOptions: TFramePreviewOptions
         Caption = 'Show Images'
         TabOrder = 1
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
     end
     object catTabs: TCategoryPanel
@@ -67,13 +66,13 @@ object FramePreviewOptions: TFramePreviewOptions
       Caption = 'Tabs'
       Color = clWindow
       TabOrder = 2
-      ExplicitTop = 78
       object lblDefaultTab: TLabel
         Left = 8
         Top = 8
         Width = 60
         Height = 13
         Caption = 'Default Tab:'
+        OnMouseDown = HelpMouseDown
       end
       object lblSpamTab: TLabel
         Left = 8
@@ -81,6 +80,7 @@ object FramePreviewOptions: TFramePreviewOptions
         Width = 156
         Height = 13
         Caption = 'Default Tab for Spam Messages:'
+        OnMouseDown = HelpMouseDown
       end
       object cmbDefaultTab: TComboBox
         Left = 74
@@ -130,6 +130,7 @@ object FramePreviewOptions: TFramePreviewOptions
         Caption = 'Show X-Mailer (when available)'
         TabOrder = 0
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
     end
   end

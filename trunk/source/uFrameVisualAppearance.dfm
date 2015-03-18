@@ -4,6 +4,7 @@ object frameVisualAppearance: TframeVisualAppearance
   Width = 433
   Height = 394
   TabOrder = 0
+  OnMouseDown = HelpMouseDown
   DesignSize = (
     433
     394)
@@ -259,6 +260,7 @@ object frameVisualAppearance: TframeVisualAppearance
     HeaderFont.Name = 'Tahoma'
     HeaderFont.Style = []
     TabOrder = 0
+    OnMouseDown = HelpMouseDown
     object CategoryPanel2: TCategoryPanel
       Top = 82
       Height = 231
@@ -869,6 +871,7 @@ object frameVisualAppearance: TframeVisualAppearance
         Caption = 'Use Images and Colors for Dark Backgrounds'
         TabOrder = 2
         OnClick = OptionsChange
+        OnMouseDown = HelpMouseDown
       end
     end
   end
@@ -879,7 +882,7 @@ object frameVisualAppearance: TframeVisualAppearance
     Left = 382
     Top = 62
     Bitmap = {
-      494C010102000800440018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010102000800480018001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000001800000001002000000000000024
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
