@@ -236,7 +236,7 @@ type
     procedure ShowMailMessage(account : TAccount; i : integer);
     procedure ShowMail(account : TAccount; ClearIt : boolean);
     procedure SendMail(const ToAddress,Subject,Body : string);
-    function DeleteOneMailItem(Account : TAccount; MailItem : TMailItem) : boolean;
+    procedure DeleteOneMailItem(Account : TAccount; MailItem : TMailItem);
     procedure QuickHelp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     function AllowAutoCheck : boolean;
     procedure SetSortColumn(ColNum : integer);
@@ -284,7 +284,6 @@ type
     procedure Preview(MailItem : TMailItem; Account : TAccount);
 //    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     function DeleteMails(account: TAccount; var DelCount : integer) : boolean;
-    function GetUID(account: TAccount; msgnum : integer) : string;
     function CheckUID(account: TAccount; msgnum : integer; UID : string='') : boolean;
     procedure MarkViewed(num : integer = -1);
     function HasAttachment(msg : IdMessage.TIdMessage) : boolean;
@@ -800,6 +799,7 @@ end;
 function TfrmPopUMain.DoQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
 var
   i : integer;          // loop counter
+  minMsgNum : integer;
   UIDLs : TStringList;
   msgnum : integer;
   UID : string;
@@ -811,9 +811,14 @@ begin
           begin //QUICKCHECK
           UIDLs := TStringList.Create;
           try
+            account.Status := Translate('Checking... Getting UIDs');
+            StatusBar.Panels[0].Text := ' '+account.Status;
             quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
             if quickchecking then
             begin
+              account.Status := Translate('Checking... Clearing old Message Numbers');
+              StatusBar.Panels[0].Text := ' '+account.Status;
+              Application.ProcessMessages();
               // clear all msgnums
               account.Mail.ClearAllMsgNums();
               if Notify then
@@ -822,7 +827,16 @@ begin
                 FTotalNew := Accounts.CountAllNew;
               end;
               // assign new nums
-              for i := 0 to UIDLs.Count-1 do
+              account.Status := Translate('Checking... Re-assigning Message IDs');
+              StatusBar.Panels[0].Text := ' '+account.Status;
+              Application.ProcessMessages();
+
+              // only assign nums for the newest N messages (if enabled)
+              minMsgNum := 0;
+              if (Options.ShowNewestMessagesOnly) then
+                minMsgNum := Math.Max(0, UIDLs.Count-Options.NumNewestMsgToShow);
+
+              for i := minMsgNum to UIDLs.Count-1 do
               begin
                 msgnum := StrToInt(StrBefore(UIDLs[i],' '));
                 UID := StrAfter(UIDLs[i],' ');
@@ -833,6 +847,10 @@ begin
                   UIDLs[i] := '';
                 end;
               end;
+              account.Status := Translate('Checking... Removing Deleted Items');
+              StatusBar.Panels[0].Text := ' '+account.Status;
+              Application.ProcessMessages();
+
               // delete the mailitems no longer on server
               if account.Mail.RemoveDeletedMessages() then begin//removes all msgs with MsgNum = -1
                 ForceShow := True; //ForceShow is set if messages were removed from the list because they are not on the server (eg: deleted)
@@ -840,6 +858,8 @@ begin
               // mismatch
               if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
               begin
+                account.Status := Translate('Checking... Double-Checking for Deleted Items');
+                StatusBar.Panels[0].Text := ' '+account.Status;
                 for i := 0 to lvMail.Items.Count-1 do
                 begin
                   MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
@@ -851,6 +871,8 @@ begin
                 end;
               end;
               // count new messages
+              account.Status := Translate('Checking... Counting New Messages');
+              StatusBar.Panels[0].Text := ' '+account.Status;
               mailcount := 0;
               for i := 0 to UIDLs.Count-1 do
                 if UIDLs[i] <> '' then
@@ -1214,15 +1236,15 @@ begin
   end;
 end;
 
-
-function TfrmPopUMain.DeleteOneMailItem(Account : TAccount; MailItem : TMailItem) : boolean;
-////////////////////////////////////////////////////////////////////////////////
-// Delete one message
+//------------------------------------------------------------------------------
+// Deletes a single mail message.
+// Used by the preview window when the delete button is pressed.
+//------------------------------------------------------------------------------
+procedure TfrmPopUMain.DeleteOneMailItem(Account : TAccount; MailItem : TMailItem);
 var
   i : integer;
 begin
-  Result := MailItem<>nil;
-  if Result then
+  if MailItem<>nil then
   begin
     // mark mail message to be deleted
     MailItem.ToDelete := True;
@@ -1239,7 +1261,6 @@ begin
 
     if not Options.DeleteNextCheck then
       CheckMail(Account,false,true); // delete and recheck mail immediately
-
   end;
 end;
 
@@ -1779,95 +1800,62 @@ begin
   if account.CountStatus([misToBeDeleted])>0 then
   begin
     ShowIcon(account,itDeleting);
+    account.Status := Translate('Deleting...');
+
     // delete from server
-    with account.Prot do
-    begin
-      account.Status := Translate('Deleting...');
-      try
-        //TPluginIMAP4
-        if account.IsImap() then begin
-          // On IMAP you can delete multiple messages in one pass, AND
-          // you can delete them by UID directly without checking MsgNum->UID
 
-          uidList := TStringList.Create;
+    try
+      if account.IsImap() then begin
+        // On IMAP you can delete multiple messages in one pass, AND
+        // you can delete them by UID directly without checking MsgNum->UID
 
-          for i := 0 to account.Mail.Count-1 do
+        uidList := TStringList.Create;
+
+        for i := 0 to account.Mail.Count-1 do
+        begin
+          if account.Mail[i].ToDelete then
           begin
-            if account.Mail[i].ToDelete then
-            begin
-              uidList.Add(account.Mail[i].UID);
-              Inc(DelCount);
-            end;
+            uidList.Add(account.Mail[i].UID);
+            Inc(DelCount);
           end;
-
-          (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
-          uidList.Free;
-          (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
-        end
-        else begin // POP3 or "custom" protocol plugin
-          for i := 0 to account.Mail.Count-1 do
+        end;
+        (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
+        uidList.Free;
+        (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
+      end
+      else begin // POP3 or "custom" protocol plugin
+        for i := 0 to account.Mail.Count-1 do
+        begin
+          if account.Mail[i].ToDelete then
           begin
-            if account.Mail[i].ToDelete then
+            if CheckUID(account,account.Mail[i].MsgNum) then
             begin
-              if CheckUID(account,account.Mail[i].MsgNum) then
-              begin
-                Delete(account.Mail[i].MsgNum);
-                Inc(DelCount);
-              end
-              else begin
-                // safe delete failed
-                Result := False;
-                account.Status := 'Safe Delete Failed for "'+ account.Mail[i].Subject + '", but '+  IntToStr(DelCount)+' '+Translate('message(s) deleted.');
-                Exit;
-              end;
+              account.Prot.Delete(account.Mail[i].MsgNum);
+              Inc(DelCount);
+            end
+            else begin
+              // safe delete failed
+              Result := False;
+              account.Status := Translate('Safe Delete Failed for')+' "'+ account.Mail[i].Subject + '", '+Translate('but')+' '+  IntToStr(DelCount)+' '+Translate('message(s) deleted.');
+              Exit;
             end;
           end;
         end;
-
-        account.Status := IntToStr(DelCount)+' '+Translate('message(s) deleted.');
-      finally
-        // must send QUIT command for POP3 account to enter UPDATE state and
-        // finalize all message deletion. (this means reconnecting later to
-        // check for new messages)
-        if (account.Prot.ProtocolType = protPOP3) then
-          DisconnectWithQuit;
       end;
+
+    finally
+      // MUST send QUIT command for POP3 account to enter UPDATE state and
+      // finalize all message deletion. (this means reconnecting later to
+      // check for new messages)
+      if (account.Prot.ProtocolType = protPOP3) then
+        account.Prot.DisconnectWithQuit;
     end;
+
+    account.Status := IntToStr(DelCount)+' '+Translate('message(s) deleted.');
   end;
 end;
 
-function TfrmPopUMain.GetUID(account: TAccount; msgnum: integer): string;
-////////////////////////////////////////////////////////////////////////////////
-// Get UID from server.  Must be connected
-var
-  UIDLs : TStringList;
-  res : boolean;
-  pUIDL : PChar;
-begin
-  UIDLs := TStringList.Create;
-  try
-    try
-      if account.UIDLSupported then
-      begin
-        res := account.Prot.UIDL(pUIDL,msgnum);
-        if res then
-          UIDLs.SetText(pUIDL);
-        account.Prot.FreePChar(pUIDL);
-      end
-      else begin
-        res := False;
-      end;
-    except
-      res := False;
-    end;
-    if (UIDLs.Count > 0) and res then
-      Result := StrAfter(UIDLs[0],' ')
-    else
-      Result := 'Error'+IntToStr(Random(10000));
-  finally
-    UIDLs.Free;
-  end;
-end;
+
 
 function TfrmPopUMain.CheckUID(account: TAccount; msgnum: integer; UID : string=''): boolean;
 ////////////////////////////////////////////////////////////////////////////////
@@ -1885,7 +1873,7 @@ begin
   if UID='' then UID := MailItem.UID;
   // compare UID
   Result := not(Options.SafeDelete) or not(account.UIDLSupported) or
-            (Options.SafeDelete and (GetUID(account,msgnum) = UID));
+            (Options.SafeDelete and (account.GetUID(msgnum) = UID));
   if not Result then
   begin
     // safe delete failed
@@ -2076,12 +2064,6 @@ begin
   try
     MsgHeader.ProcessHeaders;
   except
-    on e : EIdEmailParseError do
-    begin
-      // ignore '@ outside address' error in Indy 9
-      MsgHeader.From.Name := MsgHeader.Headers.Values['From'];
-      MsgHeader.Date := GMTToLocalDateTime(MsgHeader.Headers.Values['Date']);
-    end;
     on e: EConvertError do
     begin
       // ignore Indy '$?i' is not a valid integer value
@@ -2134,7 +2116,7 @@ begin
   MailItem.HasAttachment := HasAttachment(MsgHeader);
   MailItem.MsgID := MsgID;
   if Options.SafeDelete then
-    MailItem.UID := GetUID(account,msgnum);
+    MailItem.UID := account.GetUID(msgnum);
   //MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
   MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
   //MailItem.New := not MailItem.Viewed ;//JRWTESTING

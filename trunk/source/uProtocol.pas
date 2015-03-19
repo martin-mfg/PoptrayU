@@ -3,7 +3,7 @@ unit uProtocol;
 interface
 
 uses
-  System.Generics.Collections, IdMailBox, IdMessage;
+  System.Generics.Collections, IdMailBox, IdMessage, System.Classes;
 
 type
   TAuthType = (autoAuth = 0, password = 1, apop = 2, sasl = 3);
@@ -26,7 +26,7 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual; abstract;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual; abstract;
     function RetrieveMsgSize(const MsgNum : integer) : integer; virtual;  abstract;
-    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; virtual; abstract;
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; virtual; abstract;
     function Delete(const MsgNum : integer) : boolean; virtual; abstract;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); virtual; abstract;
     function LastErrorMsg : PChar; virtual; abstract;

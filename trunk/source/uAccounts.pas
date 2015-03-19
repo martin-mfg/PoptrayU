@@ -91,6 +91,7 @@ type
     procedure ConnectIfNeeded();
     procedure TestAccount();
     function GetUIDs(var UIDLs : TStringList): boolean;
+    function GetUID(msgnum: integer): string;
 
   end;
 
@@ -227,6 +228,34 @@ begin
   end;
 end;
 
+function TAccount.GetUID(msgnum: integer): string;
+////////////////////////////////////////////////////////////////////////////////
+// Get UID from server.  Must be connected
+var
+  UIDLs : TStringList;
+  res : boolean;
+  pUIDL : PChar;
+begin
+  UIDLs := TStringList.Create;
+  try
+    try
+      if self.UIDLSupported then begin
+        res := Prot.UIDL(UIDLs,msgnum);
+      end else begin
+        res := False;
+      end;
+    except
+      res := False;
+    end;
+    if (UIDLs.Count > 0) and res then
+      Result := StrAfter(UIDLs[0],' ')
+    else
+      Result := 'Error'+IntToStr(Random(10000));
+  finally
+    UIDLs.Free;
+  end;
+end;
+
 // @Return true if account supports UIDL
 function TAccount.GetUIDs(var UIDLs : TStringList): boolean;
 ////////////////////////////////////////////////////////////////////////////////
@@ -237,9 +266,7 @@ begin
   try
     if self.UIDLSupported then
     begin
-      Result := Prot.UIDL(pUIDL);
-      UIDLs.SetText(pUIDL);
-      Prot.FreePChar(pUIDL);
+      Result := Prot.UIDL(UIDLs);
       if not Result then
         self.UIDLSupported := False;
     end
