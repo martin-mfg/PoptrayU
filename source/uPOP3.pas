@@ -43,7 +43,7 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
     function RetrieveMsgSize(const MsgNum : integer) : integer; override;
-    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; override;
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; override;
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
     procedure SetSSLOptions(
@@ -391,17 +391,9 @@ begin
   Result := POP.RetrieveMsgSize(MsgNum);
 end;
 
-function TProtocolPOP3.UIDL(var pUIDL : PChar; const MsgNum: integer = -1): boolean;
-var
-  UIDLs : TStringList;
+function TProtocolPOP3.UIDL(var UIDLs : TStringList; const MsgNum: integer = -1): boolean;
 begin
-  UIDLs := TStringList.Create;
-  try
-    Result := POP.UIDL(UIDLs,MsgNum);
-    pUIDL := UIDLs.GetText;
-  finally
-    UIDLs.Free;
-  end;
+  Result := POP.UIDL(UIDLs,MsgNum);
 end;
 
 // This method expects to already be connected.

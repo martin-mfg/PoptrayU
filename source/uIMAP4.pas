@@ -51,7 +51,7 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
     function RetrieveMsgSize(const MsgNum : integer) : integer; override;
-    function UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean; override;
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; override;
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
     function LastErrorMsg : PChar; override;
@@ -396,31 +396,27 @@ begin
   Result := IMAP.UIDRetrieveMsgSize(AMsgUID);
 end;
 
-function TProtocolIMAP4.UIDL(var pUIDL : PChar; const MsgNum : integer = -1) : boolean;
+function TProtocolIMAP4.UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean;
 var
-  st,UID : string;
+  UID : string;
   i, nCount : integer;
 begin
 
   if MsgNum > -1 then
   begin
     Result := IMAP.GetUID(MsgNum, UID);
-    st := IntToStr(MsgNum) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity*);
-    pUIDL := StrNew(PChar(st));
+    UIDLs.Add(IntToStr(MsgNum) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity*));
   end
   else begin  //get a list of all UIDs in mailbox
-    st := '';
     nCount := IMAP.MailBox.TotalMsgs; //number of messages on the server
     for i := 1 to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
       UID := '';
       IMAP.GetUID(i, UID);
-      if UID <> '' then
-        st := st + IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *)+ #13#10;
-
+      if UID <> '' then begin
+        UIDLs.Add(IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *));;
+      end;
     end;
-    pUIDL := StrNew(PChar(Trim(st)));
-    //OutputDebugString(PChar(pUIDL));
     Result := True;
   end;
 end;
