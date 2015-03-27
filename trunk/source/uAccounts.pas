@@ -90,7 +90,7 @@ type
     procedure Connect();
     procedure ConnectIfNeeded();
     procedure TestAccount();
-    function GetUIDs(var UIDLs : TStringList): boolean;
+    function GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
     function GetUID(msgnum: integer): string;
 
   end;
@@ -257,16 +257,17 @@ begin
 end;
 
 // @Return true if account supports UIDL
-function TAccount.GetUIDs(var UIDLs : TStringList): boolean;
+function TAccount.GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Get list of UIDS for this account from server. Must be connected.
+// UIDLs is an OUTPUT parameter.
 var
   pUIDL : PChar;
 begin
   try
     if self.UIDLSupported then
     begin
-      Result := Prot.UIDL(UIDLs);
+      Result := Prot.UIDL(UIDLs, maxUIDs);
       if not Result then
         self.UIDLSupported := False;
     end
@@ -376,6 +377,8 @@ begin
       not mailItem.ToDelete then
         Inc(Result);
 end;
+
+
 
 //------------------------------------------------------------------------------
 // Count unviewed messages from this account

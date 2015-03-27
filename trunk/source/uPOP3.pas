@@ -43,7 +43,7 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
     function RetrieveMsgSize(const MsgNum : integer) : integer; override;
-    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; override;
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1; const maxUIDs : integer = -1) : boolean; override;
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
     procedure SetSSLOptions(
@@ -391,8 +391,9 @@ begin
   Result := POP.RetrieveMsgSize(MsgNum);
 end;
 
-function TProtocolPOP3.UIDL(var UIDLs : TStringList; const MsgNum: integer = -1): boolean;
+function TProtocolPOP3.UIDL(var UIDLs : TStringList; const MsgNum: integer = -1; const maxUIDs : integer = -1): boolean;
 begin
+  // maxUIDs is ignored, only supported for IMAP.
   Result := POP.UIDL(UIDLs,MsgNum);
 end;
 

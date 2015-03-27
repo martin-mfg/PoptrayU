@@ -51,7 +51,7 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
     function RetrieveMsgSize(const MsgNum : integer) : integer; override;
-    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; override;
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1; const maxUIDs : integer = -1) : boolean; override;
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
     function LastErrorMsg : PChar; override;
@@ -79,6 +79,7 @@ type
 implementation
 uses
     Log4D,   //TEMPORARY
+    Math,
 
   IdLogBase, IdLogFile, IdIntercept, uIniSettings,
   IdSASL_CRAM_MD5,
@@ -396,10 +397,10 @@ begin
   Result := IMAP.UIDRetrieveMsgSize(AMsgUID);
 end;
 
-function TProtocolIMAP4.UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean;
+function TProtocolIMAP4.UIDL(var UIDLs : TStringList; const MsgNum : integer = -1; const maxUIDs : integer = -1) : boolean;
 var
   UID : string;
-  i, nCount : integer;
+  i, nCount, startMsg : integer;
 begin
 
   if MsgNum > -1 then
@@ -409,7 +410,13 @@ begin
   end
   else begin  //get a list of all UIDs in mailbox
     nCount := IMAP.MailBox.TotalMsgs; //number of messages on the server
-    for i := 1 to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
+
+    if maxUIDs <= 0 then
+      startMsg := 1
+    else
+      startMsg := Math.Max(nCount, nCount - maxUIDs);
+
+    for i := startMsg to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
       UID := '';
       IMAP.GetUID(i, UID);
@@ -420,6 +427,7 @@ begin
     Result := True;
   end;
 end;
+
 
 function TProtocolIMAP4.Delete(const MsgNum : integer) : boolean;
 begin
