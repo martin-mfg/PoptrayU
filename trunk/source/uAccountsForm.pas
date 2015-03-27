@@ -392,7 +392,7 @@ end;
 
 function TAccountsForm.GetAccountForTab(tabNumber : integer) : TAccount;
 begin
-  if (tabNumber<=0) or (tabNumber>Accounts.NumAccounts) then
+  if (tabNumber<0) or (tabNumber>=Accounts.NumAccounts) then
     Result := nil
   else
     Result := accounts[tabNumber];
