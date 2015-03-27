@@ -73,6 +73,7 @@ type
     procedure ClearAllMsgNums();
     procedure SetAllNew(Value: boolean);
     function RemoveDeletedMessages() : boolean;
+    function RemoveToDeleteMsgs(): boolean;
   end;
 
 implementation
@@ -218,6 +219,19 @@ begin
       Result := True;
     end
   end;
+end;
+
+function TMailItems.RemoveToDeleteMsgs(): boolean;
+var
+  mailItem : TMailItem;
+begin
+  Result := false;
+  for mailItem in Self do
+    if mailItem.ToDelete then
+    begin
+      Remove(mailItem);
+      Result := True;
+    end;
 end;
 
 

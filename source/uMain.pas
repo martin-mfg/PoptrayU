@@ -694,6 +694,7 @@ begin
   Progress.Max := mailcount;
   for i := 1 to mailcount do
   begin
+    //todo does this need to use UIDs for IMAP?
     if not GetMessageHeader(account,i) then
     begin
       Result := -1; // signal checking error
@@ -724,7 +725,7 @@ begin
   firstMsgToDownload := Math.Max(0, mailcount-Options.NumNewestMsgToShow);
   account.LastMsgCount := mailcount;
   if mailcount>0 then
-    for i := firstMsgToDownload to mailcount do
+    for i := firstMsgToDownload to mailcount - 1 do
   begin
     if not GetMessageHeader(account,i) then
     begin
@@ -813,7 +814,10 @@ begin
           try
             account.Status := Translate('Checking... Getting UIDs');
             StatusBar.Panels[0].Text := ' '+account.Status;
-            quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+            if (Options.ShowNewestMessagesOnly) then
+              quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
+            else
+              quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
             if quickchecking then
             begin
               account.Status := Translate('Checking... Clearing old Message Numbers');
@@ -975,27 +979,27 @@ begin
       Screen.Cursor := crHourGlass;
 
       // connect account
-      account.ConnectIfNeeded();
+      account.ConnectIfNeeded();                                             //INDY
 
       // delete any mail marked for deletion
       try
-        ForceShow := not DeleteMails(account,deletecount);
+        ForceShow := not DeleteMails(account,deletecount);                   //INDY
       except
         on E:Exception do
-          ErrorMsg(account,'Error:',e.Message,True);
+          ErrorMsg(account,'Error:',e.Message,True);  //sync
       end;
 
-      Application.ProcessMessages;
+      Application.ProcessMessages;  //only if in fg thread
 
 
       // Show progress indicators on GUI
-      panProgress.Visible := True;
-      actStopChecking.Enabled := True;
-      Progress.Position := 0;
+      self.panProgress.Visible := True;            //sync
+      self.actStopChecking.Enabled := True;
+      self.Progress.Position := 0;
 
       ShowIcon(account,itChecking);
 
-      account.ConnectIfNeeded();
+      account.ConnectIfNeeded();                                             //INDY
 
       try
 
@@ -1005,7 +1009,7 @@ begin
         quickchecking := false;
         if Options.QuickCheck and not FShiftClick then
         begin //QUICKCHECK
-          Result := DoQuickCheck(account, Notify, ShowIt, ForceShow);
+          Result := DoQuickCheck(account, Notify, ShowIt, ForceShow);        //INDY
         end; //QUICKCHECK
 
         if not quickchecking then
@@ -1021,7 +1025,7 @@ begin
         // show status
         if (not FStop) and (Result>=0) then
         begin
-          if Notify then
+          if Notify then        // sync
           begin
             if quickchecking then
               account.Status := Translate('Quick Checked:')+' '+TimeToStr(Now)
@@ -1041,8 +1045,9 @@ begin
         ResetToolbar;
 
         // Disconnect account
-        if account.Prot.Connected then
-          account.Prot.DisconnectWithQuit;
+        if NOT account.IsImap then
+          if account.Prot.Connected then
+            account.Prot.DisconnectWithQuit;
 
         // deleted by rules
         if account.CountStatus([misToBeDeleted]) > 0 then
@@ -1645,12 +1650,12 @@ begin
     Application.ProcessMessages;
     //--------------------------------------------------------------------------
 
-    frmPreview.Show;
+      frmPreview.Show;
 
-    // progress
-    frmPreview.FStop := False;
-    FPreview := True;
-    frmPreview.ShowProgressPanel(); //sync
+      // progress
+      frmPreview.FStop := False;
+      FPreview := True;
+      frmPreview.ShowProgressPanel(); //sync
 
     // get message
     try
@@ -1766,13 +1771,13 @@ begin
     end;
     // show contents
     try
-      frmPreview.ShowMsg;   //Synchronize
-      // Bug Workaround: once the form has set the subject override the
-      // displayed subject with the correct unicode version.
-      if (MailItem.Subject <> '') then begin
-        frmPreview.Caption := MailItem.Subject;
-        frmPreview.edSubject.Text := MailItem.Subject;
-      end;
+            frmPreview.ShowMsg;   //Synchronize
+            // Bug Workaround: once the form has set the subject override the
+            // displayed subject with the correct unicode version.
+            if (MailItem.Subject <> '') then begin
+              frmPreview.Caption := MailItem.Subject;
+              frmPreview.edSubject.Text := MailItem.Subject;
+            end;
     finally
       FPreview := False;
     end;
@@ -1849,6 +1854,9 @@ begin
       // check for new messages)
       if (account.Prot.ProtocolType = protPOP3) then
         account.Prot.DisconnectWithQuit;
+
+      //TODO: do we need to remove deleted at this point for quick check?
+      //account.Mail.RemoveToDeleteMsgs();
     end;
 
     account.Status := IntToStr(DelCount)+' '+Translate('message(s) deleted.');

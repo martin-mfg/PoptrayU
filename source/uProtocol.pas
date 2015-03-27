@@ -26,7 +26,10 @@ type
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual; abstract;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual; abstract;
     function RetrieveMsgSize(const MsgNum : integer) : integer; virtual;  abstract;
-    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1) : boolean; virtual; abstract;
+
+    // maxUIDs may not be supported by all prototcols.  -1 means "no limit".
+    function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1; const maxUIDs : integer = -1) : boolean; virtual; abstract;
+
     function Delete(const MsgNum : integer) : boolean; virtual; abstract;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); virtual; abstract;
     function LastErrorMsg : PChar; virtual; abstract;
