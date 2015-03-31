@@ -5,6 +5,32 @@ PopTrayU Version History
  (*) Changed feature
  (-) Bug fixed
 
+=============
+Version 5.1.2
+=============
+New Features
+------------
+X-Mailer header is now hidden from the preview window unless X-mailer display is enabled in preview options.
+
+IMAP Mark read/unread actions for the the preview window (still experimental).
+
+Bug Fixes
+---------
+IMPORTANT! Account editing: switching tabs in 5.1.1 (and possibly 5.1.0?) will cause the wrong tab to display in the UI, so saving accounts will overwrite one or more accounts with a different account.
+
+In older version(s) the progress bar for the preview window did not have the correct z-order and could not be seen depending on which tab was selected.
+
+IMAP Quick Check with "recent messages only" mode enabled was downloading UIDs for all messages in the inbox instead of only the N most recent messages. Eliminating this improved check speed considerably for IMAP.
+
+Some options tabs with quickhelp tooltips were not responding to the quick help cursor and now are selectable. (Known bug: Quick help still does not work when themes are enabled)
+
+Codebase Improvements
+---------------------
+Protocol plugins support removed, to make way for IMAP improvements like inbox filtering (eg: unread only) that the plugin architecture was not designed to support.
+
+More refactoring, especially in the account check and preview areas, to facilitate the future possibility of possible future features like background account checking, changing how much of the message downloads on preview, etc.
+
+=============
 Version 5.1.1
 =============
 Bug Fixes
@@ -14,6 +40,7 @@ Bug Fixes
  * French (Canada) translation updated.
  * About tab sub-tabs were not sizing correctly in 5.1.0
 
+=============
 Version 5.1.0
 =============
 New Features
@@ -50,7 +77,7 @@ Most of these changes will have no user-facing impact. But many of them will mak
  * Clean up & refactor Rules.ini reading/writing code. Read whole ini file before updating UI.
  * Translation engine has had some modifications. It's now a bit more flexible about what it can translate automatically (ComboBoxes, ListViews, TreeViews, Popup Menus/Toolbars), so a bunch of code that used to translate specific items on the UI has been eliminated. Other modifications as well.
 
-
+=====================
 Versions Prior to 5.1
 =====================
 
