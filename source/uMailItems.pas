@@ -49,7 +49,8 @@ type
     Priority : TMessagePriority;
     Ignored : boolean;
     HasAttachment : boolean;
-    Viewed : boolean;
+    Viewed : boolean; // local status - whether the message has been seen by poptrayu before
+    Seen : boolean; // server status - whether the message is marked read on the server or not
     New : boolean;
     Important : boolean;
     Spam : boolean;

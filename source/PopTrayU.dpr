@@ -28,7 +28,7 @@ The GNU GPL can be found at:
 // Since PopTrayU only runs on Windows, turn off warnings for platform
 // specific calls like DebugHook.
 {$WARN SYMBOL_PLATFORM OFF}
-//{$DEFINE LOG4D}
+{$DEFINE LOG4D}
 
 
 // dontTouchUses
