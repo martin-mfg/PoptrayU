@@ -234,7 +234,6 @@ function TAccount.GetUID(msgnum: integer): string;
 var
   UIDLs : TStringList;
   res : boolean;
-  pUIDL : PChar;
 begin
   UIDLs := TStringList.Create;
   try
@@ -261,8 +260,6 @@ function TAccount.GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1)
 ////////////////////////////////////////////////////////////////////////////////
 // Get list of UIDS for this account from server. Must be connected.
 // UIDLs is an OUTPUT parameter.
-var
-  pUIDL : PChar;
 begin
   try
     if self.UIDLSupported then
@@ -291,52 +288,14 @@ end;
 //  FRuleId := id;
 //end;
 
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-(*procedure TAccount.AssignTo(Dest: TPersistent);
-begin
-  if Dest is TAccount then
-    with TAccount(Dest) do
-    begin
-      Name := self.Name;
-      Server := self.Server;
-      Port := self.Port;
-      Protocol := self.Protocol;
-      Login := self.Login;
-      Password := self.Password;
-      MailProgram := self.MailProgram;
-      Sound := self.Sound;
-      Color := self.Color;
-      MsgIDs := self.MsgIDs;
-      ViewedMsgIDs := self.ViewedMsgIDs;
-      IgnoreCount := self.IgnoreCount;
-      Enabled := self.Enabled;
-      Error := self.Error;
-      Status := self.Status;
-      Interval := self.Interval;
-      Timer := self.Timer;
-      Size := self.Size;
-      Connecting := self.Connecting;
-      OldNum := self.OldNum;
-      Prot := self.Prot;
-      UIDLSupported := self.UIDLSupported;
-      Mail := self.Mail;
-      DontCheckTimes := self.DontCheckTimes;
-      DontCheckStart := self.DontCheckStart;
-      DontCheckEnd := self.DontCheckEnd;
-    end
-  else inherited AssignTo(Dest);
-end;   *)
+
 
 //------------------------------------------------------------------------------
 // IsImap
 //------------------------------------------------------------------------------
 function TAccount.IsImap() : boolean;
 begin
-  Result := false;
-  if (Prot.ProtocolType = protIMAP4)
-    then Result := true;
+  Result := (Prot.ProtocolType = protIMAP4);
 end;
 
 
@@ -345,7 +304,6 @@ end;
 //------------------------------------------------------------------------------
 procedure TAccount.RefreshAccountStatus();
 var
-  i : integer;
   mailItem : TMailItem;
 begin
   self.MsgIDs := '';
@@ -404,10 +362,11 @@ begin
   Result := 0;
   if Mail=nil then Exit;
   for mailItem in Mail do
-    if not mailItem.Viewed and
-       not mailItem.Ignored and
-       not mailItem.ToDelete then
-         Inc(Result);
+      if not mailItem.isRead(self.IsImap) and
+         not mailItem.Ignored and
+         not mailItem.ToDelete then
+           Inc(Result);
+
 end;
 
 //------------------------------------------------------------------------------
@@ -420,7 +379,7 @@ begin
   Result := 0;
   for mailItem in Mail do
   begin
-    if Options.HideViewed and mailItem.Viewed and (Statusses<>[misToBeDeleted]) then
+    if Options.HideViewed and mailItem.isRead(self.isImap) and (Statusses<>[misToBeDeleted]) then
       // ignore
     else if (misToBeDeleted in Statusses)   and mailItem.ToDelete      then Inc(Result)
     else if (misSpam in Statusses)          and mailItem.Spam          then Inc(Result)
@@ -428,10 +387,13 @@ begin
     else if (misProtected in Statusses)     and mailItem.Protect       then Inc(Result)
     else if (misImportant in Statusses)     and mailItem.Important     then Inc(Result)
     else if (misHasAttachment in Statusses) and mailItem.HasAttachment then Inc(Result)
-    else if (misViewed in Statusses)        and mailItem.Viewed        then Inc(Result)
+    else if (misViewed in Statusses)        and mailItem.isRead(self.IsImap) then Inc(Result)
     else if (misNew in Statusses)           and mailItem.New           then Inc(Result);
   end;
 end;
+
+
+
 {$ENDREGION}
 
 {$REGION '-- TAccounts --'}

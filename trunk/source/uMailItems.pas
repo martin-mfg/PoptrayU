@@ -36,6 +36,8 @@ type
   TMailItemStatusSet = set of TMailItemStatus;
 
   TMailItem = class
+  private
+    procedure SetSeen(const isSeen : boolean);
   public
     MsgNum : integer;
     From : string;
@@ -50,7 +52,8 @@ type
     Ignored : boolean;
     HasAttachment : boolean;
     Viewed : boolean; // local status - whether the message has been seen by poptrayu before
-    Seen : boolean; // server status - whether the message is marked read on the server or not
+    mSeen : boolean;  // server status - whether the message is marked read on the server or not
+                      // FYI READ in the code = seen for IMAP, viewed for POP3
     New : boolean;
     Important : boolean;
     Spam : boolean;
@@ -61,6 +64,8 @@ type
     TrayColor : TColor;
   public
     function GetStatusSet : TMailItemStatusSet;
+    function isRead(const accountIsImap : boolean) : boolean;
+    property Seen : boolean read mSeen write SetSeen; //whether the message is MARKED READ on the SERVER or not (applicability: imap accounts)
   end;
 
   //-------------------------------------------------------------- Mail Items --
@@ -91,9 +96,24 @@ begin
   if self.Spam then Result := Result + [misSpam];
   if self.Important then Result := Result + [misImportant];
   if self.HasAttachment then Result := Result + [misHasAttachment];
-  if self.Viewed then Result := Result + [misViewed];
+  if self.viewed then Result := Result + [misViewed];  //TODO
   if self.New then Result := Result + [misNew];
 end;
+
+function TMailItem.isRead(const accountIsImap : boolean): boolean;
+begin
+  if accountIsImap then // todo: AND use server status
+    result := self.Seen
+  else
+    result := self.Viewed;
+
+end;
+
+procedure TMailItem.SetSeen(const isSeen: boolean);
+begin
+  self.mSeen := isSeen;
+end;
+
 
 { TMailItems }
 
