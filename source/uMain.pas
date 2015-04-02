@@ -403,6 +403,9 @@ const
   DONT_MARK_AS_VIEWED = false;
   DO_MARK_AS_VIEWED = true;
 
+  STATE_READ = -1;
+  STATE_UNREAD = 1;
+
 var
   HintSep : string = ' -- ';
 
@@ -1051,10 +1054,7 @@ begin
         if Options.QuickCheck and not FShiftClick then
         begin //QUICKCHECK
           Result := DoQuickCheck(account, Notify, ShowIt, ForceShow);        //INDY
-        end; //QUICKCHECK
-
-        if not quickchecking then
-        begin //FULLCHECK
+        end else begin //FULLCHECK
           if (Options.ShowNewestMessagesOnly) then
             Result := DoFullAccountCheckRecentOnly(account)
           else
@@ -1176,17 +1176,17 @@ begin
 
   // Messages that have already been seen are hidden if "Hide Viewed Messages"
   // is selected in options.
-  if not( Options.HideViewed and mailItem.Viewed ) then //TODO: logic needs to get fancier
+  if not( Options.HideViewed and mailItem.isRead(account.IsImap) ) then
   begin
     with lvMail.Items.Add do
     begin
       // icon
       ImageIndex := GetStatusIcon(mailItem);
-      if (account.IsImap) then begin     // todo: AND if useServerReadStatus
-        if mailItem.Seen then StateIndex := -1 else StateIndex := 1;
-      end else begin
-        if mailItem.Viewed then StateIndex := -1 else StateIndex := 1;
-      end;
+      if mailItem.isRead(account.IsImap) then
+        StateIndex := STATE_READ
+      else
+         StateIndex := STATE_UNREAD;
+
       // listview info
       Caption := mailItem.From;
       SubItems.Add(mailItem.MailTo);
@@ -1228,10 +1228,10 @@ begin
       if Assigned(MailItem) then
       begin
         lvMail.Items[i].ImageIndex := GetStatusIcon(MailItem);
-        if MailItem.Viewed then
-          lvMail.Items[i].StateIndex := -1
+        if mailItem.isRead(account.IsImap) then
+          lvMail.Items[i].StateIndex := STATE_READ
         else
-          lvMail.Items[i].StateIndex := 1;
+          lvMail.Items[i].StateIndex := STATE_UNREAD;
       end;
     end;
     lvMail.Items.EndUpdate;
@@ -1974,7 +1974,7 @@ begin
   begin
     if not account.Mail[i].Viewed then changed := true;
     account.Mail[i].Viewed := True;
-    if NOT account.isimap then account.ViewedMsgIDs.Add(account.Mail[i].MsgID);
+    account.ViewedMsgIDs.Add(account.Mail[i].MsgID);
   end;
   // redraw the icon
   UpdateTrayIcon;
@@ -2191,10 +2191,11 @@ begin
   MailItem.MsgID := MsgID;
   if Options.SafeDelete then
     MailItem.UID := account.GetUID(msgnum);
-  //MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
+  if (account.IsImap) then
+    MailItem.Seen := (mfSeen in MsgHeader.Flags);
   MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
-  //MailItem.New := not MailItem.Viewed ;//JRWTESTING
   MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
+
   MailItem.Important := False;
   MailItem.Spam := False;
   MailItem.TrayColor := -1;
@@ -2242,9 +2243,9 @@ begin
 
   MsgHeader := TIdMessage.Create(Self);
   //if MODE = FULLHEADERS then begin
-  //(account.Prot as TProtocolIMAP4).UIDRetrievePeekHeader(uid,MsgHeader);
+  (account.Prot as TProtocolIMAP4).UIDRetrievePeekHeader(uid,MsgHeader);
   // end else begin
-  (account.Prot as TProtocolIMAP4).UIDRetrievePeekEnvelope(uid,MsgHeader);
+  //(account.Prot as TProtocolIMAP4).UIDRetrievePeekEnvelope(uid,MsgHeader); //INDY BUG MAKES THIS SOMETIMES NOT WORK
   seen := (account.Prot as TProtocolIMAP4).UIDCheckMsgSeen(uid);
   // end;
   msgNum := StrToInt(uid);//99887766;//todo
@@ -4736,7 +4737,7 @@ procedure TfrmPopUMain.lvMailCustomDrawItem(Sender: TCustomListView;
 begin
   if Options.ShowViewed then
   begin
-    if Item.StateIndex>0 then
+    if Item.StateIndex = STATE_UNREAD then
       Sender.Canvas.Font.Style := [fsBold]
     else
       Sender.Canvas.Font.Style := [];
