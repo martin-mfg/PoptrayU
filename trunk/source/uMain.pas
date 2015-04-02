@@ -23,6 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 The GNU GPL can be found at:
   http://www.gnu.org/copyleft/gpl.html
 -------------------------------------------------------------------------------}
+{$DEFINE LOG4D}
 
 interface
 
@@ -41,7 +42,9 @@ uses
   IdGlobalProtocols, IdResourceStringsProtocols, IdStack,
 
   CoolTrayIcon, unCustomImageDrawHook,
-
+  {$IFDEF LOG4D}
+  Log4D,
+  {$ENDIF LOG4D}
   uGlobal, uPlugins, uPOP3, uIMAP4, uMailItems,
   uRules, uAccounts, uMailManager, uRulesManager, uRulesForm, uAccountsForm,
   Vcl.DBGrids, uOptionsForm, uAboutForm, uConstants, uProtocol;
@@ -818,6 +821,10 @@ begin
               quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
             else
               quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+            {$IFDEF LOG4D}
+            TLogLogger.GetLogger('poptrayuLogger').Debug('QUICKCHECK - UIDs...');
+            TLogLogger.GetLogger('poptrayuLogger').Debug(UIDLs.CommaText);
+            {$ENDIF LOG4D}
             if quickchecking then
             begin
               account.Status := Translate('Checking... Clearing old Message Numbers');
@@ -898,11 +905,20 @@ begin
                 if UIDLs[i] <> '' then
                 begin
                   msgnum := StrToInt(StrBefore(UIDLs[i],' '));
-                  if not GetMessageHeader(account,msgnum) then
-                  begin
-                    Result := -1;
-                    Break;
+                  if (account.IsImap) then begin
+                    if not GetMessageHeaderByUID(account,StrAfter(UIDLs[i],' ')) then
+                    begin
+                      Result := -1;
+                      Break;
+                    end;
+                  end else begin
+                    if not GetMessageHeader(account,msgnum) then
+                    begin
+                      Result := -1;
+                      Break;
+                    end;
                   end;
+
                 end;
                 // progress
                 Progress.Position := i;
@@ -942,6 +958,9 @@ var
   ForceShow : boolean;
   firstMsgToDownload : integer;
 
+{$IFDEF LOG4D}
+  Logger : TLogLogger;
+{$ENDIF LOG4D}
 begin
   Result := 0;
 
@@ -975,6 +994,22 @@ begin
   ForceShow := False;
   try
 
+    {$IFDEF LOG4D}
+//  TLogBasicConfigurator.Configure;
+//
+//  // set the log level
+//  TLogLogger.GetRootLogger.Level := All;
+//
+//  // create a named logger
+//  Logger := TLogLogger.GetLogger('poptrayuLogger2');
+//  Logger.addAppender(TLogFileAppender.Create('filelogger','log4d_main.log'));
+
+    Logger := TLogLogger.GetLogger('poptrayuLogger');
+    Logger.Debug('Account Check...initial state');
+    Logger.Debug(account.DebugPrint);
+    {$ENDIF LOG4D}
+
+
     try
       Screen.Cursor := crHourGlass;
 
@@ -988,6 +1023,12 @@ begin
         on E:Exception do
           ErrorMsg(account,'Error:',e.Message,True);  //sync
       end;
+
+      {$IFDEF LOG4D}
+      Logger.Debug('Account check: After deleting');
+      Logger.Debug(account.DebugPrint);
+      {$ENDIF LOG4D}
+
 
       Application.ProcessMessages;  //only if in fg thread
 
@@ -1019,6 +1060,11 @@ begin
           else
             Result := DoFullAccountCheck(account);
         end; //FULLCHECK
+
+        {$IFDEF LOG4D}
+        Logger.Debug('Account check: After quick/full check');
+        Logger.Debug(account.DebugPrint);
+        {$ENDIF LOG4D}
 
         // refresh account
         account.RefreshAccountStatus();
@@ -1113,6 +1159,11 @@ begin
     // show
     if ShowIt and (Accounts[tabMail.TabIndex]=account) then
       ShowMail(Accounts[tabMail.TabIndex], not Options.ShowWhileChecking or (deletecount<>0) or ForceShow);
+
+    {$IFDEF LOG4D}
+    Logger.Debug('Account check: very very end');
+    Logger.Debug(account.DebugPrint);
+    {$ENDIF LOG4D}
   end;
 end;
 
@@ -1125,16 +1176,17 @@ begin
 
   // Messages that have already been seen are hidden if "Hide Viewed Messages"
   // is selected in options.
-  if not( Options.HideViewed and mailItem.Viewed ) then
+  if not( Options.HideViewed and mailItem.Viewed ) then //TODO: logic needs to get fancier
   begin
     with lvMail.Items.Add do
     begin
       // icon
       ImageIndex := GetStatusIcon(mailItem);
-      if mailItem.Viewed then
-        StateIndex := -1
-      else
-        StateIndex := 1;
+      if (account.IsImap) then begin     // todo: AND if useServerReadStatus
+        if mailItem.Seen then StateIndex := -1 else StateIndex := 1;
+      end else begin
+        if mailItem.Viewed then StateIndex := -1 else StateIndex := 1;
+      end;
       // listview info
       Caption := mailItem.From;
       SubItems.Add(mailItem.MailTo);
@@ -1799,6 +1851,7 @@ function TfrmPopUMain.DeleteMails(account : TAccount; var DelCount : integer) : 
 var
   i : integer;
   uidList : TStringList;
+  Logger: TLogLogger;
 begin
   Result := True;
   DelCount := 0;
@@ -1806,6 +1859,12 @@ begin
   begin
     ShowIcon(account,itDeleting);
     account.Status := Translate('Deleting...');
+
+    {$IFDEF LOG4D}
+    Logger := TLogLogger.GetLogger('poptrayuLogger');
+    Logger.Debug('DeleteMails - '+account.Name);
+    Logger.Debug(account.DebugPrint);
+    {$ENDIF LOG4D}
 
     // delete from server
 
@@ -1859,6 +1918,12 @@ begin
       //account.Mail.RemoveToDeleteMsgs();
     end;
 
+    {$IFDEF LOG4D}
+    Logger := TLogLogger.GetLogger('poptrayuLogger');
+    Logger.Debug('DeleteMails END - '+account.Name+' - '+ IntToStr(DelCount)+'message(s) deleted.');
+    Logger.Debug(account.DebugPrint);
+    {$ENDIF LOG4D}
+
     account.Status := IntToStr(DelCount)+' '+Translate('message(s) deleted.');
   end;
 end;
@@ -1909,7 +1974,7 @@ begin
   begin
     if not account.Mail[i].Viewed then changed := true;
     account.Mail[i].Viewed := True;
-    account.ViewedMsgIDs.Add(account.Mail[i].MsgID);
+    if NOT account.isimap then account.ViewedMsgIDs.Add(account.Mail[i].MsgID);
   end;
   // redraw the icon
   UpdateTrayIcon;
@@ -2010,7 +2075,7 @@ begin
   MsgHeader.NoDecode := True;
 
   // get size
-  MsgSize := account.Prot.RetrieveMsgSize(msgnum) div 1024 +1;
+  MsgSize := Account.Prot.RetrieveMsgSize(msgnum)  div 1024 +1;
 
   // get headers/body
   try
@@ -2106,6 +2171,7 @@ begin
   MailItem.MailTo := MsgHeader.Recipients.EMailAddresses;
   MailItem.Subject := MsgHeader.Subject;
   MailItem.Date := MsgHeader.Date;
+  MailItem.Seen := mfSeen in MsgHeader.Flags;
   if int(MsgHeader.Date)=0 then
     MailItem.DateStr := Copy(MsgHeader.Headers.Values['Date'],1,16)
   else begin
@@ -2163,6 +2229,7 @@ var
   split : cardinal;
   MsgHeader : TIdMessage; //experimental, moved from class variable
   msgNum : integer;
+  seen : boolean;
 begin
   // check for stop
   if FStop then
@@ -2174,12 +2241,16 @@ begin
   end;
 
   MsgHeader := TIdMessage.Create(Self);
-  (account.Prot as TProtocolIMAP4).UIDRetrievePeekHeader(uid,MsgHeader);
-
-  msgNum := 99887766;//todo
+  //if MODE = FULLHEADERS then begin
+  //(account.Prot as TProtocolIMAP4).UIDRetrievePeekHeader(uid,MsgHeader);
+  // end else begin
+  (account.Prot as TProtocolIMAP4).UIDRetrievePeekEnvelope(uid,MsgHeader);
+  seen := (account.Prot as TProtocolIMAP4).UIDCheckMsgSeen(uid);
+  // end;
+  msgNum := StrToInt(uid);//99887766;//todo
 
   // get size
-  MsgSize := account.Prot.RetrieveMsgSize(msgnum) div 1024 +1;
+  MsgSize := (Account.Prot as TProtocolIMAP4).RetrieveMsgSizeByUID(uid) div 1024 +1;
 
 
   // store header details in mail item
@@ -2214,10 +2285,11 @@ begin
   MailItem.MsgID := MsgID;
   if Options.SafeDelete then
     MailItem.UID := uid;//GetUID(account,msgnum);
-  MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
-  //MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
-  MailItem.New := not MailItem.Viewed ;//JRWTESTING
-  //MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
+  //MailItem.Viewed := (mfSeen in MsgHeader.Flags);//JRW TESTING
+  MailItem.Seen := seen;//mfSeen in MsgHeader.Flags;
+  MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
+  //MailItem.New := not MailItem.Viewed ;//JRWTESTING
+  MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
   MailItem.Important := False;
   MailItem.Spam := False;
   MailItem.TrayColor := -1;

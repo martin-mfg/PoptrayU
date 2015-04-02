@@ -70,9 +70,11 @@ type
     function DeleteMsgsByUID(const uidList: array of String): boolean;
     function GetUnseenUids(): TIntArray;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
+    function UIDRetrievePeekEnvelope(const UID: String; var outMsg: TIdMessage) : boolean;
     function RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
     function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
     function MakeRead(const uid : string; isRead : boolean): boolean; override;
+    function UIDCheckMsgSeen(const UID: String) : boolean;
   end;
 
 
@@ -97,7 +99,7 @@ uses
   IdSSLOpenSSL;
 
 const
-  debugImap = false;
+  debugImap = TRUE;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 var
     Msg : TIdMessage;
@@ -157,7 +159,7 @@ begin
   if (debugImap) then
   begin
     DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug.log';
+    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'.log';
     DebugLogger.Active:= True;
     IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
   end;
@@ -414,17 +416,20 @@ begin
     if maxUIDs <= 0 then
       startMsg := 1
     else
-      startMsg := Math.Max(nCount, nCount - maxUIDs);
+      startMsg := Math.Min(nCount, nCount - maxUIDs);
 
     for i := startMsg to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
       UID := '';
       IMAP.GetUID(i, UID);
       if UID <> '' then begin
-        UIDLs.Add(IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *));;
+        UIDLs.Add(IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *));
       end;
     end;
     Result := True;
+  end;
+  if (Result = false) then begin
+    TLogLogger.GetLogger('poptrayuLogger').Debug('TProtocolIMAP4.UIDL() FALSE'+#13#10+UIDLs.CommaText);
   end;
 end;
 
@@ -598,7 +603,18 @@ end;
 
 function TProtocolIMAP4.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
 begin
+  Result := IMAP.UIDRetrieveHeader(UID, outMsg);
+end;
+
+function TProtocolIMAP4.UIDRetrievePeekEnvelope(const UID: String; var outMsg: TIdMessage) : boolean;
+begin
   Result := IMAP.UIDRetrieveEnvelope(UID, outMsg);
+end;
+
+// @Throws EIdNumberInvalid, EIdConnectionStateError
+function TProtocolIMAP4.UIDCheckMsgSeen(const UID: String) : boolean;
+begin
+  Result := IMAP.UIDCheckMsgSeen(UID);
 end;
 
 //------------------------------------------------------------------------------

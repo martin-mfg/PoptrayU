@@ -92,7 +92,7 @@ type
     procedure TestAccount();
     function GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
     function GetUID(msgnum: integer): string;
-
+    function DebugPrint(): String;
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -267,7 +267,7 @@ begin
   try
     if self.UIDLSupported then
     begin
-      Result := Prot.UIDL(UIDLs, maxUIDs);
+      Result := Prot.UIDL(UIDLs, -1, maxUIDs);
       if not Result then
         self.UIDLSupported := False;
     end
@@ -378,6 +378,20 @@ begin
         Inc(Result);
 end;
 
+
+//------------------------------------------------------------------------------
+// Creates a diagnostic list of mail items present in this account.
+//------------------------------------------------------------------------------
+function TAccount.DebugPrint(): String;
+var
+  mailItem : TMailItem;
+begin
+  Result := 'MsgNum,UID,Seen,Subject';
+  if Mail = nil then exit;
+
+  for mailItem in Mail do
+    Result := Result + #13#10 + IntToStr(mailItem.MsgNum)+','+mailItem.UID+','+BoolToStr(mailItem.Seen, true)+',"'+mailItem.Subject+'"';
+end;
 
 
 //------------------------------------------------------------------------------
