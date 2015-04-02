@@ -1054,6 +1054,7 @@ begin
         if Options.QuickCheck and not FShiftClick then
         begin //QUICKCHECK
           Result := DoQuickCheck(account, Notify, ShowIt, ForceShow);        //INDY
+          quickchecking := true;
         end else begin //FULLCHECK
           if (Options.ShowNewestMessagesOnly) then
             Result := DoFullAccountCheckRecentOnly(account)
@@ -1091,7 +1092,7 @@ begin
         ResetToolbar;
 
         // Disconnect account
-        if NOT account.IsImap then
+        ///////if NOT account.IsImap then   // 4-2-2015 - because there's only one instance of Prot for each protocol, this causes all accounts to use whatever account is already connected. needs the variable replicated to make this work.
           if account.Prot.Connected then
             account.Prot.DisconnectWithQuit;
 
