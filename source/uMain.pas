@@ -300,6 +300,8 @@ type
     function DoFullAccountCheckRecentOnly(account : TAccount) : integer;
     function DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
     function DoQuickCheck(account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean) : integer;
+    function ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
+
     // visual
     function GetTrayColor(num : integer) : TColor;
     procedure UpdateTrayIcon;
@@ -803,6 +805,19 @@ begin
 
 end;
 
+function TfrmPopUMain.ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
+begin
+  // for each message in the account
+    // get the flags
+    // see if the flags changed
+    // if flag = deleted, set icon = deleted
+    // if flag = read/unread set read/unread
+    // if flag = important...
+  // check for new messages starting at last seen uid
+
+end;
+
+
 function TfrmPopUMain.DoQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
 var
   i : integer;          // loop counter
@@ -814,12 +829,13 @@ var
   quickchecking : boolean;
   mailcount : integer;  // How many new messages have been found?
   firstMsgToDownload : integer;
+  tempFlags : TIdMessageFlagsSet;
 begin
           begin //QUICKCHECK
           UIDLs := TStringList.Create;
           try
             account.Status := Translate('Checking... Getting UIDs');
-            StatusBar.Panels[0].Text := ' '+account.Status;
+            StatusBar.Panels[0].Text := ' '+account.Status;   //TODO: this should be only if account is showing
             if (Options.ShowNewestMessagesOnly) then
               quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
             else
@@ -830,6 +846,7 @@ begin
             {$ENDIF LOG4D}
             if quickchecking then
             begin
+
               account.Status := Translate('Checking... Clearing old Message Numbers');
               StatusBar.Panels[0].Text := ' '+account.Status;
               Application.ProcessMessages();
@@ -859,6 +876,17 @@ begin
                 begin
                   MailItem.MsgNum := msgnum;
                   UIDLs[i] := '';
+
+                  // for imap check for changes to server flags
+                  if account.IsImap then begin
+                     if (Account.Prot as TProtocolIMAP4).GetFlags(UID, tempFlags) then
+                     begin
+                       MailItem.Seen := mfSeen in tempFlags;
+                       MailItem.Important := mfFlagged in tempFlags;
+                       MailItem.ToDelete := mfDeleted in tempFlags;     //?
+                     end;
+                  end;
+
                 end;
               end;
               account.Status := Translate('Checking... Removing Deleted Items');

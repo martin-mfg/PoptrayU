@@ -75,6 +75,7 @@ type
     function RetrieveRawByUid(const uid: String; var pRawMsg : PChar) : boolean;
     function MakeRead(const uid : string; isRead : boolean): boolean; override;
     function UIDCheckMsgSeen(const UID: String) : boolean;
+    function GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet) : Boolean;
   end;
 
 
@@ -640,6 +641,12 @@ begin
   Result := true;
 end;
 
+// @throws EIdNumberInvalid exception when AMsgUID contains an invalid value for use as a UID.
+// @throws EIdConnectionStateError if connection state is not csSelected
+function TProtocolIMAP4.GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet ) : Boolean;
+begin
+  Result := IMAP.UIDRetrieveFlags(uid, outFlags);
+end;
 
 
 // Exceptions for IMAP:EIdIMAP4ServerException, EIdIMAP4ImplicitTLSRequiresSSL,
