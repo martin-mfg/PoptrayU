@@ -2090,6 +2090,7 @@ var
   ret : boolean;
   split : cardinal;
   MsgHeader : TIdMessage; //experimental, moved from class variable
+  tempFlags : TIdMessageFlagsSet;
 begin
   // check for stop
   if FStop then
@@ -2134,6 +2135,7 @@ begin
        ret := true;
     end;
   end;
+
   if not ret then
   begin
     // error in retrieve.
@@ -2185,6 +2187,8 @@ begin
     end;
   end;
 
+
+
   MsgID := FloatToStr(MsgHeader.Date) + MsgHeader.MsgID;
 
   // store header details in mail item
@@ -2220,12 +2224,17 @@ begin
   MailItem.MsgID := MsgID;
   if Options.SafeDelete then
     MailItem.UID := account.GetUID(msgnum);
-  if (account.IsImap) then
-    MailItem.Seen := (mfSeen in MsgHeader.Flags);
+
+  MailItem.Important := False;
+  if (account.isImap) then begin
+    (account.Prot as TProtocolIMAP4).GetFlags(MailItem.UID, tempFlags);
+    MailItem.Seen := (mfSeen in tempFlags);
+    MailItem.Important := (mfFlagged in tempFlags);
+  end;
+
   MailItem.Viewed := account.ViewedMsgIDs.IndexOf(MsgID) >= 0;
   MailItem.New := not MailItem.Viewed and not AnsiContainsStr(account.MsgIDs,MsgID);
 
-  MailItem.Important := False;
   MailItem.Spam := False;
   MailItem.TrayColor := -1;
   // rules
