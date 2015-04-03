@@ -899,7 +899,6 @@ object frmPopUMain: TfrmPopUMain
       Enabled = False
       Hint = 'Spam Management'
       ImageIndex = 17
-      OnExecute = actSpamExecute
     end
     object actStopChecking: TAction
       Category = 'Mail'

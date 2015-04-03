@@ -119,6 +119,8 @@ procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word);
 
 function GetAppVersionStr: string;
 
+procedure DeleteToRecycleBin(const fileameWithPath : String; const ParentWindow: HWND = 0);
+
 const
   HH_DISPLAY_TOPIC = $0000;
   HH_DISPLAY_TOC   = $0001;
@@ -1470,6 +1472,22 @@ begin
   if FixedPtr.dwFileFlags and VS_FF_DEBUG <> 0 then
     Result := Result + ' (' + Translate(VS_FF_DEBUG_STRING)+')';
 end;
+
+
+procedure DeleteToRecycleBin(const fileameWithPath : String; const ParentWindow: HWND = 0);
+var
+  FileOpStruc: TSHFileOpStruct;
+begin
+  with FileOpStruc do
+  begin
+  Wnd := ParentWindow;
+  wFunc := FO_DELETE;
+  pFrom := PChar(fileameWithPath);
+  fFlags := FOF_ALLOWUNDO
+  end;
+  SHFileOperation(FileOpStruc);
+end;
+
 
 end.
 
