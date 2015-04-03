@@ -120,6 +120,11 @@ type
     ActMarkRead: TAction;
     ActMarkUnread: TAction;
     imlActionsPng: TPngImageList;
+    actMark: TAction;
+    actStar: TAction;
+    actUnstar: TAction;
+    actResetPreviewToolbar: TAction;
+    mnuResetPreviewToolbar: TMenuItem;
     procedure panOKResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnStopClick(Sender: TObject);
@@ -167,6 +172,10 @@ type
     procedure FindDialog1Find(Sender: TObject);
     procedure ActMarkReadExecute(Sender: TObject);
     procedure ActMarkUnreadExecute(Sender: TObject);
+    procedure actMarkExecute(Sender: TObject);
+    procedure actStarExecute(Sender: TObject);
+    procedure actUnstarExecute(Sender: TObject);
+    procedure mnuResetPreviewToolbarClick(Sender: TObject);
   protected
     procedure WndProc(var Message: TMessage); override;
   private
@@ -292,6 +301,33 @@ begin
 end;
 
 
+
+procedure TfrmPreview.mnuResetPreviewToolbarClick(Sender: TObject);
+var
+   backupFilename : String;
+begin
+    if (ShowTranslatedDlg(Translate('Reset Toolbar?')+' '+#13#10#13#10+
+                    Translate('All customizations to this toolbar will be erased.'),
+                    mtConfirmation,[mbYes,mbCancel],0) = mrYes) then
+    begin
+      backupFilename := ChangeFileExt(FToolbarFileName, '.old');
+
+      // remove previous backup
+      if (FileExists(backupFilename)) then
+        DeleteToRecycleBin(backupFilename, self.Handle);
+
+      // if toolbar has been customized delete and backup customizations file
+      if (FileExists(FToolbarFileName)) then begin
+        if RenameFile(FToolbarFileName, backupFilename) then
+          ShowMessage('Toolbar customizations backed up to'+' ' + backupFilename)
+        else
+          ShowMessage('Could not backup toolbar customizations.');
+      end;
+
+      // reset the toolbar to original state
+      ActionManagerPreview.ResetActionBar(0);
+    end;
+end;
 
 procedure TfrmPreview.WndProc(var Message: TMessage);
 var
@@ -1583,6 +1619,11 @@ begin
   memMail.ReadOnly := actEditReadOnly.Checked;
 end;
 
+procedure TfrmPreview.actMarkExecute(Sender: TObject);
+begin
+  //Todo: show submenu?
+end;
+
 procedure TfrmPreview.ActMarkReadExecute(Sender: TObject);
 var
   IMAP: TIdIMAP4;
@@ -1616,6 +1657,28 @@ begin
     LoadHtmlIntoBrowser(WebBrowser1, FHtml);
   end;
 
+end;
+
+procedure TfrmPreview.actStarExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+  AFlags : TIdMessageFlagsSet;
+begin
+  if FAccount.IsImap then begin
+    FAccount.ConnectIfNeeded();
+    (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(FUID, true);
+  end;
+end;
+
+procedure TfrmPreview.actUnstarExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+  AFlags : TIdMessageFlagsSet;
+begin
+  if FAccount.IsImap then begin
+    FAccount.ConnectIfNeeded();
+    (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(FUID, false);
+  end;
 end;
 
 procedure TfrmPreview.actCustomizeExecute(Sender: TObject);
@@ -1712,6 +1775,7 @@ procedure TfrmPreview.EnableImapOptions(enable : boolean);
 begin
   ActMarkRead.Enabled := enable;
   ActMarkUnread.Enabled := enable;
+  ActMark.Enabled := enable;
 end;
 
 procedure TfrmPreview.LoadMailMessage(MailItem : TMailItem);

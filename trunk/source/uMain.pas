@@ -1761,10 +1761,14 @@ begin
         //--------------------------------------------------------------------------
         // -- move to background thread --  Download Message
         // TODO: for IMAP download by UID.
-        if Options.TopLines>0 then
-          Account.Prot.RetrieveTop(MailItem.MsgNum,Options.TopLines,pRawMsg)
-        else
-          Account.Prot.RetrieveRaw(MailItem.MsgNum,pRawMsg);
+        if Options.TopLines>0 then  //Future:  AND NOT downloadFullOnPreview
+          Account.Prot.RetrieveTop(MailItem.MsgNum,Options.TopLines,pRawMsg)  //TODO: BUG HERE!! doesn't work for IMAP until relative msg nums are in sync
+        else begin
+          if Account.IsImap then
+            (Account.Prot as TProtocolIMAP4).RetrieveRawByUid(MailItem.UID,pRawMsg)
+          else
+            Account.Prot.RetrieveRaw(MailItem.MsgNum,pRawMsg);
+        end;
         //-------------------------------------------------------------------------
 
         RawMsg.SetText(pRawMsg);

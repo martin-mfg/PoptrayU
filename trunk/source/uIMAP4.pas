@@ -76,6 +76,7 @@ type
     function MakeRead(const uid : string; isRead : boolean): boolean; override;
     function UIDCheckMsgSeen(const UID: String) : boolean;
     function GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet) : Boolean;
+    function SetImportantFlag(const uid : string; isImportant : boolean): boolean;
   end;
 
 
@@ -619,6 +620,8 @@ begin
 end;
 
 //------------------------------------------------------------------------------
+// MakeRead
+//
 // Changes the "read" or "seen" status on a message. Expects connection to
 // already be open.
 //------------------------------------------------------------------------------
@@ -641,8 +644,34 @@ begin
   Result := true;
 end;
 
+//------------------------------------------------------------------------------
+// SetImportantFlag
+//------------------------------------------------------------------------------
+function TProtocolIMAP4.SetImportantFlag(const uid : string; isImportant : boolean): boolean;
+ var
+  flags : TidMessageFlagsSet;
+begin
+  IMAP.UIDRetrieveFlags(uid, flags);
+  if (isImportant) then
+    IMAP.UIDStoreFlags(uid, sdReplace, flags + [mfFlagged])
+  else
+    IMAP.UIDStoreFlags(uid, sdReplace, flags - [mfFlagged]);
+
+    //TODO: this way is more efficient but doesn't work yet b/c of a bug in indy
+//  if (isImportant) then
+//    IMAP.UIDStoreFlags(uid, sdAddSilent, [mfFlagged])
+//  else
+//    IMAP.UIDStoreFlags(uid, sdRemoveSilent, [mfFlagged]);
+
+  Result := true;
+end;
+
+//------------------------------------------------------------------------------
+// GetFlags
+//
 // @throws EIdNumberInvalid exception when AMsgUID contains an invalid value for use as a UID.
 // @throws EIdConnectionStateError if connection state is not csSelected
+//------------------------------------------------------------------------------
 function TProtocolIMAP4.GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet ) : Boolean;
 begin
   Result := IMAP.UIDRetrieveFlags(uid, outFlags);
