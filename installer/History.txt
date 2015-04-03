@@ -1,12 +1,25 @@
 PopTrayU Version History
 ------------------------
 
- (+) New feature
- (*) Changed feature
- (-) Bug fixed
+
+=============
+Version 5.1.3
+April 2015
+=============
+New Features
+------------
+ * IMAP uses read/unread status from the server instead of tracking locally
+ * IMAP shows message as "important" if it is starred/flagged on the server
+
+Bug Fixes
+---------
+ * Recent beta changes to quick check algorithm caused unnecessary full check when quick checking. 
+ * Leaving IMAP account connected between checks (introduced in 5.1.2) is buggy when multiple IMAP accounts. Rolled back for now. 
+
 
 =============
 Version 5.1.2
+March 2015
 =============
 New Features
 ------------
@@ -32,6 +45,7 @@ More refactoring, especially in the account check and preview areas, to facilita
 
 =============
 Version 5.1.1
+February 2015
 =============
 Bug Fixes
 ---------
@@ -42,6 +56,7 @@ Bug Fixes
 
 =============
 Version 5.1.0
+February 2015
 =============
 New Features
 ------------
@@ -80,6 +95,10 @@ Most of these changes will have no user-facing impact. But many of them will mak
 =====================
 Versions Prior to 5.1
 =====================
+
+ (+) New feature
+ (*) Changed feature
+ (-) Bug fixed
 
 5.0.15
 	(-) Fixed error "Response (last) line started with a * but next word was not a valid 
