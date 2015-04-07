@@ -118,7 +118,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
 uses uGlobal, IdException, uTranslate, Vcl.Forms, Vcl.Controls, uRCUtils,
-  IdStack;
+  IdStack, StrUtils;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,11 +344,11 @@ function TAccount.DebugPrint(): String;
 var
   mailItem : TMailItem;
 begin
-  Result := 'MsgNum,UID,Seen,Subject';
+  Result := 'MsgNum,UID,Seen,toDelete,Subject';
   if Mail = nil then exit;
 
   for mailItem in Mail do
-    Result := Result + #13#10 + IntToStr(mailItem.MsgNum)+','+mailItem.UID+','+BoolToStr(mailItem.Seen, true)+',"'+mailItem.Subject+'"';
+    Result := Result + #13#10 + IntToStr(mailItem.MsgNum)+','+mailItem.UID+','+BoolToStr(mailItem.Seen, true)+','+IfThen(mailItem.ToDelete,'toDelete','--')+',"'+mailItem.Subject+'"';
 end;
 
 
