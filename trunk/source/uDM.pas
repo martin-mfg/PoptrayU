@@ -28,7 +28,7 @@ interface
 uses
   Windows, SysUtils, Classes, ImgList, Controls, Menus,
   CustomizeDlg, Graphics, ExtCtrls, Forms, ActnMan, Dialogs,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnPopup;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnPopup, PngImageList;
 
 const
   // imlPop
@@ -137,6 +137,7 @@ type
     imlActionsDisabled: TImageList;
     mnuShowInGroups: TMenuItem;
     N2: TMenuItem;
+    imlActionsLarge: TPngImageList;
     procedure mnuColumnsClick(Sender: TObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
