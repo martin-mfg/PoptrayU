@@ -439,10 +439,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 4
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsOptions: TTabSheet
       Caption = 'Options'
@@ -453,10 +449,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsRules: TTabSheet
       Caption = 'Rules'
@@ -467,10 +459,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsAbout: TTabSheet
       Caption = 'About'
@@ -481,10 +469,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TImage
         Left = 3
         Top = 352
@@ -901,6 +885,7 @@ object frmPopUMain: TfrmPopUMain
       Enabled = False
       Hint = 'Spam Management'
       ImageIndex = 17
+      OnExecute = actSpamExecute
     end
     object actStopChecking: TAction
       Category = 'Mail'
