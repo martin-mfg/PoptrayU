@@ -326,6 +326,7 @@ begin
 
       // reset the toolbar to original state
       ActionManagerPreview.ResetActionBar(0);
+      Perform(WM_SETTINGCHANGE, 0, 0);
     end;
 end;
 
