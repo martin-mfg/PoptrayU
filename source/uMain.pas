@@ -23,7 +23,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 The GNU GPL can be found at:
   http://www.gnu.org/copyleft/gpl.html
 -------------------------------------------------------------------------------}
-{$DEFINE LOG4D}
+//{$DEFINE LOG4D}
 
 interface
 
@@ -1884,7 +1884,9 @@ function TfrmPopUMain.DeleteMails(account : TAccount; var DelCount : integer) : 
 var
   i : integer;
   uidList : TStringList;
+  {$IFDEF LOG4D}
   Logger: TLogLogger;
+  {$ENDIF LOG4D}
 begin
   Result := True;
   DelCount := 0;
