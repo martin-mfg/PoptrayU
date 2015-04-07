@@ -1,6 +1,22 @@
 PopTrayU Version History
 ------------------------
 
+=============
+Version 5.1.4
+April 2015
+=============
+New Features
+------------
+ * "Mark" Toolbar menu on Preview Window to mark as read/unread or flagged/unflagged
+ * Right click action to reset preview window toolbar (does a backup but restore can only be done manually)
+ * Large icons set added for main window toolbar (must "customize" toolbar to enable this)
+
+Bug Fixes
+---------
+ * POP: deleting messsage(s) with "limit inbox size" set to a small number causes continous re-checking instead of deleting.
+ * IMAP: recent beta(s): preview was not working until second mail check for a given account. (still todo: fix this issue when "top lines" mode enabled)
+ * Logging turned off. 5.1.3 only had some logging turned on that may generate log files in either the folder where the application is installed (causing crash reporter on some versions of windows) and/or in the PopTrayU ini/settings folder. log files may need manual deleting at this time (debug.log and imap*.log)
+ * Change to notification sound conditions (ignorecount) for messages deleted by rules.
 
 =============
 Version 5.1.3
