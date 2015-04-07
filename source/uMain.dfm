@@ -139,6 +139,7 @@ object frmPopUMain: TfrmPopUMain
             Width = 489
             Height = 32
             ActionManager = ActionManager
+            AllowHiding = False
             Caption = 'Mail'
             Color = clWindow
             ColorMap = WindowBgColorMap
@@ -925,7 +926,7 @@ object frmPopUMain: TfrmPopUMain
     BtnFrameColor = clBlack
     DisabledColor = cl3DDkShadow
     Left = 455
-    Top = 100
+    Top = 114
   end
   object WindowBgColorMap: TXPColorMap
     Color = clWindow
