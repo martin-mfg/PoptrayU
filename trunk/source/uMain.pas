@@ -1164,7 +1164,7 @@ begin
     actStopChecking.Enabled := False;
     // play sound?
     if Notify and
-      (account.Mail.Count > 0 ) and
+      (account.Mail.Count > account.IgnoreCount ) and
        (account.CountNew() > 0) then
        //(MsgIDs <> account.MsgIDs) then
     begin
@@ -2675,8 +2675,7 @@ end;
 
 procedure TfrmPopUMain.PlayNotify(account : TAccount);
 begin
-  if (account.Mail.Count > account.IgnoreCount) and
-     not(actSuspendSound.Checked) then
+  if not(actSuspendSound.Checked) then
   begin
     // play wave
     if FNotifyWav <> '' then
