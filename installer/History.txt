@@ -2,6 +2,14 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.1.5
+April 2015
+=============
+Bug Fix
+-------
+ * Hide taskbar icon again when minimized to tray and start minimized set.
+
+=============
 Version 5.1.4
 April 2015
 =============
