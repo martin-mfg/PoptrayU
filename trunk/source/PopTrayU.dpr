@@ -171,6 +171,7 @@ begin
   Application.Title := 'PopTrayU'; //App Title on Windows Taskbar
   //if ParamSwitch('TRANSLATE') then
   //  Application.CreateForm(TTranslateDebugWindow, TranslateDebugWindow);
+
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfrmPopUMain, frmPopUMain);
   Application.Run;

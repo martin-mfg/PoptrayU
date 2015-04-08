@@ -16,12 +16,14 @@ object frmPopUMain: TfrmPopUMain
   OldCreateOrder = False
   Scaled = False
   ScreenSnap = True
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnKeyUp = FormKeyUp
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl: TPageControl

@@ -106,7 +106,7 @@
         <DCC_Optimize>false</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_Release>5</VerInfo_Release>
         <DCC_DcuOutput>C:\code\poptray\trunk\source\output\dcu\</DCC_DcuOutput>
         <DCC_ExeOutput>C:\code\poptray\trunk\source\output\</DCC_ExeOutput>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
@@ -114,10 +114,10 @@
         <DCC_BplOutput>C:\code\poptray\trunk\source\output\bpl\</DCC_BplOutput>
         <DCC_DcpOutput>C:\code\poptray\trunk\source\output\dcp\</DCC_DcpOutput>
         <DCC_UnitSearchPath>C:\code\poptray\branches\xe4\source\log4d;C:\code\Indy10\Output\BPI\Win32\Release;C:\code\Indy10\Output\DCP\Win32\Release;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <Debugger_RunParams>/MULTIPLE /TRANSLATE</Debugger_RunParams>
+        <Debugger_RunParams>/MULTIPLE /TRAN--SLATE</Debugger_RunParams>
         <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=Jessica Brown;FileDescription=PopTrayU E-Mail Notifier;FileVersion=5.1.4.9;InternalName=;LegalCopyright=Copyright © 2011-2014 Jessica Brown, Copyright © 2001-2004 - Renier Crause;LegalTrademarks=;OriginalFilename=PopTrayU.exe;ProductName=PopTrayU;ProductVersion=5.0;Comments=Freeware and Open-Source</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Jessica Brown;FileDescription=PopTrayU E-Mail Notifier;FileVersion=5.1.5.9;InternalName=;LegalCopyright=Copyright © 2011-2014 Jessica Brown, Copyright © 2001-2004 - Renier Crause;LegalTrademarks=;OriginalFilename=PopTrayU.exe;ProductName=PopTrayU;ProductVersion=5.0;Comments=Freeware and Open-Source</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
