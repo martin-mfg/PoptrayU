@@ -219,6 +219,8 @@ type
     procedure GetSelectedMails(area : TRuleArea; List : TStringList);
     procedure PageControlChanging(Sender: TObject; var AllowChange: Boolean);
     procedure actSelectAllExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -485,6 +487,7 @@ begin
   // show window
   SetForegroundWindow(Handle);
   TrayIcon.ShowMainForm();
+  ShowWindow(Application.Handle, SW_SHOW);
 
   AccountsForm.Visible := true;
   OptionsForm.Visible := true;
@@ -3694,7 +3697,7 @@ begin
   Accounts := TAccounts.Create;
   RulesManager := TRulesManager.Create;
   FQueue := TUniqueQueue.Create;
-  // menus with cpation different from action
+  // menus with caption different from action
   dm.mnuRuleFromDelete.Caption := 'Delete';
   dm.mnuRuleFromSpam.Caption := 'Mark as Spam';
   dm.mnuRuleSubjectDelete.Caption := 'Delete';
@@ -3780,14 +3783,23 @@ begin
   // rules
   LoadRulesINI;
   // show first account in editboxes
-  if Accounts.NumAccounts > 0 then AccountsForm.ShowDefaultAccount();  //TODO: codesmell
+  if Accounts.NumAccounts > 0 then AccountsForm.ShowDefaultAccount();
+
+
   // startup options
   FMinimized := Options.Minimized;
   if Options.Minimized and not Options.MinimizeTray then
     Self.WindowState := wsMinimized;
+
   if Options.MinimizeTray then
-    Application.ShowMainForm := not Options.Minimized
-  else Application.ShowMainForm := true;
+  begin
+    //hide taskbar button
+    ShowWindow(Application.Handle, SW_HIDE);
+
+    Application.ShowMainForm := not Options.Minimized;
+    self.visible := false;
+  end
+    else Application.ShowMainForm := true;
 
   if Options.PasswordProtect and not Options.Minimized then
   begin
@@ -3816,7 +3828,7 @@ begin
     if Application.ShowMainForm
       then ShowForm;
     // the next two lines hide the taskbar icon if started minimized to tray
-    if Options.Minimized and Options.MinimizeTray then
+    if Options.Minimized and Options.MinimizeTray and not Options.PasswordProtect then
       TrayIcon.HideMainForm();
     Application.ProcessMessages;
     repeat
@@ -3824,6 +3836,7 @@ begin
       param := ParamSwitchIndex('ACTION',param);
     until param = 0;
   end;
+
   // swap out memory
   SwapOutMemory;
 end;
@@ -4074,6 +4087,12 @@ begin
   end;
 end;
 
+procedure TfrmPopUMain.FormActivate(Sender: TObject);
+begin
+  if (Options.Minimized and Options.MinimizeTray) then
+    ShowWindow(Application.Handle, SW_HIDE);
+end;
+
 procedure TfrmPopUMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SavePosINI;
@@ -4160,6 +4179,13 @@ begin
   end;
 end;
 
+
+procedure TfrmPopUMain.FormShow(Sender: TObject);
+begin
+  //if (Options.Minimized and Options.MinimizeTray) then
+  //  ShowWindow(Application.Handle, SW_HIDE);
+  inherited;
+end;
 
 procedure TfrmPopUMain.btnHelpOptions1Click(Sender: TObject);
 begin
