@@ -131,7 +131,6 @@ type
     procedure RefreshProtocols();
     procedure ShowDefaultAccount();
     procedure Initialize();
-    procedure SetProtocol(account : TAccount); // for accounts with plugins. //used also by ini
     procedure PageControlChanging(Sender: TObject; var AllowChange: Boolean);
     procedure UpdateFonts();
     procedure OnSetLanguage();
@@ -208,7 +207,7 @@ begin
     account.ViewedMsgIDs := TStringList.Create;
   if not Assigned(account.Mail) then
     account.Mail := TMailItems.Create;
-  SetProtocol(account);
+  account.SetProtocol();
   // global
   FNewAccount := false;
   frmPopUMain.SwitchTimer;
@@ -543,7 +542,8 @@ begin
     EnableControl(edPort,true);
     EnableControl(edServer,true);
     edPort.Text := IntToStr(Protocols[cmbProtocol.ItemIndex].Port);
-    Accounts[tabAccounts.TabIndex].Prot := Protocols[cmbProtocol.ItemIndex].Prot;
+    Accounts[tabAccounts.TabIndex].Protocol := Protocols[cmbProtocol.ItemIndex].Name;
+    Accounts[tabAccounts.TabIndex].SetProtocol;
   end;
 
   // To make sure the port number reflects whether "Use SSL" is checked or not
@@ -614,25 +614,6 @@ begin
     edSound.Text := Translate(UseDefaultSound);
     edSound.Font.Color := clGrayText;
   end;
-end;
-
-
-// assigns the protocol to an account numbered num
-procedure TAccountsForm.SetProtocol(account : TAccount);
-var
-  i,found : integer;
-begin
-  found := 0;
-  for i := Low(Protocols) to High(Protocols) do
-  begin
-    if Protocols[i].Name = account.Protocol then
-    begin
-      found := i;
-      Break;
-    end;
-  end;
-  account.Prot := Protocols[found].Prot;
-  account.Prot.SetOnWork(frmPopUMain.OnPreviewDownloadProgressChange);
 end;
 
 
@@ -868,35 +849,9 @@ var
   st : string;
   i,j : integer;
 begin
-  // clear all protocols (except POP3/IMAP)
-  SetLength(Protocols,2);
 
   cmbProtocol.Items.Text := Translate('POP3');
   cmbProtocol.Items.Add(Translate('IMAP4'));
-
-//  // new list of protocols
-//  sl := TStringList.Create;
-//  try
-//    for i := Low(Plugins) to High(Plugins) do
-//    begin
-//      if Plugins[i].Enabled and (Plugins[i] is TPluginProtocol) then
-//      begin
-//        sl.Clear;
-//        CommaSeparatedToStringList(sl,(Plugins[i] as TPluginProtocol).Protocols);
-//        for j := 0 to sl.Count-1 do
-//        begin
-//          SetLength(Protocols,Length(Protocols)+1);
-//          st := StrBefore(sl[j],':');
-//          Protocols[Length(Protocols)-1].Name := st;
-//          Protocols[Length(Protocols)-1].Port := StrToIntDef(StrAfter(sl[j],':'),-1);
-//          Protocols[Length(Protocols)-1].Prot := (Plugins[i] as TPluginProtocol);
-//          cmbProtocol.Items.Add(st);
-//        end;
-//      end;
-//    end;
-//  finally
-//    sl.Free;
-//  end;
 end;
 
 procedure TAccountsForm.EnableFields(EnableIt: Boolean);
@@ -924,6 +879,9 @@ begin
 
   // accept files to drop on me
   DragAcceptFiles(Self.Handle, True);  // requires ShellAPI
+
+  cmbProtocol.Items.Text := Translate('POP3');
+  cmbProtocol.Items.Add(Translate('IMAP4'));
 end;
 
 procedure TAccountsForm.OnSetLanguage();

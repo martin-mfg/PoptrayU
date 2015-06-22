@@ -916,6 +916,11 @@ object frmPopUMain: TfrmPopUMain
       ImageIndex = 26
       OnExecute = actSelectAllExecute
     end
+    object actReplyAll: TAction
+      Category = 'Mail'
+      Caption = 'Reply All'
+      OnExecute = actReplyAllExecute
+    end
   end
   object XPColorMap1: TXPColorMap
     HighlightColor = clWhite

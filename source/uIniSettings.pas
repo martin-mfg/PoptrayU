@@ -322,28 +322,6 @@ begin
           (Plugins[i] as TPluginNotify).FMessageCheck := GetProcAddress(Plugins[i].hPlugin,'MessageCheck');
           (Plugins[i] as TPluginNotify).FMessageBody := GetProcAddress(Plugins[i].hPlugin,'MessageBody');
         end;
-        // protocol
-//        if (Plugins[i] is TPluginProtocol) then
-//        begin
-//          (Plugins[i] as TPluginProtocol).FProtocols := GetProcAddress(Plugins[i].hPlugin,'Protocols');
-//          (Plugins[i] as TPluginProtocol).FConnect := GetProcAddress(Plugins[i].hPlugin,'Connect');
-//          (Plugins[i] as TPluginProtocol).FDisconnect := GetProcAddress(Plugins[i].hPlugin,'Disconnect');
-//          (Plugins[i] as TPluginProtocol).FDisconnectWithQuit := GetProcAddress(Plugins[i].hPlugin,'DisconnectWithQuit');
-//          (Plugins[i] as TPluginProtocol).FConnected := GetProcAddress(Plugins[i].hPlugin,'Connected');
-//          (Plugins[i] as TPluginProtocol).FCheckMessages := GetProcAddress(Plugins[i].hPlugin,'CheckMessages');
-//          (Plugins[i] as TPluginProtocol).FRetrieveHeader := GetProcAddress(Plugins[i].hPlugin,'RetrieveHeader');
-//          (Plugins[i] as TPluginProtocol).FRetrieveRaw := GetProcAddress(Plugins[i].hPlugin,'RetrieveRaw');
-//          (Plugins[i] as TPluginProtocol).FRetrieveTop := GetProcAddress(Plugins[i].hPlugin,'RetrieveTop');
-//          (Plugins[i] as TPluginProtocol).FRetrieveMsgSize := GetProcAddress(Plugins[i].hPlugin,'RetrieveMsgSize');
-//          (Plugins[i] as TPluginProtocol).FUIDL := GetProcAddress(Plugins[i].hPlugin,'UIDL');
-//          (Plugins[i] as TPluginProtocol).FDelete := GetProcAddress(Plugins[i].hPlugin,'Delete');
-//          (Plugins[i] as TPluginProtocol).FSetOnWork := GetProcAddress(Plugins[i].hPlugin,'SetOnWork');
-//          (Plugins[i] as TPluginProtocol).FLastErrorMsg := GetProcAddress(Plugins[i].hPlugin,'LastErrorMsg');
-//          (Plugins[i] as TPluginProtocol).FSetSSLOptions := GetProcAddress(Plugins[i].hPlugin,'SetSSLOptions');
-//          (Plugins[i] as TPluginProtocol).FPluginSupportsSSL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSSL');
-//          (Plugins[i] as TPluginProtocol).FPluginSupportsAPOP := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsAPOP');
-//          (Plugins[i] as TPluginProtocol).FPluginSupportsSASL := GetProcAddress(Plugins[i].hPlugin,'PluginSupportsSASL');
-//        end;
         Plugins[i].Init;
       end;
     end;
@@ -583,7 +561,7 @@ begin
 end;
 
 {*------------------------------------------------------------------------------
-  Loads a single account from the ini file 
+  Loads a single account from the ini file
 -------------------------------------------------------------------------------}
 function LoadAccountINI(num : integer) : boolean;
 var
@@ -633,7 +611,7 @@ begin
       Accounts[num-1].Port := StrToIntDef(PortStr,110);
     end;
     // protocol
-    frmPopUMain.AccountsForm.SetProtocol(Accounts[num-1]);
+    Accounts[num-1].SetProtocol();
   finally
      Ini.Free;
   end;
@@ -651,24 +629,7 @@ begin
   Ini := TMemIniFile.Create(IniName);
   try
     section := 'Account'+IntToStr(num);
-    Ini.WriteString(Section,'Name',Accounts[num-1].Name);
-    Ini.WriteString(Section,'Server',Accounts[num-1].Server);
-    Ini.WriteInteger(Section,'Port',Accounts[num-1].Port);
-    Ini.WriteString(Section,'Protocol',Accounts[num-1].Protocol);
-    Ini.WriteBool(Section,'UseSSLorTLS',Accounts[num-1].UseSSLorTLS);
-    Ini.WriteInteger(Section,'AuthType',Integer(Accounts[num-1].AuthType));
-    Ini.WriteInteger(Section,'SslVer',Integer(Accounts[num-1].SslVersion));
-    Ini.WriteBool(Section,'StartTLS',Accounts[num-1].StartTLS);
-    Ini.WriteString(Section,'Login',Accounts[num-1].Login);
-    Ini.WriteString(Section,'Password',Encrypt(Accounts[num-1].Password));
-    Ini.WriteString(Section,'MailProgram',Accounts[num-1].MailProgram);
-    Ini.WriteString(Section,'Sound',Accounts[num-1].Sound);
-    Ini.WriteString(Section,'Color',Accounts[num-1].Color);
-    Ini.WriteBool(Section,'Enabled',Accounts[num-1].Enabled);
-    Ini.WriteFloat(Section,'Interval',Accounts[num-1].Interval);
-    Ini.WriteBool(Section,'DontCheckTimes',Accounts[num-1].DontCheckTimes);
-    Ini.WriteTime(Section,'DontCheckStart',Accounts[num-1].DontCheckStart);
-    Ini.WriteTime(Section,'DontCheckEnd',Accounts[num-1].DontCheckEnd);
+    Accounts[num-1].SaveAccountToIniFile(Ini, section);
     Ini.WriteInteger('Options','NumAccounts',Accounts.NumAccounts);
     Ini.UpdateFile;
   finally

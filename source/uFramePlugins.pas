@@ -284,7 +284,7 @@ begin
         end;
       end;
       // refresh protocols
-      frmPopUMain.AccountsForm.RefreshProtocols;
+      //frmPopUMain.AccountsForm.RefreshProtocols;
     end;
   end;
 end;

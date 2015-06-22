@@ -27,7 +27,7 @@ interface
 {$REGION '-- Interfaces --'}
 uses
   Classes, ExtCtrls, Contnrs, SysUtils, Graphics, uPlugins, uMailItems,
-  Generics.Collections, uProtocol;
+  Generics.Collections, uProtocol, System.IniFiles;
 
 type
   //------------------------------------------------------------------- Queue --
@@ -93,6 +93,9 @@ type
     function GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
     function GetUID(msgnum: integer): string;
     function DebugPrint(): String;
+    procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string);
+    procedure LoadAccountFromINI(Ini : TIniFile; section: string);
+    procedure SetProtocol();
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -118,7 +121,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
 uses uGlobal, IdException, uTranslate, Vcl.Forms, Vcl.Controls, uRCUtils,
-  IdStack, StrUtils;
+  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +176,7 @@ begin
   self.Connecting := True;
   try
     self.Prot.SetSSLOptions(UseSSLorTLS, AuthType, SslVersion, StartTLS);
-    self.Prot.Connect(PChar(aHost),aPort,PChar(aProtocol),PChar(aUsername),PChar(aPassword), Options.TimeOut*1000);
+    self.Prot.Connect(aHost, aPort, aUsername, aPassword, Options.TimeOut*1000);
     errMsg := self.Prot.LastErrorMsg();
     if (errMsg <> nil) then
     begin
@@ -392,6 +395,104 @@ begin
   end;
 end;
 
+//------------------------------------------------------------------------------
+// Saves a single account to an ini file
+// Caller is responsible for opening/closing the ini file and calling
+// UpdateFile to end buffering on the ini file.
+//------------------------------------------------------------------------------
+procedure TAccount.SaveAccountToIniFile(Ini : TMemIniFile; section: string);
+begin
+    Ini.WriteString(Section,'Name',self.Name);
+    Ini.WriteString(Section,'Server',self.Server);
+    Ini.WriteInteger(Section,'Port',self.Port);
+    Ini.WriteString(Section,'Protocol',self.Protocol);
+    Ini.WriteBool(Section,'UseSSLorTLS',self.UseSSLorTLS);
+    Ini.WriteInteger(Section,'AuthType',Integer(self.AuthType));
+    Ini.WriteInteger(Section,'SslVer',Integer(self.SslVersion));
+    Ini.WriteBool(Section,'StartTLS',self.StartTLS);
+    Ini.WriteString(Section,'Login',self.Login);
+    Ini.WriteString(Section,'Password',Encrypt(self.Password));
+    Ini.WriteString(Section,'MailProgram',self.MailProgram);
+    Ini.WriteString(Section,'Sound',self.Sound);
+    Ini.WriteString(Section,'Color',self.Color);
+    Ini.WriteBool(Section,'Enabled',self.Enabled);
+    Ini.WriteFloat(Section,'Interval',self.Interval);
+    Ini.WriteBool(Section,'DontCheckTimes',self.DontCheckTimes);
+    Ini.WriteTime(Section,'DontCheckStart',self.DontCheckStart);
+    Ini.WriteTime(Section,'DontCheckEnd',self.DontCheckEnd);
+end;
+
+{*------------------------------------------------------------------------------
+  Loads a single account from the ini file
+-------------------------------------------------------------------------------}
+procedure TAccount.LoadAccountFromINI(Ini : TIniFile; section: string);
+begin
+  try
+    self.Name := Ini.ReadString(Section,'Name','NoName');
+    self.Server := Ini.ReadString(Section,'Server','');
+    self.Port := Ini.ReadInteger(Section,'Port',110);
+    self.Protocol := Ini.ReadString(Section,'Protocol','POP3');
+    self.UseSSLorTLS := Ini.ReadBool(Section,'UseSSLorTLS',FALSE);
+    self.AuthType := TAuthType(Ini.ReadInteger(Section,'AuthType',0));
+    self.SslVersion := TsslVer(Ini.ReadInteger(Section,'SslVer',0));
+    self.StartTLS := Ini.ReadBool(Section,'StartTLS',false);
+    self.Login := Ini.ReadString(Section,'Login','');
+    self.MailProgram := Ini.ReadString(Section,'MailProgram','');
+    self.Password := Decrypt(Ini.ReadString(Section,'Password',''));
+    self.Sound := Ini.ReadString(Section,'Sound','');
+    self.Color := Ini.ReadString(Section,'Color','');
+    self.Enabled := Ini.ReadBool(Section,'Enabled',True);
+    self.Interval := Ini.ReadFloat(Section,'Interval',5);
+    self.DontCheckTimes := Ini.ReadBool(Section,'DontCheckTimes',FALSE);
+    try
+      self.DontCheckStart := Ini.ReadTime(Section,'DontCheckStart',StrToTime('20'+FormatSettings.TimeSeparator+'00'));
+    Except on e: EConvertError do begin
+      ShowMessage(e.ToString);
+      end;
+    end;
+    try
+      self.DontCheckEnd := Ini.ReadTime(Section,'DontCheckEnd',StrToTime('08'+FormatSettings.TimeSeparator+'00'));
+    Except on e: EConvertError do begin
+      ShowMessage(e.ToString);
+      end;
+    end;
+    self.ViewedMsgIDs := TStringList.Create;
+    self.Mail := TMailItems.Create;
+    //uIniSettinngs.LoadViewedMessageIDs(num);
+    //Result := Ini.ReadString(Section,'Name','accnoname') <> 'accnoname';
+    //// backwards compatible port
+    //PortStr := StrAfter(Accounts[num-1].Server,':');
+    //if PortStr <> '' then
+    //begin
+    //  Accounts[num-1].Server := StrBefore(Accounts[num-1].Server,':');
+    //  Accounts[num-1].Port := StrToIntDef(PortStr,110);
+    //end;
+    // protocol
+    self.SetProtocol();
+  finally
+     Ini.Free;
+  end;
+end;
+
+// Assigns an instance of the Protocol (IMAP or POP) to the account.
+// Todo: look into whether there are cases where setProtocol is called that
+// shouldn't actually reset the protocol?
+procedure TAccount.SetProtocol();
+var
+  prevProt : TProtocol;
+begin
+  prevProt := self.Prot;
+  if (prevProt <> nil) then begin
+    prevProt.Free;
+  end;
+  if (self.Protocol = 'POP3') then
+  begin
+    self.Prot := TProtocolPOP3.Create;
+  end else begin
+    self.Prot := TProtocolIMAP4.Create;
+  end;
+
+end;
 
 
 {$ENDREGION}

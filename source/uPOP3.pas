@@ -22,11 +22,35 @@ interface
 uses
   Classes, SysUtils,
   IdPOP3, IdMessage, IdComponent, IdExplicitTLSClientServerBase,
-  uProtocol, Dialogs, IdAttachment;
+  uProtocol, Dialogs, IdAttachment,
+  IdSASL_CRAM_MD5, IdSASLLogin, IdSASL_CRAM_SHA1, IdUserPassProvider, //SASL
+  IdSASLUserPass, IdSASLPlain, IdSASLSKey,                            //SASL
+  IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous,           //SASL
+  IdSSLOpenSSL, IdLogFile;
 
 type
   TProtocolPOP3 = class(TProtocol)
   private
+    mSSL : TIdSSLIOHandlerSocketOpenSSL;
+    mTimeout : integer;
+    mSSLDisabled : boolean;// = false;
+
+    IdUserPassProvider: TIdUserPassProvider;
+    IdSASLCRAMMD5: TIdSASLCRAMMD5;
+    IdSASLCRAMSHA1: TIdSASLCRAMSHA1;
+    IdSASLPlain: TIdSASLPlain;
+    IdSASLLogin: TIdSASLLogin;
+    IdSASLSKey: TIdSASLSKey;
+    IdSASLOTP: TIdSASLOTP;
+    IdSASLAnonymous: TIdSASLAnonymous;
+    IdSASLExternal: TIdSASLExternal;
+
+    mLastErrorMsg : string;
+    mHasErrorToReport : boolean;
+
+    DebugLogger : TIdLogFile;
+    autoAuthMode : boolean;
+
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //indy10
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     procedure ShowHttpStatus(ASender: TObject; const AStatus: TIdStatus; const AStatusText: string);
@@ -34,7 +58,7 @@ type
   public
     POP : TIdPOP3;
     constructor Create;
-    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
+    procedure Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer); override;
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
     function Connected : boolean; override;
@@ -63,35 +87,12 @@ type
 implementation
   uses
     IdIMap4,  //for wsOk indy10
-    IdHTTP, IdStackConsts, IdSSLOpenSSL, Windows,
-    IdSASL_CRAM_MD5, IdSASLLogin, IdSASL_CRAM_SHA1, IdUserPassProvider, //SASL
-    IdSASLUserPass, IdSASLPlain, IdSASLSKey,                            //SASL
-    IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous,           //SASL
-    IdException, IdSASLCollection, IdExceptionCore, IdStack,
-    IdLogFile, IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3,
+    IdHTTP, IdStackConsts, Windows,
+    IdException, IdExceptionCore, IdStack,  IdSASLCollection,
+    IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3,
     uIniSettings;
   const
     debugPop = false;
-  var
-    mSSL : TIdSSLIOHandlerSocketOpenSSL;
-    mTimeout : integer;
-    mSSLDisabled : boolean = false;
-
-    IdUserPassProvider: TIdUserPassProvider;
-    IdSASLCRAMMD5: TIdSASLCRAMMD5;
-    IdSASLCRAMSHA1: TIdSASLCRAMSHA1;
-    IdSASLPlain: TIdSASLPlain;
-    IdSASLLogin: TIdSASLLogin;
-    IdSASLSKey: TIdSASLSKey;
-    IdSASLOTP: TIdSASLOTP;
-    IdSASLAnonymous: TIdSASLAnonymous;
-    IdSASLExternal: TIdSASLExternal;
-
-    mLastErrorMsg : string;
-    mHasErrorToReport : boolean;
-
-    DebugLogger : TIdLogFile;
-    autoAuthMode : boolean;
 
 { TProtocolPOP3 }
 
@@ -206,7 +207,7 @@ begin
   end; }
 end;
 
-procedure TProtocolPOP3.Connect(Server: PChar; Port: integer; Protocol,UserName, Password: PChar; TimeOut: integer);
+procedure TProtocolPOP3.Connect(Server: String; Port: integer; UserName, Password: String; TimeOut: integer);
 var
   doneTryingConnectionModes: boolean;
 begin
