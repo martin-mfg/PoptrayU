@@ -29,11 +29,44 @@ uses
   IdStackConsts,
   Classes,
   IdAttachment, IdAttachmentMemory, System.Generics.Collections,
-  IdMailbox;
+  IdMailbox,
+  IdSASL_CRAM_MD5,
+  IdSASLLogin,
+  IdSASL_CRAM_SHA1,
+  IdUserPassProvider,
+  IdSASLUserPass,
+  IdSASLPlain,
+  IdSASLSKey,
+  IdSASLOTP,
+  IdSASLExternal,
+  IdSASLDigest,
+  IdSASLAnonymous,
+  IdExplicitTLSClientServerBase,
+  IdSSLOpenSSL,
+  IdLogFile;
 
 type
   TProtocolIMAP4 = class(TProtocol)
   private
+    Msg : TIdMessage;
+
+    mSSL : TIdSSLIOHandlerSocketOpenSSL;
+    mSSLDisabled : boolean;// = false;
+
+    mIdUserPassProvider: TIdUserPassProvider;
+    mIdSASLCRAMMD5: TIdSASLCRAMMD5;
+    mIdSASLCRAMSHA1: TIdSASLCRAMSHA1;
+    mIdSASLPlain: TIdSASLPlain;
+    mIdSASLLogin: TIdSASLLogin;
+    mIdSASLSKey: TIdSASLSKey;
+    mIdSASLOTP: TIdSASLOTP;
+    mIdSASLAnonymous: TIdSASLAnonymous;
+    mIdSASLExternal: TIdSASLExternal;
+
+    mLastErrorMsg : string;
+    mHasErrorToReport : boolean;
+    DebugLogger : TIdLogFile;
+
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
 
@@ -42,7 +75,7 @@ type
     IMAP : TIdIMAP4;
     constructor Create;
     // protocol
-    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); override;
+    procedure Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer); override;
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
     function Connected : boolean; override;
@@ -85,43 +118,12 @@ uses
     Log4D,   //TEMPORARY
     Math,
 
-  IdLogBase, IdLogFile, IdIntercept, uIniSettings,
-  IdSASL_CRAM_MD5,
-  IdSASLLogin,
-  IdSASL_CRAM_SHA1,
-  IdUserPassProvider,
-  IdSASLUserPass,
-  IdSASLPlain,
-  IdSASLSKey,
-  IdSASLOTP,
-  IdSASLExternal,
-  IdSASLDigest,
-  IdSASLAnonymous,
-  IdExplicitTLSClientServerBase,
-  IdSSLOpenSSL;
+  IdLogBase, IdIntercept, uIniSettings;
 
 const
   debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-var
-    Msg : TIdMessage;
 
-    mSSL : TIdSSLIOHandlerSocketOpenSSL;
-    mSSLDisabled : boolean = false;
-
-    mIdUserPassProvider: TIdUserPassProvider;
-    mIdSASLCRAMMD5: TIdSASLCRAMMD5;
-    mIdSASLCRAMSHA1: TIdSASLCRAMSHA1;
-    mIdSASLPlain: TIdSASLPlain;
-    mIdSASLLogin: TIdSASLLogin;
-    mIdSASLSKey: TIdSASLSKey;
-    mIdSASLOTP: TIdSASLOTP;
-    mIdSASLAnonymous: TIdSASLAnonymous;
-    mIdSASLExternal: TIdSASLExternal;
-
-    mLastErrorMsg : string;
-    mHasErrorToReport : boolean;
-    DebugLogger : TIdLogFile;
 
 
 //------------------------------------------------------------------ helpers ---
@@ -255,7 +257,7 @@ begin
 end;
 
 
-procedure TProtocolIMAP4.Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer);
+procedure TProtocolIMAP4.Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer);
 begin
   IMAP.Host := Server;
   IMAP.Port := Port;

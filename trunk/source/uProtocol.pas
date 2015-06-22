@@ -17,7 +17,7 @@ type
     Name : string;
     ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
-    procedure Connect(Server : PChar; Port : integer; Protocol,UserName,Password : PChar; TimeOut : integer); virtual; abstract;
+    procedure Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer); virtual; abstract;
     procedure Disconnect; virtual; abstract;
     procedure DisconnectWithQuit; virtual; abstract;
     function Connected : boolean;  virtual; abstract;

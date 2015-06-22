@@ -120,6 +120,7 @@ type
     btnToTray: TPngBitBtn;
     imgTray: TImage;
     actSelectAll: TAction;
+    actReplyAll: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -221,6 +222,7 @@ type
     procedure actSelectAllExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure actReplyAllExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -368,7 +370,7 @@ type
   TProtocolType = record
     Name : string;
     Port : integer;
-    Prot : TProtocol;
+//    Prot : TProtocol;
   end;
 
 var
@@ -1048,6 +1050,7 @@ begin
       Screen.Cursor := crHourGlass;
 
       // connect account
+      account.Prot.SetOnWork(frmPopUMain.OnPreviewDownloadProgressChange);
       account.ConnectIfNeeded();                                             //INDY
 
       // delete any mail marked for deletion
@@ -1284,21 +1287,24 @@ end;
 procedure TfrmPopUMain.SendMail(const ToAddress, Subject, Body: string);
 ////////////////////////////////////////////////////////////////////////////////
 // Send EMAIL using either MAPI or "mailto:"
+// Note: HexEncodeSpecialChars is used to convert invalid chars to hex values
 var
-  email,subj,mailbody : string;
+  email,subj,mailbody, ccparsed : string;
   mailto : string;
 begin
   // local vars work, params not
   email := ToAddress;
+  //if (cc <> '') then
+  //begin
+  //  ccparsed := 'cc=' + HexEncodeSpecialChars(cc,false) + '&'; //Do not translate
+  //end;
   subj := Subject;
   mailbody := Body;
   if Options.UseMAPI then
-  begin
-    // MAPI
-    MAPISendMessage(Application.Handle,email,subj,mailbody);
+  begin //MAPI
+    MAPISendMessage(Application.Handle,email,subj,mailbody);  //TODO CC support
   end
-  else begin
-    // mailto
+  else begin //mailto
     if mailbody <> '' then
     begin
       // convert invalid chars to the hex values
@@ -1306,7 +1312,7 @@ begin
       subj := HexEncodeSpecialChars(subj,false);
       mailbody := HexEncodeSpecialChars(mailbody,true);
 
-      mailto := 'mailto:'+email+'?subject='+subj+'&body=';
+      mailto := 'mailto:'+email+'?'+ccparsed+'subject='+subj+'&body=';  //do not translate
       // limit mailto link to 2023 chars (Outlook and Outlook Express limit)
       mailbody := Copy(mailbody,1,2023-length(mailto));                         // mod BG: 12.09.2002
       ClearImpairedCode(mailbody);                                       		    // add BG: 12.09.2002
@@ -1317,10 +1323,12 @@ begin
       if subj <> '' then
       begin
         subj := HexEncodeSpecialChars(subj,false);
-        ExecuteFile('mailto:'+email+'?subject='+subj,'','',SW_RESTORE)
+        ExecuteFile('mailto:'+email+'?'+ccparsed+'subject='+subj,'','',SW_RESTORE)  //do not translate
       end
       else
-        ExecuteFile('mailto:'+email,'','',SW_RESTORE)
+        if (ccparsed <> '') then
+          ccparsed := '?' + ccparsed;
+        ExecuteFile('mailto:'+email,'','',SW_RESTORE)  //do not translate
     end;
   end;
 end;
@@ -1626,7 +1634,7 @@ begin
   UpdateFonts();
 
   // load plugins list into array and combo
-  AccountsForm.RefreshProtocols();
+  //AccountsForm.RefreshProtocols();
 
   // Set whether viewed messages are hidden or not
   actHideViewed.Checked := Options.HideViewed;
@@ -3722,11 +3730,11 @@ begin
   SetLength(Protocols,2);
   Protocols[0].Name := 'POP3';
   Protocols[0].Port := 110;
-  Protocols[0].Prot := TProtocolPOP3.Create;
+  //Protocols[0].Prot := TProtocolPOP3.Create;
 
   Protocols[1].Name := 'IMAP4';
   Protocols[1].Port := 143;
-  Protocols[1].Prot := TProtocolIMAP4.Create;
+  //Protocols[1].Prot := TProtocolIMAP4.Create;
 
   // Load toolbar customizations
   if FileExists(ToolbarName) then
@@ -3872,8 +3880,8 @@ begin
       Plugins[i].Free;
   end;
 
-  Protocols[0].Prot.Free;
-  Protocols[1].Prot.Free;
+  //Protocols[0].Prot.Free;
+  //Protocols[1].Prot.Free;
 
   RulesManager.Free;
 
@@ -4361,6 +4369,31 @@ begin
   QuickHelp(Sender, Button, Shift, X, Y);
 end;
 
+procedure TfrmPopUMain.actReplyAllExecute(Sender: TObject);
+////////////////////////////////////////////////////////////////////////////////
+// Reply to message using default mail client
+var
+  email,subject : string;
+  MailItem : TMailItem;
+begin
+  if (SelectedMailItem = nil) then begin
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0);
+    exit;
+  end;
+
+  MailItem := SelectedMailItem;
+  // get headers
+  if MailItem.ReplyTo <> '' then
+    email := MailItem.ReplyTo
+  else
+    email := MailItem.Address;
+  subject := MailItem.Subject;
+  if (Uppercase(Copy(subject,1,3)) <> 'RE:') and (Uppercase(Copy(subject,1,3)) <> 'RE[') then
+    subject := 'Re: '+subject;
+  // send mail
+  SendMail(email,subject,'');
+end;
+
 procedure TfrmPopUMain.actReplyExecute(Sender: TObject);
 ////////////////////////////////////////////////////////////////////////////////
 // Reply to message using default mail client
@@ -4747,7 +4780,7 @@ begin
       // save
       for num := 1 to Accounts.Count do
         SaveAccountINI(num);
-
+      frmPopUMain.tabMail.Refresh;
     finally
       Screen.Cursor := crDefault;
     end;
