@@ -427,7 +427,6 @@ end;
 -------------------------------------------------------------------------------}
 procedure TAccount.LoadAccountFromINI(Ini : TIniFile; section: string);
 begin
-  try
     self.Name := Ini.ReadString(Section,'Name','NoName');
     self.Server := Ini.ReadString(Section,'Server','');
     self.Port := Ini.ReadInteger(Section,'Port',110);
@@ -459,19 +458,7 @@ begin
     self.ViewedMsgIDs := TStringList.Create;
     self.Mail := TMailItems.Create;
     //uIniSettinngs.LoadViewedMessageIDs(num);
-    //Result := Ini.ReadString(Section,'Name','accnoname') <> 'accnoname';
-    //// backwards compatible port
-    //PortStr := StrAfter(Accounts[num-1].Server,':');
-    //if PortStr <> '' then
-    //begin
-    //  Accounts[num-1].Server := StrBefore(Accounts[num-1].Server,':');
-    //  Accounts[num-1].Port := StrToIntDef(PortStr,110);
-    //end;
-    // protocol
     self.SetProtocol();
-  finally
-     Ini.Free;
-  end;
 end;
 
 // Assigns an instance of the Protocol (IMAP or POP) to the account.

@@ -571,47 +571,16 @@ begin
   Ini := TIniFile.Create(IniName);
   try
     section := 'Account'+IntToStr(num);
-    Accounts[num-1].Name := Ini.ReadString(Section,'Name','NoName');
-    Accounts[num-1].Server := Ini.ReadString(Section,'Server','');
-    Accounts[num-1].Port := Ini.ReadInteger(Section,'Port',110);
-    Accounts[num-1].Protocol := Ini.ReadString(Section,'Protocol','POP3');
-    Accounts[num-1].UseSSLorTLS := Ini.ReadBool(Section,'UseSSLorTLS',FALSE);
-    Accounts[num-1].AuthType := TAuthType(Ini.ReadInteger(Section,'AuthType',0));
-    Accounts[num-1].SslVersion := TsslVer(Ini.ReadInteger(Section,'SslVer',0));
-    Accounts[num-1].StartTLS := Ini.ReadBool(Section,'StartTLS',false);
-    Accounts[num-1].Login := Ini.ReadString(Section,'Login','');
-    Accounts[num-1].MailProgram := Ini.ReadString(Section,'MailProgram','');
-    Accounts[num-1].Password := Decrypt(Ini.ReadString(Section,'Password',''));
-    Accounts[num-1].Sound := Ini.ReadString(Section,'Sound','');
-    Accounts[num-1].Color := Ini.ReadString(Section,'Color','');
-    Accounts[num-1].Enabled := Ini.ReadBool(Section,'Enabled',True);
-    Accounts[num-1].Interval := Ini.ReadFloat(Section,'Interval',5);
-    Accounts[num-1].DontCheckTimes := Ini.ReadBool(Section,'DontCheckTimes',FALSE);
-    try
-      Accounts[num-1].DontCheckStart := Ini.ReadTime(Section,'DontCheckStart',StrToTime('20'+FormatSettings.TimeSeparator+'00'));
-    Except on e: EConvertError do begin
-      ShowMessage(e.ToString);
-      end;
-    end;
-    try
-      Accounts[num-1].DontCheckEnd := Ini.ReadTime(Section,'DontCheckEnd',StrToTime('08'+FormatSettings.TimeSeparator+'00'));
-    Except on e: EConvertError do begin
-      ShowMessage(e.ToString);
-      end;
-    end;
-    Accounts[num-1].ViewedMsgIDs := TStringList.Create;
-    Accounts[num-1].Mail := TMailItems.Create;
+    Accounts[num-1].LoadAccountFromINI(Ini, section);
     LoadViewedMessageIDs(num);
-    Result := Ini.ReadString(Section,'Name','accnoname') <> 'accnoname';
-    // backwards compatible port
-    PortStr := StrAfter(Accounts[num-1].Server,':');
-    if PortStr <> '' then
-    begin
-      Accounts[num-1].Server := StrBefore(Accounts[num-1].Server,':');
-      Accounts[num-1].Port := StrToIntDef(PortStr,110);
-    end;
-    // protocol
-    Accounts[num-1].SetProtocol();
+    //    Result := Ini.ReadString(Section,'Name','accnoname') <> 'accnoname';
+    //    // backwards compatible port
+    //    PortStr := StrAfter(Accounts[num-1].Server,':');
+    //    if PortStr <> '' then
+    //    begin
+    //      Accounts[num-1].Server := StrBefore(Accounts[num-1].Server,':');
+    //      Accounts[num-1].Port := StrToIntDef(PortStr,110);
+    //    end;
   finally
      Ini.Free;
   end;
