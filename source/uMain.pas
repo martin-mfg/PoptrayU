@@ -1126,7 +1126,7 @@ begin
         ResetToolbar;
 
         // Disconnect account
-        ///////if NOT account.IsImap then   // 4-2-2015 - because there's only one instance of Prot for each protocol, this causes all accounts to use whatever account is already connected. needs the variable replicated to make this work.
+        if NOT account.IsImap then
           if account.Prot.Connected then
             account.Prot.DisconnectWithQuit;
 
