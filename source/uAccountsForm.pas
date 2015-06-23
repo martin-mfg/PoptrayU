@@ -76,6 +76,19 @@ type
     lblStartls: TLabel;
     lblEnableAccount: TLabel;
     lblTest: TLabel;
+    catImap: TCategoryPanel;
+    chkGmailExt: TCheckBox;
+    chkMoveSpam: TCheckBox;
+    lblSpamFolder: TLabel;
+    edSpamFolder: TEdit;
+    chkMoveTrash: TCheckBox;
+    edTrashFolder: TEdit;
+    lblTrashFolder: TLabel;
+    btnSpamFolder: TSpeedButton;
+    btnTrashFolder: TSpeedButton;
+    lblArchiveFolder: TLabel;
+    edArchiveFolder: TEdit;
+    btnArchiveFolder: TSpeedButton;
     procedure btnNeverAccountClick(Sender: TObject);
     procedure cmbProtocolChange(Sender: TObject);
     procedure chkSSLClick(Sender: TObject);
@@ -126,6 +139,7 @@ type
 
     procedure WMDropFiles(var msg: TWMDROPFILES); message WM_DROPFILES;
     function GetAccountForTab(tabNumber : integer) : TAccount;
+    procedure showHideImapOptions;
   public
     { Public declarations }
     procedure RefreshProtocols();
@@ -202,6 +216,12 @@ begin
   account.DontCheckEnd := dtEnd.Time;
   account.Error := False;
   account.UIDLSupported := True;
+  account.UseGmailExtensions := chkGmailExt.Checked;
+  account.MoveSpamOnDelete := chkMoveSpam.Checked;
+  account.MoveTrashOnDelete := chkMoveTrash.Checked;
+  account.SpamFolderName := edSpamFolder.Text;
+  account.TrashFolderName := edTrashFolder.Text;
+  account.ArchiveFolderName := edArchiveFolder.Text;
   // objects
   if not Assigned(account.ViewedMsgIDs) then
     account.ViewedMsgIDs := TStringList.Create;
@@ -332,6 +352,15 @@ begin
     EnableControl(edPort,true);
     EnableControl(edServer,true);
   end;
+
+  edSpamFolder.Text := account.SpamFolderName;
+  edTrashFolder.Text := account.TrashFolderName;
+  edArchiveFolder.Text := account.ArchiveFolderName;
+  chkMoveSpam.Checked := account.MoveSpamOnDelete;
+  chkMoveTrash.Checked := account.MoveTrashOnDelete;
+  chkGmailExt.Checked := account.UseGmailExtensions;
+  ShowHideImapOptions();
+
   // buttons
   FAccChanged := False;
   btnSave.Enabled := False;
@@ -351,6 +380,13 @@ begin
 
 end;
 
+procedure TAccountsForm.ShowHideImapOptions;
+begin
+  if (cmbProtocol.ItemIndex = 1 ) then   //0 = POP3, 1 = IMAP in dropdown
+    catImap.Visible := true
+  else
+    catImap.Visible := false;
+end;
 
 function TAccountsForm.AccountChanged(tab: integer): boolean;
 ////////////////////////////////////////////////////////////////////////////////
@@ -549,6 +585,8 @@ begin
   // To make sure the port number reflects whether "Use SSL" is checked or not
   // (needs to be after the Protocols[i].Port calls above)
   setPortOnAccountTab();
+
+  showHideImapOptions();
 
   // buttons
   FAccChanged := AccountChanged(tabAccounts.TabIndex);
@@ -1071,8 +1109,39 @@ begin
   lblEnableAccount.Top := lblName.Top;
   lblEnableAccount.Left := catAccName.Width - lblEnableAccount.Width - 26;//chkAccEnabled.Left - lblEnableAccount.Width - 4; //this shouldn't even be needed
 
+  // ------
+  catImap.Realign;
 
+  chkMoveSpam.Height := lblSpamFolder.Height;
+  chkMoveTrash.Height := lblSpamFolder.Height;
+  chkGmailExt.Height := lblSpamFolder.Height;
 
+  chkMoveSpam.Top := calcPosBelow(chkGmailExt);
+  edSpamFolder.Top := calcPosBelow(chkMoveSpam);
+  lblSpamFolder.Top := edSpamFolder.Top+3;
+  btnSpamFolder.Top := edSpamFolder.Top;
+  chkMoveTrash.Top := calcPosBelow(edSpamFolder);
+  edTrashFolder.Top := calcPosBelow(chkMoveTrash);
+  lblTrashFolder.Top := edTrashFolder.Top + 3;
+  btnTrashFolder.Top := edTrashFolder.Top;
+  edArchiveFolder.Top := calcPosBelow(edTrashFolder);
+  lblArchiveFolder.Top := edArchiveFolder.Top + 3;
+  btnArchiveFolder.Top := edArchiveFolder.Top;
+
+  catImap.ClientHeight := lblArchiveFolder.Top + lblArchiveFolder.Height + 4;
+
+  edSpamFolder.Left := CalcPosToRightOf(lblSpamFolder);
+  edTrashFolder.Left := CalcPosToRightOf(lblTrashFolder);
+  edArchiveFolder.Left := CalcPosToRightOf(lblArchiveFolder);
+  btnSpamFolder.Left := CalcPosToRightOf(edSpamFolder);
+  btnTrashFolder.Left := CalcPosToRightOf(edTrashFolder);
+  btnArchiveFolder.Left := CalcPosToRightOf(edArchiveFolder);
+
+  btnTrashFolder.Height := edTrashFolder.Height;
+  btnSpamFolder.Height := edSpamFolder.Height;
+  btnArchiveFolder.Height := edArchiveFolder.Height;
+
+  // basic account settings panel
   catPopTrayAccountPrefs.Realign;
   catBasicAccount.Realign;
 

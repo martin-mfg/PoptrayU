@@ -2,8 +2,8 @@ object AccountsForm: TAccountsForm
   Left = 0
   Top = 0
   Caption = 'Email Accounts'
-  ClientHeight = 548
-  ClientWidth = 518
+  ClientHeight = 546
+  ClientWidth = 542
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object AccountsForm: TAccountsForm
   object panAccounts: TPanel
     Left = 0
     Top = 0
-    Width = 518
-    Height = 548
+    Width = 542
+    Height = 546
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 4
@@ -30,8 +30,8 @@ object AccountsForm: TAccountsForm
     object tabAccounts: TTabControl
       Left = 4
       Top = 38
-      Width = 510
-      Height = 477
+      Width = 534
+      Height = 475
       Margins.Left = 12
       Margins.Top = 12
       Margins.Right = 12
@@ -48,8 +48,8 @@ object AccountsForm: TAccountsForm
       object ScrollBox2: TScrollBox
         Left = 4
         Top = 6
-        Width = 502
-        Height = 467
+        Width = 526
+        Height = 465
         Align = alClient
         BevelEdges = []
         BevelInner = bvNone
@@ -64,8 +64,8 @@ object AccountsForm: TAccountsForm
         object panelGrp1: TCategoryPanelGroup
           Left = 0
           Top = 0
-          Width = 502
-          Height = 467
+          Width = 526
+          Height = 465
           VertScrollBar.Tracking = True
           Align = alClient
           BevelInner = bvNone
@@ -82,14 +82,14 @@ object AccountsForm: TAccountsForm
           HeaderFont.Style = [fsBold]
           TabOrder = 0
           object catPopTrayAccountPrefs: TCategoryPanel
-            Top = 246
-            Height = 163
+            Top = 427
+            Height = 100
             Caption = 'PopTrayU Account Preferences'
             Color = clWindow
             TabOrder = 0
             StyleElements = [seFont, seClient]
             object btnAccountProgramTest: TSpeedButton
-              Left = 422
+              Left = 412
               Top = 9
               Width = 72
               Height = 23
@@ -102,7 +102,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnAccountSoundTest: TSpeedButton
-              Left = 422
+              Left = 412
               Top = 38
               Width = 72
               Height = 23
@@ -124,7 +124,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnEdAccountProgram: TSpeedButton
-              Left = 395
+              Left = 385
               Top = 9
               Width = 21
               Height = 23
@@ -139,7 +139,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 437
             end
             object btnEdSound: TSpeedButton
-              Left = 395
+              Left = 385
               Top = 38
               Width = 21
               Height = 23
@@ -172,7 +172,7 @@ object AccountsForm: TAccountsForm
             object edAccountProgram: TEdit
               Left = 89
               Top = 9
-              Width = 300
+              Width = 290
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -188,7 +188,7 @@ object AccountsForm: TAccountsForm
             object edSound: TEdit
               Left = 89
               Top = 40
-              Width = 300
+              Width = 290
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -204,7 +204,7 @@ object AccountsForm: TAccountsForm
             object panNoCheckHours: TPanel
               Left = 8
               Top = 103
-              Width = 488
+              Width = 478
               Height = 25
               Anchors = [akLeft, akTop, akRight]
               BevelOuter = bvNone
@@ -314,12 +314,118 @@ object AccountsForm: TAccountsForm
               end
             end
           end
+          object catImap: TCategoryPanel
+            Top = 246
+            Height = 181
+            Caption = 'IMAP Account Options'
+            Color = clWindow
+            TabOrder = 1
+            object lblSpamFolder: TLabel
+              Left = 29
+              Top = 54
+              Width = 63
+              Height = 13
+              Caption = 'Spam Folder:'
+            end
+            object lblTrashFolder: TLabel
+              Left = 28
+              Top = 101
+              Width = 64
+              Height = 13
+              Caption = 'Trash Folder:'
+            end
+            object btnSpamFolder: TSpeedButton
+              Left = 225
+              Top = 54
+              Width = 23
+              Height = 22
+              Caption = '...'
+            end
+            object btnTrashFolder: TSpeedButton
+              Left = 225
+              Top = 100
+              Width = 23
+              Height = 22
+              Caption = '...'
+            end
+            object lblArchiveFolder: TLabel
+              Left = 8
+              Top = 137
+              Width = 73
+              Height = 13
+              Caption = 'Archive Folder:'
+            end
+            object btnArchiveFolder: TSpeedButton
+              Left = 214
+              Top = 128
+              Width = 23
+              Height = 22
+              Caption = '...'
+            end
+            object chkGmailExt: TCheckBox
+              Left = 8
+              Top = 8
+              Width = 492
+              Height = 17
+              Anchors = [akLeft, akTop, akRight]
+              Caption = 'Use Gmail IMAP Extensions'
+              TabOrder = 0
+              OnClick = edAccChange
+            end
+            object chkMoveSpam: TCheckBox
+              Left = 8
+              Top = 31
+              Width = 491
+              Height = 17
+              Anchors = [akLeft, akTop, akRight]
+              Caption = 'Use Server Spam Folder (when Deleting Spam)'
+              TabOrder = 1
+              OnClick = edAccChange
+            end
+            object edSpamFolder: TEdit
+              Left = 98
+              Top = 54
+              Width = 121
+              Height = 21
+              TabOrder = 2
+              Text = '[Gmail]/Spam'
+              OnClick = edAccChange
+            end
+            object chkMoveTrash: TCheckBox
+              Left = 8
+              Top = 78
+              Width = 491
+              Height = 17
+              Anchors = [akLeft, akTop, akRight]
+              Caption = 'Use Server Trash Folder'
+              TabOrder = 3
+              OnClick = edAccChange
+            end
+            object edTrashFolder: TEdit
+              Left = 87
+              Top = 128
+              Width = 121
+              Height = 21
+              TabOrder = 4
+              Text = '[Gmail]/Trash'
+              OnClick = edAccChange
+            end
+            object edArchiveFolder: TEdit
+              Left = 98
+              Top = 101
+              Width = 121
+              Height = 21
+              TabOrder = 5
+              Text = '[Gmail]/All Mail'
+              OnClick = edAccChange
+            end
+          end
           object catAdvAcc: TCategoryPanel
             Top = 170
             Height = 76
             Caption = 'Advanced Connection Settings'
             Color = clWindow
-            TabOrder = 1
+            TabOrder = 2
             StyleElements = [seFont, seClient]
             object lblAuthMode: TLabel
               AlignWithMargins = True
@@ -397,7 +503,7 @@ object AccountsForm: TAccountsForm
             Height = 113
             Caption = 'Connection Settings'
             Color = clWindow
-            TabOrder = 2
+            TabOrder = 3
             StyleElements = [seFont, seClient]
             object lblServer: TLabel
               AlignWithMargins = True
@@ -431,7 +537,7 @@ object AccountsForm: TAccountsForm
             end
             object lblProt: TLabel
               AlignWithMargins = True
-              Left = 333
+              Left = 323
               Top = 9
               Width = 43
               Height = 13
@@ -443,7 +549,7 @@ object AccountsForm: TAccountsForm
             end
             object lblPort: TLabel
               AlignWithMargins = True
-              Left = 352
+              Left = 342
               Top = 63
               Width = 24
               Height = 13
@@ -455,7 +561,7 @@ object AccountsForm: TAccountsForm
             end
             object lblUseSsl: TLabel
               AlignWithMargins = True
-              Left = 313
+              Left = 303
               Top = 36
               Width = 63
               Height = 13
@@ -468,7 +574,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 6
-              Width = 182
+              Width = 172
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -480,7 +586,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 33
-              Width = 182
+              Width = 172
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -492,7 +598,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 60
-              Width = 182
+              Width = 172
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -503,7 +609,7 @@ object AccountsForm: TAccountsForm
             end
             object chkSSL: TCheckBox
               AlignWithMargins = True
-              Left = 382
+              Left = 372
               Top = 32
               Width = 110
               Height = 22
@@ -513,7 +619,7 @@ object AccountsForm: TAccountsForm
             end
             object edPort: TEdit
               AlignWithMargins = True
-              Left = 382
+              Left = 372
               Top = 60
               Width = 63
               Height = 21
@@ -524,7 +630,7 @@ object AccountsForm: TAccountsForm
               OnClick = edAccChange
             end
             object cmbProtocol: TComboBox
-              Left = 382
+              Left = 372
               Top = 5
               Width = 110
               Height = 21
@@ -545,7 +651,7 @@ object AccountsForm: TAccountsForm
             Height = 57
             Caption = 'Display Options'
             Color = clWindow
-            TabOrder = 3
+            TabOrder = 4
             StyleElements = [seFont, seClient]
             object lblName: TLabel
               Left = 8
@@ -566,7 +672,7 @@ object AccountsForm: TAccountsForm
               FocusControl = colAccount
             end
             object lblEnableAccount: TLabel
-              Left = 432
+              Left = 422
               Top = 3
               Width = 42
               Height = 13
@@ -574,9 +680,10 @@ object AccountsForm: TAccountsForm
               Anchors = [akTop, akRight]
               Caption = 'Enabled:'
               Layout = tlCenter
+              ExplicitLeft = 432
             end
             object chkAccEnabled: TCheckBox
-              Left = 474
+              Left = 464
               Top = 2
               Width = 18
               Height = 24
@@ -613,18 +720,18 @@ object AccountsForm: TAccountsForm
     end
     object panAccountsButtons: TPanel
       Left = 4
-      Top = 515
-      Width = 510
+      Top = 513
+      Width = 534
       Height = 29
       Align = alBottom
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
       DesignSize = (
-        510
+        534
         29)
       object btnSave: TBitBtn
-        Left = 290
+        Left = 314
         Top = 4
         Width = 120
         Height = 25
@@ -688,7 +795,7 @@ object AccountsForm: TAccountsForm
         OnClick = btnSaveAccountClick
       end
       object btnCancelAccount: TBitBtn
-        Left = 417
+        Left = 441
         Top = 4
         Width = 90
         Height = 25
@@ -791,7 +898,7 @@ object AccountsForm: TAccountsForm
     object AccountsToolbar: TActionToolBar
       Left = 4
       Top = 4
-      Width = 510
+      Width = 534
       Height = 34
       ActionManager = AccountsActionManager
       Caption = 'Accounts'

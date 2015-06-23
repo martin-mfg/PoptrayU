@@ -1895,6 +1895,7 @@ function TfrmPopUMain.DeleteMails(account : TAccount; var DelCount : integer) : 
 var
   i : integer;
   uidList : TStringList;
+  spamList : TStringList;
   {$IFDEF LOG4D}
   Logger: TLogLogger;
   {$ENDIF LOG4D}
@@ -1920,18 +1921,35 @@ begin
         // you can delete them by UID directly without checking MsgNum->UID
 
         uidList := TStringList.Create;
+        spamList := TStringList.Create;
 
         for i := 0 to account.Mail.Count-1 do
         begin
           if account.Mail[i].ToDelete then
           begin
-            uidList.Add(account.Mail[i].UID);
+            if (account.MoveSpamOnDelete) and account.Mail[i].Spam then
+              spamList.Add(account.Mail[i].UID)
+            else
+              uidList.Add(account.Mail[i].UID);
             Inc(DelCount);
           end;
         end;
-        (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
+        if (spamList.Count > 0) then
+          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
+
+        if (account.MoveTrashOnDelete) then begin
+          // move to server trash folder
+          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
+        end else begin
+          // delete permanantly
+          (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
+          if (account.ExpungeDeletedMessages) then
+            (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
+        end;
+
+
         uidList.Free;
-        (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
+        spamList.Free;
       end
       else begin // POP3 or "custom" protocol plugin
         for i := 0 to account.Mail.Count-1 do
@@ -3462,13 +3480,13 @@ begin
           account.Mail[i].ToDelete := True;
         end;
       end;
-      // recheck and delete
-      if not Options.DeleteNextCheck then
-      begin
-        if CheckMail(account,False,False) < 0 then
-          lvMail.Clear;
-        CallNotifyPlugins;
-      end;
+    end;
+    // recheck and delete
+    if not Options.DeleteNextCheck then
+    begin
+      if CheckMail(account,False,False) < 0 then
+        lvMail.Clear;
+      CallNotifyPlugins;
     end;
   end;
 end;
