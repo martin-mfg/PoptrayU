@@ -101,6 +101,7 @@ type
     destructor Destroy; override;
     procedure Expunge;
     function DeleteMsgsByUID(const uidList: array of String): boolean;
+    function MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
     function GetUnseenUids(): TIntArray;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
     function UIDRetrievePeekEnvelope(const UID: String; var outMsg: TIdMessage) : boolean;
@@ -541,6 +542,31 @@ end;
 function TProtocolIMAP4.DeleteMsgsByUID(const uidList: array of String): boolean;
 begin
   Result := IMAP.UIDDeleteMsgs(uidList);
+end;
+
+// moves messages to the SPAM or other folder.
+// does not expunge.
+function TProtocolIMAP4.MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
+begin
+  if (uidList = nil) or (uidList.Count < 1) then exit;
+  if (pos(' ',destFolder)<>-1) and (pos('"',destFolder)<>0) then
+    destFolder := '"'+destFolder + '"';
+
+  if IMAP.Capabilities.IndexOf('MOVE')<>-1 then begin
+    //server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
+    IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder);
+    Result := IMAP.LastCmdResult.Code = '+OK';
+  end else begin
+    // server does not support MOVE so COPY and then DELETE original and then EXPUNGE the original
+    Result := IMAP.UIDCopyMsgs(uidList, destFolder);
+    IMAP.UIDDeleteMsgs(uidList.ToStringArray);
+
+    // EXPUNGE deleted messages only if CAPA indicates UIDPLUS https://tools.ietf.org/html/rfc4315
+    if IMAP.Capabilities.IndexOf('UIDPLUS')<>-1 then begin
+      IMAP.SendCmd('UID EXPUNGE '+uidList.commaText);
+    end;
+  end;
+
 end;
 
 procedure TProtocolIMAP4.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);

@@ -71,6 +71,15 @@ type
     SslVersion : TsslVer;
     StartTLS : boolean;
     LastMsgCount : integer;
+
+    //imap options
+    MoveSpamOnDelete : boolean;
+    SpamFolderName : string;
+    MoveTrashOnDelete : boolean;
+    TrashFolderName : string;
+    ExpungeDeletedMessages : boolean;
+    ArchiveFolderName : string;
+    UseGmailExtensions : boolean;
   private
     FAccountIndex : Integer; //zero based
     FAccountNum : Integer; //one based
@@ -153,6 +162,11 @@ begin
   FAccountNum := 0;    //not set
   FAccountIndex := -1; //not set
   LastMsgCount := 0;
+  ExpungeDeletedMessages := true;
+  MoveSpamOnDelete := true; //DEBUG
+  SpamFolderName := '[Gmail]/Spam';
+  MoveTrashOnDelete := True;
+  TrashFolderName := '[Gmail]/Trash';
 end;
 
 procedure TAccount.ConnectIfNeeded();
@@ -419,13 +433,19 @@ begin
     Ini.WriteFloat(Section,'Interval',self.Interval);
     Ini.WriteBool(Section,'DontCheckTimes',self.DontCheckTimes);
     Ini.WriteTime(Section,'DontCheckStart',self.DontCheckStart);
-    Ini.WriteTime(Section,'DontCheckEnd',self.DontCheckEnd);
+    Ini.WriteTime(Section,'DontCheckEnd', self.DontCheckEnd);
+    Ini.WriteBool(Section, 'MoveSpamOnDelete', self.MoveSpamOnDelete);
+    Ini.WriteBool(Section, 'MoveTrashOnDelete', self.MoveTrashOnDelete);
+    Ini.WriteString(Section,'SpamFolderName', self.SpamFolderName);
+    Ini.WriteString(Section, 'TrashFolderName', self.TrashFolderName);
+    Ini.WriteString(Section, 'ArchiveFolderName',self.ArchiveFolderName);
+    Ini.WriteBool(Section,'UseGmailExtensions',self.UseGmailExtensions);
 end;
 
 {*------------------------------------------------------------------------------
   Loads a single account from the ini file
 -------------------------------------------------------------------------------}
-procedure TAccount.LoadAccountFromINI(Ini : TIniFile; section: string);
+procedure TAccount.LoadAccountFromINI(Ini : TIniFile; Section: string);
 begin
     self.Name := Ini.ReadString(Section,'Name','NoName');
     self.Server := Ini.ReadString(Section,'Server','');
@@ -455,9 +475,17 @@ begin
       ShowMessage(e.ToString);
       end;
     end;
+    self.MoveSpamOnDelete := Ini.ReadBool(Section, 'MoveSpamOnDelete', false);
+    self.MoveTrashOnDelete := Ini.ReadBool(Section, 'MoveTrashOnDelete', false);
+    self.SpamFolderName := Ini.ReadString(Section, 'SpamFolderName','[Gmail]/Spam');
+    self.TrashFolderName := Ini.ReadString(Section, 'TrashFolderName','[Gmail]/Trash');
+    self.ArchiveFolderName := Ini.ReadString(Section, 'ArchiveFolderName','[Gmail]/All Mail');
+    self.UseGmailExtensions := Ini.ReadBool(Section, 'UseGmailExtensions',false);
+
     self.ViewedMsgIDs := TStringList.Create;
     self.Mail := TMailItems.Create;
     //uIniSettinngs.LoadViewedMessageIDs(num);
+
     self.SetProtocol();
 end;
 
