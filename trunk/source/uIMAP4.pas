@@ -66,10 +66,10 @@ type
     mLastErrorMsg : string;
     mHasErrorToReport : boolean;
     DebugLogger : TIdLogFile;
-
+    capabilities : TStringList;
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
-
+    function HasCapa(capability: string) : boolean;
   public
     // general
     IMAP : TIdIMAP4;
@@ -100,7 +100,7 @@ type
       const startTLS : boolean = false); override;
     destructor Destroy; override;
     procedure Expunge;
-    function DeleteMsgsByUID(const uidList: array of String): boolean;
+    function DeleteMsgsByUID(const uidList: TStrings; expunge : boolean = true): boolean;
     function MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
     function GetUnseenUids(): TIntArray;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
@@ -111,15 +111,18 @@ type
     function UIDCheckMsgSeen(const UID: String) : boolean;
     function GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet) : Boolean;
     function SetImportantFlag(const uid : string; isImportant : boolean): boolean;
+    function AddGmailLabelToMsgs(const uidList: TStrings; labelname : string): boolean;
+    function RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
   end;
 
+  function AddQuotesIfNeeded(input: string) : string;
 
 implementation
 uses
     Log4D,   //TEMPORARY
     Math,
 
-  IdLogBase, IdIntercept, uIniSettings;
+  IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
 
 const
   debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -156,7 +159,7 @@ begin
   Msg.OnCreateAttachment := IdMessage1CreateAttachment;
   Msg.NoEncode := True;
   Msg.NoDecode := True;
-
+  capabilities := TStringList.Create;
 
   IMAP.OnWork := IMAPWork;
   IMAP.MilliSecsToWaitToClearBuffer := 10;
@@ -164,7 +167,7 @@ begin
   if (debugImap) then
   begin
     DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'.log';
+    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(Random(9999))+'.log';
     DebugLogger.Active:= True;
     IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
   end;
@@ -255,6 +258,7 @@ begin
 
   IMAP.Free;
   Msg.Free;
+  capabilities.Free;
 end;
 
 
@@ -539,35 +543,39 @@ begin
   else Result := -1;
 end;
 
-function TProtocolIMAP4.DeleteMsgsByUID(const uidList: array of String): boolean;
+function TProtocolIMAP4.DeleteMsgsByUID(const uidList: TStrings; expunge : boolean): boolean;
 begin
-  Result := IMAP.UIDDeleteMsgs(uidList);
+  Result := IMAP.UIDDeleteMsgs(uidList.ToStringArray);
+
+  if (expunge) then
+    if HasCapa('UIDPLUS') then
+      IMAP.SendCmd('UID EXPUNGE '+uidList.commaText)
+    else
+      IMAP.ExpungeMailBox();
 end;
 
 // moves messages to the SPAM or other folder.
 // does not expunge.
 function TProtocolIMAP4.MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
 begin
+
   if (uidList = nil) or (uidList.Count < 1) then exit;
   if (pos(' ',destFolder)<>-1) and (pos('"',destFolder)<>0) then
     destFolder := '"'+destFolder + '"';
 
-  if IMAP.Capabilities.IndexOf('MOVE')<>-1 then begin
+  if HasCapa('MOVE') then begin
     //server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
     IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder);
-    Result := IMAP.LastCmdResult.Code = '+OK';
+    Result := IMAP.LastCmdResult.Code = IMAP_OK;
   end else begin
-    // server does not support MOVE so COPY and then DELETE original and then EXPUNGE the original
+    // server does not support MOVE so COPY and then DELETE and EXPUNGE the original
     Result := IMAP.UIDCopyMsgs(uidList, destFolder);
-    IMAP.UIDDeleteMsgs(uidList.ToStringArray);
-
-    // EXPUNGE deleted messages only if CAPA indicates UIDPLUS https://tools.ietf.org/html/rfc4315
-    if IMAP.Capabilities.IndexOf('UIDPLUS')<>-1 then begin
-      IMAP.SendCmd('UID EXPUNGE '+uidList.commaText);
-    end;
+    DeleteMsgsByUID(uidList);
   end;
 
 end;
+
+
 
 procedure TProtocolIMAP4.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
 begin
@@ -708,5 +716,41 @@ end;
 
 // Exceptions for IMAP:EIdIMAP4ServerException, EIdIMAP4ImplicitTLSRequiresSSL,
 // EIdReplyIMAP4Error
+
+
+// Wrapper to check whether the server has a specific IMAP capability.
+// This will populate the capablity list only if it has not already been filled
+// so it doesn't call CAPA every single deletion, etc.
+function TProtocolIMAP4.HasCapa(capability: string) : boolean;
+begin
+  if (capabilities.count = 0) then begin
+    IMAP.Capability(capabilities);
+  end;
+  Result := (capabilities.IndexOf(capability)<>-1);
+end;
+
+function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname : string) : boolean;
+begin
+  if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
+    IMAP.SendCmd('UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")');
+    Result := IMAP.LastCmdResult.Code = 'UID OK Success';
+  end else
+    Result := false;
+end;
+
+function TProtocolIMAP4.RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
+begin
+  if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
+    IMAP.SendCmd('UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")');
+    Result := IMAP.LastCmdResult.Code = 'UID OK Success';
+  end else
+    Result := false;
+end;
+
+function AddQuotesIfNeeded(input: string) : string;
+begin
+    if (pos(' ',input)<>-1) and ((FindDelimiter('"',input)<>1) and (LastDelimiter('"',input)>1)) then
+    Result := '"'+input + '"';
+end;
 
 end.
