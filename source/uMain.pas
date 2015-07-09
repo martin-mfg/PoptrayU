@@ -121,6 +121,9 @@ type
     imgTray: TImage;
     actSelectAll: TAction;
     actReplyAll: TAction;
+    actArchive: TAction;
+    actStar: TAction;
+    actUnstar: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -223,6 +226,9 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actReplyAllExecute(Sender: TObject);
+    procedure actArchiveExecute(Sender: TObject);
+    procedure actStarExecute(Sender: TObject);
+    procedure actUnstarExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -292,7 +298,7 @@ type
 //    procedure ProcessMessage(AMsg: TIdMessage; const AStream: TStream; AHeaderOnly: Boolean);
     function DeleteMails(account: TAccount; var DelCount : integer) : boolean;
     function CheckUID(account: TAccount; msgnum : integer; UID : string='') : boolean;
-    procedure MarkViewed(num : integer = -1);
+    procedure MarkAllViewed(num : integer = -1);
     function HasAttachment(msg : IdMessage.TIdMessage) : boolean;
     function SelectedMailItem(Item : TListItem = nil) : TMailItem;
     procedure RunMessage(account: TAccount; msgnum: integer);
@@ -499,7 +505,7 @@ begin
   FMinimized := False;
   // clear the tray
   if (PageControl.ActivePageIndex = 0) and MarkAsViewed and not FBusy then
-    MarkViewed;
+    MarkAllViewed;
 end;
 
 procedure TfrmPopUMain.HideForm;
@@ -1281,7 +1287,7 @@ begin
   ShowStatusBar(account);
   // clear icon
   if not FMinimized and (PageControl.ActivePageIndex = 0) then
-    MarkViewed;
+    MarkAllViewed;
 end;
 
 procedure TfrmPopUMain.SendMail(const ToAddress, Subject, Body: string);
@@ -1927,26 +1933,27 @@ begin
         begin
           if account.Mail[i].ToDelete then
           begin
-            if (account.MoveSpamOnDelete) and account.Mail[i].Spam then
-              spamList.Add(account.Mail[i].UID)
-            else
+            if (account.MoveSpamOnDelete) and account.Mail[i].Spam then begin
+              spamList.Add(account.Mail[i].UID);
+            end else
               uidList.Add(account.Mail[i].UID);
             Inc(DelCount);
           end;
         end;
-        if (spamList.Count > 0) then
-          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
+        if (spamList.Count > 0) then begin
+          //(Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
+          (Account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(spamList, 'testlabel');
+        end;
 
         if (account.MoveTrashOnDelete) then begin
           // move to server trash folder
           (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
+
         end else begin
           // delete permanantly
-          (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList.ToStringArray);
-          if (account.ExpungeDeletedMessages) then
-            (account.Prot as TProtocolIMAP4).Expunge(); // Make deletions permanant on server
+          (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList, account.ExpungeDeletedMessages);
         end;
-
+        Account.Mail.RemoveToDeleteMsgs();
 
         uidList.Free;
         spamList.Free;
@@ -2018,7 +2025,7 @@ begin
   end;
 end;
 
-procedure TfrmPopUMain.MarkViewed(num : integer = -1);
+procedure TfrmPopUMain.MarkAllViewed(num : integer = -1);
 ////////////////////////////////////////////////////////////////////////////////
 // Mark all messages as viewed
 var
@@ -4055,6 +4062,7 @@ begin
   actMarkSpam.Enabled := False;
   actUnmarkSpam.Enabled := False;
   actSelectAll.Enabled := False;
+  actArchive.Enabled := False;
 end;
 
 procedure TfrmPopUMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
@@ -4077,6 +4085,7 @@ begin
     actMarkSpam.Enabled := True;
     actUnmarkSpam.Enabled := True;
     actSelectAll.Enabled := True;
+    actArchive.Enabled := True;
   end;
   actSpam.Enabled := actDeleteSpam.Enabled or actMarkSpam.Enabled or actUnmarkSpam.Enabled;
 end;
@@ -4129,7 +4138,7 @@ procedure TfrmPopUMain.PageControlChange(Sender: TObject);
 begin
   // mail page
   if (PageControl.ActivePageIndex = 0) then
-    MarkViewed;
+    MarkAllViewed;
   // if accounts page
   if (PageControl.ActivePageIndex = 1) and (Accounts.NumAccounts>0) then //TODO: codesmell
   begin
@@ -4557,6 +4566,26 @@ begin
   CheckAllMail;
 end;
 
+procedure TfrmPopUMain.actStarExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+  MailItem : TMailItem;
+begin
+  if lvMail.Selected = nil then
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+  else begin
+    if FAccount.IsImap then begin
+      FAccount.ConnectIfNeeded();
+      for i := 0 to lvMail.Items.Count-1 do
+      begin
+        if (lvMail.Items[i].Selected) then
+          MailItem := lvMail.Selected.Data;
+          (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, true);
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmPopUMain.actStartProgramExecute(Sender: TObject);
 var
   i : integer;
@@ -4569,7 +4598,7 @@ begin
   if FShowingInfo then frmInfo.Close;
   if res then HideForm;
   for i := 1 to Accounts.NumAccounts do
-    MarkViewed(i);
+    MarkAllViewed(i);
   UpdateTrayIcon;
   if not Options.ResetTray then ClearTrayIcon;
 end;
@@ -4662,6 +4691,38 @@ begin
   end;
 end;
 
+procedure TfrmPopUMain.actArchiveExecute(Sender: TObject);
+var
+  account : TAccount;
+  uidList : TStringList;
+  i : integer;
+begin
+  // 1. get selection
+  account := Accounts[tabMail.TabIndex];
+
+  // 2. For each selected message
+    // 2a. make UID list of messages to archive
+  // 3. call server archive command.
+
+        if account.IsImap() then begin
+
+          uidList := TStringList.Create;
+
+          for i := 0 to account.Mail.Count-1 do
+          begin
+            //if account.Mail[i].ToArchive then
+            //begin
+            //  uidList.Add(account.Mail[i].UID);
+            //end;
+          end;
+          if (uidList.Count > 0) then begin
+            (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.ArchiveFolderName);
+          end;
+
+        end;
+
+end;
+
 procedure TfrmPopUMain.actAddBlackListExecute(Sender: TObject);
 begin
   if AddToWhiteBlackList(wbBlack) and Options.BlackListSpam then
@@ -4673,7 +4734,7 @@ var
   i : integer;
 begin
   for i := 1 to Accounts.NumAccounts do
-    MarkViewed(i);
+    MarkAllViewed(i);
   if FShowingInfo then
     frmInfo.Close;
   if Not FMinimized and (tabMail.Tabs.Count>0) then
@@ -4698,6 +4759,16 @@ begin
   actDeleteSpam.Enabled := Accounts[tabMail.TabIndex].CountStatus([misSpam]) > 0;
   actSelectSpam.Enabled := actDeleteSpam.Enabled;
   actSpam.Enabled := actDeleteSpam.Enabled or actMarkSpam.Enabled or actUnmarkSpam.Enabled;
+end;
+
+procedure TfrmPopUMain.actUnstarExecute(Sender: TObject);
+var
+  IMAP: TIdIMAP4;
+begin
+  if FAccount.IsImap then begin
+    FAccount.ConnectIfNeeded();
+    //(FAccount.Prot as TProtocolIMAP4).SetImportantFlag(uid, false);
+  end;
 end;
 
 procedure TfrmPopUMain.actDeleteSpamExecute(Sender: TObject);

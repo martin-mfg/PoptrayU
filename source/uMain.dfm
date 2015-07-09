@@ -921,6 +921,21 @@ object frmPopUMain: TfrmPopUMain
       Caption = 'Reply All'
       OnExecute = actReplyAllExecute
     end
+    object actArchive: TAction
+      Category = 'Mail'
+      Caption = 'Archive'
+      OnExecute = actArchiveExecute
+    end
+    object actStar: TAction
+      Category = 'Mail'
+      Caption = 'Mark Important'
+      OnExecute = actStarExecute
+    end
+    object actUnstar: TAction
+      Category = 'Mail'
+      Caption = 'Mark Not Important'
+      OnExecute = actUnstarExecute
+    end
   end
   object XPColorMap1: TXPColorMap
     HighlightColor = clWhite
