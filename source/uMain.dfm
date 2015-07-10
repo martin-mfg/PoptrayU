@@ -3,7 +3,7 @@ object frmPopUMain: TfrmPopUMain
   Top = 258
   Caption = 'PopTrayU'
   ClientHeight = 379
-  ClientWidth = 534
+  ClientWidth = 568
   Color = clBtnFace
   Constraints.MinHeight = 340
   Constraints.MinWidth = 418
@@ -29,7 +29,7 @@ object frmPopUMain: TfrmPopUMain
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 534
+    Width = 568
     Height = 379
     ActivePage = tsMail
     Align = alClient
@@ -44,6 +44,7 @@ object frmPopUMain: TfrmPopUMain
     TabPosition = tpRight
     OnChange = PageControlChange
     OnChanging = PageControlChanging
+    ExplicitWidth = 534
     object tsMail: TTabSheet
       Caption = 'Mail'
       Font.Charset = DEFAULT_CHARSET
@@ -52,10 +53,11 @@ object frmPopUMain: TfrmPopUMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitWidth = 507
       object mailPanel1: TPanel
         Left = 0
         Top = 0
-        Width = 507
+        Width = 541
         Height = 371
         Margins.Left = 5
         Margins.Right = 5
@@ -66,13 +68,14 @@ object frmPopUMain: TfrmPopUMain
         ParentBackground = False
         TabOrder = 0
         StyleElements = [seFont, seClient]
+        ExplicitWidth = 507
         DesignSize = (
-          507
+          541
           371)
         object tabMail: TTabControl
           Left = 5
           Top = 0
-          Width = 497
+          Width = 531
           Height = 338
           Align = alClient
           Images = dm.imlTabs
@@ -82,10 +85,11 @@ object frmPopUMain: TfrmPopUMain
           OnDragDrop = tabDragDrop
           OnDragOver = tabMailDragOver
           OnMouseDown = DragMouseDown
+          ExplicitWidth = 497
           object lvMail: TListView
             Left = 4
             Top = 38
-            Width = 489
+            Width = 523
             Height = 277
             Align = alClient
             Columns = <
@@ -134,11 +138,12 @@ object frmPopUMain: TfrmPopUMain
             OnMouseDown = lvMailMouseDown
             OnMouseMove = MouseMoveReset
             OnSelectItem = lvMailSelectItem
+            ExplicitWidth = 489
           end
           object MailToolBar: TActionToolBar
             Left = 4
             Top = 6
-            Width = 489
+            Width = 523
             Height = 32
             ActionManager = ActionManager
             AllowHiding = False
@@ -159,11 +164,13 @@ object frmPopUMain: TfrmPopUMain
             Spacing = 4
             VertMargin = 4
             OnGetControlClass = MailToolBarGetControlClass
+            ExplicitWidth = 489
+            ExplicitHeight = 64
           end
           object StatusBar: TStatusBar
             Left = 4
             Top = 315
-            Width = 489
+            Width = 523
             Height = 19
             AutoHint = True
             Panels = <
@@ -191,18 +198,20 @@ object frmPopUMain: TfrmPopUMain
             UseSystemFont = False
             OnDrawPanel = StatusBarDrawPanel
             OnResize = StatusBarResize
+            ExplicitWidth = 489
           end
         end
         object panMailButtons: TPanel
           Left = 5
           Top = 338
-          Width = 497
+          Width = 531
           Height = 33
           Align = alBottom
           BevelOuter = bvNone
           ParentBackground = False
           TabOrder = 1
           OnResize = panMailButtonsResize
+          ExplicitWidth = 497
           object btnStartProgram: TBitBtn
             Left = 16
             Top = 4
@@ -380,7 +389,7 @@ object frmPopUMain: TfrmPopUMain
           end
         end
         object panProgress: TPanel
-          Left = 290
+          Left = 324
           Top = 316
           Width = 205
           Height = 18
@@ -390,6 +399,7 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 2
           Visible = False
+          ExplicitLeft = 290
           DesignSize = (
             205
             18)
@@ -441,6 +451,7 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 4
       ParentFont = False
+      ExplicitWidth = 507
     end
     object tsOptions: TTabSheet
       Caption = 'Options'
@@ -451,6 +462,7 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
+      ExplicitWidth = 507
     end
     object tsRules: TTabSheet
       Caption = 'Rules'
@@ -461,6 +473,7 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
+      ExplicitWidth = 507
     end
     object tsAbout: TTabSheet
       Caption = 'About'
@@ -471,6 +484,7 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
+      ExplicitWidth = 507
       object TImage
         Left = 3
         Top = 352
@@ -631,6 +645,48 @@ object frmPopUMain: TfrmPopUMain
           item
             Items = <
               item
+                Action = actMarkAsRead
+                Caption = 'Ma&rk as Read'
+                ImageIndex = 30
+              end
+              item
+                Action = actMarkAsUnread
+                Caption = 'Mar&k as Unread'
+                ImageIndex = 29
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actStar
+                Caption = 'Mark as &Important'
+                ImageIndex = 27
+              end
+              item
+                Action = actUnstar
+                Caption = 'M&ark as Not Important'
+                ImageIndex = 28
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actMarkSpam
+                ImageIndex = 22
+                ShortCut = 16461
+              end
+              item
+                Action = actUnmarkSpam
+                ImageIndex = 21
+                ShortCut = 16469
+              end>
+            Action = actMark
+            Caption = '&Mark As'
+            ImageIndex = 29
+          end
+          item
+            Items = <
+              item
                 Action = actDeleteSpam
                 ImageIndex = 18
               end
@@ -670,6 +726,34 @@ object frmPopUMain: TfrmPopUMain
           item
             Action = actStartProgram
             ImageIndex = 12
+          end>
+      end
+      item
+        Items = <
+          item
+            Action = actStar
+            Caption = '&Important'
+            ImageIndex = 27
+          end
+          item
+            Action = actUnstar
+            Caption = '&Not Important'
+            ImageIndex = 28
+          end
+          item
+            Action = actMarkAsRead
+            Caption = '&Read'
+            ImageIndex = 30
+          end
+          item
+            Action = actMarkAsUnread
+            Caption = '&Unread'
+            ImageIndex = 29
+          end
+          item
+            Action = actArchive
+            Caption = '&Archive'
+            ImageIndex = 31
           end>
       end>
     DisabledImages = dm.imlActionsDisabled
@@ -840,7 +924,7 @@ object frmPopUMain: TfrmPopUMain
     end
     object actMarkViewed: TAction
       Category = 'Mail'
-      Caption = 'Mark as &Viewed'
+      Caption = 'Mark All &Viewed (POP)'
       ImageIndex = 19
       OnExecute = actMarkViewedExecute
     end
@@ -922,19 +1006,41 @@ object frmPopUMain: TfrmPopUMain
       OnExecute = actReplyAllExecute
     end
     object actArchive: TAction
-      Category = 'Mail'
+      Category = 'Imap'
       Caption = 'Archive'
+      ImageIndex = 31
       OnExecute = actArchiveExecute
     end
     object actStar: TAction
-      Category = 'Mail'
-      Caption = 'Mark Important'
+      Category = 'Imap'
+      Caption = 'Mark as Important'
+      ImageIndex = 27
       OnExecute = actStarExecute
     end
     object actUnstar: TAction
-      Category = 'Mail'
-      Caption = 'Mark Not Important'
+      Category = 'Imap'
+      Caption = 'Mark as Not Important'
+      ImageIndex = 28
       OnExecute = actUnstarExecute
+    end
+    object actMarkAsRead: TAction
+      Category = 'Imap'
+      Caption = 'Mark as Read'
+      Hint = 'Marks message(s) viewed on IMAP accounts'
+      ImageIndex = 30
+      OnExecute = actMarkAsReadExecute
+    end
+    object actMarkAsUnread: TAction
+      Category = 'Imap'
+      Caption = 'Mark as Unread'
+      ImageIndex = 29
+      OnExecute = actMarkAsUnreadExecute
+    end
+    object actMark: TAction
+      Category = 'Imap'
+      Caption = 'Mark As'
+      ImageIndex = 29
+      OnExecute = actMarkExecute
     end
   end
   object XPColorMap1: TXPColorMap

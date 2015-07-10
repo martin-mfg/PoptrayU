@@ -124,6 +124,9 @@ type
     actArchive: TAction;
     actStar: TAction;
     actUnstar: TAction;
+    actMarkAsRead: TAction;
+    actMarkAsUnread: TAction;
+    actMark: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -229,6 +232,9 @@ type
     procedure actArchiveExecute(Sender: TObject);
     procedure actStarExecute(Sender: TObject);
     procedure actUnstarExecute(Sender: TObject);
+    procedure actMarkAsReadExecute(Sender: TObject);
+    procedure actMarkAsUnreadExecute(Sender: TObject);
+    procedure actMarkExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -359,7 +365,8 @@ type
 
     procedure SetColumnGroups();
     procedure AddFormToTab(parentTab : TTabSheet; form : TForm);
-
+    procedure ChangeImportantStatuses(const becomeImportant : boolean);
+    procedure ChangeReadStatuses(const becomeRead : boolean);
   public
     FKB : string; //UI label for kilobytes in the current language
 
@@ -4063,6 +4070,11 @@ begin
   actUnmarkSpam.Enabled := False;
   actSelectAll.Enabled := False;
   actArchive.Enabled := False;
+  actStar.Enabled := false;
+  actUnstar.Enabled := false;
+  actMarkAsRead.Enabled := false;
+  actMarkAsUnread.Enabled := false;
+  actMark.Enabled := false;
 end;
 
 procedure TfrmPopUMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
@@ -4086,6 +4098,11 @@ begin
     actUnmarkSpam.Enabled := True;
     actSelectAll.Enabled := True;
     actArchive.Enabled := True;
+    actStar.Enabled := True;
+    actUnstar.Enabled := True;
+    actMarkAsRead.Enabled := True;
+    actMarkAsUnread.Enabled := True;
+    actMark.Enabled := True;
   end;
   actSpam.Enabled := actDeleteSpam.Enabled or actMarkSpam.Enabled or actUnmarkSpam.Enabled;
 end;
@@ -4566,26 +4583,6 @@ begin
   CheckAllMail;
 end;
 
-procedure TfrmPopUMain.actStarExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
-  MailItem : TMailItem;
-begin
-  if lvMail.Selected = nil then
-    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
-  else begin
-    if FAccount.IsImap then begin
-      FAccount.ConnectIfNeeded();
-      for i := 0 to lvMail.Items.Count-1 do
-      begin
-        if (lvMail.Items[i].Selected) then
-          MailItem := lvMail.Selected.Data;
-          (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, true);
-      end;
-    end;
-  end;
-end;
-
 procedure TfrmPopUMain.actStartProgramExecute(Sender: TObject);
 var
   i : integer;
@@ -4761,14 +4758,130 @@ begin
   actSpam.Enabled := actDeleteSpam.Enabled or actMarkSpam.Enabled or actUnmarkSpam.Enabled;
 end;
 
-procedure TfrmPopUMain.actUnstarExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
+//IMAP mark as read
+procedure TfrmPopUMain.actMarkAsReadExecute(Sender: TObject);
 begin
-  if FAccount.IsImap then begin
-    FAccount.ConnectIfNeeded();
-    //(FAccount.Prot as TProtocolIMAP4).SetImportantFlag(uid, false);
+  ChangeReadStatuses(true);
+end;
+
+procedure TfrmPopUMain.actMarkAsUnreadExecute(Sender: TObject);
+begin
+  ChangeReadStatuses(false);
+end;
+
+procedure TfrmPopUMain.actMarkExecute(Sender: TObject);
+begin
+  ShowTranslatedDlg('This feature is coming soon', mtError, [mbOK], 0);
+end;
+
+procedure TfrmPopUMain.ChangeReadStatuses(const becomeRead : boolean);
+var
+  MailItem : TMailItem;
+  account : TAccount;
+  i : integer;
+  numsuccess, numfailures : integer;
+begin
+  if lvMail.Selected = nil then
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+  else begin
+    account := Accounts[tabMail.TabIndex]; //TODO: tabToAccount
+    if account.IsImap then begin
+      numsuccess := 0;
+      numfailures := 0;
+      account.ConnectIfNeeded();
+      for i := 0 to lvMail.Items.Count-1 do
+      begin
+        if (lvMail.Items[i].Selected) then begin
+          MailItem := lvMail.Items[i].Data;
+          if (MailItem<>nil) and (account.Prot as TProtocolIMAP4).MakeRead(MailItem.UID, becomeRead) then begin
+            Inc(numsuccess);
+
+            // set icon
+            MailItem.mSeen := becomeRead;
+            lvMail.Items[i].ImageIndex := GetStatusIcon(MailItem);
+
+            // set row bold/unbold
+            if becomeRead then
+              lvMail.Items[i].StateIndex := STATE_READ
+            else
+              lvMail.Items[i].StateIndex := STATE_UNREAD;
+
+          end else
+            Inc(numfailures);
+        end;
+      end;
+      if (numfailures > 0) then begin
+        account.Status := Translate('Error:') + ' ' + IntToStr(numfailures) + ' ' + Translate('message(s) could not be changed!')+HintSep+TimeToStr(Now);
+        StatusBar.Panels[0].Text := account.Status;
+      end else begin
+        if (becomeRead) then
+          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked read')+HintSep+TimeToStr(Now)
+        else
+          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked unread')+HintSep+TimeToStr(Now);
+
+        StatusBar.Panels[0].Text := account.Status;
+      end;
+    end;
   end;
+end;
+
+
+procedure TfrmPopUMain.actStarExecute(Sender: TObject);
+var
+  MailItem : TMailItem;
+  account : TAccount;
+  i : integer;
+  numsuccess, numfailures : integer;
+begin
+  ChangeImportantStatuses(true);
+end;
+
+procedure TfrmPopUMain.ChangeImportantStatuses(const becomeImportant : boolean);
+var
+  MailItem : TMailItem;
+  account : TAccount;
+  i : integer;
+  numsuccess, numfailures : integer;
+begin
+  if lvMail.Selected = nil then
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+  else begin
+    account := Accounts[tabMail.TabIndex]; //TODO: tabToAccount
+    if account.IsImap then begin
+      numsuccess := 0;
+      numfailures := 0;
+      account.ConnectIfNeeded();
+      for i := 0 to lvMail.Items.Count-1 do
+      begin
+        if (lvMail.Items[i].Selected) then begin
+          MailItem := lvMail.Items[i].Data;
+          if (MailItem<>nil) and (account.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, becomeImportant) then begin
+            Inc(numsuccess);
+            MailItem.Important := becomeImportant;
+            lvMail.Items[i].ImageIndex := GetStatusIcon(MailItem);
+          end else
+            Inc(numfailures);
+        end;
+      end;
+      if (numfailures > 0) then begin
+        account.Status := Translate('Error:') + ' ' + IntToStr(numfailures) + ' ' + Translate('message(s) could not be changed!')+HintSep+TimeToStr(Now);
+        StatusBar.Panels[0].Text := account.Status;
+      end else begin
+        if (becomeImportant) then
+          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked important')+HintSep+TimeToStr(Now)
+        else
+          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked not important')+HintSep+TimeToStr(Now);
+
+        StatusBar.Panels[0].Text := account.Status;
+      end;
+    end;
+  end;
+end;
+
+
+procedure TfrmPopUMain.actUnstarExecute(Sender: TObject);
+begin
+  ChangeImportantStatuses(false);
 end;
 
 procedure TfrmPopUMain.actDeleteSpamExecute(Sender: TObject);
