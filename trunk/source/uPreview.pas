@@ -1626,9 +1626,6 @@ begin
 end;
 
 procedure TfrmPreview.ActMarkReadExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
-  AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
     FAccount.ConnectIfNeeded();
@@ -1637,9 +1634,6 @@ begin
 end;
 
 procedure TfrmPreview.ActMarkUnreadExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
-  AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
     FAccount.ConnectIfNeeded();
@@ -1661,9 +1655,6 @@ begin
 end;
 
 procedure TfrmPreview.actStarExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
-  AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
     FAccount.ConnectIfNeeded();
