@@ -62,6 +62,7 @@ type
     mIdSASLOTP: TIdSASLOTP;
     mIdSASLAnonymous: TIdSASLAnonymous;
     mIdSASLExternal: TIdSASLExternal;
+    cmdNum : integer;  // counter for imapCmdNum
 
     mLastErrorMsg : string;
     mHasErrorToReport : boolean;
@@ -70,6 +71,7 @@ type
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     function HasCapa(capability: string) : boolean;
+    function ImapCmdNum() : string;
   public
     // general
     IMAP : TIdIMAP4;
@@ -125,7 +127,7 @@ uses
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
 
 const
-  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -145,6 +147,7 @@ begin
   end;
 end;
 
+
 //---------------------------------------------------------- general exports ---
 
 constructor TProtocolIMAP4.Create;
@@ -160,6 +163,7 @@ begin
   Msg.NoEncode := True;
   Msg.NoDecode := True;
   capabilities := TStringList.Create;
+  cmdNum := 1;
 
   IMAP.OnWork := IMAPWork;
   IMAP.MilliSecsToWaitToClearBuffer := 10;
@@ -261,6 +265,11 @@ begin
   capabilities.Free;
 end;
 
+function TProtocolIMAP4.ImapCmdNum(): string;
+begin
+  Result := 'j'+IntToStr(cmdNum);
+  inc(cmdNum)
+end;
 
 procedure TProtocolIMAP4.Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer);
 begin
@@ -549,7 +558,7 @@ begin
 
   if (expunge) then
     if HasCapa('UIDPLUS') then
-      IMAP.SendCmd('UID EXPUNGE '+uidList.commaText)
+      IMAP.SendCmd(ImapCmdNum()+'UID EXPUNGE '+uidList.commaText)
     else
       IMAP.ExpungeMailBox();
 end;
@@ -557,20 +566,28 @@ end;
 // moves messages to the SPAM or other folder.
 // does not expunge.
 function TProtocolIMAP4.MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
+var
+  Response : String;
 begin
 
   if (uidList = nil) or (uidList.Count < 1) then exit;
-  if (pos(' ',destFolder)<>-1) and (pos('"',destFolder)<>0) then
-    destFolder := '"'+destFolder + '"';
 
   if HasCapa('MOVE') then begin
     //server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
-    IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder);
-    Result := IMAP.LastCmdResult.Code = IMAP_OK;
+    if (pos(' ',destFolder)<>0) then    // POS is one based: "not found" = 0 and "first char" = 1
+      if (pos('"',destFolder)<>1) then
+        destFolder := '"'+destFolder + '"';
+    try
+      IMAP.SendCmd(ImapCmdNum(),'UID MOVE '+uidList.CommaText +' '+destFolder,['OK','NO','BAD'],true);
+      Result := IMAP.LastCmdResult.Code = IMAP_OK;
+    except
+      Result := false;
+    end;
   end else begin
     // server does not support MOVE so COPY and then DELETE and EXPUNGE the original
     Result := IMAP.UIDCopyMsgs(uidList, destFolder);
-    DeleteMsgsByUID(uidList);
+    if (Result) then
+      DeleteMsgsByUID(uidList);
   end;
 
 end;
@@ -732,8 +749,8 @@ end;
 function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname : string) : boolean;
 begin
   if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
-    IMAP.SendCmd('UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")');
-    Result := IMAP.LastCmdResult.Code = 'UID OK Success';
+    IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+    Result := IMAP.LastCmdResult.Code = 'OK';
   end else
     Result := false;
 end;
@@ -741,8 +758,8 @@ end;
 function TProtocolIMAP4.RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
 begin
   if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
-    IMAP.SendCmd('UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")');
-    Result := IMAP.LastCmdResult.Code = 'UID OK Success';
+    IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+    Result := IMAP.LastCmdResult.Code = 'OK';
   end else
     Result := false;
 end;
