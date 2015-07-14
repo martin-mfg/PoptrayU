@@ -134,18 +134,18 @@ const
 
 //------------------------------------------------------------------ helpers ---
 
-function WordAfterStr(str,substr : string) : string;
-var
-  i : integer;
-begin
-  Result := '';
-  if pos(substr,str) = 0 then Exit;
-  for i := pos(substr,str)+length(substr) to length(str) do
-  begin
-    if not(str[i] in [' ',')',#13,#10]) then
-      Result := Result + str[i];
-  end;
-end;
+//function WordAfterStr(str,substr : string) : string;
+//var
+//  i : integer;
+//begin
+//  Result := '';
+//  if pos(substr,str) = 0 then Exit;
+//  for i := pos(substr,str)+length(substr) to length(str) do
+//  begin
+//    if not(str[i] in [' ',')',#13,#10]) then
+//      Result := Result + str[i];
+//  end;
+//end;
 
 
 //---------------------------------------------------------- general exports ---
@@ -384,8 +384,10 @@ begin
   if Result then
   begin
     // get first LineCount*70 octets
-    IMAP.WriteLn('xx FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
-                 IntToStr(LineCount*70)+'>');
+    IMAP.SendCmd(ImapCmdNum(), 'FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
+                 IntToStr(LineCount*70)+'>', ['OK','BAD','NO'], true);
+    //IMAP.WriteLn('xx FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
+    //             IntToStr(LineCount*70)+'>');
     //Result := IMAP.GetLineResponse('xx',[wsOK]) = wsOK;    //indy9
     Result := IMAP.LastCmdResult.Code = 'OK';                //indy10
 
@@ -566,11 +568,12 @@ end;
 // moves messages to the SPAM or other folder.
 // does not expunge.
 function TProtocolIMAP4.MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
-var
-  Response : String;
 begin
 
-  if (uidList = nil) or (uidList.Count < 1) then exit;
+  if (uidList = nil) or (uidList.Count < 1) then begin
+    Result := false;
+    Exit;
+  end;
 
   if HasCapa('MOVE') then begin
     //server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
@@ -604,7 +607,7 @@ function TProtocolIMAP4.GetUnseenUids(): TIntArray;
 var
   SearchInfo: array of TIdIMAP4SearchRec;
   I : integer;
-  MsgObject: TIdMessage;
+  //MsgObject: TIdMessage;
   Logger : TLogLogger;
 begin
 
@@ -748,20 +751,28 @@ end;
 
 function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname : string) : boolean;
 begin
-  if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
-    IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
-    Result := IMAP.LastCmdResult.Code = 'OK';
-  end else
+  try
+    if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
+      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+      Result := IMAP.LastCmdResult.Code = 'OK';
+    end else
+      Result := false;
+  except
     Result := false;
+  end;
 end;
 
 function TProtocolIMAP4.RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
 begin
-  if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
-    IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
-    Result := IMAP.LastCmdResult.Code = 'OK';
-  end else
+  try
+    if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
+      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+      Result := IMAP.LastCmdResult.Code = 'OK';
+    end else
+      Result := false;
+  except
     Result := false;
+  end;
 end;
 
 function AddQuotesIfNeeded(input: string) : string;
