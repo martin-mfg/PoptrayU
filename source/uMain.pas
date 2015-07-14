@@ -127,6 +127,8 @@ type
     actMarkAsRead: TAction;
     actMarkAsUnread: TAction;
     actMark: TAction;
+    actAddGmailLabel: TAction;
+    actRemoveGmailLabel: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -235,6 +237,7 @@ type
     procedure actMarkAsReadExecute(Sender: TObject);
     procedure actMarkAsUnreadExecute(Sender: TObject);
     procedure actMarkExecute(Sender: TObject);
+    procedure actAddGmailLabelExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -367,6 +370,8 @@ type
     procedure AddFormToTab(parentTab : TTabSheet; form : TForm);
     procedure ChangeImportantStatuses(const becomeImportant : boolean);
     procedure ChangeReadStatuses(const becomeRead : boolean);
+    procedure GetUidsOfSelectedMsgs(uidList : TStringList);
+    function TabToAccount() : TAccount;
   public
     FKB : string; //UI label for kilobytes in the current language
 
@@ -1948,8 +1953,8 @@ begin
           end;
         end;
         if (spamList.Count > 0) then begin
-          //(Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
-          (Account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(spamList, 'testlabel');
+          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
+          //(Account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(spamList, 'testlabel');
         end;
 
         if (account.MoveTrashOnDelete) then begin
@@ -4693,37 +4698,94 @@ var
   account : TAccount;
   uidList : TStringList;
   i : integer;
+  MailItem : TMailItem;
 begin
-  // 1. get selection
-  account := Accounts[tabMail.TabIndex];
+  if lvMail.Selected = nil then
+    ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
+  else begin
+    account := Accounts[tabMail.TabIndex]; //TODO: tabToAccount
+    if account.IsImap then begin
+      uidList := TStringList.Create;
+      account.ConnectIfNeeded();
 
-  // 2. For each selected message
-    // 2a. make UID list of messages to archive
-  // 3. call server archive command.
+      for i := 0 to lvMail.Items.Count-1 do
+      begin
+        if (lvMail.Items[i].Selected) then begin
+          MailItem := lvMail.Items[i].Data;
+          uidList.Add(MailItem.UID);
+        end;
+      end;
 
-        if account.IsImap() then begin
+      if (uidList.Count > 0) then begin
+        try
+        if (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.ArchiveFolderName) then
+          account.Status := IntToStr(uidList.count) + ' ' + Translate('message(s) archived.') + HintSep + TimeToStr(Now)
+        else
+          account.Status := 'Error Archiving' + HintSep + TimeToStr(Now);
 
-          uidList := TStringList.Create;
-
-          for i := 0 to account.Mail.Count-1 do
-          begin
-            //if account.Mail[i].ToArchive then
-            //begin
-            //  uidList.Add(account.Mail[i].UID);
-            //end;
-          end;
-          if (uidList.Count > 0) then begin
-            (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.ArchiveFolderName);
-          end;
+        finally
 
         end;
-
+        StatusBar.Panels[0].Text := account.Status;
+      end;
+      uidList.Free;
+    end;
+  end;
 end;
 
 procedure TfrmPopUMain.actAddBlackListExecute(Sender: TObject);
 begin
   if AddToWhiteBlackList(wbBlack) and Options.BlackListSpam then
      actMarkSpam.Execute;
+end;
+
+procedure TfrmPopUMain.actAddGmailLabelExecute(Sender: TObject);
+var
+  uidList : TStringList;
+  account : TAccount;
+  labelname : string;
+  success : boolean;
+begin
+  if (lvMail.SelCount > 0) then begin
+    account := TabToAccount();
+    if (account.IsImap) then begin
+      //TODO: show prompt for adding a label
+      labelname := Dialogs.InputBox('Add a Label', 'Label:', '');
+      if labelname <> '' then begin
+        uidList := TStringList.Create;
+        GetUidsOfSelectedMsgs(uidList);
+        success := (account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(uidList, labelname);
+
+        if (success) then
+          account.Status := SysUtils.Format(Translate('Label "%s" added to %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now)
+          // Translate('label added to') +' ' + IntToStr(numsuccess) + ' ' + Translate('message(s)')+HintSep+TimeToStr(Now)
+        else
+          account.Status := SysUtils.Format(Translate('Error: Label "%s" could not be added to %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now);
+
+        StatusBar.Panels[0].Text := account.Status;
+
+      end;
+    end;
+  end;
+end;
+
+// Gets the messages selected in the UI, and adds their UIDs to a list.
+// uidList will be populated by this method. It must be Create(d) before
+// calling this method.
+procedure TfrmPopUMain.GetUidsOfSelectedMsgs(uidList : TStringList);
+var
+  MailItem : TMailItem;
+  i : integer;
+begin
+  for i := 0 to lvMail.Items.Count-1 do
+  begin
+    if (lvMail.Items[i].Selected) then begin
+      MailItem := lvMail.Items[i].Data;
+      if (MailItem<>nil) then begin
+        uidList.add(MailItem.uid);
+      end;
+    end;
+  end;
 end;
 
 procedure TfrmPopUMain.actMarkViewedExecute(Sender: TObject);
@@ -5123,6 +5185,11 @@ begin
   RunMessage(Accounts[tabMail.TabIndex],StrToInt(lvMail.Selected.SubItems[colID])); //todo: tabToAccount
 end;
 
+// Gets the account associated with the currently visible tab.
+function TfrmPopUMain.TabToAccount() : TAccount;
+begin
+  Result := Accounts[tabMail.TabIndex];
+end;
 
 
 initialization
