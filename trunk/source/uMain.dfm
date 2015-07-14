@@ -638,11 +638,6 @@ object frmPopUMain: TfrmPopUMain
             ShortCut = 16466
           end
           item
-            Action = actHideViewed
-            Caption = '&Hide'
-            ImageIndex = 14
-          end
-          item
             Items = <
               item
                 Action = actMarkAsRead
@@ -679,6 +674,14 @@ object frmPopUMain: TfrmPopUMain
                 Action = actUnmarkSpam
                 ImageIndex = 21
                 ShortCut = 16469
+              end
+              item
+                Caption = '-'
+              end
+              item
+                Action = actArchive
+                Caption = 'Ar&chive'
+                ImageIndex = 31
               end>
             Action = actMark
             Caption = '&Mark As'
@@ -703,9 +706,35 @@ object frmPopUMain: TfrmPopUMain
                 ImageIndex = 21
                 ShortCut = 16469
               end>
+            Visible = False
             Action = actSpam
             Caption = '&Spam'
             ImageIndex = 17
+          end
+          item
+            Items = <
+              item
+                Action = actHideViewed
+                Caption = '&Hide'
+                ImageIndex = 14
+              end
+              item
+                Action = actDeleteSpam
+                ImageIndex = 18
+              end
+              item
+                Action = actSelectAll
+                ImageIndex = 26
+              end
+              item
+                Action = actRemoveGmailLabel
+                Caption = 'a&ctRemoveGmailLabel'
+              end
+              item
+                Action = actAddGmailLabel
+              end>
+            Caption = 'M&ore...'
+            ImageIndex = 14
           end
           item
             Action = actCheck
@@ -1041,6 +1070,15 @@ object frmPopUMain: TfrmPopUMain
       Caption = 'Mark As'
       ImageIndex = 29
       OnExecute = actMarkExecute
+    end
+    object actAddGmailLabel: TAction
+      Category = 'Gmail'
+      Caption = 'actAddGmailLabel'
+      OnExecute = actAddGmailLabelExecute
+    end
+    object actRemoveGmailLabel: TAction
+      Category = 'Gmail'
+      Caption = 'actRemoveGmailLabel'
     end
   end
   object XPColorMap1: TXPColorMap
