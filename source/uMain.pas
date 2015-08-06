@@ -129,6 +129,7 @@ type
     actMark: TAction;
     actAddGmailLabel: TAction;
     actRemoveGmailLabel: TAction;
+    Action1: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -238,6 +239,7 @@ type
     procedure actMarkAsUnreadExecute(Sender: TObject);
     procedure actMarkExecute(Sender: TObject);
     procedure actAddGmailLabelExecute(Sender: TObject);
+    procedure actRemoveGmailLabelExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -4416,6 +4418,31 @@ procedure TfrmPopUMain.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   QuickHelp(Sender, Button, Shift, X, Y);
+end;
+
+procedure TfrmPopUMain.actRemoveGmailLabelExecute(Sender: TObject);
+begin
+  if (lvMail.SelCount > 0) then begin
+    account := TabToAccount();
+    if (account.IsImap) then begin
+      //TODO: show prompt for removing a label
+      labelname := Dialogs.InputBox('Remove a Label', 'Label:', '');
+      if labelname <> '' then begin
+        uidList := TStringList.Create;
+        GetUidsOfSelectedMsgs(uidList);
+        success := (account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(uidList, labelname);
+
+        if (success) then
+          account.Status := SysUtils.Format(Translate('Label "%s" removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now)
+          // Translate('label added to') +' ' + IntToStr(numsuccess) + ' ' + Translate('message(s)')+HintSep+TimeToStr(Now)
+        else
+          account.Status := SysUtils.Format(Translate('Error: Label "%s" could not be removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now);
+
+        StatusBar.Panels[0].Text := account.Status;
+
+      end;
+    end;
+  end;
 end;
 
 procedure TfrmPopUMain.actReplyAllExecute(Sender: TObject);

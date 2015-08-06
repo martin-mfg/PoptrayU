@@ -115,6 +115,7 @@ type
     function SetImportantFlag(const uid : string; isImportant : boolean): boolean;
     function AddGmailLabelToMsgs(const uidList: TStrings; labelname : string): boolean;
     function RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
+    function FetchGmailLabels(const uid: String; labels: TStrings): boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -123,13 +124,14 @@ implementation
 uses
     Log4D,   //TEMPORARY
     Math,
-
+             Dialogs,
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
 
 const
   debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
+var
+  debugAccountCounter : integer = 0;
 
 
 //------------------------------------------------------------------ helpers ---
@@ -171,7 +173,8 @@ begin
   if (debugImap) then
   begin
     DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(Random(9999))+'.log';
+    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'logs/' + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(debugAccountCounter)+'.log';//+IntToStr(Random(9999))+'.log';
+    Inc(debugAccountCounter);
     DebugLogger.Active:= True;
     IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
   end;
@@ -267,7 +270,7 @@ end;
 
 function TProtocolIMAP4.ImapCmdNum(): string;
 begin
-  Result := 'j'+IntToStr(cmdNum);
+  Result := 'C'+IntToStr(cmdNum);
   inc(cmdNum)
 end;
 
@@ -758,7 +761,12 @@ begin
     end else
       Result := false;
   except
-    Result := false;
+    on E : Exception do
+     begin
+       //Dialogs.ShowMessage('Exception class name = '+E.ClassName);
+       //Dialogs.ShowMessage('Exception message = '+E.Message);
+       Result := false;
+     end;
   end;
 end;
 
@@ -767,6 +775,34 @@ begin
   try
     if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
       IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+      Result := IMAP.LastCmdResult.Code = 'OK';
+    end else
+      Result := false;
+  except
+    Result := false;
+  end;
+end;
+
+
+function TProtocolIMAP4.FetchGmailLabels(const uid: String; labels: TStrings): boolean;
+var
+  labelsStr : string;
+begin
+  try
+    if HasCapa('X-GM-EXT-1') and (uid <> '') and (labels <> nil)  then begin
+      IMAP.SendCmd(ImapCmdNum(),'FETCH '+uid+' (X-GM-LABELS)',['OK','BAD','NO'], false);
+      labels.Clear;
+
+
+      // a010 FETCH 1 (X-GM-LABELS)
+      //
+      // * 1 FETCH (X-GM-LABELS (\Inbox \Sent Important "Muy Importante"))
+      // a010 OK FETCH (Success)
+
+
+      labelsStr := IMAP.LastCmdResult.Text.ToString;
+      System.Delete(labelsStr,0,Pos('X-GM-LABELS',labelsStr)+12);
+      ExtractStrings(['(',')'],[' '],PChar(labelsStr), labels);
       Result := IMAP.LastCmdResult.Code = 'OK';
     end else
       Result := false;
