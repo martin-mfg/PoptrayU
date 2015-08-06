@@ -3,7 +3,7 @@ object frmPopUMain: TfrmPopUMain
   Top = 258
   Caption = 'PopTrayU'
   ClientHeight = 379
-  ClientWidth = 568
+  ClientWidth = 576
   Color = clBtnFace
   Constraints.MinHeight = 340
   Constraints.MinWidth = 418
@@ -29,7 +29,7 @@ object frmPopUMain: TfrmPopUMain
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 568
+    Width = 576
     Height = 379
     ActivePage = tsMail
     Align = alClient
@@ -57,7 +57,7 @@ object frmPopUMain: TfrmPopUMain
       object mailPanel1: TPanel
         Left = 0
         Top = 0
-        Width = 541
+        Width = 549
         Height = 371
         Margins.Left = 5
         Margins.Right = 5
@@ -70,12 +70,12 @@ object frmPopUMain: TfrmPopUMain
         StyleElements = [seFont, seClient]
         ExplicitWidth = 507
         DesignSize = (
-          541
+          549
           371)
         object tabMail: TTabControl
           Left = 5
           Top = 0
-          Width = 531
+          Width = 539
           Height = 338
           Align = alClient
           Images = dm.imlTabs
@@ -89,7 +89,7 @@ object frmPopUMain: TfrmPopUMain
           object lvMail: TListView
             Left = 4
             Top = 38
-            Width = 523
+            Width = 531
             Height = 277
             Align = alClient
             Columns = <
@@ -143,7 +143,7 @@ object frmPopUMain: TfrmPopUMain
           object MailToolBar: TActionToolBar
             Left = 4
             Top = 6
-            Width = 523
+            Width = 531
             Height = 32
             ActionManager = ActionManager
             AllowHiding = False
@@ -170,7 +170,7 @@ object frmPopUMain: TfrmPopUMain
           object StatusBar: TStatusBar
             Left = 4
             Top = 315
-            Width = 523
+            Width = 531
             Height = 19
             AutoHint = True
             Panels = <
@@ -204,7 +204,7 @@ object frmPopUMain: TfrmPopUMain
         object panMailButtons: TPanel
           Left = 5
           Top = 338
-          Width = 531
+          Width = 539
           Height = 33
           Align = alBottom
           BevelOuter = bvNone
@@ -389,7 +389,7 @@ object frmPopUMain: TfrmPopUMain
           end
         end
         object panProgress: TPanel
-          Left = 324
+          Left = 332
           Top = 316
           Width = 205
           Height = 18
@@ -728,12 +728,11 @@ object frmPopUMain: TfrmPopUMain
               end
               item
                 Action = actRemoveGmailLabel
-                Caption = 'a&ctRemoveGmailLabel'
               end
               item
                 Action = actAddGmailLabel
               end>
-            Caption = 'M&ore...'
+            Caption = 'More'
             ImageIndex = 14
           end
           item
@@ -1073,12 +1072,16 @@ object frmPopUMain: TfrmPopUMain
     end
     object actAddGmailLabel: TAction
       Category = 'Gmail'
-      Caption = 'actAddGmailLabel'
+      Caption = 'Add Gmail Label'
       OnExecute = actAddGmailLabelExecute
     end
     object actRemoveGmailLabel: TAction
       Category = 'Gmail'
-      Caption = 'actRemoveGmailLabel'
+      Caption = 'Remove Gmail Label'
+      OnExecute = actRemoveGmailLabelExecute
+    end
+    object Action1: TAction
+      Caption = 'Action1'
     end
   end
   object XPColorMap1: TXPColorMap
