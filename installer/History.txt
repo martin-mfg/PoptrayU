@@ -2,6 +2,19 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.1.6
+July 2015?
+=============
+New Features
+------------
+* IMAP accounts now attempt to leave connection open between checks for faster checking, more responsive preview, and quicker processing of actions like deleting messages or changing their read status.
+* For IMAP servers that support UIDPLUS like gmail, delete will now use UID EXPUNGE instead of EXPUNGE so that only messages deleted by this client are expunged (permanantly removed) and messages deleted by other clients are unaffected.
+* Mark IMAP message(s) as important/not important (ie: "starred" for Gmail) on the server from the main window. 
+* Mark IMAP message(s) as read/unread on the server from the main window. 
+* IMAP account options to move deleted messages to server trash folder, move deleted spam to server spam folder
+* IMAP archive (for non-gmail accounts this will move messages to an arbitrary IMAP folder)
+
+=============
 Version 5.1.5
 April 2015
 =============
