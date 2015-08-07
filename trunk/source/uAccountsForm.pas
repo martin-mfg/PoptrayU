@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
   PngBitBtn, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList,
-  uAccounts, uProtocol, Vcl.Grids, Vcl.ValEdit;
+  uAccounts, uProtocol, Vcl.Grids, Vcl.ValEdit, System.Types;
 
 const
   UseDefaultSound = '[Use Default Sound]';
@@ -89,6 +89,8 @@ type
     lblArchiveFolder: TLabel;
     edArchiveFolder: TEdit;
     btnArchiveFolder: TSpeedButton;
+    actExport: TAction;
+    actImport: TAction;
     procedure btnNeverAccountClick(Sender: TObject);
     procedure cmbProtocolChange(Sender: TObject);
     procedure chkSSLClick(Sender: TObject);
@@ -124,6 +126,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure colAccountGetColors(Sender: TCustomColorBox; Items: TStrings);
     procedure FormShow(Sender: TObject);
+    procedure actExportExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -157,7 +160,7 @@ implementation
 
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
-  uPositioning;
+  uPositioning, System.IniFiles;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -862,6 +865,73 @@ begin
     DeleteAccount(tabAccounts.TabIndex+1);
 end;
 
+
+procedure TAccountsForm.actExportExecute(Sender: TObject);
+var
+  saveDialog : TSaveDialog;    // Save dialog variable
+  msgBox: TForm;
+  dlgResult : integer;
+  iniSection : string;
+  Ini : TMemIniFile;
+begin
+
+  // save changes to account before proceeding.
+  if FAccChanged then begin
+    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account, would you like to save now?'),
+      mtConfirmation, mbOKCancel);
+    with msgBox do
+    try
+      Caption := uTranslate.Translate('Export Account Settings');
+      TButton(FindComponent('Ok')).Caption := uTranslate.Translate('Save');
+      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
+      dlgResult := msgBox.ShowModal;
+      if dlgResult = mrOK then begin
+        btnSave.Click;
+      end else exit;
+    finally
+      msgBox.Free;
+    end;
+  end;
+
+
+  saveDialog := TSaveDialog.Create(self);
+  saveDialog.Title := 'Export Account Settings';
+  saveDialog.InitialDir := GetCurrentDir;
+  saveDialog.Filter := 'Ini File|*.ini|Text File|*.txt';
+  saveDialog.DefaultExt := 'ini';
+  saveDialog.FilterIndex := 1;
+
+  // Display the open file dialog
+  if saveDialog.Execute
+  then begin
+    ShowMessage('File : '+saveDialog.FileName);
+
+    // write to ini
+    Ini := TMemIniFile.Create(saveDialog.FileName);
+    try
+      Ini.WriteInteger('Options','NumAccounts',1);//Accounts.NumAccounts);
+
+      iniSection := 'Account'+'1';//IntToStr(tabAccounts.TabIndex);
+      Accounts[tabAccounts.TabIndex].SaveAccountToIniFile(Ini, iniSection);
+
+      Ini.UpdateFile;
+
+      ShowMessage('Account Exported Successfully'+ sLineBreak + saveDialog.FileName);
+
+      //MessageDlg.
+    finally
+       Ini.Free;
+    end;
+
+
+
+  end
+  else
+    ShowMessage('Export account cancelled');
+
+  // Free up the dialog
+  saveDialog.Free;
+end;
 
 procedure TAccountsForm.actTestAccountExecute(Sender: TObject);
 var
