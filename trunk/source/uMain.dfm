@@ -44,7 +44,6 @@ object frmPopUMain: TfrmPopUMain
     TabPosition = tpRight
     OnChange = PageControlChange
     OnChanging = PageControlChanging
-    ExplicitWidth = 534
     object tsMail: TTabSheet
       Caption = 'Mail'
       Font.Charset = DEFAULT_CHARSET
@@ -53,7 +52,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 507
       object mailPanel1: TPanel
         Left = 0
         Top = 0
@@ -68,7 +66,6 @@ object frmPopUMain: TfrmPopUMain
         ParentBackground = False
         TabOrder = 0
         StyleElements = [seFont, seClient]
-        ExplicitWidth = 507
         DesignSize = (
           549
           371)
@@ -85,12 +82,11 @@ object frmPopUMain: TfrmPopUMain
           OnDragDrop = tabDragDrop
           OnDragOver = tabMailDragOver
           OnMouseDown = DragMouseDown
-          ExplicitWidth = 497
           object lvMail: TListView
             Left = 4
-            Top = 38
+            Top = 70
             Width = 531
-            Height = 277
+            Height = 245
             Align = alClient
             Columns = <
               item
@@ -138,13 +134,12 @@ object frmPopUMain: TfrmPopUMain
             OnMouseDown = lvMailMouseDown
             OnMouseMove = MouseMoveReset
             OnSelectItem = lvMailSelectItem
-            ExplicitWidth = 489
           end
           object MailToolBar: TActionToolBar
             Left = 4
             Top = 6
             Width = 531
-            Height = 32
+            Height = 64
             ActionManager = ActionManager
             AllowHiding = False
             Caption = 'Mail'
@@ -164,8 +159,6 @@ object frmPopUMain: TfrmPopUMain
             Spacing = 4
             VertMargin = 4
             OnGetControlClass = MailToolBarGetControlClass
-            ExplicitWidth = 489
-            ExplicitHeight = 64
           end
           object StatusBar: TStatusBar
             Left = 4
@@ -198,7 +191,6 @@ object frmPopUMain: TfrmPopUMain
             UseSystemFont = False
             OnDrawPanel = StatusBarDrawPanel
             OnResize = StatusBarResize
-            ExplicitWidth = 489
           end
         end
         object panMailButtons: TPanel
@@ -211,7 +203,6 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 1
           OnResize = panMailButtonsResize
-          ExplicitWidth = 497
           object btnStartProgram: TBitBtn
             Left = 16
             Top = 4
@@ -399,7 +390,6 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 2
           Visible = False
-          ExplicitLeft = 290
           DesignSize = (
             205
             18)
@@ -451,7 +441,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 4
       ParentFont = False
-      ExplicitWidth = 507
     end
     object tsOptions: TTabSheet
       Caption = 'Options'
@@ -462,7 +451,10 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 507
+      ExplicitHeight = 0
     end
     object tsRules: TTabSheet
       Caption = 'Rules'
@@ -473,7 +465,10 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 507
+      ExplicitHeight = 0
     end
     object tsAbout: TTabSheet
       Caption = 'About'
@@ -484,7 +479,10 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 507
+      ExplicitHeight = 0
       object TImage
         Left = 3
         Top = 352
@@ -728,11 +726,13 @@ object frmPopUMain: TfrmPopUMain
               end
               item
                 Action = actRemoveGmailLabel
+                Caption = '&Remove Gmail Label'
               end
               item
                 Action = actAddGmailLabel
+                Caption = 'A&dd Gmail Label'
               end>
-            Caption = 'More'
+            Caption = 'M&ore'
             ImageIndex = 14
           end
           item
