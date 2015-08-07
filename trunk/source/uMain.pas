@@ -4421,6 +4421,11 @@ begin
 end;
 
 procedure TfrmPopUMain.actRemoveGmailLabelExecute(Sender: TObject);
+var
+  uidList : TStringList;
+  account : TAccount;
+  labelname : string;
+  success : boolean;
 begin
   if (lvMail.SelCount > 0) then begin
     account := TabToAccount();
