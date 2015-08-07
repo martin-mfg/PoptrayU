@@ -102,7 +102,7 @@ type
     function GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
     function GetUID(msgnum: integer): string;
     function DebugPrint(): String;
-    procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string);
+    procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string; const skipPassword: boolean = false);
     procedure LoadAccountFromINI(Ini : TIniFile; section: string);
     procedure SetProtocol();
   end;
@@ -414,7 +414,7 @@ end;
 // Caller is responsible for opening/closing the ini file and calling
 // UpdateFile to end buffering on the ini file.
 //------------------------------------------------------------------------------
-procedure TAccount.SaveAccountToIniFile(Ini : TMemIniFile; section: string);
+procedure TAccount.SaveAccountToIniFile(Ini : TMemIniFile; section: string; const skipPassword: boolean = false);
 begin
     Ini.WriteString(Section,'Name',self.Name);
     Ini.WriteString(Section,'Server',self.Server);
@@ -425,7 +425,7 @@ begin
     Ini.WriteInteger(Section,'SslVer',Integer(self.SslVersion));
     Ini.WriteBool(Section,'StartTLS',self.StartTLS);
     Ini.WriteString(Section,'Login',self.Login);
-    Ini.WriteString(Section,'Password',Encrypt(self.Password));
+    if (not skipPassword) then Ini.WriteString(Section,'Password',Encrypt(self.Password));
     Ini.WriteString(Section,'MailProgram',self.MailProgram);
     Ini.WriteString(Section,'Sound',self.Sound);
     Ini.WriteString(Section,'Color',self.Color);
