@@ -160,7 +160,7 @@ implementation
 
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
-  uPositioning, System.IniFiles;
+  uPositioning, System.IniFiles, ExportAcctDlg;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -873,6 +873,7 @@ var
   dlgResult : integer;
   iniSection : string;
   Ini : TMemIniFile;
+  exportDlg : TExportAccountsDlg;
 begin
 
   // save changes to account before proceeding.
@@ -881,7 +882,7 @@ begin
       mtConfirmation, mbOKCancel);
     with msgBox do
     try
-      Caption := uTranslate.Translate('Export Account Settings');
+      Caption := uTranslate.Translate('Backup/Export Accounts');
       TButton(FindComponent('Ok')).Caption := uTranslate.Translate('Save');
       TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
       dlgResult := msgBox.ShowModal;
@@ -893,44 +894,12 @@ begin
     end;
   end;
 
-
-  saveDialog := TSaveDialog.Create(self);
-  saveDialog.Title := 'Export Account Settings';
-  saveDialog.InitialDir := GetCurrentDir;
-  saveDialog.Filter := 'Ini File|*.ini|Text File|*.txt';
-  saveDialog.DefaultExt := 'ini';
-  saveDialog.FilterIndex := 1;
-
-  // Display the open file dialog
-  if saveDialog.Execute
-  then begin
-    ShowMessage('File : '+saveDialog.FileName);
-
-    // write to ini
-    Ini := TMemIniFile.Create(saveDialog.FileName);
-    try
-      Ini.WriteInteger('Options','NumAccounts',1);//Accounts.NumAccounts);
-
-      iniSection := 'Account'+'1';//IntToStr(tabAccounts.TabIndex);
-      Accounts[tabAccounts.TabIndex].SaveAccountToIniFile(Ini, iniSection);
-
-      Ini.UpdateFile;
-
-      ShowMessage('Account Exported Successfully'+ sLineBreak + saveDialog.FileName);
-
-      //MessageDlg.
-    finally
-       Ini.Free;
-    end;
-
-
-
-  end
-  else
-    ShowMessage('Export account cancelled');
-
-  // Free up the dialog
-  saveDialog.Free;
+  exportDlg := TExportAccountsDlg.Create(self);
+  try
+    dlgResult := exportDlg.ShowModal;
+  finally
+    exportDlg.Free;
+  end;
 end;
 
 procedure TAccountsForm.actTestAccountExecute(Sender: TObject);
