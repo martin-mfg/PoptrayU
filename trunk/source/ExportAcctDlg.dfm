@@ -1,49 +1,44 @@
-inherited OKHelpRightDlg: TOKHelpRightDlg
+inherited ExportAccountsDlg: TExportAccountsDlg
+  BorderStyle = bsSizeable
   Caption = 'Export Account(s)'
-  ClientHeight = 298
-  ClientWidth = 536
+  ClientHeight = 288
+  ClientWidth = 526
+  OnCreate = FormCreate
   ExplicitWidth = 542
   ExplicitHeight = 326
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
-    Width = 437
-    Height = 280
+    Width = 427
+    Height = 270
     Anchors = [akLeft, akTop, akRight, akBottom]
     ExplicitWidth = 437
     ExplicitHeight = 280
   end
   object Label1: TLabel [1]
     Left = 20
-    Top = 20
-    Width = 128
+    Top = 18
+    Width = 148
     Height = 13
     Caption = 'Select Accounts to Export:'
-  end
-  object SpeedButton1: TSpeedButton [2]
-    Left = 366
-    Top = 11
-    Width = 23
-    Height = 22
-    Caption = 'All'
-  end
-  object SpeedButton2: TSpeedButton [3]
-    Left = 395
-    Top = 11
-    Width = 38
-    Height = 22
-    Caption = 'None'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   inherited OKBtn: TButton
-    Left = 452
+    Left = 442
     Anchors = [akTop, akRight]
+    OnClick = OKBtnClick
   end
   inherited CancelBtn: TButton
-    Left = 452
+    Left = 442
     Anchors = [akTop, akRight]
   end
   object HelpBtn: TButton
-    Left = 452
+    Left = 442
     Top = 68
     Width = 75
     Height = 25
@@ -56,7 +51,7 @@ inherited OKHelpRightDlg: TOKHelpRightDlg
   end
   object chkIncludePw: TCheckBox
     Left = 20
-    Top = 260
+    Top = 250
     Width = 254
     Height = 17
     Anchors = [akLeft, akBottom]
@@ -64,12 +59,13 @@ inherited OKHelpRightDlg: TOKHelpRightDlg
     Checked = True
     State = cbChecked
     TabOrder = 3
+    ExplicitTop = 260
   end
-  object ListView1: TListView
+  object ListViewAccounts: TListView
     Left = 20
     Top = 39
-    Width = 413
-    Height = 215
+    Width = 403
+    Height = 205
     Anchors = [akLeft, akTop, akRight, akBottom]
     Checkboxes = True
     Columns = <
@@ -92,5 +88,21 @@ inherited OKHelpRightDlg: TOKHelpRightDlg
       FF}
     TabOrder = 4
     ViewStyle = vsReport
+    ExplicitWidth = 413
+    ExplicitHeight = 215
+  end
+  object chkSelAll: TCheckBox
+    Left = 344
+    Top = 16
+    Width = 79
+    Height = 17
+    Alignment = taLeftJustify
+    Anchors = [akTop, akRight]
+    BiDiMode = bdLeftToRight
+    Caption = 'All Accounts'
+    ParentBiDiMode = False
+    TabOrder = 5
+    OnClick = chkSelAllClick
+    ExplicitLeft = 354
   end
 end
