@@ -63,6 +63,7 @@ type
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
                             Shift: TShiftState; X, Y: Integer);
     procedure FrameResize(Sender: TObject);
+    procedure btnStorageLocClick(Sender: TObject);
   private
     { Private declarations }
     funcEnableSaveBtn : TEnableSaveOptionsFunction;
@@ -75,7 +76,7 @@ type
 
 implementation
 
-uses uMain, uRCUtils, uGlobal, uTranslate, uDM, uIniSettings, Math;
+uses uMain, uRCUtils, uGlobal, uTranslate, uDM, uIniSettings, Math, ShellAPI;
 
 {$R *.dfm}
 
@@ -225,6 +226,14 @@ begin
   PlayWav(Options.DefSound);
 end;
 
+
+procedure TframeDefaults.btnStorageLocClick(Sender: TObject);
+var
+  iniPathAsStr : string;
+begin
+  iniPathAsStr := IniPath;
+  ShellExecute(Application.Handle, nil, 'explorer.exe', PChar(iniPathAsStr), nil, SW_NORMAL);
+end;
 
 procedure TframeDefaults.HelpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
