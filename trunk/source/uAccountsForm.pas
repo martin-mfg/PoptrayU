@@ -127,6 +127,7 @@ type
     procedure colAccountGetColors(Sender: TCustomColorBox; Items: TStrings);
     procedure FormShow(Sender: TObject);
     procedure actExportExecute(Sender: TObject);
+    procedure actImportExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -160,7 +161,7 @@ implementation
 
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
-  uPositioning, System.IniFiles, ExportAcctDlg;
+  uPositioning, System.IniFiles, ExportAcctDlg, uImportAccountDlg;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -441,11 +442,11 @@ procedure TAccountsForm.DeleteAccount(num: integer);
 var
   i : integer;
 begin
-  if Accounts.NumAccounts=1 then
-  begin
-    ShowTranslatedDlg(Translate('Cannot delete last Account'), mtError, [mbOK], 0);
-    Exit;
-  end;
+  //if Accounts.NumAccounts=1 then
+  //begin
+  //  ShowTranslatedDlg(Translate('Cannot delete last Account'), mtError, [mbOK], 0);
+  //  Exit;
+  //end;
   if ShowTranslatedDlg(Translate('Delete Account:')+' '+Accounts[num-1].Name+' ?',
                 mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
@@ -899,6 +900,63 @@ begin
     dlgResult := exportDlg.ShowModal;
   finally
     exportDlg.Free;
+  end;
+end;
+
+procedure TAccountsForm.actImportExecute(Sender: TObject);
+var
+  msgBox: TForm;
+  dlgResult : integer;
+  importDlg : TImportAcctDlg;
+  numAddedAccts : integer;
+  i : integer;
+begin
+  // save changes to account before proceeding.
+  if FAccChanged then begin
+    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account, would you like to save now?'),
+      mtConfirmation, mbOKCancel);
+    with msgBox do
+    try
+      Caption := uTranslate.Translate('Import/Restore Accounts');
+      TButton(FindComponent('Ok')).Caption := uTranslate.Translate('Save');
+      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
+      dlgResult := msgBox.ShowModal;
+      if dlgResult = mrOK then begin
+        btnSave.Click;
+      end else exit;
+    finally
+      msgBox.Free;
+    end;
+  end;
+
+  importDlg := TImportAcctDlg.Create(self);
+  try
+    numAddedAccts := importDlg.ImportAccounts(Accounts);
+    if (numAddedAccts > 0) then
+    begin
+        FNewAccount := True;
+        btnSave.Enabled := True;
+        btnCancelAccount.Enabled := True;
+
+        for i := 1 to numAddedAccts do
+        begin
+          tabAccounts.Tabs.Add(Accounts[Accounts.NumAccounts - numAddedAccts + i].Name);
+          dm.AddBitmap(dm.imlTabs, dm.imlPopTrueColor,popClosed);
+        end;
+
+        // set current tab
+        tabAccounts.TabIndex := Accounts.NumAccounts-numAddedAccts;
+//        EnableFields(True);
+//        chkAccEnabled.Checked := True;
+        frmPopUMain.lvMail.Items.Clear; //clear mail list
+        ShowAccount( Accounts[Accounts.NumAccounts - numAddedAccts] );
+
+        FNewAccount := True;
+        btnSave.Enabled := True;
+        btnCancelAccount.Enabled := True;
+    end;
+  finally
+    importDlg.Free;
   end;
 end;
 

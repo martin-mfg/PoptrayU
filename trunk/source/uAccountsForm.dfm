@@ -89,7 +89,7 @@ object AccountsForm: TAccountsForm
             TabOrder = 0
             StyleElements = [seFont, seClient]
             object btnAccountProgramTest: TSpeedButton
-              Left = 395
+              Left = 378
               Top = 9
               Width = 72
               Height = 23
@@ -102,7 +102,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnAccountSoundTest: TSpeedButton
-              Left = 395
+              Left = 378
               Top = 38
               Width = 72
               Height = 23
@@ -124,7 +124,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnEdAccountProgram: TSpeedButton
-              Left = 368
+              Left = 351
               Top = 9
               Width = 21
               Height = 23
@@ -139,7 +139,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 437
             end
             object btnEdSound: TSpeedButton
-              Left = 368
+              Left = 351
               Top = 38
               Width = 21
               Height = 23
@@ -172,7 +172,7 @@ object AccountsForm: TAccountsForm
             object edAccountProgram: TEdit
               Left = 89
               Top = 9
-              Width = 273
+              Width = 256
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -188,7 +188,7 @@ object AccountsForm: TAccountsForm
             object edSound: TEdit
               Left = 89
               Top = 40
-              Width = 273
+              Width = 256
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -204,7 +204,7 @@ object AccountsForm: TAccountsForm
             object panNoCheckHours: TPanel
               Left = 8
               Top = 103
-              Width = 461
+              Width = 444
               Height = 25
               Anchors = [akLeft, akTop, akRight]
               BevelOuter = bvNone
@@ -537,7 +537,7 @@ object AccountsForm: TAccountsForm
             end
             object lblProt: TLabel
               AlignWithMargins = True
-              Left = 306
+              Left = 289
               Top = 9
               Width = 43
               Height = 13
@@ -549,7 +549,7 @@ object AccountsForm: TAccountsForm
             end
             object lblPort: TLabel
               AlignWithMargins = True
-              Left = 325
+              Left = 308
               Top = 63
               Width = 24
               Height = 13
@@ -561,7 +561,7 @@ object AccountsForm: TAccountsForm
             end
             object lblUseSsl: TLabel
               AlignWithMargins = True
-              Left = 286
+              Left = 269
               Top = 36
               Width = 63
               Height = 13
@@ -574,7 +574,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 6
-              Width = 155
+              Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -586,7 +586,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 33
-              Width = 155
+              Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -598,7 +598,7 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 60
-              Width = 155
+              Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -609,7 +609,7 @@ object AccountsForm: TAccountsForm
             end
             object chkSSL: TCheckBox
               AlignWithMargins = True
-              Left = 355
+              Left = 338
               Top = 32
               Width = 110
               Height = 22
@@ -619,7 +619,7 @@ object AccountsForm: TAccountsForm
             end
             object edPort: TEdit
               AlignWithMargins = True
-              Left = 355
+              Left = 338
               Top = 60
               Width = 63
               Height = 21
@@ -630,7 +630,7 @@ object AccountsForm: TAccountsForm
               OnClick = edAccChange
             end
             object cmbProtocol: TComboBox
-              Left = 355
+              Left = 338
               Top = 5
               Width = 110
               Height = 21
@@ -672,7 +672,7 @@ object AccountsForm: TAccountsForm
               FocusControl = colAccount
             end
             object lblEnableAccount: TLabel
-              Left = 405
+              Left = 388
               Top = 3
               Width = 42
               Height = 13
@@ -683,7 +683,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 432
             end
             object chkAccEnabled: TCheckBox
-              Left = 447
+              Left = 430
               Top = 2
               Width = 18
               Height = 24
@@ -986,6 +986,7 @@ object AccountsForm: TAccountsForm
       Category = 'Accounts'
       Caption = 'Import'
       ImageIndex = 13
+      OnExecute = actImportExecute
     end
   end
 end

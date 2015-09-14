@@ -232,16 +232,24 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS">
-            <Form>OKRightDlg</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="uCustomColorDialog.pas">
             <Form>CustomColorDialog</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uConstants.pas"/>
         <DCCReference Include="uProtocol.pas"/>
+        <DCCReference Include="ExportAcctDlg.pas">
+            <Form>ExportAccountsDlg</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS">
+            <Form>OKRightDlg</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uImportAccountDlg.pas">
+            <Form>ImportAcctDlg</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="ModelSupport_PopTrayU\PopTrayU\default.txvpck"/>
         <None Include="ModelSupport_PopTrayU\PopTrayU\default.txaPackage"/>
         <None Include="ModelSupport_PopTrayU\default.txaPackage"/>
