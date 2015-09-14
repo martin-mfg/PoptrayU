@@ -80,16 +80,16 @@ begin
 
   try
     saveDialog := TSaveDialog.Create(self);
-    saveDialog.Title := 'Backup/Export Accounts';
+    saveDialog.Title := 'Export/Backup Accounts';
     saveDialog.InitialDir := GetCurrentDir;
     saveDialog.Filter := 'Ini File|*.ini|Text File|*.txt';
     saveDialog.DefaultExt := 'ini';
     saveDialog.FilterIndex := 1;
 
-    // Display the open file dialog
+    // Display the save file dialog
     if saveDialog.Execute
     then begin
-      ShowMessage('File : '+saveDialog.FileName);
+      //ShowMessage('File : '+saveDialog.FileName);
 
       // write to ini
       Ini := TMemIniFile.Create(saveDialog.FileName);

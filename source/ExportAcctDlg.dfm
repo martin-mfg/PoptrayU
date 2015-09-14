@@ -32,10 +32,12 @@ inherited ExportAccountsDlg: TExportAccountsDlg
     Left = 442
     Anchors = [akTop, akRight]
     OnClick = OKBtnClick
+    ExplicitLeft = 442
   end
   inherited CancelBtn: TButton
     Left = 442
     Anchors = [akTop, akRight]
+    ExplicitLeft = 442
   end
   object HelpBtn: TButton
     Left = 442
@@ -47,7 +49,6 @@ inherited ExportAccountsDlg: TExportAccountsDlg
     Enabled = False
     TabOrder = 2
     OnClick = HelpBtnClick
-    ExplicitLeft = 300
   end
   object chkIncludePw: TCheckBox
     Left = 20
@@ -59,7 +60,6 @@ inherited ExportAccountsDlg: TExportAccountsDlg
     Checked = True
     State = cbChecked
     TabOrder = 3
-    ExplicitTop = 260
   end
   object ListViewAccounts: TListView
     Left = 20
@@ -71,12 +71,15 @@ inherited ExportAccountsDlg: TExportAccountsDlg
     Columns = <
       item
         Caption = 'Account'
+        Width = 120
       end
       item
         Caption = 'Server'
+        Width = 120
       end
       item
         Caption = 'Username'
+        Width = 120
       end>
     Items.ItemData = {
       05BC0000000400000000000000FFFFFFFFFFFFFFFF02000000FFFFFFFF000000
@@ -103,6 +106,5 @@ inherited ExportAccountsDlg: TExportAccountsDlg
     ParentBiDiMode = False
     TabOrder = 5
     OnClick = chkSelAllClick
-    ExplicitLeft = 354
   end
 end
