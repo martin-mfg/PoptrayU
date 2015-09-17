@@ -103,7 +103,7 @@ type
     function GetUID(msgnum: integer): string;
     function DebugPrint(): String;
     procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string; const includePassword: boolean = true);
-    procedure LoadAccountFromINI(Ini : TIniFile; section: string);
+    procedure LoadAccountFromINI(Ini : TCustomIniFile; section: string);
     procedure SetProtocol();
   end;
 
@@ -445,7 +445,7 @@ end;
 {*------------------------------------------------------------------------------
   Loads a single account from the ini file
 -------------------------------------------------------------------------------}
-procedure TAccount.LoadAccountFromINI(Ini : TIniFile; Section: string);
+procedure TAccount.LoadAccountFromINI(Ini : TCustomIniFile; Section: string);
 begin
     self.Name := Ini.ReadString(Section,'Name','NoName');
     self.Server := Ini.ReadString(Section,'Server','');
@@ -488,6 +488,7 @@ begin
 
     self.SetProtocol();
 end;
+
 
 // Assigns an instance of the Protocol (IMAP or POP) to the account.
 // Todo: look into whether there are cases where setProtocol is called that
