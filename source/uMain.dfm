@@ -3,7 +3,7 @@ object frmPopUMain: TfrmPopUMain
   Top = 258
   Caption = 'PopTrayU'
   ClientHeight = 379
-  ClientWidth = 576
+  ClientWidth = 590
   Color = clBtnFace
   Constraints.MinHeight = 340
   Constraints.MinWidth = 418
@@ -29,7 +29,7 @@ object frmPopUMain: TfrmPopUMain
   object PageControl: TPageControl
     Left = 0
     Top = 0
-    Width = 576
+    Width = 590
     Height = 379
     ActivePage = tsMail
     Align = alClient
@@ -44,6 +44,7 @@ object frmPopUMain: TfrmPopUMain
     TabPosition = tpRight
     OnChange = PageControlChange
     OnChanging = PageControlChanging
+    ExplicitWidth = 576
     object tsMail: TTabSheet
       Caption = 'Mail'
       Font.Charset = DEFAULT_CHARSET
@@ -52,10 +53,11 @@ object frmPopUMain: TfrmPopUMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
+      ExplicitWidth = 549
       object mailPanel1: TPanel
         Left = 0
         Top = 0
-        Width = 549
+        Width = 563
         Height = 371
         Margins.Left = 5
         Margins.Right = 5
@@ -66,13 +68,14 @@ object frmPopUMain: TfrmPopUMain
         ParentBackground = False
         TabOrder = 0
         StyleElements = [seFont, seClient]
+        ExplicitWidth = 549
         DesignSize = (
-          549
+          563
           371)
         object tabMail: TTabControl
           Left = 5
           Top = 0
-          Width = 539
+          Width = 553
           Height = 338
           Align = alClient
           Images = dm.imlTabs
@@ -82,11 +85,12 @@ object frmPopUMain: TfrmPopUMain
           OnDragDrop = tabDragDrop
           OnDragOver = tabMailDragOver
           OnMouseDown = DragMouseDown
+          ExplicitWidth = 539
           object lvMail: TListView
             Left = 4
-            Top = 70
-            Width = 531
-            Height = 245
+            Top = 38
+            Width = 545
+            Height = 277
             Align = alClient
             Columns = <
               item
@@ -134,12 +138,15 @@ object frmPopUMain: TfrmPopUMain
             OnMouseDown = lvMailMouseDown
             OnMouseMove = MouseMoveReset
             OnSelectItem = lvMailSelectItem
+            ExplicitTop = 70
+            ExplicitWidth = 531
+            ExplicitHeight = 245
           end
           object MailToolBar: TActionToolBar
             Left = 4
             Top = 6
-            Width = 531
-            Height = 64
+            Width = 545
+            Height = 32
             ActionManager = ActionManager
             AllowHiding = False
             Caption = 'Mail'
@@ -159,11 +166,13 @@ object frmPopUMain: TfrmPopUMain
             Spacing = 4
             VertMargin = 4
             OnGetControlClass = MailToolBarGetControlClass
+            ExplicitWidth = 531
+            ExplicitHeight = 64
           end
           object StatusBar: TStatusBar
             Left = 4
             Top = 315
-            Width = 531
+            Width = 545
             Height = 19
             AutoHint = True
             Panels = <
@@ -191,18 +200,20 @@ object frmPopUMain: TfrmPopUMain
             UseSystemFont = False
             OnDrawPanel = StatusBarDrawPanel
             OnResize = StatusBarResize
+            ExplicitWidth = 531
           end
         end
         object panMailButtons: TPanel
           Left = 5
           Top = 338
-          Width = 539
+          Width = 553
           Height = 33
           Align = alBottom
           BevelOuter = bvNone
           ParentBackground = False
           TabOrder = 1
           OnResize = panMailButtonsResize
+          ExplicitWidth = 539
           object btnStartProgram: TBitBtn
             Left = 16
             Top = 4
@@ -380,7 +391,7 @@ object frmPopUMain: TfrmPopUMain
           end
         end
         object panProgress: TPanel
-          Left = 332
+          Left = 346
           Top = 316
           Width = 205
           Height = 18
@@ -390,6 +401,7 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 2
           Visible = False
+          ExplicitLeft = 332
           DesignSize = (
             205
             18)
@@ -682,7 +694,7 @@ object frmPopUMain: TfrmPopUMain
                 ImageIndex = 31
               end>
             Action = actMark
-            Caption = '&Mark As'
+            Caption = '&Mark'
             ImageIndex = 29
           end
           item
