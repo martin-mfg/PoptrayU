@@ -3553,7 +3553,11 @@ begin
   NewCount := 0;
   for num := 1 to Accounts.NumAccounts do
   begin
-    MailCount := MailCount + Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount; //crashes here when invalid account found.
+    if (Accounts[num-1] = nil) or (Accounts[num-1].Mail = nil) then begin
+      //skip invalid accounts that are not fully initialized
+      Continue;
+    end;
+    MailCount := MailCount + Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount;
     UnviewedCount := UnviewedCount + Accounts[num-1].CountUnviewed;
     NewCount := NewCount + Accounts[num-1].CountNew();
     //plug-in notify account
