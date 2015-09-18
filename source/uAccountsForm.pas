@@ -128,6 +128,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure actExportExecute(Sender: TObject);
     procedure actImportExecute(Sender: TObject);
+    procedure btnPickFolderClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -144,6 +145,7 @@ type
     procedure WMDropFiles(var msg: TWMDROPFILES); message WM_DROPFILES;
     function GetAccountForTab(tabNumber : integer) : TAccount;
     procedure showHideImapOptions;
+    procedure EnableSSLOptions(enable : boolean);
   public
     { Public declarations }
     procedure RefreshProtocols();
@@ -161,7 +163,8 @@ implementation
 
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
-  uPositioning, System.IniFiles, ExportAcctDlg, uImportAccountDlg;
+  uPositioning, System.IniFiles, ExportAcctDlg, uImportAccountDlg,
+  uImapFolderSelect;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -268,13 +271,9 @@ begin
 
   // If the plugin does not support SSL, do not allow user to click on
   // options that require SSL encryption.
-  if (account.Prot.SupportsSSL = false)
+  if (account.Prot = nil) or (account.Prot.SupportsSSL = false)    //needs compiler setting {$B+} short cicuiting or will fail
   then begin
-    chkSSL.Enabled := false;
-    cmbSslVer.Enabled := false;
-    lblSslVer.Enabled := false;
-    //cmbAuthType.Items.Delete(Integer(sasl)); // no option to disable, so hide
-    chkStartTLS.Enabled := false;
+    EnableSSLOptions(false); //disable UI features for selecting SSL
   end
   else if (account.UseSSLorTLS = false) then
   begin
@@ -286,11 +285,11 @@ begin
   cmbAuthType.Items.Clear;
   idxAuto := cmbAuthType.Items.AddObject(Translate('Auto'),TObject(autoAuth));
   idxPw := cmbAuthType.Items.AddObject(Translate('Password'),TObject(password));
-  if (account.Prot.SupportsAPOP) then
+  if (account.Prot <> nil) and (account.Prot.SupportsAPOP) then
     idxApop := cmbAuthType.Items.AddObject(Translate('APOP'),TObject(apop))
   else
     idxApop := -1;
-  if (account.Prot.SupportsSSL and account.Prot.SupportsSASL) then
+  if (account.Prot <> nil) and (account.Prot.SupportsSSL and account.Prot.SupportsSASL) then
     idxSasl := cmbAuthType.Items.AddObject(Translate('SASL'),TObject(sasl))
   else
     idxSasl := -1;
@@ -462,9 +461,7 @@ begin
     // remove from INI
     for i := 1 to Accounts.NumAccounts do
       SaveAccountINI(i);
-    // Notify Rules form that it needs to remove an account from rules dropdown
-    RulesForm.AccountsChanged();
-    // fix rules
+    // fix rules - rule numbers after the deleted account all need to be decreased by one
     for i := 0 to RulesManager.Rules.Count-1 do        //TODO make this a method in RulesManager /////////////////////////////////////////
     begin
       if RulesManager.Rules[i].Account = num then
@@ -472,13 +469,24 @@ begin
       if RulesManager.Rules[i].Account > num then
         RulesManager.Rules[i].Account := RulesManager.Rules[i].Account - 1;
     end;
-    RulesForm.listRulesClick(RulesForm.listRules);
+    // Notify Rules form that it needs to remove an account from rules dropdown
+    if Assigned(RulesForm) then begin    //TODO: this change seems like it might break something!!!!!!!!!!!!
+      RulesForm.AccountsChanged();
+      RulesForm.listRulesClick(RulesForm.listRules);
+    end;
     SaveRulesINI;
     // show mail
     if Accounts.NumAccounts>0 then
     begin
-      frmPopUMain.tabMail.TabIndex := 0;
-      tabAccounts.TabIndex := 0;
+      //frmPopUMain.tabMail.TabIndex := 0;
+      //tabAccounts.TabIndex := 0;
+      if (num) >= (Accounts.numAccounts) then begin
+        frmPopUMain.tabMail.TabIndex := num-2;
+        tabAccounts.TabIndex := num-2;
+      end else begin
+        frmPopUMain.tabMail.TabIndex := num-1;
+        tabAccounts.TabIndex := num-1;
+      end;
       ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
       frmPopUMain.ShowMail(Accounts[frmPopUMain.tabMail.TabIndex],True);
     end
@@ -567,6 +575,15 @@ begin
   btnCancelAccount.Enabled := FAccChanged;
 end;
 
+procedure TAccountsForm.EnableSSLOptions(enable : boolean);
+begin
+    chkSSL.Enabled := enable;
+    cmbSslVer.Enabled := enable;
+    lblSslVer.Enabled := enable;
+    //cmbAuthType.Items.Delete(Integer(sasl)); // no option to disable, so hide
+    chkStartTLS.Enabled := enable;
+end;
+
 procedure TAccountsForm.cmbProtocolChange(Sender: TObject);
 begin
   if length(Protocols)-1 < cmbProtocol.ItemIndex then Exit;
@@ -584,6 +601,12 @@ begin
     edPort.Text := IntToStr(Protocols[cmbProtocol.ItemIndex].Port);
     Accounts[tabAccounts.TabIndex].Protocol := Protocols[cmbProtocol.ItemIndex].Name;
     Accounts[tabAccounts.TabIndex].SetProtocol;
+
+    if (Accounts[tabAccounts.TabIndex].Prot <> nil) and (Accounts[tabAccounts.TabIndex].Prot.SupportsSSL = true) then begin
+      EnableSSLOptions(true);
+    end else begin
+      EnableSSLOptions(false);
+    end;
   end;
 
   // To make sure the port number reflects whether "Use SSL" is checked or not
@@ -593,7 +616,7 @@ begin
   showHideImapOptions();
 
   // buttons
-  FAccChanged := AccountChanged(tabAccounts.TabIndex);
+  FAccChanged := AccountChanged(tabAccounts.TabIndex) or FNewAccount;
   btnSave.Enabled := FAccChanged;
   btnCancelAccount.Enabled := FAccChanged;
 end;
@@ -801,6 +824,49 @@ begin
   btnCancelAccount.Enabled := False;
 end;
 
+// for the three pick folder ... buttons.
+procedure TAccountsForm.btnPickFolderClick(Sender: TObject);
+var
+  num : integer;
+  account : TAccount;
+  folders: TStringList;
+  pickFolderDlg : TImapFolderSelectDlg;
+  pickedFolder : string;
+begin
+  try
+    num := tabAccounts.TabIndex+1;
+    if num <= 0 then Exit;
+
+    account := Accounts[num-1];
+    if (account = nil) or (account.IsImap = false) then Exit;
+
+    SaveAccountEdits(Accounts[num-1]);
+
+    pickFolderDlg := TImapFolderSelectDlg.Create(self);
+    try
+      pickedFolder := pickFolderDlg.ShowSelect(account);
+      if (pickedFolder <> '') then begin
+        if (Sender = btnSpamFolder) then
+          edSpamFolder.Text := pickedFolder
+        else if (Sender = btnTrashFolder) then
+          edTrashFolder.Text := pickedFolder
+        else if (Sender = btnArchiveFolder) then
+          edArchiveFolder.Text := pickedFolder;
+
+        FAccChanged := true;
+        btnSave.Enabled := true;
+        btnCancelAccount.Enabled := true;
+      end;
+    finally
+      pickFolderDlg.Free;
+    end;
+
+
+  finally
+    //Screen.Cursor := crDefault;
+    //actTestAccount.Enabled := true;
+  end;
+end;
 
 procedure TAccountsForm.actAddAccountExecute(Sender: TObject);
 var
@@ -910,6 +976,8 @@ var
   importDlg : TImportAcctDlg;
   numAddedAccts : integer;
   i : integer;
+  accName : string;
+  accNum : integer;
 begin
   // save changes to account before proceeding.
   if FAccChanged then begin
@@ -934,14 +1002,19 @@ begin
     numAddedAccts := importDlg.ImportAccounts(Accounts);
     if (numAddedAccts > 0) then
     begin
-        FNewAccount := True;
+        //FNewAccount := True;   --this will screw up deleting accounts later
+        FAccChanged := True;
         btnSave.Enabled := True;
         btnCancelAccount.Enabled := True;
 
-        for i := 1 to numAddedAccts do
+        for i := 0 to numAddedAccts - 1 do
         begin
-          tabAccounts.Tabs.Add(Accounts[Accounts.NumAccounts - numAddedAccts + i].Name);
-          dm.AddBitmap(dm.imlTabs, dm.imlPopTrueColor,popClosed);
+          accNum := Accounts.NumAccounts - numAddedAccts + i; //zero based
+          accName := Accounts[accNum].Name;
+          tabAccounts.Tabs.Add(accName);
+          frmPopUMain.tabMail.Tabs.Add(accName);
+          dm.AddBitmap(dm.imlTabs, dm.imlPopTrueColor,popClosed); //adds to end of list
+          SaveAccountINI(accNum + 1);  //one based
         end;
 
         // set current tab
@@ -951,9 +1024,17 @@ begin
         frmPopUMain.lvMail.Items.Clear; //clear mail list
         ShowAccount( Accounts[Accounts.NumAccounts - numAddedAccts] );
 
-        FNewAccount := True;
-        btnSave.Enabled := True;
-        btnCancelAccount.Enabled := True;
+        //FNewAccount := True;
+        //btnSave.Enabled := True;
+        //btnCancelAccount.Enabled := True;
+
+
+        //frmPopUMain.RulesForm.AccountsChanged();
+        //frmPopUMain.ShowIcon(Accounts[Accounts.NumAccounts - numAddedAccts],itNormal);
+        //frmPopUMain.ShowIcon(Accounts[Accounts.NumAccounts - numAddedAccts],itNormal);
+        FAccChanged := False;
+        btnSave.Enabled := False;
+        btnCancelAccount.Enabled := False;
     end;
   finally
     importDlg.Free;

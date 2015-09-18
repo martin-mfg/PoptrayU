@@ -96,8 +96,9 @@ uses
   uConstants in 'uConstants.pas',
   uProtocol in 'uProtocol.pas',
   ExportAcctDlg in 'ExportAcctDlg.pas' {ExportAccountsDlg},
+  uImportAccountDlg in 'uImportAccountDlg.pas' {ImportAcctDlg},
   OKCANCL2 in 'c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS' {OKRightDlg},
-  uImportAccountDlg in 'uImportAccountDlg.pas' {ImportAcctDlg};
+  uImapFolderSelect in 'uImapFolderSelect.pas' {ImapFolderSelectDlg};
 
 {$R *.RES}
 
@@ -178,6 +179,7 @@ begin
   Application.CreateForm(TfrmPopUMain, frmPopUMain);
   Application.CreateForm(TExportAccountsDlg, ExportAccountsDlg);
   Application.CreateForm(TImportAcctDlg, ImportAcctDlg);
+  Application.CreateForm(TImapFolderSelectDlg, ImapFolderSelectDlg);
   Application.Run;
 
 end.

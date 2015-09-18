@@ -116,6 +116,7 @@ type
     function AddGmailLabelToMsgs(const uidList: TStrings; labelname : string): boolean;
     function RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
     function FetchGmailLabels(const uid: String; labels: TStrings): boolean;
+    function GetFolderNames(folders : TStringList): boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -809,6 +810,11 @@ begin
   except
     Result := false;
   end;
+end;
+
+function TProtocolIMAP4.GetFolderNames(folders : TStringList): boolean;
+begin
+  Result := IMAP.ListMailBoxes(folders);
 end;
 
 function AddQuotesIfNeeded(input: string) : string;
