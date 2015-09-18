@@ -18,7 +18,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    function ImportAccounts(): integer;
+    function ImportAccounts(accounts : TAccounts): integer;
   end;
 
 var
@@ -47,16 +47,15 @@ end;
 // @param accounts - pass in the account list that you would like any imported
 //    accounts to be added to. It should be initialized before calling this
 //    function.
-// @return a message result whether the import was canceled or successful
-//    mrCancel or mrOk
+// @return number of accounts imported
 function TImportAcctDlg.ImportAccounts(accounts : TAccounts): integer;
 var
   openDialog : TOpenDialog;    // Save dialog variable
   msgBox: TForm;
   dlgResult : integer;
   aSection : string;
-  Ini : TIniFile;
-  numExportedAccounts : integer;
+  Ini : TMemIniFile;
+  numImportedAccounts : integer;
   item : TListItem;
   iniSections : TStringList;
   account : TAccount;
@@ -64,7 +63,8 @@ begin
   inherited;
 
   try
-    Result := mrCancel;
+    Result := 0;
+    numImportedAccounts := 0;
 
     openDialog := TOpenDialog.Create(self);
     openDialog.Title := 'Import/Restore Accounts';
@@ -78,7 +78,7 @@ begin
     then begin
       ListViewAccounts.Clear;
 
-      Ini := TIniFile.Create(openDialog.FileName);
+      Ini := TMemIniFile.Create(openDialog.FileName);
       try
         // make a list of accounts in the ini file
         iniSections := TStringList.Create;
@@ -96,6 +96,7 @@ begin
             item.Caption := account.Name;
             item.SubItems.Add(account.Server);
             item.SubItems.Add(account.Login);
+            item.SubItems.Add(aSection);
             item.Data := account;
           end;
         end;
@@ -103,8 +104,18 @@ begin
 
         if (Result = mrOk) then
         begin
-
+          for item in ListViewAccounts.Items do begin
+            if (item.Checked) then begin
+              Inc(numImportedAccounts);
+              account := accounts.Add;
+              account.LoadAccountFromINI(Ini, item.SubItems[2]);
+            end;
+          end;
+          if (numImportedAccounts > 0) then begin
+            Result := numImportedAccounts;
+          end;
         end;
+
 
 
         // todo: free item.Data
