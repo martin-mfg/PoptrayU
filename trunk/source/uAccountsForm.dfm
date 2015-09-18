@@ -66,6 +66,7 @@ object AccountsForm: TAccountsForm
           Top = 0
           Width = 526
           Height = 465
+          VertScrollBar.Position = 64
           VertScrollBar.Tracking = True
           Align = alClient
           BevelInner = bvNone
@@ -82,7 +83,7 @@ object AccountsForm: TAccountsForm
           HeaderFont.Style = [fsBold]
           TabOrder = 0
           object catPopTrayAccountPrefs: TCategoryPanel
-            Top = 427
+            Top = 363
             Height = 100
             Caption = 'PopTrayU Account Preferences'
             Color = clWindow
@@ -315,7 +316,7 @@ object AccountsForm: TAccountsForm
             end
           end
           object catImap: TCategoryPanel
-            Top = 246
+            Top = 182
             Height = 181
             Caption = 'IMAP Account Options'
             Color = clWindow
@@ -340,6 +341,7 @@ object AccountsForm: TAccountsForm
               Width = 23
               Height = 22
               Caption = '...'
+              OnClick = btnPickFolderClick
             end
             object btnTrashFolder: TSpeedButton
               Left = 225
@@ -347,6 +349,7 @@ object AccountsForm: TAccountsForm
               Width = 23
               Height = 22
               Caption = '...'
+              OnClick = btnPickFolderClick
             end
             object lblArchiveFolder: TLabel
               Left = 8
@@ -361,6 +364,7 @@ object AccountsForm: TAccountsForm
               Width = 23
               Height = 22
               Caption = '...'
+              OnClick = btnPickFolderClick
             end
             object chkGmailExt: TCheckBox
               Left = 8
@@ -421,7 +425,7 @@ object AccountsForm: TAccountsForm
             end
           end
           object catAdvAcc: TCategoryPanel
-            Top = 170
+            Top = 106
             Height = 76
             Caption = 'Advanced Connection Settings'
             Color = clWindow
@@ -499,7 +503,7 @@ object AccountsForm: TAccountsForm
             end
           end
           object catBasicAccount: TCategoryPanel
-            Top = 57
+            Top = -7
             Height = 113
             Caption = 'Connection Settings'
             Color = clWindow
@@ -647,7 +651,7 @@ object AccountsForm: TAccountsForm
             end
           end
           object catAccName: TCategoryPanel
-            Top = 0
+            Top = -64
             Height = 57
             Caption = 'Display Options'
             Color = clWindow
