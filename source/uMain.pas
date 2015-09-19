@@ -412,7 +412,7 @@ uses
   IniFiles,  ShellAPI,  StrUtils, Types, uFrameVisualAppearance,
   IdEMailAddress, IdResourceStrings, uTranslate, uIniSettings, uFontUtils,
   IdReplyPOP3, IdExceptionCore, uRegExp, IdIOHandler, Math, OtlParallel,
-  DateUtils, IdMailBox;
+  DateUtils, IdMailBox, uImapFolderSelect;
 
 
 
@@ -4426,20 +4426,33 @@ end;
 
 procedure TfrmPopUMain.actRemoveGmailLabelExecute(Sender: TObject);
 var
-  uidList : TStringList;
+  uidList, labelsList : TStringList;
   account : TAccount;
   labelname : string;
   success : boolean;
+  pickLabelDlg : TImapFolderSelectDlg;
 begin
   if (lvMail.SelCount > 0) then begin
     account := TabToAccount();
     if (account.IsImap) then begin
-      //TODO: show prompt for removing a label
-      labelname := Dialogs.InputBox('Remove a Label', 'Label:', '');
-      if labelname <> '' then begin
-        uidList := TStringList.Create;
+      account.ConnectIfNeeded();
+      uidList := TStringList.Create;
+      labelsList := TStringList.Create;
+      try
         GetUidsOfSelectedMsgs(uidList);
-        success := (account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(uidList, labelname);
+        if (account.Prot as TProtocolIMAP4).FetchGmailLabels(uidList.CommaText, labelsList) then begin
+        pickLabelDlg := TImapFolderSelectDlg.Create(self);
+        try
+          labelname := pickLabelDlg.ShowSelectDlg(uTranslate.Translate('Select Label to Remove'), labelsList);
+          if (labelname <> '') then begin
+            success := (account.Prot as TProtocolIMAP4).RemoveGmailLabelFromMsgs(uidList, labelname);
+          end;
+        finally
+          pickLabelDlg.Free;
+        end;
+
+        end;
+        //success := (account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(uidList, labelname);
 
         if (success) then
           account.Status := SysUtils.Format(Translate('Label "%s" removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now)
@@ -4448,7 +4461,9 @@ begin
           account.Status := SysUtils.Format(Translate('Error: Label "%s" could not be removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now);
 
         StatusBar.Panels[0].Text := account.Status;
-
+      finally
+        uidList.Free;
+        labelsList.Free;
       end;
     end;
   end;

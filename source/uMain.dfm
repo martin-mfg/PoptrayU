@@ -724,25 +724,30 @@ object frmPopUMain: TfrmPopUMain
           item
             Items = <
               item
-                Action = actHideViewed
-                Caption = '&Hide'
-                ImageIndex = 14
+                Action = actAddGmailLabel
+                Caption = 'A&dd Gmail Label'
+                ImageIndex = 32
               end
               item
-                Action = actDeleteSpam
-                ImageIndex = 18
+                Action = actRemoveGmailLabel
+                Caption = '&Remove Gmail Label'
+                ImageIndex = 33
+              end
+              item
+                Caption = '-'
               end
               item
                 Action = actSelectAll
                 ImageIndex = 26
               end
               item
-                Action = actRemoveGmailLabel
-                Caption = '&Remove Gmail Label'
+                Action = actDeleteSpam
+                ImageIndex = 18
               end
               item
-                Action = actAddGmailLabel
-                Caption = 'A&dd Gmail Label'
+                Action = actHideViewed
+                Caption = '&Hide'
+                ImageIndex = 14
               end>
             Caption = 'M&ore'
             ImageIndex = 14
