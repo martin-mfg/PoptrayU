@@ -115,7 +115,7 @@ type
     function SetImportantFlag(const uid : string; isImportant : boolean): boolean;
     function AddGmailLabelToMsgs(const uidList: TStrings; labelname : string): boolean;
     function RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
-    function FetchGmailLabels(const uid: String; labels: TStrings): boolean;
+    function FetchGmailLabels(const uid: String; labels: TStrings): boolean; overload;
     function GetFolderNames(folders : TStringList): boolean;
   end;
 
@@ -784,14 +784,14 @@ begin
   end;
 end;
 
-
+// TStrings.CommaText can be substituted for uid for multiple uids
 function TProtocolIMAP4.FetchGmailLabels(const uid: String; labels: TStrings): boolean;
 var
   labelsStr : string;
 begin
   try
     if HasCapa('X-GM-EXT-1') and (uid <> '') and (labels <> nil)  then begin
-      IMAP.SendCmd(ImapCmdNum(),'FETCH '+uid+' (X-GM-LABELS)',['OK','BAD','NO'], false);
+      IMAP.SendCmd(ImapCmdNum(),'UID FETCH '+uid+' (X-GM-LABELS)',['OK','BAD','NO'], false);
       labels.Clear;
 
 
@@ -811,6 +811,7 @@ begin
     Result := false;
   end;
 end;
+
 
 function TProtocolIMAP4.GetFolderNames(folders : TStringList): boolean;
 begin

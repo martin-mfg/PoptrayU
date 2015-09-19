@@ -14,14 +14,15 @@ type
     { Private declarations }
   public
     { Public declarations }
-    function ShowSelect(account : TAccount): string;
+    function ShowSelectImapFolder(account : TAccount): string;
+    function ShowSelectDlg(dialogTitle : string; listItems : TStringList): string;
   end;
 
 var
   ImapFolderSelectDlg: TImapFolderSelectDlg;
 
 implementation
-uses uIMAP4;
+uses uIMAP4, uTranslate;
 
 {$R *.dfm}
 
@@ -30,7 +31,7 @@ begin
   Application.HelpContext(HelpContext);
 end;
 
-function TImapFolderSelectDlg.ShowSelect(account : TAccount): string;
+function TImapFolderSelectDlg.ShowSelectImapFolder(account : TAccount): string;
 var
   folders : TStringList;
   i : integer;
@@ -50,6 +51,7 @@ begin
       end;
     end;
     Screen.Cursor := crDefault;
+    self.Caption := uTranslate.Translate('Select Imap Folder');
     dlgResult := self.ShowModal;
     if (dlgResult = mrOk) and (ListBox1.itemindex >= 0) then begin
       Result := listbox1.items[listbox1.itemindex];
@@ -60,6 +62,28 @@ begin
   end;
 
 end;
+
+function TImapFolderSelectDlg.ShowSelectDlg(dialogTitle : string; listItems : TStringList): string;
+var
+  i : integer;
+  dlgResult : integer;
+begin
+  Result := '';
+  if listItems = nil then exit;
+
+  begin
+    for i := 0 to (listItems.Count - 1) do begin
+      ListBox1.AddItem(listItems[i], nil);
+    end;
+  end;
+  Screen.Cursor := crDefault;
+  dlgResult := self.ShowModal;
+  if (dlgResult = mrOk) and (ListBox1.itemindex >= 0) then begin
+    Result := listbox1.items[listbox1.itemindex];
+  end;
+
+end;
+
 
 end.
  

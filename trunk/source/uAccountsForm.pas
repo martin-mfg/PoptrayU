@@ -844,7 +844,7 @@ begin
 
     pickFolderDlg := TImapFolderSelectDlg.Create(self);
     try
-      pickedFolder := pickFolderDlg.ShowSelect(account);
+      pickedFolder := pickFolderDlg.ShowSelectImapFolder(account);
       if (pickedFolder <> '') then begin
         if (Sender = btnSpamFolder) then
           edSpamFolder.Text := pickedFolder
