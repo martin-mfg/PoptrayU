@@ -131,6 +131,10 @@ uses
 const
   debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+type
+  TIdIMAP4Access = class(TIdIMAP4);
+  TIdIMAPLineStructAccess = class(TIdIMAPLineStruct);
+
 var
   debugAccountCounter : integer = 0;
 
@@ -791,7 +795,7 @@ var
 begin
   try
     if HasCapa('X-GM-EXT-1') and (uid <> '') and (labels <> nil)  then begin
-      IMAP.SendCmd(ImapCmdNum(),'UID FETCH '+uid+' (X-GM-LABELS)',['OK','BAD','NO'], false);
+      IMAP.SendCmd('UID FETCH '+uid+' (X-GM-LABELS)',['FETCH','UID'], false);
       labels.Clear;
 
 
@@ -800,11 +804,19 @@ begin
       // * 1 FETCH (X-GM-LABELS (\Inbox \Sent Important "Muy Importante"))
       // a010 OK FETCH (Success)
 
+      if IMAP.LastCmdResult.Text.Count > 0 then
+      begin
+        labelsStr := IMAP.LastCmdResult.Text[0];
+        //System.Delete(labelsStr,0,Pos('X-GM-LABELS',labelsStr)+12);
+        //ExtractStrings(['(',')'],[' '],PChar(labelsStr), labels);
 
-      labelsStr := IMAP.LastCmdResult.Text.ToString;
-      System.Delete(labelsStr,0,Pos('X-GM-LABELS',labelsStr)+12);
-      ExtractStrings(['(',')'],[' '],PChar(labelsStr), labels);
-      Result := IMAP.LastCmdResult.Code = 'OK';
+        if TIdIMAP4Access(IMAP).ParseLastCmdResult(IMAP.LastCmdResult.Text[0], 'FETCH', ['X-GM-LABELS']) then begin
+          labelsStr := TIdIMAPLineStructAccess(TIdIMAP4Access(IMAP).FLineStruct).IMAPValue;
+          ExtractStrings(['''','"',' '],[' '],PChar(labelsStr), labels);
+        end;
+
+        Result := IMAP.LastCmdResult.Code = 'OK';
+      end;
     end else
       Result := false;
   except
