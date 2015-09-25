@@ -1,18 +1,29 @@
 PopTrayU Version History
 ------------------------
 
-=============
-Version 5.1.6
-July 2015?
-=============
+==============
+Version 5.2,0
+September 2015
+==============
 New Features
 ------------
-* IMAP accounts now attempt to leave connection open between checks for faster checking, more responsive preview, and quicker processing of actions like deleting messages or changing their read status.
-* For IMAP servers that support UIDPLUS like gmail, delete will now use UID EXPUNGE instead of EXPUNGE so that only messages deleted by this client are expunged (permanantly removed) and messages deleted by other clients are unaffected.
 * Mark IMAP message(s) as important/not important (ie: "starred" for Gmail) on the server from the main window. 
 * Mark IMAP message(s) as read/unread on the server from the main window. 
 * IMAP account options to move deleted messages to server trash folder, move deleted spam to server spam folder
-* IMAP archive (for non-gmail accounts this will move messages to an arbitrary IMAP folder)
+* Gmail compatible IMAP archive button (for non-gmail accounts this moves messages to a specified IMAP folder)
+* The "..." button next to the ini/settings storage path now opens that folder in explorer.
+* Backup/restore account(s) from the account edit screen.
+
+Changed Features
+----------------
+* IMAP accounts now attempt to leave connection open between checks for faster checking, more responsive preview, and quicker processing of actions like deleting messages or changing their read status.
+* Faster delete. Deleting message(s) immediately (rather than at next scheduled/manual check) no longer triggers the account to be rechecked for new mail. For users with large inboxes this results in an enormous performance benefit.
+* For IMAP servers that support UIDPLUS like gmail, delete will now use UID EXPUNGE instead of EXPUNGE so that only messages deleted by PopTrayU are expunged (permanantly removed) and messages deleted by other clients are unaffected.
+
+Bug Fixes
+---------
+* (Deleted) Message not found after checking for new mail after deleting messages.
+
 
 =============
 Version 5.1.5
