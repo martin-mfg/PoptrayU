@@ -289,8 +289,12 @@ begin
       Result := False;
     end;
   except
-    // server doesn't support UIDL
+    on E : Exception do begin
+    ShowMessage('Exception class name = '+E.ClassName);
+    ShowMessage('Exception message = '+E.Message);
+    // server doesn't support UIDL?
     Result := False;
+    end;
   end;
 end;
 

@@ -454,7 +454,7 @@ begin
         IMAP.GetUID(i, UID);
       except
         on E : Exception do begin
-          ShowMessage('UIDL Fetch Error'+#13#10+'Exception class name = '+E.ClassName+ #13#10 +'Exception message = '+E.Message);
+          TLogLogger.GetLogger('poptrayuLogger').Debug('TProtocolIMAP4.UIDL() Fetch Error'+#13#10+'Exception class name = '+E.ClassName+ #13#10 +'Exception message = '+E.Message);
           UID := '';
         end;
       end;
@@ -570,15 +570,16 @@ begin
   else Result := -1;
 end;
 
+// throws EIdReadTimeout
 function TProtocolIMAP4.DeleteMsgsByUID(const uidList: TStrings; expunge : boolean): boolean;
 begin
-  Result := IMAP.UIDDeleteMsgs(uidList.ToStringArray);
+    Result := IMAP.UIDDeleteMsgs(uidList.ToStringArray);
 
-  if (expunge) then
-    if HasCapa('UIDPLUS') then
-      IMAP.SendCmd(ImapCmdNum()+'UID EXPUNGE '+uidList.commaText)
-    else
-      IMAP.ExpungeMailBox();
+    if (expunge) then
+      if HasCapa('UIDPLUS') then
+        IMAP.SendCmd('UID EXPUNGE '+uidList.commaText, ['EXPUNGE'])
+      else
+        IMAP.ExpungeMailBox();
 end;
 
 // moves messages to the SPAM or other folder.
