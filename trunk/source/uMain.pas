@@ -4088,7 +4088,6 @@ begin
   actAddBlackList.Enabled := False;
   actMarkSpam.Enabled := False;
   actUnmarkSpam.Enabled := False;
-  actSelectAll.Enabled := False;
   actArchive.Enabled := False;
   actStar.Enabled := false;
   actUnstar.Enabled := false;
@@ -4097,6 +4096,10 @@ begin
   actMark.Enabled := false;
   actAddGmailLabel.Enabled := false;
   actRemoveGmailLabel.Enabled := false;
+  if (lvMail.Items.Count > 0) then
+    actSelectAll.Enabled := true
+  else
+    actSelectAll.Enabled := false;
 end;
 
 procedure TfrmPopUMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
