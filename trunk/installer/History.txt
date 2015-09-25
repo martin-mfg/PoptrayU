@@ -23,7 +23,12 @@ Changed Features
 Bug Fixes
 ---------
 * (Deleted) Message not found after checking for new mail after deleting messages.
+* "Select all" toolbar button not selectable when no messages selected 
 
+Known Issues
+------------
+* New dialogs do not yet use the fonts in the fonts settings or auto-size for translated labels.
+* May be new strings in this release that are not translatable yet.
 
 =============
 Version 5.1.5
