@@ -44,7 +44,6 @@ object frmPopUMain: TfrmPopUMain
     TabPosition = tpRight
     OnChange = PageControlChange
     OnChanging = PageControlChanging
-    ExplicitWidth = 576
     object tsMail: TTabSheet
       Caption = 'Mail'
       Font.Charset = DEFAULT_CHARSET
@@ -53,7 +52,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      ExplicitWidth = 549
       object mailPanel1: TPanel
         Left = 0
         Top = 0
@@ -68,7 +66,6 @@ object frmPopUMain: TfrmPopUMain
         ParentBackground = False
         TabOrder = 0
         StyleElements = [seFont, seClient]
-        ExplicitWidth = 549
         DesignSize = (
           563
           371)
@@ -85,7 +82,6 @@ object frmPopUMain: TfrmPopUMain
           OnDragDrop = tabDragDrop
           OnDragOver = tabMailDragOver
           OnMouseDown = DragMouseDown
-          ExplicitWidth = 539
           object lvMail: TListView
             Left = 4
             Top = 38
@@ -138,9 +134,8 @@ object frmPopUMain: TfrmPopUMain
             OnMouseDown = lvMailMouseDown
             OnMouseMove = MouseMoveReset
             OnSelectItem = lvMailSelectItem
-            ExplicitTop = 70
-            ExplicitWidth = 531
-            ExplicitHeight = 245
+            ExplicitLeft = 247
+            ExplicitTop = -4
           end
           object MailToolBar: TActionToolBar
             Left = 4
@@ -166,8 +161,6 @@ object frmPopUMain: TfrmPopUMain
             Spacing = 4
             VertMargin = 4
             OnGetControlClass = MailToolBarGetControlClass
-            ExplicitWidth = 531
-            ExplicitHeight = 64
           end
           object StatusBar: TStatusBar
             Left = 4
@@ -200,7 +193,6 @@ object frmPopUMain: TfrmPopUMain
             UseSystemFont = False
             OnDrawPanel = StatusBarDrawPanel
             OnResize = StatusBarResize
-            ExplicitWidth = 531
           end
         end
         object panMailButtons: TPanel
@@ -213,7 +205,6 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 1
           OnResize = panMailButtonsResize
-          ExplicitWidth = 539
           object btnStartProgram: TBitBtn
             Left = 16
             Top = 4
@@ -401,7 +392,6 @@ object frmPopUMain: TfrmPopUMain
           ParentBackground = False
           TabOrder = 2
           Visible = False
-          ExplicitLeft = 332
           DesignSize = (
             205
             18)
@@ -463,10 +453,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 507
-      ExplicitHeight = 0
     end
     object tsRules: TTabSheet
       Caption = 'Rules'
@@ -477,10 +463,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 507
-      ExplicitHeight = 0
     end
     object tsAbout: TTabSheet
       Caption = 'About'
@@ -491,10 +473,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 507
-      ExplicitHeight = 0
       object TImage
         Left = 3
         Top = 352
@@ -684,14 +662,6 @@ object frmPopUMain: TfrmPopUMain
                 Action = actUnmarkSpam
                 ImageIndex = 21
                 ShortCut = 16469
-              end
-              item
-                Caption = '-'
-              end
-              item
-                Action = actArchive
-                Caption = 'Ar&chive'
-                ImageIndex = 31
               end>
             Action = actMark
             Caption = '&Mark'
@@ -732,6 +702,10 @@ object frmPopUMain: TfrmPopUMain
                 Action = actRemoveGmailLabel
                 Caption = '&Remove Gmail Label'
                 ImageIndex = 33
+              end
+              item
+                Action = actArchive
+                ImageIndex = 31
               end
               item
                 Caption = '-'
