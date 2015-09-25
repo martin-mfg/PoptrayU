@@ -392,8 +392,8 @@ begin
   if Result then
   begin
     // get first LineCount*70 octets
-    IMAP.SendCmd(ImapCmdNum(), 'FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
-                 IntToStr(LineCount*70)+'>', ['OK','BAD','NO'], true);
+    IMAP.SendCmd('FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
+                 IntToStr(LineCount*70)+'>', ['FETCH','UID'], true);
     //IMAP.WriteLn('xx FETCH '+IntToStr(MsgNum)+' BODY.PEEK[TEXT]<0.'+
     //             IntToStr(LineCount*70)+'>');
     //Result := IMAP.GetLineResponse('xx',[wsOK]) = wsOK;    //indy9
@@ -445,11 +445,19 @@ begin
       startMsg := 1
     else
       startMsg := Math.Min(nCount, nCount - maxUIDs);
+      startMsg := Math.Max(startMsg, 1);
 
     for i := startMsg to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
       UID := '';
-      IMAP.GetUID(i, UID);
+      try
+        IMAP.GetUID(i, UID);
+      except
+        on E : Exception do begin
+          ShowMessage('UIDL Fetch Error'+#13#10+'Exception class name = '+E.ClassName+ #13#10 +'Exception message = '+E.Message);
+          UID := '';
+        end;
+      end;
       if UID <> '' then begin
         UIDLs.Add(IntToStr(i) + ' ' + (*'UID' +*) UID (*+ '-' + IMAP.MailBox.UIDValidity *));
       end;
@@ -589,7 +597,7 @@ begin
       if (pos('"',destFolder)<>1) then
         destFolder := '"'+destFolder + '"';
     try
-      IMAP.SendCmd(ImapCmdNum(),'UID MOVE '+uidList.CommaText +' '+destFolder,['OK','NO','BAD'],true);
+      IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder,['UID','FETCH','SEARCH','UID','MOVE'],true);
       Result := IMAP.LastCmdResult.Code = IMAP_OK;
     except
       Result := false;
@@ -761,7 +769,7 @@ function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname :
 begin
   try
     if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
-      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['UID','STORE','FETCH','SEARCH'], true);
       Result := IMAP.LastCmdResult.Code = 'OK';
     end else
       Result := false;
@@ -779,7 +787,7 @@ function TProtocolIMAP4.RemoveGmailLabelFromMsgs(const uidList: TStrings; labeln
 begin
   try
     if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '')  then begin
-      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['OK','BAD','NO'], true);
+      IMAP.SendCmd('UID STORE '+uidList.CommaText+' -X-GM-LABELS ("'+ labelname + '")',['UID','FETCH'], true);
       Result := IMAP.LastCmdResult.Code = 'OK';
     end else
       Result := false;
