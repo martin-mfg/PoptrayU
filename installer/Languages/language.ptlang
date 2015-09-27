@@ -18,6 +18,7 @@
 # 2014-07-07 Updated for PopTrayU 5.0 beta 10
 # 2014-11-04 Updated for PopTrayU 5.0 beta 14
 # 2015-02-15 Updated for PopTrayU 5.1.0
+# 2015-08-28 Updated for PopTrayU 5.2.0
 #-----------------------------------------------------------------------
 
 OK=
@@ -781,3 +782,66 @@ Window Text=
 Windows=
 With this option enabled, certain images will be replaced with ones better suited to dark background colors.=
 Yellow=
+
+#-------------- Added 5.1.1 to 5.2.1 ----------------
+IMAP Account Options=
+Spam Folder:=
+Trash Folder:=
+Archive Folder:=
+Use Gmail IMAP Extensions=
+Use Server Spam Folder (when Deleting Spam)=
+Use Server Trash Folder=
+Export=
+Import=
+Export Account(s)=
+Select Accounts to Export:=
+Include Saved Passwords=
+Server=
+Username=
+Mark All Viewed (POP)=
+Reply All=
+Archive=
+Mark as Important=
+Mark as Not Important=
+Mark as Read=
+Marks message(s) viewed on IMAP accounts=
+Mark as Unread=
+Mark=
+Add Gmail Label=
+Remove Gmail Label=
+Add a Label=
+Label:=
+## ------------------------------ Translation Notes: -----------------------------------------
+## Some of the strings below include "format strings". These are good for
+## translators because they allow the word order to be more flexible.
+## the format string such as %s should be included in the translation and
+## will have a "real" value added at runtime. 
+## %d = a number
+## %s = a string AKA one or more words
+## --------------------------------------------------------------------------------------------------
+Label "%s" added to %d message(s)=
+Error: Label "%s" could not be added to %d message(s)=
+Error Archiving=
+%d message(s) archived=
+Select Label to Remove=
+Label "%s" removed from %d message(s)=
+Error: Label "%s" could not be removed from %d message(s)=
+%d message(s) marked important=
+%d message(s) marked not important=
+%d message(s) marked read=
+%d message(s) marked unread=
+Select IMAP Folder=
+Import/Restore Accounts=
+Export/Backup Accounts=
+## File types for save as dialogs
+Ini File=
+Text File=
+Account(s) Exported Successfully=
+Import Account(s)=
+Select Accounts to Import:=
+Checking... Getting UIDs=
+Checking... Clearing old Message Numbers=
+Checking... Re-assigning Message IDs=
+Checking... Removing Deleted Items=
+Checking... Double-Checking for Deleted Items=
+Checking... Counting New Messages=

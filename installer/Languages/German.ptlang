@@ -15,6 +15,7 @@
 # 2013-05-31 PopTrayU 5.0 beta 1
 # 2013-12-11 PopTrayU 5.0 beta 9
 # 2015-02-15 PopTrayU 5.1.0
+# 2015-09-26 PopTrayU 5.2.0
 #-----------------------------------------------------------------------
 
 (All Actions)=(Alle Aktionen)
@@ -684,3 +685,61 @@ Rule Settings=Regeleinstellungen
 Rule Actions=Regelaktionen
 Rule Conditions=Regelbedingungen
 Beta Release=Beta-Version
+
+IMAP Account Options=IMAP Kontooptionen
+Spam Folder:=Spam-Ordner:
+Trash Folder:=Papierkorb:
+Archive Folder:=Archivordner:
+Use Gmail IMAP Extensions=Benutzen sie Google Mail IMAP-Erweiterungen
+Use Server Spam Folder (when Deleting Spam)=Spam zu löschen, um Server Spam-Ordner
+Use Server Trash Folder= Server Papierkorb verwenden
+Export=Export
+Import=Import
+Export Account(s)=Export-Accounts
+Select Accounts to Export:=Wählen Sie Konten auf Exportieren:
+Include Saved Passwords=Fügen Gespeicherte Passwörter
+Server=Server
+Username=Benutzername
+Mark All Viewed (POP)=Mark All-Nachrichten als angeschaut (POP)
+Reply All=Allen Antworten
+Archive=archivieren
+Mark as Important=Als Wichtig
+Mark as Not Important=Als Nicht wichtig
+Mark as Read=Als gelesen markieren
+Marks message(s) viewed on IMAP accounts=Marks Nachricht(en) auf IMAP-Konten angesehen
+Mark as Unread=Als ungelesen markieren
+Mark=Marke
+Add Gmail Label=Fügen Sie ein Google Mail-Label-
+Remove Gmail Label=Entfernen Sie ein Google Mail-Label-
+M&ore=Mehr
+Add a Label=Fügen Sie ein Google Mail-Label
+Label:=Label-Namen:
+Label "%s" added to %d message(s)=Label «%s» zu %d Nachricht(en) hinzugefügt
+Error: Label "%s" could not be added to %d message(s)=Fehler: Label «%s» konnte nicht bis %d Nachricht (en) hinzugefügt werden
+Error Archiving=Fehler Archivierung
+%d message(s) archived=%d Nachricht (en) archiviert
+Select Label to Remove=Wählen Etikett zu entfernen
+Label "%s" removed from %d message(s)=Label «%s» wurde von %d Nachricht(en) entfernt
+Error: Label "%s" could not be removed from %d message(s)=Fehler: Label «%s» konnte nicht aus %d Nachricht (en) entfernt werden
+%d message(s) marked important=%d Nachricht(en) markiert wichtig
+%d message(s) marked not important=%d Nachricht(en) markiert nicht wichtig
+%d message(s) marked read=%d Nachricht(en) als gelesen markiert
+%d message(s) marked unread=%d Nachricht(en) ungelesen markiert
+Select IMAP Folder=Wählen Sie IMAP-Ordner
+Import/Restore Accounts=Import / Restore Konten
+Export/Backup Accounts=Export / Backup Konten
+## File types for save as dialogs
+Ini File=Ini-Datei
+Text File=Textdatei
+Account(s) Exported Successfully=Konto(en) erfolgreich exportiert
+Import Account(s)=Import Konto(en)
+Select Accounts to Import:=Wählen Sie Accounts importieren:
+
+
+
+
+
+
+
+
+
