@@ -770,7 +770,7 @@ function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname :
 begin
   try
     if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
-      IMAP.SendCmd(ImapCmdNum(),'UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['UID','STORE','FETCH','SEARCH'], true);
+      IMAP.SendCmd('UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['UID','STORE','FETCH','SEARCH'], true);
       Result := IMAP.LastCmdResult.Code = 'OK';
     end else
       Result := false;
