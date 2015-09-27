@@ -27,7 +27,7 @@ var
   ExportAccountsDlg: TExportAccountsDlg;
 
 implementation
-uses uAccounts, System.IniFiles, Vcl.Dialogs;
+uses uAccounts, System.IniFiles, Vcl.Dialogs, uTranslate;
 
 {$R *.dfm}
 
@@ -57,6 +57,8 @@ begin
     item.SubItems.Add(account.Login);
     item.Data := account;
   end;
+
+  TranslateComponentFromEnglish(self);
 end;
 
 
@@ -80,9 +82,9 @@ begin
 
   try
     saveDialog := TSaveDialog.Create(self);
-    saveDialog.Title := 'Export/Backup Accounts';
+    saveDialog.Title := Translate('Export/Backup Accounts');
     saveDialog.InitialDir := GetCurrentDir;
-    saveDialog.Filter := 'Ini File|*.ini|Text File|*.txt';
+    saveDialog.Filter := Translate('Ini File') + '|*.ini|' + Translate('Text File') + '|*.txt';
     saveDialog.DefaultExt := 'ini';
     saveDialog.FilterIndex := 1;
 

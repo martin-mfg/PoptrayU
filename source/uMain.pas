@@ -129,7 +129,7 @@ type
     actMark: TAction;
     actAddGmailLabel: TAction;
     actRemoveGmailLabel: TAction;
-    Action1: TAction;
+    actMore: TAction;
     procedure FormCreate(Sender: TObject);
     procedure lblHomepageMouseEnter(Sender: TObject);
     procedure lblHomepageMouseLeave(Sender: TObject);
@@ -3845,6 +3845,8 @@ begin
   // show first account in editboxes
   if Accounts.NumAccounts > 0 then AccountsForm.ShowDefaultAccount();
 
+  // make sure toolbar initializes in a consistent enabled/disabled state
+  OnNoMessageSelected();
 
   // startup options
   FMinimized := Options.Minimized;
@@ -4508,11 +4510,9 @@ begin
         end;
 
         end;
-        //success := (account.Prot as TProtocolIMAP4).AddGmailLabelToMsgs(uidList, labelname);
 
         if (success) then
           account.Status := SysUtils.Format(Translate('Label "%s" removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now)
-          // Translate('label added to') +' ' + IntToStr(numsuccess) + ' ' + Translate('message(s)')+HintSep+TimeToStr(Now)
         else
           account.Status := SysUtils.Format(Translate('Error: Label "%s" could not be removed from %d message(s)'),[labelname, uidList.Count]) +HintSep+TimeToStr(Now);
 
@@ -4825,7 +4825,7 @@ begin
   if lvMail.Selected = nil then
     ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
   else begin
-    account := Accounts[tabMail.TabIndex]; //TODO: tabToAccount
+    account := TabToAccount();
     if account.IsImap then begin
       uidList := TStringList.Create;
       account.ConnectIfNeeded();
@@ -4843,7 +4843,7 @@ begin
           // Send ARCHIVE command to server
           if (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.ArchiveFolderName) then
           begin
-            account.Status := IntToStr(uidList.count) + ' ' + Translate('message(s) archived.') + HintSep + TimeToStr(Now);
+            account.Status := SysUtils.Format(Translate('%d message(s) archived'),[uidList.Count]) + HintSep + TimeToStr(Now);
             lvMailRemoveSelectedMsgs();
             //TODO: do we need to remove the mail message from the Mail items list??
           end
@@ -4877,7 +4877,7 @@ begin
     account := TabToAccount();
     if (account.IsImap) then begin
       //TODO: show prompt for adding a label
-      labelname := Dialogs.InputBox('Add a Label', 'Label:', '');
+      labelname := Dialogs.InputBox(Translate('Add a Label'),Translate('Label:'), '');
       if labelname <> '' then begin
         uidList := TStringList.Create;
         GetUidsOfSelectedMsgs(uidList);
@@ -5004,9 +5004,9 @@ begin
         StatusBar.Panels[0].Text := account.Status;
       end else begin
         if (becomeRead) then
-          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked read')+HintSep+TimeToStr(Now)
+          account.Status := SysUtils.Format(Translate('%d message(s) marked read'),[numsuccess]) +HintSep+TimeToStr(Now)
         else
-          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked unread')+HintSep+TimeToStr(Now);
+          account.Status := SysUtils.Format(Translate('%d message(s) marked unread'),[numsuccess])+HintSep+TimeToStr(Now);
 
         StatusBar.Panels[0].Text := account.Status;
       end;
@@ -5057,9 +5057,9 @@ begin
         StatusBar.Panels[0].Text := account.Status;
       end else begin
         if (becomeImportant) then
-          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked important')+HintSep+TimeToStr(Now)
+          account.Status :=  SysUtils.Format(Translate('%d message(s) marked important'),[numsuccess])+HintSep+TimeToStr(Now)
         else
-          account.Status := IntToStr(numsuccess) + ' ' + Translate('message(s) marked not important')+HintSep+TimeToStr(Now);
+          account.Status := SysUtils.Format(Translate('%d message(s) marked not important'),[numsuccess])+HintSep+TimeToStr(Now);
 
         StatusBar.Panels[0].Text := account.Status;
       end;
