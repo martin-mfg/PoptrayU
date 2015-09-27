@@ -67,9 +67,9 @@ begin
     numImportedAccounts := 0;
 
     openDialog := TOpenDialog.Create(self);
-    openDialog.Title := 'Import/Restore Accounts';
+    openDialog.Title := Translate('Import/Restore Accounts');
     openDialog.InitialDir := GetCurrentDir;
-    openDialog.Filter := 'Ini File|*.ini|Text File|*.txt';
+    openDialog.Filter := Translate('Ini File') + '|*.ini|' + Translate('Text File') + '|*.txt';
     openDialog.DefaultExt := 'ini';
     openDialog.FilterIndex := 1;
 
