@@ -37,7 +37,5 @@ inherited ImapFolderSelectDlg: TImapFolderSelectDlg
     Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 13
     TabOrder = 3
-    ExplicitWidth = 281
-    ExplicitHeight = 343
   end
 end

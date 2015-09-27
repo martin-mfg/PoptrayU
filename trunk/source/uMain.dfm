@@ -674,6 +674,10 @@ object frmPopUMain: TfrmPopUMain
                 ImageIndex = 18
               end
               item
+                Action = actSelectSpam
+                ImageIndex = 17
+              end
+              item
                 Caption = '-'
               end
               item
@@ -705,6 +709,7 @@ object frmPopUMain: TfrmPopUMain
               end
               item
                 Action = actArchive
+                Caption = 'Ar&chive'
                 ImageIndex = 31
               end
               item
@@ -723,7 +728,8 @@ object frmPopUMain: TfrmPopUMain
                 Caption = '&Hide'
                 ImageIndex = 14
               end>
-            Caption = 'M&ore'
+            Action = actMore
+            Caption = 'More'
             ImageIndex = 14
           end
           item
@@ -976,6 +982,7 @@ object frmPopUMain: TfrmPopUMain
       Category = 'Spam'
       Caption = 'Select Spam &Messages'
       Enabled = False
+      ImageIndex = 17
       OnExecute = actSelectSpamExecute
     end
     object actSuspendSound: TAction
@@ -1057,22 +1064,26 @@ object frmPopUMain: TfrmPopUMain
     end
     object actMark: TAction
       Category = 'Imap'
-      Caption = 'Mark As'
+      Caption = 'Mark'
       ImageIndex = 29
       OnExecute = actMarkExecute
     end
     object actAddGmailLabel: TAction
       Category = 'Gmail'
       Caption = 'Add Gmail Label'
+      ImageIndex = 32
       OnExecute = actAddGmailLabelExecute
     end
     object actRemoveGmailLabel: TAction
       Category = 'Gmail'
       Caption = 'Remove Gmail Label'
+      ImageIndex = 33
       OnExecute = actRemoveGmailLabelExecute
     end
-    object Action1: TAction
-      Caption = 'Action1'
+    object actMore: TAction
+      Category = 'Mail'
+      Caption = 'M&ore'
+      ImageIndex = 14
     end
   end
   object XPColorMap1: TXPColorMap

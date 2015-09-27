@@ -39,6 +39,7 @@ var
 begin
   Screen.cursor := crAppStart;
   Result := '';
+  TranslateComponentFromEnglish(self);
 
   try
     account.ConnectIfNeeded;
@@ -51,7 +52,7 @@ begin
       end;
     end;
     Screen.Cursor := crDefault;
-    self.Caption := uTranslate.Translate('Select Imap Folder');
+    self.Caption := uTranslate.Translate('Select IMAP Folder');
     dlgResult := self.ShowModal;
     if (dlgResult = mrOk) and (ListBox1.itemindex >= 0) then begin
       Result := listbox1.items[listbox1.itemindex];
@@ -71,12 +72,14 @@ begin
   Result := '';
   if listItems = nil then exit;
 
+  TranslateComponentFromEnglish(self);
   begin
     for i := 0 to (listItems.Count - 1) do begin
       ListBox1.AddItem(listItems[i], nil);
     end;
   end;
   Screen.Cursor := crDefault;
+  self.Caption := dialogTitle;
   dlgResult := self.ShowModal;
   if (dlgResult = mrOk) and (ListBox1.itemindex >= 0) then begin
     Result := listbox1.items[listbox1.itemindex];

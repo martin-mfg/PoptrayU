@@ -25,7 +25,7 @@ var
   ImportAcctDlg: TImportAcctDlg;
 
 implementation
-uses Vcl.Dialogs, System.IniFiles;
+uses Vcl.Dialogs, System.IniFiles, uTranslate;
 
 {$R *.dfm}
 
@@ -100,6 +100,8 @@ begin
             item.Data := account;
           end;
         end;
+        TranslateComponentFromEnglish(self);
+
         Result := self.ShowModal;
 
         if (Result = mrOk) then
