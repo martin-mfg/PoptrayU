@@ -1084,6 +1084,7 @@ object frmPopUMain: TfrmPopUMain
       Category = 'Mail'
       Caption = 'M&ore'
       ImageIndex = 14
+      OnExecute = actMoreExecute
     end
   end
   object XPColorMap1: TXPColorMap
