@@ -240,6 +240,7 @@ type
     procedure actMarkExecute(Sender: TObject);
     procedure actAddGmailLabelExecute(Sender: TObject);
     procedure actRemoveGmailLabelExecute(Sender: TObject);
+    procedure actMoreExecute(Sender: TObject);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -2156,6 +2157,7 @@ var
   split : cardinal;
   MsgHeader : TIdMessage; //experimental, moved from class variable
   tempFlags : TIdMessageFlagsSet;
+  wasImportant : boolean;
 begin
   // check for stop
   if FStop then
@@ -2302,8 +2304,18 @@ begin
 
   MailItem.Spam := False;
   MailItem.TrayColor := -1;
+
+  wasImportant := MailItem.Important;
+
   // rules
   RulesManager.CheckRules(MailItem,MsgHeader,account);
+
+  // if important flag was changed by rules, set it on the server.
+  if (account.IsImap) and (wasImportant <> MailItem.Important) then begin
+    (account.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, MailItem.Important);
+  end;
+
+
   // notify plugin
   with MailItem do
   begin
@@ -2334,6 +2346,7 @@ var
   MsgHeader : TIdMessage; //experimental, moved from class variable
   msgNum : integer;
   seen : boolean;
+  wasImportant: boolean;
 begin
   // check for stop
   if FStop then
@@ -2351,7 +2364,7 @@ begin
   //(account.Prot as TProtocolIMAP4).UIDRetrievePeekEnvelope(uid,MsgHeader); //INDY BUG MAKES THIS SOMETIMES NOT WORK
   seen := (account.Prot as TProtocolIMAP4).UIDCheckMsgSeen(uid);
   // end;
-  msgNum := StrToInt(uid);//99887766;//todo
+  msgNum := StrToInt(uid);
 
   // get size
   MsgSize := (Account.Prot as TProtocolIMAP4).RetrieveMsgSizeByUID(uid) div 1024 +1;
@@ -2397,8 +2410,17 @@ begin
   MailItem.Important := False;
   MailItem.Spam := False;
   MailItem.TrayColor := -1;
+
+  wasImportant := MailItem.Important;
+
   // rules
   RulesManager.CheckRules(MailItem,MsgHeader,account);
+
+  // if important flag was changed by rules, set it on the server.
+  if (account.IsImap) and (wasImportant <> MailItem.Important) then begin
+    (account.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, MailItem.Important);
+  end;
+
   // notify plugin
   with MailItem do
   begin
@@ -4102,6 +4124,9 @@ begin
     actSelectAll.Enabled := true
   else
     actSelectAll.Enabled := false;
+
+  // exception to the rule, always available:
+  actMore.Enabled := true;
 end;
 
 procedure TfrmPopUMain.lvMailSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
@@ -4293,6 +4318,7 @@ procedure TfrmPopUMain.lvMailInfoTip(Sender: TObject; Item: TListItem; var InfoT
 var
   MailItem : TMailItem;
 begin
+  try
   InfoTip := '';
   if lvMail.ScreenToClient(Mouse.CursorPos).X  < lvMail.Columns[0].Width then
   begin
@@ -4300,6 +4326,20 @@ begin
     if MailItem <> nil then
       InfoTip := MailItem.Address;
   end
+  except
+    on E: Exception do begin
+      {$IFDEF LOG4D}
+      TLogLogger.GetLogger('poptrayuLogger').Debug('lvMailInfoTip exception: ' +
+        E.ClassName+' message: '+E.Message);
+      {$ENDIF}
+    end;
+    on E2: EAccessViolation do begin
+      {$IFDEF LOG4D}
+      TLogLogger.GetLogger('poptrayuLogger').Debug('lvMailInfoTip access violation: ' +
+        E.ClassName+' message: '+E.Message);
+      {$ENDIF}
+    end;
+  end;
 end;
 
 procedure TfrmPopUMain.lblForumClick(Sender: TObject);
@@ -4925,6 +4965,11 @@ begin
     frmInfo.Close;
   if Not FMinimized and (tabMail.Tabs.Count>0) then
     ShowMail(Accounts[tabMail.TabIndex],True);
+end;
+
+procedure TfrmPopUMain.actMoreExecute(Sender: TObject);
+begin
+  // do nothing. placeholder so it doesn't disable the action.
 end;
 
 procedure TfrmPopUMain.actMarkSpamExecute(Sender: TObject);
