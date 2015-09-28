@@ -2,7 +2,33 @@ PopTrayU Version History
 ------------------------
 
 ==============
-Version 5.2,0
+Version 5.2.1
+September 2015
+==============
+New Features
+------------
+
+Changed Features
+----------------
+* When a rule marks a message as important on IMAP accounts, the message will be flagged as important on the server as well.
+* Previewing an externally deleted IMAP message shows a better error message and deletes the message from the message list.
+
+Bug Fixes
+---------
+* Translation code implemented for New dialogs
+* Error handling for EAccessException in TfrmPopUMain.lvMailInfoTip
+
+Codebase Improvements
+---------------------
+* Refactored Rule Actions to Ini File code.
+
+
+Known Issues
+------------
+* New dialogs do not yet use the fonts in the fonts settings or auto-size for translated labels.
+
+==============
+Version 5.2.0
 September 2015
 ==============
 New Features
