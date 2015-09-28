@@ -734,6 +734,16 @@ Text File=Textdatei
 Account(s) Exported Successfully=Konto(en) erfolgreich exportiert
 Import Account(s)=Import Konto(en)
 Select Accounts to Import:=Wählen Sie Accounts importieren:
+Checking... Getting UIDs=Überprüfen ... Anreise UIDs
+Checking... Clearing old Message Numbers=Überprüfen ... Beseitigen von alten Meldenummern
+Checking... Re-assigning Message IDs=Überprüfen ... Re-Zuweisung von Nachrichten-IDs
+Checking... Removing Deleted Items=Überprüfen ... Entfernen Gelöschte Objekte
+Checking... Double-Checking for Deleted Items=Überprüfen ... der doppelten Kontrolle für Gelöschte Objekte
+Checking... Counting New Messages=Überprüfen ... Zählen Neue Nachrichten
+Message may have been deleted by an external client=Nachricht kann von einem externen Client gelöscht wurden
+Checking...=Überprüfen ...
+Counting New Messages=Zählen Neue Nachrichten
+Show X-Mailer (when available)=Anzeigen X-Mailer (wenn verfügbar)
 
 
 
