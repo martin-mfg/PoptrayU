@@ -131,7 +131,7 @@ uses
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
 
 const
-  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
