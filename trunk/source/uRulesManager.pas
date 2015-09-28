@@ -35,7 +35,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
   uses uGlobal, uIniSettings, uTranslate, Dialogs, Controls, System.StrUtils,
-    uRCUtils, Winapi.Windows, uMain;
+    uRCUtils, Winapi.Windows, uMain, uImap4;
 
 const
   ALL_ACCOUNTS = 0; // account number for rules that apply to all accounts
@@ -272,6 +272,15 @@ begin
           if Rules[i].Log then
             LogRule('TRAYCOLOR',Rules[i].Name,MsgHeader.From.Text,MsgHeader.Subject,accountName);
         end;
+        if Rules[i].AddLabel <> '' then
+        begin
+          if (account.IsImap and account.UseGmailExtensions) then begin
+            (account.Prot as TProtocolIMAP4).AddGmailLabelToMsg(MailItem.UID, Rules[i].AddLabel);
+            if Rules[i].Log then
+              LogRule('ADDLABEL',Rules[i].Name,MsgHeader.From.Text,MsgHeader.Subject,accountName);
+          end;
+        end;
+
       end;
     end; //enabled
   end;

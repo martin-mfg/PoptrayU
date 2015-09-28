@@ -114,9 +114,11 @@ type
     function GetFlags(const uid : string; var outFlags: TIdMessageFlagsSet) : Boolean;
     function SetImportantFlag(const uid : string; isImportant : boolean): boolean;
     function AddGmailLabelToMsgs(const uidList: TStrings; labelname : string): boolean;
+    function AddGmailLabelToMsg(const uid: string; labelname : string) : boolean;
     function RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
     function FetchGmailLabels(const uid: String; labels: TStrings): boolean; overload;
     function GetFolderNames(folders : TStringList): boolean;
+    function CheckMsgExists(const uid: String): boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -768,9 +770,16 @@ end;
 
 function TProtocolIMAP4.AddGmailLabelToMsgs(const uidList: TStrings; labelname : string) : boolean;
 begin
+  Result := false;
+  if (uidList.Count > 0) then
+    Result := AddGmailLabelToMsg(uidList.CommaText, labelname);
+end;
+
+function TProtocolIMAP4.AddGmailLabelToMsg(const uid: string; labelname : string) : boolean;
+begin
   try
-    if HasCapa('X-GM-EXT-1') and (uidList.Count >0) and (labelname <> '') then begin
-      IMAP.SendCmd('UID STORE '+uidList.CommaText+' +X-GM-LABELS ("'+ labelname + '")',['UID','STORE','FETCH','SEARCH'], true);
+    if HasCapa('X-GM-EXT-1') and (labelname <> '') then begin
+      IMAP.SendCmd('UID STORE '+uid+' +X-GM-LABELS ("'+ labelname + '")',['UID','STORE','FETCH','SEARCH'], true);
       Result := IMAP.LastCmdResult.Code = 'OK';
     end else
       Result := false;
@@ -783,6 +792,7 @@ begin
      end;
   end;
 end;
+
 
 function TProtocolIMAP4.RemoveGmailLabelFromMsgs(const uidList: TStrings; labelname : string): boolean;
 begin
@@ -839,10 +849,19 @@ begin
   Result := IMAP.ListMailBoxes(folders);
 end;
 
+function TProtocolIMAP4.CheckMsgExists(const uid: String): boolean;
+var
+  AFlags: TIdMessageFlagsSet;
+begin
+  Result := IMAP.UIDRetrieveFlags(uid, AFlags); //returns false when message doesn't exist
+end;
+
+
 function AddQuotesIfNeeded(input: string) : string;
 begin
     if (pos(' ',input)<>-1) and ((FindDelimiter('"',input)<>1) and (LastDelimiter('"',input)>1)) then
     Result := '"'+input + '"';
 end;
+
 
 end.
