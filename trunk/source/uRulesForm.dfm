@@ -343,9 +343,11 @@ object RulesForm: TRulesForm
       TabOrder = 2
       Visible = False
       OnResize = CategoryPanelGroup1Resize
+      ExplicitLeft = 110
+      ExplicitTop = 39
       object catRuleActions: TCategoryPanel
         Top = 229
-        Height = 159
+        Height = 193
         Caption = 'Rule Actions'
         Color = clWindow
         TabOrder = 0
@@ -478,7 +480,7 @@ object RulesForm: TRulesForm
           OnClick = chkRuleTrayColorClick
         end
         object chkRuleWav: TCheckBox
-          Left = 151
+          Left = 148
           Top = 5
           Width = 85
           Height = 17
@@ -516,6 +518,25 @@ object RulesForm: TRulesForm
           TabOrder = 11
           Visible = False
           OnChange = edRuleWavChange
+        end
+        object chkAddLabel: TCheckBox
+          Left = 148
+          Top = 127
+          Width = 99
+          Height = 17
+          Caption = 'Add Gmail Label'
+          TabOrder = 12
+          OnClick = chkAddLabelClick
+        end
+        object edAddLabel: TEdit
+          Left = 247
+          Top = 127
+          Width = 275
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 13
+          Visible = False
+          OnChange = edAddLabelChange
         end
       end
       object catRuleDetail: TCategoryPanel
