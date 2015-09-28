@@ -7,6 +7,7 @@ September 2015
 ==============
 New Features
 ------------
+* Add Gmail Label via rules. (rule will be skipped if the account is not IMAP or Gmail Extensions are not enabled for the account).
 
 Changed Features
 ----------------
@@ -17,11 +18,12 @@ Bug Fixes
 ---------
 * Translation code implemented for New dialogs
 * Error handling for EAccessException in TfrmPopUMain.lvMailInfoTip
+* Certain HTML emails (such as ebay) with MIME type multipart/alternative not showing up correctly as HTML
+* IMAP logging should not have been enabled in 5.2.0
 
 Codebase Improvements
 ---------------------
-* Refactored Rule Actions to Ini File code.
-
+* Refactored Rule Actions Ini Save/Restore code.
 
 Known Issues
 ------------
