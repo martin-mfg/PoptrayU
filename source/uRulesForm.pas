@@ -70,6 +70,8 @@ type
     catRuleName: TCategoryPanel;
     catRuleActions: TCategoryPanel;
     panRuleDetail: TPanel;
+    chkAddLabel: TCheckBox;
+    edAddLabel: TEdit;
 
 
     procedure edRuleNameChange(Sender: TObject);
@@ -135,6 +137,8 @@ type
     procedure colRuleTrayColorGetColors(Sender: TCustomColorBox;
       Items: TStrings);
     procedure CategoryPanelGroup1Resize(Sender: TObject);
+    procedure chkAddLabelClick(Sender: TObject);
+    procedure edAddLabelChange(Sender: TObject);
   private
     { Private declarations }
     FRuleChanged : boolean;
@@ -226,6 +230,8 @@ begin
   edRuleWav.Visible := chkRuleWav.Checked;
   btnEdRuleWav.Visible := chkRuleWav.Checked;
   btnRuleSoundTest.Visible := chkRuleWav.Checked;
+  btnEdRuleWav.Refresh;
+  btnRuleSoundTest.Refresh;
 end;
 
 procedure TRulesForm.edRuleNameChange(Sender: TObject);
@@ -344,6 +350,12 @@ begin
     RulesManager.Rules[listRules.ItemIndex].Wav := edRulewav.Text;
 end;
 
+procedure TRulesForm.chkAddLabelClick(Sender: TObject);
+begin
+  edAddLabel.Text := '';
+  edAddLabel.Visible := chkAddLabel.Checked;
+end;
+
 procedure TRulesForm.chkRuleDeleteClick(Sender: TObject);
 begin
   EnableRuleButtons;
@@ -370,6 +382,13 @@ begin
   EnableRuleButtons;
   if listRules.ItemIndex > -1 then
     RulesManager.Rules[listRules.ItemIndex].Log := chkRuleLog.Checked;
+end;
+
+procedure TRulesForm.edAddLabelChange(Sender: TObject);
+begin
+  EnableRuleButtons;
+  if listRules.ItemIndex > -1 then
+    RulesManager.Rules[listRules.ItemIndex].AddLabel := edAddLabel.Text;
 end;
 
 procedure TRulesForm.edRuleEXEChange(Sender: TObject);
@@ -466,6 +485,8 @@ begin
   chkRuleLog.Checked := NewRule.Log;
   chkRuleTrayColor.Checked := NewRule.TrayColor<>-1;
   chkRuleProtect.Checked := NewRule.Protect;
+  chkAddLabel.Chk := NewRule.AddLabel<>'';
+
   // enable buttons
   FRuleChanged := True;
   EnableRuleButtons;
@@ -575,8 +596,9 @@ begin
   AutoSizeCheckBox(chkRuleTrayColor);
   AutoSizeCheckBox(chkRuleImportant);
   AutoSizeCheckBox(chkRuleProtect);
+  AutoSizeCheckBox(chkAddLabel);
 
-  //if chkRuleDelete.Width > widest then widest :=
+  // Set LEFT anchor for checkboxes in LEFT column.
   SetLength(colGrp, 4);
   colGrp := TArray<Integer>.Create(chkRuleDelete.Width, chkRuleSpam.Width,
     chkRuleIgnore.Width, chkRuleLog.Width, 119);
@@ -589,26 +611,36 @@ begin
     chk.Width := col1Width;
     chk.Height := lblRuleName.Height; // height = height of a label
   end;
+
+  // row height = height of an arbitrary edit box + margin
   rowHeight := edRuleWav.Height + 3;
+
+  // TOP anchor for checkboxes in the LEFT column.
   chkRuleSpam.Top := chkRuleDelete.Top + rowHeight + 3; //valign centered to edit box
   chkRuleIgnore.Top := chkRuleSpam.Top + rowHeight ;
   chkRuleLog.Top := chkRuleSpam.Top + (rowHeight)*2; //skip a row
 
+  // Set LEFT anchor for checkboxes in RIGHT column.
   chkGrp := TArray<TCheckBox>.Create(chkRuleWav, chkRuleEXE,
-    chkRuleTrayColor, chkRuleImportant, chkRuleProtect);
+    chkRuleTrayColor, chkRuleImportant, chkRuleProtect, chkAddLabel);
   colGrp := TArray<Integer>.Create(chkRuleWav.Width, chkRuleEXE.Width,
-    chkRuleTrayColor.Width, chkRuleImportant.Width, chkRuleProtect.Width);
+    chkRuleTrayColor.Width, chkRuleImportant.Width, chkRuleProtect.Width,
+    chkAddLabel.Width);
   col2Width := MaxIntValue(colGrp) + 10;
   for chk in chkGrp do begin
     chk.Left := VMARGIN + col1Width;
     chk.Height := lblRuleName.Height; // height = height of a label
   end;
 
+  // TOP anchor for checkboxes in the RIGHT column.
   chkRuleWav.Top := VMARGIN + 3;
   chkRuleEXE.Top := chkRuleWav.Top + rowHeight;
   chkRuleTrayColor.Top := chkRuleEXE.Top + rowHeight;
   chkRuleImportant.Top := chkRuleTrayColor.Top + rowHeight;
   chkRuleProtect.Top := chkRuleImportant.Top + rowHeight;
+  chkAddLabel.Top := chkRuleProtect.Top + rowHeight;
+
+  // TOP and LEFT anchors for edit boxes & buttons next to RIGHT column.
 
   btnRuleSoundTest.Top := VMARGIN;
   btnEdRuleWav.Top := VMARGIN;
@@ -624,10 +656,18 @@ begin
   edRuleEXE.Top := chkRuleEXE.Top;
   btnEdRuleEXE.Top := edRuleEXE.Top;
 
+  chkAddLabel.Width := chkAddLabel.Width + 3; //add extra margin so word isn't cut off
+
+  edAddLabel.Left := CalcPosToRightOf(chkAddLabel, LBL_EDIT_SPACING);
+  edAddLabel.Width := (btnEdRuleEXE.Left + btnEdRuleEXE.Width) - edAddLabel.Left - HMARGIN;
+  //                                RIGHT MARGIN POS               LEFT EDGE      SPACE BETWEEN
+  edAddLabel.Top := chkAddLabel.Top - 3;
+
   colRuleTrayColor.Top := chkRuleTrayColor.Top;
   colRuleTrayColor.Left := chkRuleTrayColor.Left + chkRuleTrayColor.Width + LBL_EDIT_SPACING;
 
-  catRuleActions.ClientHeight := calcPosBelow(chkRuleProtect) + VMARGIN;
+  // HEIGHT of the PANEL should be just below the BOTTOM of the LAST component on the panel.
+  catRuleActions.ClientHeight := calcPosBelow(chkAddLabel) + VMARGIN;
 
 end;
 
@@ -908,6 +948,8 @@ begin
     chkRuleLog.Checked := RulesManager.Rules[selected].Log;
     colRuleTrayColor.Selected := RulesManager.Rules[selected].TrayColor;
     chkRuleTrayColor.Checked := RulesManager.Rules[selected].TrayColor <> -1;
+    chkAddLabel.Checked := RulesManager.Rules[selected].AddLabel <> '';
+    edAddLabel.Text := RulesManager.Rules[selected].AddLabel;
     Application.ProcessMessages;
     FRuleChanged := True;
 
@@ -1050,6 +1092,7 @@ begin
     TrayColor := -1;
     Protect := False;
     Log := Options.LogRules;
+    AddLabel := '';
   end;
   // add to listbox
   listRules.Items.Add(RulesManager.Rules[RulesManager.Rules.Count-1].Name);

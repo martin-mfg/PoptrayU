@@ -77,8 +77,10 @@ type
     Log : boolean;
     TrayColor : TColor;
     Rows : TRuleRows;
+    AddLabel : string;
   public
     constructor Create();
+    procedure ExportRuleItem(const Ini : TCustomIniFile; const iniSection : String);
     procedure ImportRuleItem(const Ini : TCustomIniFile; const iniSection : String; newRulesFormat : boolean = true);
   end;
 
@@ -177,6 +179,34 @@ begin
   Rows := TRuleRows.Create;
 end;
 
+procedure TRuleItem.ExportRuleItem(const Ini : TCustomIniFile; const iniSection : String);
+begin
+    Ini.WriteString(Section,'Name',Rules[i].Name);
+    Ini.WriteBool(Section,'Enabled',Rules[i].Enabled);
+    Ini.WriteBool(Section,'New',Rules[i].New);
+    Ini.WriteInteger(Section,'Account',Rules[i].Account);
+    Ini.WriteInteger(Section,'Operator',Ord(Rules[i].Operator));
+    Ini.WriteInteger(Section,'RowCount',Rules[i].Rows.Count);
+    for j := 0 to Rules[i].Rows.Count-1 do
+    begin
+      if j=0 then st := '' else st := IntToStr(j+1);
+      Ini.WriteString(Section,'Area'+st,RuleAreaToStr(Rules[i].Rows[j].Area));
+      Ini.WriteString(Section,'Func'+st,RuleCompareToStr(Rules[i].Rows[j].Compare));
+      Ini.WriteString(Section,'Text'+st,Rules[i].Rows[j].Text);
+      Ini.WriteBool(Section,'Not'+st,Rules[i].Rows[j].RuleNot);
+    end;
+    Ini.WriteString(Section,'Wav',Rules[i].Wav);
+    Ini.WriteBool(Section,'Delete',Rules[i].Delete);
+    Ini.WriteBool(Section,'Ignore',Rules[i].Ignore);
+    Ini.WriteString(Section,'EXE',Rules[i].EXE);
+    Ini.WriteBool(Section,'Important',Rules[i].Important);
+    Ini.WriteBool(Section,'Spam',Rules[i].Spam);
+    Ini.WriteBool(Section,'Protect',Rules[i].Protect);
+    Ini.WriteBool(Section,'Log',Rules[i].Log);
+    Ini.WriteInteger(Section,'TrayColor',Rules[i].TrayColor);
+    Ini.WriteString(Section,'AddLabel',Rules[i].AddLabel);
+end;
+
 procedure TRuleItem.ImportRuleItem(const Ini : TCustomIniFile; const iniSection : String; newRulesFormat : boolean = true);
 begin
   Name := Ini.ReadString(iniSection,'Name','NoName');
@@ -185,6 +215,7 @@ begin
 
   Wav := Ini.ReadString(iniSection,'Wav','');
   EXE := Ini.ReadString(iniSection,'EXE','');
+  AddLabel := Ini.ReadString(iniSection,'AddLabel','');
 
   if newRulesFormat then
   begin
