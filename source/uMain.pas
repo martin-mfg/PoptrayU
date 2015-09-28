@@ -277,7 +277,6 @@ type
     { Private declarations }
     FMsgRead : integer;
     FPreview : Boolean;
-    FShownRules : Boolean;
     FShutDown : Boolean;
     FQueue : TUniqueQueue; //This queue holds a list of accounts for auto-check.
     FTotalNew : integer;
@@ -1780,7 +1779,9 @@ begin
 
       // Update UI (progress bar) based on message size
       if (mMsgSize < 0) then begin
-        raise Exception.Create('No Such Message (PopTrayU Error 1804)'); //todo: this prevents TProgressBar out of range from showing as the error. but the string printed is not from this message.
+        // this happens, for example, if an IMAP message is deleted/moved by an external
+        // client after checking, before selecting preview.
+        raise Exception.Create('Message may have been deleted by an external client'); //todo: this prevents TProgressBar out of range from showing as the error. but the string printed is not from this message.
       end;
       frmPreview.Progress.Max := mMsgSize; //Synchronize this
       frmPreview.lblProgress.Caption := Translate('Downloading...');  //Synchronize this
@@ -1880,6 +1881,18 @@ begin
           end;
           frmPreview.Close;
           FreeAndNil(frmPreview);
+
+          // Check whether the message still exists on the server, and delete if it doesn't
+          // (if we are here, we don't expect this message to still exist, we expect that
+          // it was probably deleted by an external client)
+          if Account.IsImap then begin
+             if (Account.Prot as TProtocolIMAP4).CheckMsgExists(MailItem.UID) <> true then begin
+               //delete from message list
+               if lvMail.ItemIndex > -1 then
+                 if lvMail.Items[lvMail.ItemIndex].Data = MailItem then
+                   lvMail.Items[lvMail.ItemIndex].Delete;
+             end;
+          end;
         end;
         Exit;
       end;
@@ -3737,7 +3750,6 @@ var
 begin
   // init vars
   FNotified := False;
-  FShownRules := False;
   FShutDown := False;
   FBusy := False;
   FDoubleClicked := False;

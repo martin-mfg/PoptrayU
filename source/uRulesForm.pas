@@ -485,7 +485,7 @@ begin
   chkRuleLog.Checked := NewRule.Log;
   chkRuleTrayColor.Checked := NewRule.TrayColor<>-1;
   chkRuleProtect.Checked := NewRule.Protect;
-  chkAddLabel.Chk := NewRule.AddLabel<>'';
+  chkAddLabel.Checked := NewRule.AddLabel<>'';
 
   // enable buttons
   FRuleChanged := True;
