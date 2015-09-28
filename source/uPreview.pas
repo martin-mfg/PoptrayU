@@ -818,7 +818,7 @@ begin
                 FBody := FBody + TidText(Msg.MessageParts.Items[0]).Body.Text;
 
                 if (NOT AnsiContainsStr(Msg. ContentType, 'text/html')) then
-                  if (NOT AnsiContainsStr(Msg. ContentType, 'multipart/mixed')) then //fixes bug - some html email showing as plain text
+                  if (NOT AnsiContainsStr(Msg. ContentType, 'multipart/mixed')) and (NOT AnsiContainsStr(Msg. ContentType, 'multipart/alternative')) then //fixes bug - some html email showing as plain text
                     FHtml := '' //empty string = show plain-text view on HTML pane
                 else begin
                   //HTML only message, convert to plaintext
