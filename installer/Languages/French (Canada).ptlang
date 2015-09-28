@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.1.0
+# Logiciel - version               : 5.2.0
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 17.02.2015 - Ville de Québec 
+# Fichier - date et lieu           : 28.09.2015 - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -716,6 +716,11 @@ With this option enabled, certain images will be replaced with ones better suite
 Yellow=Jaune
 Error Display:=Signalement d'une erreur :
 
+# ------------- Added PopTrayU 5.2.0 -----------
+
+Checking...=Vérification...
+Counting New Messages=Décompte des nouveaux courriels
+Show X-Mailer (when available)=Afficher le logiciel de courriel utilisé (si l'information est disponible)
 
 
 
