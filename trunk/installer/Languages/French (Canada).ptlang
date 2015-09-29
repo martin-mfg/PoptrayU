@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.2.0
+# Logiciel - version               : 5.2.1
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 28.09.2015 - Ville de Québec 
+# Fichier - date et lieu           : 29.09.2015 - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -716,11 +716,75 @@ With this option enabled, certain images will be replaced with ones better suite
 Yellow=Jaune
 Error Display:=Signalement d'une erreur :
 
-# ------------- Added PopTrayU 5.2.0 -----------
+# ------------- Added PopTrayU 5.2.0 ----------------
 
-Checking...=Vérification...
-Counting New Messages=Décompte des nouveaux courriels
 Show X-Mailer (when available)=Afficher le logiciel de courriel utilisé (si l'information est disponible)
 
+#-------------- Added 5.1.1 to 5.2.1 ----------------
 
+IMAP Account Options=Options d'un compte IMAP
+Spam Folder:=Dossier des pourriels
+Trash Folder:=Dossier de la poubelle
+Archive Folder:=Dossier des archives
+Use Gmail IMAP Extensions=Utiliser les extensions IMAP de Gmail
+Use Server Spam Folder (when Deleting Spam)=Utiliser le dossier Pourriel du serveur (au moment de la suppression des pourriels)
+Use Server Trash Folder=Utiliser le dossier Poulelle du serveur
+Export=Exporter
+Import=Importer
+Export Account(s)=Exporter le(s) compte(s)
+Select Accounts to Export:=Choisir les comptes à exporter
+Include Saved Passwords=Inclure les mots de passe enregistrés
+Server=Serveur
+Username=Nom de l'usager
+Mark All Viewed (POP)=Identifier comme ayant été tous vus (POP)
+Reply All=Répondre à tous
+Archive=Archiver
+Mark as Important=Identifier comme important
+Mark as Not Important=Identifier comme non important
+Mark as Read=Identifier comme lu
+Marks message(s) viewed on IMAP accounts=Identifier le(s) message(s) vu(s) dans les comptes IMAP
+Mark as Unread=Identifier comme non lu
+Mark=Idenfier
+Add Gmail Label=Ajouter un libellé Gmail
+Remove Gmail Label=Supprimer le libellé Gmail
+Add a Label=Ajouter un libellé
+Label:=Libellé
 
+## ------------------------------ Translation Notes: -----------------------------------------
+## Some of the strings below include "format strings". These are good for
+## translators because they allow the word order to be more flexible.
+## the format string such as %s should be included in the translation and
+## will have a "real" value added at runtime. 
+## %d = a number
+## %s = a string AKA one or more words
+## --------------------------------------------------------------------------------------------------
+
+Label "%s" added to %d message(s)=Libellé "%s" ajouté à %d courriel(s)
+Error: Label "%s" could not be added to %d message(s)=Erreur : le libellé "%s" ne peut pas être ajouté aux %d courriels
+Error Archiving=Erreur d'archivage
+%d message(s) archived=%d courriel(s) archivé(s)
+Select Label to Remove=Choisir le libellé à supprimer
+Label "%s" removed from %d message(s)=Le libellé "%s" supprimé des %d courriels
+Error: Label "%s" could not be removed from %d message(s)=Erreur : le libellé "%s" ne peut pas être supprimé de(s) %s courriel(s)
+%d message(s) marked important=%d courriel(s) identifié(s) comme important(s)
+%d message(s) marked not important=%d courriel(s) identifié(s) comme non important(s)
+%d message(s) marked read=%d courriel(s) idenfié(s) comme lu(s)
+%d message(s) marked unread=%d courriel(s) idenfié(s) comme non lu(s)
+Select IMAP Folder=Sélectionner le dossier IMAP
+Import/Restore Accounts=Importer/Restaurer les comptes
+Export/Backup Accounts=Exporter/Sauvegarder les comptes
+## File types for save as dialogs
+Ini File=Fichier ini
+Text File=Fichier texte
+Account(s) Exported Successfully=Le(s) compte(s) a(ont) été exporté(s) avec succès
+Import Account(s)=Importer le(s) compte(s)
+Select Accounts to Import:=Choisir le(s) compte(s) à importer
+Checking... Getting UIDs=Vérification... Obtention du(des) numéro(s) d'identification unique(s)
+Checking... Clearing old Message Numbers=Vérification... Suppression des anciens numéros d'identification
+Checking... Re-assigning Message IDs=Vérification... Atribution d'un numéro d'identifaction 
+Checking... Removing Deleted Items=Vérification... Retrait des éléments supprimés
+Checking... Double-Checking for Deleted Items=Vérification... Re-vérification des éléments supprimés
+Checking... Counting New Messages=Vérification... Décompte des nouveaux courriels
+More=Plus
+Download full message on Preview=Télécharger le courriel au complet au moment de la prévisiualisation
+ 
