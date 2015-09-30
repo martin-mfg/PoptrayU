@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
   PngBitBtn, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList,
-  uAccounts, uProtocol, Vcl.Grids, Vcl.ValEdit, System.Types;
+  uAccounts, uProtocol, Vcl.Grids, Vcl.ValEdit, System.Types, System.UITypes;
 
 const
   UseDefaultSound = '[Use Default Sound]';
@@ -252,9 +252,7 @@ procedure TAccountsForm.ShowAccount(account : TAccount);
 ////////////////////////////////////////////////////////////////////////////////
 // Show the account info in the edit boxes
 var
-  i, idxAuto, idxPw, idxApop, idxSasl: integer;
-  //account : TAccount;
-  row : integer;
+  idxAuto, idxPw, idxApop, idxSasl: integer;
 begin
   if (account = nil) then Exit;
 
@@ -303,14 +301,6 @@ begin
               else cmbAuthType.ItemIndex := idxAuto;
     else      cmbAuthType.ItemIndex := idxAuto;
   end;
-  //cmbAuthType.ItemIndex := Integer(account.AuthType);
-
-
-  //retranslate
-//  for i := 0 to cmbAuthType.Items.Count-1 do
-//    ChangeComboBoxListItem(cmbAuthType,i,TranslateDir(cmbAuthType.Items[i],FromEnglish));
-
-
 
   edUsername.Text := account.Login;
   edPassword.Text := account.Password;
@@ -370,10 +360,6 @@ begin
   btnCancelAccount.Enabled := False;
 
 
-  (*AutoSizeCheckBox(chkDontCheckTimes);
-  dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
-  lblAnd.Left := dtStart.Left + dtStart.Width + 6;
-  dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;   *)
 
   btnAccountSoundTest.Glyph := nil;
   if (Options.ToolbarColorScheme = Integer(schemeTwilight)) then
@@ -625,7 +611,6 @@ procedure TAccountsForm.colAccountGetColors(Sender: TCustomColorBox;
   Items: TStrings);
 var
   i: integer;
-  s: string;
 begin
   for i := 0 to Items.Count - 1 do begin
     Items.Strings[i] := Translate(Items.Strings[i]);
@@ -829,7 +814,6 @@ procedure TAccountsForm.btnPickFolderClick(Sender: TObject);
 var
   num : integer;
   account : TAccount;
-  folders: TStringList;
   pickFolderDlg : TImapFolderSelectDlg;
   pickedFolder : string;
 begin
@@ -935,11 +919,8 @@ end;
 
 procedure TAccountsForm.actExportExecute(Sender: TObject);
 var
-  saveDialog : TSaveDialog;    // Save dialog variable
   msgBox: TForm;
   dlgResult : integer;
-  iniSection : string;
-  Ini : TMemIniFile;
   exportDlg : TExportAccountsDlg;
 begin
 
@@ -963,7 +944,7 @@ begin
 
   exportDlg := TExportAccountsDlg.Create(self);
   try
-    dlgResult := exportDlg.ShowModal;
+    exportDlg.ShowModal;
   finally
     exportDlg.Free;
   end;
@@ -1060,12 +1041,7 @@ end;
 
 
 procedure TAccountsForm.RefreshProtocols;
-var
-  sl : TStringList;
-  st : string;
-  i,j : integer;
 begin
-
   cmbProtocol.Items.Text := Translate('POP3');
   cmbProtocol.Items.Add(Translate('IMAP4'));
 end;
