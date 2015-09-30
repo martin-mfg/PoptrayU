@@ -71,7 +71,7 @@ type
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     function HasCapa(capability: string) : boolean;
-    function ImapCmdNum() : string;
+    //function ImapCmdNum() : string;
   public
     // general
     IMAP : TIdIMAP4;
@@ -125,7 +125,9 @@ type
 
 implementation
 uses
-    Log4D,   //TEMPORARY
+    {$IFDEF LOG4D}
+    Log4D,
+    {$ENDIF}
     Math,
              Dialogs,
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
@@ -275,11 +277,11 @@ begin
   capabilities.Free;
 end;
 
-function TProtocolIMAP4.ImapCmdNum(): string;
-begin
-  Result := 'C'+IntToStr(cmdNum);
-  inc(cmdNum)
-end;
+//function TProtocolIMAP4.ImapCmdNum(): string;
+//begin
+//  Result := 'C'+IntToStr(cmdNum);
+//  inc(cmdNum)
+//end;
 
 procedure TProtocolIMAP4.Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer);
 begin
@@ -456,7 +458,9 @@ begin
         IMAP.GetUID(i, UID);
       except
         on E : Exception do begin
+          {$IFDEF LOG4D}
           TLogLogger.GetLogger('poptrayuLogger').Debug('TProtocolIMAP4.UIDL() Fetch Error'+#13#10+'Exception class name = '+E.ClassName+ #13#10 +'Exception message = '+E.Message);
+          {$ENDIF}
           UID := '';
         end;
       end;
@@ -467,7 +471,9 @@ begin
     Result := True;
   end;
   if (Result = false) then begin
+    {$IFDEF LOG4D}
     TLogLogger.GetLogger('poptrayuLogger').Debug('TProtocolIMAP4.UIDL() FALSE'+#13#10+UIDLs.CommaText);
+    {$ENDIF}
   end;
 end;
 
@@ -627,10 +633,12 @@ var
   SearchInfo: array of TIdIMAP4SearchRec;
   I : integer;
   //MsgObject: TIdMessage;
+  {$IFDEF LOG4D}
   Logger : TLogLogger;
+  {$ENDIF}
 begin
 
-
+  {$IFDEF LOG4D}
   TLogBasicConfigurator.Configure;
 
   // set the log level
@@ -641,7 +649,7 @@ begin
   Logger.addAppender(TLogFileAppender.Create('filelogger','log'+(Chr(ord('a') + Random(26)))
     +(Chr(ord('a') + Random(26)))
     +(Chr(ord('a') + Random(26)))+(Chr(ord('a') + Random(26)))+ '.log'));
-
+  {$ENDIF}
 
   // if the mailbox selection succeed, then...
   if IMAP.SelectMailBox('INBOX') then
@@ -669,7 +677,9 @@ begin
         //finally
         //  MsgObject.Free;
         //end;
+        {$IFDEF LOG4D}
         Logger.Debug( IntToStr(Result[i]));
+        {$ENDIF}
       end;
 // end debug section
 
@@ -812,6 +822,7 @@ function TProtocolIMAP4.FetchGmailLabels(const uid: String; labels: TStrings): b
 var
   labelsStr : string;
 begin
+  Result := false;
   try
     if HasCapa('X-GM-EXT-1') and (uid <> '') and (labels <> nil)  then begin
       IMAP.SendCmd('UID FETCH '+uid+' (X-GM-LABELS)',['FETCH','UID'], false);
