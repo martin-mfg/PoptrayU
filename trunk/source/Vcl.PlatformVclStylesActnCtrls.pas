@@ -54,6 +54,7 @@ uses
   Vcl.Themes,
   Vcl.XPActnCtrls,
   Vcl.StdActnMenus,
+  System.UITypes,
   Vcl.Graphics;
 
 type

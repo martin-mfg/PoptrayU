@@ -30,13 +30,13 @@ uses System.SysUtils;
     // ini files
     procedure LoadOptionsINI(); forward;
     procedure SaveOptionsINI(); forward;
-    function LoadAccountINI(num : integer) : boolean; forward;
-    procedure SaveAccountINI(num : integer); forward;
+    procedure LoadAccountINI(num : integer);
+    procedure SaveAccountINI(num : integer);
     procedure LoadRulesINI; forward;
     procedure SaveRulesINI; forward;
     procedure LoadPosINI; forward;
     procedure SavePosINI; forward;
-    procedure LoadViewedMessageIDs(num : integer); forward;
+    procedure LoadViewedMessageIDs(num : integer);
     procedure SaveViewedMessageIDs; forward;
     function GetDefaultEmail(): string; forward; //would be ok to be private
     function GetSettingsFolder(): string; forward;
@@ -563,24 +563,21 @@ end;
 {*------------------------------------------------------------------------------
   Loads a single account from the ini file
 -------------------------------------------------------------------------------}
-function LoadAccountINI(num : integer) : boolean;
+procedure LoadAccountINI(num : integer);
 var
   Ini : TIniFile;
-  section,PortStr : string;
+  section : string;
 begin
   Ini := TIniFile.Create(IniName);
   try
+    try
     section := 'Account'+IntToStr(num);
     Accounts[num-1].LoadAccountFromINI(Ini, section);
     LoadViewedMessageIDs(num);
-    //    Result := Ini.ReadString(Section,'Name','accnoname') <> 'accnoname';
-    //    // backwards compatible port
-    //    PortStr := StrAfter(Accounts[num-1].Server,':');
-    //    if PortStr <> '' then
-    //    begin
-    //      Accounts[num-1].Server := StrBefore(Accounts[num-1].Server,':');
-    //      Accounts[num-1].Port := StrToIntDef(PortStr,110);
-    //    end;
+    except
+      Assert(false);
+      Exit;
+    end;
   finally
      Ini.Free;
   end;
