@@ -82,6 +82,7 @@ type
     function SupportsSASL : boolean; override;
     function SupportsUIDL(): boolean; override;
     function CountMessages(): LongInt; override;
+    function MakeRead(const uid : string; isRead : boolean): boolean; override; //not supported. error case if called.
   end;
 
 implementation
@@ -520,6 +521,12 @@ begin
   end;
 end;
 
+// Protocol doesn't support "mark read"
+function TProtocolPOP3.MakeRead(const uid: string; isRead: Boolean): boolean;
+begin
+  Result := false;
+  Assert(false);
+end;
 
 destructor TProtocolPOP3.Destroy;
 begin
