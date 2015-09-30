@@ -66,7 +66,6 @@ object AccountsForm: TAccountsForm
           Top = 0
           Width = 526
           Height = 465
-          VertScrollBar.Position = 64
           VertScrollBar.Tracking = True
           Align = alClient
           BevelInner = bvNone
@@ -83,14 +82,15 @@ object AccountsForm: TAccountsForm
           HeaderFont.Style = [fsBold]
           TabOrder = 0
           object catPopTrayAccountPrefs: TCategoryPanel
-            Top = 363
+            Top = 427
             Height = 100
             Caption = 'PopTrayU Account Preferences'
             Color = clWindow
             TabOrder = 0
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 524
             object btnAccountProgramTest: TSpeedButton
-              Left = 378
+              Left = 361
               Top = 9
               Width = 72
               Height = 23
@@ -103,7 +103,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnAccountSoundTest: TSpeedButton
-              Left = 378
+              Left = 361
               Top = 38
               Width = 72
               Height = 23
@@ -125,7 +125,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 464
             end
             object btnEdAccountProgram: TSpeedButton
-              Left = 351
+              Left = 334
               Top = 9
               Width = 21
               Height = 23
@@ -140,7 +140,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 437
             end
             object btnEdSound: TSpeedButton
-              Left = 351
+              Left = 334
               Top = 38
               Width = 21
               Height = 23
@@ -173,7 +173,7 @@ object AccountsForm: TAccountsForm
             object edAccountProgram: TEdit
               Left = 89
               Top = 9
-              Width = 256
+              Width = 239
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -185,11 +185,12 @@ object AccountsForm: TAccountsForm
               OnClick = edAccChange
               OnEnter = edAccountProgramEnter
               OnExit = edAccountProgramExit
+              ExplicitWidth = 256
             end
             object edSound: TEdit
               Left = 89
               Top = 40
-              Width = 256
+              Width = 239
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -201,15 +202,17 @@ object AccountsForm: TAccountsForm
               OnClick = edAccChange
               OnEnter = edSoundEnter
               OnExit = edSoundExit
+              ExplicitWidth = 256
             end
             object panNoCheckHours: TPanel
               Left = 8
               Top = 103
-              Width = 444
+              Width = 427
               Height = 25
               Anchors = [akLeft, akTop, akRight]
               BevelOuter = bvNone
               TabOrder = 2
+              ExplicitWidth = 444
               object lblAnd: TLabel
                 Left = 265
                 Top = 3
@@ -316,11 +319,12 @@ object AccountsForm: TAccountsForm
             end
           end
           object catImap: TCategoryPanel
-            Top = 182
+            Top = 246
             Height = 181
             Caption = 'IMAP Account Options'
             Color = clWindow
             TabOrder = 1
+            ExplicitWidth = 524
             object lblSpamFolder: TLabel
               Left = 29
               Top = 54
@@ -425,12 +429,13 @@ object AccountsForm: TAccountsForm
             end
           end
           object catAdvAcc: TCategoryPanel
-            Top = 106
+            Top = 170
             Height = 76
             Caption = 'Advanced Connection Settings'
             Color = clWindow
             TabOrder = 2
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 524
             object lblAuthMode: TLabel
               AlignWithMargins = True
               Left = 8
@@ -503,12 +508,13 @@ object AccountsForm: TAccountsForm
             end
           end
           object catBasicAccount: TCategoryPanel
-            Top = -7
+            Top = 57
             Height = 113
             Caption = 'Connection Settings'
             Color = clWindow
             TabOrder = 3
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 524
             object lblServer: TLabel
               AlignWithMargins = True
               Left = 8
@@ -541,7 +547,7 @@ object AccountsForm: TAccountsForm
             end
             object lblProt: TLabel
               AlignWithMargins = True
-              Left = 289
+              Left = 272
               Top = 9
               Width = 43
               Height = 13
@@ -553,7 +559,7 @@ object AccountsForm: TAccountsForm
             end
             object lblPort: TLabel
               AlignWithMargins = True
-              Left = 308
+              Left = 291
               Top = 63
               Width = 24
               Height = 13
@@ -565,7 +571,7 @@ object AccountsForm: TAccountsForm
             end
             object lblUseSsl: TLabel
               AlignWithMargins = True
-              Left = 269
+              Left = 252
               Top = 36
               Width = 63
               Height = 13
@@ -578,31 +584,33 @@ object AccountsForm: TAccountsForm
               AlignWithMargins = True
               Left = 117
               Top = 6
-              Width = 138
+              Width = 121
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
               Enabled = False
               TabOrder = 0
               OnClick = edAccChange
+              ExplicitWidth = 138
             end
             object edUsername: TEdit
               AlignWithMargins = True
               Left = 117
               Top = 33
-              Width = 138
+              Width = 121
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
               Enabled = False
               TabOrder = 1
               OnClick = edAccChange
+              ExplicitWidth = 138
             end
             object edPassword: TEdit
               AlignWithMargins = True
               Left = 117
               Top = 60
-              Width = 138
+              Width = 121
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               Color = clBtnFace
@@ -610,20 +618,22 @@ object AccountsForm: TAccountsForm
               PasswordChar = '*'
               TabOrder = 2
               OnClick = edAccChange
+              ExplicitWidth = 138
             end
             object chkSSL: TCheckBox
               AlignWithMargins = True
-              Left = 338
+              Left = 321
               Top = 32
               Width = 110
               Height = 22
               Anchors = [akTop, akRight]
               TabOrder = 3
               OnClick = chkSSLClick
+              ExplicitLeft = 338
             end
             object edPort: TEdit
               AlignWithMargins = True
-              Left = 338
+              Left = 321
               Top = 60
               Width = 63
               Height = 21
@@ -632,9 +642,10 @@ object AccountsForm: TAccountsForm
               Enabled = False
               TabOrder = 4
               OnClick = edAccChange
+              ExplicitLeft = 338
             end
             object cmbProtocol: TComboBox
-              Left = 338
+              Left = 321
               Top = 5
               Width = 110
               Height = 21
@@ -648,15 +659,17 @@ object AccountsForm: TAccountsForm
               OnChange = cmbProtocolChange
               Items.Strings = (
                 'POP3')
+              ExplicitLeft = 338
             end
           end
           object catAccName: TCategoryPanel
-            Top = -64
+            Top = 0
             Height = 57
             Caption = 'Display Options'
             Color = clWindow
             TabOrder = 4
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 524
             object lblName: TLabel
               Left = 8
               Top = 8
@@ -676,7 +689,7 @@ object AccountsForm: TAccountsForm
               FocusControl = colAccount
             end
             object lblEnableAccount: TLabel
-              Left = 388
+              Left = 371
               Top = 3
               Width = 42
               Height = 13
@@ -687,7 +700,7 @@ object AccountsForm: TAccountsForm
               ExplicitLeft = 432
             end
             object chkAccEnabled: TCheckBox
-              Left = 430
+              Left = 413
               Top = 2
               Width = 18
               Height = 24
@@ -696,6 +709,7 @@ object AccountsForm: TAccountsForm
               Enabled = False
               TabOrder = 0
               OnClick = edAccChange
+              ExplicitLeft = 430
             end
             object edName: TEdit
               Left = 45
