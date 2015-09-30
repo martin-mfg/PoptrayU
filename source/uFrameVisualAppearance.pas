@@ -115,7 +115,7 @@ type
     procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction); overload;
     procedure SetColors();
   end;
 
@@ -126,7 +126,7 @@ implementation
 
 uses uMain, uGlobal, StrUtils, uRCUtils, uFontUtils, uTranslate, uDM,
   Vcl.Themes, DateTimePickers, Math, uPositioning, uCustomColorDialog,
-  uConstants;
+  uConstants, System.UITypes;
 
 {$R *.dfm}
   //TToolbarScheme = (schemeNormal = 0, schemeTwilight = 1);
@@ -409,7 +409,12 @@ begin
   if (Sender = btnMsgListColors) then
     previewPanel := panSampleListboxFont
   else if (Sender = BtnPreviewColors) then
-    previewPanel := panSamplePlainText;
+    previewPanel := panSamplePlainText
+  else begin
+    // unexpected for any other sender to call this method.
+    Assert(false);
+    Exit;
+  end;
 
   dlg.DefaultForeColor := clWindowText;
   dlg.DefaultBackColor := clWindow;

@@ -174,8 +174,8 @@ begin
 end;
 
 procedure TAboutForm.UpdateFonts();
-var
-  font : TFont;
+//var
+//  font : TFont;
 begin
   Self.Font.Assign(Options.GlobalFont);
 

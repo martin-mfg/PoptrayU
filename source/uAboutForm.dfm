@@ -660,6 +660,10 @@ object AboutForm: TAboutForm
       object TabAboutPTU: TTabSheet
         Caption = 'About PopTrayU'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         DesignSize = (
           478
           223)
@@ -966,6 +970,10 @@ object AboutForm: TAboutForm
       object TabCredits: TTabSheet
         Caption = 'Component Credits'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lvCredits: TListView
           Left = 0
           Top = 0
@@ -1022,6 +1030,10 @@ object AboutForm: TAboutForm
       object TabTranslate: TTabSheet
         Caption = 'Translation Credits'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lvVolunteers: TListView
           Left = 0
           Top = 0
@@ -1146,6 +1158,10 @@ object AboutForm: TAboutForm
       object tabImageCred: TTabSheet
         Caption = 'Image Credits'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lvImageCredits: TListView
           Left = 0
           Top = 0
