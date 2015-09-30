@@ -10,7 +10,8 @@ interface
 
 uses
   Windows, SysUtils, Graphics, Forms, Buttons, StdCtrls, Controls, Types,
-  Classes, Dialogs, TypInfo, ActnCtrls, CommCtrl, ComCtrls, System.UITypes;
+  Classes, Dialogs, TypInfo, ActnCtrls, CommCtrl, ComCtrls, System.UITypes,
+  AnsiStrings, System.Character;
 
 type
   TKeyboardLight = (klNumLock,klCapsLock,klScrollLock);
@@ -280,34 +281,33 @@ begin
   end;
 end;
 
-// Hex encodes special characters (for sending emails)
+// Hex encodes special characters (for sending emails by MAILTO links)
 function HexEncodeSpecialChars(str : string; encodeLineBreaks: boolean) : string;
-const
-  CHARS_TO_ENCODE : set of char = [' ','&','%','=','?','"'];
-  CHARS_WITH_LINE_BREAKS : set of char = [' ','&','%','=','?','"', #13,#10];
 var
   i : integer;
-  charsToConvert : set of char;
 begin
   Result := '';
-  if encodeLineBreaks then charsToConvert := CHARS_WITH_LINE_BREAKS
-  else charsToConvert := CHARS_TO_ENCODE;
 
-  // TODO: this might actually be more efficient with TStringBuilder because
-  // it's only appending one character at a time?
   for i := 1 to length(str) do
   begin
-    if CharInSet(str[i],charsToConvert) then
-      Result := Result + '%' + IntToHex(Ord(str[i]),2)
+    case str[i] of
+    ' ','&','%','=','?','"':
+      Result := Result + '%' + IntToHex(Ord(str[i]),2);
+    #13,#10:
+      if (encodeLineBreaks) then
+         Result := Result + '%' + IntToHex(Ord(str[i]),2)
+      else
+         Result := Result + str[i];
     else
       Result := Result + str[i];
+    end;
   end;
 end;
 
 // Eliminates invalid characters from a filename
 function SanitizeFileName(unsanitizedFileName : string) : string;
 const
-  invalidChars : set of char = [ '"', //double quote
+  invalidChars = [ '"', //double quote
                                  '/', //forward slash
                                  '*', //wildcard
                                  '\', //backslash
@@ -982,14 +982,15 @@ var
   MapiMessage : TMapiMessage;  // must be global?
 
 // TODO: this MAPI function is ANSI not unicode
+// MAPISendMAilW is available on Windows 8+.
 function MAPISendMessage(h : HWND; const ToAddress,Subject,Body : string) : boolean;
 var
   Recips : TMapiRecipDesc;
   pToAddress,pSubject,pBody : PAnsiChar;
 begin
-  pToAddress := StrNew(PAnsiChar(ToAddress));
-  pSubject := StrNew(PAnsiChar(Subject));
-  pBody := StrNew(PAnsiChar(Body));
+  pToAddress := AnsiStrings.StrNew(PAnsiChar(ToAddress));
+  pSubject := AnsiStrings.StrNew(PAnsiChar(Subject));
+  pBody := AnsiStrings.StrNew(PAnsiChar(Body));
   try
     Recips.ulRecipClass := MAPI_TO;
     Recips.lpszName := '';
@@ -1012,9 +1013,9 @@ begin
     Result := MapiSendMail(0, h, MapiMessage,
                  MAPI_DIALOG or MAPI_LOGON_UI or MAPI_NEW_SESSION, 0) <> 99;
   finally
-    StrDispose(pToAddress);
-    StrDispose(pSubject);
-    StrDispose(pBody);
+    AnsiStrings.StrDispose(pToAddress);
+    AnsiStrings.StrDispose(pSubject);
+    AnsiStrings.StrDispose(pBody);
   end;
 end;
 
@@ -1279,7 +1280,7 @@ var
 begin
   s := '';
   for i := 1 to Length(st) do
-    if st[i] in ['0'..'9'] then
+    if st[i].IsDigit then
       s := s + st[i];
   Result := StrToInt(s);
 end;
