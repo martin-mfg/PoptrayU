@@ -27,7 +27,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, 
-  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls, System.UITypes;
 
 type
   TEnableSaveOptionsFunction = procedure of object;

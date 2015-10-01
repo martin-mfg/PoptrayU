@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.PlatformDefaultStyleActnCtrls,
   System.Actions, Vcl.ActnList, Vcl.ActnMan, Vcl.StdCtrls, Vcl.CheckLst,
   Vcl.Grids, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ToolWin, Vcl.ActnCtrls, PngBitBtn,
-  uMailItems, uAccounts, uRules, Vcl.ComCtrls, IdMessage;
+  uMailItems, uAccounts, uRules, Vcl.ComCtrls, IdMessage, System.UITypes;
 
 
 const
@@ -154,7 +154,6 @@ type
     procedure EnableRuleButtons;
     procedure MoveRule(old,new : integer);
     procedure FillRulesAccountsDropdown(const Accounts : TAccounts); //Updates the Rule "accounts" list drop down after an account is added or removed etc
-    procedure ResizeGrdRule();
   public
     { Public declarations }
     procedure enableBodyRuleArea(enable : boolean);
@@ -528,12 +527,7 @@ begin
 end;
  }
 
-procedure TRulesForm.ResizeGrdRule();
-var
-  i : integer;
-begin
 
-end;
 
 procedure TRulesForm.CategoryPanelGroup1Resize(Sender: TObject);
 const
@@ -781,7 +775,7 @@ procedure TRulesForm.colRuleTrayColorGetColors(Sender: TCustomColorBox;
   Items: TStrings);
 var
   i: integer;
-  s: string;
+//  s: string;
 begin
   for i := 0 to Items.Count - 1 do begin
     Items.Strings[i] := Translate(Items.Strings[i]);

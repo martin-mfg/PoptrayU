@@ -776,11 +776,13 @@ end;
 
 function TfrmPopUMain.DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
 var
-  i, msgNum : integer;          // loop counter
+  i : integer;          // loop counter
   mailcount : integer;  // How many new messages are on the server
   uidList : TIntArray;
   imap : TProtocolIMAP4;
 begin
+  Result := -1;
+
   // clear visual list - if current tab is showing this account
   if Accounts[tabMail.TabIndex] = account then
     lvMail.Items.Clear;
@@ -795,8 +797,10 @@ begin
     // 3a. eml = imap.GetMessageByUID(uid)
     // 3b. parse email and deal with it
 
-  if (NOT account.IsImap) then
+  if (NOT account.IsImap) then begin
+    Result := -1;
     exit;
+  end;
 
   imap := account.Prot as TProtocolIMAP4;
 
@@ -841,6 +845,7 @@ begin
     // if flag = important...
   // check for new messages starting at last seen uid
 
+  Result := -1; // failure
 end;
 
 
@@ -1000,18 +1005,10 @@ function TfrmPopUMain.CheckMail(Account : TAccount; Notify : boolean; ShowIt : b
 // Check for mail on 1 account
 var
   i : integer;          // loop counter
-  mailcount : integer;  // How many new messages have been found?
   quickchecking : boolean;
   BalloonText : string;
   deletecount : integer;
-
-  UIDLs : TStringList;
-  msgnum : integer;
-  UID : string;
-  MailItem : TMailItem;
   ForceShow : boolean;
-  firstMsgToDownload : integer;
-
 {$IFDEF LOG4D}
   Logger : TLogLogger;
 {$ENDIF LOG4D}
@@ -2352,10 +2349,9 @@ function TfrmPopUMain.GetMessageHeaderByUID(account : TAccount; uid : string) : 
 var
   MsgSize : integer;
   MsgID : string;
-  pHeader : PChar;
+  //pHeader : PChar;
   MailItem : TMailItem;
-  ret : boolean;
-  split : cardinal;
+  //ret : boolean;
   MsgHeader : TIdMessage; //experimental, moved from class variable
   msgNum : integer;
   seen : boolean;
@@ -3993,8 +3989,6 @@ begin
 end;
 
 procedure TfrmPopUMain.OnSetLanguage();
-var
-  i : integer;
 begin
   // translate back to english before wiping old translation strings (if needed)
   TranslateComponentToEnglish(self);
@@ -4516,10 +4510,11 @@ var
 begin
   if lvMail.Selected = nil then
     ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
-  else
+  else begin
     accountNum := tabMail.TabIndex;             //TODO: tabToAccount
     MailItem := lvMail.Selected.Data;
     Preview(MailItem, Accounts[accountNum]);
+  end;
 end;
 
 procedure TfrmPopUMain.actNewMailExecute(Sender: TObject);
@@ -5073,11 +5068,6 @@ end;
 
 
 procedure TfrmPopUMain.actStarExecute(Sender: TObject);
-var
-  MailItem : TMailItem;
-  account : TAccount;
-  i : integer;
-  numsuccess, numfailures : integer;
 begin
   ChangeImportantStatuses(true);
 end;

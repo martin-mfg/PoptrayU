@@ -161,9 +161,9 @@ begin
       if (Result.MsgNum = MsgNum) then Exit; //Message found
     except on E: EArgumentOutOfRangeException do begin
       //Return nil if index is out of bounds/range
+      Result := nil;
       end;
     end;
-    Result := nil;
   end;
 
   // If Items[MsgNum-1] is not MsgNum, do a search of all msgs until found.
