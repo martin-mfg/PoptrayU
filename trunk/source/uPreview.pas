@@ -285,17 +285,20 @@ begin
     LIOHandler.MaxLineAction := TIdMaxLineAction.maSplit;
 
     MessageClient := TIdMessageClient.Create(Self);
-    MessageClient.OnWork := frmPopUMain.OnProcessWork;
-    MessageClient.IOHandler := LIOHandler;
-
     try
-      MessageClient.IOHandler.Open;
-      MessageClient.ProcessMessage(AMsg, AHeaderOnly);
+      MessageClient.OnWork := frmPopUMain.OnProcessWork;
+      MessageClient.IOHandler := LIOHandler;
+
+      try
+        MessageClient.IOHandler.Open;
+        MessageClient.ProcessMessage(AMsg, AHeaderOnly);
+      finally
+        MessageClient.IOHandler := nil;
+      end;
     finally
-      MessageClient.IOHandler := nil;
+      MessageClient.Free;
     end;
   finally
-    MessageClient.Free;
     LIOHandler.Free;
   end;
 end;
@@ -858,7 +861,7 @@ begin
                 begin
                   Caption := TIdAttachment(Msg.MessageParts.Items[0]).FileName;
                   ImageIndex := AttachmentIcon(aname);
-                  StateIndex := i;
+                  StateIndex := lvAttachments.Items.Count; //used to be i, but i makes no sense.
                   //Hint := mimetype;
                 end;
               end;
@@ -1663,9 +1666,6 @@ begin
 end;
 
 procedure TfrmPreview.actUnstarExecute(Sender: TObject);
-var
-  IMAP: TIdIMAP4;
-  AFlags : TIdMessageFlagsSet;
 begin
   if FAccount.IsImap then begin
     FAccount.ConnectIfNeeded();

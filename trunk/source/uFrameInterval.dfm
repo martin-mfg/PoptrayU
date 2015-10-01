@@ -30,6 +30,7 @@ object frameInterval: TframeInterval
       Caption = 'Mail Check Actions'
       Color = clWindow
       TabOrder = 0
+      ExplicitWidth = 185
       object lblDeleteNextCheck: TLabel
         Left = 8
         Top = 10

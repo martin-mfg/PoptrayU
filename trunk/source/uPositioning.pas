@@ -1,7 +1,7 @@
 unit uPositioning;
 
 interface
-uses Vcl.Controls, Vcl.StdCtrls, Vcl.Graphics;
+uses Vcl.Controls, Vcl.StdCtrls, Vcl.Graphics, Math;
 
   function calcPosBelow(const control : TControl) : integer; inline;
   function CalcPosToRightOf(const control : TControl; const marginPx : integer = 3): Integer;
@@ -12,7 +12,7 @@ uses Vcl.Controls, Vcl.StdCtrls, Vcl.Graphics;
 // Implementation Section
 //------------------------------------------------------------------------------
 implementation
-uses System.Types, Windows, Math;
+uses System.Types, Windows;
 
 function calcPosBelow(const control : TControl) : integer;
 begin
@@ -27,7 +27,7 @@ end;
 // Note: this function is not in tested, working order. it is experimental.
 procedure AutosizeCombobox(comboBox : TCombobox; minSize : Integer = 0);
 var
-  Rect : TRect;
+  //Rect : TRect;
   Canvas : TCanvas;
   widest, strWidth, i : Integer;
 begin

@@ -50,9 +50,7 @@ end;
 // @return number of accounts imported
 function TImportAcctDlg.ImportAccounts(accounts : TAccounts): integer;
 var
-  openDialog : TOpenDialog;    // Save dialog variable
-  msgBox: TForm;
-  dlgResult : integer;
+  openDialog : TOpenDialog;
   aSection : string;
   Ini : TMemIniFile;
   numImportedAccounts : integer;
@@ -118,15 +116,11 @@ begin
           end;
         end;
 
-
-
-        // todo: free item.Data
+        // todo: free item.Data??
       finally
          Ini.Free;
          iniSections.Free;
       end;
-
-      //ShowMessage('Account(s) Imported Successfully'+ sLineBreak + openDialog.FileName);
 
     end;
   finally
