@@ -689,8 +689,13 @@ end;
 //--------------------------------------------------------------- encryption ---
 
 const
+  // keys for borland encrypt classic
   C1 = 43941;
   C2 = 16302;
+
+  // keys for borland encrypt wide
+  C1B = 38677;
+  C2B = 13873;
 
 // This version of Borland Encrypt only works with ANSI strings, and wide
 // string characters are truncated/ignored. It is, however,
@@ -721,7 +726,7 @@ begin
   SetLength(Result,Length(S));
   for I := 1 to Length(S) do begin
     Result[I] := Char(word(S[I]) xor (Key shr 8));
-    Key := (word(Result[I]) + Key) * C1 + C2;
+    Key := (word(Result[I]) + Key) * C1B + C2B;
   end;
 end;
 {$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
@@ -759,7 +764,7 @@ begin
     Result[I] := Char(word(S[I]) xor (Key shr 8));
     si := word(S[I]);
     {$IFOPT R+}{$DEFINE RANGEON}{$R-}{$ELSE}{$UNDEF RANGEON}{$ENDIF}
-    Key := (si + Key) * C1 + C2;
+    Key := (si + Key) * C1B + C2B;
     {$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
 
   end;
@@ -931,14 +936,14 @@ var
 
 // TODO: this MAPI function is ANSI not unicode
 // MAPISendMAilW is available on Windows 8+.
-function MAPISendMessage(h : HWND; const ToAddress,Subject,Body : string) : boolean;
+function MAPISendMessage(h : HWND; const ToAddress, Subject, Body : string) : boolean;
 var
   Recips : TMapiRecipDesc;
   pToAddress,pSubject,pBody : PAnsiChar;
 begin
-  pToAddress := AnsiStrings.StrNew(PAnsiChar(ToAddress));
-  pSubject := AnsiStrings.StrNew(PAnsiChar(Subject));
-  pBody := AnsiStrings.StrNew(PAnsiChar(Body));
+  pToAddress := AnsiStrings.StrNew(PAnsiChar(AnsiString(ToAddress)));
+  pSubject := AnsiStrings.StrNew(PAnsiChar(AnsiString(Subject)));
+  pBody := AnsiStrings.StrNew(PAnsiChar(AnsiString(Body)));
   try
     Recips.ulRecipClass := MAPI_TO;
     Recips.lpszName := '';
