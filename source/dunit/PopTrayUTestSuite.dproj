@@ -39,11 +39,11 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <DCC_K>false</DCC_K>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_UnitSearchPath>C:\code\poptray\branches\xe4\source;C:\code\dunit3\src;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\CoolTrayIcon;C:\code\poptray\dependencies\htmlp-0.96;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\code\poptray\trunk\source;C:\code\dunit3\src;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\htmlp-0.96;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\PackagesXE4\Win32\Release;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\Source;C:\code\poptray\branches\xe4\dependencies\Cooltray for delphi 2010;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_E>false</DCC_E>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_F>false</DCC_F>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;$(DCC_Namespace)</DCC_Namespace>
         <DCC_N>true</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
@@ -51,6 +51,7 @@
         <DCC_ImageBase>00400000</DCC_ImageBase>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UsePackage>PngComponents;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Icon_MainIcon>PopTrayUTestSuite_Icon.ico</Icon_MainIcon>
@@ -128,6 +129,7 @@
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\RAD Studio\11.0\Bpl\PngComponentsDesign170.bpl">Png components designtime</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclnet180.bpl">Embarcadero Internet Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
