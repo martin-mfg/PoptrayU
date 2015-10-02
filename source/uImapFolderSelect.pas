@@ -41,10 +41,9 @@ begin
   Result := '';
   TranslateComponentFromEnglish(self);
 
+  account.ConnectIfNeeded;
+  folders := TStringList.Create;
   try
-    account.ConnectIfNeeded;
-    folders := TStringList.Create;
-
     if (Account.Prot as TProtocolIMAP4).GetFolderNames(folders) then
     begin
       for i := 0 to (folders.Count - 1) do begin
@@ -57,7 +56,6 @@ begin
     if (dlgResult = mrOk) and (ListBox1.itemindex >= 0) then begin
       Result := listbox1.items[listbox1.itemindex];
     end;
-
   finally
     folders.Free;
   end;

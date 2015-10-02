@@ -137,11 +137,7 @@ begin
 end;
 
 procedure TOptionsForm.FormResize(Sender: TObject);
-var
-  buttonHeight : Integer;
 begin
-  //inherited FormResize(Sender);
-
   panOptionButtons.Width := self.Width;
 
   lblTest.Caption := btnCancel.Caption;

@@ -52,7 +52,7 @@ type
     procedure OnBlackListUpdated(var Msg: TMessage); message UM_RELOAD_BLACKLIST;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction); reintroduce;
   end;
 
 implementation

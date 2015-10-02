@@ -29,6 +29,7 @@ object FrameRulesOptions: TFrameRulesOptions
       Caption = 'Whitelist/Blacklist'
       Color = clWindow
       TabOrder = 0
+      ExplicitWidth = 185
       object lblBlacklistAct: TLabel
         Left = 4
         Top = 7

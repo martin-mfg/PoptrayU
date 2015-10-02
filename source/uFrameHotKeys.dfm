@@ -193,7 +193,7 @@ object frameHotKeys: TframeHotKeys
       Left = 30
       Top = 4
       Width = 249
-      Height = 57
+      Height = 52
       Align = alLeft
       Anchors = [akLeft, akTop, akRight, akBottom]
       Caption = 
@@ -202,9 +202,6 @@ object frameHotKeys: TframeHotKeys
         'are not recommended.'
       Transparent = True
       WordWrap = True
-      ExplicitLeft = 31
-      ExplicitTop = 5
-      ExplicitHeight = 55
     end
   end
 end
