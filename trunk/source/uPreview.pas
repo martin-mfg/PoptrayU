@@ -932,7 +932,7 @@ var
   mask: Word;
   i : integer;
   labelHeight : integer;
-  vMargin : integer;
+  //vMargin : integer;
 begin
   // rich edit with URLs
   mask := SendMessage(Handle, EM_GETEVENTMASK, 0, 0);

@@ -2150,8 +2150,8 @@ begin
         // execute
         ExecuteFile(IniPath+Options.TempEmailFilename,'',IniPath,SW_NORMAL);
       finally
-        if account.Prot.Connected then
-          account.Prot.DisconnectWithQuit;
+        //if account.Prot.Connected then
+        //  account.Prot.DisconnectWithQuit;
       end;
     end
   );

@@ -620,7 +620,7 @@ begin
   colGrp := TArray<Integer>.Create(chkRuleWav.Width, chkRuleEXE.Width,
     chkRuleTrayColor.Width, chkRuleImportant.Width, chkRuleProtect.Width,
     chkAddLabel.Width);
-  col2Width := MaxIntValue(colGrp) + 10;
+  //col2Width := MaxIntValue(colGrp) + 10;
   for chk in chkGrp do begin
     chk.Left := VMARGIN + col1Width;
     chk.Height := lblRuleName.Height; // height = height of a label

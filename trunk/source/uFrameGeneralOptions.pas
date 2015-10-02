@@ -125,7 +125,7 @@ const
   indentSubItemsAmount = 30;
 var
   labelHeight : Integer;
-  flowDirection : TFlowStyle;
+  //flowDirection : TFlowStyle;
 begin
   AutoSizeCheckBox(chkDeluxeBalloon); // b/c this one has a label to it's right
   AutosizeCombobox(cmbCheckingIcon, 110);
