@@ -35,11 +35,15 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_DcpOutput>C:\code\poptray\trunk\source\output\dcp\</DCC_DcpOutput>
+        <DCC_ExeOutput>C:\code\poptray\trunk\source\output\dcu\</DCC_ExeOutput>
+        <DCC_DcuOutput>C:\code\poptray\trunk\source\dunit\output\</DCC_DcuOutput>
+        <DCC_BplOutput>C:\code\poptray\trunk\source\output\bpl\</DCC_BplOutput>
         <Manifest_File>None</Manifest_File>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <DCC_K>false</DCC_K>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_UnitSearchPath>C:\code\poptray\trunk\source;C:\code\dunit3\src;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\htmlp-0.96;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\PackagesXE4\Win32\Release;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\Source;C:\code\poptray\branches\xe4\dependencies\Cooltray for delphi 2010;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\code\poptray\trunk\source;C:\code\dunit3\src;C:\code\poptray\dependencies\regexpr\Source;C:\code\poptray\dependencies\htmlp-0.96;C:\code\Indy10\Core;C:\code\Indy10\Protocols;C:\code\Indy10\System;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\PackagesXE4\Win32\Release;C:\code\poptray\dependencies\26127_pngcomponents_for_delphi_2009_seattle\Source;C:\code\poptray\branches\xe4\dependencies\Cooltray for delphi 2010;c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_E>false</DCC_E>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_F>false</DCC_F>
