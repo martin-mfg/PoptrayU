@@ -59,12 +59,11 @@ var
   account : TAccount;
 begin
   inherited;
+  Result := 0;
+  numImportedAccounts := 0;
 
+  openDialog := TOpenDialog.Create(self);
   try
-    Result := 0;
-    numImportedAccounts := 0;
-
-    openDialog := TOpenDialog.Create(self);
     openDialog.Title := Translate('Import/Restore Accounts');
     openDialog.InitialDir := GetCurrentDir;
     openDialog.Filter := Translate('Ini File') + '|*.ini|' + Translate('Text File') + '|*.txt';
@@ -77,9 +76,10 @@ begin
       ListViewAccounts.Clear;
 
       Ini := TMemIniFile.Create(openDialog.FileName);
+
+      // make a list of accounts in the ini file
+      iniSections := TStringList.Create;
       try
-        // make a list of accounts in the ini file
-        iniSections := TStringList.Create;
         Ini.ReadSections(iniSections);
 
         // add each account+data from the ini file to the import dialog.

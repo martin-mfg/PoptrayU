@@ -66,6 +66,7 @@ object FramePreviewOptions: TFramePreviewOptions
       Caption = 'Tabs'
       Color = clWindow
       TabOrder = 2
+      ExplicitWidth = 185
       object lblDefaultTab: TLabel
         Left = 8
         Top = 8

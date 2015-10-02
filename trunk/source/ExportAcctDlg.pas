@@ -70,18 +70,15 @@ end;
 procedure TExportAccountsDlg.OKBtnClick(Sender: TObject);
 var
   saveDialog : TSaveDialog;    // Save dialog variable
-  msgBox: TForm;
-  dlgResult : integer;
   iniSection : string;
   Ini : TMemIniFile;
-  exportDlg : TExportAccountsDlg;
   numExportedAccounts : integer;
   item : TListItem;
 begin
   inherited;
 
+  saveDialog := TSaveDialog.Create(self);
   try
-    saveDialog := TSaveDialog.Create(self);
     saveDialog.Title := Translate('Export/Backup Accounts');
     saveDialog.InitialDir := GetCurrentDir;
     saveDialog.Filter := Translate('Ini File') + '|*.ini|' + Translate('Text File') + '|*.txt';

@@ -56,7 +56,7 @@ type
     procedure ShowOptions;
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction); reintroduce;
     destructor Destroy; override;
   end;
 

@@ -56,7 +56,7 @@ type
     procedure AlignLabels();
   public
     { Public declarations }
-    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
+    constructor Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction); reintroduce;
   end;
 
 implementation
@@ -69,10 +69,8 @@ uses uMain, uGlobal, uTranslate;
 
 constructor TframeMouseButtons.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 var
-  i, lblOffset : integer;
+  i : integer;
   st : string;
-  max : TLabel;
-  maxWidth : integer;
 begin
   inherited Create(AOwner);
   funcEnableSaveBtn := SaveButtonProc;
@@ -112,7 +110,6 @@ procedure TframeMouseButtons.AlignLabels();
 var
   lblOffset : integer;
   max : TLabel;
-  maxWidth : integer;
 begin
  // re-align
   max := lblLeft;

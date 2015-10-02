@@ -78,6 +78,7 @@ object frameMainWindowOptions: TframeMainWindowOptions
       Caption = 'Main Window Behaviors'
       Color = clWindow
       TabOrder = 1
+      ExplicitWidth = 185
       object lblErrorDisp: TLabel
         Left = 6
         Top = 98
@@ -191,6 +192,7 @@ object frameMainWindowOptions: TframeMainWindowOptions
       Caption = 'Main Window Message List'
       Color = clWindow
       TabOrder = 2
+      ExplicitWidth = 185
       object lblDateExample: TLabel
         Left = 254
         Top = 87

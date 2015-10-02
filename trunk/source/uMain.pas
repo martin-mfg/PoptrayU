@@ -4505,15 +4505,15 @@ end;
 procedure TfrmPopUMain.actPreviewExecute(Sender: TObject);
 var
   //msgnum : integer;
-  accountNum : integer;
+  account : TAccount;
   MailItem : TMailItem;
 begin
   if lvMail.Selected = nil then
     ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
   else begin
-    accountNum := tabMail.TabIndex;             //TODO: tabToAccount
     MailItem := lvMail.Selected.Data;
-    Preview(MailItem, Accounts[accountNum]);
+    account := tabToAccount();
+    Preview(MailItem, account);
   end;
 end;
 
@@ -4537,6 +4537,7 @@ var
   success : boolean;
   pickLabelDlg : TImapFolderSelectDlg;
 begin
+  success := false;
   if (lvMail.SelCount > 0) then begin
     account := TabToAccount();
     if (account.IsImap) then begin
@@ -4547,6 +4548,7 @@ begin
         GetUidsOfSelectedMsgs(uidList);
         if (account.Prot as TProtocolIMAP4).FetchGmailLabels(uidList.CommaText, labelsList) then begin
         pickLabelDlg := TImapFolderSelectDlg.Create(self);
+
         try
           labelname := pickLabelDlg.ShowSelectDlg(uTranslate.Translate('Select Label to Remove'), labelsList);
           if (labelname <> '') then begin
@@ -5184,7 +5186,7 @@ end;
 
 procedure TfrmPopUMain.tabDragDrop(Sender, Source: TObject; X,  Y: Integer);
 var
-  i,num,new,old : integer;
+  num, new, old : integer;
   map : array of integer;
 begin
   // get tabs
