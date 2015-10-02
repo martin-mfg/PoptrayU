@@ -36,8 +36,9 @@ TDateTimePickerStyleHookFix= class(TDateTimePickerStyleHook)
 private
 procedure CNNotify(var Message: TWMNotify); message CN_NOTIFY;
 procedure WMPaint(var Message: TMessage); message WM_PAINT;
-procedure PaintBackground(Canvas: TCanvas); override;
 procedure SetColorsCalendar;
+strict protected
+procedure PaintBackground(Canvas: TCanvas); override;
 public
 constructor Create(AControl: TWinControl); override;
 end;

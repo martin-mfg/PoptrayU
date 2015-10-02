@@ -209,17 +209,18 @@ object RulesForm: TRulesForm
     TabOrder = 0
     object spltRules: TSplitter
       Left = 104
-      Top = 38
+      Top = 35
       Width = 5
-      Height = 475
+      Height = 478
       ResizeStyle = rsUpdate
+      ExplicitTop = 38
       ExplicitHeight = 297
     end
     object RulesToolbar: TActionToolBar
       Left = 4
       Top = 4
       Width = 640
-      Height = 34
+      Height = 31
       ActionManager = RulesActionManager
       Caption = 'Rules'
       Color = clMenuBar
@@ -239,15 +240,18 @@ object RulesForm: TRulesForm
       PopupMenu = dm.mnuToolbar
       Spacing = 8
       VertMargin = 4
+      ExplicitHeight = 34
     end
     object panRuleList: TPanel
       Left = 4
-      Top = 38
+      Top = 35
       Width = 100
-      Height = 475
+      Height = 478
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitTop = 38
+      ExplicitHeight = 475
       object listRules: TCheckListBox
         Left = 0
         Top = 0
@@ -266,13 +270,14 @@ object RulesForm: TRulesForm
       end
       object panRuleListButtons: TPanel
         Left = 0
-        Top = 453
+        Top = 456
         Width = 100
         Height = 22
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
         OnResize = panRuleListButtonsResize
+        ExplicitTop = 453
         object btnRuleDown: TSpeedButton
           Left = 3
           Top = 0
@@ -325,9 +330,9 @@ object RulesForm: TRulesForm
     end
     object CategoryPanelGroup1: TCategoryPanelGroup
       Left = 109
-      Top = 38
+      Top = 35
       Width = 535
-      Height = 475
+      Height = 478
       VertScrollBar.Tracking = True
       Align = alClient
       ChevronColor = clCaptionText
@@ -345,12 +350,14 @@ object RulesForm: TRulesForm
       OnResize = CategoryPanelGroup1Resize
       ExplicitLeft = 110
       ExplicitTop = 39
+      ExplicitHeight = 475
       object catRuleActions: TCategoryPanel
         Top = 229
         Height = 193
         Caption = 'Rule Actions'
         Color = clWindow
         TabOrder = 0
+        ExplicitWidth = 185
         object btnEdRuleEXE: TSpeedButton
           Left = 508
           Top = 30
@@ -545,6 +552,7 @@ object RulesForm: TRulesForm
         Caption = 'Rule Conditions'
         Color = clWindow
         TabOrder = 1
+        ExplicitWidth = 185
         object panRuleDetail: TPanel
           Left = 0
           Top = 0

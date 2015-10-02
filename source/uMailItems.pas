@@ -161,7 +161,7 @@ begin
       if (Result.MsgNum = MsgNum) then Exit; //Message found
     except on E: EArgumentOutOfRangeException do begin
       //Return nil if index is out of bounds/range
-      Result := nil;
+      //Result := nil;
       end;
     end;
   end;

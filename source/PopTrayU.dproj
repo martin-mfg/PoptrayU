@@ -111,6 +111,7 @@
         <DCC_Optimize>false</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_Build>9</VerInfo_Build>
         <VerInfo_Release>1</VerInfo_Release>
         <DCC_DcuOutput>C:\code\poptray\trunk\source\output\dcu\</DCC_DcuOutput>
         <DCC_ExeOutput>C:\code\poptray\trunk\source\output\</DCC_ExeOutput>
@@ -121,7 +122,7 @@
         <Debugger_RunParams>/MULTIPLE /TRANSLATE</Debugger_RunParams>
         <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=Jessica Brown;FileDescription=PopTrayU E-Mail Notifier;FileVersion=5.2.1.0;InternalName=;LegalCopyright=Copyright © 2011-2014 Jessica Brown, Copyright © 2001-2004 - Renier Crause;LegalTrademarks=;OriginalFilename=PopTrayU.exe;ProductName=PopTrayU;ProductVersion=5.0;Comments=Freeware and Open-Source</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Jessica Brown;FileDescription=PopTrayU E-Mail Notifier;FileVersion=5.2.1.9;InternalName=;LegalCopyright=Copyright © 2011-2014 Jessica Brown, Copyright © 2001-2004 - Renier Crause;LegalTrademarks=;OriginalFilename=PopTrayU.exe;ProductName=PopTrayU;ProductVersion=5.0;Comments=Freeware and Open-Source</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -290,7 +291,7 @@
                     <VersionInfo Name="MajorVer">4</VersionInfo>
                     <VersionInfo Name="MinorVer">1</VersionInfo>
                     <VersionInfo Name="Release">1</VersionInfo>
-                    <VersionInfo Name="Build">53</VersionInfo>
+                    <VersionInfo Name="Build">62</VersionInfo>
                     <VersionInfo Name="Debug">False</VersionInfo>
                     <VersionInfo Name="PreRelease">False</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -302,7 +303,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">Jessica Brown</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription">PopTrayU E-Mail Notifier</VersionInfoKeys>
-                    <VersionInfoKeys Name="FileVersion">4.1.1.53</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">4.1.1.62</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName"/>
                     <VersionInfoKeys Name="LegalCopyright">Copyright © 2011-2012 Jessica Brown, Copyright © 2001-2004 - Renier Crause</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalTrademarks"/>

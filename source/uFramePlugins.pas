@@ -180,7 +180,7 @@ begin
       else
         Plugin := TPlugin.Create;
       end;
-      Plugin.Name := PluginName;
+      Plugin.Name := String(PluginName);
       Plugin.DLLName := srec.Name;
       Plugin.hPlugin := hPlugin;
       Plugin.Enabled := False;
