@@ -4,12 +4,13 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "2"
-!define VER_BETA "1"
+!define VER_BETA "2"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
 !define VERSION "${VER_MAJOR}.${VER_MINOR}.${VER_BETA}"
-Name "${PRODUCT} ${VERSION} Beta Release"
+Name "${PRODUCT} ${VERSION}"
+;; Beta Release"
 
 !include "MUI2.nsh"
 !include "InstallOptions.nsh"

@@ -1,6 +1,24 @@
 PopTrayU Version History
 ------------------------
 
+=============
+Version 5.2.2
+October 2015
+=============
+New Features
+------------
+* Unicode password support
+* This version compiled with optimizations enabled
+
+Changed Features
+----------------
+* Canadian French trasnslation updated
+
+Codebase Improvements
+---------------------
+* Eliminated warnings and hints throughout the project
+* MadExcept settings updated, no longer includes certain unnecessary logs
+
 ==============
 Version 5.2.1
 September 2015
