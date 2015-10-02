@@ -57,7 +57,6 @@ var
   password : string;
   encodedpw : string;
   decodedpw : string;
-  byteString : RawByteString;
 begin
   password := 'password';
   encodedpw := Encrypt(password);
@@ -71,7 +70,6 @@ var
   password : string;
   encodedpw : string;
   decodedpw : string;
-  byteString : RawByteString;
 begin
   password := 'abcd1234!';
   encodedpw := Encrypt(password);
@@ -85,7 +83,6 @@ var
   password : string;
   encodedpw : string;
   decodedpw : string;
-  byteString : RawByteString;
 begin
   password := 'ÿóýõ'; // upper ANSI passes the old password algorithm
   encodedpw := Encrypt(password);
@@ -99,7 +96,6 @@ var
   password : string;
   encodedpw : string;
   decodedpw : string;
-  byteString : RawByteString;
 begin
   password := 'στην αρχή';  // greek fails the old password algorithm
   encodedpw := Encrypt(password);
@@ -113,7 +109,6 @@ var
   password : string;
   encodedpw : string;
   decodedpw : string;
-  byteString : RawByteString;
 begin
   password := 'בהתחלה';  // hebrew fails the old password algorithm
   encodedpw := Encrypt(password);
