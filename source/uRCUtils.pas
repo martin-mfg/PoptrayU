@@ -53,14 +53,12 @@ procedure EnableControl(Edit : TWinControl; Enabled : boolean);
 procedure Alert(st : string); overload;
 procedure Alert(int : integer); overload;
 
-// base 64
-function Encode64(st : string) : string;
-function Decode64(st : string) : string;
-
 // encryption
-function BorlandEncrypt(const S: String; Key: Word): string;
-function BorlandDecrypt(const S: String; Key: Word): string;
-function Encrypt(password : string) : string;
+function BorlandEncryptClassic(const S: String; Key: Word): String;
+function BorlandDecryptClassic(const S: String; Key: Word): String;
+function BorlandEncryptWide(const S: String; Key: Word): String;
+function BorlandDecryptWide(const S: String; Key: Word): String;
+function Encrypt(const password : string) : string;
 function Decrypt(password : string) : string;
 
 //wininet
@@ -129,7 +127,7 @@ const
 
 implementation
 
-uses ShellAPI, Mapi, StrUtils, uTranslate;
+uses ShellAPI, Mapi, StrUtils, uTranslate, IdCoderMIME, IdGlobal;
 
 const
   INTERNET_CONNECTION_MODEM           = $01;
@@ -687,92 +685,6 @@ begin
   ShowMessage(IntTostr(int));
 end;
 
-//------------------------------------------------------------------- base64 ---
-
-const
-  Alphabet : string[64] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-
-function Encode64(st : string) : string;
-////////////////////////////////////////////////////////////////////////////////
-// Base64 Encode a string  (RFC 1521)
-// Copyright © 2001 - Renier Crause
-var
-  i,idx : integer;
-begin
-  Result := '';
-  i := 1;
-  while i <= length(st) do
-  begin
-    // 1st char
-    idx := ord(st[i]) and $FC shr 2;
-    Result := Result + Alphabet[idx+1];
-    // 2nd char
-    idx := (ord(st[i]) and $3 shl 4);
-    if i+1 <= length(st) then idx := idx + (ord(st[i+1]) and $F0 shr 4);
-    Result := Result + Alphabet[idx+1];
-    // 3rd char
-    if i+1 <= length(st) then
-    begin
-      idx := (ord(st[i+1]) and $F shl 2);
-      if i+2 <= length(st) then idx := idx + (ord(st[i+2]) and $C0 shr 6);
-      Result := Result + Alphabet[idx+1];
-    end
-    else
-      Result := Result + '=';
-    // 4th char
-    if i+2 <= length(st) then
-    begin
-      idx := (ord(st[i+2]) and $3F);
-      Result := Result + Alphabet[idx+1];
-    end
-    else
-      Result := Result + '=';
-    // next source char
-    Inc(i,3);
-  end;
-end;
-
-function Decode64(st : string) : string;
-////////////////////////////////////////////////////////////////////////////////
-// Base64 Decode a string  (RFC 1521)
-// Copyright © 2001 - Renier Crause
-var
-  i,c,idx : integer;
-begin
-  Result := '';
-  for i := 1 to length(st) do
-  begin
-    if st[i] = '=' then
-    begin
-      if Copy(Result,length(Result),1) = #0 then Delete(Result,Length(Result),1);
-      Break;
-    end;
-    idx := Pos(st[i],Alphabet) - 1;
-    if idx < 0 then break;
-    case (i-1) mod 4 of
-      0 : begin
-            c := idx shl 2;
-            Result := Result + chr(c);
-          end;
-      1 : begin
-            c := idx shr 4;
-            Result[length(Result)] := chr(ord(Result[length(Result)]) or c);
-            c := idx and $F shl 4;
-            Result := Result + chr(c);
-          end;
-      2 : begin
-            c := idx shr 2;
-            Result[length(Result)] := chr(ord(Result[length(Result)]) or c);
-            c := idx and $3 shl 6;
-            Result := Result + chr(c);
-          end;
-      3 : begin
-            c := idx;
-            Result[length(Result)] := chr(ord(Result[length(Result)]) or c);
-          end;
-    end;
-  end;
-end;
 
 //--------------------------------------------------------------- encryption ---
 
@@ -780,58 +692,85 @@ const
   C1 = 43941;
   C2 = 16302;
 
-function BorlandEncrypt(const S: String; Key: Word): String;
+// This version of Borland Encrypt only works with ANSI strings, and wide
+// string characters are truncated/ignored. It is, however,
+// backward compatible with older versions of poptrayu
+{$IFOPT Q+}{$DEFINE OVERFLOW_ON}{$Q-}{$ELSE}{$UNDEF OVERFLOW_ON}{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGEON}{$R-}{$ELSE}{$UNDEF RANGEON}{$ENDIF}
+function BorlandEncryptClassic(const S: String; Key: Word): String;
 var
   I: byte;
 begin
   SetLength(Result,Length(S));
   for I := 1 to Length(S) do begin
-    Result[I] := char(byte(S[I]) xor (Key shr 8));
+    Result[I] := Char(byte(S[I]) xor (Key shr 8));
     Key := (byte(Result[I]) + Key) * C1 + C2;
   end;
 end;
+{$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
+{$IFDEF OVERFLOW_ON}{$Q+}{$UNDEF OVERFLOW_ON}{$ENDIF}
 
-// the multiplication of Key * C1 causes an integer overflow condition.
-// however, this is expected behavior, and not an unexpected error.
+// This version of Borland Encrypt works with Wide Strings without truncating
+// the upper byte on each string.
+{$IFOPT Q+}{$DEFINE OVERFLOW_ON}{$Q-}{$ELSE}{$UNDEF OVERFLOW_ON}{$ENDIF}
+{$IFOPT R+}{$DEFINE RANGEON}{$R-}{$ELSE}{$UNDEF RANGEON}{$ENDIF}
+function BorlandEncryptWide(const S: String; Key: Word): String;
+var
+  I: integer;
+begin
+  SetLength(Result,Length(S));
+  for I := 1 to Length(S) do begin
+    Result[I] := Char(word(S[I]) xor (Key shr 8));
+    Key := (word(Result[I]) + Key) * C1 + C2;
+  end;
+end;
+{$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
+{$IFDEF OVERFLOW_ON}{$Q+}{$UNDEF OVERFLOW_ON}{$ENDIF}
+
+// the multiplication of Key * C1 may cause an expected integer overflow.
 // so we've set compiler options here to disable rangechecking and
-// overflow checking as they seem to be setting off false-positives.
-{$IFOPT Q+}
-  {$DEFINE OVERFLOW_ON}
-  {$Q-}
-{$ELSE}
-  {$UNDEF OVERFLOW_ON}
-{$ENDIF}
-function BorlandDecrypt(const S: String; Key: Word): String;
+// overflow checking during this algorithm
+{$IFOPT Q+}{$DEFINE OVERFLOW_ON}{$Q-}{$ELSE}{$UNDEF OVERFLOW_ON}{$ENDIF}
+function BorlandDecryptClassic(const S: String; Key: Word): String;
 var
   I, si: byte;
 begin
   SetLength(Result,Length(S));
   for I := 1 to Length(S) do begin
-    Result[I] := char(byte(S[I]) xor (Key shr 8));
+    Result[I] := Char(byte(S[I]) xor (Key shr 8));
     si := byte(S[I]);
-    {$IFOPT R+}
-      {$DEFINE RANGEON}
-      {$R-}
-    {$ELSE}
-      {$UNDEF RANGEON}
-    {$ENDIF}
+    {$IFOPT R+}{$DEFINE RANGEON}{$R-}{$ELSE}{$UNDEF RANGEON}{$ENDIF}
     Key := (si + Key) * C1 + C2;
-    {$IFDEF RANGEON}
-      {$R+}
-      {$UNDEF RANGEON}
-    {$ENDIF}
+    {$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
+  end;
+end;
+{$IFDEF OVERFLOW_ON}{$Q+}{$UNDEF OVERFLOW_ON}{$ENDIF}
+
+
+
+{$IFOPT Q+}{$DEFINE OVERFLOW_ON}{$Q-}{$ELSE}{$UNDEF OVERFLOW_ON}{$ENDIF}
+function BorlandDecryptWide(const S: String; Key: Word): String;
+var
+  I : integer;
+  si: word;
+begin
+  SetLength(Result,Length(S));
+  for I := 1 to Length(S) do begin
+    Result[I] := Char(word(S[I]) xor (Key shr 8));
+    si := word(S[I]);
+    {$IFOPT R+}{$DEFINE RANGEON}{$R-}{$ELSE}{$UNDEF RANGEON}{$ENDIF}
+    Key := (si + Key) * C1 + C2;
+    {$IFDEF RANGEON}{$R+}{$UNDEF RANGEON}{$ENDIF}
 
   end;
 end;
-
-{$IFDEF OVERFLOW_ON}
-  {$Q+}
-  {$UNDEF OVERFLOW_ON}
-{$ENDIF}
+{$IFDEF OVERFLOW_ON}{$Q+}{$UNDEF OVERFLOW_ON}{$ENDIF}
 
 
 
-function Encrypt(password : string) : string;
+function Encrypt(const password : string) : string;
+var
+  partially_encrypted : string;
 begin
   { ----old encrypt ----
     result := '';
@@ -839,9 +778,12 @@ begin
       result := result + char( (ord(password[i]) xor 43) + 11 ); }
 
   // new encrypt
-  password := BorlandEncrypt(password,17732);
-  Result := '<' + Encode64(password) + '>';
-  //Result := '<' + Encode64(password) + '>';
+  partially_encrypted := BorlandEncryptClassic(password,17732);
+  Result := '<' + TIdEncoderMIME.EncodeString(partially_encrypted) + '>';  //ANSI
+  if Decrypt(Result) <> password then begin
+    partially_encrypted := BorlandEncryptWide(password,17732);
+    Result := '>' + TIdEncoderMIME.EncodeString(partially_encrypted, IndyTextEncoding_UTF8) + '<'; //UTF-8
+  end;
 end;
 
 function Decrypt(password : string) : string;
@@ -853,13 +795,19 @@ begin
     result := '';
     Exit;
   end;
-  if (Copy(password,1,1) = '<') and (Copy(password,Length(password),1) = '>') then
+  if (Copy(password,1,1) = '>') and (Copy(password,Length(password),1) = '<') then
   begin
-    // new decrypt
+    // UTF8 decrypt
     password := Copy(password,2,Length(password)-2);
-    password := Decode64(password);
-    result := BorlandDecrypt(password,17732);
-    //Result := password;
+    password := TIdDecoderMIME.DecodeString(password, IndyTextEncoding_UTF8);
+    Result := BorlandDecryptWide(password,17732);
+  end
+  else if (Copy(password,1,1) = '<') and (Copy(password,Length(password),1) = '>') then
+  begin
+    // ANSI decrypt
+    password := Copy(password,2,Length(password)-2);
+    password := TIdDecoderMIME.DecodeString(password);
+    result := BorlandDecryptClassic(password,17732);
   end
   else begin
     // old decrypt
@@ -955,8 +903,8 @@ begin
   for i := low(FileNames) to high(FileNames) do
   begin
     files[i].nPosition := i;
-    files[i].lpszPathName := PAnsiChar(FileNames[i]);
-    files[i].lpszFileName := PAnsiChar(FileNames[i]);
+    files[i].lpszPathName := PAnsiChar(AnsiString(FileNames[i]));
+    files[i].lpszFileName := PAnsiChar(AnsiString(FileNames[i]));
   end;
 
   with MapiMessage do
