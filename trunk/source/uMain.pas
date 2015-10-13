@@ -313,8 +313,8 @@ type
     function HasAttachment(msg : IdMessage.TIdMessage) : boolean;
     function SelectedMailItem(Item : TListItem = nil) : TMailItem;
     procedure RunMessage(account: TAccount; msgnum: integer);
-    function GetMessageHeader(account : TAccount; msgnum : integer) : boolean;
-    function GetMessageHeaderByUID(account : TAccount; uid : string) : boolean;
+    function GetPOPMessageHeader(account : TAccount; msgnum : integer) : boolean;
+    function GetIMAPMessageHeader(account : TAccount; uid : string) : boolean;
     procedure SetSelectedMailItemStatus(Statusses : TMailItemStatusSet; SetIt : boolean);
     function CountSelectedMailItemStatus(Statusses: TMailItemStatusSet) : integer;
     function DoFullAccountCheck(account : TAccount) : integer;
@@ -729,7 +729,7 @@ begin
   for i := 1 to mailcount do
   begin
     //todo does this need to use UIDs for IMAP?
-    if not GetMessageHeader(account,i) then
+    if not GetPOPMessageHeader(account,i) then
     begin
       Result := -1; // signal checking error
       //break //commenting out to allow checking additional msgs after an error containing message
@@ -761,7 +761,7 @@ begin
   if mailcount>0 then
     for i := firstMsgToDownload to mailcount - 1 do
   begin
-    if not GetMessageHeader(account,i) then
+    if not GetPOPMessageHeader(account,i) then
     begin
       Result := -1; // signal checking error
       //break //commenting out to allow checking additional msgs after an error containing message
@@ -820,7 +820,7 @@ begin
     for i := mailcount -1 downto 0 do
     begin
       //msgNum := uidList[i]
-      if not GetMessageHeaderByUID(account,IntToStr(uidList[i])) then
+      if not GetIMAPMessageHeader(account,IntToStr(uidList[i])) then
       begin
         Result := -1; // signal checking error
         //break //commenting out to allow checking additional msgs after an error containing message
@@ -836,14 +836,160 @@ begin
 end;
 
 function TfrmPopUMain.ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
+//begin
+//  // for each message in the account
+//    // get the flags
+//    // see if the flags changed
+//    // if flag = deleted, set icon = deleted
+//    // if flag = read/unread set read/unread
+//    // if flag = important...
+//  // check for new messages starting at last seen uid
+var
+  i : integer;          // loop counter
+  minMsgNum : integer;
+  UIDLs : TStringList;
+  msgnum : integer;
+  UID : string;
+  MailItem : TMailItem;
+  quickchecking : boolean;
+  mailcount : integer;  // How many new messages have been found?
+  firstMsgToDownload : integer;
+  tempFlags : TIdMessageFlagsSet;
 begin
-  // for each message in the account
-    // get the flags
-    // see if the flags changed
-    // if flag = deleted, set icon = deleted
-    // if flag = read/unread set read/unread
-    // if flag = important...
-  // check for new messages starting at last seen uid
+  UIDLs := TStringList.Create;
+  try
+    account.Status := Translate('Checking... Getting UIDs');
+    StatusBar.Panels[0].Text := ' '+account.Status;   //TODO: this should be only if account is showing
+    if (Options.ShowNewestMessagesOnly) then
+      quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
+    else
+      quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+
+
+    if quickchecking then
+    begin
+
+      account.Status := Translate('Checking... Clearing old Message Numbers');
+      StatusBar.Panels[0].Text := ' '+account.Status;
+      Application.ProcessMessages();
+      // clear all msgnums
+      account.Mail.ClearAllMsgNums();
+//      if Notify then
+//      begin
+//        account.Mail.SetAllNew(false);
+//        FTotalNew := Accounts.CountAllNew;
+//      end;
+      // assign new nums
+      account.Status := Translate('Checking... Re-assigning Message IDs');
+      StatusBar.Panels[0].Text := ' '+account.Status;
+      Application.ProcessMessages();
+
+      // only assign nums for the newest N messages (if enabled)
+      minMsgNum := 0;
+      if (Options.ShowNewestMessagesOnly) then
+        minMsgNum := Math.Max(0, UIDLs.Count-Options.NumNewestMsgToShow);
+
+      for i := minMsgNum to UIDLs.Count-1 do
+      begin
+        msgnum := StrToInt(StrBefore(UIDLs[i],' '));
+        UID := StrAfter(UIDLs[i],' ');
+        MailItem := account.Mail.FindUIDWithDuplicates(UID);
+        if MailItem <> nil then
+        begin
+          MailItem.MsgNum := msgnum;
+          UIDLs[i] := '';
+
+          // for imap check for changes to server flags
+          if account.IsImap then begin
+             if (Account.Prot as TProtocolIMAP4).GetFlags(UID, tempFlags) then
+             begin
+               MailItem.Seen := mfSeen in tempFlags;
+               MailItem.Important := mfFlagged in tempFlags;
+               MailItem.ToDelete := mfDeleted in tempFlags;     //?
+             end;
+          end;
+
+        end;
+      end;
+      account.Status := Translate('Checking... Removing Deleted Items');
+      StatusBar.Panels[0].Text := ' '+account.Status;
+      Application.ProcessMessages();
+
+      // delete the mailitems no longer on server
+      if account.Mail.RemoveDeletedMessages() then begin//removes all msgs with MsgNum = -1
+        ForceShow := True; //ForceShow is set if messages were removed from the list because they are not on the server (eg: deleted)
+      end;
+      // mismatch
+      if ShowIt and Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then   //TODO: accountToTab()
+      begin
+        account.Status := Translate('Checking... Double-Checking for Deleted Items');
+        StatusBar.Panels[0].Text := ' '+account.Status;
+        for i := 0 to lvMail.Items.Count-1 do
+        begin
+          MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
+          if MailItem = nil then
+          begin
+            ForceShow := True;
+            break;
+          end;
+        end;
+      end;
+      // count new messages
+      account.Status := Translate('Checking... Counting New Messages');
+      StatusBar.Panels[0].Text := ' '+account.Status;
+      mailcount := 0;
+      for i := 0 to UIDLs.Count-1 do
+        if UIDLs[i] <> '' then
+          Inc(mailcount);
+      if mailcount>0 then
+        if (Options.ShowNewestMessagesOnly) then
+          account.Status := Translate('Downloading newest')+' '+IntToStr(Math.Min(UIDLs.Count,Options.NumNewestMsgToShow))+' '+Translate('messages')+'...'
+        else
+          account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('messages')+'...';
+      StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+      // go fetch the new messages
+      Progress.Max := UIDLs.Count;
+      if (Options.ShowNewestMessagesOnly) then
+        firstMsgToDownload := Math.Max(0, UIDLs.Count-Options.NumNewestMsgToShow)
+      else
+        firstMsgToDownload := 0;
+      for i := firstMsgToDownload to UIDLs.Count-1 do
+      begin
+        if UIDLs[i] <> '' then
+        begin
+          msgnum := StrToInt(StrBefore(UIDLs[i],' '));
+          if (account.IsImap) then begin
+            if not GetIMAPMessageHeader(account,StrAfter(UIDLs[i],' ')) then
+            begin
+              Result := -1;
+              Break;
+            end;
+          end else begin
+            if not GetPOPMessageHeader(account,msgnum) then
+            begin
+              Result := -1;
+              Break;
+            end;
+          end;
+
+        end;
+        // progress
+        Progress.Position := i;
+        Application.ProcessMessages;
+      end;
+      account.LastMsgCount := mailcount;
+
+       Result := 0; //ok
+
+    end
+    else begin
+      // if UIDL failed for some reason, revert to full-check.
+      Result := DoFullAccountCheck(account);
+    end;
+  finally
+    UIDLs.Free;
+  end;
+
 
   Result := -1; // failure
 end;
@@ -967,13 +1113,13 @@ begin
         begin
           msgnum := StrToInt(StrBefore(UIDLs[i],' '));
           if (account.IsImap) then begin
-            if not GetMessageHeaderByUID(account,StrAfter(UIDLs[i],' ')) then
+            if not GetIMAPMessageHeader(account,StrAfter(UIDLs[i],' ')) then
             begin
               Result := -1;
               Break;
             end;
           end else begin
-            if not GetMessageHeader(account,msgnum) then
+            if not GetPOPMessageHeader(account,msgnum) then
             begin
               Result := -1;
               Break;
@@ -2157,7 +2303,7 @@ begin
   );
 end;
 
-function TfrmPopUMain.GetMessageHeader(account : TAccount; msgnum: integer) : boolean;
+function TfrmPopUMain.GetPOPMessageHeader(account : TAccount; msgnum: integer) : boolean;
 var
   MsgSize : integer;
   MsgID : string;
@@ -2345,7 +2491,7 @@ begin
   FreeAndNil(MsgHeader);
 end;
 
-function TfrmPopUMain.GetMessageHeaderByUID(account : TAccount; uid : string) : boolean;
+function TfrmPopUMain.GetIMAPMessageHeader(account : TAccount; uid : string) : boolean;
 var
   MsgSize : integer;
   MsgID : string;
@@ -4479,24 +4625,31 @@ begin
           Inc(deleteCount);
           Item := lvMail.GetNextItem(Item, sdAll, [isSelected]);
         end;
-        account.ConnectIfNeeded();
         try
-        if DeleteMails(account,deleteCount) then
-          account.Status := IntToStr(deleteCount) + ' ' + Translate('message(s) deleted.') + ''
-        else
-          account.Status := Translate('Error deleting message(s)');
-        except
-          on E: Exception do begin
+          account.ConnectIfNeeded();
+          try
+          if DeleteMails(account,deleteCount) then begin
+            account.Status := IntToStr(deleteCount) + ' ' + Translate('message(s) deleted.') + '';
+            lvMailRemoveSelectedMsgs();
+            //TODO: should we also remove the mail message from the Mail items list??
+            CallNotifyPlugins;
+          end else
             account.Status := Translate('Error deleting message(s)');
+          except
+            on E: Exception do begin
+              account.Status := Translate('Error deleting message(s)');
+            end;
+          end;
+        except // error on ConnectIfNeeded such as timeout error or other server error
+          on E : EIdReadTimeout do begin
+            account.Status := Translate('Timeout Error Connecting to Account');
+          end;
+          on E2 : EIdException do begin
+            account.Status := Translate('Error Connecting to Account');
           end;
         end;
-
         StatusBar.Panels[0].Text := ' '+account.Status;
 
-        lvMailRemoveSelectedMsgs();
-        //TODO: do we need to remove the mail message from the Mail items list??
-
-        CallNotifyPlugins;
       end;
     end;
   end;
