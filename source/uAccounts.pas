@@ -130,7 +130,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
 uses uGlobal, IdException, uTranslate, Vcl.Forms, Vcl.Controls, uRCUtils,
-  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4;
+  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4, IdExceptionCore;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,11 +190,17 @@ begin
   self.Connecting := True;
   try
     self.Prot.SetSSLOptions(UseSSLorTLS, AuthType, SslVersion, StartTLS);
-    self.Prot.Connect(aHost, aPort, aUsername, aPassword, Options.TimeOut*1000);
-    errMsg := self.Prot.LastErrorMsg();
-    if (errMsg <> nil) then
-    begin
-      raise EIdException.Create(errMsg);
+    try
+      self.Prot.Connect(aHost, aPort, aUsername, aPassword, Options.TimeOut*1000);
+      errMsg := self.Prot.LastErrorMsg();
+      if (errMsg <> nil) then
+      begin
+        raise EIdException.Create(errMsg);
+      end;
+    except on E : EIdReadTimeout do
+      begin
+        raise E;
+      end;
     end;
   finally
     self.Connecting := False;
