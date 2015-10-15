@@ -142,6 +142,7 @@ object frameAdvancedOptions: TframeAdvancedOptions
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Communicate using &MAPI instead of mailto:'
         TabOrder = 0
+        OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
       end
     end
