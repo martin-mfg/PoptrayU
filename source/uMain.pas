@@ -645,7 +645,14 @@ begin
   // run it
   if MailProgram = '' then
   begin
-    ShowTranslatedDlg(Translate('No E-Mail Client specified'),mtError,[mbOK],0);
+    // Run Email Client
+    // ----------------
+    // A default email client has not been selected.
+    // Would you like to select one now?
+    // ----------------
+    // Select    Cancel
+
+    ShowTranslatedDlg('Unable to Launch Email Client.'+#13#10+'No Email Client specified.',mtError,[mbOK],0,'Run Email Client');
     Result := false;
   end
   else begin
@@ -2218,6 +2225,7 @@ begin
   if num < 0 then Exit;
   if Accounts.Count <= 0 then Exit; //added to prevent exception when no accounts
   account := Accounts[num-1];
+  if account.Mail = nil then Exit;
   if account.Mail.Count = 0 then Exit;
   account.ViewedMsgIDs.Clear;
   changed := false;
@@ -5185,6 +5193,7 @@ begin
       numsuccess := 0;
       numfailures := 0;
       account.ConnectIfNeeded();
+      lvMail.Items.BeginUpdate;
       for i := 0 to lvMail.Items.Count-1 do
       begin
         if (lvMail.Items[i].Selected) then begin
@@ -5206,6 +5215,7 @@ begin
             Inc(numfailures);
         end;
       end;
+      lvMail.Items.EndUpdate;
       if (numfailures > 0) then begin
         account.Status := Translate('Error:') + ' ' + IntToStr(numfailures) + ' ' + Translate('message(s) could not be changed!')+HintSep+TimeToStr(Now);
         StatusBar.Panels[0].Text := account.Status;
