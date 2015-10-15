@@ -667,9 +667,7 @@ begin
   Edit.Enabled := Enabled;
   if Edit.Enabled then
     SetPropValue(Edit,'Color',clWindow)
-    //Edit.Color := clWindow
   else
-    //Edit.Color := clBtnFace;
     SetPropValue(Edit,'Color',clBtnFace)
 end;
 
