@@ -645,6 +645,7 @@ begin
   // run it
   if MailProgram = '' then
   begin
+    // TODO: redone dialog:
     // Run Email Client
     // ----------------
     // A default email client has not been selected.
