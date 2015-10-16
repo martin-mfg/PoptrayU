@@ -21,6 +21,7 @@ type
     procedure SaveRulesToFile(Ini : TCustomIniFile);
     procedure LoadRulesFromFile(Ini : TCustomIniFile; newRulesFormat: boolean = true);
     procedure RemapRules(map : array of integer);
+    procedure RemoveAccount(accountNum : integer);
   End;
 
 var
@@ -372,6 +373,33 @@ begin
 
   frmPopUMain.RulesForm.listRulesClick(frmPopUMain.RulesForm.listRules);
   SaveRulesINI;
+end;
+
+// When an account is deleted, this method should be called. It will
+// change rules that apply to the deleted account to apply to the default
+// account (all accounts) and inactivate the rule. For all rules with an
+// account number higher than the deleted account, the account number will
+// be shifted to match.
+procedure TRulesManager.RemoveAccount( accountNum : integer);
+var
+  i : integer;
+begin
+    for i := 0 to Rules.Count-1 do
+    begin
+      if Rules[i].Account = accountNum then begin
+        Rules[i].Account := -1;
+        Rules[i].Enabled := false; // if account rule is set for no longer exists, disable rule
+      end;
+      // fix rules - rule numbers after the deleted account all need to be decreased by one
+      if Rules[i].Account > accountNum then
+        Rules[i].Account := Rules[i].Account - 1;
+    end;
+    // Notify Rules form that it needs to remove an account from rules dropdown
+    if Assigned(frmPopUMain.RulesForm) then begin
+      frmPopUMain.RulesForm.AccountsChanged();
+      frmPopUMain.RulesForm.listRulesClick(frmPopUMain.RulesForm.listRules);
+    end;
+    SaveRulesIni();
 end;
 
 end.

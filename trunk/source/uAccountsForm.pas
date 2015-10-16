@@ -129,6 +129,8 @@ type
     procedure actExportExecute(Sender: TObject);
     procedure actImportExecute(Sender: TObject);
     procedure btnPickFolderClick(Sender: TObject);
+    procedure chkMoveSpamClick(Sender: TObject);
+    procedure chkMoveTrashClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -146,6 +148,7 @@ type
     function GetAccountForTab(tabNumber : integer) : TAccount;
     procedure showHideImapOptions;
     procedure EnableSSLOptions(enable : boolean);
+    function ShowSaveAccountDlg(dlgTitle : string) : integer;
   public
     { Public declarations }
     procedure RefreshProtocols();
@@ -164,7 +167,7 @@ implementation
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
   uPositioning, System.IniFiles, ExportAcctDlg, uImportAccountDlg,
-  uImapFolderSelect;
+  uImapFolderSelect, System.TypInfo;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -254,7 +257,10 @@ procedure TAccountsForm.ShowAccount(account : TAccount);
 var
   idxAuto, idxPw, idxApop, idxSasl: integer;
 begin
-  if (account = nil) then Exit;
+  if (account = nil) then begin
+    EnableFields(false);
+    Exit;
+  end;
 
   // main params
   edName.Text := account.Name;
@@ -426,18 +432,26 @@ end;
 procedure TAccountsForm.DeleteAccount(num: integer);
 var
   i : integer;
+  accountToDelete : TAccount;
+  accountName : String
 begin
-  //if Accounts.NumAccounts=1 then
-  //begin
-  //  ShowTranslatedDlg(Translate('Cannot delete last Account'), mtError, [mbOK], 0);
-  //  Exit;
-  //end;
-  if ShowTranslatedDlg(Translate('Delete Account:')+' '+Accounts[num-1].Name+' ?',
+  if num > Accounts.Count then begin
+    // if all is programmed well, this shouldn't happen
+    assert(false);
+    exit;
+  end;
+  accountToDelete := Accounts[num-1];
+
+  accountName := accountToDelete.Name;
+  if accountName = '' then accountName = Translate('<unnamed account>');
+  if ShowTranslatedDlg(Translate('Delete Account:')+' '+accountName+' ?',
                 mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
+
     // stop timer
-    if Assigned(Accounts[num-1]) then
-       FreeAndNil(Accounts[num-1].Timer);
+
+    if Assigned(accountToDelete) then
+       FreeAndNil(accountToDelete.Timer);
     // remove from array
     Accounts.Delete(num-1);
     //Dec(NumAccounts);
@@ -447,20 +461,10 @@ begin
     // remove from INI
     for i := 1 to Accounts.NumAccounts do
       SaveAccountINI(i);
-    // fix rules - rule numbers after the deleted account all need to be decreased by one
-    for i := 0 to RulesManager.Rules.Count-1 do        //TODO make this a method in RulesManager /////////////////////////////////////////
-    begin
-      if RulesManager.Rules[i].Account = num then
-        RulesManager.Rules[i].Account := -1;
-      if RulesManager.Rules[i].Account > num then
-        RulesManager.Rules[i].Account := RulesManager.Rules[i].Account - 1;
-    end;
-    // Notify Rules form that it needs to remove an account from rules dropdown
-    if Assigned(RulesForm) then begin    //TODO: this change seems like it might break something!!!!!!!!!!!!
-      RulesForm.AccountsChanged();
-      RulesForm.listRulesClick(RulesForm.listRules);
-    end;
-    SaveRulesINI;
+
+    // remap rules to not include the deleted account
+    RulesManager.RemoveAccount(num);
+
     // show mail
     if Accounts.NumAccounts>0 then
     begin
@@ -477,12 +481,17 @@ begin
       frmPopUMain.ShowMail(Accounts[frmPopUMain.tabMail.TabIndex],True);
     end
     else begin
+      // we now have no accounts left.
+      EnableFields(false);
+
       // this is a workaround, before it wasn't fixing the size of these
       // items if there's no accounts yet.
       AutoSizeCheckBox(chkDontCheckTimes);
       dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
       lblAnd.Left := dtStart.Left + dtStart.Width + 6;
       dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+
+
     end;
   end;
 end;
@@ -702,10 +711,29 @@ procedure TAccountsForm.chkDontCheckTimesClick(Sender: TObject);
 begin
   dtStart.Enabled := chkDontCheckTimes.Checked;
   dtEnd.Enabled := chkDontCheckTimes.Checked;
+  lblAnd.Enabled := chkDontCheckTimes.Checked;
 
   edAccChange(Sender);
 end;
 
+
+procedure TAccountsForm.chkMoveSpamClick(Sender: TObject);
+begin
+  lblSpamFolder.Enabled := chkMoveSpam.Checked;
+  edSpamFolder.Enabled := chkMoveSpam.Checked;
+  btnSpamFolder.Enabled := chkMoveSpam.Checked;
+
+  edAccChange(Sender);
+end;
+
+procedure TAccountsForm.chkMoveTrashClick(Sender: TObject);
+begin
+  lblTrashFolder.Enabled := chkMoveTrash.Checked;
+  edTrashFolder.Enabled := chkMoveTrash.Checked;
+  btnTrashFolder.Enabled := chkMoveTrash.Checked;
+
+  edAccChange(Sender);
+end;
 
 procedure TAccountsForm.btnEdAccountProgramClick(Sender: TObject);
 var
@@ -752,31 +780,86 @@ begin
   actDeleteAccount.Enabled := True;
 end;
 
-procedure TAccountsForm.tabAccountsChanging(Sender: TObject; var AllowChange: Boolean);
+// Prompts the user whether they'd like to save unsaved changes to the current
+// account.
+// @return - mrYes, mrNo, mrCancel
+function TAccountsForm.ShowSaveAccountDlg(dlgTitle : string) : integer;
+var
+  msgBox : TForm;
+  dlgResult : integer;
 begin
-  if FAccChanged then
-  begin
-    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
-                    'Do you want to save it?'), mtConfirmation,
-                    [mbYes, mbNo, mbCancel], 0) of
-      mrYes    : begin
-                   btnSave.Click;
-                   AllowChange := True;
-                 end;
-      mrNo     : begin
-                   if FNewAccount then
-                   begin
-                     Accounts.Delete(tabAccounts.TabIndex);
-                     //Dec(NumAccounts);
-                     frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
-                     tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
-                     FNewAccount := False;
-                   end;
-                   AllowChange := True;
-                 end;
-      mrCancel : AllowChange := False;
+
+    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account.')+#13+#10+
+                                  uTranslate.Translate('Would you like to save now?'),
+      mtConfirmation, mbYesNoCancel);
+    with msgBox do
+    try
+      Caption := dlgTitle;
+      TButton(FindComponent('Yes')).Caption := uTranslate.Translate('Save');
+      TButton(FindComponent('No')).Caption := uTranslate.Translate('Revert');
+      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
+      Result := msgBox.ShowModal;
+    finally
+      msgBox.Free
+    end;
+end;
+
+procedure TAccountsForm.tabAccountsChanging(Sender: TObject; var AllowChange: Boolean);
+var
+  dlgResult : integer;
+begin
+  if FAccChanged then begin
+    dlgResult := ShowSaveAccountDlg(uTranslate.Translate('Select Account'));
+
+    case dlgResult of
+      mrYes:
+        begin
+          btnSave.Click;
+          AllowChange := True;
+        end;
+      mrNo:
+        begin
+           if FNewAccount then
+           begin
+             Accounts.Delete(tabAccounts.TabIndex);
+             //Dec(NumAccounts);
+             frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
+             tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
+             FNewAccount := False;
+           end;
+           FAccChanged := false;
+           AllowChange := True;
+         end;
+      mrCancel:
+        AllowChange := False;
     end;
   end;
+
+
+
+//  if FAccChanged then
+//  begin
+//    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
+//                    'Do you want to save it?'), mtConfirmation,
+//                    [mbYes, mbNo, mbCancel], 0) of
+//      mrYes    : begin
+//                   btnSave.Click;
+//                   AllowChange := True;
+//                 end;
+//      mrNo     : begin
+//                   if FNewAccount then
+//                   begin
+//                     Accounts.Delete(tabAccounts.TabIndex);
+//                     //Dec(NumAccounts);
+//                     frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
+//                     tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
+//                     FNewAccount := False;
+//                   end;
+//                   AllowChange := True;
+//                 end;
+//      mrCancel : AllowChange := False;
+//    end;
+//  end;
 end;
 
 procedure TAccountsForm.tabAccountsDragOver(Sender, Source: TObject; X,
@@ -799,6 +882,7 @@ end;
 // TODO: only fill dropdown if acct is new or name changed
 procedure TAccountsForm.btnSaveAccountClick(Sender: TObject);
 begin
+
   SaveAccountEdits(Accounts[tabAccounts.TabIndex]);
   SaveAccountINI(tabAccounts.TabIndex+1);
   frmPopUMain.RulesForm.AccountsChanged();
@@ -857,11 +941,9 @@ var
   NoName : string;
 begin
   // check if saved
-  if FAccChanged then
+  if (FAccChanged or FNewAccount) and (Accounts.Count > 0) then
   begin
-    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
-                    'Do you want to save it?'), mtConfirmation,
-                    [mbYes, mbNo, mbCancel], 0) of
+    case ShowSaveAccountDlg(uTranslate.Translate('Add Account')) of
       mrYes    : btnSave.Click;
       mrNo     : ;// nothing
       mrCancel : Exit;
@@ -874,7 +956,7 @@ begin
   btnSave.Enabled := True;
   btnCancelAccount.Enabled := True;
   // add tab
-  NoName := Translate('NoName');
+  NoName := Translate('Account')+' '+IntToStr(Accounts.Count);
   tabAccounts.Tabs.Add(NoName);
   tabAccounts.TabIndex := Accounts.NumAccounts-1;
   frmPopUMain.tabMail.Tabs.Add(NoName);
@@ -1046,23 +1128,55 @@ begin
   cmbProtocol.Items.Add(Translate('IMAP4'));
 end;
 
+
+// Enable / Disable the fields. Fields shouldd be disabled when there are no
+// accounts and enabled otherwise.
 procedure TAccountsForm.EnableFields(EnableIt: Boolean);
-////////////////////////////////////////////////////////////////////////////////
-// Enable / Disable the fields
+var
+  i,j : integer;
+  surface: TCategoryPanelSurface;
+  panel : TCategoryPanel;
 begin
-  EnableControl(edName,EnableIt);
-  EnableControl(edServer,EnableIt);
-  EnableControl(cmbProtocol,EnableIt);
-  EnableControl(edPort,EnableIt);
-  EnableControl(edUsername,EnableIt);
-  EnableControl(edPassword,EnableIt);
-  EnableControl(edAccountProgram,EnableIt);
-  EnableControl(edSound,EnableIt);
-  EnableControl(colAccount,EnableIt);
-  chkAccEnabled.Enabled := EnableIt;
-  actTestAccount.Enabled := EnableIt;
+
+  for i := 0 to panelGrp1.Panels.Count - 1 do begin
+    panel := panelGrp1.Panels[i];
+    surface := (panel.Controls[0] as TCategoryPanelSurface);
+    for j := 0 to surface.ControlCount - 1 do begin
+      (surface.Controls[j]).Enabled := EnableIt;
+
+      // set background color on Edit boxes (gray for disabled, white for enabled)
+      if (surface.Controls[j] is TEdit) or
+         (surface.Controls[j] is TColorBox) or
+         (surface.Controls[j] is TComboBox) or
+         (surface.Controls[j] is TDateTimePicker) then
+      begin
+        if surface.Controls[j].Enabled then
+          SetPropValue(surface.Controls[j],'Color',clWindow)
+        else
+          SetPropValue(surface.Controls[j],'Color',clBtnFace);
+      end;
+    end;
+  end;
+
+
+  edSpamFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+  btnSpamFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+
+  edTrashFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+  btnTrashFolder.Enabled := EnableIt AND chkMoveTrash.Checked;
+
+  //edArchiveFolder.Enabled := EnableIt;
+  //btnArchiveFolder.Enabled := EnableIt;
+
+  lblSpamFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+  edSpamFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+  btnSpamFolder.Enabled := EnableIt AND chkMoveSpam.Checked;
+
+  lblAnd.Enabled := dtStart.Enabled;
+
   actDeleteAccount.Enabled := EnableIt;
-  EnableControl(chkDontCheckTimes,EnableIt);
+  actTestAccount.Enabled := EnableIt;
+  actExport.Enabled := EnableIt;
 end;
 
 procedure TAccountsForm.FormCreate(Sender: TObject);
@@ -1135,7 +1249,6 @@ begin
   btnAccountSoundTest.Height := edSound.Height;
   btnEdSound.Top := edSound.Top;
   btnEdSound.Height := edSound.Height;
-
 
   panIntervalAccount.Top := edSound.Top + edSound.Height + 3;
   edIntervalAccount.Left := CalcPosToRightOf(lblCheckEvery);
@@ -1324,10 +1437,8 @@ begin
   colAccount.Style := colAccount.Style - [cbCustomColors];
   colAccount.Style := colAccount.Style + [cbCustomColors];
 
-
   AutosizeCombobox( cmbAuthType );
   AutosizeCombobox( cmbSslVer );
-
 end;
 
 procedure TAccountsForm.btnEdSoundClick(Sender: TObject);
