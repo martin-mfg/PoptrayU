@@ -65,8 +65,8 @@ type
     Mail : TMailItems;
     UseSSLorTLS : boolean;
     DontCheckTimes : boolean;
-    DontCheckStart : TDateTime;
-    DontCheckEnd : TDateTime;
+    DontCheckStart : TTime;
+    DontCheckEnd : TTime;
     AuthType : TAuthType;
     SslVersion : TsslVer;
     StartTLS : boolean;
@@ -105,6 +105,9 @@ type
     procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string; const includePassword: boolean = true);
     procedure LoadAccountFromINI(Ini : TCustomIniFile; section: string);
     procedure SetProtocol();
+
+    class function GetDefaultDontCheckStartTime() : TTime;
+    class function GetDefaultDontCheckEndTime() : TTime;
   end;
 
   //----------------------------------------------------------- Account Items --
@@ -167,6 +170,9 @@ begin
   SpamFolderName := '[Gmail]/Spam';
   MoveTrashOnDelete := True;
   TrashFolderName := '[Gmail]/Trash';
+  DontCheckStart := GetDefaultDontCheckStartTime();
+  DontCheckEnd := GetDefaultDontCheckEndTime();
+  DontCheckTimes := false;
 end;
 
 procedure TAccount.ConnectIfNeeded();
@@ -474,13 +480,13 @@ begin
     self.Interval := Ini.ReadFloat(Section,'Interval',5);
     self.DontCheckTimes := Ini.ReadBool(Section,'DontCheckTimes',FALSE);
     try
-      self.DontCheckStart := Ini.ReadTime(Section,'DontCheckStart',StrToTime('20'+FormatSettings.TimeSeparator+'00'));
+      self.DontCheckStart := Ini.ReadTime(Section,'DontCheckStart',GetDefaultDontCheckStartTime());
     Except on e: EConvertError do begin
       ShowMessage(e.ToString);
       end;
     end;
     try
-      self.DontCheckEnd := Ini.ReadTime(Section,'DontCheckEnd',StrToTime('08'+FormatSettings.TimeSeparator+'00'));
+      self.DontCheckEnd := Ini.ReadTime(Section,'DontCheckEnd',GetDefaultDontCheckEndTime());
     Except on e: EConvertError do begin
       ShowMessage(e.ToString);
       end;
@@ -520,6 +526,24 @@ begin
 
 end;
 
+
+
+
+{*------------------------------------------------------------------------------
+  Default time for Don't Check Hours start time
+-------------------------------------------------------------------------------}
+class function TAccount.GetDefaultDontCheckStartTime() : TTime;
+begin
+  Result := StrToTime('20'+FormatSettings.TimeSeparator+'00');
+end;
+
+{*------------------------------------------------------------------------------
+  Default time for Don't Check Hours end time
+-------------------------------------------------------------------------------}
+class function TAccount.GetDefaultDontCheckEndTime() : TTime;
+begin
+  Result := StrToTime('08'+FormatSettings.TimeSeparator+'00');
+end;
 
 {$ENDREGION}
 
@@ -590,7 +614,6 @@ begin
       Result := Result + account.Mail.Count - account.IgnoreCount;
   end;
 end;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 {$ENDREGION}
