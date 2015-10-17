@@ -3,7 +3,7 @@ unit uAccountsForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
   PngBitBtn, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList,
@@ -149,6 +149,7 @@ type
     procedure showHideImapOptions;
     procedure EnableSSLOptions(enable : boolean);
     function ShowSaveAccountDlg(dlgTitle : string) : integer;
+    procedure RevertAccountChanges();
   public
     { Public declarations }
     procedure RefreshProtocols();
@@ -167,7 +168,7 @@ implementation
 uses uTranslate, uRCUtils, uMailItems, uMain, uRulesForm, uGlobal, uDM,
   uIniSettings, uRulesManager, IdStack, IdGlobalProtocols, ShellAPI, Math,
   uPositioning, System.IniFiles, ExportAcctDlg, uImportAccountDlg,
-  uImapFolderSelect, System.TypInfo;
+  uImapFolderSelect, System.TypInfo, SynTaskDialog;
 //todo umailitems = suspect!
 
 {$R *.dfm}
@@ -239,7 +240,7 @@ begin
     account.Mail := TMailItems.Create;
   account.SetProtocol();
   // global
-  FNewAccount := false;
+    FNewAccount := false;
   frmPopUMain.SwitchTimer;
 end;
 
@@ -431,9 +432,12 @@ end;
 
 procedure TAccountsForm.DeleteAccount(num: integer);
 var
-  i : integer;
+  i, dlgResult : integer;
   accountToDelete : TAccount;
-  accountName : String
+  accountName, dlgTitle : String;
+  exportDlg : TExportAccountsDlg;
+  msgBox : TForm;
+  Task : TSynTaskDialog;
 begin
   if num > Accounts.Count then begin
     // if all is programmed well, this shouldn't happen
@@ -441,58 +445,115 @@ begin
     exit;
   end;
   accountToDelete := Accounts[num-1];
-
   accountName := accountToDelete.Name;
-  if accountName = '' then accountName = Translate('<unnamed account>');
-  if ShowTranslatedDlg(Translate('Delete Account:')+' '+accountName+' ?',
-                mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if accountName = '' then accountName := Translate('<unnamed account>');
+
+  Task.Title := Translate('PopTrayU - Delete Account');
+  Task.Inst := SysUtils.Format(Translate('Backup "%s" Before Deleting?'), [accountName]);
+  //Task.Content := subtitle for Inst, currently blank
+  Task.Buttons := Translate('Backup and Delete')+'\n'+ //message result = 100
+                  Translate('Backup file can be imported to undo')
+                  +sLineBreak+
+                  Translate('Delete without Backup')+'\n'+ //message result = 101
+                  Translate('Delete cannot be undone');
+  dlgResult := Task.Execute([cbCancel],mrCancel,[tdfUseCommandLinks],tiQuestion);
+  if dlgResult = 100 then dlgResult := mrYes else if dlgResult = 101 then dlgResult := mrNo else dlgResult := mrCancel;
+
+
+//  msgBox := CreateMessageDialog(SysUtils.Format(uTranslate.Translate('You have selected to delete account %s.'), [accountName]) +#13+#10+
+//                                uTranslate.Translate('Would you like to backup this account before deleting?'),
+//                                mtConfirmation, mbYesNoCancel);
+//
+//  with msgBox do
+//  try
+//    Caption := uTranslate.Translate('Delete Account:') + ' ' + accountName;
+//    TButton(FindComponent('Yes')).Caption := uTranslate.Translate('Yes');
+//    TButton(FindComponent('No')).Caption := uTranslate.Translate('No');
+//    TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
+//    dlgResult := msgBox.ShowModal;
+//  finally
+//    msgBox.Free
+//  end;
+
+  if dlgResult = mrCancel then Exit;
+
+  // if user selected to create a backup before deleting account, create the backup.
+  if dlgResult = mrYes then
   begin
+    exportDlg := TExportAccountsDlg.Create(self);
+    try
+      dlgResult := exportDlg.ExportSingleAccount(accountToDelete);
+      if dlgResult = mrCancel then begin
+           Task.Title := Translate('PopTrayU - Delete Account');
+  Task.Inst := Translate('Account Backup Canceled');
+  Task.Content := SysUtils.Format(Translate('%s will not be backed up before deleting'), [accountName]);
+  Task.Buttons := Translate('Delete without Backup')+'\n'+ //message result = 101
+                  Translate('Delete cannot be undone');
+  dlgResult := Task.Execute([cbCancel],mrCancel,[tdfUseCommandLinks],tiQuestion);
+  if dlgResult = mrCancel then Exit;
 
-    // stop timer
 
-    if Assigned(accountToDelete) then
-       FreeAndNil(accountToDelete.Timer);
-    // remove from array
-    Accounts.Delete(num-1);
-    //Dec(NumAccounts);
-    // tab
-    frmPopUMain.tabMail.Tabs.Delete(num-1);
-    tabAccounts.Tabs.Delete(num-1);
-    // remove from INI
-    for i := 1 to Accounts.NumAccounts do
-      SaveAccountINI(i);
 
-    // remap rules to not include the deleted account
-    RulesManager.RemoveAccount(num);
 
-    // show mail
-    if Accounts.NumAccounts>0 then
-    begin
-      //frmPopUMain.tabMail.TabIndex := 0;
-      //tabAccounts.TabIndex := 0;
-      if (num) >= (Accounts.numAccounts) then begin
-        frmPopUMain.tabMail.TabIndex := num-2;
-        tabAccounts.TabIndex := num-2;
-      end else begin
-        frmPopUMain.tabMail.TabIndex := num-1;
-        tabAccounts.TabIndex := num-1;
+
+//        dlgTitle := uTranslate.Translate('Delete Account:') + ' ' + accountName;
+//        dlgResult := ShowTranslatedDlg(Translate('Account backup canceled.')+#13#10+
+//          Translate('Do you want to delete this account anyway?'), mtConfirmation,
+//          [mbYes, mbNo], 0, dlgTitle);
+//        if dlgResult = mrNo then Exit;
       end;
-      ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
-      frmPopUMain.ShowMail(Accounts[frmPopUMain.tabMail.TabIndex],True);
-    end
-    else begin
-      // we now have no accounts left.
-      EnableFields(false);
-
-      // this is a workaround, before it wasn't fixing the size of these
-      // items if there's no accounts yet.
-      AutoSizeCheckBox(chkDontCheckTimes);
-      dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
-      lblAnd.Left := dtStart.Left + dtStart.Width + 6;
-      dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
-
-
+    finally
+      exportDlg.Free;
     end;
+  end;
+
+
+
+  // stop timer
+
+  if Assigned(accountToDelete) then
+     FreeAndNil(accountToDelete.Timer);
+  // remove from array
+  Accounts.Delete(num-1);
+  //Dec(NumAccounts);
+  // tab
+  frmPopUMain.tabMail.Tabs.Delete(num-1);
+  tabAccounts.Tabs.Delete(num-1);
+  // remove from INI
+  for i := 1 to Accounts.NumAccounts do
+    SaveAccountINI(i);
+
+  // remap rules to not include the deleted account
+  RulesManager.RemoveAccount(num);
+
+  // show mail
+  if Accounts.NumAccounts>0 then
+  begin
+    //frmPopUMain.tabMail.TabIndex := 0;
+    //tabAccounts.TabIndex := 0;
+    if (num) >= (Accounts.numAccounts) then begin
+      frmPopUMain.tabMail.TabIndex := num-2;
+      tabAccounts.TabIndex := num-2;
+    end else begin
+      frmPopUMain.tabMail.TabIndex := num-1;
+      tabAccounts.TabIndex := num-1;
+    end;
+    ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
+    frmPopUMain.ShowMail(Accounts[frmPopUMain.tabMail.TabIndex],True);
+  end
+  else begin
+    // we now have no accounts left.
+    EnableFields(false);
+
+    // this is a workaround, before it wasn't fixing the size of these
+    // items if there's no accounts yet.
+    AutoSizeCheckBox(chkDontCheckTimes);
+    dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+    lblAnd.Left := dtStart.Left + dtStart.Width + 6;
+    dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+
+
+
   end;
 end;
 
@@ -683,27 +744,37 @@ begin
   btnCancelAccount.Enabled := FAccChanged;
 end;
 
-
-procedure TAccountsForm.btnCancelAccountClick(Sender: TObject);
+// Deletes/reverts the account if it's new.
+// @return - whether the account was reverted
+procedure TAccountsForm.RevertAccountChanges();
 begin
-  if FNewAccount then
-  begin
+  FAccChanged := False;
+  if FNewAccount then begin
     Accounts.Delete(tabAccounts.TabIndex);
-    //Dec(NumAccounts);
     frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
     tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
     FNewAccount := False;
-    tabAccounts.TabIndex := tabAccounts.Tabs.Count-1;
-  end
-  else begin
-    LoadAccountINI(tabAccounts.TabIndex+1);
+
+    // Change tab to select the previous account (if any)
+    tabAccounts.TabIndex := tabAccounts.Tabs.Count-1; // When count is 0, TabIndex=-1 is valid and means "no selected tab"
   end;
-  ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
-  FAccChanged := False;
-  // buttons
-  if Accounts.NumAccounts=0 then EnableFields(False);
+
   btnSave.Enabled := False;
   btnCancelAccount.Enabled := False;
+
+  if Accounts.NumAccounts=0 then
+    EnableFields(False);
+end;
+
+procedure TAccountsForm.btnCancelAccountClick(Sender: TObject);
+var
+  reloadAccount : boolean;
+begin
+  reloadAccount := NOT FNewAccount;
+  RevertAccountChanges();
+  if reloadAccount then
+    LoadAccountINI(tabAccounts.TabIndex+1);
+  ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
 end;
 
 
@@ -786,80 +857,39 @@ end;
 function TAccountsForm.ShowSaveAccountDlg(dlgTitle : string) : integer;
 var
   msgBox : TForm;
-  dlgResult : integer;
 begin
-
-    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account.')+#13+#10+
-                                  uTranslate.Translate('Would you like to save now?'),
-      mtConfirmation, mbYesNoCancel);
-    with msgBox do
-    try
-      Caption := dlgTitle;
-      TButton(FindComponent('Yes')).Caption := uTranslate.Translate('Save');
-      TButton(FindComponent('No')).Caption := uTranslate.Translate('Revert');
-      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
-      Result := msgBox.ShowModal;
-    finally
-      msgBox.Free
-    end;
+  msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account.')+#13+#10+
+                                uTranslate.Translate('Would you like to save now?'),
+                                mtConfirmation, mbYesNoCancel);
+  with msgBox do
+  try
+    Caption := dlgTitle;
+    TButton(FindComponent('Yes')).Caption := uTranslate.Translate('Save');
+    TButton(FindComponent('No')).Caption := uTranslate.Translate('Revert');
+    TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
+    Result := msgBox.ShowModal;
+  finally
+    msgBox.Free
+  end;
 end;
 
 procedure TAccountsForm.tabAccountsChanging(Sender: TObject; var AllowChange: Boolean);
-var
-  dlgResult : integer;
 begin
-  if FAccChanged then begin
-    dlgResult := ShowSaveAccountDlg(uTranslate.Translate('Select Account'));
-
-    case dlgResult of
-      mrYes:
-        begin
-          btnSave.Click;
-          AllowChange := True;
-        end;
-      mrNo:
-        begin
-           if FNewAccount then
-           begin
-             Accounts.Delete(tabAccounts.TabIndex);
-             //Dec(NumAccounts);
-             frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
-             tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
-             FNewAccount := False;
-           end;
-           FAccChanged := false;
-           AllowChange := True;
-         end;
-      mrCancel:
+  if FAccChanged or FNewAccount then begin
+    case ShowSaveAccountDlg(uTranslate.Translate('Select Account')) of
+      mrYes: begin
+        btnSave.Click;
+        AllowChange := True;
+      end;
+      mrNo: begin
+        RevertAccountChanges();
+        AllowChange := True;
+      end;
+      mrCancel: begin
         AllowChange := False;
+      end;
     end;
   end;
-
-
-
-//  if FAccChanged then
-//  begin
-//    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
-//                    'Do you want to save it?'), mtConfirmation,
-//                    [mbYes, mbNo, mbCancel], 0) of
-//      mrYes    : begin
-//                   btnSave.Click;
-//                   AllowChange := True;
-//                 end;
-//      mrNo     : begin
-//                   if FNewAccount then
-//                   begin
-//                     Accounts.Delete(tabAccounts.TabIndex);
-//                     //Dec(NumAccounts);
-//                     frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
-//                     tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
-//                     FNewAccount := False;
-//                   end;
-//                   AllowChange := True;
-//                 end;
-//      mrCancel : AllowChange := False;
-//    end;
-//  end;
 end;
 
 procedure TAccountsForm.tabAccountsDragOver(Sender, Source: TObject; X,
@@ -938,7 +968,7 @@ end;
 
 procedure TAccountsForm.actAddAccountExecute(Sender: TObject);
 var
-  NoName : string;
+  DefaultAccountName : string;
 begin
   // check if saved
   if (FAccChanged or FNewAccount) and (Accounts.Count > 0) then
@@ -956,16 +986,16 @@ begin
   btnSave.Enabled := True;
   btnCancelAccount.Enabled := True;
   // add tab
-  NoName := Translate('Account')+' '+IntToStr(Accounts.Count);
-  tabAccounts.Tabs.Add(NoName);
+  DefaultAccountName := Translate('Account')+' '+IntToStr(Accounts.Count);
+  tabAccounts.Tabs.Add(DefaultAccountName);
   tabAccounts.TabIndex := Accounts.NumAccounts-1;
-  frmPopUMain.tabMail.Tabs.Add(NoName);
+  frmPopUMain.tabMail.Tabs.Add(DefaultAccountName);
   dm.AddBitmap(dm.imlTabs, dm.imlPopTrueColor,popClosed);
   // enable fields
   EnableFields(True);
   chkAccEnabled.Checked := True;
   // clear the fields
-  edName.Text := NoName;
+  edName.Text := DefaultAccountName;
   edServer.Text := '';
   cmbProtocol.ItemIndex := 0;
   edPort.Text := '110';
@@ -977,51 +1007,48 @@ begin
   edSound.Text := Translate(UseDefaultSound);
   edSound.Font.Color := clGrayText;
   colAccount.Selected := clRed;
+  dtStart.Time := TAccount.GetDefaultDontCheckStartTime();
+  dtEnd.Time := TAccount.GetDefaultDontCheckEndTime();
   edName.SetFocus;
   // clear mail
   frmPopUMain.lvMail.Items.Clear;
 end;
 
 procedure TAccountsForm.actDeleteAccountExecute(Sender: TObject);
+var
+  accountName : String;
+ // dlgTitle : String;
+  dlgResult : integer;
 begin
   if FNewAccount then
   begin
-    Accounts.Delete(tabAccounts.TabIndex);
-    //Dec(NumAccounts);
-    frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
-    tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
-    FNewAccount := False;
-    tabAccounts.TabIndex := tabAccounts.Tabs.Count-1;
-    ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
+    if edName.Text = '' then accountName := Translate('<unnamed account>')
+    else accountName := edName.Text;
+
+    //dlgTitle := SysUtils.Format(Translate('Delete Account: %s'), [accountName]);
+    dlgResult := ShowVistaConfirmDialog(Translate('Delete Account'),  SysUtils.Format(Translate('Delete "%s"'), [accountName]),
+    SysUtils.Format(Translate('Are you sure you want to delete this account?'), [accountName]),
+    'Delete Account','Keep Account');
+//    dlgResult := ShowCustomOkCancelDialog(dlgTitle,
+//      SysUtils.Format(Translate('Are you sure you want to delete account "%s"?'), [accountName]), mtConfirmation,
+//      0, Translate('Delete'),Translate('Keep Account'));
+    if dlgResult = mrYes then begin
+      RevertAccountChanges();
+      ShowAccount(GetAccountForTab(tabAccounts.TabIndex));
+    end;
   end
-  else if frmPopUMain.tabMail.TabIndex >= 0 then  //TODO: can this use accounts form tab num instead??
+  else if tabAccounts.TabIndex >= 0 then //TODO: TabToAccount
     DeleteAccount(tabAccounts.TabIndex+1);
 end;
 
 
 procedure TAccountsForm.actExportExecute(Sender: TObject);
 var
-  msgBox: TForm;
-  dlgResult : integer;
   exportDlg : TExportAccountsDlg;
 begin
-
-  // save changes to account before proceeding.
-  if FAccChanged then begin
-    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account, would you like to save now?'),
-      mtConfirmation, mbOKCancel);
-    with msgBox do
-    try
-      Caption := uTranslate.Translate('Backup/Export Accounts');
-      TButton(FindComponent('Ok')).Caption := uTranslate.Translate('Save');
-      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
-      dlgResult := msgBox.ShowModal;
-      if dlgResult = mrOK then begin
-        btnSave.Click;
-      end else exit;
-    finally
-      msgBox.Free;
-    end;
+  if FAccChanged or FNewAccount then begin
+    if ShowSaveAccountDlg('Backup/Export Accounts') = mrCancel then
+      Exit;
   end;
 
   exportDlg := TExportAccountsDlg.Create(self);
@@ -1034,30 +1061,15 @@ end;
 
 procedure TAccountsForm.actImportExecute(Sender: TObject);
 var
-  msgBox: TForm;
-  dlgResult : integer;
   importDlg : TImportAcctDlg;
   numAddedAccts : integer;
   i : integer;
   accName : string;
   accNum : integer;
 begin
-  // save changes to account before proceeding.
-  if FAccChanged then begin
-    msgBox := CreateMessageDialog(uTranslate.Translate('You have unsaved changes to this account, would you like to save now?'),
-      mtConfirmation, mbOKCancel);
-    with msgBox do
-    try
-      Caption := uTranslate.Translate('Import/Restore Accounts');
-      TButton(FindComponent('Ok')).Caption := uTranslate.Translate('Save');
-      TButton(FindComponent('Cancel')).Caption := uTranslate.Translate('Cancel');
-      dlgResult := msgBox.ShowModal;
-      if dlgResult = mrOK then begin
-        btnSave.Click;
-      end else exit;
-    finally
-      msgBox.Free;
-    end;
+  if FAccChanged or FNewAccount then begin
+    if ShowSaveAccountDlg('Import/Restore Accounts') = mrCancel then
+      Exit;
   end;
 
   importDlg := TImportAcctDlg.Create(self);
@@ -1184,7 +1196,7 @@ begin
   Inherited;
 
   // accept files to drop on me
-  DragAcceptFiles(Self.Handle, True);  // requires ShellAPI
+  DragAcceptFiles(Self.Handle, True);  // TODO: what does this enable us to do? is it for tab drag/drop?
 
   cmbProtocol.Items.Text := Translate('POP3');
   cmbProtocol.Items.Add(Translate('IMAP4'));
@@ -1464,26 +1476,17 @@ end;
 procedure TAccountsForm.PageControlChanging(Sender: TObject;
   var AllowChange: Boolean);
 begin
-  if FAccChanged then
+  if FAccChanged or FNewAccount then
   begin
-    case ShowTranslatedDlg(Translate('Account Info changed.'+#13+#10+
-                    'Do you want to save it?'), mtConfirmation,
-                    [mbYes, mbNo, mbCancel], 0) of
-      mrYes    : begin
-                   btnSave.Click;
-                   AllowChange := True;
-                 end;
-      mrNo     : begin
-                   if FNewAccount then
-                   begin
-                     Accounts.Delete(tabAccounts.TabIndex);
-                     //Dec(NumAccounts);
-                     frmPopUMain.tabMail.Tabs.Delete(tabAccounts.TabIndex);
-                     tabAccounts.Tabs.Delete(tabAccounts.TabIndex);
-                     FNewAccount := False;
-                   end;
-                   AllowChange := True;
-                 end;
+    case ShowSaveAccountDlg('Leave Accounts Tab') of
+      mrYes: begin
+        btnSave.Click();
+        AllowChange := True;
+      end;
+      mrNo: begin
+        RevertAccountChanges();
+        AllowChange := True;
+      end;
       mrCancel : AllowChange := False;
     end;
   end;
