@@ -57,6 +57,10 @@ type
   procedure TranslateComponentFromEnglish(component : TComponent);
   procedure TranslateComponentToEnglish(component : TComponent);
   procedure TranslateTMenuItem(menuItem : TMenuItem; const LangDirection : TLangDirection; const recursive : boolean = true);
+//  function ShowCustomOkCancelDialog(const DlgTitle : String; const DlgMsg : String; DlgType: TMsgDlgType;
+//    HelpCtx: Integer; Button1Caption : String; Button2Caption : String): Integer;
+  function ShowVistaConfirmDialog(DlgTitle: string; DlgHeading: string;
+    DlgMsg: string; YesBtnCaption:string; NoBtnCaption: string): integer;
 
 //----------------------------------------------------------------------------
 // Implementation
@@ -66,7 +70,7 @@ implementation
 uses
   uGlobal, sysutils, StrUtils,
   Windows, uMain, uFrameDefaults, uDM, uRCUtils, TypInfo, Vcl.Buttons,
-  uTranslateDebugWindow;
+  uTranslateDebugWindow, Math, SynTaskDialog;
 const
   WS_EX_NOINHERITLAYOUT = $00100000; // Disable inheritence of mirroring by children
   WS_EX_LAYOUTRTL = $00400000; // Right to left mirroring
@@ -562,7 +566,56 @@ begin
   frmPopUMain.OnSetLanguage;
 end;
 
+// Asks a vista style yes/no prompt with custom labels
+// returns mrYes or mrNo
+function ShowVistaConfirmDialog(DlgTitle: string; DlgHeading: string;
+  DlgMsg: string; YesBtnCaption:
+  string; NoBtnCaption: string): integer;
+var
+  Task: TSynTaskDialog;
+begin
+  Task.Title := DlgTitle;
+  Task.Inst := DlgHeading;
+  Task.Content := DlgMsg;
+  Task.Buttons := YesBtnCaption+#13#10+NoBtnCaption;
+  if Task.Execute([],101{=no,thedefault},[],tiQuestion) = 100{=Yes} then
+    Result := mrYes else Result := mrNo;
+end;
 
+function ShowCustomOkCancelDialog(const DlgTitle : String; const DlgMsg : String; DlgType: TMsgDlgType;
+  HelpCtx: Integer; Button1Caption : String; Button2Caption : String) : Integer;
+var
+  dlg : TForm;
+  button1, button2 : TButton;
+begin
+  dlg := CreateMessageDialog(DlgMsg, DlgType, [mbOk, mbCancel]);
+  with dlg do
+  begin
+    try
+      HelpContext := HelpCtx;
+      Position := poScreenCenter;
+      TranslateForm(dlg);
+
+      if (DlgTitle <> '') then
+        Caption := Translate(DlgTitle)
+      else Caption := Translate(Caption);
+
+      button1 := TButton(FindComponent('OK'));
+      button1.Caption := Button1Caption;
+      button1.Width := Max(Canvas.TextWidth(button1.Caption)+10, 70);
+
+      button2 := TButton(FindComponent('Cancel'));
+      button2.Caption := Button2Caption;
+      button2.Width := Max(Canvas.TextWidth(button2.Caption)+10, 70);
+      button2.Left := button1.Width + button1.Left;
+
+
+      Result := ShowModal();
+    finally
+      Free;
+    end;
+  end;
+end;
 
 //******************************************************************************
 // Creates and shows a modal dialog box (eg: for error messages) including
