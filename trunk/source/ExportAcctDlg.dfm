@@ -4,6 +4,7 @@ inherited ExportAccountsDlg: TExportAccountsDlg
   ClientHeight = 288
   ClientWidth = 526
   OnCreate = FormCreate
+  OnShow = FormShow
   ExplicitWidth = 542
   ExplicitHeight = 326
   PixelsPerInch = 96
