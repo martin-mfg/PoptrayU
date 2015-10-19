@@ -206,7 +206,7 @@ begin
     optMouseButtons       : frame := TframeMouseButtons.Create(Self, EnableSaveOptions);
     optHotKeys            : frame := TframeHotKeys.Create(Self, EnableSaveOptions);
     optWhiteBlackList     : frame := TframeWhiteBlack.Create(Self, EnableSaveOptions);
-    optPlugins            : frame := TframePlugins.Create(Self, EnableSaveOptions);
+    //optPlugins            : frame := TframePlugins.Create(Self, EnableSaveOptions);
     optVisualAppearance   : frame := TframeVisualAppearance.Create(Self, EnableSaveOptions);
     optPreview            : frame := TframePreviewOptions.Create(Self, EnableSaveOptions);
     optRules              : frame := TframeRulesOptions.Create(Self, EnableSaveOptions);

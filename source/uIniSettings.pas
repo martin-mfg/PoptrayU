@@ -166,6 +166,7 @@ begin
   // load options from INI
   Ini := TIniFile.Create(IniName);
   try
+    //---- Defaults ----//
     // interval
     Interval := Ini.ReadString('Options','Interval','5');
     Options.Interval := StrToFloatDef(Interval,5);
@@ -177,7 +178,10 @@ begin
     if not FileExists(NewMail) then
       NewMail := '';
     Options.DefSound := Ini.ReadString('Options','Sound',NewMail);
+    Options.Use24HrTime := Ini.ReadBool('Options','Use24HrTime',false);
+    //---- end ----//
 
+    //-- Other categories --//
     // options
     with Options do
     begin
@@ -285,46 +289,46 @@ begin
     Options.Language := Ini.ReadInteger('Languages','Active',0);
 
     // plug-ins
-    pluginCount := Ini.ReadInteger('Plug-ins','Count',0);
-    SetLength(Plugins,pluginCount);
-    for i := 0 to pluginCount-1 do
-    begin
-      ThePluginType := TPluginType(Ini.ReadInteger('Plug-ins','PluginType'+IntToStr(i+1),0));
-      case ThePluginType of
-        piNotify   : Plugins[i] := TPluginNotify.Create;
-        //piProtocol : Plugins[i] := TPluginProtocol.Create;
-      end;
-      Plugins[i].Name := Ini.ReadString('Plug-ins','PluginName'+IntToStr(i+1),'');
-      Plugins[i].DLLName := Ini.ReadString('Plug-ins','PluginDLLName'+IntToStr(i+1),'');
-      Plugins[i].PluginType := TPluginType(Ini.ReadInteger('Plug-ins','PluginType'+IntToStr(i+1),0));
-      Plugins[i].Enabled := Ini.ReadBool('Plug-ins','PluginEnabled'+IntToStr(i+1),False);
-      if Plugins[i].Enabled then
-      begin
-        Plugins[i].hPlugin := LoadLibrary(PChar(ExtractFilePath(Application.ExeName)+'plugins\'+Plugins[i].DLLName));
-        if Plugins[i].hPlugin = 0 then
-          Continue;
-        // skip old interface version
-        fInterfaceVersion := GetProcAddress(Plugins[i].hPlugin, 'InterfaceVersion');
-        if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
-        begin
-          TranslateMsg(Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
-          FreeLibrary(Plugins[i].hPlugin);
-          Continue;
-        end;
-        Plugins[i].FInit := GetProcAddress(Plugins[i].hPlugin,'Init');
-        Plugins[i].FFreePChar := GetProcAddress(Plugins[i].hPlugin,'FreePChar');
-        Plugins[i].FUnload := GetProcAddress(Plugins[i].hPlugin,'Unload');
-        // notify
-        if (Plugins[i] is TPluginNotify) then
-        begin
-          (Plugins[i] as TPluginNotify).FNotify := GetProcAddress(Plugins[i].hPlugin,'Notify');
-          (Plugins[i] as TPluginNotify).FNotifyAccount := GetProcAddress(Plugins[i].hPlugin,'NotifyAccount');
-          (Plugins[i] as TPluginNotify).FMessageCheck := GetProcAddress(Plugins[i].hPlugin,'MessageCheck');
-          (Plugins[i] as TPluginNotify).FMessageBody := GetProcAddress(Plugins[i].hPlugin,'MessageBody');
-        end;
-        Plugins[i].Init;
-      end;
-    end;
+    pluginCount := 0;//Ini.ReadInteger('Plug-ins','Count',0);
+//    SetLength(Plugins,pluginCount);
+//    for i := 0 to pluginCount-1 do
+//    begin
+//      ThePluginType := TPluginType(Ini.ReadInteger('Plug-ins','PluginType'+IntToStr(i+1),0));
+//      case ThePluginType of
+//        piNotify   : Plugins[i] := TPluginNotify.Create;
+//        //piProtocol : Plugins[i] := TPluginProtocol.Create;
+//      end;
+//      Plugins[i].Name := Ini.ReadString('Plug-ins','PluginName'+IntToStr(i+1),'');
+//      Plugins[i].DLLName := Ini.ReadString('Plug-ins','PluginDLLName'+IntToStr(i+1),'');
+//      Plugins[i].PluginType := TPluginType(Ini.ReadInteger('Plug-ins','PluginType'+IntToStr(i+1),0));
+//      Plugins[i].Enabled := Ini.ReadBool('Plug-ins','PluginEnabled'+IntToStr(i+1),False);
+//      if Plugins[i].Enabled then
+//      begin
+//        Plugins[i].hPlugin := LoadLibrary(PChar(ExtractFilePath(Application.ExeName)+'plugins\'+Plugins[i].DLLName));
+//        if Plugins[i].hPlugin = 0 then
+//          Continue;
+//        // skip old interface version
+//        fInterfaceVersion := GetProcAddress(Plugins[i].hPlugin, 'InterfaceVersion');
+//        if (@fInterfaceVersion=nil) or (fInterfaceVersion<INTERFACE_VERSION) then
+//        begin
+//          TranslateMsg(Translate('Incompatible Plugin:')+'  '+Plugins[i].DLLName,mtWarning,[mbOk],0);
+//          FreeLibrary(Plugins[i].hPlugin);
+//          Continue;
+//        end;
+//        Plugins[i].FInit := GetProcAddress(Plugins[i].hPlugin,'Init');
+//        Plugins[i].FFreePChar := GetProcAddress(Plugins[i].hPlugin,'FreePChar');
+//        Plugins[i].FUnload := GetProcAddress(Plugins[i].hPlugin,'Unload');
+//        // notify
+//        if (Plugins[i] is TPluginNotify) then
+//        begin
+//          (Plugins[i] as TPluginNotify).FNotify := GetProcAddress(Plugins[i].hPlugin,'Notify');
+//          (Plugins[i] as TPluginNotify).FNotifyAccount := GetProcAddress(Plugins[i].hPlugin,'NotifyAccount');
+//          (Plugins[i] as TPluginNotify).FMessageCheck := GetProcAddress(Plugins[i].hPlugin,'MessageCheck');
+//          (Plugins[i] as TPluginNotify).FMessageBody := GetProcAddress(Plugins[i].hPlugin,'MessageBody');
+//        end;
+//        Plugins[i].Init;
+//      end;
+//    end;
 
     // Visual Appearance
     defaultFont := IfThen(IsWinVista(), DEFAULT_FONT_VISTA, DEFAULT_FONT_XP);
@@ -444,6 +448,7 @@ begin
       Ini.WriteBool('Options','Balloon',Balloon);
       Ini.WriteBool('Options','DeleteNextCheck',DeleteNextCheck);
       Ini.WriteInteger('Options','FirstWait',FirstWait);
+      Ini.WriteBool('Options','Use24HrTime',Use24HrTime);
       // advanced - connection
       Ini.WriteInteger('Options','TimeOut',TimeOut);
       Ini.WriteBool('Options','QuickCheck',QuickCheck);
@@ -521,14 +526,14 @@ begin
       Ini.WriteString('Languages','Language'+IntToStr(i),TranslateToEnglish(Options.Languages[i]));
 
     // plug-ins
-    Ini.WriteInteger('Plug-ins','Count',Length(Plugins));
-    for i := 0 to Length(Plugins)-1 do
-    begin
-      Ini.WriteString('Plug-ins','PluginName'+IntToStr(i+1),Plugins[i].Name);
-      Ini.WriteString('Plug-ins','PluginDLLName'+IntToStr(i+1),Plugins[i].DLLName);
-      Ini.WriteBool('Plug-ins','PluginEnabled'+IntToStr(i+1),Plugins[i].Enabled);
-      Ini.WriteInteger('Plug-ins','PluginType'+IntToStr(i+1),Integer(Plugins[i].PluginType));
-    end;
+//    Ini.WriteInteger('Plug-ins','Count',Length(Plugins));
+//    for i := 0 to Length(Plugins)-1 do
+//    begin
+//      Ini.WriteString('Plug-ins','PluginName'+IntToStr(i+1),Plugins[i].Name);
+//      Ini.WriteString('Plug-ins','PluginDLLName'+IntToStr(i+1),Plugins[i].DLLName);
+//      Ini.WriteBool('Plug-ins','PluginEnabled'+IntToStr(i+1),Plugins[i].Enabled);
+//      Ini.WriteInteger('Plug-ins','PluginType'+IntToStr(i+1),Integer(Plugins[i].PluginType));
+//    end;
 
     // Visual appearance
     Ini.WriteString('VisualOptions', 'ListboxFont', FontToString(Options.ListboxFont));

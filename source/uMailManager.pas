@@ -4,7 +4,7 @@ interface
 
 uses
   Classes, ComCtrls,
-  uPlugins, uPreview, uMailItems,
+  uPreview, uMailItems,
   IdResourceStringsProtocols, IdMessage, IdComponent;
 
 //type

@@ -45,7 +45,7 @@ uses
   {$IFDEF LOG4D}
   Log4D,
   {$ENDIF LOG4D}
-  uGlobal, uPlugins, uPOP3, uIMAP4, uMailItems,
+  uGlobal, uPOP3, uIMAP4, uMailItems, //  uPlugins,
   uRules, uAccounts, uMailManager, uRulesManager, uRulesForm, uAccountsForm,
   Vcl.DBGrids, uOptionsForm, uAboutForm, uConstants, uProtocol;
 
@@ -356,12 +356,12 @@ type
     procedure DeleteSpam(account : TAccount; confirm : boolean);
     procedure SetSpamAction(act : TAction);
     procedure StopAll;
-    // plug-ins
-    procedure CallNotifyPlugins;
-    procedure NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
-    procedure NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
-    procedure NotifyPluginMessage(MsgFrom,MsgTo,MsgSubject : string; MsgDate : TDateTime; Viewed,New,Important,Spam : boolean);
-    procedure NotifyPluginMsgBody(MsgHeader,MsgBody : string);
+//    // plug-ins
+//    procedure CallNotifyPlugins;
+//    procedure NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+//    procedure NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+//    procedure NotifyPluginMessage(MsgFrom,MsgTo,MsgSubject : string; MsgDate : TDateTime; Viewed,New,Important,Spam : boolean);
+//    procedure NotifyPluginMsgBody(MsgHeader,MsgBody : string);
     // private events
     procedure OnAccountTimer(Sender: TObject);
     procedure OnFirstWait(Sender: TObject);
@@ -711,7 +711,7 @@ begin
       end;
     end;
   end;
-  CallNotifyPlugins;
+//  CallNotifyPlugins;
 
   // show balloon
   if Options.Balloon and (Accounts.CountAllNew > 0) then
@@ -2238,7 +2238,7 @@ begin
   end;
   // redraw the icon
   UpdateTrayIcon;
-  if changed then CallNotifyPlugins;
+//  if changed then CallNotifyPlugins;
 end;
 
 function TfrmPopUMain.HasAttachment (msg : IdMessage.TIdMessage) : boolean;
@@ -2481,12 +2481,12 @@ begin
   end;
 
 
-  // notify plugin
-  with MailItem do
-  begin
-    NotifyPluginMessage(From,MailTo,Subject,MsgHeader.Date,Viewed,New,Important,Spam);
-    NotifyPluginMsgBody(MsgHeader.Headers.Text,MsgHeader.Body.Text);
-  end;
+//  // notify plugin
+//  with MailItem do
+//  begin
+//    NotifyPluginMessage(From,MailTo,Subject,MsgHeader.Date,Viewed,New,Important,Spam);
+//    NotifyPluginMsgBody(MsgHeader.Headers.Text,MsgHeader.Body.Text);
+//  end;
   // show
   if Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then
   begin
@@ -2585,12 +2585,12 @@ begin
     (account.Prot as TProtocolIMAP4).SetImportantFlag(MailItem.UID, MailItem.Important);
   end;
 
-  // notify plugin
-  with MailItem do
-  begin
-    NotifyPluginMessage(From,MailTo,Subject,MsgHeader.Date,Viewed,New,Important,Spam);
-    NotifyPluginMsgBody(MsgHeader.Headers.Text,MsgHeader.Body.Text);
-  end;
+//  // notify plugin
+//  with MailItem do
+//  begin
+//    NotifyPluginMessage(From,MailTo,Subject,MsgHeader.Date,Viewed,New,Important,Spam);
+//    NotifyPluginMsgBody(MsgHeader.Headers.Text,MsgHeader.Body.Text);
+//  end;
   // show
   if Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then
   begin
@@ -3542,7 +3542,7 @@ begin
       end;
     Application.ProcessMessages;
   end;
-  CallNotifyPlugins;
+//  CallNotifyPlugins;
   // show balloon
   if Options.Balloon and (Accounts.CountAllNew > 0) then
     ShowInfo(True);
@@ -3649,7 +3649,7 @@ begin
     cmdMarkViewed      : actMarkViewed.Execute;
     cmdCheckFirst      : begin
                            CheckMail(Accounts[0],True,True);
-                           CallNotifyPlugins;
+                           //CallNotifyPlugins;
                          end;
     cmdStopChecking    : StopAll;
     // extra commands
@@ -3738,7 +3738,7 @@ begin
     begin
       if CheckMail(account,False,False) < 0 then
         lvMail.Clear;
-      CallNotifyPlugins;
+//      CallNotifyPlugins;
     end;
   end;
 end;
@@ -3771,101 +3771,101 @@ end;
 
 
 //----------------------------------------------------------------- plug-ins ---
-
-procedure TfrmPopUMain.CallNotifyPlugins;
-var
-  NewCount : integer;
-  MailCount,UnviewedCount : integer;
-  num : integer;
-begin
-  // total emails
-  MailCount := 0;
-  UnviewedCount := 0;
-  NewCount := 0;
-  for num := 1 to Accounts.NumAccounts do
-  begin
-    if (Accounts[num-1] = nil) or (Accounts[num-1].Mail = nil) then begin
-      //skip invalid accounts that are not fully initialized
-      Continue;
-    end;
-    MailCount := MailCount + Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount;
-    UnviewedCount := UnviewedCount + Accounts[num-1].CountUnviewed;
-    NewCount := NewCount + Accounts[num-1].CountNew();
-    //plug-in notify account
-    NotifyPluginExecuteAccount(num, Accounts[num-1].Name, Accounts[num-1].Color,
-      Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount,
-      Accounts[num-1].CountUnviewed(), Accounts[num-1].CountNew(), Options.ResetTray);
-  end;
-  // plug-in notify
-  NotifyPluginExecute(MailCount, UnviewedCount, NewCount, Options.ResetTray);
-end;
-
-
-
-procedure TfrmPopUMain.NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
-var
-  i : integer;
-begin
-  for i := Low(Plugins) to High(Plugins) do
-  begin
-    if Plugins[i].Enabled then
-    begin
-      if (Plugins[i] is TPluginNotify) then
-        (Plugins[i] as TPluginNotify).Notify(MailCount,UnviewedCount,NewCount,ResetTray);
-    end;
-  end;
-end;
-
-procedure TfrmPopUMain.NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
-var
-  i : integer;
-begin
-  for i := Low(Plugins) to High(Plugins) do
-  begin
-    if Plugins[i].Enabled then
-    begin
-      if (Plugins[i] is TPluginNotify) then
-        (Plugins[i] as TPluginNotify).NotifyAccount(AccountNo,PChar(AccountName),
-                                                    PChar(AccountColor),
-                                                    MailCount,UnviewedCount,NewCount,
-                                                    ResetTray);
-    end;
-  end;
-end;
-
-procedure TfrmPopUMain.NotifyPluginMessage(MsgFrom, MsgTo, MsgSubject: string;
-                                          MsgDate : TDateTime;
-                                          Viewed, New, Important, Spam: boolean);
-var
-  i : integer;
-begin
-  for i := Low(Plugins) to High(Plugins) do
-  begin
-    if Plugins[i].Enabled then
-    begin
-      if (Plugins[i] is TPluginNotify) then
-        (Plugins[i] as TPluginNotify).MessageCheck(PChar(MsgFrom), PChar(MsgTo),
-                                                   PChar(MsgSubject), MsgDate,
-                                                   Viewed, New, Important, Spam);
-    end;
-  end;
-end;
-
-procedure TfrmPopUMain.NotifyPluginMsgBody(MsgHeader, MsgBody: string);
-var
-  i : integer;
-begin
-  for i := Low(Plugins) to High(Plugins) do
-  begin
-    if Plugins[i].Enabled then
-    begin
-      if (Plugins[i] is TPluginNotify) then
-        (Plugins[i] as TPluginNotify).MessageBody(PChar(MsgHeader), PChar(MsgBody));
-    end;
-  end;
-end;
-
-
+//
+//procedure TfrmPopUMain.CallNotifyPlugins;
+//var
+//  NewCount : integer;
+//  MailCount,UnviewedCount : integer;
+//  num : integer;
+//begin
+//  // total emails
+//  MailCount := 0;
+//  UnviewedCount := 0;
+//  NewCount := 0;
+//  for num := 1 to Accounts.NumAccounts do
+//  begin
+//    if (Accounts[num-1] = nil) or (Accounts[num-1].Mail = nil) then begin
+//      //skip invalid accounts that are not fully initialized
+//      Continue;
+//    end;
+//    MailCount := MailCount + Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount;
+//    UnviewedCount := UnviewedCount + Accounts[num-1].CountUnviewed;
+//    NewCount := NewCount + Accounts[num-1].CountNew();
+//    //plug-in notify account
+//    NotifyPluginExecuteAccount(num, Accounts[num-1].Name, Accounts[num-1].Color,
+//      Accounts[num-1].Mail.Count - Accounts[num-1].IgnoreCount,
+//      Accounts[num-1].CountUnviewed(), Accounts[num-1].CountNew(), Options.ResetTray);
+//  end;
+//  // plug-in notify
+//  NotifyPluginExecute(MailCount, UnviewedCount, NewCount, Options.ResetTray);
+//end;
+//
+//
+//
+//procedure TfrmPopUMain.NotifyPluginExecute(MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+//var
+//  i : integer;
+//begin
+//  for i := Low(Plugins) to High(Plugins) do
+//  begin
+//    if Plugins[i].Enabled then
+//    begin
+//      if (Plugins[i] is TPluginNotify) then
+//        (Plugins[i] as TPluginNotify).Notify(MailCount,UnviewedCount,NewCount,ResetTray);
+//    end;
+//  end;
+//end;
+//
+//procedure TfrmPopUMain.NotifyPluginExecuteAccount(AccountNo:integer; AccountName:string; AccountColor:string; MailCount,UnviewedCount,NewCount : integer; ResetTray : boolean);
+//var
+//  i : integer;
+//begin
+//  for i := Low(Plugins) to High(Plugins) do
+//  begin
+//    if Plugins[i].Enabled then
+//    begin
+//      if (Plugins[i] is TPluginNotify) then
+//        (Plugins[i] as TPluginNotify).NotifyAccount(AccountNo,PChar(AccountName),
+//                                                    PChar(AccountColor),
+//                                                    MailCount,UnviewedCount,NewCount,
+//                                                    ResetTray);
+//    end;
+//  end;
+//end;
+//
+//procedure TfrmPopUMain.NotifyPluginMessage(MsgFrom, MsgTo, MsgSubject: string;
+//                                          MsgDate : TDateTime;
+//                                          Viewed, New, Important, Spam: boolean);
+//var
+//  i : integer;
+//begin
+//  for i := Low(Plugins) to High(Plugins) do
+//  begin
+//    if Plugins[i].Enabled then
+//    begin
+//      if (Plugins[i] is TPluginNotify) then
+//        (Plugins[i] as TPluginNotify).MessageCheck(PChar(MsgFrom), PChar(MsgTo),
+//                                                   PChar(MsgSubject), MsgDate,
+//                                                   Viewed, New, Important, Spam);
+//    end;
+//  end;
+//end;
+//
+//procedure TfrmPopUMain.NotifyPluginMsgBody(MsgHeader, MsgBody: string);
+//var
+//  i : integer;
+//begin
+//  for i := Low(Plugins) to High(Plugins) do
+//  begin
+//    if Plugins[i].Enabled then
+//    begin
+//      if (Plugins[i] is TPluginNotify) then
+//        (Plugins[i] as TPluginNotify).MessageBody(PChar(MsgHeader), PChar(MsgBody));
+//    end;
+//  end;
+//end;
+//
+//
 //----------------------------------------------------------- private events ---
 
 procedure TfrmPopUMain.OnAccountTimer(Sender: TObject);
@@ -4149,14 +4149,11 @@ var
   i: Integer;
 begin
 
-  if (Plugins <> nil) then
-  begin
-    for i := 0 to Length(Plugins) - 1 do
-      Plugins[i].Free;
-  end;
-
-  //Protocols[0].Prot.Free;
-  //Protocols[1].Prot.Free;
+//  if (Plugins <> nil) then
+//  begin
+//    for i := 0 to Length(Plugins) - 1 do
+//      Plugins[i].Free;
+//  end;
 
   RulesManager.Free;
 
@@ -4677,7 +4674,7 @@ begin
             account.Status := IntToStr(deleteCount) + ' ' + Translate('message(s) deleted.') + '';
             lvMailRemoveSelectedMsgs();
             //TODO: should we also remove the mail message from the Mail items list??
-            CallNotifyPlugins;
+//            CallNotifyPlugins;
           end else
             account.Status := Translate('Error deleting message(s)');
           except
@@ -4926,7 +4923,7 @@ begin
   if tabMail.TabIndex >= 0 then
   begin
     CheckMail(Accounts[tabMail.TabIndex],True,True);   //TODO: tabToAccount
-    CallNotifyPlugins;
+//    CallNotifyPlugins;
   end;
 end;
 

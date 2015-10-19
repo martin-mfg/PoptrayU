@@ -142,6 +142,7 @@ var
     TempEmailFilename : string; //includes extension
     ShowNewestMessagesOnly : boolean;
     NumNewestMsgToShow : integer;
+    Use24HrTime : boolean;
   end;
 
   HelpFileName : TFileName; // Path+filename to the Help File
@@ -159,8 +160,8 @@ type
     optVisualAppearance = 7,
     optMouseButtons = 8,
     optHotKeys = 9,
-    optAdvancedOptions = 10,
-    optPlugins = 11
+    optAdvancedOptions = 10//,
+    //optPlugins = 11
     );
 
 const
