@@ -26,7 +26,7 @@ interface
 
 {$REGION '-- Interfaces --'}
 uses
-  Classes, ExtCtrls, Contnrs, SysUtils, Graphics, uPlugins, uMailItems,
+  Classes, ExtCtrls, Contnrs, SysUtils, Graphics, uMailItems,
   Generics.Collections, uProtocol, System.IniFiles;
 
 type
