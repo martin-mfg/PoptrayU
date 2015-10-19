@@ -1200,6 +1200,9 @@ begin
 
   cmbProtocol.Items.Text := Translate('POP3');
   cmbProtocol.Items.Add(Translate('IMAP4'));
+
+  dtStart.DateTime := 0;
+  dtEnd.DateTime := 0;
 end;
 
 procedure TAccountsForm.OnSetLanguage();
@@ -1280,8 +1283,10 @@ begin
   AutoSizeCheckBox(chkDontCheckTimes);
   chkDontCheckTimes.Height := lblAnd.Height;
   dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
+  dtStart.ClientWidth := self.Canvas.TextWidth('28:88am')+30;
   lblAnd.Left := dtStart.Left + dtStart.Width + 6;
   dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
+  dtEnd.ClientWidth := self.Canvas.TextWidth('28:88am')+30;
   panNoCheckHours.Height := dtStart.Top + dtStart.Height + 3;
 
   catPopTrayAccountPrefs.ClientHeight := panNoCheckHours.Top + panNoCheckHours.Height + 3;

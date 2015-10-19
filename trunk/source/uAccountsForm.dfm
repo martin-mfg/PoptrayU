@@ -236,7 +236,7 @@ object AccountsForm: TAccountsForm
                 Width = 68
                 Height = 21
                 Date = 37759.833333333300000000
-                Format = 'HH:mm'
+                Format = 'hh:mma'
                 Time = 37759.833333333300000000
                 Enabled = False
                 Kind = dtkTime
@@ -249,7 +249,7 @@ object AccountsForm: TAccountsForm
                 Width = 68
                 Height = 21
                 Date = 37759.333333333300000000
-                Format = 'HH:mm'
+                Format = 'hh:mma'
                 Time = 37759.333333333300000000
                 Enabled = False
                 Kind = dtkTime
