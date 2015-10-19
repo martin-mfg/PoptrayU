@@ -413,7 +413,7 @@ uses
   IniFiles,  ShellAPI,  StrUtils, Types, uFrameVisualAppearance,
   IdEMailAddress, IdResourceStrings, uTranslate, uIniSettings, uFontUtils,
   IdReplyPOP3, IdExceptionCore, uRegExp, IdIOHandler, Math, OtlParallel,
-  DateUtils, IdMailBox, uImapFolderSelect;
+  DateUtils, IdMailBox, uImapFolderSelect, SynTaskDialog;
 
 
 
@@ -1321,14 +1321,14 @@ begin
       on e : EIdException do
         begin
           Screen.Cursor := crDefault;
+          account.Error := True;
+          Result := -1;
           if FStop then
             account.Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now)
           else
             // This is where an error message is trapped if the account is
             // unable to connect to the server on a routine check
             ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
-          account.Error := True;
-          Result := -1;
         end;
       else begin
         Screen.Cursor := crDefault;
@@ -3219,6 +3219,9 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 // Show an Error Message Dialog (eg: Socket Error connecting to get mail
 procedure TfrmPopUMain.ErrorMsg(account : TAccount; Heading,Msg: string; IgnoreError : boolean);
+var
+  TaskDlg : TSynTaskDialog;
+  msgResult : integer;
 begin
   account.Error := True;
   account.Status := Translate(Heading)+' '+Trim(Msg)+HintSep+DateTimeToStr(Now);
@@ -3226,12 +3229,45 @@ begin
   // if the user has not opted through saved options to ignore error dialogs
   if not IgnoreError then
   begin
-    if not FMinimized and not Options.ShowErrorsInBalloons then
-      // Show error message as a modal dialog
-      ShowTranslatedDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+account.Name)
-    else
+    if not FMinimized and not Options.ShowErrorsInBalloons then begin
+      if Msg = CONNECT_ERR_NO_HOST_STR then begin
+        TaskDlg.Title := Translate('Connection Error:')+' '+account.Name ;
+        TaskDlg.Inst := 'Incoming Mail Server Not Set';
+        TaskDlg.Content := 'Incoming Mail Server must be set to check mail for this account';
+        TaskDlg.Buttons :=
+                  Translate('Update Account Settings')+'\n'+ //message result = 100
+                  Translate('Set the Incoming Mail Server')
+                  +sLineBreak+
+                  Translate('Disable This Account')+'\n'+ //message result = 101
+                  Translate('This will prevent further checking of this account')
+                  +sLineBreak+
+                  Translate('Ignore')+'\n'+ //message result = 101
+                  Translate('Take no action at this time');
+        msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
+        case msgResult of
+        100:
+          begin
+            PageControl.ActivePage := tsAccounts;
+            AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
+            AccountsForm.ShowAccount(account);
+            AccountsForm.edServer.SetFocus();
+          end;
+        101:
+          begin
+            account.Enabled := false;
+            account.Error := false;
+            SaveAccountINI(account.AccountNum);
+            ShowIcon(account,itNormal); //sets the disabled icon indirectly
+          end;
+        end;
+      end else
+        // Show error message as a modal dialog
+        ShowTranslatedDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+account.Name)
+    end
+    else begin
       // Show error message as a balloon popup on the tray icon
       Balloon(Translate(Heading)+' ('+ account.Name+')',Trim(msg),bitError,15);
+    end;
   end;
 end;
 

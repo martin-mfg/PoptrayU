@@ -138,7 +138,6 @@ type
     FAccChanged : Boolean;
     function GetAuthTypeFromComboValue(comboBox : TComboBox) : TAuthType;
     procedure SaveAccountEdits(account : TAccount);
-    procedure ShowAccount(account : TAccount);
     function AccountChanged(tab : integer) : boolean;
     procedure EnableFields(EnableIt: Boolean);
     procedure DeleteAccount(num: integer);
@@ -158,6 +157,7 @@ type
     procedure PageControlChanging(Sender: TObject; var AllowChange: Boolean);
     procedure UpdateFonts();
     procedure OnSetLanguage();
+    procedure ShowAccount(account : TAccount);
   end;
 
 var

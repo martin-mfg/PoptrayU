@@ -28,6 +28,9 @@ uses
   IdSASLOTP, IdSASLExternal, IdSASLDigest, IdSASLAnonymous,           //SASL
   IdSSLOpenSSL, IdLogFile;
 
+const
+  CONNECT_ERR_NO_HOST_STR = 'Server is a required field, and may not be blank.';
+
 type
   TProtocolPOP3 = class(TProtocol)
   private
@@ -76,7 +79,7 @@ type
       const sslVersion : TsslVer = sslAuto;
       const startTLS : boolean = false); override;
     destructor Destroy; override;
-    function LastErrorMsg : PChar; override;
+    function LastErrorMsg : String; override;
     function SupportsSSL : boolean; override;
     function SupportsAPOP : boolean; override;
     function SupportsSASL : boolean; override;
@@ -260,7 +263,7 @@ begin
       end;
       on e : EIdHostRequired do begin
         mHasErrorToReport := true;
-        mLastErrorMsg := 'Server is a required field, and may not be blank.';
+        mLastErrorMsg := CONNECT_ERR_NO_HOST_STR;
       end;
       on e : EIdReadTimeout do begin
         mHasErrorToReport := true;
@@ -282,11 +285,11 @@ begin
 end;
 
 
-function TProtocolPOP3.LastErrorMsg : PChar;
+function TProtocolPOP3.LastErrorMsg : String;
 begin
   if (mHasErrorToReport) then
-    Result := PChar(mLastErrorMsg)
-  else Result := nil;
+    Result := mLastErrorMsg
+  else Result := '';
   mHasErrorToReport := false;
 end;
 

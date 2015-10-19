@@ -186,7 +186,7 @@ var
   aHost,aProtocol : string;
   aUsername,aPassword : string;
   aPort : integer;
-  errMsg : PChar;
+  errMsg : String;
 begin
   aHost := Server;
   aPort := Port;
@@ -199,7 +199,7 @@ begin
     try
       self.Prot.Connect(aHost, aPort, aUsername, aPassword, Options.TimeOut*1000);
       errMsg := self.Prot.LastErrorMsg();
-      if (errMsg <> nil) then
+      if (errMsg <> '') then
       begin
         raise EIdException.Create(errMsg);
       end;
@@ -507,8 +507,6 @@ end;
 
 
 // Assigns an instance of the Protocol (IMAP or POP) to the account.
-// Todo: look into whether there are cases where setProtocol is called that
-// shouldn't actually reset the protocol?
 procedure TAccount.SetProtocol();
 var
   prevProt : TProtocol;
