@@ -89,8 +89,8 @@ var
     RememberViewed : boolean;
     BlackListSpam : boolean;
     DontCheckTimes : boolean;
-    DontCheckStart : TDateTime;
-    DontCheckEnd : TDateTime;
+    DontCheckStart : TTime;
+    DontCheckEnd : TTime;
     // Spam
     DowloadFullMsgForPreview : boolean;
     // mouse buttons
