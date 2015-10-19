@@ -441,10 +441,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 4
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsOptions: TTabSheet
       Caption = 'Options'
@@ -483,10 +479,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 3
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object TImage
         Left = 3
         Top = 352

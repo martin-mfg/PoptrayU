@@ -89,7 +89,7 @@ type
     function UIDL(var UIDLs : TStringList; const MsgNum : integer = -1; const maxUIDs : integer = -1) : boolean; override;
     function Delete(const MsgNum : integer) : boolean; override;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); override;
-    function LastErrorMsg : PChar; override;
+    function LastErrorMsg : String; override;
     function SupportsSSL : boolean; override;
     function SupportsAPOP : boolean; override;
     function SupportsSASL : boolean; override;
@@ -309,11 +309,11 @@ begin
 end;
 
 
-function TProtocolIMAP4.LastErrorMsg : PChar;
+function TProtocolIMAP4.LastErrorMsg : String;
 begin
   if (mHasErrorToReport) then
-    Result := PChar(mLastErrorMsg)
-  else Result := nil;
+    Result := mLastErrorMsg
+  else Result := '';
   mHasErrorToReport := false;
 end;
 

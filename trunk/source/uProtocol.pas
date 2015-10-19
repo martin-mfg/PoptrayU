@@ -32,7 +32,7 @@ type
 
     function Delete(const MsgNum : integer) : boolean; virtual; abstract;
     procedure SetOnWork(const OnWorkProc : TPluginWorkEvent); virtual; abstract;
-    function LastErrorMsg : PChar; virtual; abstract;
+    function LastErrorMsg : String; virtual; abstract;
     procedure SetSSLOptions(const useSSLorTLS : boolean; const authType: TAuthType = password;
       const sslVersion : TsslVer = sslAuto; const startTLS : boolean = false); virtual; abstract;
     function SupportsSSL(): boolean; virtual; abstract; //Should return true if SSL plugin is installed correctly.
