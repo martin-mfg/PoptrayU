@@ -241,6 +241,8 @@ type
     procedure actAddGmailLabelExecute(Sender: TObject);
     procedure actRemoveGmailLabelExecute(Sender: TObject);
     procedure actMoreExecute(Sender: TObject);
+
+    procedure ShowBlankMailServerErrMsg(account : TAccount);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -3216,12 +3218,46 @@ begin
   if MailItem.ToDelete then Result := mToDelete;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-// Show an Error Message Dialog (eg: Socket Error connecting to get mail
-procedure TfrmPopUMain.ErrorMsg(account : TAccount; Heading,Msg: string; IgnoreError : boolean);
+procedure TfrmPopUMain.ShowBlankMailServerErrMsg(account : TAccount);
 var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
+begin
+  TaskDlg.Title := Translate('Connection Error:')+' '+account.Name ;
+  TaskDlg.Inst := 'Incoming Mail Server Not Set';
+  TaskDlg.Content := 'Incoming Mail Server must be set to check mail for this account';
+  TaskDlg.Buttons :=
+            Translate('Update Account Settings')+'\n'+ //message result = 100
+            Translate('Set the Incoming Mail Server')
+            +sLineBreak+
+            Translate('Disable This Account')+'\n'+ //message result = 101
+            Translate('This will prevent further checking of this account')
+            +sLineBreak+
+            Translate('Ignore')+'\n'+ //message result = 101
+            Translate('Take no action at this time');
+  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
+  case msgResult of
+  100:
+    begin
+      PageControl.ActivePage := tsAccounts;
+      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
+      AccountsForm.ShowAccount(account);
+      AccountsForm.edServer.SetFocus();
+    end;
+  101:
+    begin
+      account.Enabled := false;
+      account.Error := false;
+      SaveAccountINI(account.AccountNum);
+      ShowIcon(account,itNormal); //sets the disabled icon indirectly
+    end;
+  end;
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+// Show an Error Message Dialog (eg: Socket Error connecting to get mail
+procedure TfrmPopUMain.ErrorMsg(account : TAccount; Heading,Msg: string; IgnoreError : boolean);
+
 begin
   account.Error := True;
   account.Status := Translate(Heading)+' '+Trim(Msg)+HintSep+DateTimeToStr(Now);
@@ -3231,35 +3267,7 @@ begin
   begin
     if not FMinimized and not Options.ShowErrorsInBalloons then begin
       if Msg = CONNECT_ERR_NO_HOST_STR then begin
-        TaskDlg.Title := Translate('Connection Error:')+' '+account.Name ;
-        TaskDlg.Inst := 'Incoming Mail Server Not Set';
-        TaskDlg.Content := 'Incoming Mail Server must be set to check mail for this account';
-        TaskDlg.Buttons :=
-                  Translate('Update Account Settings')+'\n'+ //message result = 100
-                  Translate('Set the Incoming Mail Server')
-                  +sLineBreak+
-                  Translate('Disable This Account')+'\n'+ //message result = 101
-                  Translate('This will prevent further checking of this account')
-                  +sLineBreak+
-                  Translate('Ignore')+'\n'+ //message result = 101
-                  Translate('Take no action at this time');
-        msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
-        case msgResult of
-        100:
-          begin
-            PageControl.ActivePage := tsAccounts;
-            AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
-            AccountsForm.ShowAccount(account);
-            AccountsForm.edServer.SetFocus();
-          end;
-        101:
-          begin
-            account.Enabled := false;
-            account.Error := false;
-            SaveAccountINI(account.AccountNum);
-            ShowIcon(account,itNormal); //sets the disabled icon indirectly
-          end;
-        end;
+        ShowBlankMailServerErrMsg(account);
       end else
         // Show error message as a modal dialog
         ShowTranslatedDlg(Translate(Heading)+#13#10#13#10+Trim(Msg), mtError, [mbOK], 0,Translate('Error checking')+' '+account.Name)
