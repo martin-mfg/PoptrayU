@@ -416,7 +416,7 @@ uses
   IniFiles,  ShellAPI,  StrUtils, Types, uFrameVisualAppearance,
   IdEMailAddress, IdResourceStrings, uTranslate, uIniSettings, uFontUtils,
   IdReplyPOP3, IdExceptionCore, uRegExp, IdIOHandler, Math, OtlParallel,
-  DateUtils, IdMailBox, uImapFolderSelect, SynTaskDialog;
+  DateUtils, IdMailBox, uImapFolderSelect, SynTaskDialog, uRegistryFxns;
 
 
 
@@ -648,16 +648,7 @@ begin
   // run it
   if MailProgram = '' then
   begin
-    // TODO: redone dialog:
-    // Run Email Client
-    // ----------------
-    // A default email client has not been selected.
-    // Would you like to select one now?
-    // ----------------
-    // Select    Cancel
     NoDefaultMailClientErrMsg();
-    //ShowTranslatedDlg('Unable to Launch Email Client.'+#13#10+'No Email Client specified.',
-    //  mtError,[mbOK],0,'Run Email Client');
     Result := false;
   end
   else begin
@@ -673,12 +664,12 @@ var
 begin
   TaskDlg.Title := Translate('PopTrayU - Run Email Client');
   TaskDlg.Inst := 'Unable to Launch Email Client';
-  TaskDlg.Content := 'PopTrayU does not know which email client you would like launched';
+  TaskDlg.Content := 'Your preferred email client has not been set yet.';
   TaskDlg.Buttons :=
             Translate('Auto-detect My Email Client')+'\n'+ //message result = 100
             Translate('PopTrayU will look in the system registry for the preferred email client')
             +sLineBreak+
-            Translate('Set Preferred Email Client Manually')+'\n'+ //message result = 101
+            Translate('Set Email Client Manually')+'\n'+ //message result = 101
             Translate('You will be taken to the Options screen to set this value.')
             +sLineBreak+
             Translate('Ignore')+'\n'+ //message result = 101
@@ -687,10 +678,7 @@ begin
   case msgResult of
   100:
     begin
-
-//      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
-//      AccountsForm.ShowAccount(account);
-//      AccountsForm.edServer.SetFocus();
+      SetDefaultMailClientFromRegistry();
     end;
   101:
     begin
@@ -699,6 +687,10 @@ begin
     end;
   end;
 end;
+
+
+
+
 
 //*****************************************************************************
 // CheckAllMail
