@@ -2,9 +2,19 @@ object frameDefaults: TframeDefaults
   Left = 0
   Top = 0
   Width = 346
-  Height = 235
+  Height = 307
   TabOrder = 0
   OnResize = FrameResize
+  DesignSize = (
+    346
+    307)
+  object lblTimeFormat: TLabel
+    Left = 0
+    Top = 226
+    Width = 101
+    Height = 13
+    Caption = 'Default Time Format:'
+  end
   object panProg: TPanel
     Left = 0
     Top = 60
@@ -18,7 +28,7 @@ object frameDefaults: TframeDefaults
     DesignSize = (
       346
       58)
-    object btnTest: TSpeedButton
+    object btnTestEmailClient: TSpeedButton
       Left = 272
       Top = 13
       Width = 74
@@ -28,7 +38,7 @@ object frameDefaults: TframeDefaults
       Caption = 'Test'
       ParentShowHint = False
       ShowHint = True
-      OnClick = btnTestClick
+      OnClick = btnTestEmailClientClick
       OnMouseDown = HelpMouseDown
     end
     object btnEdProgram: TSpeedButton
@@ -255,5 +265,20 @@ object frameDefaults: TframeDefaults
       OnChange = OptionsChange
       OnMouseDown = HelpMouseDown
     end
+  end
+  object cmbTimeFormat: TComboBox
+    Left = 107
+    Top = 224
+    Width = 239
+    Height = 21
+    Style = csDropDownList
+    Anchors = [akLeft, akTop, akRight]
+    ItemIndex = 0
+    TabOrder = 4
+    Text = 'AM/PM Time (12:00am-11:59pm)'
+    OnChange = cmbTimeFormatChange
+    Items.Strings = (
+      'AM/PM Time (12:00am-11:59pm)'
+      '24-Hour Time (0:00-23:59)')
   end
 end
