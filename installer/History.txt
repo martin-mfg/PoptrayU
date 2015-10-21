@@ -2,6 +2,35 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.2.3
+=============
+
+New Features
+------------
+* Modern style Task Dialogs (these are emulated for XP) used for certain error messages with more useful options for how to respond to problems:
+  * "No email client specified" 
+  * "Mail Client not Set" 
+* Notification plugin support disabled, due to lack of useful working plugins.
+
+Changed Features
+----------------
+* Batch update display When changing read/unread status of several messages for faster display
+* When an account is deleted, any rules specific to that account will be set to inactive in addition to the prior behavior of being re-associated with all accounts.
+
+Bug Fixes
+---------
+* Deleting immediately should only remove message from message list if successful deletion
+* Handle EIdReadTimeout exception when connecting to delete a message 
+* Changing advanced option use MAPI instead of Mailto change was not triggering save button to be enabled.
+* Account edit dialog not correctly detecting whether or not the account has unsaved changes
+* Do not check hours boxes were not scaling correctly for large fonts
+* The "..." buttons on the Options/Defaults screen were covered by the textbox in certain languages including English.
+
+New translation strings:
+'Unable to Launch Email Client.~No Email Client specified.'
+'Run Email Client.
+
+=============
 Version 5.2.2
 October 2015
 =============
