@@ -25,7 +25,6 @@ type
     lblTest: TLabel;
     scrollBox1: TScrollBox;
 
-
     procedure btnHelpOptionsClick(Sender: TObject);
     procedure btnHintHelpClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -40,6 +39,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure OnSetLanguage();
     procedure FormShow(Sender: TObject);
+
   private
     { Private declarations }
     frame : TFrame; //Frame currently shown in on the options page
@@ -49,6 +49,8 @@ type
     procedure UpdateUIAfterLoadingIni();
     procedure EnableSaveOptions();
     procedure SetBiDiModeOpts();
+    procedure ShowSetEmailClient();
+
   end;
 
 var
@@ -270,6 +272,12 @@ procedure TOptionsForm.EnableSaveOptions();
 begin
   btnSaveOptions.Enabled := True;
   btnCancel.Enabled := True;
+end;
+
+procedure TOptionsForm.ShowSetEmailClient();
+begin
+  changePanel(optDefaults);
+  (frame as TframeDefaults).edProgram.SetFocus();
 end;
 
 end.

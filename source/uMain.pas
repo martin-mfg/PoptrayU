@@ -243,6 +243,7 @@ type
     procedure actMoreExecute(Sender: TObject);
 
     procedure ShowBlankMailServerErrMsg(account : TAccount);
+    procedure NoDefaultMailClientErrMsg();
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -654,13 +655,48 @@ begin
     // Would you like to select one now?
     // ----------------
     // Select    Cancel
-
-    ShowTranslatedDlg('Unable to Launch Email Client.'+#13#10+'No Email Client specified.',mtError,[mbOK],0,'Run Email Client');
+    NoDefaultMailClientErrMsg();
+    //ShowTranslatedDlg('Unable to Launch Email Client.'+#13#10+'No Email Client specified.',
+    //  mtError,[mbOK],0,'Run Email Client');
     Result := false;
   end
   else begin
     SplitExeParams(MailProgram,ExeName,Params);
     Result := ExecuteFile(ExeName,Params,'',SW_NORMAL) > 32;
+  end;
+end;
+
+procedure TfrmPopUMain.NoDefaultMailClientErrMsg();
+var
+  TaskDlg : TSynTaskDialog;
+  msgResult : integer;
+begin
+  TaskDlg.Title := Translate('PopTrayU - Run Email Client');
+  TaskDlg.Inst := 'Unable to Launch Email Client';
+  TaskDlg.Content := 'PopTrayU does not know which email client you would like launched';
+  TaskDlg.Buttons :=
+            Translate('Auto-detect My Email Client')+'\n'+ //message result = 100
+            Translate('PopTrayU will look in the system registry for the preferred email client')
+            +sLineBreak+
+            Translate('Set Preferred Email Client Manually')+'\n'+ //message result = 101
+            Translate('You will be taken to the Options screen to set this value.')
+            +sLineBreak+
+            Translate('Ignore')+'\n'+ //message result = 101
+            Translate('Take no action at this time');
+  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
+  case msgResult of
+  100:
+    begin
+
+//      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
+//      AccountsForm.ShowAccount(account);
+//      AccountsForm.edServer.SetFocus();
+    end;
+  101:
+    begin
+      PageControl.ActivePage := tsOptions;
+      OptionsForm.ShowSetEmailClient();
+    end;
   end;
 end;
 
