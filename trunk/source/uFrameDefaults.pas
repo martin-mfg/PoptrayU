@@ -36,7 +36,7 @@ type
   TframeDefaults = class(TFrame)
     lblProgram: TLabel;
     btnEdProgram: TSpeedButton;
-    btnTest: TSpeedButton;
+    btnTestEmailClient: TSpeedButton;
     lblSound: TLabel;
     btnEdDefSound: TSpeedButton;
     btnSndTest: TSpeedButton;
@@ -53,17 +53,20 @@ type
     panSnd: TPanel;
     panlIniFolder: TPanel;
     lblTester: TLabel;
+    lblTimeFormat: TLabel;
+    cmbTimeFormat: TComboBox;
     procedure btnEdProgramClick(Sender: TObject);
     procedure btnEdDefSoundClick(Sender: TObject);
     procedure cmbLanguageChange(Sender: TObject);
     procedure btnLanguageRefresh2Click(Sender: TObject);
-    procedure btnTestClick(Sender: TObject);
+    procedure btnTestEmailClientClick(Sender: TObject);
     procedure btnSndTestClick(Sender: TObject);
     procedure OptionsChange(Sender: TObject);
     procedure HelpMouseDown(Sender: TObject; Button: TMouseButton;
                             Shift: TShiftState; X, Y: Integer);
     procedure FrameResize(Sender: TObject);
     procedure btnStorageLocClick(Sender: TObject);
+    procedure cmbTimeFormatChange(Sender: TObject);
   private
     { Private declarations }
     funcEnableSaveBtn : TEnableSaveOptionsFunction;
@@ -80,6 +83,18 @@ uses uMain, uRCUtils, uGlobal, uTranslate, uDM, uIniSettings, Math, ShellAPI;
 
 {$R *.dfm}
 
+procedure TframeDefaults.cmbTimeFormatChange(Sender: TObject);
+begin
+  if not Options.Busy then
+  begin
+    // screen to options
+    Options.Use24HrTime := (cmbTimeFormat.ItemIndex = 1); //second item = 24 hr time
+
+    // enable save button
+    funcEnableSaveBtn();
+  end;
+end;
+
 constructor TframeDefaults.Create(AOwner: TComponent; SaveButtonProc : TEnableSaveOptionsFunction);
 begin
   inherited Create(AOwner);
@@ -90,7 +105,7 @@ begin
   edProgram.Text := Options.MailProgram;
   edDefSound.Text := Options.DefSound;
   edIniFolder.Text := uIniSettings.GetSettingsFolder();
-  btnTest.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
+  btnTestEmailClient.Glyph.Assign(frmPopUMain.btnStartProgram.Glyph);
   ShowLanguages;
   Options.Busy := False;
 
@@ -156,7 +171,7 @@ begin
     if dlgOpen.Execute then
     begin
       edProgram.Text := dlgOpen.FileName;
-      GetBitmapFromFileIcon(edProgram.Text,btnTest.Glyph,True);
+      GetBitmapFromFileIcon(edProgram.Text,btnTestEmailClient.Glyph,True);
     end;
   finally
     dlgOpen.Free;
@@ -216,7 +231,7 @@ begin
   //FrmPopUMain.
 end;
 
-procedure TframeDefaults.btnTestClick(Sender: TObject);
+procedure TframeDefaults.btnTestEmailClientClick(Sender: TObject);
 begin
   frmPopUMain.ExecuteProgram;
 end;
@@ -255,8 +270,8 @@ begin
   lblTester.Caption := btnLanguageRefresh.Caption;
   btnLanguageRefresh.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
 
-  lblTester.Caption := btnTest.Caption;
-  btnTest.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
+  lblTester.Caption := btnTestEmailClient.Caption;
+  btnTestEmailClient.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
 
   lblTester.Caption := btnSndTest.Caption;
   btnSndTest.ClientWidth := lblTester.Width + BTN_IMG_OFFSET;
@@ -265,24 +280,24 @@ begin
   btnEdProgram.ClientWidth  := Max(lblTester.Width + 4, BTN_DOT_MIN_WIDTH);
   btnEdDefSound.ClientWidth := Max(lblTester.Width + 4, BTN_DOT_MIN_WIDTH);
 
-  testButtonsWidth := Max(btnTest.Width, btnSndTest.Width);
+  testButtonsWidth := Max(btnTestEmailClient.Width, btnSndTest.Width);
   if (testButtonsWidth + btnEdProgram.Width + BTN_SPACING) > btnLanguageRefresh.Width then
   begin
     //width determined by test buttons width
-    btnTest.Width  := Max(testButtonsWidth, BTN_TEST_MIN_WIDTH);
-    btnSndTest.Width := btnTest.Width;
-    btnLanguageRefresh.Width := testButtonsWidth + btnEdProgram.Width + BTN_SPACING;
+    btnTestEmailClient.Width  := Max(testButtonsWidth, BTN_TEST_MIN_WIDTH);
+    btnSndTest.Width := btnTestEmailClient.Width;
+    btnLanguageRefresh.Width := btnTestEmailClient.Width + btnEdProgram.Width + BTN_SPACING;
   end else begin
     // width determined by language refresh button width
     btnLanguageRefresh.Width := Max(btnLanguageRefresh.Width, BTN_REFRESH_MIN_WIDTH);
-    btnTest.Width := btnLanguageRefresh.Width - btnEdProgram.Width - BTN_SPACING;
-    btnSndTest.Width := btnTest.Width;
+    btnTestEmailClient.Width := btnLanguageRefresh.Width - btnEdProgram.Width - BTN_SPACING;
+    btnSndTest.Width := btnTestEmailClient.Width;
   end;
 
   btnLanguageRefresh.Left := self.ClientWidth - btnLanguageRefresh.width;
-  btnTest.Left := self.ClientWidth - btnTest.Width;
+  btnTestEmailClient.Left := self.ClientWidth - btnTestEmailClient.Width;
   btnSndTest.Left := self.ClientWidth - btnSndTest.Width;
-  btnEdProgram.Left := btnTest.left - BTN_SPACING - btnEdProgram.width;
+  btnEdProgram.Left := btnTestEmailClient.left - BTN_SPACING - btnEdProgram.width;
   btnEdDefSound.Left := btnSndTest.Left - BTN_SPACING - btnEdDefSound.Width;
 
 
@@ -302,8 +317,8 @@ begin
   edProgram.Top := lblProgram.Height + lblProgram.Margins.Bottom;
   btnEdProgram.Top := edProgram.Top;
   btnEdProgram.Height := cmbLanguage.Height;
-  btnTest.Top := btnEdProgram.Top;
-  btnTest.Height := btnEdProgram.Height;
+  btnTestEmailClient.Top := btnEdProgram.Top;
+  btnTestEmailClient.Height := btnEdProgram.Height;
   panProg.Height := btnEdProgram.Top + btnEdProgram.Height + btnEdProgram.Margins.Bottom + 6;
 
   edDefSound.Top := lblSound.Top + lblSound.Height + lblSound.Margins.Bottom;
