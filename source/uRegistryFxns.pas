@@ -14,8 +14,8 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Title := Translate('PopTrayU - Auto-detect Email Client');
-  TaskDlg.Inst := Translate('Auto-detection Complete');
+  TaskDlg.Caption := Translate('PopTrayU - Auto-detect Email Client');
+  TaskDlg.Title := Translate('Auto-detection Complete');
   //TaskDlg.Content := 'Path: '+clientPath;
   TaskDlg.Buttons :=
             Format(Translate('Use %s'), [clientname])+'\n'+ //message result = 100
@@ -46,9 +46,9 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Title := Translate('Auto-detect My Email Client');
-  TaskDlg.Inst := Translate('Unable to Detect Mail Client');
-  TaskDlg.Content := '';
+  TaskDlg.Caption := Translate('Auto-detect My Email Client');
+  TaskDlg.Title := Translate('Unable to Detect Mail Client');
+  TaskDlg.Text := '';
   TaskDlg.Buttons :=
             Translate('Set Email Client Manually')+'\n'+ //message result = 101
             Translate('You will be taken to the Options screen to set this value.')

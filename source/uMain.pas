@@ -663,9 +663,9 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Title := Translate('PopTrayU - Run Email Client');
-  TaskDlg.Inst := Translate('Unable to Launch Email Client');
-  TaskDlg.Content := Translate('Your preferred email client has not been set yet.');
+  TaskDlg.Caption := Translate('PopTrayU - Run Email Client');
+  TaskDlg.Title := Translate('Unable to Launch Email Client');
+  TaskDlg.Text := Translate('Your preferred email client has not been set yet.');
   TaskDlg.Buttons :=
             Translate('Auto-detect My Email Client')+'\n'+ //message result = 100
             Translate('PopTrayU will look in the system registry for the preferred email client')
@@ -695,19 +695,19 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Title := 'PopTrayU';
-  TaskDlg.Inst := Translate('Connection Error:')+' '+account.Name;
-  TaskDlg.Content := Translate('Invalid Username or Password');
+  TaskDlg.Caption := 'PopTrayU';
+  TaskDlg.Title := Translate('Connection Error:')+' '+account.Name;
+  TaskDlg.Text := Translate('Invalid Username or Password');
   TaskDlg.Buttons :=
             Translate('Edit Account Settings')+'\n'+ //message result = 100
             Translate('Fix your username and/or password')
             +sLineBreak+
             Translate('Ignore')+'\n'+ //message result = 101
             Translate('Take no action at this time');
-  TaskDlg.Info := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
+  TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
     Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally. Uusally it happens when the username or password is invalid.');
-  TaskDlg.InfoCollapse := Translate('Technical Information');
-  TaskDlg.InfoExpanded := Translate('Technical Information');
+  TaskDlg.CollapseButtonCaption := Translate('Technical Information');
+  TaskDlg.ExpandButtonCaption := Translate('Technical Information');
   msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
   case msgResult of
   100:
@@ -3287,9 +3287,9 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Title := Translate('Connection Error:')+' '+account.Name ;
-  TaskDlg.Inst := 'Incoming Mail Server Not Set';
-  TaskDlg.Content := 'Incoming Mail Server must be set to check mail for this account';
+  TaskDlg.Caption := Translate('Connection Error:')+' '+account.Name ;
+  TaskDlg.Title := 'Incoming Mail Server Not Set';
+  TaskDlg.Text := 'Incoming Mail Server must be set to check mail for this account';
   TaskDlg.Buttons :=
             Translate('Update Account Settings')+'\n'+ //message result = 100
             Translate('Set the Incoming Mail Server')
