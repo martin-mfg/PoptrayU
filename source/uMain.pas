@@ -244,6 +244,7 @@ type
 
     procedure ShowBlankMailServerErrMsg(account : TAccount);
     procedure NoDefaultMailClientErrMsg();
+    procedure ShowUsernameOrPasswordError(account : TAccount);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -663,8 +664,8 @@ var
   msgResult : integer;
 begin
   TaskDlg.Title := Translate('PopTrayU - Run Email Client');
-  TaskDlg.Inst := 'Unable to Launch Email Client';
-  TaskDlg.Content := 'Your preferred email client has not been set yet.';
+  TaskDlg.Inst := Translate('Unable to Launch Email Client');
+  TaskDlg.Content := Translate('Your preferred email client has not been set yet.');
   TaskDlg.Buttons :=
             Translate('Auto-detect My Email Client')+'\n'+ //message result = 100
             Translate('PopTrayU will look in the system registry for the preferred email client')
@@ -689,6 +690,38 @@ begin
 end;
 
 
+procedure TfrmPopUMain.ShowUsernameOrPasswordError(account : TAccount);
+var
+  TaskDlg : TSynTaskDialog;
+  msgResult : integer;
+begin
+  TaskDlg.Title := 'PopTrayU';
+  TaskDlg.Inst := Translate('Connection Error:')+' '+account.Name;
+  TaskDlg.Content := Translate('Invalid Username or Password');
+  TaskDlg.Buttons :=
+            Translate('Edit Account Settings')+'\n'+ //message result = 100
+            Translate('Fix your username and/or password')
+            +sLineBreak+
+            Translate('Ignore')+'\n'+ //message result = 101
+            Translate('Take no action at this time');
+  TaskDlg.Info := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
+    Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally. Uusally it happens when the username or password is invalid.');
+  TaskDlg.InfoCollapse := Translate('Technical Information');
+  TaskDlg.InfoExpanded := Translate('Technical Information');
+  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
+  case msgResult of
+  100:
+    begin  //todo: this is very similar to the blank server error message. refactor.
+      PageControl.ActivePage := tsAccounts;
+      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
+      AccountsForm.ShowAccount(account);
+      AccountsForm.edUsername.SetFocus();
+    end;
+  101:
+    begin
+    end;
+  end;
+end;
 
 
 
@@ -1356,9 +1389,12 @@ begin
           if FStop then
             account.Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now)
           else
-            // This is where an error message is trapped if the account is
-            // unable to connect to the server on a routine check
-            ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
+            if (e is EIdConnClosedGracefully) then
+              ShowUsernameOrPasswordError(account)
+            else
+              // This is where an error message is trapped if the account is
+              // unable to connect to the server on a routine check
+              ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
         end;
       else begin
         Screen.Cursor := crDefault;

@@ -100,7 +100,8 @@ uses
   OKCANCL2 in 'c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL2.PAS' {OKRightDlg},
   uImapFolderSelect in 'uImapFolderSelect.pas' {ImapFolderSelectDlg},
   OKCANCL1 in 'c:\program files (x86)\embarcadero\rad studio\11.0\ObjRepos\EN\DelphiWin32\OKCANCL1.PAS' {OKBottomDlg},
-  SynTaskDialog in 'SynTaskDialog.pas';
+  SynTaskDialog in 'SynTaskDialog.pas',
+  uRegistryFxns in 'uRegistryFxns.pas';
 
 {$R *.RES}
 
