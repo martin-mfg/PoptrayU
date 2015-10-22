@@ -15,7 +15,7 @@ var
   msgResult : integer;
 begin
   TaskDlg.Title := Translate('PopTrayU - Auto-detect Email Client');
-  TaskDlg.Inst := Translate('Autodetection Complete');
+  TaskDlg.Inst := Translate('Auto-detection Complete');
   //TaskDlg.Content := 'Path: '+clientPath;
   TaskDlg.Buttons :=
             Format(Translate('Use %s'), [clientname])+'\n'+ //message result = 100
