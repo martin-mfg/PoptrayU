@@ -149,6 +149,7 @@ begin
   ToolbarName := uIniSettings.IniPath+'PopTray.customize';
 end;
 
+
 {*------------------------------------------------------------------------------
   Reads options from INI file 
 -------------------------------------------------------------------------------}
@@ -157,9 +158,10 @@ var
   Ini : TIniFile;
   Interval,NewMail : string;
   i : integer;
-  langCount,pluginCount : integer;
-  ThePluginType : TPluginType;
-  fInterfaceVersion : function : integer; stdcall;
+  langCount : integer;
+  //pluginCount : integer;
+  //ThePluginType : TPluginType;
+  //fInterfaceVersion : function : integer; stdcall;
   defaultFont : string;
   font : TFont;
 begin
@@ -289,7 +291,7 @@ begin
     Options.Language := Ini.ReadInteger('Languages','Active',0);
 
     // plug-ins
-    pluginCount := 0;//Ini.ReadInteger('Plug-ins','Count',0);
+//    pluginCount := 0;//Ini.ReadInteger('Plug-ins','Count',0);
 //    SetLength(Plugins,pluginCount);
 //    for i := 0 to pluginCount-1 do
 //    begin
