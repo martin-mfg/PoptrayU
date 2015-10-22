@@ -574,9 +574,9 @@ function ShowVistaConfirmDialog(DlgTitle: string; DlgHeading: string;
 var
   Task: TSynTaskDialog;
 begin
-  Task.Title := DlgTitle;
-  Task.Inst := DlgHeading;
-  Task.Content := DlgMsg;
+  Task.Caption := DlgTitle;
+  Task.Title := DlgHeading;
+  Task.Text := DlgMsg;
   Task.Buttons := YesBtnCaption+#13#10+NoBtnCaption;
   if Task.Execute([],101{=no,thedefault},[],tiQuestion) = 100{=Yes} then
     Result := mrYes else Result := mrNo;

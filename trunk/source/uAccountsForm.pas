@@ -448,8 +448,8 @@ begin
   accountName := accountToDelete.Name;
   if accountName = '' then accountName := Translate('<unnamed account>');
 
-  Task.Title := Translate('PopTrayU - Delete Account');
-  Task.Inst := SysUtils.Format(Translate('Backup "%s" Before Deleting?'), [accountName]);
+  Task.Caption := Translate('PopTrayU - Delete Account');
+  Task.Title := SysUtils.Format(Translate('Backup "%s" Before Deleting?'), [accountName]);
   //Task.Content := subtitle for Inst, currently blank
   Task.Buttons := Translate('Backup and Delete')+'\n'+ //message result = 100
                   Translate('Backup file can be imported to undo')
@@ -484,9 +484,9 @@ begin
     try
       dlgResult := exportDlg.ExportSingleAccount(accountToDelete);
       if dlgResult = mrCancel then begin
-           Task.Title := Translate('PopTrayU - Delete Account');
-  Task.Inst := Translate('Account Backup Canceled');
-  Task.Content := SysUtils.Format(Translate('%s will not be backed up before deleting'), [accountName]);
+           Task.Caption := Translate('PopTrayU - Delete Account');
+  Task.Title := Translate('Account Backup Canceled');
+  Task.Text := SysUtils.Format(Translate('%s will not be backed up before deleting'), [accountName]);
   Task.Buttons := Translate('Delete without Backup')+'\n'+ //message result = 101
                   Translate('Delete cannot be undone');
   dlgResult := Task.Execute([cbCancel],mrCancel,[tdfUseCommandLinks],tiQuestion);
