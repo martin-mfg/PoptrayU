@@ -9,8 +9,6 @@ unit SynTaskDialog;
     Synopse framework. Copyright (C) 2015 Arnaud Bouchez
       Synopse Informatique - http://synopse.info
 
-    Modified By Jessica Brown (C) 2015 for PopTrayU
-
   *** BEGIN LICENSE BLOCK *****
   Version: MPL 1.1/GPL 2.0/LGPL 2.1
 
@@ -155,7 +153,7 @@ type
   /// this callback will be triggerred when a task dialog button is clicked
   // - to prevent the task dialog from closing, the application must set
   // ACanClose to FALSE, otherwise the task dialog is closed and the button
-  // ID is returned via the original TSynTaskDialog.Execute() result
+  // ID is returned via the original TTaskDialog.Execute() result
   TTaskDialogButtonClickedEvent = procedure(Sender: PTaskDialog;
     AButtonID: integer; var ACanClose: Boolean) of object;
 
@@ -195,10 +193,12 @@ type
       True:  (Form: TEmulatedTaskDialog);
   end;
 
+
+
   /// implements a TaskDialog
   // - will use the new TaskDialog API under Vista/Seven, and emulate it with
   // pure Delphi code and standard themed VCL components under XP or 2K
-  // - create a TSynTaskDialog object/record on the stack will initialize all
+  // - create a TTaskDialog object/record on the stack will initialize all
   // its string parameters to '' (it's a SHAME that since Delphi 2009, objects
   // are not initialized any more: we have to define this type as object before
   // Delphi 2009, and as record starting with Delphi 2009)
@@ -207,35 +207,39 @@ type
   // - RadioRes/SelectionRes/VerifyChecked will be used to reflect the state
   // after dialog execution
   // - here is a typical usage:
-  // !var Task: TSynTaskDialog;
+  // !var Task: TTaskDialog;
   // !begin
-  // !  Task.Title := 'Saving application settings';
-  // !  Task.Text := 'This is the content';
+  // !  Task.Inst := 'Saving application settings';
+  // !  Task.Content := 'This is the content';
   // !  Task.Radios := 'Store settings in registry'#10'Store settings in XML file';
-  // !  Task.VerificationText := 'Do no ask for this setting next time';
+  // !  Task.Verify := 'Do no ask for this setting next time';
   // !  Task.VerifyChecked := true;
-  // !  Task.FooterText := 'XML file is perhaps a better choice';
+  // !  Task.Footer := 'XML file is perhaps a better choice';
   // !  Task.Execute([],0,[],tiQuestion,tfiInformation,200);
   // !  ShowMessage(IntToStr(Task.RadioRes)); // 200=Registry, 201=XML
   // !  if Task.VerifyChecked then
-  // !    ShowMessage(Task.VerificationText);
+  // !    ShowMessage(Task.Verify);
   // !end;
   {$ifdef UNICODE}
+  /// Changed for PopTrayU - do not name this object TTaskDialog because
+  /// it causes a name conflict with the VCL TTaskDialog class
   TSynTaskDialog = record
   {$else}
   TSynTaskDialog = object
   {$endif}
-    /// the caption of the main title bar of the dialog window
+    /// the main title of the dialog window
     // - if left void, the title of the application main form is used
-    Caption: string;
-    /// The first line shown on the dialog body, its title.
-    // - it is usually shown in a larger bold blue font
+    // Changed for PopTrayU - because Title has a different meaning in the
+    // real TTaskDialog, this had to be renamed to make a different property
+    // called Title
+    TitleC: string;
+    /// the main instruction (first line on top of window)
     // - any '\n' will be converted into a line feed
     // - if left void, the text is taken from the current dialog icon kind
-    Title: string;
-    /// the subheading or body text that is displayed under the title in the dialog
+    Inst: string;
+    /// the dialog's primary content content text
     // - any '\n' will be converted into a line feed
-    Text: string;
+    Content: string;
     /// a #13#10 or #10 separated list of custom buttons
     // - they will be identified with an ID number starting at 100
     // - by default, the buttons will be created at the dialog bottom, just
@@ -252,25 +256,22 @@ type
     // - '\n' will be converted as note text (shown with smaller text under
     // native Vista/Seven TaskDialog, or as popup hint within Delphi emulation)
     Radios: string;
-    /// the text to show when the expand button has been pressed to show additional
-    ///  details, such as technical information
+    /// the expanded information content text
     // - any '\n' will be converted into a line feed
-    // - the Delphi emulation will always show the ExpandedText content (there is no
+    // - the Delphi emulation will always show the Info content (there is no
     // collapse/expand button)
-    ExpandedText: string;
+    Info: string;
     /// the button caption to be displayed when the information is collapsed
-    ///  Example: 'Technical Information'
-    // - not used under XP: the Delphi emulation will always show the ExpandedText content
-    ExpandButtonCaption: string;
+    // - not used under XP: the Delphi emulation will always show the Info content
+    InfoExpanded: string;
     /// the button caption to be displayed when the information is expanded
-    // - not used under XP: the Delphi emulation will always show the ExpandedText content
-    CollapseButtonCaption: string;
+    // - not used under XP: the Delphi emulation will always show the Info content
+    InfoCollapse: string;
     /// the footer content text
     // - any '\n' will be converted into a line feed
-    FooterText: string;
-    /// Using the VerificationText string property, you can add a checkbox to
-    /// the footer of the task dialog. Example: 'Remember my choice'
-    VerificationText: string;
+    Footer: string;
+    /// the text of the bottom most optional checkbox
+    Verify: string;
     /// a #13#10 or #10 separated list of items to be selected
     // - if set, a Combo Box will be displayed to select
     // - if tdfQuery is in the flags, the combo box will be in edition mode,
@@ -289,11 +290,24 @@ type
     /// after execution, contains the selected item from the Selection list
     SelectionRes: integer;
     /// reflect the the bottom most optional checkbox state
-    // - if VerificationText is not '', should be set before execution
+    // - if Verify is not '', should be set before execution
     // - after execution, will contain the final checkbox state
     VerifyChecked: BOOL;
     /// low-level access to the task dialog implementation
     Dialog: TTaskDialogImplementation;
+
+    //--------------------------------------------------------------------------
+    // Wrapper for property names added for PopTrayU so we can use names of
+    // TTaskDialog properties whenever possible.
+    property Caption : String read TitleC write TitleC;
+    property Text : String read Content write Content;
+    property Title : String read Inst write Inst;
+    property ExpandedText : String read Info write Info;
+    property ExpandButtonCaption : String read InfoExpanded write InfoExpanded;
+    property CollapseButtonCaption : String read InfoCollapse write InfoCollapse;
+    property FooterText : String read Footer write Footer;
+    property VerficationText : String read Verify write Verify;
+    //--------------------------------------------------------------------------
 
     /// launch the TaskDialog form
     // - some common buttons can be set via aCommonButtons
@@ -329,14 +343,14 @@ type
     procedure AddButton(const ACaption: string; const ACommandLinkHint: string = '');
   end;
 
-  /// a wrapper around the TSynTaskDialog.Execute method
+  /// a wrapper around the TTaskDialog.Execute method
   // - used to provide a "flat" access to task dialog parameters
   {$ifdef UNICODE}
   TTaskDialogEx = record
   {$else}
   TTaskDialogEx = object
   {$endif}
-    /// the associated main TSynTaskDialog instance
+    /// the associated main TTaskDialog instance
     Base: TSynTaskDialog;
     /// some common buttons to be displayed
     CommonButtons: TCommonButtons;
@@ -370,7 +384,7 @@ type
     // !  TaskEx.Execute;
     procedure Init;
     /// main (and unique) method showing the dialog itself
-    // - is in fact a wrapper around the TSynTaskDialog.Execute method
+    // - is in fact a wrapper around the TTaskDialog.Execute method
     function Execute(aParent: HWND=0): integer;
   end;
 {$endif USETMSPACK}
@@ -575,7 +589,8 @@ begin
     result := StringReplace(aText, '\n', #10, [rfReplaceAll]);
 end;
 
-{ TSynTaskDialog }
+
+{ TTaskDialog }
 
 type
   // see http://msdn.microsoft.com/en-us/library/bb787473
@@ -681,8 +696,7 @@ begin
 end;
 var RU: array of Ws;
     RUCount: integer;
-    TaskDlgButtons: array of TTASKDIALOG_BUTTON;
-
+    But: array of TTASKDIALOG_BUTTON;
 procedure AddRU(Text: string; var n: integer; firstID: integer);
 var P: PChar;
 begin
@@ -693,10 +707,10 @@ begin
   while P<>nil do begin
     if length(RU)<=RUCount then begin
       SetLength(RU,RUCount+16);
-      SetLength(TaskDlgButtons,RUCount+16);
+      SetLength(But,RUCount+16);
     end;
     RU[RUCount] := GetNextStringLineToWS(P);
-    with TaskDlgButtons[RUCount] do begin
+    with But[RUCount] do begin
       nButtonID := n+firstID;
       pszButtonText := pointer(RU[RUCount]);
     end;
@@ -794,12 +808,12 @@ begin
     if aButtonDef=0 then
       aButtonDef := mrOk;
   end;
-  if Title='' then
+  if TitleC='' then
     if Application.MainForm=nil then
-      Title := Application.Title else
-      Title := Application.MainForm.Caption;
-  if Title='' then
-    Title := IconMessage(aDialogIcon);
+      TitleC := Application.Title else
+      TitleC := Application.MainForm.Caption;
+  if Inst='' then
+    Inst := IconMessage(aDialogIcon);
   if aParent=0 then
     if Screen.ActiveCustomForm<>nil then
       aParent := Screen.ActiveCustomForm.Handle else
@@ -812,22 +826,23 @@ begin
     FillChar(Config,sizeof(Config),0);
     Config.cbSize := sizeof(Config);
     Config.hwndParent := aParent;
-    Config.pszWindowTitle := pointer(N(Title));
-    Config.pszMainInstruction := pointer(N(Title));
-    Config.pszContent := pointer(N(Text));
+    Config.pszWindowTitle := pointer(N(TitleC));
+    Config.pszMainInstruction := pointer(N(Inst));
+    Config.pszContent := pointer(N(Content));
     RUCount := 0;
     AddRU(Buttons,Config.cButtons,100);
     AddRU(Radios,Config.cRadioButtons,200);
     if Config.cButtons>0 then
-      Config.pButtons := @TaskDlgButtons[0];
+      Config.pButtons := @But[0];
     if Config.cRadioButtons>0 then
-      Config.pRadioButtons := @TaskDlgButtons[Config.cButtons];
-    Config.pszVerificationText := pointer(N(VerificationText));
-    Config.pszExpandedInformation := pointer(N(ExpandedText));
-    Config.pszExpandedControlText := pointer(N(ExpandButtonCaption));
-    Config.pszCollapsedControlText := pointer(N(CollapseButtonCaption));
-    Config.pszFooter := pointer(N(FooterText));
-    if (VerificationText<>'') and VerifyChecked then
+      Config.pRadioButtons := @But[Config.cButtons];
+    Config.pszVerificationText := pointer(N(Verify));
+    Config.pszExpandedInformation := pointer(N(Info));
+    Config.pszExpandedControlText := pointer(N(InfoExpanded));
+    Config.pszCollapsedControlText := pointer(N(InfoCollapse));
+    Config.pszFooter := pointer(N(Footer));
+    Config.dwCommonButtons := byte(aCommonButtons);
+    if (Verify<>'') and VerifyChecked then
       include(aFlags,tdfVerificationFlagChecked);
     if (Config.cButtons=0) and (aCommonButtons=[cbOk]) then
       Include(aFlags,tdfAllowDialogCancellation); // just OK -> Esc/Alt+F4 close
@@ -855,15 +870,15 @@ begin
       Dialog.Form.Font := DefaultFont;
     FontHeight := Dialog.Form.Font.Height;
       if aWidth=0 then begin
-      aWidth := Dialog.Form.Canvas.TextWidth(Title);
-      if (aWidth>300) or (Dialog.Form.Canvas.TextWidth(Text)>300) or
+      aWidth := Dialog.Form.Canvas.TextWidth(Inst);
+      if (aWidth>300) or (Dialog.Form.Canvas.TextWidth(Content)>300) or
            (length(Buttons)>40) then
           aWidth := 480 else
           aWidth := 420;
       end;
     Dialog.Form.ClientWidth := aWidth;
     Dialog.Form.Height := 200;
-    Dialog.Form.Caption := Title;
+    Dialog.Form.Caption := TitleC;
       // create a white panel for the main dialog part
     Panel := TPanel.Create(Dialog.Form);
     Panel.Parent := Dialog.Form;
@@ -902,11 +917,11 @@ begin
       Y := IconBorder;
     end;
     // add main texts (Instruction, Content, Information)
-    Dialog.Form.Element[tdeMainInstruction] := AddLabel(Title,true);
-    Dialog.Form.Element[tdeContent] := AddLabel(Text, false);
-    if ExpandedText<>'' then
+    Dialog.Form.Element[tdeMainInstruction] := AddLabel(Inst,true);
+    Dialog.Form.Element[tdeContent] := AddLabel(Content, false);
+    if Info<>'' then
         // no information collapse/expand yet: it's always expanded
-      Dialog.Form.Element[tdeExpandedInfo] := AddLabel(ExpandedText,false);
+      Dialog.Form.Element[tdeExpandedInfo] := AddLabel(Info,false);
       // add command links buttons
       if (tdfUseCommandLinks in aFlags) and (Buttons<>'') then
         with TStringList.Create do
@@ -1014,7 +1029,7 @@ begin
       Panel.Height := Y;
     Par := Dialog.Form;
       // add buttons and verification checkbox
-    if (byte(aCommonButtons)<>0) or (VerificationText<>'') or
+    if (byte(aCommonButtons)<>0) or (Verify<>'') or
          ((Buttons<>'') and not (tdfUseCommandLinks in aFlags)) then begin
       CurrTabOrder := Panel.TabOrder;
         inc(Y,16);
@@ -1031,16 +1046,16 @@ begin
         for B := high(B) downto low(B) do
           if B in aCommonButtons then
           AddBtn(LoadResString(TD_BTNS(B)), TD_BTNMOD[B]);
-      if VerificationText <>'' then begin
+      if Verify<>'' then begin
         Dialog.Form.Verif := TCheckBox.Create(Dialog.Form);
         with Dialog.Form.Verif do begin
             Parent := Par;
-          if X+16+Dialog.Form.Canvas.TextWidth(VerificationText)>XB then begin
+          if X+16+Dialog.Form.Canvas.TextWidth(Verify)>XB then begin
               inc(Y,32);
               XB := aWidth;
             end;
             SetBounds(X,Y,XB-X,24);
-          Caption := VerificationText;
+          Caption := Verify;
             Checked := VerifyChecked;
           end;
         end;
@@ -1048,7 +1063,7 @@ begin
       end else
         XB := 0;
       // add footer text with optional icon
-    if FooterText<>'' then begin
+    if Footer<>'' then begin
         if XB<>0 then
           AddBevel else
           inc(Y,16);
@@ -1074,7 +1089,7 @@ begin
           end;
         end else
           X := 24;
-      Dialog.Form.Element[tdeFooter] := AddLabel(FooterText,false);
+      Dialog.Form.Element[tdeFooter] := AddLabel(Footer,false);
       end;
       // display the form
     Dialog.Form.ClientHeight := Y;
