@@ -14,7 +14,7 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Caption := Translate('PopTrayU - Auto-detect Email Client');
+  TaskDlg.Caption := APPTITLE + ' - ' +  Translate('Auto-detect Email Client');
   TaskDlg.Title := Translate('Auto-detection Complete');
   //TaskDlg.Content := 'Path: '+clientPath;
   TaskDlg.Buttons :=

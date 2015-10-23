@@ -434,9 +434,8 @@ procedure TAccountsForm.DeleteAccount(num: integer);
 var
   i, dlgResult : integer;
   accountToDelete : TAccount;
-  accountName, dlgTitle : String;
+  accountName: String;
   exportDlg : TExportAccountsDlg;
-  msgBox : TForm;
   Task : TSynTaskDialog;
 begin
   if num > Accounts.Count then begin
@@ -448,15 +447,17 @@ begin
   accountName := accountToDelete.Name;
   if accountName = '' then accountName := Translate('<unnamed account>');
 
-  Task.Caption := Translate('PopTrayU - Delete Account');
+  Task.Caption := APPTITLE + ' - ' + Translate('Delete Account');
   Task.Title := SysUtils.Format(Translate('Backup "%s" Before Deleting?'), [accountName]);
-  //Task.Content := subtitle for Inst, currently blank
-  Task.Buttons := Translate('Backup and Delete')+'\n'+ //message result = 100
-                  Translate('Backup file can be imported to undo')
-                  +sLineBreak+
-                  Translate('Delete without Backup')+'\n'+ //message result = 101
-                  Translate('Delete cannot be undone');
+
+  Task.AddButton( Translate('Backup and Delete'), //message result = 100
+                  Translate('Backup file can be imported to undo'));
+
+  Task.AddButton( Translate('Delete without Backup'), //message result = 101
+                  Translate('Delete cannot be undone'));
+
   dlgResult := Task.Execute([cbCancel],mrCancel,[tdfUseCommandLinks],tiQuestion);
+
   if dlgResult = 100 then dlgResult := mrYes else if dlgResult = 101 then dlgResult := mrNo else dlgResult := mrCancel;
 
 
@@ -484,13 +485,16 @@ begin
     try
       dlgResult := exportDlg.ExportSingleAccount(accountToDelete);
       if dlgResult = mrCancel then begin
-           Task.Caption := Translate('PopTrayU - Delete Account');
+           Task.Caption := APPTITLE + ' - ' + Translate('Delete Account');
   Task.Title := Translate('Account Backup Canceled');
   Task.Text := SysUtils.Format(Translate('%s will not be backed up before deleting'), [accountName]);
   Task.Buttons := Translate('Delete without Backup')+'\n'+ //message result = 101
-                  Translate('Delete cannot be undone');
+                  Translate('Delete cannot be undone')
+                  +sLineBreak+
+                  Translate('Cancel')+'\n'+ //message result = 101
+                  Translate('Keep this account');
   dlgResult := Task.Execute([cbCancel],mrCancel,[tdfUseCommandLinks],tiQuestion);
-  if dlgResult = mrCancel then Exit;
+  if (dlgResult = mrCancel) or (dlgResult = 101) then Exit;
 
 
 
@@ -1026,9 +1030,10 @@ begin
     else accountName := edName.Text;
 
     //dlgTitle := SysUtils.Format(Translate('Delete Account: %s'), [accountName]);
-    dlgResult := ShowVistaConfirmDialog(Translate('Delete Account'),  SysUtils.Format(Translate('Delete "%s"'), [accountName]),
-    SysUtils.Format(Translate('Are you sure you want to delete this account?'), [accountName]),
-    'Delete Account','Keep Account');
+    dlgResult := ShowVistaConfirmDialog(Translate('Delete Account'),
+      SysUtils.Format(Translate('Delete "%s"'), [accountName]),
+      SysUtils.Format(Translate('Are you sure you want to delete this account?'), [accountName]),
+      Translate('Delete Account'),Translate('Keep Account'));
 //    dlgResult := ShowCustomOkCancelDialog(dlgTitle,
 //      SysUtils.Format(Translate('Are you sure you want to delete account "%s"?'), [accountName]), mtConfirmation,
 //      0, Translate('Delete'),Translate('Keep Account'));

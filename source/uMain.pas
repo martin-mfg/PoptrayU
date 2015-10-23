@@ -663,18 +663,15 @@ var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
 begin
-  TaskDlg.Caption := Translate('PopTrayU - Run Email Client');
+  TaskDlg.Caption := APPTITLE + ' - ' + Translate('Run Email Client');
   TaskDlg.Title := Translate('Unable to Launch Email Client');
   TaskDlg.Text := Translate('Your preferred email client has not been set yet.');
-  TaskDlg.Buttons :=
-            Translate('Auto-detect My Email Client')+'\n'+ //message result = 100
-            Translate('PopTrayU will look in the system registry for the preferred email client')
-            +sLineBreak+
-            Translate('Set Email Client Manually')+'\n'+ //message result = 101
-            Translate('You will be taken to the Options screen to set this value.')
-            +sLineBreak+
-            Translate('Ignore')+'\n'+ //message result = 101
-            Translate('Take no action at this time');
+  TaskDlg.AddButton(Translate('Auto-detect My Email Client'),
+                    Translate('PopTrayU will look in the system registry for the preferred email client')); //100
+  TaskDlg.AddButton(Translate('Set Email Client Manually'),
+                    Translate('You will be taken to the Options screen to set this value.')); //101
+  TaskDlg.AddButton(Translate('Ignore'),
+                    Translate('Take no action at this time')); //102
   msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
   case msgResult of
   100:
@@ -699,13 +696,10 @@ begin
   TaskDlg.Caption := 'PopTrayU';
   TaskDlg.Title := Translate('Connection Error:')+' '+account.Name;
   TaskDlg.Text := Translate('Invalid Username or Password');
-
-  TaskDlg.Buttons :=
-            Translate('Edit Account Settings')+'\n'+ //message result = 100
-            Translate('Fix your username and/or password')
-            +sLineBreak+
-            Translate('Ignore')+'\n'+ //message result = 101
-            Translate('Take no action at this time');
+  TaskDlg.AddButton(Translate('Edit Account Settings'),
+                    Translate('Fix your username and/or password')); // msg result = 100
+  TaskDlg.AddButton(Translate('Ignore'),
+                    Translate('Take no action at this time')); //msg result = 101
   TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
     Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.');
   TaskDlg.CollapseButtonCaption := Translate('Technical Information');
@@ -3043,7 +3037,7 @@ begin
     if Copy(head,1,8)='PopTrayU' then
       head := Translate(head)
     else
-      head := 'PopTrayU - '+Translate(head);
+      head := APPTITLE + ' - '+Translate(head);
     TrayIcon.ShowBalloonHint(head,info,IconType,TimeoutSecs);
   end
   else begin
@@ -3290,17 +3284,19 @@ var
   msgResult : integer;
 begin
   TaskDlg.Caption := Translate('Connection Error:')+' '+account.Name ;
-  TaskDlg.Title := 'Incoming Mail Server Not Set';
-  TaskDlg.Text := 'Incoming Mail Server must be set to check mail for this account';
-  TaskDlg.Buttons :=
-            Translate('Update Account Settings')+'\n'+ //message result = 100
-            Translate('Set the Incoming Mail Server')
-            +sLineBreak+
-            Translate('Disable This Account')+'\n'+ //message result = 101
-            Translate('This will prevent further checking of this account')
-            +sLineBreak+
-            Translate('Ignore')+'\n'+ //message result = 101
-            Translate('Take no action at this time');
+
+  TaskDlg.Title   := Translate('Incoming Mail Server Not Set');
+  TaskDlg.Text    := Translate('Incoming Mail Server must be set to check mail for this account');
+
+  TaskDlg.AddButton( Translate('Update Account Settings'), //message result = 100
+                     Translate('Set the Incoming Mail Server'));
+
+  TaskDlg.AddButton( Translate('Disable This Account'),//message result = 101
+                     Translate('This will prevent further checking of this account'));
+
+  TaskDlg.AddButton( Translate('Ignore'), //message result = 101
+                     Translate('Take no action at this time'));
+
   msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
   case msgResult of
   100:

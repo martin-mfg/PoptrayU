@@ -31,6 +31,9 @@ uses Classes, ExtCtrls, Contnrs, SysUtils, Graphics;
 type
   DefaultTabType = ( TAB_LAST_USED=-1, TAB_HTML=0, TAB_PLAIN_TEXT=2, TAB_RAW=3);
 
+const
+  APPTITLE = 'PopTrayU';
+
 var
   Options : record
     Busy : boolean;
