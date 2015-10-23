@@ -93,7 +93,7 @@ uses
   {$ifdef WITHUXTHEME}
   Themes,
   {$endif}
-  Graphics, Forms, Controls, StdCtrls, ExtCtrls, Buttons;
+  Graphics, Forms, Controls, StdCtrls, ExtCtrls, Buttons, TDEMU;
 
 var
   /// will map a generic OK picture from SynTaskDialog.res
@@ -568,7 +568,8 @@ begin
   GetVersionEx(OSVersionInfo);
   if OSVersionInfo.dwMajorVersion<6 then
     @TaskDialogIndirect := nil else begin
-    @TaskDialogIndirect := GetProcAddress(GetModuleHandle(comctl32),'TaskDialogIndirect');
+    //@TaskDialogIndirect := GetProcAddress(GetModuleHandle(comctl32),'TaskDialogIndirect');
+    @TaskDialogIndirect := GetProcAddress(GetModuleHandle('TDEMU.DLL'),'TaskDialogIndirectEmulate');
     {$ifdef FIXVCLALTKEY}
     {$WARN SYMBOL_PLATFORM OFF}
     if (DebugHook=0) {$ifdef WITHUXTHEME}and ThemeServices.ThemesEnabled{$endif} then
@@ -1193,6 +1194,9 @@ initialization
   BitmapArrow := TBitmap.Create;
   BitmapArrow.LoadFromResourceName(HInstance,'btnArrow'); // SQLite3btnArrow.bmp
   BitmapArrow.Transparent := true;
+
+  // FOR DEBUGGING...THIS WILL ENABLE FORCED EMULATION FOR TDEMU.DLL
+  TaskDialogSetEmulation(true);
 
 finalization
   {$ifdef FIXVCLALTKEY}
