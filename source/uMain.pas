@@ -681,6 +681,7 @@ begin
   101:
     begin
       PageControl.ActivePage := tsOptions;
+      ShowForm();
       OptionsForm.ShowSetEmailClient();
     end;
   end;
@@ -709,6 +710,7 @@ begin
   100:
     begin  //todo: this is very similar to the blank server error message. refactor.
       PageControl.ActivePage := tsAccounts;
+      ShowForm;
       AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
       AccountsForm.ShowAccount(account);
       AccountsForm.edUsername.SetFocus();
@@ -3302,6 +3304,7 @@ begin
   100:
     begin
       PageControl.ActivePage := tsAccounts;
+      ShowForm();
       AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
       AccountsForm.ShowAccount(account);
       AccountsForm.edServer.SetFocus();
@@ -5014,17 +5017,22 @@ var
   i : integer;
   res : boolean;
 begin
-  if accounts.count = 0 then exit;
   if not FMinimized and (PageControl.ActivePageIndex = 0) then
-    res := ExecuteProgram(Accounts.Items[tabMail.TabIndex]) //TODO: tabToAccount
+    if accounts.count = 0 then
+      res := ExecuteProgram()
+    else
+      res := ExecuteProgram(Accounts.Items[tabMail.TabIndex]) //TODO: tabToAccount
   else begin
-    if FAccountIdxWithMail < 0 then exit else
+    if FAccountIdxWithMail < 0 then
+      res := ExecuteProgram()
+    else
       res := ExecuteProgram(Accounts[FAccountIdxWithMail]);
   end;
   if FShowingInfo then frmInfo.Close;
   if res then HideForm;
-  for i := 1 to Accounts.NumAccounts do
-    MarkAllViewed(i);
+  if accounts.Count > 0 then
+    for i := 1 to Accounts.NumAccounts do
+      MarkAllViewed(i);
   UpdateTrayIcon;
   if not Options.ResetTray then ClearTrayIcon;
 end;
