@@ -694,10 +694,12 @@ procedure TfrmPopUMain.ShowUsernameOrPasswordError(account : TAccount);
 var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
+  btn : TTaskDialogButtonItem;
 begin
   TaskDlg.Caption := 'PopTrayU';
   TaskDlg.Title := Translate('Connection Error:')+' '+account.Name;
   TaskDlg.Text := Translate('Invalid Username or Password');
+
   TaskDlg.Buttons :=
             Translate('Edit Account Settings')+'\n'+ //message result = 100
             Translate('Fix your username and/or password')
@@ -708,7 +710,7 @@ begin
     Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally. Uusally it happens when the username or password is invalid.');
   TaskDlg.CollapseButtonCaption := Translate('Technical Information');
   TaskDlg.ExpandButtonCaption := Translate('Technical Information');
-  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
+  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError, tfiBlank, 0, 0, Handle, true); //modal dlg
   case msgResult of
   100:
     begin  //todo: this is very similar to the blank server error message. refactor.
