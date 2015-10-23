@@ -1,12 +1,12 @@
 /// implement TaskDialog window (native on Vista/Seven, emulated on XP)
-// - this unit is a part of the freeware Synopse framework,
-// licensed under a MPL/GPL/LGPL tri-license; version 1.15
+// - this unit is a part of the freeware Synopse mORMot framework,
+// licensed under a MPL/GPL/LGPL tri-license; version 1.18
 unit SynTaskDialog;
 
 {
     This file is part of Synopse framework.
 
-    Synopse framework. Copyright (C) 2011 Arnaud Bouchez
+    Synopse framework. Copyright (C) 2015 Arnaud Bouchez
       Synopse Informatique - http://synopse.info
 
     Modified By Jessica Brown (C) 2015 for PopTrayU
@@ -27,10 +27,12 @@ unit SynTaskDialog;
 
   The Initial Developer of the Original Code is Arnaud Bouchez.
 
-  Portions created by the Initial Developer are Copyright (C) 2011
+  Portions created by the Initial Developer are Copyright (C) 2015
   the Initial Developer. All Rights Reserved.
 
   Contributor(s):
+  - Ulrich Gerhardt
+
   Alternatively, the contents of this file may be used under the terms of
   either the GNU General Public License Version 2 or later (the "GPL"), or
   the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -51,22 +53,47 @@ unit SynTaskDialog;
   Version 1.15
   - new tdfQueryMasked function to display * in the tdfQuery editor field
 
+  Version 1.16
+  - fixed issue when changing the current application with Alt+Tab - see
+    http://synopse.info/fossil/tktview?name=01395e5932
+  - fixed compiler error when using the unit with runtime packages enabled
+    (known compiler issue about string resources, referenced as E2201)
+  - default modal dialog parent changed into any current active form
+  - added tdfQueryFieldFocused optional flag to focus the input field component
+  - some aesthetical rendering changes and code clean-up (e.g. no temporary
+    form necessary), thanks to uligerhardt proposals
+
+  Version 1.18
+  - fixed label height display when long text is wrapped on several lines
+  - bottom buttons use better looking TButton component
+  - bottom buttons won't trim expected shortcut definition, in emulated mode
+  - added OnButtonClicked property and associated SetElementText() method
+  - fix the Windows Vista Alt key VCL bug (QC 37403) for Delphi 6/7/2006
+  - now compiles and run in Win64 platform (Delphi XE2+)
+
 }
 
 interface
+
+{$I Synopse.inc}
 
 {$IFDEF CONDITIONALEXPRESSIONS}  // Delphi 6 or newer
   {$ifndef VER140} // Delphi 6
     {$define WITHUXTHEME} // Themes unit exists till Delphi 7
   {$endif}
+  {$ifndef ISDELPHI2007ANDUP}
+    {$define FIXVCLALTKEY} // fix QC 37403 for Delphi 6/7/2006
+  {$endif}
 {$ENDIF}
 
 uses
-  Windows, Classes, SysUtils, Consts,
+  Windows, CommCtrl, Classes, SysUtils, Consts, Messages,
+  Menus,
   {$ifdef USETMSPACK}
   AdvGlowButton, AdvMenus, TaskDialog, TaskDialogEx,
-  {$else}
-  Menus,
+  {$endif}
+  {$ifdef WITHUXTHEME}
+  Themes,
   {$endif}
   Graphics, Forms, Controls, StdCtrls, ExtCtrls, Buttons;
 
@@ -118,15 +145,60 @@ type
     tdfExpandFooterArea, tdfExpandByDefault, tdfVerificationFlagChecked,
     tdfShowProgressBar, tdfShowMarqueeProgressBar, tdfCallbackTimer,
     tdfPositionRelativeToWindow, tdfRtlLayout, tdfNoDefaultRadioButton,
-    tdfCanBeMinimized, tdfQuery, tdfQueryMasked);
+    tdfCanBeMinimized, tdfQuery, tdfQueryMasked, tdfQueryFieldFocused);
 
   /// set of available configuration flags for the Task Dialog
   TTaskDialogFlags = set of TTaskDialogFlag;
 
+  PTaskDialog = ^TSynTaskDialog;
+
+  /// this callback will be triggerred when a task dialog button is clicked
+  // - to prevent the task dialog from closing, the application must set
+  // ACanClose to FALSE, otherwise the task dialog is closed and the button
+  // ID is returned via the original TSynTaskDialog.Execute() result
+  TTaskDialogButtonClickedEvent = procedure(Sender: PTaskDialog;
+    AButtonID: integer; var ACanClose: Boolean) of object;
+
+  /// the visual components of this Task Dialog
+  // - map low-level TDE_CONTENT...TDE_MAIN_INSTRUCTION constants and
+  // the query editor and checkbox
+  // - tdeEdit is for the query editor
+  // - tdeVerif is for the checkbox
+  TTaskDialogElement = (
+    tdeContent, tdeExpandedInfo, tdeFooter, tdeMainInstruction,
+    tdeEdit, tdeVerif);
+
+  /// the actual form class used for emulation
+  TEmulatedTaskDialog = class(TForm)
+  protected
+    procedure HandleEmulatedButtonClicked(Sender: TObject);
+  public
+    /// the Task Dialog structure which created the form
+    Owner: PTaskDialog;
+    /// the labels corresponding to the Task Dialog main elements
+    Element: array[tdeContent..tdeMainInstruction] of TLabel;
+    /// the Task Dialog selection list
+    Combo: TComboBox;
+    /// the Task Dialog optional query editor
+    Edit: TEdit;
+    /// the Task Dialog optional checkbox
+    Verif: TCheckBox;
+  end;
+
+  /// structure for low-level access to the task dialog implementation
+  // - points either to the HWND handle of the new TaskDialog API
+  // or to the emulation dialog
+  TTaskDialogImplementation = record
+    OnButtonClicked: TTaskDialogButtonClickedEvent;
+    case Emulated: Boolean of
+      False: (Wnd: HWND);
+      True:  (Form: TEmulatedTaskDialog);
+  end;
+
   /// implements a TaskDialog
   // - will use the new TaskDialog API under Vista/Seven, and emulate it with
   // pure Delphi code and standard themed VCL components under XP or 2K
-  // - create a TTaskDialog object/record on the stack will initialize all
+  // - create a TSynTaskDialog object/record on the stack will initialize all
   // its string parameters to '' (it's a SHAME that since Delphi 2009, objects
   // are not initialized any more: we have to define this type as object before
   // Delphi 2009, and as record starting with Delphi 2009)
@@ -135,7 +207,7 @@ type
   // - RadioRes/SelectionRes/VerifyChecked will be used to reflect the state
   // after dialog execution
   // - here is a typical usage:
-  // !var Task: TTaskDialog;
+  // !var Task: TSynTaskDialog;
   // !begin
   // !  Task.Title := 'Saving application settings';
   // !  Task.Text := 'This is the content';
@@ -148,8 +220,11 @@ type
   // !  if Task.VerifyChecked then
   // !    ShowMessage(Task.VerificationText);
   // !end;
-  TSynTaskDialog = {$ifdef UNICODE}record{$else}object{$endif}
-  public
+  {$ifdef UNICODE}
+  TSynTaskDialog = record
+  {$else}
+  TSynTaskDialog = object
+  {$endif}
     /// the caption of the main title bar of the dialog window
     // - if left void, the title of the application main form is used
     Caption: string;
@@ -169,6 +244,7 @@ type
     // as big button in the middle of the dialog window; in this case, any
     // '\n' will be converted as note text (shown with smaller text under native
     // Vista/Seven TaskDialog, or as popup hint within Delphi emulation)
+    // - see the AddButton() wrapper method for an easy access
     Buttons: string;
     /// a #13#10 or #10 separated list of custom radio buttons
     // - they will be identified with an ID number starting at 200
@@ -216,6 +292,9 @@ type
     // - if VerificationText is not '', should be set before execution
     // - after execution, will contain the final checkbox state
     VerifyChecked: BOOL;
+    /// low-level access to the task dialog implementation
+    Dialog: TTaskDialogImplementation;
+
     /// launch the TaskDialog form
     // - some common buttons can be set via aCommonButtons
     // - in emulation mode, aFlags will handle only tdfUseCommandLinks,
@@ -227,13 +306,72 @@ type
     // - aDialogIcon and aFooterIcon are used to specify the displayed icons
     // - aWidth can be used to force a custom form width (in pixels)
     // - aParent can be set to any HWND - by default, Application.DialogHandle 
-    // - if NonNative is TRUE, the Delphi emulation code will always be used
+    // - if aNonNative is TRUE, the Delphi emulation code will always be used
+    // - aEmulateClassicStyle can be set to enforce conformity with the non themed
+    // user interface - see @http://synopse.info/forum/viewtopic.php?pid=2867#p2867
+    // - aOnButtonClicked can be set to a callback triggerred when a button is
+    // clicked
     function Execute(aCommonButtons: TCommonButtons=[];
       aButtonDef: integer=0; aFlags: TTaskDialogFlags=[];
       aDialogIcon: TTaskDialogIcon=tiInformation;
       aFooterIcon: TTaskDialogFooterIcon=tfiWarning;
       aRadioDef: integer=0; aWidth: integer=0; aParent: HWND=0;
-      NonNative: boolean=false): integer;
+      aNonNative: boolean=false; aEmulateClassicStyle: boolean = false;
+      aOnButtonClicked: TTaskDialogButtonClickedEvent=nil): integer;
+
+    /// allow a OnButtonClicked callback to change the Task Dialog main elements
+    // - note that tdeVerif could be modified only in emulation mode, since
+    // the API does not give any runtime access to the checkbox caption
+    // - other elements will work in both emulated and native modes
+    procedure SetElementText(element: TTaskDialogElement; const Text: string);
+    /// wrapper method able to add a custom button to the Task Dialog
+    // - will add the expected content to the Buttons text field
+    procedure AddButton(const ACaption: string; const ACommandLinkHint: string = '');
+  end;
+
+  /// a wrapper around the TSynTaskDialog.Execute method
+  // - used to provide a "flat" access to task dialog parameters
+  {$ifdef UNICODE}
+  TTaskDialogEx = record
+  {$else}
+  TTaskDialogEx = object
+  {$endif}
+    /// the associated main TSynTaskDialog instance
+    Base: TSynTaskDialog;
+    /// some common buttons to be displayed
+    CommonButtons: TCommonButtons;
+    /// the default button ID
+    ButtonDef: integer;
+    /// the associated configuration flags for this Task Dialog
+    // - in emulation mode, aFlags will handle only tdfUseCommandLinks,
+    // tdfUseCommandLinksNoIcon, and tdfQuery options
+    Flags: TTaskDialogFlags;
+    /// used to specify the dialog icon
+    DialogIcon: TTaskDialogIcon;
+    /// used to specify the footer icon
+    FooterIcon: TTaskDialogFooterIcon;
+    /// the default radio button ID
+    RadioDef: integer;
+    /// can be used to force a custom form width (in pixels)
+    Width: integer;
+    /// if TRUE, the Delphi emulation code will always be used
+    NonNative: boolean;
+    /// can be used to enforce conformity with the non themed user interface
+    EmulateClassicStyle: boolean;
+    /// this event handler will be fired on a button dialog click
+    OnButtonClicked: TTaskDialogButtonClickedEvent;
+    /// will initialize the dialog parameters
+    // - can be used to display some information with less parameters:
+    // !var TaskEx: TTaskDialogEx;
+    // !  ...
+    // !  TaskEx.Init;
+    // !  TaskEx.Base.Title := 'Task Dialog Test';
+    // !  TaskEx.Base.Inst := 'Callback Test';
+    // !  TaskEx.Execute;
+    procedure Init;
+    /// main (and unique) method showing the dialog itself
+    // - is in fact a wrapper around the TSynTaskDialog.Execute method
+    function Execute(aParent: HWND=0): integer;
   end;
 {$endif USETMSPACK}
 
@@ -243,11 +381,13 @@ type
   TSynPopupMenu = TAdvPopupMenu;
 
   TSynButtonParent = TAdvGlowButton;
+  TSynTaskDialogButton = TAdvGlowButton;
 {$else}
   /// a generic VCL popup menu
   TSynPopupMenu = TPopupMenu;
 
   TSynButtonParent = {$ifdef WITHUXTHEME}TBitBtn{$else}TButton{$endif};
+  TSynTaskDialogButton = TButton;
 {$endif USETMSPACK}
 
   /// a generic Button to be used in the User Interface
@@ -278,15 +418,28 @@ type
 /// return the text without the '&' characters within
 function UnAmp(const s: string): string;
 
-{
+{$ifndef USETMSPACK}
 var
+{
   /// if set to TRUE, buttons will be bigger than default
   // - can be useful e.g. for touch screens
-  // - will work only for the Delphi emulated version (NonNative=true) of
+  // - will work only for the Delphi emulated version (aNonNative=true) of
   // TSynTask - could be combined with @TaskDialogIndirect := nil;
   TaskDialogBiggerButtons: boolean = false;
 }
-
+  /// a default Task Dialog wrapper instance
+  // - can be used to display some information with less parameters, just
+  // like the TTaskDialogEx.Init method:
+  // !var TaskEx: TTaskDialogEx;
+  // !  ...
+  // !  TaskEx := DefaultTaskDialog;
+  // !  TaskEx.Base.Title := 'Task Dialog Test';
+  // !  TaskEx.Base.Inst := 'Callback Test';
+  // !  TaskEx.Execute;
+  DefaultTaskDialog: TTaskDialogEx = (
+    DialogIcon: tiInformation;
+    FooterIcon: tfiWarning);
+{$endif}
 
 implementation
 
@@ -294,11 +447,21 @@ implementation
 
 
 const
-  TD_BTNS: array[TCommonButton] of pointer = (
-    @SMsgDlgOK, @SMsgDlgYes, @SMsgDlgNo, @SMsgDlgCancel, @SMsgDlgRetry,
-    @SCloseButton);
   TD_BTNMOD: array[TCommonButton] of Integer = (
     mrOk, mrYes, mrNo, mrCancel, mrRetry, mrAbort);
+
+function TD_BTNS(button: TCommonButton): pointer;
+begin
+  case button of
+    cbOK:     result := @SMsgDlgOK;
+    cbYes:    result := @SMsgDlgYes;
+    cbNo:     result := @SMsgDlgNo;
+    cbCancel: result := @SMsgDlgCancel;
+    cbRetry:  result := @SMsgDlgRetry;
+    cbClose:  result := @SCloseButton;
+        else  result := nil;
+  end;
+end;
 
 { TSynButton }
 
@@ -308,7 +471,7 @@ begin
   Create(Owner);
   Parent := Owner;
   SetBounds(Left,Right,Width,Height);
-  Caption := LoadResString(TD_BTNS[Btn]);
+  Caption := LoadResString(TD_BTNS(Btn));
   ModalResult := TD_BTNMOD[Btn];
   case Btn of
     cbOK:     Default := true;
@@ -343,15 +506,8 @@ begin
 end;
 
 function UnAmp(const s: string): string;
-var i: integer;
 begin
-  result := s;
-  repeat
-    i := pos('&',result);
-    if i=0 then
-      exit;
-    delete(result,i,1);
-  until false;
+  result := StripHotkey(s);
 end;
 
 
@@ -360,9 +516,6 @@ end;
 const
   TD_ICONS: array[TTaskDialogIcon] of integer = (
     17, 84, 99, 98, 81, 0, 78);
-  TD_ICONS_IDENT: array[TTaskDialogIcon] of pointer =(
-    nil, @SMsgDlgWarning, @SMsgDlgConfirm, @SMsgDlgError, @SMsgDlgInformation,
-    nil, @SMsgDlgInformation);
   TD_FOOTERICONS: array[TTaskDialogFooterIcon] of integer = (
     17, 84, 99, 98, 65533, 65532);
   WIN_ICONS: array[TTaskDialogIcon] of PChar = (
@@ -370,20 +523,62 @@ const
   WIN_FOOTERICONS: array[TTaskDialogFooterIcon] of PChar = (
     nil, IDI_WARNING, IDI_QUESTION, IDI_ERROR, IDI_INFORMATION, IDI_WINLOGO);
 
+function IconMessage(Icon: TTaskDialogIcon): string;
+begin
+  case Icon of
+    tiWarning:   result := SMsgDlgWarning;
+    tiQuestion:  result := SMsgDlgConfirm;
+    tiError:     result := SMsgDlgError;
+    tiInformation, tiShield: result := SMsgDlgInformation;
+    else result := '';
+  end;
+end;
+
+{$ifdef FIXVCLALTKEY}
+var
+  WndProcHook: HHOOK = 0;
+
+function HookedWndProcFunc(nCode: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; stdcall;
+begin
+  if nCode=HC_ACTION then
+    if PCWPSTRUCT(lParam).message=WM_UPDATEUISTATE then
+      InvalidateRect(PCWPSTRUCT(lParam).hwnd,nil,false);
+  result := CallNextHookEx(WndProcHook,nCode,wParam,lParam);
+end;
+{$endif}
+
 procedure InitComCtl6;
 var OSVersionInfo: TOSVersionInfo;
 begin
   OSVersionInfo.dwOSVersionInfoSize := sizeof(OSVersionInfo);
   GetVersionEx(OSVersionInfo);
   if OSVersionInfo.dwMajorVersion<6 then
-    @TaskDialogIndirect := nil else
+    @TaskDialogIndirect := nil else begin
     @TaskDialogIndirect := GetProcAddress(GetModuleHandle(comctl32),'TaskDialogIndirect');
+    {$ifdef FIXVCLALTKEY}
+    {$WARN SYMBOL_PLATFORM OFF}
+    if (DebugHook=0) {$ifdef WITHUXTHEME}and ThemeServices.ThemesEnabled{$endif} then
+      WndProcHook := SetWindowsHookEx(WH_CALLWNDPROC,HookedWndProcFunc,0,GetCurrentThreadID);
+    {$WARN SYMBOL_PLATFORM ON}
+    {$endif}
+  end;
 end;
 
-{ TTaskDialog }
+type
+  /// internal type used for Unicode string storage
+  WS = {$ifdef UNICODE}string{$else}WideString{$endif};
+
+function CR(const aText: string): string;
+begin
+  if pos('\n', aText) = 0 then
+    result := aText else
+    result := StringReplace(aText, '\n', #10, [rfReplaceAll]);
+end;
+
+{ TSynTaskDialog }
 
 type
-  // see http://msdn.microsoft.com/en-us/library/bb787473(v=VS.85).aspx
+  // see http://msdn.microsoft.com/en-us/library/bb787473
   PTASKDIALOG_BUTTON = ^TTASKDIALOG_BUTTON;
   TTASKDIALOG_BUTTON = packed record
     nButtonID: integer;
@@ -394,10 +589,10 @@ type
     cbSize: integer;
     hwndParent: HWND;
     hInstance: THandle;
-    dwFlags: integer;
-    dwCommonButtons: integer;
+    dwFlags: cardinal;
+    dwCommonButtons: cardinal;
     pszWindowTitle: PWideChar;
-    hMainIcon: integer;
+    hMainIcon: HICON;
     pszMainInstruction: PWideChar;
     pszContent: PWideChar;
     cButtons: integer;
@@ -417,48 +612,34 @@ type
     cxWidth: integer;
   end;
 
+const
+  TDN_BUTTON_CLICKED = 2; // wParam = Button ID
 
-type
-  /// a wrapper to a TForm, just used to implement some event handlers
-  TTaskDialogForm = class(TForm)
-  public
-    /// to set Form.Tag := Button.Tag
-    procedure ButtonClick(Sender: TObject);
-    /// will set the focus to any TSynButton(Form.Tag)
-    procedure FormShow(Sender: TObject);
-  end;
 
-procedure TTaskDialogForm.ButtonClick(Sender: TObject);
+function TaskDialogCallbackProc(hwnd: HWND; uNotification: UINT;
+  wParam: WPARAM; lParam: LPARAM; dwRefData: pointer): HRESULT; stdcall;
+var ptd: PTaskDialog absolute dwRefData;
+    CanClose: Boolean;
 begin
-  if (Sender<>nil) and Sender.InheritsFrom(TSynButton) then
-  with TSynButton(Sender) do begin
-    self.Tag := Tag;
-    if Tag in [mrOk..mrNo] then
-      self.ModalResult := Tag;
-    Close;
+  ptd^.Dialog.Wnd := hwnd;
+  Result := S_OK;
+  case uNotification of
+    TDN_BUTTON_CLICKED:
+    if Assigned(ptd^.Dialog.OnButtonClicked) then begin
+      CanClose := True;
+      ptd^.Dialog.OnButtonClicked(ptd,wParam,CanClose);
+      if not CanClose then
+        Result := S_FALSE;
   end;
 end;
-
-procedure TTaskDialogForm.FormShow(Sender: TObject);
-begin
-  if (Tag<>0) and TObject(Tag).InheritsFrom(TSynButton) then begin
-    TSynButton(Tag).SetFocus;
-    Tag := 0;
-  end;
 end;
 
 function TSynTaskDialog.Execute(aCommonButtons: TCommonButtons;
   aButtonDef: integer; aFlags: TTaskDialogFlags;
   aDialogIcon: TTaskDialogIcon; aFooterIcon: TTaskDialogFooterIcon;
-  aRadioDef, aWidth: integer; aParent: HWND; NonNative: boolean): integer;
-type StringType = {$ifdef UNICODE}string{$else}WideString{$endif};
-function ReplaceLineBreaks(const aText: string): string;
-begin
-  if pos('\n',aText)=0 then
-    result := aText else
-    result := StringReplace(aText,'\n',#10,[rfReplaceAll]);
-end;
-function GetNextStringLineToWS(var P: PChar): StringType;
+  aRadioDef, aWidth: integer; aParent: HWND; aNonNative: boolean;
+  aEmulateClassicStyle: boolean; aOnButtonClicked: TTaskDialogButtonClickedEvent): integer;
+function GetNextStringLineToWS(var P: PChar): WS;
 var S: PChar;
     {$ifndef UNICODE}tmp: string;{$endif}
 begin
@@ -469,10 +650,10 @@ begin
       inc(S);
     {$ifdef UNICODE}
     SetString(result,P,S-P);
-    result := ReplaceLineBreaks(result);
+    result := CR(result);
     {$else}
     SetString(tmp,P,S-P);
-    result := WideString(ReplaceLineBreaks(tmp));
+    result := WideString(CR(tmp));
     {$endif}
     while (S^<>#0) and (S^<' ') do inc(S); // ignore e.g. #13 or #10
     if S^<>#0 then
@@ -488,19 +669,17 @@ begin
   aHint := '';
   i := pos('\n',result);
   if i>0 then begin
-    aHint := ReplaceLineBreaks(copy(result,i+2,maxInt));
+    aHint := CR(copy(result,i+2,maxInt));
     SetLength(result,i-1);
   end;
 end;
-function N(const aText: string): StringType;
+function N(const aText: string): WS;
 begin
   if aText='' then
     result := '' else
-    result := StringType(ReplaceLineBreaks(aText));
+    result := WS(CR(aText));
 end;
-
-
-var RU: array of StringType;
+var RU: array of Ws;
     RUCount: integer;
     TaskDlgButtons: array of TTASKDIALOG_BUTTON;
 
@@ -526,40 +705,50 @@ begin
   end;
 end;
 var Config: TTASKDIALOGCONFIG;
-    i, X, Y, XB, FontHeight: integer;
+    i, X, Y, XB, IconBorder, FontHeight: integer;
     Par: TWinControl;
     Panel: TPanel;
-    Form: TTaskDialogForm;
+    CurrTabOrder: TTabOrder;
     Image: TImage;
     Pic: TIcon;
     Bmp: TBitmap;
-    Edit: TEdit;
-    Combo: TComboBox;
     List: TStrings;
     B: TCommonButton;
     CommandLink: TSynButton;
     Rad: array of TRadioButton;
-    Verif: TCheckBox;
-function AddLabel(const Text: string; BigFont: boolean): TLabel;
+function AddLabel(Text: string; BigFont: boolean): TLabel;
+var R: TRect;
+    W: integer;
 begin
-  result := TLabel.Create(Form);
+  result := TLabel.Create(Dialog.Form);
   result.Parent := Par;
   result.WordWrap := true;
   if BigFont then begin
+    if aEmulateClassicStyle then begin
+      result.Font.Height := FontHeight-2;
+      result.Font.Style := [fsBold]
+    end else begin
     result.Font.Height := FontHeight-4;
     result.Font.Color := $B00000;
+    end;
   end else
     result.Font.Height:= FontHeight;
-  result.Left := X;
-  result.Top := Y;
-  result.Width := aWidth-X-8;
-  result.Caption := ReplaceLineBreaks(Text);
-  inc(Y,result.Height+16);
+  Text := CR(Text);
+  result.AutoSize := false;
+  R.Left := 0;
+  R.Top := 0;
+  W := aWidth-X-8;
+  R.Right := W;
+  R.Bottom := result.Height;
+  R.Bottom := DrawText(result.Canvas.Handle,pointer(Text),-1,R,DT_CALCRECT or DT_WORDBREAK);
+  result.SetBounds(X,Y,W,R.Bottom);
+  result.Caption := Text;
+  inc(Y,R.Bottom+16);
 end;
 procedure AddBevel;
 var BX: integer;
 begin
-  with TBevel.Create(Form) do begin
+  with TBevel.Create(Dialog.Form) do begin
     Parent := Par;
     if (Image<>nil) and (Y<Image.Top+Image.Height) then
       BX := X else
@@ -568,23 +757,26 @@ begin
   end;
   inc(Y,16);
 end;
-function AddButton(s: string; Tag: integer): TSynButton;
+
+function AddBtn(const s: string; ModalResult: integer): TSynTaskDialogButton;
 var WB: integer;
 begin
-  s := UnAmp(s);
-  WB := Form.Canvas.TextWidth(s)+52;
+  WB := Dialog.Form.Canvas.TextWidth(s)+52;
   dec(XB,WB);
   if XB<X shr 1 then begin
     XB := aWidth-WB;
     inc(Y,32);
   end;
-  result := TSynButton.Create(Form);
+  result := TSynTaskDialogButton.Create(Dialog.Form);
   result.Parent := Par;
+    if aEmulateClassicStyle then
+      result.SetBounds(XB,Y,WB-10,22) else
   result.SetBounds(XB,Y,WB-12,28);
   result.Caption := s;
-  result.Tag := Tag;
-  result.OnClick := Form.ButtonClick; // will set F.Tag := Button.Tag
-  case Tag of
+  result.ModalResult := ModalResult;
+  result.TabOrder := CurrTabOrder;
+  result.OnClick := Dialog.Form.HandleEmulatedButtonClicked;
+  case ModalResult of
     mrOk: begin
       result.Default := true;
       if aCommonButtons=[cbOk] then
@@ -592,8 +784,8 @@ begin
     end;
     mrCancel: result.Cancel := true;
   end;
-  if Tag=aButtonDef then
-    Form.Tag := integer(result);
+  if ModalResult=aButtonDef then
+    Dialog.Form.ActiveControl := result;
 end;
 
 begin
@@ -602,21 +794,25 @@ begin
     if aButtonDef=0 then
       aButtonDef := mrOk;
   end;
-  if Caption='' then
+  if Title='' then
     if Application.MainForm=nil then
-      Caption := Application.Title else
-      Caption := Application.MainForm.Caption;
-  if (Title='') and (TD_ICONS_IDENT[aDialogIcon]<>nil) then
-    Title := LoadResString(TD_ICONS_IDENT[aDialogIcon]);
+      Title := Application.Title else
+      Title := Application.MainForm.Caption;
+  if Title='' then
+    Title := IconMessage(aDialogIcon);
   if aParent=0 then
+    if Screen.ActiveCustomForm<>nil then
+      aParent := Screen.ActiveCustomForm.Handle else
     aParent := Application.Handle;
-  if Assigned(TaskDialogIndirect) and not NonNative and
+  Dialog.OnButtonClicked := aOnButtonClicked;
+  if Assigned(TaskDialogIndirect) and not aNonNative and
      not (tdfQuery in aFlags) and (Selection='') then begin
+    Dialog.Emulated := False;
     // use Vista/Seven TaskDialog implementation (not tdfQuery nor Selection)
     FillChar(Config,sizeof(Config),0);
     Config.cbSize := sizeof(Config);
     Config.hwndParent := aParent;
-    Config.pszWindowTitle := pointer(N(Caption));
+    Config.pszWindowTitle := pointer(N(Title));
     Config.pszMainInstruction := pointer(N(Title));
     Config.pszContent := pointer(N(Text));
     RUCount := 0;
@@ -631,7 +827,6 @@ begin
     Config.pszExpandedControlText := pointer(N(ExpandButtonCaption));
     Config.pszCollapsedControlText := pointer(N(CollapseButtonCaption));
     Config.pszFooter := pointer(N(FooterText));
-    Config.dwCommonButtons := byte(aCommonButtons);
     if (VerificationText<>'') and VerifyChecked then
       include(aFlags,tdfVerificationFlagChecked);
     if (Config.cButtons=0) and (aCommonButtons=[cbOk]) then
@@ -642,61 +837,76 @@ begin
     Config.nDefaultButton := aButtonDef;
     Config.nDefaultRadioButton := aRadioDef;
     Config.cxWidth := aWidth;
-    if TaskDialogIndirect(@Config,@result,@RadioRes,@VerifyChecked)<>S_OK then
-      result := 0; // error (mostly invalid argument)
-  end else begin
+    Config.pfCallback := @TaskDialogCallbackProc;
+    Config.lpCallbackData := @self;
+    if TaskDialogIndirect(@Config,@result,@RadioRes,@VerifyChecked)=S_OK then
+      exit; // error (mostly invalid argument) -> execute the VCL emulation
+  end;
     // use our native (naive?) Delphi implementation
-    Verif := nil;
-    Combo := nil;
-    Edit := nil;
-    Form := TTaskDialogForm(TForm.CreateParented(aParent));
+  Dialog.Emulated := true;
+  Dialog.Form := TEmulatedTaskDialog.CreateNew(Application);
     try
+    Dialog.Form.Owner := @Self;
       // initialize form properties
-      Form.OnShow := Form.FormShow;
-      Form.BorderStyle := bsDialog;
-      Form.BorderIcons := [];
-      Form.Position := poScreenCenter;
-      Form.Font := DefaultFont;
-      FontHeight := DefaultFont.Height;
+    Dialog.Form.BorderStyle := bsDialog;
+    Dialog.Form.BorderIcons := [];
+    Dialog.Form.Position := poScreenCenter;
+    if not aEmulateClassicStyle then
+      Dialog.Form.Font := DefaultFont;
+    FontHeight := Dialog.Form.Font.Height;
       if aWidth=0 then begin
-        aWidth := Form.Canvas.TextWidth(Title);
-        if (aWidth>300) or (Form.Canvas.TextWidth(Text)>300) or
+      aWidth := Dialog.Form.Canvas.TextWidth(Title);
+      if (aWidth>300) or (Dialog.Form.Canvas.TextWidth(Text)>300) or
            (length(Buttons)>40) then
           aWidth := 480 else
           aWidth := 420;
       end;
-      Form.ClientWidth := aWidth;
-      Form.Height := 200;
-      Form.Caption := Caption;
+    Dialog.Form.ClientWidth := aWidth;
+    Dialog.Form.Height := 200;
+    Dialog.Form.Caption := Title;
       // create a white panel for the main dialog part
-      Panel := TPanel.Create(Form);
-      Panel.Parent := Form;
+    Panel := TPanel.Create(Dialog.Form);
+    Panel.Parent := Dialog.Form;
       Panel.Align := alTop;
+    Panel.BorderStyle := bsNone;
+    Panel.BevelOuter := bvNone;
+    if not aEmulateClassicStyle then begin
+      {$ifdef HASINLINE}
+      Panel.BevelEdges := [beBottom];
+      Panel.BevelKind := bkFlat;
+      {$endif}
+      Panel.Color := clWhite;
       {$ifdef WITHUXTHEME}
       Panel.ParentBackground := false; // clWhite not used otherwise
       {$endif}
-      Panel.Color := clWhite;
-      Panel.BorderStyle := bsNone;
+    end;
       Par := Panel;
       // handle main dialog icon
+    if aEmulateClassicStyle then
+      IconBorder := 10 else
+      IconBorder := 24;
       if WIN_ICONS[aDialogIcon]<>nil then  begin
-        Image := TImage.Create(Form);
+      Image := TImage.Create(Dialog.Form);
         Image.Parent := Par;
         Image.Picture.Icon.Handle := LoadIcon(0,WIN_ICONS[aDialogIcon]);
-        Image.SetBounds(24,24,Image.Picture.Icon.Width,Image.Picture.Icon.Height);
-        X := Image.Width+48;
+      Image.SetBounds(IconBorder,IconBorder,Image.Picture.Icon.Width,Image.Picture.Icon.Height);
+      X := Image.Width+IconBorder*2;
         Y := Image.Top;
+      if aEmulateClassicStyle then
+        inc(Y, 8);
       end else begin
         Image := nil;
-        X := 24;
-        Y := 24;
-      end;
-      // add main texts (Instruction, Text, Information)
-      AddLabel(Title,true);
-      AddLabel(Text,false);
-      if ExpandedText<>'' then
+      if not aEmulateClassicStyle then
+        IconBorder := IconBorder*2;
+      X := IconBorder;
+      Y := IconBorder;
+    end;
+    // add main texts (Instruction, Content, Information)
+    Dialog.Form.Element[tdeMainInstruction] := AddLabel(Title,true);
+    Dialog.Form.Element[tdeContent] := AddLabel(Text, false);
+    if ExpandedText<>'' then
         // no information collapse/expand yet: it's always expanded
-        AddLabel(ExpandedText,false);
+      Dialog.Form.Element[tdeExpandedInfo] := AddLabel(ExpandedText,false);
       // add command links buttons
       if (tdfUseCommandLinks in aFlags) and (Buttons<>'') then
         with TStringList.Create do
@@ -704,10 +914,12 @@ begin
           inc(Y,8);
           Text := SysUtils.trim(Buttons);
           for i := 0 to Count-1 do begin
-            CommandLink := TSynButton.Create(Form);
+          CommandLink := TSynButton.Create(Dialog.Form);
             with CommandLink do begin
               Parent := Par;
               Font.Height := FontHeight-3;
+            if aEmulateClassicStyle then
+              SetBounds(X,Y,aWidth-10-X,40) else
               SetBounds(X,Y,aWidth-16-X,40);
               Caption := NoCR(Strings[i]);
               if aHint<>'' then begin
@@ -715,13 +927,22 @@ begin
                 Hint := aHint; // note shown as Hint
               end;
               inc(Y,Height+2);
-              Tag := i+100;
-              if Tag=aButtonDef then
-                Form.Tag := integer(CommandLink);
-              OnClick := Form.ButtonClick;
+            ModalResult := i+100;
+            OnClick := Dialog.Form.HandleEmulatedButtonClicked;
+            if ModalResult=aButtonDef then
+              Dialog.Form.ActiveControl := CommandLink;
+            if aEmulateClassicStyle then begin
+              Font.Height := FontHeight - 2;
+              Font.Style := [fsBold]
+            end;
               {$ifdef WITHUXTHEME}
+            if aEmulateClassicStyle then begin
+              Margin := 7;
+              Spacing := 7;
+            end else begin
               Margin := 24;
               Spacing := 10;
+            end;
               if not (tdfUseCommandLinksNoIcon in aFlags) then
                 SetBitmap(BitmapArrow);
               {$endif}
@@ -738,7 +959,7 @@ begin
           Text := SysUtils.trim(Radios);
           SetLength(Rad,Count);
           for i := 0 to Count-1 do begin
-            Rad[i] := TRadioButton.Create(Form);
+          Rad[i] := TRadioButton.Create(Dialog.Form);
             with Rad[i] do begin
               Parent := Par;
               SetBounds(X+16,Y,aWidth-32-X,6-FontHeight);
@@ -748,8 +969,7 @@ begin
                 Hint := aHint; // note shown as Hint
               end;
               inc(Y,Height);
-              Tag := i+200;
-              if (i=0) or (Tag=aRadioDef) then
+            if (i=0) or (i+200=aRadioDef) then
                 Checked := true;
             end;
           end;
@@ -761,35 +981,42 @@ begin
       if Selection<>'' then begin
         List := TStringList.Create;
         try
-          Combo := TComboBox.Create(Form);
-          Combo.Parent := Par;
-          Combo.SetBounds(X,Y,aWidth-32-X,22);
+        Dialog.Form.Combo := TComboBox.Create(Dialog.Form);
+        with Dialog.Form.Combo do begin
+          Parent := Par;
+          SetBounds(X,Y,aWidth-32-X,22);
           if tdfQuery in aFlags then
-            Combo.Style := csDropDown else
-            Combo.Style := csDropDownList;
+            Style := csDropDown else
+            Style := csDropDownList;
           List.Text := trim(Selection);
-          Combo.Items.Assign(List);
-          Combo.ItemIndex := List.IndexOf(Query);
+          Items.Assign(List);
+          ItemIndex := List.IndexOf(Query);
+        end;
           inc(Y,42);
         finally
           List.Free;
         end;
       end else
         if tdfQuery in aFlags then begin
-          Edit := TEdit.Create(Form);
-          Edit.Parent := Par;
-          Edit.SetBounds(X,Y,aWidth-16-X,22);
-          Edit.Text := Query;
+        Dialog.Form.Edit := TEdit.Create(Dialog.Form);
+        with Dialog.Form.Edit do begin
+          Parent := Par;
+          SetBounds(X,Y,aWidth-16-X,22);
+          Text := Query;
           if tdfQueryMasked in aFlags then
-            Edit.PasswordChar := '*';
+            PasswordChar := '*';
+        end;
+        if tdfQueryFieldFocused in aFlags then
+          Dialog.Form.ActiveControl := Dialog.Form.Edit;
           inc(Y,42);
         end;
       // from now we won't add components to the white panel, but to the form
       Panel.Height := Y;
-      Par := Form;
+    Par := Dialog.Form;
       // add buttons and verification checkbox
-      if (byte(aCommonButtons)<>0) or (VerificationText<>'') or
+    if (byte(aCommonButtons)<>0) or (VerificationText<>'') or
          ((Buttons<>'') and not (tdfUseCommandLinks in aFlags)) then begin
+      CurrTabOrder := Panel.TabOrder;
         inc(Y,16);
         XB := aWidth;
         if not (tdfUseCommandLinks in aFlags) then
@@ -797,23 +1024,23 @@ begin
           try
             Text := SysUtils.trim(Buttons);
             for i := Count-1 downto 0 do
-              AddButton(Strings[i],i+100);
+            AddBtn(Strings[i],i+100);
           finally
             Free;
           end;
         for B := high(B) downto low(B) do
           if B in aCommonButtons then
-            AddButton(LoadResString(TD_BTNS[B]),TD_BTNMOD[B]);
-        if VerificationText<>'' then begin
-          Verif := TCheckBox.Create(Form);
-          with Verif do begin
+          AddBtn(LoadResString(TD_BTNS(B)), TD_BTNMOD[B]);
+      if VerificationText <>'' then begin
+        Dialog.Form.Verif := TCheckBox.Create(Dialog.Form);
+        with Dialog.Form.Verif do begin
             Parent := Par;
-            if X+16+Form.Canvas.TextWidth(VerificationText)>XB then begin
+          if X+16+Dialog.Form.Canvas.TextWidth(VerificationText)>XB then begin
               inc(Y,32);
               XB := aWidth;
             end;
             SetBounds(X,Y,XB-X,24);
-            Caption := VerificationText;
+          Caption := VerificationText;
             Checked := VerifyChecked;
           end;
         end;
@@ -821,19 +1048,19 @@ begin
       end else
         XB := 0;
       // add footer text with optional icon
-      if FooterText<>'' then begin
+    if FooterText<>'' then begin
         if XB<>0 then
           AddBevel else
           inc(Y,16);
         if WIN_FOOTERICONS[aFooterIcon]<>nil then begin
-          Image := TImage.Create(Form);
+        Image := TImage.Create(Dialog.Form);
           Image.Parent := Par;
           Pic := TIcon.Create;
           Bmp := TBitmap.Create;
           try
             Pic.Handle := LoadIcon(0,WIN_FOOTERICONS[aFooterIcon]);
             Bmp.Transparent := true;
-            Bmp.Canvas.Brush.Color := Form.Color;
+          Bmp.Canvas.Brush.Color := Dialog.Form.Color;
             Bmp.Width := Pic.Width shr 1;
             Bmp.Height := Pic.Height shr 1;
             DrawIconEx(Bmp.Canvas.Handle,0,0,Pic.Handle,Bmp.Width,Bmp.Height,0,
@@ -847,31 +1074,84 @@ begin
           end;
         end else
           X := 24;
-        AddLabel(FooterText,false);
+      Dialog.Form.Element[tdeFooter] := AddLabel(FooterText,false);
       end;
       // display the form
-      Form.ClientHeight := Y;
-      Form.ShowModal;
+    Dialog.Form.ClientHeight := Y;
       // retrieve the results
-      result := Form.Tag;
-      if result>=$10000 then
-        result := 0; // Tag still = TSynButton -> no ButtonClick event
-      if Combo<>nil then begin
-        SelectionRes := Combo.ItemIndex;
-        Query := Combo.Text;
+    result := Dialog.Form.ShowModal;
+    if Dialog.Form.Combo<>nil then begin
+      SelectionRes := Dialog.Form.Combo.ItemIndex;
+      Query := Dialog.Form.Combo.Text;
       end else
-      if Edit<>nil then
-        Query := Edit.Text;
-      if Verif<>nil then
-        VerifyChecked := Verif.Checked;
+    if Dialog.Form.Edit<>nil then
+      Query := Dialog.Form.Edit.Text;
+    if Dialog.Form.Verif<>nil then
+      VerifyChecked := Dialog.Form.Verif.Checked;
       RadioRes := 0;
       for i := 0 to high(Rad) do
         if Rad[i].Checked then
           RadioRes := i+200;
     finally
-      Form.Free;
-    end;
+    FreeAndNil(Dialog.Form);
   end;
+end;
+
+procedure TSynTaskDialog.SetElementText(element: TTaskDialogElement; const Text: string);
+const // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
+  TDM_UPDATE_ELEMENT_TEXT = WM_USER+114;
+begin
+  case element of
+  tdeContent..tdeMainInstruction:
+    if Dialog.Emulated then
+      Dialog.Form.Element[element].Caption := CR(Text) else
+      SendMessageW(Dialog.Wnd,TDM_UPDATE_ELEMENT_TEXT,ord(element),
+        {$ifdef UNICODE}NativeInt{$else}integer{$endif}(pointer(WS(Text))));
+  tdeEdit:
+    if Dialog.Emulated then
+      Dialog.Form.Edit.Text := Text; // only in emulation
+  tdeVerif:
+    if Dialog.Emulated then
+      Dialog.Form.Verif.Caption := Text
+  end;
+end;
+
+procedure TSynTaskDialog.AddButton(const ACaption: string; const ACommandLinkHint: string = '');
+begin
+  if Buttons <> '' then
+    Buttons := Buttons + sLineBreak;
+  Buttons := Buttons + ACaption;
+  if ACommandLinkHint <> '' then
+    Buttons := Buttons + '\n' + ACommandLinkHint;
+end;
+
+
+{ TEmulatedTaskDialog }
+
+procedure TEmulatedTaskDialog.HandleEmulatedButtonClicked(Sender: TObject);
+var btn: TSynTaskDialogButton absolute Sender;
+    CanClose: Boolean;
+begin
+  if Assigned(Owner) and Assigned(Owner.Dialog.OnButtonClicked) then begin
+    CanClose := true;
+    Owner.Dialog.OnButtonClicked(Owner,btn.ModalResult,CanClose);
+    if not CanClose then
+      ModalResult := mrNone;
+  end;
+    end;
+
+
+{ TTaskDialogEx }
+
+procedure TTaskDialogEx.Init;
+begin
+  self := DefaultTaskDialog;
+  end;
+
+function TTaskDialogEx.Execute(aParent: HWND): integer;
+begin
+  Result := Base.Execute(CommonButtons, ButtonDef, Flags, DialogIcon, FooterIcon,
+    RadioDef, Width, aParent, NonNative, EmulateClassicStyle, OnButtonClicked);
 end;
 
 {$endif USETMSPACK}
@@ -900,6 +1180,10 @@ initialization
   BitmapArrow.Transparent := true;
 
 finalization
+  {$ifdef FIXVCLALTKEY}
+  if WndProcHook<>0 then
+    UnhookWindowsHookEx(WndProcHook);
+  {$endif}
   DefaultFont.Free;
   BitmapArrow.Free;
   BitmapOK.Free;
