@@ -172,8 +172,6 @@ type
   TEmulatedTaskDialog = class(TForm)
   protected
     procedure HandleEmulatedButtonClicked(Sender: TObject);
-    procedure ExpandLinkClick(Sender: TObject);
-    procedure ExpandLinkMouseOver(Sender:TObject);
   public
     /// the Task Dialog structure which created the form
     Owner: PTaskDialog;
@@ -185,8 +183,6 @@ type
     Edit: TEdit;
     /// the Task Dialog optional checkbox
     Verif: TCheckBox;
-
-    ExpandTextLink : TLabel;
   end;
 
   /// structure for low-level access to the task dialog implementation
@@ -910,7 +906,7 @@ begin
     Dialog.Form.Element[tdeContent] := AddLabel(Text, false);
     if ExpandedText<>'' then
         // no information collapse/expand yet: it's always expanded
-      Dialog.Form.Element[tdeExpandedInfo] := AddLabel(CollapseButtonCaption+':'+#10+ExpandedText,false);
+      Dialog.Form.Element[tdeExpandedInfo] := AddLabel(ExpandedText,false);
       // add command links buttons
       if (tdfUseCommandLinks in aFlags) and (Buttons<>'') then
         with TStringList.Create do
@@ -1035,15 +1031,6 @@ begin
         for B := high(B) downto low(B) do
           if B in aCommonButtons then
           AddBtn(LoadResString(TD_BTNS(B)), TD_BTNMOD[B]);
-      if ExpandButtonCaption <> '' then begin
-        Dialog.Form.ExpandTextLink := AddLabel(ExpandButtonCaption, False);
-        Dialog.Form.ExpandTextLink.OnClick := Dialog.Form.ExpandLinkClick;
-        Dialog.Form.ExpandTextLink.OnMouseEnter := Dialog.Form.ExpandLinkMouseOver;
-        Dialog.Form.ExpandTextLink.Color := clHighlightText;
-
-        if VerificationText <>'' then
-          inc(Y, 16);
-      end;
       if VerificationText <>'' then begin
         Dialog.Form.Verif := TCheckBox.Create(Dialog.Form);
         with Dialog.Form.Verif do begin
@@ -1152,19 +1139,6 @@ begin
       ModalResult := mrNone;
   end;
     end;
-
-procedure TEmulatedTaskDialog.ExpandLinkClick(Sender: TObject);
-var
-  vis : boolean;
-begin
-  vis := Element[tdeExpandedInfo].Visible;
-  Element[tdeExpandedInfo].Visible := not vis;
-end;
-
-procedure TEmulatedTaskDialog.ExpandLinkMouseOver(Sender:TObject);
-begin
-  ExpandTextLink.Font.Style := ExpandTextLink.Font.Style + [fsUnderline];
-end;
 
 
 { TTaskDialogEx }
