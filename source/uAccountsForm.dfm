@@ -185,6 +185,7 @@ object AccountsForm: TAccountsForm
               ShowHint = True
               TabOrder = 0
               Text = '[Use Default Program]'
+              OnChange = edAccChange
               OnClick = edAccChange
               OnEnter = edAccountProgramEnter
               OnExit = edAccountProgramExit
@@ -201,6 +202,7 @@ object AccountsForm: TAccountsForm
               ShowHint = True
               TabOrder = 1
               Text = '[Use Default Sound]'
+              OnChange = edAccChange
               OnClick = edAccChange
               OnEnter = edSoundEnter
               OnExit = edSoundExit
@@ -401,6 +403,7 @@ object AccountsForm: TAccountsForm
               Enabled = False
               TabOrder = 2
               Text = '[Gmail]/Spam'
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object chkMoveTrash: TCheckBox
@@ -422,6 +425,7 @@ object AccountsForm: TAccountsForm
               Enabled = False
               TabOrder = 4
               Text = '[Gmail]/Trash'
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object edArchiveFolder: TEdit
@@ -432,6 +436,7 @@ object AccountsForm: TAccountsForm
               Enabled = False
               TabOrder = 5
               Text = '[Gmail]/All Mail'
+              OnChange = edAccChange
               OnClick = edAccChange
             end
           end
@@ -479,6 +484,7 @@ object AccountsForm: TAccountsForm
               Height = 21
               TabOrder = 0
               Text = 'Auto'
+              OnChange = edAccChange
               OnClick = edAccChange
               Items.Strings = (
                 'Auto'
@@ -505,6 +511,7 @@ object AccountsForm: TAccountsForm
               Height = 21
               TabOrder = 2
               Text = 'Auto'
+              OnChange = edAccChange
               OnClick = edAccChange
               Items.Strings = (
                 'Auto'
@@ -595,6 +602,7 @@ object AccountsForm: TAccountsForm
               Color = clBtnFace
               Enabled = False
               TabOrder = 0
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object edUsername: TEdit
@@ -607,6 +615,7 @@ object AccountsForm: TAccountsForm
               Color = clBtnFace
               Enabled = False
               TabOrder = 1
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object edPassword: TEdit
@@ -620,6 +629,7 @@ object AccountsForm: TAccountsForm
               Enabled = False
               PasswordChar = '*'
               TabOrder = 2
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object chkSSL: TCheckBox
@@ -643,6 +653,7 @@ object AccountsForm: TAccountsForm
               Color = clBtnFace
               Enabled = False
               TabOrder = 4
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object cmbProtocol: TComboBox
@@ -716,6 +727,7 @@ object AccountsForm: TAccountsForm
               Color = clBtnFace
               Enabled = False
               TabOrder = 1
+              OnChange = edAccChange
               OnClick = edAccChange
             end
             object colAccount: TColorBox
@@ -726,6 +738,7 @@ object AccountsForm: TAccountsForm
               Style = [cbStandardColors, cbExtendedColors, cbCustomColor, cbPrettyNames]
               Color = clBtnFace
               TabOrder = 2
+              OnChange = edAccChange
               OnClick = edAccChange
               OnGetColors = colAccountGetColors
             end
