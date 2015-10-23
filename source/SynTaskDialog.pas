@@ -451,14 +451,14 @@ function TSynTaskDialog.Execute(aCommonButtons: TCommonButtons;
   aButtonDef: integer; aFlags: TTaskDialogFlags;
   aDialogIcon: TTaskDialogIcon; aFooterIcon: TTaskDialogFooterIcon;
   aRadioDef, aWidth: integer; aParent: HWND; NonNative: boolean): integer;
-type WS = {$ifdef UNICODE}string{$else}WideString{$endif};
-function CR(const aText: string): string;
+type StringType = {$ifdef UNICODE}string{$else}WideString{$endif};
+function ReplaceLineBreaks(const aText: string): string;
 begin
   if pos('\n',aText)=0 then
     result := aText else
     result := StringReplace(aText,'\n',#10,[rfReplaceAll]);
 end;
-function GetNextStringLineToWS(var P: PChar): WS;
+function GetNextStringLineToWS(var P: PChar): StringType;
 var S: PChar;
     {$ifndef UNICODE}tmp: string;{$endif}
 begin
@@ -469,10 +469,10 @@ begin
       inc(S);
     {$ifdef UNICODE}
     SetString(result,P,S-P);
-    result := CR(result);
+    result := ReplaceLineBreaks(result);
     {$else}
     SetString(tmp,P,S-P);
-    result := WideString(CR(tmp));
+    result := WideString(ReplaceLineBreaks(tmp));
     {$endif}
     while (S^<>#0) and (S^<' ') do inc(S); // ignore e.g. #13 or #10
     if S^<>#0 then
@@ -488,19 +488,22 @@ begin
   aHint := '';
   i := pos('\n',result);
   if i>0 then begin
-    aHint := CR(copy(result,i+2,maxInt));
+    aHint := ReplaceLineBreaks(copy(result,i+2,maxInt));
     SetLength(result,i-1);
   end;
 end;
-function N(const aText: string): WS;
+function N(const aText: string): StringType;
 begin
   if aText='' then
     result := '' else
-    result := WS(CR(aText));
+    result := StringType(ReplaceLineBreaks(aText));
 end;
-var RU: array of Ws;
+
+
+var RU: array of StringType;
     RUCount: integer;
-    But: array of TTASKDIALOG_BUTTON;
+    TaskDlgButtons: array of TTASKDIALOG_BUTTON;
+
 procedure AddRU(Text: string; var n: integer; firstID: integer);
 var P: PChar;
 begin
@@ -511,10 +514,10 @@ begin
   while P<>nil do begin
     if length(RU)<=RUCount then begin
       SetLength(RU,RUCount+16);
-      SetLength(But,RUCount+16);
+      SetLength(TaskDlgButtons,RUCount+16);
     end;
     RU[RUCount] := GetNextStringLineToWS(P);
-    with But[RUCount] do begin
+    with TaskDlgButtons[RUCount] do begin
       nButtonID := n+firstID;
       pszButtonText := pointer(RU[RUCount]);
     end;
@@ -550,7 +553,7 @@ begin
   result.Left := X;
   result.Top := Y;
   result.Width := aWidth-X-8;
-  result.Caption := CR(Text);
+  result.Caption := ReplaceLineBreaks(Text);
   inc(Y,result.Height+16);
 end;
 procedure AddBevel;
@@ -620,9 +623,9 @@ begin
     AddRU(Buttons,Config.cButtons,100);
     AddRU(Radios,Config.cRadioButtons,200);
     if Config.cButtons>0 then
-      Config.pButtons := @But[0];
+      Config.pButtons := @TaskDlgButtons[0];
     if Config.cRadioButtons>0 then
-      Config.pRadioButtons := @But[Config.cButtons];
+      Config.pRadioButtons := @TaskDlgButtons[Config.cButtons];
     Config.pszVerificationText := pointer(N(VerificationText));
     Config.pszExpandedInformation := pointer(N(ExpandedText));
     Config.pszExpandedControlText := pointer(N(ExpandButtonCaption));

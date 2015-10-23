@@ -143,8 +143,9 @@ object frmPopUMain: TfrmPopUMain
             ActionManager = ActionManager
             AllowHiding = False
             Caption = 'Mail'
-            Color = clWindow
-            ColorMap = WindowBgColorMap
+            ColorMap.HighlightColor = clWhite
+            ColorMap.BtnSelectedColor = clBtnFace
+            ColorMap.UnusedColor = clWhite
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -11
@@ -152,6 +153,7 @@ object frmPopUMain: TfrmPopUMain
             Font.Style = []
             HorzMargin = 4
             HorzSeparator = False
+            ParentBackground = True
             ParentFont = False
             ParentShowHint = False
             PopupMenu = dm.mnuToolbar
@@ -451,10 +453,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 1
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsRules: TTabSheet
       Caption = 'Rules'
@@ -465,10 +463,6 @@ object frmPopUMain: TfrmPopUMain
       Font.Style = []
       ImageIndex = 2
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tsAbout: TTabSheet
       Caption = 'About'
@@ -1108,7 +1102,6 @@ object frmPopUMain: TfrmPopUMain
     Top = 114
   end
   object WindowBgColorMap: TXPColorMap
-    Color = clWindow
     HighlightColor = clWhite
     BtnSelectedColor = clBtnFace
     UnusedColor = clWhite
