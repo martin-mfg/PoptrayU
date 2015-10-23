@@ -707,10 +707,10 @@ begin
             Translate('Ignore')+'\n'+ //message result = 101
             Translate('Take no action at this time');
   TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
-    Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally. Uusally it happens when the username or password is invalid.');
+    Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.');
   TaskDlg.CollapseButtonCaption := Translate('Technical Information');
   TaskDlg.ExpandButtonCaption := Translate('Technical Information');
-  msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError, tfiBlank, 0, 0, Handle, true); //modal dlg
+  msgResult := TaskDlg.Execute([cbOK],101,[tdfUseCommandLinks, tdfExpandFooterArea],tiError, tfiBlank, 0, 0, Handle, false); //modal dlg
   case msgResult of
   100:
     begin  //todo: this is very similar to the blank server error message. refactor.
@@ -5018,10 +5018,13 @@ var
   i : integer;
   res : boolean;
 begin
+  if accounts.count = 0 then exit;
   if not FMinimized and (PageControl.ActivePageIndex = 0) then
     res := ExecuteProgram(Accounts.Items[tabMail.TabIndex]) //TODO: tabToAccount
-  else
-    res := ExecuteProgram(Accounts[FAccountIdxWithMail]);
+  else begin
+    if FAccountIdxWithMail < 0 then exit else
+      res := ExecuteProgram(Accounts[FAccountIdxWithMail]);
+  end;
   if FShowingInfo then frmInfo.Close;
   if res then HideForm;
   for i := 1 to Accounts.NumAccounts do

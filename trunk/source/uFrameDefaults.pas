@@ -219,7 +219,6 @@ begin
         Break;
       end;
 
-
   // enable save button
   funcEnableSaveBtn();
 end;
@@ -265,6 +264,7 @@ const
   BTN_SPACING = 8;
 var
   testButtonsWidth : integer;
+  rightPos : integer;
 begin
   // Buttons need to be at least as big as their captions
   lblTester.Caption := btnLanguageRefresh.Caption;
@@ -333,6 +333,11 @@ begin
   btnStorageLoc.Height := edIniFolder.Height;
   panlIniFolder.Height := edIniFolder.Top + edIniFolder.Height + edIniFolder.Margins.Bottom + 6;
 
+  lblTimeFormat.Top := panlIniFolder.Top + panlIniFolder.Height + lblIni.Margins.Bottom;
+  rightPos := cmbTimeFormat.Left + cmbTimeFormat.Width;
+  cmbTimeFormat.Left := lblTimeFormat.Left + lblTimeFormat.Width + BTN_SPACING;
+  cmbTimeFormat.Width := rightPos - cmbTimeFormat.Left;
+  cmbTimeFormat.Top := lblTimeFormat.Top - 3;
 
 end;
 
