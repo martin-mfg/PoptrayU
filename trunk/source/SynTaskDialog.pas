@@ -567,9 +567,12 @@ begin
   OSVersionInfo.dwOSVersionInfoSize := sizeof(OSVersionInfo);
   GetVersionEx(OSVersionInfo);
   if OSVersionInfo.dwMajorVersion<6 then
-    @TaskDialogIndirect := nil else begin
-    //@TaskDialogIndirect := GetProcAddress(GetModuleHandle(comctl32),'TaskDialogIndirect');
-    @TaskDialogIndirect := GetProcAddress(GetModuleHandle('TDEMU.DLL'),'TaskDialogIndirectEmulate');
+    //@TaskDialogIndirect := nil
+    // MODIFIED FOR POPTRAYU TO FALL BACK TO TDEMU emulation instead of SynTaskDialog emulation
+
+    @TaskDialogIndirect := GetProcAddress(GetModuleHandle('TDEMU.DLL'),'TaskDialogIndirectEmulate')
+    else begin
+    @TaskDialogIndirect := GetProcAddress(GetModuleHandle(comctl32),'TaskDialogIndirect');
     {$ifdef FIXVCLALTKEY}
     {$WARN SYMBOL_PLATFORM OFF}
     if (DebugHook=0) {$ifdef WITHUXTHEME}and ThemeServices.ThemesEnabled{$endif} then
@@ -1196,7 +1199,7 @@ initialization
   BitmapArrow.Transparent := true;
 
   // FOR DEBUGGING...THIS WILL ENABLE FORCED EMULATION FOR TDEMU.DLL
-  TaskDialogSetEmulation(true);
+  //TaskDialogSetEmulation(true);
 
 finalization
   {$ifdef FIXVCLALTKEY}

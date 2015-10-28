@@ -262,6 +262,7 @@
         </DCCReference>
         <DCCReference Include="SynTaskDialog.pas"/>
         <DCCReference Include="uRegistryFxns.pas"/>
+        <DCCReference Include="TDEMU.PAS"/>
         <None Include="ModelSupport_PopTrayU\PopTrayU\default.txvpck"/>
         <None Include="ModelSupport_PopTrayU\PopTrayU\default.txaPackage"/>
         <None Include="ModelSupport_PopTrayU\default.txaPackage"/>

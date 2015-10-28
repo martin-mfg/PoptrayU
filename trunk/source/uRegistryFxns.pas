@@ -36,6 +36,7 @@ begin
   101:
     begin
       frmPopUMain.PageControl.ActivePage := frmPopUMain.tsOptions;
+      frmPopUMain.ShowForm();
       frmPopUMain.OptionsForm.ShowSetEmailClient();
     end;
   end;
@@ -60,6 +61,7 @@ begin
   100:
     begin
       frmPopUMain.PageControl.ActivePage := frmPopUMain.tsOptions;
+      frmPopUMain.ShowForm();
       frmPopUMain.OptionsForm.ShowSetEmailClient();
     end;
   end;
