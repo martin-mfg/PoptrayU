@@ -104,7 +104,6 @@ type
     procedure Expunge;
     function DeleteMsgsByUID(const uidList: TStrings; expunge : boolean = true): boolean;
     function MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
-    function GetUnseenUids(): TIntArray;
     function UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
     function UIDRetrievePeekEnvelope(const UID: String; var outMsg: TIdMessage) : boolean;
     function RetrieveMsgSizeByUID(const AMsgUID : String) : integer;
@@ -119,6 +118,7 @@ type
     function FetchGmailLabels(const uid: String; labels: TStrings): boolean; overload;
     function GetFolderNames(folders : TStringList): boolean;
     function CheckMsgExists(const uid: String): boolean;
+    function GetUnreadUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1) : boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -133,7 +133,7 @@ uses
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
 
 const
-  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
@@ -181,11 +181,16 @@ begin
 
   if (debugImap) then
   begin
-    DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'logs/' + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(debugAccountCounter)+'.log';//+IntToStr(Random(9999))+'.log';
-    Inc(debugAccountCounter);
-    DebugLogger.Active:= True;
-    IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
+    if not DirectoryExists(uIniSettings.GetSettingsFolder() + 'logs/') then
+      CreateDir(uIniSettings.GetSettingsFolder() + 'logs/');
+
+    if DirectoryExists(uIniSettings.GetSettingsFolder() + 'logs/') then begin
+      DebugLogger := TIdLogFile.Create(Nil);
+      DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'logs/' + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(debugAccountCounter)+'.log';//+IntToStr(Random(9999))+'.log';
+      Inc(debugAccountCounter);
+      DebugLogger.Active:= True;
+      IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
+    end;
   end;
 
   DLL1 := LoadLibrary('libeay32.dll');
@@ -447,9 +452,10 @@ begin
 
     if maxUIDs <= 0 then
       startMsg := 1
-    else
+    else begin
       startMsg := Math.Min(nCount, nCount - maxUIDs);
       startMsg := Math.Max(startMsg, 1);
+    end;
 
     for i := startMsg to nCount do  //Relative message numbers start from 1 and go up according to INDY docs
     begin
@@ -476,6 +482,45 @@ begin
     {$ENDIF}
   end;
 end;
+
+function TProtocolIMAP4.GetUnreadUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1) : boolean;
+var
+  SearchInfo: array of TIdIMAP4SearchRec;
+  I, firstIndex, lastIndex : integer;
+begin
+  // if the mailbox selection succeed, then...
+  if IMAP.SelectMailBox('INBOX') then
+  begin
+    SetLength(SearchInfo, 1); // set length of the search criteria to 1
+    SearchInfo[0].SearchKey := skUnseen;
+    // TODO: to expand this search key idea to do a full gmail style body text search see
+    // http://stackoverflow.com/questions/13612968/how-to-search-for-a-specific-e-mail-message-in-imap-mailbox
+
+    if IMAP.UIDSearchMailBox(SearchInfo) then
+    begin
+      // iterate the search results
+
+      lastIndex := High(IMAP.MailBox.SearchResult);
+      if maxUIDs <= 0 then
+        firstIndex := 0
+      else
+        firstIndex := Math.Max(Math.Min(lastIndex, lastIndex - maxUIDs), 0);
+
+
+      for I := firstIndex to lastIndex do
+      begin
+        // this is a little bit of a hack. the function calling this is expecting a map of ID->UID
+        // but for IMAP we don't do anything by ID, so fake the ID column with UID so we don't have
+        // to waste bandwidth asking for the sequential IDs
+        uidls.Add(intToStr(IMAP.MailBox.SearchResult[i]) + ' ' + intToStr(IMAP.MailBox.SearchResult[i]));
+      end;
+      Result := true;
+    end;
+  end;
+
+end;
+
+
 
 
 function TProtocolIMAP4.Delete(const MsgNum : integer) : boolean;
@@ -627,66 +672,6 @@ begin
   AAttachment := TIdAttachmentMemory.Create(AMsg.MessageParts);
 end;
 
-
-function TProtocolIMAP4.GetUnseenUids(): TIntArray;
-var
-  SearchInfo: array of TIdIMAP4SearchRec;
-  I : integer;
-  //MsgObject: TIdMessage;
-  {$IFDEF LOG4D}
-  Logger : TLogLogger;
-  {$ENDIF}
-begin
-
-  {$IFDEF LOG4D}
-  TLogBasicConfigurator.Configure;
-
-  // set the log level
-  TLogLogger.GetRootLogger.Level := All;
-
-  // create a named logger
-  Logger := TLogLogger.GetLogger('poptrayuLogger');
-  Logger.addAppender(TLogFileAppender.Create('filelogger','log'+(Chr(ord('a') + Random(26)))
-    +(Chr(ord('a') + Random(26)))
-    +(Chr(ord('a') + Random(26)))+(Chr(ord('a') + Random(26)))+ '.log'));
-  {$ENDIF}
-
-  // if the mailbox selection succeed, then...
-  if IMAP.SelectMailBox('INBOX') then
-  begin
-    SetLength(SearchInfo, 1); // set length of the search criteria to 1
-    SearchInfo[0].SearchKey := skUnseen;
-    // TODO: to expand this search key idea to do a full gmail style body text search see
-    // http://stackoverflow.com/questions/13612968/how-to-search-for-a-specific-e-mail-message-in-imap-mailbox
-
-    if IMAP.UIDSearchMailBox(SearchInfo) then
-    begin
-      Result := IMAP.MailBox.SearchResult;
-
-// this section here can be removed later, it is for debugging
-
-      // iterate the search results
-      for I := 0 to High(IMAP.MailBox.SearchResult) do
-      begin
-        //// make an instance of the message object
-        //MsgObject := TIdMessage.Create(nil);
-        //try
-        //  if IMAP.RetrievePeek(IMAP.MailBox.SearchResult[I], MsgObject) then begin
-        //    Logger.Debug(MsgObject.Subject);
-        //  end;
-        //finally
-        //  MsgObject.Free;
-        //end;
-        {$IFDEF LOG4D}
-        Logger.Debug( IntToStr(Result[i]));
-        {$ENDIF}
-      end;
-// end debug section
-
-    end;
-  end;
-
-end;
 
 function TProtocolIMAP4.UIDRetrievePeekHeader(const UID: String; var outMsg: TIdMessage) : boolean;
 begin

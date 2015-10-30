@@ -99,7 +99,7 @@ type
     procedure Connect();
     procedure ConnectIfNeeded();
     procedure TestAccount();
-    function GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
+    function GetUIDs(var UIDLs : TStringList; unreadOnly : boolean = false; const maxUIDs : integer = -1 ): boolean;
     function GetUID(msgnum: integer): string;
     function DebugPrint(): String;
     procedure SaveAccountToIniFile(Ini : TMemIniFile; section: string; const includePassword: boolean = true);
@@ -285,29 +285,32 @@ begin
 end;
 
 // @Return true if account supports UIDL
-function TAccount.GetUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1): boolean;
+function TAccount.GetUIDs(var UIDLs : TStringList; unreadOnly : boolean = false; const maxUIDs : integer = -1): boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Get list of UIDS for this account from server. Must be connected.
 // UIDLs is an OUTPUT parameter.
 begin
-  try
+//  try
     if self.UIDLSupported then
     begin
-      Result := Prot.UIDL(UIDLs, -1, maxUIDs);
+      if unreadOnly and self.isImap then
+        Result := (Prot as TProtocolIMAP4).GetUnreadUIDs(UIDLs, maxUIDs)
+      else
+        Result := Prot.UIDL(UIDLs, -1, maxUIDs);
       if not Result then
         self.UIDLSupported := False;
     end
     else begin
       Result := False;
     end;
-  except
-    on E : Exception do begin
-    ShowMessage('Exception class name = '+E.ClassName);
-    ShowMessage('Exception message = '+E.Message);
-    // server doesn't support UIDL?
-    Result := False;
-    end;
-  end;
+//  except
+//    on E : Exception do begin
+//    ShowMessage('Exception class name = '+E.ClassName);    //seeing connection reset by peer here.
+//    ShowMessage('Exception message = '+E.Message);
+//    // server doesn't support UIDL?
+//    Result := False;
+//    end;
+//  end;
 end;
 
 //------------------------------------------------------------------------------
