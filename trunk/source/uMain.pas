@@ -323,7 +323,7 @@ type
     function CountSelectedMailItemStatus(Statusses: TMailItemStatusSet) : integer;
     function DoFullAccountCheck(account : TAccount) : integer;
     function DoFullAccountCheckRecentOnly(account : TAccount) : integer;
-    function DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
+    //function DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
     function DoQuickCheck(account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean) : integer;
     function ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
 
@@ -843,66 +843,66 @@ begin
 end;
 
 
-function TfrmPopUMain.DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
-var
-  i : integer;          // loop counter
-  mailcount : integer;  // How many new messages are on the server
-  uidList : TIntArray;
-  imap : TProtocolIMAP4;
-begin
-  Result := -1;
-
-  // clear visual list - if current tab is showing this account
-  if Accounts[tabMail.TabIndex] = account then
-    lvMail.Items.Clear;
-  // normal check (non-quick)
-  mailcount := 0;//account.Prot.CheckMessages; // get number of messages
-  account.Mail.Clear;
-
-
-  // 1. imap.SelectInbox();
-  // 2. List<long> uids = imap.Search(Flag.Unseen);
-  // 3. foreach (long uid in uids)
-    // 3a. eml = imap.GetMessageByUID(uid)
-    // 3b. parse email and deal with it
-
-  if (NOT account.IsImap) then begin
-    Result := -1;
-    exit;
-  end;
-
-  imap := account.Prot as TProtocolIMAP4;
-
-  uidList := imap.GetUnseenUids();
-
-  if Assigned(uidList) then begin
-    mailcount := Length(uidList);
-  end;
-
-  if mailcount>0 then begin
-    account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('unread message(s)')+'...';
-    StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
-
-    Progress.Max := mailcount;
-    account.LastMsgCount := mailcount;
-
-    for i := mailcount -1 downto 0 do
-    begin
-      //msgNum := uidList[i]
-      if not GetIMAPMessageHeader(account,IntToStr(uidList[i])) then
-      begin
-        Result := -1; // signal checking error
-        //break //commenting out to allow checking additional msgs after an error containing message
-      end;
-      // progress
-      Progress.Position := i;
-      Application.ProcessMessages;
-    end;
-    Result := 0; // Indicate success
-  end;
-
-
-end;
+//function TfrmPopUMain.DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
+//var
+//  i : integer;          // loop counter
+//  mailcount : integer;  // How many new messages are on the server
+//  uidList : TIntArray;
+//  imap : TProtocolIMAP4;
+//begin
+//  Result := -1;
+//
+//  // clear visual list - if current tab is showing this account
+//  if Accounts[tabMail.TabIndex] = account then
+//    lvMail.Items.Clear;
+//  // normal check (non-quick)
+//  mailcount := 0;//account.Prot.CheckMessages; // get number of messages
+//  account.Mail.Clear;
+//
+//
+//  // 1. imap.SelectInbox();
+//  // 2. List<long> uids = imap.Search(Flag.Unseen);
+//  // 3. foreach (long uid in uids)
+//    // 3a. eml = imap.GetMessageByUID(uid)
+//    // 3b. parse email and deal with it
+//
+//  if (NOT account.IsImap) then begin
+//    Result := -1;
+//    exit;
+//  end;
+//
+//  imap := account.Prot as TProtocolIMAP4;
+//
+//  uidList := imap.GetUnseenUids();
+//
+//  if Assigned(uidList) then begin
+//    mailcount := Length(uidList);
+//  end;
+//
+//  if mailcount>0 then begin
+//    account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('unread message(s)')+'...';
+//    StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
+//
+//    Progress.Max := mailcount;
+//    account.LastMsgCount := mailcount;
+//
+//    for i := mailcount -1 downto 0 do
+//    begin
+//      //msgNum := uidList[i]
+//      if not GetIMAPMessageHeader(account,IntToStr(uidList[i])) then
+//      begin
+//        Result := -1; // signal checking error
+//        //break //commenting out to allow checking additional msgs after an error containing message
+//      end;
+//      // progress
+//      Progress.Position := i;
+//      Application.ProcessMessages;
+//    end;
+//    Result := 0; // Indicate success
+//  end;
+//
+//
+//end;
 
 function TfrmPopUMain.ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
 //begin
@@ -929,11 +929,11 @@ begin
   try
     account.Status := Translate('Checking... Getting UIDs');
     StatusBar.Panels[0].Text := ' '+account.Status;   //TODO: this should be only if account is showing
+    quickchecking := true;
     if (Options.ShowNewestMessagesOnly) then
-      quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
+      account.GetUIDs(UIDLs, Options.HideViewed, Options.NumNewestMsgToShow)
     else
-      quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
-
+      account.GetUIDs(UIDLs, Options.HideViewed);
 
     if quickchecking then
     begin
@@ -1082,9 +1082,9 @@ begin
     account.Status := Translate('Checking... Getting UIDs');
     StatusBar.Panels[0].Text := ' '+account.Status;   //TODO: this should be only if account is showing
     if (Options.ShowNewestMessagesOnly) then
-      quickchecking := account.GetUIDs(UIDLs, Options.NumNewestMsgToShow)
+      quickchecking := account.GetUIDs(UIDLs, Options.HideViewed, Options.NumNewestMsgToShow)
     else
-      quickchecking := account.GetUIDs(UIDLs); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
+      quickchecking := account.GetUIDs(UIDLs, Options.HideViewed); //Only quickcheck if return value says server supports quickcheck. This also fills in the list of UIDs
     {$IFDEF LOG4D}
     TLogLogger.GetLogger('poptrayuLogger').Debug('QUICKCHECK - UIDs...');
     TLogLogger.GetLogger('poptrayuLogger').Debug(UIDLs.CommaText);
@@ -1310,9 +1310,6 @@ begin
       account.ConnectIfNeeded();                                             //INDY
 
       try
-
-//DoFullAccountCheckUnseenOnly(account); //!!!!!!!!!!!!! for testing only
-
         // quick check (Shift-click causes a full check instead)
         quickchecking := false;
         if Options.QuickCheck and not FShiftClick then
@@ -1391,7 +1388,7 @@ begin
               ShowUsernameOrPasswordError(account)
             else
               // This is where an error message is trapped if the account is
-              // unable to connect to the server on a routine check
+              // unable to connect to the server on a routine check (or other error)
               ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
         end;
       else begin

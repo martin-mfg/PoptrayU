@@ -531,9 +531,9 @@ begin
     SetSetProp(memMail.Font,'Style',Ini.ReadString('Preview','FontStyle',''));
     memMail.Font.Charset := Ini.ReadInteger('Preview','FontCharset',DEFAULT_CHARSET);
     // tab
-    tabType := DefaultTabType(Ini.ReadInteger('Preview','DefaultPreviewTab',Integer(TAB_LAST_USED)));
+    tabType := DefaultTabType(Ini.ReadInteger('Preview','DefaultPreviewTab',Integer(TAB_HTML)));
     if (tabType = TAB_LAST_USED) then begin
-      FTab := Ini.ReadInteger('Preview','Tab',BODY_TAB);
+      FTab := Ini.ReadInteger('Preview','Tab',HTML_TAB);
     end else begin
       case (tabType) of
         TAB_HTML:       FTab := HTML_TAB;

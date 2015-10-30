@@ -210,7 +210,7 @@ begin
       GetBodySize := Ini.ReadInteger('Options','GetBodySize',0);
       // advanced - interface
       CheckingIcon := Ini.ReadInteger('Options','CheckingIcon',ciAnimatedStar);
-      ShowViewed := Ini.ReadBool('Options','ShowViewed',FALSE);
+      ShowViewed := Ini.ReadBool('Options','ShowViewed',TRUE);
       CloseMinimize := Ini.ReadBool('Options','CloseMinimize',TRUE);
       MinimizeTray := Ini.ReadBool('Options','MinimizeTray',TRUE);
       NoError := Ini.ReadBool('Options','NoError',FALSE);
