@@ -77,9 +77,9 @@ begin
   chkLogRules.Checked := Options.LogRules;
 
   if (Options.BlackListSpam) then
-    cmbBlacklistAction.Text := cmbBlacklistAction.Items[MARK_BLACKLIST_AS_SPAM]
+    cmbBlacklistAction.ItemIndex := MARK_BLACKLIST_AS_SPAM
   else
-    cmbBlacklistAction.Text := cmbBlacklistAction.Items[DELETE_BLACKLIST];
+    cmbBlacklistAction.ItemIndex := DELETE_BLACKLIST;
 
   Options.Busy := False;
 
