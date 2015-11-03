@@ -81,7 +81,6 @@ type
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
     function Connected : boolean; override;
-    function CheckMessages : integer; override;
     function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; override;
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
@@ -134,7 +133,11 @@ uses
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4, IdExceptionCore;
 
 const
-  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  {$IFDEF DEBUG}
+  debugImap = true;
+  {$ELSE}
+  debugImap = false;
+  {$ENDIF}
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
@@ -357,11 +360,6 @@ end;
 function TProtocolIMAP4.Connected : boolean;
 begin
   Result := IMAP.Connected;
-end;
-
-function TProtocolIMAP4.CheckMessages : integer;
-begin
-  Result := IMAP.MailBox.TotalMsgs;
 end;
 
 function TProtocolIMAP4.RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean;

@@ -21,7 +21,6 @@ type
     procedure Disconnect; virtual; abstract;
     procedure DisconnectWithQuit; virtual; abstract;
     function Connected : boolean;  virtual; abstract;
-    function CheckMessages : integer; virtual; abstract;
     function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; virtual; abstract;
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; virtual; abstract;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; virtual; abstract;

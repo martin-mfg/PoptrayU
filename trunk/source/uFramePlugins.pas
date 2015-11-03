@@ -202,7 +202,7 @@ begin
 //        (Plugin as TPluginProtocol).FConnect := GetProcAddress(hPlugin,'Connect');
 //        (Plugin as TPluginProtocol).FDisconnect := GetProcAddress(hPlugin,'Disconnect');
 //        (Plugin as TPluginProtocol).FConnected := GetProcAddress(hPlugin,'Connected');
-//        (Plugin as TPluginProtocol).FCheckMessages := GetProcAddress(hPlugin,'CheckMessages');
+//        (Plugin as TPluginProtocol).FCheckMessages := GetProcAddress(hPlugin,'CheckMessages');  //replaced by CountMessages
 //        (Plugin as TPluginProtocol).FRetrieveHeader := GetProcAddress(hPlugin,'RetrieveHeader');
 //        (Plugin as TPluginProtocol).FRetrieveRaw := GetProcAddress(hPlugin,'RetrieveRaw');
 //        (Plugin as TPluginProtocol).FRetrieveTop := GetProcAddress(hPlugin,'RetrieveTop');
