@@ -1389,7 +1389,13 @@ begin
             else
               // This is where an error message is trapped if the account is
               // unable to connect to the server on a routine check (or other error)
+              // eg: Connection Reset By Peer
               ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
+
+              // To recover from Connection Reset by Peer, IMAP needs to
+              // close the connection and re-connect
+              if (account.isImap) then
+                account.prot.Disconnect;
         end;
       else begin
         Screen.Cursor := crDefault;
@@ -2184,25 +2190,24 @@ begin
 
         if (account.MoveTrashOnDelete) then begin
           // move to server trash folder
-          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
+          Result := (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
 
         end else begin
           // delete permanantly
           try
-            (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList, account.ExpungeDeletedMessages);
+            Result := (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList, account.ExpungeDeletedMessages);
           except on EIdReadTimeout do
             begin
               Account.Prot.Disconnect;
               Account.Connect();
               try
-              (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList, account.ExpungeDeletedMessages);
+                Result := (Account.Prot as TProtocolIMAP4).DeleteMsgsByUID(uidList, account.ExpungeDeletedMessages);
               except
                 account.Status := Translate('Delete Messages by UID Failed.');
               end;
             end;
           end;
         end;
-        Account.Mail.RemoveToDeleteMsgs();
 
         uidList.Free;
         spamList.Free;
@@ -2687,7 +2692,9 @@ begin
     if misHasAttachment in Statusses then MailItem.HasAttachment := SetIt;
     if misViewed in Statusses then MailItem.Viewed := SetIt;
     if misNew in Statusses then MailItem.New := SetIt;
+
     Item.ImageIndex := GetStatusIcon(MailItem);
+
     Item := lvMail.GetNextItem(Item, sdAll, [isSelected]);
   end;
   ShowStatusBar(Accounts[tabMail.TabIndex]);
@@ -4729,24 +4736,21 @@ begin
       else
       begin
         deleteCount := 0;
-        Item := lvMail.Selected;
-        while Item <> nil do
-        begin
-          MailItem := SelectedMailItem(Item);
-          MailItem.ToDelete := true;
-          Inc(deleteCount);
-          Item := lvMail.GetNextItem(Item, sdAll, [isSelected]);
-        end;
+        SetSelectedMailItemStatus([misToBeDeleted],True); //mark selected items with "to delete" icon and ToDelete flag
         try
           account.ConnectIfNeeded();
           try
-          if DeleteMails(account,deleteCount) then begin
-            account.Status := IntToStr(deleteCount) + ' ' + Translate('message(s) deleted.') + '';
-            lvMailRemoveSelectedMsgs();
-            //TODO: should we also remove the mail message from the Mail items list??
-//            CallNotifyPlugins;
-          end else
-            account.Status := Translate('Error deleting message(s)');
+
+            if DeleteMails(account,deleteCount) then begin
+              account.Status := IntToStr(deleteCount) + ' ' + Translate('message(s) deleted.') + '';
+              lvMailRemoveSelectedMsgs();
+              account.Mail.RemoveDeletedMessages();
+              Account.Mail.RemoveToDeleteMsgs();
+              Account.LastMsgCount := Account.LastMsgCount - deleteCount;
+              ShowIcon(Account, itNormal);// to set the count in the account tab & tray
+              //CallNotifyPlugins;
+            end else
+              account.Status := Translate('Error deleting message(s)');
           except
             on E: Exception do begin
               account.Status := Translate('Error deleting message(s)');

@@ -134,7 +134,7 @@ uses
   IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4, IdExceptionCore;
 
 const
-  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
@@ -652,7 +652,7 @@ begin
       if (pos('"',destFolder)<>1) then
         destFolder := '"'+destFolder + '"';
     try
-      IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder,['UID','FETCH','SEARCH','UID','MOVE'],true);
+      IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder,['UID','FETCH','SEARCH','MOVE'],true);
       Result := IMAP.LastCmdResult.Code = IMAP_OK;
     except
       Result := false;
