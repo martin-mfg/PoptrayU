@@ -65,7 +65,6 @@ type
     procedure Disconnect; override;
     procedure DisconnectWithQuit; override;
     function Connected : boolean; override;
-    function CheckMessages : integer; override;
     function RetrieveHeader(const MsgNum : integer; var pHeader : PChar) : boolean; override;
     function RetrieveRaw(const MsgNum : integer; var pRawMsg : PChar) : boolean; override;
     function RetrieveTop(const MsgNum,LineCount: integer; var pDest: PChar) : boolean; override;
@@ -314,11 +313,6 @@ end;
 function TProtocolPOP3.Connected: boolean;
 begin
   Result := POP.Connected;
-end;
-
-function TProtocolPOP3.CheckMessages: integer;
-begin
-  Result := POP.CheckMessages;
 end;
 
 procedure TProtocolPOP3.IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);

@@ -782,13 +782,13 @@ end;
 function TfrmPopUMain.DoFullAccountCheck(account : TAccount) : integer;
 var
   i : integer;          // loop counter
-  mailcount : integer;  // How many new messages are on the server
+  mailcount : longint;  // How many new messages are on the server
 begin
   // clear visual list - if current tab is showing this account
   if Accounts[tabMail.TabIndex] = account then
     lvMail.Items.Clear;
   // normal check (non-quick)
-  mailcount := account.Prot.CheckMessages; // get number of messages
+  mailcount := account.Prot.CountMessages; // get number of messages
   account.Mail.Clear;
   account.LastMsgCount := mailcount;
   if mailcount>0 then
@@ -813,13 +813,13 @@ end;
 function TfrmPopUMain.DoFullAccountCheckRecentOnly(account : TAccount) : integer;
 var
   i,firstMsgToDownload : integer;          // loop counter
-  mailcount : integer;  // How many new messages are on the server
+  mailcount : longint;  // How many new messages are on the server
 begin
   // clear visual list - if current tab is showing this account
   if Accounts[tabMail.TabIndex] = account then
     lvMail.Items.Clear;
   // normal check (non-quick)
-  mailcount := account.Prot.CheckMessages; // get number of messages
+  mailcount := account.Prot.CountMessages; // get number of messages
   account.Mail.Clear;
   if mailcount>0 then
     account.Status := Translate('Downloading newest')+' '+IntToStr(Math.Min(mailcount,Options.NumNewestMsgToShow))+' '+Translate('messages')+'...';
@@ -842,67 +842,6 @@ begin
   Result := 0; // Indicate success
 end;
 
-
-//function TfrmPopUMain.DoFullAccountCheckUnseenOnly(account : TAccount) : integer;
-//var
-//  i : integer;          // loop counter
-//  mailcount : integer;  // How many new messages are on the server
-//  uidList : TIntArray;
-//  imap : TProtocolIMAP4;
-//begin
-//  Result := -1;
-//
-//  // clear visual list - if current tab is showing this account
-//  if Accounts[tabMail.TabIndex] = account then
-//    lvMail.Items.Clear;
-//  // normal check (non-quick)
-//  mailcount := 0;//account.Prot.CheckMessages; // get number of messages
-//  account.Mail.Clear;
-//
-//
-//  // 1. imap.SelectInbox();
-//  // 2. List<long> uids = imap.Search(Flag.Unseen);
-//  // 3. foreach (long uid in uids)
-//    // 3a. eml = imap.GetMessageByUID(uid)
-//    // 3b. parse email and deal with it
-//
-//  if (NOT account.IsImap) then begin
-//    Result := -1;
-//    exit;
-//  end;
-//
-//  imap := account.Prot as TProtocolIMAP4;
-//
-//  uidList := imap.GetUnseenUids();
-//
-//  if Assigned(uidList) then begin
-//    mailcount := Length(uidList);
-//  end;
-//
-//  if mailcount>0 then begin
-//    account.Status := Translate('Downloading')+' '+IntToStr(mailcount)+' '+Translate('unread message(s)')+'...';
-//    StatusBar.Panels[0].Text := ' '+Accounts[tabMail.TabIndex].Status;
-//
-//    Progress.Max := mailcount;
-//    account.LastMsgCount := mailcount;
-//
-//    for i := mailcount -1 downto 0 do
-//    begin
-//      //msgNum := uidList[i]
-//      if not GetIMAPMessageHeader(account,IntToStr(uidList[i])) then
-//      begin
-//        Result := -1; // signal checking error
-//        //break //commenting out to allow checking additional msgs after an error containing message
-//      end;
-//      // progress
-//      Progress.Position := i;
-//      Application.ProcessMessages;
-//    end;
-//    Result := 0; // Indicate success
-//  end;
-//
-//
-//end;
 
 function TfrmPopUMain.ImapQuickCheck(Account : TAccount; var Notify : boolean; var ShowIt : boolean; var ForceShow : boolean): integer;
 //begin
