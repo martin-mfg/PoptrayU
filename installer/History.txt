@@ -3,32 +3,41 @@ PopTrayU Version History
 
 =============
 Version 5.2.3
+November 2015
 =============
 
 New Features
 ------------
-* Modern style Task Dialogs (these are emulated for XP) used for certain error messages with more useful options for how to respond to problems:
-  * "No email client specified" 
-  * "Mail Client not Set" 
+* IMAP accounts will only download unread messages (those without the IMAP /seen flag) when in "hide viewed messages" mode (by pressing the more->hide button on the main toolbar, or by setting the option on the Main Window options page). Very helpful for users with thousands of old messages in their inbox and only a handful of new messages. Can be used with "limit inbox size" option if desired.
+* Vista/Win7+ style Task Dialogs (these are emulated for XP) used for certain error messages with more useful options for how to respond to problems:
+  * Run Mail Client - Default email client blank
+  * Check for Email - Incoming mail server blank
+  * Check for Email - Connection closed gracefully because username or password incorrect
+  * Delete account
 * Notification plugin support disabled, due to lack of useful working plugins.
 
 Changed Features
 ----------------
+* When deleting an account, user is prompted to (optionally) create a backup of the account settings before deleting. 
 * Batch update display When changing read/unread status of several messages for faster display
 * When an account is deleted, any rules specific to that account will be set to inactive in addition to the prior behavior of being re-associated with all accounts.
+* A couple defaults changed (only affects new installations, not upgrades)
+  * indicate viewed and unviewed messages = true 
+  * Default tab for preview window = HTML view 
 
 Bug Fixes
 ---------
 * Deleting immediately should only remove message from message list if successful deletion
 * Handle EIdReadTimeout exception when connecting to delete a message 
 * Changing advanced option use MAPI instead of Mailto change was not triggering save button to be enabled.
-* Account edit dialog not correctly detecting whether or not the account has unsaved changes
+* Account edit dialog not correctly detecting whether or not the account has unsaved changes.
 * Do not check hours boxes were not scaling correctly for large fonts
 * The "..." buttons on the Options/Defaults screen were covered by the textbox in certain languages including English.
-
-New translation strings:
-'Unable to Launch Email Client.~No Email Client specified.'
-'Run Email Client.
+* Blacklist Action "Delete" was not displaying properly in the options configuration page
+* When connection reset by peer is detected, make sure to disconnect imap so it can reconnect successfully.
+* Wrong total Messages count displayed on account tab in "hide viewed" mode with "limit inbox size"
+* IMAP delete failure sometimes not detected and shown
+* Deleted messages reappear after changing tabs
 
 =============
 Version 5.2.2
