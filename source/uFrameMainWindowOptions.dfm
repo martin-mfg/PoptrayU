@@ -78,7 +78,6 @@ object frameMainWindowOptions: TframeMainWindowOptions
       Caption = 'Main Window Behaviors'
       Color = clWindow
       TabOrder = 1
-      ExplicitWidth = 185
       object lblErrorDisp: TLabel
         Left = 6
         Top = 98
@@ -192,7 +191,6 @@ object frameMainWindowOptions: TframeMainWindowOptions
       Caption = 'Main Window Message List'
       Color = clWindow
       TabOrder = 2
-      ExplicitWidth = 185
       object lblDateExample: TLabel
         Left = 254
         Top = 87
@@ -255,7 +253,7 @@ object frameMainWindowOptions: TframeMainWindowOptions
           'Remember which messages on the server has already been viewed'#13#10'e' +
           'ven after closing PopTrayU.'
         Anchors = [akLeft, akTop, akRight]
-        Caption = 'Remember &Viewed Messages'
+        Caption = 'Remember &Viewed Messages for POP Accounts'
         TabOrder = 3
         OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
