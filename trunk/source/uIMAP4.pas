@@ -45,6 +45,12 @@ uses
   IdSSLOpenSSL,
   IdLogFile;
 
+const
+   DEST_DOES_NOT_EXIST_MSG = 'Cannot move message because destination mailbox does not exist.';
+
+type
+   EInvalidImapFolderException = class(Exception);
+
 type
   TProtocolIMAP4 = class(TProtocol)
   private
@@ -637,6 +643,9 @@ end;
 // moves messages to the SPAM or other folder.
 // does not expunge.
 function TProtocolIMAP4.MoveToFolderByUID(const uidList: TStrings; destFolder : string): boolean;
+var
+  mbName : string;
+  mbExists : boolean;
 begin
 
   if (uidList = nil) or (uidList.Count < 1) then begin
@@ -644,16 +653,32 @@ begin
     Exit;
   end;
 
+  // If server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
   if HasCapa('MOVE') then begin
-    //server supports RFC 6851 (MOVE Extension) https://tools.ietf.org/html/rfc6851
+    // add quotation marks around the folder name if it has spaces in it
     if (pos(' ',destFolder)<>0) then    // POS is one based: "not found" = 0 and "first char" = 1
       if (pos('"',destFolder)<>1) then
         destFolder := '"'+destFolder + '"';
+
     try
       IMAP.SendCmd('UID MOVE '+uidList.CommaText +' '+destFolder,['UID','FETCH','SEARCH','MOVE'],true);
       Result := IMAP.LastCmdResult.Code = IMAP_OK;
+
+      // if deleting/moving/archiving failed, check whether the folder we tried to move to exists
+      if not Result then begin
+        mbName := IMAP.MailBox.Name;
+        mbExists := IMAP.SelectMailBox(destFolder);
+        IMAP.SelectMailBox(mbName);
+
+        // if folder did not exist, throw that back to the caller to show an error message
+        // specific to fixing the invalid folder problem.
+        if not mbExists then raise EInvalidImapFolderException.Create(DEST_DOES_NOT_EXIST_MSG);
+      end;
     except
-      Result := false;
+      on E1 : EInvalidImapFolderException do raise; // re-throw the folder error
+      on E : Exception do begin // for any other exception, indicate generic failure
+        Result := false;
+      end;
     end;
   end else begin
     // server does not support MOVE so COPY and then DELETE and EXPUNGE the original

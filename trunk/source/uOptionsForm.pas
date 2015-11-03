@@ -50,7 +50,7 @@ type
     procedure EnableSaveOptions();
     procedure SetBiDiModeOpts();
     procedure ShowSetEmailClient();
-
+    procedure ShowMouseActions();
   end;
 
 var
@@ -279,6 +279,12 @@ begin
   changePanel(optDefaults);
   (frame as TframeDefaults).edProgram.SetFocus();
 end;
+
+procedure TOptionsForm.ShowMouseActions();
+begin
+  changePanel(optMouseButtons);
+end;
+
 
 end.
 

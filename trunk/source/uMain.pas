@@ -245,6 +245,7 @@ type
     procedure ShowBlankMailServerErrMsg(account : TAccount);
     procedure NoDefaultMailClientErrMsg();
     procedure ShowUsernameOrPasswordError(account : TAccount);
+    procedure ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -680,8 +681,10 @@ begin
                     Translate('PopTrayU will look in the system registry for the preferred email client')); //100
   TaskDlg.AddButton(Translate('Set Email Client Manually'),
                     Translate('You will be taken to the Options screen to set this value.')); //101
+  TaskDlg.AddButton(Translate('Change Mouse Button Actions'),
+                    Translate('Change what happens when you click or double click the tray icon')); //102
   TaskDlg.AddButton(Translate('Ignore'),
-                    Translate('Take no action at this time')); //102
+                    Translate('Take no action at this time')); //103
   msgResult := TaskDlg.Execute([cbOK],mrOK,[tdfUseCommandLinks],tiError); //modal dlg
   case msgResult of
   100:
@@ -693,6 +696,12 @@ begin
       PageControl.ActivePage := tsOptions;
       ShowForm();
       OptionsForm.ShowSetEmailClient();
+    end;
+  102:
+    begin
+      PageControl.ActivePage := tsOptions;
+      ShowForm();
+      OptionsForm.ShowMouseActions();
     end;
   end;
 end;
@@ -2084,6 +2093,85 @@ begin
 end;
 
 
+procedure TfrmPopUMain.ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
+var
+  TaskDlg : TSynTaskDialog;
+  msgResult : integer;
+  btn : TTaskDialogButtonItem;
+  folderPath : string;
+  stopUsingFolderStr : string;
+  stopUsingFolderSubStr : string;
+  pickFolderSubStr : string;
+begin
+stopUsingFolderSubStr := '';
+
+  TaskDlg.Caption := 'PopTrayU'+' - '+account.Name;
+
+  case folderType of
+    SPAM_FOLDER:
+      begin
+        folderPath := account.SpamFolderName;
+        TaskDlg.Title := Translate('Error Deleting Spam Messages');
+        //TaskDlg.Text := 'Error Moving Spam Messages to Spam Folder';
+        stopUsingFolderStr := 'Do not use server Spam Folder';
+        stopUsingFolderSubStr := 'Spam will be deleted without archiving';
+        pickFolderSubStr := 'Move deleted spam to a different IMAP folder'
+      end;
+    TRASH_FOLDER:
+      begin
+        folderPath := account.TrashFolderName;
+        TaskDlg.Title := Translate('Unable to Delete Message(s)');
+
+        //TaskDlg.Text := 'Error Moving Deleted Messages to Deleted Messages Folder';
+        stopUsingFolderStr := 'Do not use IMAP Trash folder';
+        stopUsingFolderSubStr := 'Delete messages without archiving';
+        pickFolderSubStr := 'Move deleted messages to a different IMAP folder'
+      end;
+    ARCHIVE_FOLDER:
+      begin
+        folderPath := account.ArchiveFolderName;
+        //TaskDlg.Text := 'Error Archiving Message';
+        stopUsingFolderStr := 'Disable Archive';
+        stopUsingFolderSubStr := 'The archive button will be disabled';
+        pickFolderSubStr := 'Archive messages to a different IMAP folder'
+      end;
+  end;
+  TaskDlg.Text := Format(Translate('IMAP Folder %s Does Not Exixt'), [folderPath]);
+  TaskDlg.AddButton(Translate('Re-select IMAP Folder'),  // msg result = 100
+                    Translate(pickFolderSubStr));
+  TaskDlg.AddButton(Format(Translate('Create %s'), [folderPath]),       // msg result = 101
+                    Translate('Attempt to Create this folder on the server'));
+  TaskDlg.AddButton(Translate(stopUsingFolderStr),                // msg result = 102
+                    Translate(stopUsingFolderSubStr));
+  TaskDlg.AddButton(Translate('Ignore'),                    // msg result = 103
+                    Translate('Take no action at this time'));
+
+//  TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
+//    Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.');
+//  TaskDlg.CollapseButtonCaption := Translate('Technical Information');
+//  TaskDlg.ExpandButtonCaption := Translate('Technical Information');
+  msgResult := TaskDlg.Execute([cbOK],103,[tdfUseCommandLinks{, tdfExpandFooterArea}],tiError, tfiBlank, 0, 0, Handle, false); //modal dlg
+  case msgResult of
+  100:
+    begin
+//      PageControl.ActivePage := tsAccounts;
+//      ShowForm;
+//      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
+//      AccountsForm.ShowAccount(account);
+//      AccountsForm.chkUseSpam.SetFocus();
+    end;
+  101:
+    begin
+
+    end;
+  102:
+    begin
+
+    end;
+  end;
+end;
+
+
 function TfrmPopUMain.DeleteMails(account : TAccount; var DelCount : integer) : boolean;
 ////////////////////////////////////////////////////////////////////////////////
 // Delete all mail marked as 'ToDelete' from "account" specified as parameter.
@@ -2133,14 +2221,29 @@ begin
             Inc(DelCount);
           end;
         end;
-        if (spamList.Count > 0) then begin
-          (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
-        end;
 
+
+        if (spamList.Count > 0) then begin //already checked account.MoveSpamOnDelete above
+          try
+            (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(spamList, account.SpamFolderName);
+          except
+            on E : Exception do begin
+              if E.Message = DEST_DOES_NOT_EXIST_MSG then
+                ShowInvalidFolderError(account, SPAM_FOLDER);
+              Result := false;
+            end;
+          end;
+        end;
         if (account.MoveTrashOnDelete) then begin
           // move to server trash folder
-          Result := (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
-
+          try
+            Result := (Account.Prot as TProtocolIMAP4).MoveToFolderByUID(uidList, account.TrashFolderName);
+          except
+            on E1 : EInvalidImapFolderException do begin
+              Result := false;
+              ShowInvalidFolderError(account, TRASH_FOLDER);
+            end;
+          end;
         end else begin
           // delete permanantly
           try
