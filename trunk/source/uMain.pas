@@ -379,6 +379,7 @@ type
     procedure ChangeReadStatuses(const becomeRead : boolean);
     procedure GetUidsOfSelectedMsgs(uidList : TStringList);
     function TabToAccount() : TAccount;
+    procedure SetMsgCountInTabTitle(account : TAccount; numMsgs : integer);
   public
     FKB : string; //UI label for kilobytes in the current language
 
@@ -539,6 +540,28 @@ begin
   end;
 end;
 
+// numMsgs = unviewed count for hide-viewed mode and count otherwise
+procedure TfrmPopUMain.SetMsgCountInTabTitle(account : TAccount; numMsgs : integer);
+var
+  tabNum : integer;
+begin
+  tabNum := account.AccountIndex;
+  // message count
+  if ((numMsgs>0) or Options.HideViewed) and (account.Mail.Count > 0) then
+  begin
+    tabMail.Tabs[tabNum] := account.Name + ' - ' + IntToStr(numMsgs);     //TODO: update this for limit inbox mode
+
+    if Options.HideViewed then
+      tabMail.Tabs[tabNum] := tabMail.Tabs[tabNum] + '/' + IntToStr(account.Mail.Count);
+
+    if (Options.ShowNewestMessagesOnly) then begin
+      if (numMsgs > 0) and (numMsgs < account.LastMsgCount) then begin
+        tabMail.Tabs[tabNum] := account.Name + ' - ' + IntToStr(numMsgs) + '/' + IntToStr(account.LastMsgCount);
+      end;
+    end;
+  end;
+end;
+
 //*****************************************************************************
 // ShowIcon
 // --------
@@ -585,22 +608,9 @@ begin
       else
         dispIconType := popOpen;
     end;
-    // message count
-    if ((numMsgs>0) or Options.HideViewed) and (account.Mail.Count > 0) then
-    begin
-      tabMail.Tabs[tabNum] := account.Name + ' - ' + IntToStr(numMsgs);     //TODO: update this for limit inbox mode
+    SetMsgCountInTabTitle(account, numMsgs);
 
-      if Options.HideViewed then
-        tabMail.Tabs[tabNum] := tabMail.Tabs[tabNum] + '/' + IntToStr(account.Mail.Count);
 
-      //TODO: this doesn't work for HideViewed mode!!
-      if (Options.ShowNewestMessagesOnly) then begin
-        if (numMsgs > 0) and (numMsgs < account.LastMsgCount) then begin
-          tabMail.Tabs[tabNum] := account.Name + ' - ' + IntToStr(numMsgs) + '/' + IntToStr(account.LastMsgCount);
-        end;
-      end;
-
-    end;
   end;
   dm.ReplaceBitmap(dm.imlTabs, imlIndex, dm.imlPopTrueColor, dispIconType);
 
@@ -888,7 +898,7 @@ begin
 //        FTotalNew := Accounts.CountAllNew;
 //      end;
       // assign new nums
-      account.Status := Translate('Checking... Re-assigning Message IDs');
+      account.Status := Translate('Checking... Checking for changes to server flags');
       StatusBar.Panels[0].Text := ' '+account.Status;
       Application.ProcessMessages();
 
@@ -985,7 +995,7 @@ begin
         Progress.Position := i;
         Application.ProcessMessages;
       end;
-      account.LastMsgCount := mailcount;
+      account.LastMsgCount := Account.Prot.CountMessages;
 
        Result := 0; //ok
 
@@ -1139,7 +1149,7 @@ begin
         Progress.Position := i;
         Application.ProcessMessages;
       end;
-      account.LastMsgCount := mailcount;
+      account.LastMsgCount := account.Prot.CountMessages;
 
        Result := 0; //ok
 
