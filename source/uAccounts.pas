@@ -70,7 +70,7 @@ type
     AuthType : TAuthType;
     SslVersion : TsslVer;
     StartTLS : boolean;
-    LastMsgCount : integer;
+    LastMsgCount : longint;
 
     //imap options
     MoveSpamOnDelete : boolean;
