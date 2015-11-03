@@ -119,6 +119,7 @@ type
     function GetFolderNames(folders : TStringList): boolean;
     function CheckMsgExists(const uid: String): boolean;
     function GetUnreadUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1) : boolean;
+    function ConnectionReady() : boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -130,10 +131,10 @@ uses
     {$ENDIF}
     Math,
              Dialogs,
-  IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4;
+  IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4, IdExceptionCore;
 
 const
-  debugImap = true;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  debugImap = false;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
@@ -851,6 +852,26 @@ var
 begin
   Result := IMAP.UIDRetrieveFlags(uid, AFlags); //returns false when message doesn't exist
 end;
+
+function TProtocolIMAP4.ConnectionReady() : boolean;
+var
+  connState : TIdIMAP4ConnectionState;
+begin
+  result := false;
+  try
+    connState := TIdIMAP4Access(IMAP).CheckConnectionState(csSelected);
+    case connState of
+      csSelected:
+        result := true;
+      csAny, csNonAuthenticated, csAuthenticated, csUnexpectedlyDisconnected:
+        result := false;
+    end;
+  except
+    on e : EIdConnectionStateError do
+      //nothing, leave result := false
+  end;
+end;
+
 
 
 function AddQuotesIfNeeded(input: string) : string;

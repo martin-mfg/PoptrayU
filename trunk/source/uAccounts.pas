@@ -178,7 +178,16 @@ end;
 procedure TAccount.ConnectIfNeeded();
 begin
   if not Prot.Connected then
-    Connect();
+    Connect()
+  else begin
+    if isImap then begin
+      if NOT (prot as TProtocolIMAP4).ConnectionReady then     // csSelected -> valid, csUnexpectedlyDisconnected -> disconnect and reconnect
+      begin
+        (prot as TProtocolIMAP4).Disconnect;
+        connect();
+      end;
+    end;
+  end;
 end;
 
 procedure TAccount.Connect();
@@ -516,7 +525,13 @@ var
 begin
   prevProt := self.Prot;
   if (prevProt <> nil) then begin
+    try
     prevProt.Free;
+    except on E : Exception do
+      begin
+        //ignore (eg: socket error trying to disconnect as it's freeing)
+      end;
+    end;
   end;
   if (self.Protocol = 'POP3') then
   begin
