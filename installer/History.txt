@@ -14,6 +14,7 @@ New Features
   * Check for Email - Incoming mail server blank
   * Check for Email - Connection closed gracefully because username or password incorrect
   * Delete account
+  * Spam or Trash IMAP folder does not exist
 * Notification plugin support disabled, due to lack of useful working plugins.
 
 Changed Features
@@ -38,6 +39,18 @@ Bug Fixes
 * Wrong total Messages count displayed on account tab in "hide viewed" mode with "limit inbox size"
 * IMAP delete failure sometimes not detected and shown
 * Deleted messages reappear after changing tabs
+* Deleting message failure not detected correctly (causing other cascading errors)
+* Account don't check times on accounts screen displaying as AM for both AM and PM.
+
+Known Issues
+------------
+(these issues will be fixed in a future release)
+* After archiving messages, if you switch tabs the message may incorrectly reappear in the message list
+* Message count may be incorrect after archiving until next scheduled check
+* Deleting a message from the preview window does not use the "Quick Delete" algorithm
+* Re-ordering accounts occasionally causes account order to get scrambled and risking account data loss
+* Folder missing for Archive
+* Archive and Gmail 
 
 =============
 Version 5.2.2
