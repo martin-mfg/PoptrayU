@@ -330,12 +330,12 @@ SubSection $(SEC_OptionalPlugins) SecPlugins
 
 Section $(SEC_KeyboardLights) SecKeyboardLights
   SectionIn 1
-  WriteRegStr HKLM "Software\${PRODUCT}" "keyboardlights" 1
+  ;;WriteRegStr HKLM "Software\${PRODUCT}" "keyboardlights" 1
 
-  SetOutPath "$INSTDIR\plugins"
+  ;;SetOutPath "$INSTDIR\plugins"
 
-  File "plugins\NotifyKeyboardLights.dll"
-  File "plugins\NotifyKeyboardLights.txt"
+  ;;File "plugins\NotifyKeyboardLights.dll"
+  ;;File "plugins\NotifyKeyboardLights.txt"
 SectionEnd
 
 SubSectionEnd
@@ -352,7 +352,7 @@ SubSectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SecStartMenu} $(DESC_SecStartMenu)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecStartup} $(DESC_SecStartup)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} $(DESC_SecDesktop)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecKeyboardLights} $(DESC_SecKeyboardLights)
+  ;;!insertmacro MUI_DESCRIPTION_TEXT ${SecKeyboardLights} $(DESC_SecKeyboardLights)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;------------------------------------------------------------------[ Uninstaller Section ]---
