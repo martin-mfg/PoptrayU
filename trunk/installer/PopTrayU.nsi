@@ -4,7 +4,7 @@
 
 !define VER_MAJOR "5"
 !define VER_MINOR "2"
-!define VER_BETA "2"
+!define VER_BETA "3"
 
 !define PRODUCT "PopTrayU"
 ;!define VERSION "${VER_MAJOR}.${VER_MINOR}
@@ -14,6 +14,7 @@ Name "${PRODUCT} ${VERSION}"
 
 !include "MUI2.nsh"
 !include "InstallOptions.nsh"
+!include WinVer.nsh
 
 !define Language $1
 !define Sounds $2
@@ -195,6 +196,9 @@ Section $(SEC_PopTrayU) SecPopTrayU
   	File "Readme.txt"
   	File "History.txt"
   	File "License.txt"
+  	${If} ${IsWinXP}
+             File "TDEmu.dll"
+        ${EndIf}
   	;File "lightskin.bmp"
  	;File "darkskin.bmp"
  	
@@ -326,19 +330,19 @@ Section $(SEC_SoundFiles) SecSound
   File "sounds\poptray_spam_lo.wav"
 SectionEnd
 
-SubSection $(SEC_OptionalPlugins) SecPlugins
+;;SubSection $(SEC_OptionalPlugins) SecPlugins
 
-Section $(SEC_KeyboardLights) SecKeyboardLights
-  SectionIn 1
+;;Section $(SEC_KeyboardLights) SecKeyboardLights
+  ;;SectionIn 1
   ;;WriteRegStr HKLM "Software\${PRODUCT}" "keyboardlights" 1
 
   ;;SetOutPath "$INSTDIR\plugins"
 
   ;;File "plugins\NotifyKeyboardLights.dll"
   ;;File "plugins\NotifyKeyboardLights.txt"
-SectionEnd
+;;SectionEnd
 
-SubSectionEnd
+;;SubSectionEnd
 
 ;!insertmacro MUI_SECTIONS_FINISHHEADER
 
@@ -365,6 +369,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Readme.txt"
   Delete "$INSTDIR\History.txt"
   Delete "$INSTDIR\Beta.txt"
+  Delete "$INSTDIR\TDEmu.dll"
   
   ; start menu icons
   Delete "$SMPROGRAMS\PopTrayU\PopTrayU.lnk"
