@@ -696,11 +696,13 @@ var
 begin
   mbName := IMAP.MailBox.Name;
   try
-    Resut := IMAP.CreateMailBox(foldername);
+    Result := IMAP.CreateMailBox(foldername);
     if Result then
       Result := IMAP.SelectMailBox(folderName); //check the created folder now exists
-  except begin
-    Result := false;
+  except
+    begin
+      Result := false;
+    end;
   end;
   IMAP.SelectMailBox(mbName); //change selected folder back to original
 end;
