@@ -418,7 +418,13 @@ begin
               (Accounts[tab].Interval <> StrToFloatDef(edIntervalAccount.Text,5)) or
               (Accounts[tab].DontCheckTimes <> chkDontCheckTimes.Checked) or
               (Accounts[tab].DontCheckStart <> dtStart.Time) or
-              (Accounts[tab].DontCheckEnd <> dtEnd.Time);
+              (Accounts[tab].DontCheckEnd <> dtEnd.Time) or
+              (Accounts[tab].SpamFolderName <> edSpamFolder.Text) or
+              (Accounts[tab].TrashFolderName <> edTrashFolder.Text) or
+              (Accounts[tab].ArchiveFolderName <> edArchiveFolder.Text) or
+              (Accounts[tab].MoveSpamOnDelete <> chkMoveSpam.Checked) or
+              (Accounts[tab].MoveTrashOnDelete <> chkMoveTrash.Checked) or
+              (Accounts[tab].UseGmailExtensions <> chkGmailExt.Checked);
 end;
 
 function TAccountsForm.GetAccountForTab(tabNumber : integer) : TAccount;
@@ -1508,3 +1514,4 @@ begin
 end;
 
 end.
+
