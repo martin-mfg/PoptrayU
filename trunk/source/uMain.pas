@@ -246,6 +246,7 @@ type
     procedure NoDefaultMailClientErrMsg();
     procedure ShowUsernameOrPasswordError(account : TAccount);
     procedure ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
+    procedure SelectImapSpecialFolder(account : TAccount; folderType : SpecialImapFolders);
   public
     { Public declarations }
     FShowingInfo : boolean;
@@ -2092,6 +2093,27 @@ begin
 
 end;
 
+procedure TfrmPopUMain.SelectImapSpecialFolder(account : TAccount; folderType : SpecialImapFolders);
+var
+  pickFolderDlg : TImapFolderSelectDlg;
+  pickedFolder : string;
+begin
+    pickFolderDlg := TImapFolderSelectDlg.Create(self);
+    try
+      pickedFolder := pickFolderDlg.ShowSelectImapFolder(account);
+      if (pickedFolder <> '') then begin
+        if (folderType = SPAM_FOLDER) then
+          account.SpamFolderName := pickedFolder
+        else if (folderType = TRASH_FOLDER) then
+          account.TrashFolderName := pickedFolder
+        else if (folderType = ARCHIVE_FOLDER) then
+          account.ArchiveFolderName := pickedFolder;
+        SaveAccountINI(account.AccountNum);
+      end;
+    finally
+      pickFolderDlg.Free;
+    end;
+end;
 
 procedure TfrmPopUMain.ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
 var
@@ -2111,7 +2133,7 @@ stopUsingFolderSubStr := '';
     SPAM_FOLDER:
       begin
         folderPath := account.SpamFolderName;
-        TaskDlg.Title := Translate('Error Deleting Spam Messages');
+        TaskDlg.Title := Translate('Error Deleting Spam Message(s)');
         //TaskDlg.Text := 'Error Moving Spam Messages to Spam Folder';
         stopUsingFolderStr := 'Do not use server Spam Folder';
         stopUsingFolderSubStr := 'Spam will be deleted without archiving';
@@ -2137,7 +2159,7 @@ stopUsingFolderSubStr := '';
       end;
   end;
   TaskDlg.Text := Format(Translate('IMAP Folder %s Does Not Exixt'), [folderPath]);
-  TaskDlg.AddButton(Translate('Re-select IMAP Folder'),  // msg result = 100
+  TaskDlg.AddButton(Translate('Select A Different Folder'),  // msg result = 100
                     Translate(pickFolderSubStr));
   TaskDlg.AddButton(Format(Translate('Create %s'), [folderPath]),       // msg result = 101
                     Translate('Attempt to Create this folder on the server'));
@@ -2153,21 +2175,25 @@ stopUsingFolderSubStr := '';
   msgResult := TaskDlg.Execute([cbOK],103,[tdfUseCommandLinks{, tdfExpandFooterArea}],tiError, tfiBlank, 0, 0, Handle, false); //modal dlg
   case msgResult of
   100:
-    begin
-//      PageControl.ActivePage := tsAccounts;
-//      ShowForm;
-//      AccountsForm.tabAccounts.TabIndex := account.AccountNum-1; // todo: accountToTab
-//      AccountsForm.ShowAccount(account);
-//      AccountsForm.chkUseSpam.SetFocus();
-    end;
+    SelectImapSpecialFolder(account, folderType);
   101:
+    if not (Account.prot as TProtocolIMAP4).CreateIMAPFolder(folderPath) then
     begin
-
+      ShowTranslatedDlg('Error Creating IMAP Folder', mtError,[mbOK],0)
     end;
   102:
     begin
-
+      case folderType of
+        SPAM_FOLDER:
+          account.MoveSpamOnDelete := false;
+        TRASH_FOLDER:
+          account.MoveTrashOnDelete := false;
+        ARCHIVE_FOLDER:
+          account.ArchiveFolderName := '';//wrong
+      end;
+      SaveAccountIni(account.AccountNum);
     end;
+
   end;
 end;
 
@@ -5223,13 +5249,17 @@ begin
           begin
             account.Status := SysUtils.Format(Translate('%d message(s) archived'),[uidList.Count]) + HintSep + TimeToStr(Now);
             lvMailRemoveSelectedMsgs();
-            //TODO: do we need to remove the mail message from the Mail items list??
+            //TODO: we need to remove the mail message from the Mail items list!!
+            // and update the tray icon
           end
           else
             account.Status := 'Error Archiving' + HintSep + TimeToStr(Now);
 
-        finally
+        except
+          begin
 
+            account.Status := 'Error Archiving' + HintSep + TimeToStr(Now);
+          end;
         end;
         StatusBar.Panels[0].Text := account.Status;
       end;

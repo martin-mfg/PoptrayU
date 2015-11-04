@@ -125,6 +125,7 @@ type
     function CheckMsgExists(const uid: String): boolean;
     function GetUnreadUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1) : boolean;
     function ConnectionReady() : boolean;
+    function CreateIMAPFolder(folderName : String) : boolean;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -687,6 +688,21 @@ begin
       DeleteMsgsByUID(uidList);
   end;
 
+end;
+
+function TProtocolIMAP4.CreateIMAPFolder(folderName : String) : boolean;
+var
+  mbName : string;
+begin
+  mbName := IMAP.MailBox.Name;
+  try
+    Resut := IMAP.CreateMailBox(foldername);
+    if Result then
+      Result := IMAP.SelectMailBox(folderName); //check the created folder now exists
+  except begin
+    Result := false;
+  end;
+  IMAP.SelectMailBox(mbName); //change selected folder back to original
 end;
 
 
