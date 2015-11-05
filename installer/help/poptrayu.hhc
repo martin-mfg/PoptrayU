@@ -21,6 +21,10 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Main Window">
+			<param name="Local" value="mail.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Preview">
 			<param name="Local" value="preview.htm">
 			</OBJECT>
@@ -32,6 +36,12 @@
 			<param name="Name" value="Options">
 			<param name="Local" value="options.htm">
 			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Custom Date Formating">
+				<param name="Local" value="customdateformat.htm">
+				</OBJECT>
+		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Rules">
 			<param name="Local" value="rules.htm">
