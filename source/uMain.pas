@@ -580,7 +580,7 @@ begin
   tabNum := account.AccountIndex;
 
   // reset name (without mailcount)
-  AccountsForm.tabAccounts.Tabs[tabNum] := account.Name; //TODO: codesmell
+  AccountsForm.tabAccounts.Tabs[tabNum] := account.Name;
   tabMail.Tabs[tabNum] := account.Name;
 
 
@@ -5558,8 +5558,11 @@ begin
     Screen.Cursor := crHourGlass;
     try
       // save oldnum
-      for num := 1 to Accounts.NumAccounts do
+      for num := 1 to Accounts.NumAccounts do begin
         Accounts[num-1].OldNum := num;
+        //Accounts[num-1].AccountNum := num;
+        //Accounts[num-1].AccountIndex := num-1;
+      end;
       // move
       Accounts.Move(old,new);
       frmPopUMain.tabMail.Tabs.Move(old,new);
