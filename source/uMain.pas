@@ -5225,6 +5225,7 @@ var
   uidList : TStringList;
   i : integer;
   MailItem : TMailItem;
+  //lvMailIdxs: TList<integer>;
 begin
   if lvMail.Selected = nil then
     ShowTranslatedDlg(Translate('No message selected.'), mtError, [mbOK], 0)
@@ -5234,11 +5235,13 @@ begin
       uidList := TStringList.Create;
       account.ConnectIfNeeded();
 
+      //lvMailIdxs := TList<integer>.Create;
       for i := 0 to lvMail.Items.Count-1 do
       begin
         if (lvMail.Items[i].Selected) then begin
           MailItem := lvMail.Items[i].Data;
           uidList.Add(MailItem.UID);
+          MailItem.ToArchive := true;
         end;
       end;
 
@@ -5249,8 +5252,9 @@ begin
           begin
             account.Status := SysUtils.Format(Translate('%d message(s) archived'),[uidList.Count]) + HintSep + TimeToStr(Now);
             lvMailRemoveSelectedMsgs();
-            //TODO: we need to remove the mail message from the Mail items list!!
-            // and update the tray icon
+            Account.Mail.RemoveToArchiveMsgs();
+            Account.LastMsgCount := Account.LastMsgCount - uidList.Count;
+            ShowIcon(Account, itNormal);// to set the count in the account tab & tray
           end
           else
             account.Status := 'Error Archiving' + HintSep + TimeToStr(Now);

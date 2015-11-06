@@ -59,6 +59,7 @@ type
     Spam : boolean;
     Protect : boolean;
     ToDelete : boolean;
+    ToArchive : boolean;
     MsgID : string;
     UID : string;
     TrayColor : TColor;
@@ -80,6 +81,7 @@ type
     procedure SetAllNew(Value: boolean);
     function RemoveDeletedMessages() : boolean;
     function RemoveToDeleteMsgs(): boolean;
+    function RemoveToArchiveMsgs(): boolean;
   end;
 
 implementation
@@ -259,5 +261,17 @@ begin
     end;
 end;
 
+function TMailItems.RemoveToArchiveMsgs(): boolean;
+var
+  mailItem : TMailItem;
+begin
+  Result := false;
+  for mailItem in Self do
+    if mailItem.ToArchive then
+    begin
+      Remove(mailItem);
+      Result := True;
+    end;
+end;
 
 end.
