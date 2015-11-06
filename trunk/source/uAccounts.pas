@@ -124,6 +124,7 @@ type
     function CountAll(UnviewedOnly: boolean): integer;
 
     procedure Move(CurIndex, NewIndex: Integer);
+    procedure Delete(Index: Integer);
   end;
 
   //----------------------------------------------------------------- Globals --
@@ -653,6 +654,17 @@ begin
         Inc(Items[i].FAccountNum);
       end;
     end;
+  end;
+  inherited;
+end;
+
+procedure TAccounts.Delete(Index: Integer);
+var
+  i : integer;
+begin
+  for i := Index to Count-1 do begin
+    Dec(Items[i].FAccountIndex);
+    Dec(Items[i].FAccountNum);
   end;
   inherited;
 end;
