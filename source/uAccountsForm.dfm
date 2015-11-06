@@ -88,6 +88,7 @@ object AccountsForm: TAccountsForm
             Color = clWindow
             TabOrder = 0
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 185
             object btnAccountProgramTest: TSpeedButton
               Left = 362
               Top = 9
@@ -447,6 +448,7 @@ object AccountsForm: TAccountsForm
             Color = clWindow
             TabOrder = 2
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 185
             object lblAuthMode: TLabel
               AlignWithMargins = True
               Left = 8
@@ -527,6 +529,7 @@ object AccountsForm: TAccountsForm
             Color = clWindow
             TabOrder = 3
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 185
             object lblServer: TLabel
               AlignWithMargins = True
               Left = 8
@@ -680,6 +683,7 @@ object AccountsForm: TAccountsForm
             Color = clWindow
             TabOrder = 4
             StyleElements = [seFont, seClient]
+            ExplicitWidth = 185
             object lblName: TLabel
               Left = 8
               Top = 8
