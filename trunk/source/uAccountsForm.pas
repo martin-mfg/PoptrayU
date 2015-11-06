@@ -561,9 +561,6 @@ begin
     dtStart.Left := chkDontCheckTimes.Left + chkDontCheckTimes.Width + 4;
     lblAnd.Left := dtStart.Left + dtStart.Width + 6;
     dtEnd.Left := lblAnd.Left + lblAnd.Width + 8;
-
-
-
   end;
 end;
 
