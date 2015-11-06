@@ -122,6 +122,8 @@ type
 
     function CountAllNew: integer;
     function CountAll(UnviewedOnly: boolean): integer;
+
+    procedure Move(CurIndex, NewIndex: Integer);
   end;
 
   //----------------------------------------------------------------- Globals --
@@ -629,6 +631,30 @@ begin
     else
       Result := Result + account.Mail.Count - account.IgnoreCount;
   end;
+end;
+
+procedure TAccounts.Move(CurIndex, NewIndex: Integer);
+var
+  i : integer;
+begin
+  if (curIndex <> newIndex) then begin
+    Items[curIndex].FAccountIndex := NewIndex;
+    Items[curIndex].FAccountNum := NewIndex+1;
+
+    if CurIndex < NewIndex then begin
+      for i := CurIndex + 1 to NewIndex do begin
+        Dec(Items[i].FAccountIndex);
+        Dec(Items[i].FAccountNum);
+      end
+    end
+    else if CurIndex > NewIndex then begin
+      for i := NewIndex to CurIndex - 1 do begin
+        Inc(Items[i].FAccountIndex);
+        Inc(Items[i].FAccountNum);
+      end;
+    end;
+  end;
+  inherited;
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
