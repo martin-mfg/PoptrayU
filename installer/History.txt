@@ -2,6 +2,26 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.2.4
+November 2015
+=============
+Bug Fixes
+---------
+* Re-ordering accounts occasionally causes account order to get scrambled and risking account data loss
+* Deleting accounts (other than the last one) may cause account data to get scrambled or crash
+* After archiving messages, if you switch tabs the message may incorrectly reappear in the message list until the next account check
+* "Folder missing" for Archive does not show the fixit task dialog.
+* Message count may be incorrect after archiving until next account check
+* Help file: Added a couple "missing" pages to the index
+
+Remaining Known Issues
+----------------------
+* Deleting a message from the preview window does not use the "Quick Delete" algorithm
+* Archive button cannot be disabled for IMAP accounts when archive folder does not exist.
+* some new translatable language strings since 5.2.2 are not documented in the blank translation file yet
+* Importing account with zero existing accounts edit leaves fields un-editable until another account is added.
+
+=============
 Version 5.2.3
 November 2015
 =============
