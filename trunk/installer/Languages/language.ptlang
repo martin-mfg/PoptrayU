@@ -906,3 +906,23 @@ Delete cannot be undone=
 Backup Account:=
 Account Backup Canceled=
 %s will not be backed up before deleting=
+
+# Version 5.2.4
+Change what happens when you click or double click the tray icon=
+Change Mouse Button Actions=
+Unable to Delete Message(s)=
+IMAP Folder %s Does Not Exist=
+Move deleted messages to a different IMAP folder=
+Select A Different Folder=
+Create %s=
+Attempt to Create this folder on the server=
+Delete messages without archiving=
+Do not use IMAP Trash folder=
+Error Creating IMAP Folder=
+Select Account=
+Error Deleting Spam Message(s)=
+Do not use IMAP Spam Folder=
+Move deleted spam to a different IMAP folder=
+Disable Archive=
+The archive button will be disabled=
+Archive messages to a different IMAP folder=
