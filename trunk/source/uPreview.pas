@@ -1660,8 +1660,20 @@ end;
 procedure TfrmPreview.actStarExecute(Sender: TObject);
 begin
   if FAccount.IsImap then begin
-    FAccount.ConnectIfNeeded();
-    (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(FUID, true);
+    try
+      FAccount.ConnectIfNeeded();
+      (FAccount.Prot as TProtocolIMAP4).SetImportantFlag(FUID, true);
+    except
+      on e1 : EIdReadTimeout do begin
+        Account.Prot.Disconnect;
+        // TODO: smarter determination of whether to use star or important terminology
+        ShowTranslatedDlg('Server Timeout: Unable to Add Star/Important Flag', mtError,[mbOK],0);
+      end;
+      on e2 : Exception do begin
+        Account.Prot.Disconnect;
+          ShowTranslatedDlg(Translate('Error Adding Star/Important Flag')+#13#10+e2.Message, mtError,[mbOK],0);
+      end;
+    end;
   end;
 end;
 

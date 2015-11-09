@@ -46,7 +46,7 @@ var
   AboutForm: TAboutForm;
 
 implementation
-uses uRCUtils, uGlobal, Math;
+uses uRCUtils, uGlobal, Math, IdGlobal, uProtocol, uTranslate;
 
 {$R *.dfm}
 
@@ -101,6 +101,9 @@ begin
 end;
 
 procedure TAboutForm.FormCreate(Sender: TObject);
+const
+  indyIdx = 1;
+  openSSLIdx = 2;
 begin
   // Set version info
 
@@ -118,6 +121,17 @@ begin
   //    lblVersion.Caption := lblVersion.Caption + '  ' + ReleaseCandidate;
 
   lblVersion.Caption := GetAppVersionStr();
+
+  // Populate version for Indy
+  lvCredits.Items[indyIdx].SubItems[0] :=
+    // Indy Version from IdGlobal unit
+    IntToStr(gsIdVersionMajor) + '.' +
+    IntToStr(gsIdVersionMinor) + '.' +
+    IntToStr(gsIdVersionRelease) + '.' +
+    IntToStr(gsIdVersionBuild);
+
+  TProtocol.InitOpenSSL; //populates SSL Version String
+  lvCredits.Items[openSSLIdx].SubItems[0] := Translate(TProtocol.sslVersionString);
 
 end;
 
