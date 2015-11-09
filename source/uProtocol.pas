@@ -12,11 +12,16 @@ type
   TProtocolType = (protPOP3 = 0, protIMAP4 = 1, protOTHER = 2);
 
 type
+
   TProtocol = class(TObject)
   public
+    class var sslLoaded : boolean;
+    class var sslInitDone : boolean;
+    class var sslVersionString : string;
     Name : string;
     ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
+    class procedure InitOpenSSL();
     procedure Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer); virtual; abstract;
     procedure Disconnect; virtual; abstract;
     procedure DisconnectWithQuit; virtual; abstract;
@@ -43,7 +48,8 @@ type
 
     //TODO: this should be eliminated if we can weed out enough of the no longer needed PChar's
     procedure FreePChar(var p : PChar);
-
+  private
+    class constructor Create;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +61,68 @@ implementation
 
 
 uses
-  SysUtils;
+  SysUtils, Windows, IdSSLOpenSSL;
+
+class constructor TProtocol.Create;
+begin
+  sslLoaded := false;
+  sslInitDone := false;
+  sslVersionString := '';
+end;
+
+class procedure TProtocol.InitOpenSSL();
+type
+  PLandCodepage = ^TLandCodepage;
+  TLandCodepage = record
+    wLanguage,
+    wCodePage: word;
+  end;
+var
+  DLL1, DLL2 : THandle;
+
+  // for DLL version
+  dummy, len: cardinal;
+  buf, pntr: pointer;
+  lang : string;
+begin
+  if not sslInitDone then begin
+    DLL1 := LoadLibrary('libeay32.dll');
+    if DLL1 = 0 then begin
+      //MessageDlg('OpenSSL library libeay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
+      sslLoaded := false;
+    end
+    else begin
+      DLL2 := LoadLibrary('ssleay32.dll');
+      if DLL2 = 0 then begin
+        //MessageDlg('OpenSSL library ssleay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
+        sslLoaded := false;
+      end else begin
+        sslLoaded := true;
+        try
+            len := GetFileVersionInfoSize(PChar('libeay32.dll'), dummy);
+            if len = 0 then
+              RaiseLastOSError;
+            GetMem(buf, len);
+            try
+              if GetFileVersionInfo(PChar('libeay32.dll'), 0, len, buf) then begin
+                //lang := Format('%.4x%.4x', [PLandCodepage(pntr)^.wLanguage, PLandCodepage(pntr)^.wCodePage]);
+                if VerQueryValue(buf, PChar('\StringFileInfo\040904b0\FileVersion'), pntr, len){ and (@len <> nil)} then
+                  sslVersionString := PChar(pntr)
+                else sslVersionString := '???';
+              end;
+            finally
+              FreeMem(buf);
+            end;
+        except
+           sslVersionString := '???';
+        end;
+      end;
+    end;
+    sslInitDone := true;
+    if not sslLoaded then
+      sslVersionString := 'not loaded';
+  end;
+end;
 
 
 procedure TProtocol.FreePChar(var p : PChar);

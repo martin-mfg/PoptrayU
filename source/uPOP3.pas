@@ -116,18 +116,20 @@ begin
     POP.Intercept:= TIdConnectionIntercept(DebugLogger);
   end;
 
-  DLL1 := LoadLibrary('libeay32.dll');
-  if DLL1 = 0 then begin
-    //MessageDlg('OpenSSL library libeay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-    mSSLDisabled := true;
-  end
-  else begin
-    DLL2 := LoadLibrary('ssleay32.dll');
-    if DLL2 = 0 then begin
-      //MessageDlg('OpenSSL library ssleay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-      mSSLDisabled := true;
-    end;
-  end;
+//  DLL1 := LoadLibrary('libeay32.dll');
+//  if DLL1 = 0 then begin
+//    //MessageDlg('OpenSSL library libeay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
+//    mSSLDisabled := true;
+//  end
+//  else begin
+//    DLL2 := LoadLibrary('ssleay32.dll');
+//    if DLL2 = 0 then begin
+//      //MessageDlg('OpenSSL library ssleay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
+//      mSSLDisabled := true;
+//    end;
+//  end;
+  TProtocol.InitOpenSSL;
+  mSSLDisabled := not TProtocol.sslLoaded;
 
   // pretty much everything inside this IF will fail if the SSL DLLs fail to load
   if (not mSSLDisabled) then begin
