@@ -30,7 +30,6 @@ object frameInterval: TframeInterval
       Caption = 'Mail Check Actions'
       Color = clWindow
       TabOrder = 0
-      ExplicitWidth = 185
       object lblDeleteNextCheck: TLabel
         Left = 8
         Top = 10
@@ -76,8 +75,6 @@ object frameInterval: TframeInterval
       Caption = 'Automatic Mail Check Conditions'
       Color = clWindow
       TabOrder = 1
-      ExplicitTop = 120
-      ExplicitWidth = 354
       object lblAnd: TLabel
         Left = 195
         Top = 49
@@ -100,7 +97,6 @@ object frameInterval: TframeInterval
         TabOrder = 0
         OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
-        ExplicitWidth = 341
       end
       object chkDontCheckTimes: TCheckBox
         Left = 8
@@ -201,7 +197,6 @@ object frameInterval: TframeInterval
         Caption = 'Don'#39't automatically check for new messages'
         TabOrder = 2
         OnClick = radioNeverClick
-        ExplicitWidth = 341
       end
       object radioTimerAccount: TRadioButton
         Left = 8
@@ -214,7 +209,6 @@ object frameInterval: TframeInterval
         TabOrder = 3
         OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
-        ExplicitWidth = 341
       end
       object UpDown: TUpDown
         Left = 181
