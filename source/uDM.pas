@@ -44,6 +44,7 @@ const
   popNew = 9;
   popSleeping = 10;
   // imlListView
+  mNoListImg = -1;
   mHigh = 0;
   mHigh2 = 1;
   mNormal = 2;
@@ -179,13 +180,17 @@ end;
 
 { Tdm }
 
+// Called when the right-click menu for columns is clicked. this will either
+// show or hide a column.
+// when a column is un-hidden, the width is restored from prior to hiding from
+// the Tag field of the column.
 procedure Tdm.mnuColumnsClick(Sender: TObject);
 var
   col : integer;
 begin
   with frmPopUMain do
   begin
-    col := (Sender as TMenuItem).Tag;
+    col := SortTypeToColumnNum(TSortType((Sender as TMenuItem).Tag));
     if not(Sender as TMenuItem).Checked then
     begin
       lvMail.Columns[col].MinWidth := 10;
@@ -350,7 +355,7 @@ end;
 
 procedure Tdm.mnuSortClick(Sender: TObject);
 begin
-  frmPopUMain.SetSortColumn((Sender as TMenuItem).Tag);
+  frmPopUMain.SetSortType(TSortType((Sender as TMenuItem).Tag));
 end;
 
 procedure Tdm.mnuSpamLastClick(Sender: TObject);

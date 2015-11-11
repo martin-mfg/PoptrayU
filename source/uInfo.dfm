@@ -68,6 +68,7 @@ object frmInfo: TfrmInfo
               Alignment = taRightJustify
               Caption = 'Size'
             end>
+          FullDrag = True
           ParentColor = True
           SmallImages = dm.imlListView
           TabOrder = 0
@@ -172,7 +173,6 @@ object frmInfo: TfrmInfo
         Width = 108
         Height = 21
         Action = frmPopUMain.actMarkViewed
-        Caption = 'Mark &Viewed'
       end
       object btnMailProgram: TSpeedButton
         Left = 3
