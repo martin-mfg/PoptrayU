@@ -535,7 +535,7 @@ object frmPreview: TfrmPreview
     Left = 34
     Top = 341
     Bitmap = {
-      494C01010A000E00980020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A000E009C0020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000008000000060000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000008854
       4600875345008854460088544600885446008955470088544600875345008854
@@ -2182,10 +2182,12 @@ object frmPreview: TfrmPreview
             Items = <
               item
                 Action = ActMarkUnread
+                Caption = '&Mark as Unread'
                 ImageIndex = 11
               end
               item
                 Action = ActMarkRead
+                Caption = 'M&ark as Read'
                 ImageIndex = 10
               end
               item
@@ -2201,10 +2203,12 @@ object frmPreview: TfrmPreview
               end
               item
                 Action = actStar
+                Caption = 'Ma&rk as Important'
                 ImageIndex = 12
               end
               item
                 Action = actUnstar
+                Caption = 'Mar&k as Not Important'
                 ImageIndex = 13
               end>
             Action = actMark
@@ -2385,7 +2389,7 @@ object frmPreview: TfrmPreview
     Left = 111
     Top = 341
     Bitmap = {
-      494C01010C00A800000118001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010C00A800040118001800FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3682,7 +3686,7 @@ object frmPreview: TfrmPreview
     Left = 175
     Top = 340
     Bitmap = {
-      494C010103000800880010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C0101030008008C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000000000000A0A0E3F9F3039BDF711175BB90000
