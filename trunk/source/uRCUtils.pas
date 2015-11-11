@@ -113,7 +113,7 @@ function ColorToString2(Color : TColor) : string;
 function DarkColor(col : TColor) : Boolean;
 function MixColors(col1,col2 : TColor) : TColor;
 procedure ClearImpairedCode(var str : string);
-procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : integer);
+procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : integer; textRightAligned : boolean = false);
 procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word);
 
 function GetAppVersionStr: string;
@@ -1357,23 +1357,27 @@ begin
 end;
 
 
-
-procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : integer);
+// this helper function calls the CommCtrl library function ListView_SetColumn
+// (see MSDN) to change the list view header image (eg: sort arrow) as this
+// functionality is not exposed by the TListView in a way that you can select
+// whether the header image should be left or right aligned.
+procedure SetColumnImage(lv : TListView; ColumnIndex,ImageIndex : Integer; textRightAligned : boolean = false);
 var
-  Column : TLVColumn; //uses CommCtrl
+  lvColumnStruct : TLVColumn; //uses CommCtrl
 begin
   // set image on right of text
-  with Column do
-  begin
-    mask := LVCF_FMT or LVCF_IMAGE;
-    fmt := LVCFMT_IMAGE or LVCFMT_BITMAP_ON_RIGHT or LVCFMT_COL_HAS_IMAGES;
-    if lv.Columns[ColumnIndex].Alignment = taRightJustify then
-      fmt := fmt or LVCFMT_RIGHT;
-    iImage := ImageIndex;
-  end;
-  lv.Columns[ColumnIndex].ImageIndex := ImageIndex;
-  if ImageIndex <> -1 then
-    ListView_SetColumn(lv.Handle, ColumnIndex, Column);
+  lvColumnStruct.mask := LVCF_FMT or LVCF_IMAGE;
+  lvColumnStruct.iImage := ImageIndex;
+  if not textRightAligned then
+    lvColumnStruct.fmt := LVCFMT_BITMAP_ON_RIGHT // (explicit) arrow on right, (implicit) text left aligned
+  else
+    lvColumnStruct.fmt := LVCFMT_RIGHT; // (implicit) arrow on left, (explicit) right align text
+  if (ImageIndex > -1) then
+    lvColumnStruct.fmt := lvColumnStruct.fmt or LVCFMT_IMAGE
+  else
+    lvColumnStruct.fmt := lvColumnStruct.fmt and not LVCFMT_IMAGE;
+
+  ListView_SetColumn(lv.Handle, ColumnIndex, lvColumnStruct);
 end;
 
 procedure ExecuteAccelAction(ToolBar : TActionToolbar; Key : word); //uses ActnCtrls

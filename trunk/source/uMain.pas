@@ -50,6 +50,22 @@ uses
   Vcl.DBGrids, uOptionsForm, uAboutForm, uConstants, uProtocol;
 
 
+const
+  // lvMail subitems data structure fields (From is in Item.caption not SubItems)
+  subItemTo = 0;
+  subItemSubject = 1;
+  subItemDateFormatted = 2;
+  subItemMsgSize = 3;
+  subItemMsgId = 4;
+  subItemDateNumeric = 5;
+
+  NUM_COLUMNS = 5; //with indexes 0 to 4
+
+type
+  // TColumnID is the list of physical columns in their default order
+  //TColumnID = (columnFrom = 0, columnTo = 1, columnSubject = 2, columnDate = 3, columnSize = 4);
+  // TSortType holds the IDs for various sort types. Sort types 0-4 should match SubItemsIndex-1 for that field as column ID numbers are cast
+  TSortType = (sortByMessageStatus = -2, sortByNothing = -1, sortByFrom = 0, sortByTo = 1, sortBySubject = 2, sortByDate = 3, sortBySize = 4);
 
 
 type
@@ -57,7 +73,6 @@ type
   TMouseCommand = (mcClick,mcRClick,mcDblClick,mcMClick);
   TIconType = (itNormal,itChecking,itDeleting,itError,itSleeping);
   TToolbarScheme = (schemeNormal = 0, schemeTwilight = 1);
-
 
   TfrmPopUMain = class(TForm)
     PageControl: TPageControl;
@@ -247,13 +262,15 @@ type
     procedure ShowUsernameOrPasswordError(account : TAccount);
     procedure ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
     procedure SelectImapSpecialFolder(account : TAccount; folderType : SpecialImapFolders);
+
+    function SortTypeToColumnNum(sortType : TSortType) : integer;
   public
     { Public declarations }
     FShowingInfo : boolean;
     FMinimized : Boolean;
     FHintWindow : THintWindow;
     FSortDirection : integer; // which direction FSortColumn is sorted in. Public to be used by uIniSettings
-    FSortColumn : integer; // which column to sort the mail window by. Public to be used by uIniSettings
+    FSortType : TSortType; // which column to sort the mail window by. Public to be used by uIniSettings
     RulesForm : TRulesForm; //todo: later this should be private
     AccountsForm : TAccountsForm; //todo: later this should be private
     OptionsForm : TOptionsForm;
@@ -270,7 +287,7 @@ type
     procedure DeleteOneMailItem(Account : TAccount; MailItem : TMailItem);
     procedure QuickHelp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     function AllowAutoCheck : boolean;
-    procedure SetSortColumn(ColNum : integer);
+    procedure SetSortType(sortType : TSortType);
     procedure UpdateFonts;
     procedure OnCloseFree(Sender: TObject; var Action: TCloseAction); //used to be private
     procedure OnClickClose(Sender: TObject); //used to be private
@@ -428,11 +445,6 @@ const
   // sort for lvMail
   sdAsc = 1;
   sdDesc = -1;
-
-  // lvMail columns
-  colID = 4;    // for the ID of the message on the server
-  colDate = 5;  // for the internal representation of the date (not the display version)
-  NOSORT = -1;
 
   DONT_MARK_AS_VIEWED = false;
   DO_MARK_AS_VIEWED = true;
@@ -954,7 +966,7 @@ begin
         StatusBar.Panels[0].Text := ' '+account.Status;
         for i := 0 to lvMail.Items.Count-1 do
         begin
-          MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
+          MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[subItemMsgId]));
           if MailItem = nil then
           begin
             ForceShow := True;
@@ -1108,7 +1120,7 @@ begin
         StatusBar.Panels[0].Text := ' '+account.Status;
         for i := 0 to lvMail.Items.Count-1 do
         begin
-          MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[colID]));
+          MailItem := account.Mail.FindMessage(StrToInt(lvMail.Items[i].SubItems[subItemMsgId]));
           if MailItem = nil then
           begin
             ForceShow := True;
@@ -1466,7 +1478,7 @@ begin
     end;
     lvMail.Items.EndUpdate;
   end;
-  if (FSortColumn <> NOSORT) or dm.mnuSpamLast.Checked then
+  if (FSortType <> sortByNothing) or dm.mnuSpamLast.Checked then
     lvMail.AlphaSort;
   // del spam button
   actDeleteSpam.Enabled := account.CountStatus([misSpam]) > 0;
@@ -1658,7 +1670,7 @@ begin
 
   for item in lvMail.Items do
   begin
-    when := StrToFloat(item.SubItems[colDate]);
+    when := StrToFloat(item.SubItems[subItemDateNumeric]);
     dateDiff := DaysBetween(DateOf(Tomorrow()), when);
     if (dateDiff < 0) then
       item.GroupID := 0
@@ -1671,25 +1683,58 @@ begin
   end;
 end;
 
+// converts the column ID to the actual physical column (since the columns
+// can be re-ordered)
+function TfrmPopUMain.SortTypeToColumnNum(sortType : TSortType) : integer;
+var
+  i : integer;
+begin
+  if integer(sortType) < 0 then begin
+    Result := integer(sortType);
+    exit;
+  end
+  else begin
+    for i := 0 to 4 do begin
+      if lvMail.Columns[i].ID = integer(sortType) then begin
+        Result := i;
+        exit;
+      end;
+    end;
+  end;
+end;
 
 // This procedure is called by uDM when the menu option to sort by a given
 // column is selected. lvMail will be sorted by the column selected.
-procedure TfrmPopUMain.SetSortColumn(ColNum : integer);
+procedure TfrmPopUMain.SetSortType(sortType : TSortType);
+var
+  ColNum, i : integer;
+  textAlignRight : boolean; //whether the column header should be left or right aligned
 begin
-  // remove sort indicator
-  if FSortColumn >= 0 then
-    SetColumnImage(lvMail,FSortColumn,-1);
+
+  // remove OLD sort indicator
+  if Integer(FSortType) >= 0 then begin
+    ColNum := SortTypeToColumnNum(FSortType);
+    textAlignRight := lvMail.Columns[ColNum].Alignment = taRightJustify;
+    SetColumnImage(lvMail,Integer(FSortType), mNoListImg, textAlignRight);
+
+    lvMail.Columns[ColNum].ImageIndex := -1;
+  end;
   // new col
-  FSortColumn := ColNum;
+  FSortType := sortType;
   // sort column
   lvMail.AlphaSort;
   // add sort indicator
-  if ColNum >= 0 then
+  if integer(sortType) >= 0 then
   begin
-    if FSortDirection = sdAsc then
-      SetColumnImage(lvMail,FSortColumn,mSortAsc)
-    else
-      SetColumnImage(lvMail,FSortColumn,mSortDesc);
+    ColNum := SortTypeToColumnNum(sortType);
+    textAlignRight := lvMail.Columns[ColNum].Alignment = taRightJustify;
+
+    if FSortDirection = sdAsc then begin
+      SetColumnImage(lvMail, Integer(sortType), mSortAsc, textAlignRight);
+    end else begin
+      SetColumnImage(lvMail, Integer(sortType), mSortDesc, textAlignRight);
+
+    end;
   end;
 
   //SetColumnGroups();
@@ -2635,7 +2680,7 @@ begin
   if Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then
   begin
     ShowMailMessage(account,account.Mail.Count-1);
-    if not lvMail.Focused and (FSortColumn = NOSORT) then
+    if not lvMail.Focused and (FSortType = sortByNothing) then
       lvMail.Items[lvMail.Items.Count-1].MakeVisible(true);
   end;
   // success
@@ -2739,7 +2784,7 @@ begin
   if Options.ShowWhileChecking and (Accounts[tabMail.TabIndex]=account) then
   begin
     ShowMailMessage(account,account.Mail.Count-1);
-    if not lvMail.Focused and (FSortColumn = NOSORT) then
+    if not lvMail.Focused and (FSortType = sortByNothing) then
       lvMail.Items[lvMail.Items.Count-1].MakeVisible(true);
   end;
   // success
@@ -3094,20 +3139,20 @@ end;
 procedure TfrmPopUMain.SetColumnMenuCheckMarks;
 begin
   // visible columns
-  dm.mnuColFrom.Checked := lvMail.Columns[0].Width <> 0;
-  dm.mnuColTo.Checked := lvMail.Columns[1].Width <> 0;
-  dm.mnuColSubject.Checked := lvMail.Columns[2].Width <> 0;
-  dm.mnuColDate.Checked := lvMail.Columns[3].Width <> 0;
-  dm.mnuColSize.Checked := lvMail.Columns[4].Width <> 0;
+  dm.mnuColFrom.Checked := lvMail.Columns[SortTypeToColumnNum(sortByFrom)].Width <> 0;
+  dm.mnuColTo.Checked := lvMail.Columns[SortTypeToColumnNum(sortByTo)].Width <> 0;
+  dm.mnuColSubject.Checked := lvMail.Columns[SortTypeToColumnNum(sortBySubject)].Width <> 0;
+  dm.mnuColDate.Checked := lvMail.Columns[SortTypeToColumnNum(sortByDate)].Width <> 0;
+  dm.mnuColSize.Checked := lvMail.Columns[SortTypeToColumnNum(sortBySize)].Width <> 0;
   // sort column
-  dm.mnuSortMessageStatus.Checked := FSortColumn = -2;
-  dm.mnuSortFrom.Checked := FSortColumn = 0;
-  dm.mnuSortTo.Checked := FSortColumn = 1;
-  dm.mnuSortSubject.Checked := FSortColumn = 2;
-  dm.mnuSortDate.Checked := FSortColumn = 3;
-  dm.mnuSortSize.Checked := FSortColumn = 4;
-  dm.mnuSortNoSort.Checked := FSortColumn = NOSORT;
-  actNoSort.Checked := FSortColumn = NOSORT;
+  dm.mnuSortMessageStatus.Checked := FSortType = sortByMessageStatus;
+  dm.mnuSortFrom.Checked := FSortType = sortByFrom;
+  dm.mnuSortTo.Checked := FSortType = sortByTo;
+  dm.mnuSortSubject.Checked := FSortType = sortBySubject;
+  dm.mnuSortDate.Checked := FSortType = sortByDate;
+  dm.mnuSortSize.Checked := FSortType = sortBySize;
+  dm.mnuSortNoSort.Checked := FSortType = sortByNothing;
+  actNoSort.Checked := FSortType = sortByNothing;
 end;
 
 procedure TfrmPopUMain.Balloon(head,info: string; IconType : TBalloonHintIcon; TimeoutSecs : integer);
@@ -4097,7 +4142,7 @@ begin
   FDoubleClicked := False;
   FShowingInfo := False;
   FStop := False;
-  FSortColumn := NOSORT;
+  FSortType := sortByNothing;
   FSortDirection := sdAsc;
   FLastCheck := '';
   FAccountIdxWithMail := -1;
@@ -4403,12 +4448,12 @@ end;
 procedure TfrmPopUMain.lvMailColumnClick(Sender: TObject; Column: TListColumn);
 begin
   // direction
-  if FSortColumn = Column.Index then
+  if Integer(FSortType) = Column.ID then
     FSortDirection := sdDesc * FSortDirection
   else
     FSortDirection := sdAsc;
   // column
-  SetSortColumn(Column.Index);
+  SetSortType(TSortType(Column.ID));
   SetColumnMenuCheckMarks;
 end;
 
@@ -4430,20 +4475,19 @@ begin
     end;
   end;
   // sort column
-  case FSortColumn of
-    -2 : Compare := CompareInt(IntToStr(Item1.ImageIndex),IntToStr(Item2.ImageIndex));  //status
-    -1 : Compare := CompareInt(Item1.SubItems[colID],Item2.SubItems[colID]);            //no sort
-    0  : Compare := CompareText(Item1.Caption,Item2.Caption);                           //from
-    2  : Compare := CompareText(StripSubjectPrefix(Item1.SubItems[1]),
-                                StripSubjectPrefix(Item2.SubItems[1]));                 //subject
-    3  : Compare := CompareDateRC(Item1.SubItems[colDate],Item2.SubItems[colDate]);       //date
-    4  : Compare := CompareInt(Item1.SubItems[3],Item2.SubItems[3]);                    //size
-  else
-   Compare := CompareText(Item1.SubItems[FSortColumn - 1],
-                          Item2.SubItems[FSortColumn - 1]);
+  case FSortType of
+    sortByMessageStatus : Compare := CompareInt(IntToStr(Item1.ImageIndex),IntToStr(Item2.ImageIndex));  //status
+    sortByNothing : Compare := CompareInt(Item1.SubItems[subItemMsgId],Item2.SubItems[subItemMsgId]);            //no sort
+    sortByFrom :    Compare := CompareText(Item1.Caption,Item2.Caption);                           //from
+    sortByTo:       CompareText(Item1.SubItems[subItemTo], Item2.SubItems[subItemTo]);
+    sortBySubject : Compare := CompareText(StripSubjectPrefix(Item1.SubItems[subItemSubject]),
+                               StripSubjectPrefix(Item2.SubItems[subItemSubject]));                 //subject
+    sortByDate :    Compare := CompareDateRC(Item1.SubItems[subItemDateNumeric],Item2.SubItems[subItemDateNumeric]);       //date
+    sortBySize :    Compare := CompareInt(Item1.SubItems[subItemMsgSize],Item2.SubItems[subItemMsgSize]);                    //size
   end;
   Compare := FSortDirection * Compare;
 end;
+
 
 
 
@@ -4778,7 +4822,7 @@ begin
                      warning +
                      Translate('Delete Message from Server?')+' '+#13#10#13#10+
                      Translate('From')+': '+lvMail.Selected.Caption+#13#10+
-                     Translate('Subject')+': '+lvMail.Selected.SubItems[1],
+                     Translate('Subject')+': '+lvMail.Selected.SubItems[subItemSubject],
                      mtConfirmation,[mbYes,mbNo],0) = mrYes);
     end
     else begin
@@ -5065,7 +5109,7 @@ end;
 procedure TfrmPopUMain.actNoSortExecute(Sender: TObject);
 begin
   FSortDirection := sdAsc;
-  SetSortColumn(NOSORT);
+  SetSortType(sortByNothing);
   SetColumnMenuCheckMarks;
 end;
 
@@ -5726,7 +5770,7 @@ end;
 
 procedure TfrmPopUMain.actOpenMessageExecute(Sender: TObject);
 begin
-  RunMessage(Accounts[tabMail.TabIndex],StrToInt(lvMail.Selected.SubItems[colID])); //todo: tabToAccount
+  RunMessage(Accounts[tabMail.TabIndex],StrToInt(lvMail.Selected.SubItems[subItemMsgId])); //todo: tabToAccount
 end;
 
 // Gets the account associated with the currently visible tab.

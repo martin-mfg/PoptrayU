@@ -721,7 +721,8 @@ end;
 procedure LoadPosINI();
 var
   Ini : TIniFile;
-  i,ColWidth,SortCol : integer;
+  i,j,ColWidth,SortType : integer;
+  colId : integer;
 begin
   Ini := TIniFile.Create(IniName);
   try
@@ -732,9 +733,25 @@ begin
     frmPopUMain.Top := Ini.ReadInteger('Position','Top',Screen.WorkAreaHeight-frmPopUMain.Height);
     frmPopUMain.panMailButtonsResize(frmPopUMain.panMailButtons);
     // columns
-    SortCol := Ini.ReadInteger('Position','SortColumn',-1);
+    SortType := Ini.ReadInteger('Position','SortType',-1);
     frmPopUMain.FSortDirection := Ini.ReadInteger('Position','SortDirection',frmPopUMain.FSortDirection);
     dm.mnuSpamLast.Checked := Ini.ReadBool('Position', 'SortSpamLast', False);
+
+    // re-order the columns
+    for i := 0 to NUM_COLUMNS-1 do begin
+      colId := Ini.ReadInteger('Position','Column'+IntToStr(i+1)+'ID',i);
+
+      // the index of the remaining columns change as we move the columns
+      // into the correct order
+      for j := i to NUM_COLUMNS-1 do begin
+        if frmPopUMain.lvMail.Columns[j].ID = colId then begin
+          frmPopUMain.lvMail.Columns[j].index := i;
+          break;
+        end;
+      end;
+    end;
+
+    // load column widths (do this AFTER ordering the columns)
     for i := 0 to 4 do
     begin
       ColWidth := Ini.ReadInteger('Position','Column'+IntToStr(i+1),frmPopUMain.lvMail.Columns[i].Width);
@@ -742,7 +759,9 @@ begin
         frmPopUMain.lvMail.Columns[i].MinWidth := 0;
       frmPopUMain.lvMail.Columns[i].Width := ColWidth;
     end;
-    frmPopUMain.SetSortColumn(SortCol);
+    // load column to sort by (do this AFTER ordering the columns)
+    frmPopUMain.SetSortType(TSortType(SortType));
+
     // tree widths
     frmPopUMain.OptionsForm.tvOptions.Width := Ini.ReadInteger('Position','OptionTree',145);
     frmPopUMain.RulesForm.panRuleList.Width := Ini.ReadInteger('Position','RuleList',100);
@@ -777,11 +796,12 @@ begin
 end;
 
 {*------------------------------------------------------------------------------
-  Save window position,window size adn column widths to INI                     
+  Save window position,window size and column widths to INI
 -------------------------------------------------------------------------------}
 procedure SavePosINI;
 var
   Ini : TMemIniFile;
+  i : integer;
 begin
   Ini := TMemIniFile.Create(IniName);
   try
@@ -791,14 +811,22 @@ begin
     Ini.WriteInteger('Position','Width',frmPopUMain.Width);
     Ini.WriteInteger('Position','Height',frmPopUMain.Height);
     // columns
-    Ini.WriteInteger('Position','SortColumn',frmPopUMain.FSortColumn);
+    Ini.WriteInteger('Position','SortType',Integer(frmPopUMain.FSortType));
     Ini.WriteInteger('Position','SortDirection',frmPopUMain.FSortDirection);
     Ini.WriteBool('Position','SortSpamLast',dm.mnuSpamLast.Checked);
+
     Ini.WriteInteger('Position','Column1',frmPopUMain.lvMail.Columns[0].Width);
     Ini.WriteInteger('Position','Column2',frmPopUMain.lvMail.Columns[1].Width);
     Ini.WriteInteger('Position','Column3',frmPopUMain.lvMail.Columns[2].Width);
     Ini.WriteInteger('Position','Column4',frmPopUMain.lvMail.Columns[3].Width);
     Ini.WriteInteger('Position','Column5',frmPopUMain.lvMail.Columns[4].Width);
+    // column order
+    Ini.WriteInteger('Position','Column1ID',frmPopUMain.lvMail.Columns[0].ID);
+    Ini.WriteInteger('Position','Column2ID',frmPopUMain.lvMail.Columns[1].ID);
+    Ini.WriteInteger('Position','Column3ID',frmPopUMain.lvMail.Columns[2].ID);
+    Ini.WriteInteger('Position','Column4ID',frmPopUMain.lvMail.Columns[3].ID);
+    Ini.WriteInteger('Position','Column5ID',frmPopUMain.lvMail.Columns[4].ID);
+
     // list widths
     Ini.WriteInteger('Position','OptionTree',frmPopUMain.OptionsForm.tvOptions.Width);
     Ini.WriteInteger('Position','RuleList',frmPopUMain.RulesForm.panRuleList.Width);
@@ -808,6 +836,7 @@ begin
     Ini.WriteInteger('Info','Column2',Options.InfoCol2);
     Ini.WriteInteger('Info','Column3',Options.InfoCol3);
     Ini.WriteInteger('Info','Column4',Options.InfoCol4);
+
     Ini.WriteBool('Position','AccountNameCollapsed',frmPopUMain.AccountsForm.catAccName.Collapsed);
     Ini.WriteBool('Position','BasicAccountCollapsed',frmPopUMain.AccountsForm.catBasicAccount.Collapsed);
     Ini.WriteBool('Position','AdvancedAccountCollapsed',frmPopUMain.AccountsForm.catAdvAcc.Collapsed);
