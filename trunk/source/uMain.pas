@@ -1917,6 +1917,19 @@ begin
 
   OptionsForm.UpdateUIAfterLoadingIni();
 
+  if (Options.Interval = 0) then
+  begin
+    // turning off auto-checking
+    frmPopUMain.actAutoCheck.Enabled := false;
+    frmPopUMain.actAutoCheck.Checked := false;
+    frmPopUMain.actAutoCheck.Caption := Translate('A&utoCheck Disabled');
+  end else begin
+    // turning on auto-checking
+    frmPopUMain.actAutoCheck.Enabled := true;
+    frmPopUMain.actAutoCheck.Checked := true;
+    frmPopUMain.actAutoCheck.Caption := Translate('A&utoCheck Enabled');
+  end;
+
   Application.ProcessMessages;
 end;
 

@@ -141,13 +141,32 @@ end;
 //-----------------------------------------------------------------[ events ]---
 
 procedure TframeInterval.OptionsChange(Sender: TObject);
+var
+  prevInterval : integer;
 begin
   if not Options.Busy then
   begin
     // screen to options
-    if (radioNever.Checked) then
+
+    //here Options.Inteveral = previous interval before we update it below
+    if (Options.Interval > 0) and (radioNever.Checked) then
+    begin
+      // turning off auto-checking
+      frmPopUMain.actAutoCheck.Enabled := false;
+      frmPopUMain.actAutoCheck.Checked := false;
+      frmPopUMain.actAutoCheck.Caption := Translate('A&utoCheck Disabled');
+    end else if (Options.Interval = 0) and (not radioNever.Checked) then
+    begin
+      // turning on auto-checking
+      frmPopUMain.actAutoCheck.Enabled := true;
+      frmPopUMain.actAutoCheck.Checked := true;
+      frmPopUMain.actAutoCheck.Caption := Translate('A&utoCheck Enabled');
+    end;
+
+    // now update Options.Interval
+    if (radioNever.Checked) then begin
       Options.Interval := 0
-    else
+    end else
       Options.Interval := StrToFloatDef(edTime.Text,5); //UpDown.Position;
 
     Options.TimerAccount := radioTimerAccount.Checked;
