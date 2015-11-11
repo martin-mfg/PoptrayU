@@ -136,7 +136,7 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
 uses uGlobal, IdException, uTranslate, Vcl.Forms, Vcl.Controls, uRCUtils,
-  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4, IdExceptionCore;
+  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4, IdExceptionCore, IdReplyIMAP4;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -180,14 +180,26 @@ end;
 
 procedure TAccount.ConnectIfNeeded();
 begin
-  if not Prot.Connected then
-    Connect()
-  else begin
+  if Prot.Connected then begin
     if isImap then begin
-      if NOT (prot as TProtocolIMAP4).ConnectionReady then     // csSelected -> valid, csUnexpectedlyDisconnected -> disconnect and reconnect
-      begin
+      if NOT (prot as TProtocolIMAP4).ConnectionReady then // eg: if connection reset by peer, socket may still be open but in invalid state
         (prot as TProtocolIMAP4).Disconnect;
-        connect();
+    end;
+  end;
+
+  if not Prot.Connected then begin
+    try
+      Connect();
+    except
+      on e: EIdConnClosedGracefully do
+        raise;
+      on e: EIdReplyIMAP4Error do begin
+        // username or password rejected...or auth type rejected
+        raise;
+      end;
+      on e2: Exception do begin
+        Prot.Disconnect;
+        Connect(); // retry once (retry failure should be passed back to caller)
       end;
     end;
   end;
@@ -216,9 +228,7 @@ begin
         raise EIdException.Create(errMsg);
       end;
     except on E : EIdReadTimeout do
-      begin
-        raise E;
-      end;
+      raise;
     end;
   finally
     self.Connecting := False;
