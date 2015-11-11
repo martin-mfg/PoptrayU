@@ -66,7 +66,7 @@ type
   //TColumnID = (columnFrom = 0, columnTo = 1, columnSubject = 2, columnDate = 3, columnSize = 4);
   // TSortType holds the IDs for various sort types. Sort types 0-4 should match SubItemsIndex-1 for that field as column ID numbers are cast
   TSortType = (sortByMessageStatus = -2, sortByNothing = -1, sortByFrom = 0, sortByTo = 1, sortBySubject = 2, sortByDate = 3, sortBySize = 4);
-
+  TPasswordErrorCause = (causeConnClosedGracefully, causeImapResponseError);
 
 type
   TDateTimePickerStyleHookFix= class(TDateTimePickerStyleHook);
@@ -259,7 +259,7 @@ type
 
     procedure ShowBlankMailServerErrMsg(account : TAccount);
     procedure NoDefaultMailClientErrMsg();
-    procedure ShowUsernameOrPasswordError(account : TAccount);
+    procedure ShowUsernameOrPasswordError(account : TAccount; cause : TPasswordErrorCause);
     procedure ShowInvalidFolderError(account : TAccount; folderType : SpecialImapFolders);
     procedure SelectImapSpecialFolder(account : TAccount; folderType : SpecialImapFolders);
 
@@ -399,6 +399,7 @@ type
     procedure GetUidsOfSelectedMsgs(uidList : TStringList);
     function TabToAccount() : TAccount;
     procedure SetMsgCountInTabTitle(account : TAccount; numMsgs : integer);
+    procedure DisableAccount(account : TAccount);
   public
     FKB : string; //UI label for kilobytes in the current language
 
@@ -437,7 +438,8 @@ uses
   IniFiles,  ShellAPI,  StrUtils, Types, uFrameVisualAppearance,
   IdEMailAddress, IdResourceStrings, uTranslate, uIniSettings, uFontUtils,
   IdReplyPOP3, IdExceptionCore, uRegExp, IdIOHandler, Math, OtlParallel,
-  DateUtils, IdMailBox, uImapFolderSelect, SynTaskDialog, uRegistryFxns;
+  DateUtils, IdMailBox, uImapFolderSelect, SynTaskDialog, uRegistryFxns,
+  IdReplyIMAP4;
 
 
 
@@ -720,7 +722,7 @@ begin
 end;
 
 
-procedure TfrmPopUMain.ShowUsernameOrPasswordError(account : TAccount);
+procedure TfrmPopUMain.ShowUsernameOrPasswordError(account : TAccount; cause: TPasswordErrorCause);
 var
   TaskDlg : TSynTaskDialog;
   msgResult : integer;
@@ -731,13 +733,21 @@ begin
   TaskDlg.Text := Translate('Invalid Username or Password');
   TaskDlg.AddButton(Translate('Edit Account Settings'),
                     Translate('Fix your username and/or password')); // msg result = 100
+  TaskDlg.AddButton( Translate('Disable This Account'),//message result = 101
+                     Translate('This will prevent further checking of this account'));
   TaskDlg.AddButton(Translate('Ignore'),
-                    Translate('Take no action at this time')); //msg result = 101
-  TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
-    Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.');
+                    Translate('Take no action at this time')); //msg result = 102
+  case cause of
+    causeConnClosedGracefully:
+      TaskDlg.ExpandedText := Translate('Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)')+'\n'+
+        Translate('EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.');
+    causeImapResponseError:
+      TaskDlg.ExpandedText := Translate('Error Type: "EIdReplyIMAP4Error"')+'\n'+
+        Translate('The response to the AUTHENTICATE IMAP command was NO. Usually this means the username or password was incorrect, but can be caused by using an unsupported Authentication Mode');
+  end;
   TaskDlg.CollapseButtonCaption := Translate('Technical Information');
   TaskDlg.ExpandButtonCaption := Translate('Technical Information');
-  msgResult := TaskDlg.Execute([cbOK],101,[tdfUseCommandLinks, tdfExpandFooterArea],tiError, tfiBlank, 0, 0, Handle, false); //modal dlg
+  msgResult := TaskDlg.Execute([cbOK],102,[tdfUseCommandLinks, tdfExpandFooterArea],tiError, tfiBlank, 0, 0, Handle, false); //modal dlg
   case msgResult of
   100:
     begin  //todo: this is very similar to the blank server error message. refactor.
@@ -748,8 +758,7 @@ begin
       AccountsForm.edUsername.SetFocus();
     end;
   101:
-    begin
-    end;
+    DisableAccount(account);
   end;
 end;
 
@@ -1231,55 +1240,67 @@ begin
   ForceShow := False;
   try
 
-    {$IFDEF LOG4D}
-//  TLogBasicConfigurator.Configure;
-//
-//  // set the log level
-//  TLogLogger.GetRootLogger.Level := All;
-//
-//  // create a named logger
-//  Logger := TLogLogger.GetLogger('poptrayuLogger2');
-//  Logger.addAppender(TLogFileAppender.Create('filelogger','log4d_main.log'));
+    Screen.Cursor := crHourGlass;
+    account.Prot.SetOnWork(frmPopUMain.OnPreviewDownloadProgressChange);
 
-    Logger := TLogLogger.GetLogger('poptrayuLogger');
-    Logger.Debug('Account Check...initial state');
-    Logger.Debug(account.DebugPrint);
-    {$ENDIF LOG4D}
+     // connect account
+    try
+      account.ConnectIfNeeded();                                             //INDY
+    except
+      on e : Exception do begin
+        Screen.Cursor := crDefault;
+        account.Error := True;
+        Result := -1;
 
+        if (e is EIdConnClosedGracefully) or (e is EIdReplyIMAP4Error) then begin
+          if (e is EIdConnClosedGracefully) then
+            ShowUsernameOrPasswordError(account, causeConnClosedGracefully)
+          else
+            ShowUsernameOrPasswordError(account, causeImapResponseError);
+          ErrorMsg(account,'Error Connecting:','Username or Password Error',true);//true = ignore error, don't show a popup
+          Exit;
+        end else begin
+          ErrorMsg(account,'Error Connecting:',e.Message,Options.NoError);
+          Exit;
+        end;
+      end;
+    end;
+
+
+    // delete any mail marked for deletion
+    try
+      ForceShow := not DeleteMails(account,deletecount);                   //INDY
+    except
+      on E:Exception do
+        ErrorMsg(account,'Error:',e.Message,True);  //sync
+    end;
+
+
+    Application.ProcessMessages;  //only if in fg thread
+
+
+    // Show progress indicators on GUI
+    self.panProgress.Visible := True;            //sync
+    self.actStopChecking.Enabled := True;
+    self.Progress.Position := 0;
+
+    ShowIcon(account,itChecking);
 
     try
-      Screen.Cursor := crHourGlass;
-
-      // connect account
-      account.Prot.SetOnWork(frmPopUMain.OnPreviewDownloadProgressChange);
+      // (POP accounts after deleting needs reconnecting here)
       account.ConnectIfNeeded();                                             //INDY
+    except
+      on e : Exception do begin
+        Screen.Cursor := crDefault;
+        account.Error := True;
+        Result := -1;
 
-      // delete any mail marked for deletion
-      try
-        ForceShow := not DeleteMails(account,deletecount);                   //INDY
-      except
-        on E:Exception do
-          ErrorMsg(account,'Error:',e.Message,True);  //sync
+        ErrorMsg(account,'Error Connecting:',e.Message,Options.NoError);
+        Exit;
       end;
+    end;
 
-      {$IFDEF LOG4D}
-      Logger.Debug('Account check: After deleting');
-      Logger.Debug(account.DebugPrint);
-      {$ENDIF LOG4D}
-
-
-      Application.ProcessMessages;  //only if in fg thread
-
-
-      // Show progress indicators on GUI
-      self.panProgress.Visible := True;            //sync
-      self.actStopChecking.Enabled := True;
-      self.Progress.Position := 0;
-
-      ShowIcon(account,itChecking);
-
-      account.ConnectIfNeeded();                                             //INDY
-
+    try
       try
         // quick check (Shift-click causes a full check instead)
         quickchecking := false;
@@ -1356,7 +1377,9 @@ begin
             account.Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now)
           else
             if (e is EIdConnClosedGracefully) then
-              ShowUsernameOrPasswordError(account)
+              ShowUsernameOrPasswordError(account, causeConnClosedGracefully)
+            else if (e is EIdReplyIMAP4Error) then
+              ShowUsernameOrPasswordError(account, causeImapResponseError)
             else
               // This is where an error message is trapped if the account is
               // unable to connect to the server on a routine check (or other error)
@@ -1395,6 +1418,7 @@ begin
     if Result >= 0 then
       Result := account.Mail.Count;
   finally
+    Screen.Cursor := crDefault;
     FLastCheck := DateTimeToStr(Now);
     FBusy := False;
     ShowIcon(account,itNormal);
@@ -1600,12 +1624,8 @@ end;
 function TfrmPopUMain.AllowAutoCheck: boolean;
 begin
   Result := dm.mnuAutoCheck.Checked and
-            (not Options.CheckWhileMinimized or
-             (Options.CheckWhileMinimized and FMinimized)
-            ) and
-            (not Options.DontCheckTimes or
-             (Options.DontCheckTimes and not BetweenTimes)
-            );
+    (not Options.CheckWhileMinimized or (Options.CheckWhileMinimized and FMinimized)) and
+    (not Options.DontCheckTimes or (Options.DontCheckTimes and not BetweenTimes));
 end;
 
 procedure TfrmPopUMain.SetColumnGroups();
@@ -3437,13 +3457,16 @@ begin
       AccountsForm.edServer.SetFocus();
     end;
   101:
-    begin
-      account.Enabled := false;
-      account.Error := false;
-      SaveAccountINI(account.AccountNum);
-      ShowIcon(account,itNormal); //sets the disabled icon indirectly
-    end;
+    DisableAccount(account);
   end;
+end;
+
+procedure TfrmPopUMain.DisableAccount(account : TAccount);
+begin
+  account.Enabled := false;
+  account.Error := false;
+  SaveAccountINI(account.AccountNum);
+  ShowIcon(account,itNormal); //sets the disabled icon indirectly
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
