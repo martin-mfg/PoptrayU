@@ -273,8 +273,21 @@ begin
       if ( e.LastError = 11004 ) then info := info + Translate('Server found, but is not a mail server.');
       ShowMemo(Translate('Connection Info'),info,450,250); //synchronize
     end;
-    on e : EIdException do begin
-      ShowMemo(Translate('Test Account'),Translate('An error occurred.')+ sLineBreak + e.Message,450,250); //synchronize
+    on e1: EIdReplyIMAP4Error do
+    begin
+      info := Translate('Authenticaion Failure') + sLineBreak +
+        sLineBreak +
+        Translate('Possible Causes:') + sLineBreak +
+        '* ' + Translate('Incorrect username or password') + sLineBreak +
+        '* ' + Translate('Unsupported authentication mode') + sLineBreak +
+        '* ' + Translate('IMAP access is disabled for this account');
+      ShowMemo(Translate('Connection Info'),info,450,250); //synchronize
+    end;
+    on e2: EIdException do begin
+      ShowMemo(Translate('Test Account'),
+        Translate('An error occurred.') + sLineBreak +
+        Translate('Error Type:') + ' ' + e2.className + sLineBreak +
+        e2.Message, 450,250); //synchronize
     end;
   end;
 end;
