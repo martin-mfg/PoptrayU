@@ -19,7 +19,7 @@ type
     class var sslInitDone : boolean;
     class var sslVersionString : string;
     Name : string;
-    ProtocolType : TProtocolType;
+    //ProtocolType : TProtocolType;
     OnWork : TPluginWorkEvent;
     class procedure InitOpenSSL();
     procedure Connect(Server : String; Port : integer; UserName,Password : String; TimeOut : integer); virtual; abstract;

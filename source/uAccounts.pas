@@ -96,6 +96,7 @@ type
     function CountStatus(statusses : TMailItemStatusSet): integer;
 
     function IsImap() : boolean;
+    function IsPop() : boolean;
     procedure Connect();
     procedure ConnectIfNeeded();
     procedure TestAccount();
@@ -182,8 +183,15 @@ procedure TAccount.ConnectIfNeeded();
 begin
   if Prot.Connected then begin
     if isImap then begin
+      try
       if NOT (prot as TProtocolIMAP4).ConnectionReady then // eg: if connection reset by peer, socket may still be open but in invalid state
         (prot as TProtocolIMAP4).Disconnect;
+      except
+        on EInvalidCast do begin
+          // if all is coded right this error is NOT expected ever.
+          ShowMessage('Error 191: Unable to connect as IMAP. Protocol is not IMAP.');
+        end;
+      end;
     end;
   end;
 
@@ -366,7 +374,15 @@ end;
 //------------------------------------------------------------------------------
 function TAccount.IsImap() : boolean;
 begin
-  Result := (Prot.ProtocolType = protIMAP4);
+  Result := (Prot is TProtocolIMAP4);
+end;
+
+//------------------------------------------------------------------------------
+// IsImap
+//------------------------------------------------------------------------------
+function TAccount.IsPop() : boolean;
+begin
+  Result := (Prot is TProtocolPOP3);
 end;
 
 

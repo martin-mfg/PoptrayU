@@ -82,6 +82,7 @@ type
     function RemoveDeletedMessages() : boolean;
     function RemoveToDeleteMsgs(): boolean;
     function RemoveToArchiveMsgs(): boolean;
+    procedure UpdateRelativeMsgNumbers();
   end;
 
 implementation
@@ -272,6 +273,23 @@ begin
       Remove(mailItem);
       Result := True;
     end;
+end;
+
+// Should be called after removing messages for POP to correct the relative
+// message numbers for messages after first deleted.
+procedure TMailItems.UpdateRelativeMsgNumbers();
+var
+  i, startNum : integer;
+  mailItem : TMailItem;
+begin
+  // THIS METHOD IS NOT THOROUGHLY TESTED
+  Assert(false);
+  startNum := self[0].msgNum + 1;
+  for i := 1 to self.Count - 1 do
+  begin
+    mailItem := self[i] as TMailItem;
+    mailItem.MsgNum := startNum + i;
+  end
 end;
 
 end.
