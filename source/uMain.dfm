@@ -31,7 +31,7 @@ object frmPopUMain: TfrmPopUMain
     Top = 0
     Width = 590
     Height = 379
-    ActivePage = tsAccounts
+    ActivePage = tsMail
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -154,6 +154,8 @@ object frmPopUMain: TfrmPopUMain
             Font.Style = []
             HorzMargin = 4
             HorzSeparator = False
+            ParentBackground = True
+            ParentColor = True
             ParentFont = False
             ParentShowHint = False
             PopupMenu = dm.mnuToolbar
