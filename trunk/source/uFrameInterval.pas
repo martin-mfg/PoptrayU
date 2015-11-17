@@ -141,8 +141,6 @@ end;
 //-----------------------------------------------------------------[ events ]---
 
 procedure TframeInterval.OptionsChange(Sender: TObject);
-var
-  prevInterval : integer;
 begin
   if not Options.Busy then
   begin

@@ -31,7 +31,6 @@ object frameGeneralOptions: TframeGeneralOptions
       Caption = 'New Message Notification'
       Color = clWindow
       TabOrder = 0
-      ExplicitWidth = 449
       object lblAdvInfoDelay: TLabel
         Left = 237
         Top = 45
@@ -117,7 +116,6 @@ object frameGeneralOptions: TframeGeneralOptions
       Caption = 'Tray Icon'
       Color = clWindow
       TabOrder = 1
-      ExplicitWidth = 185
       object lblTrayIcon: TLabel
         AlignWithMargins = True
         Left = 4
@@ -132,7 +130,7 @@ object frameGeneralOptions: TframeGeneralOptions
         AlignWithMargins = True
         Left = 4
         Top = 22
-        Width = 422
+        Width = 388
         Height = 12
         Hint = 
           'Reset the Tray Icon message count when you view the PopTrayU'#13#10'wi' +
@@ -143,13 +141,12 @@ object frameGeneralOptions: TframeGeneralOptions
         TabOrder = 0
         OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
-        ExplicitWidth = 439
       end
       object chkRotateIcon: TCheckBox
         AlignWithMargins = True
         Left = 4
         Top = 4
-        Width = 422
+        Width = 388
         Height = 12
         Hint = 'Rotate Icon to show messages in each account'
         Anchors = [akLeft, akTop, akRight]
@@ -157,7 +154,6 @@ object frameGeneralOptions: TframeGeneralOptions
         TabOrder = 1
         OnClick = OptionsChange
         OnMouseDown = HelpMouseDown
-        ExplicitWidth = 439
       end
       object cmbCheckingIcon: TComboBox
         Left = 130
@@ -182,7 +178,7 @@ object frameGeneralOptions: TframeGeneralOptions
       Caption = 'Startup'
       Color = clWindow
       TabOrder = 2
-      ExplicitWidth = 449
+      StyleElements = [seFont, seClient]
       object lblFirstWait: TLabel
         Left = 31
         Top = 22

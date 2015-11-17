@@ -178,7 +178,7 @@ var
   //idLogFile1 : TidLogFile;//DEBUG - logging.
 begin
   Self.Name := 'IMAP';
-  Self.ProtocolType := protIMAP4;
+  //Self.ProtocolType := protIMAP4;
   IMAP := TIdIMAP4.Create(nil);
   Msg := TIdMessage.Create(nil);
   Msg.OnCreateAttachment := IdMessage1CreateAttachment;

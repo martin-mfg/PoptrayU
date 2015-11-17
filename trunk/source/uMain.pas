@@ -1253,10 +1253,11 @@ begin
         Result := -1;
 
         if (e is EIdConnClosedGracefully) or (e is EIdReplyIMAP4Error) then begin
-          if (e is EIdConnClosedGracefully) then
-            ShowUsernameOrPasswordError(account, causeConnClosedGracefully)
-          else
-            ShowUsernameOrPasswordError(account, causeImapResponseError);
+          if not Options.NoError then
+            if (e is EIdConnClosedGracefully) then
+              ShowUsernameOrPasswordError(account, causeConnClosedGracefully)
+            else
+              ShowUsernameOrPasswordError(account, causeImapResponseError);
           ErrorMsg(account,'Error Connecting:','Username or Password Error',true);//true = ignore error, don't show a popup
           Exit;
         end else begin
@@ -1295,7 +1296,7 @@ begin
         account.Error := True;
         Result := -1;
 
-        ErrorMsg(account,'Error Connecting:',e.Message,Options.NoError);
+        ErrorMsg(account,'Error Connecting:',e.Message + ' ('+e.ClassName+')',Options.NoError);
         Exit;
       end;
     end;
@@ -1376,20 +1377,15 @@ begin
           if FStop then
             account.Status := Translate('User Aborted.')+HintSep+DateTimeToStr(Now)
           else
-            if (e is EIdConnClosedGracefully) then
-              ShowUsernameOrPasswordError(account, causeConnClosedGracefully)
-            else if (e is EIdReplyIMAP4Error) then
-              ShowUsernameOrPasswordError(account, causeImapResponseError)
-            else
-              // This is where an error message is trapped if the account is
-              // unable to connect to the server on a routine check (or other error)
-              // eg: Connection Reset By Peer
-              ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
+            // This is where an error message is trapped if the account is
+            // unable to connect to the server on a routine check (or other error)
+            // eg: Connection Reset By Peer
+            ErrorMsg(account,'Connect Error:',e.Message,Options.NoError);
 
-              // To recover from Connection Reset by Peer, IMAP needs to
-              // close the connection and re-connect
-              if (account.isImap) then
-                account.prot.Disconnect;
+            // To recover from Connection Reset by Peer, IMAP needs to
+            // close the connection and re-connect
+            if (account.isImap) then
+              account.prot.Disconnect;
         end;
       else begin
         Screen.Cursor := crDefault;
@@ -2392,7 +2388,7 @@ begin
       // MUST send QUIT command for POP3 account to enter UPDATE state and
       // finalize all message deletion. (this means reconnecting later to
       // check for new messages)
-      if (account.Prot.ProtocolType = protPOP3) then
+      if (account.IsPop) then
         account.Prot.DisconnectWithQuit;
 
       //TODO: do we need to remove deleted at this point for quick check?
@@ -4904,9 +4900,21 @@ begin
               lvMailRemoveSelectedMsgs();
               account.Mail.RemoveDeletedMessages();
               Account.Mail.RemoveToDeleteMsgs();
+
+              // if pop adjust relative message numbers after delete - ideal, but not working yet.
+              //if account.IsPop then //POP
+              //  Account.Mail.UpdateRelativeMsgNumbers();
+
               Account.LastMsgCount := Account.LastMsgCount - deleteCount;
               ShowIcon(Account, itNormal);// to set the count in the account tab & tray
               //CallNotifyPlugins;
+              if account.IsPop then begin
+                account.Prot.Disconnect;
+
+                // bug fix: the relative message numbers get "off" for POP after deleting.
+                // until this is fixed, automatically recheck POP to fix message numbers
+                CheckMail(account,False,True);
+              end;
             end else
               account.Status := Translate('Error deleting message(s)');
           except

@@ -104,7 +104,7 @@ var
   DLL1, DLL2 : THandle;
 begin
   Self.Name := 'POP3';
-  Self.ProtocolType := protPOP3;
+  //Self.ProtocolType := protPOP3;
   POP := TidPOP3.Create(nil);
   autoAuthMode := true;
 
