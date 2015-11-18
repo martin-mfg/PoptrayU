@@ -2,6 +2,30 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.2.5
+November 2015
+=============
+
+New Features
+------------
+* Re-order columns in the message list in the main window (by drag and drop)
+
+Changed Features
+----------------
+* Indy Version and OpenSSL version on about dialog now loaded dynamically to reflect the actual version loaded.
+* Indy updated to 10.6.2.0
+
+
+Bug Fixes
+---------
+* POP deletion behavior has been reverted to do a check for new mail after deleting. This fixes relative message numbers incorrect for POP accounts after deleting (causing "message not found" or incorrect message to be shown on preview) 
+* Automatic disconnect/reconnect after sleep/hibernate/connection reset by peer (fixes various "Invalid connection state" errors)
+* Crash reporter was shown for EIdReadTimeout adding star to message in preview window.
+* "AutoCheck Enabled" option on the tray menu disabled when Interval Option "Do not automatically check for new messages" is set.
+* A couple fixes to what error message is shown on certain connect failures (eg: username or password error incorrectly shown after connection reset by peer).
+
+
+=============
 Version 5.2.4
 November 2015
 =============
