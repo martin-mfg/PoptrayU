@@ -2,6 +2,15 @@ PopTrayU Version History
 ------------------------
 
 =============
+Version 5.2.6
+December 2015
+=============
+Bug Fixes
+---------
+* Crash reporter shown when adding a rule if no existing rule is selected
+* Deleting last rule left some edit fields editable
+
+=============
 Version 5.2.5
 November 2015
 =============
