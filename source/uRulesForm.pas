@@ -878,16 +878,20 @@ end;
 
 procedure TRulesForm.ShowRuleEditingFields();
 begin
-    CategoryPanelGroup1.Visible := true;
-    panRuleDetail.Visible := True;
-    actRuleDelete.Enabled := True;
-    btnRuleDown.Enabled := listRules.ItemIndex < listRules.Count-1;
-    btnRuleUp.Enabled := listRules.ItemIndex > 0;
+  CategoryPanelGroup1.Visible := true;
+  panRuleDetail.Visible := True;
+  actRuleDelete.Enabled := True;
+  btnRuleDown.Enabled := listRules.ItemIndex < listRules.Count-1;
+  btnRuleUp.Enabled := listRules.ItemIndex > 0;
 end;
 
 procedure TRulesForm.HideRuleEditingFields();
 begin
-    CategoryPanelGroup1.Visible := false;
+  CategoryPanelGroup1.Visible := false;
+  actRuleDelete.Enabled := False;
+  panRuleDetail.Visible := False;
+  btnRuleDown.Enabled := False;
+  btnRuleUp.Enabled := False;
 end;
 
 procedure TRulesForm.ShowRule(selected: integer);
@@ -963,10 +967,7 @@ begin
 
   end
   else begin
-    actRuleDelete.Enabled := False;
-    panRuleDetail.Visible := False;
-    btnRuleDown.Enabled := False;
-    btnRuleUp.Enabled := False;
+    HideRuleEditingFields();
   end;
 end;
 
