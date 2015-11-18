@@ -154,6 +154,8 @@ type
     procedure EnableRuleButtons;
     procedure MoveRule(old,new : integer);
     procedure FillRulesAccountsDropdown(const Accounts : TAccounts); //Updates the Rule "accounts" list drop down after an account is added or removed etc
+    procedure ShowRuleEditingFields();
+    procedure HideRuleEditingFields();
   public
     { Public declarations }
     procedure enableBodyRuleArea(enable : boolean);
@@ -431,7 +433,7 @@ procedure TRulesForm.btnCancelRuleClick(Sender: TObject);
 begin
   LoadRulesINI;
   listRules.ItemIndex := -1;
-  panRuleDetail.Visible := False;
+  HideRuleEditingFields();
   actRuleDelete.Enabled := False;
   btnRuleDown.Enabled := False;
   btnRuleUp.Enabled := False;
@@ -455,7 +457,9 @@ begin
   end;
   // show in listbox
   listRules.ItemIndex := RulesManager.Rules.Count-1;
-  panRuleDetail.Visible := True;
+
+  ShowRuleEditingFields();
+
   // clear rule detail
   edRuleName.Text := NewRule.Name;
   edRuleName.SelectAll;
@@ -872,6 +876,20 @@ begin
   end;
 end;
 
+procedure TRulesForm.ShowRuleEditingFields();
+begin
+    CategoryPanelGroup1.Visible := true;
+    panRuleDetail.Visible := True;
+    actRuleDelete.Enabled := True;
+    btnRuleDown.Enabled := listRules.ItemIndex < listRules.Count-1;
+    btnRuleUp.Enabled := listRules.ItemIndex > 0;
+end;
+
+procedure TRulesForm.HideRuleEditingFields();
+begin
+    CategoryPanelGroup1.Visible := false;
+end;
+
 procedure TRulesForm.ShowRule(selected: integer);
 var
   i : integer;
@@ -883,14 +901,10 @@ begin
     SetupRuleGrid;
     FRuleChanged := False;
     // visible
-    CategoryPanelGroup1.Visible := true;
-    panRuleDetail.Visible := True;
-    actRuleDelete.Enabled := True;
-    btnRuleDown.Enabled := listRules.ItemIndex < listRules.Count-1;
-    btnRuleUp.Enabled := listRules.ItemIndex > 0;
+    ShowRuleEditingFields();
     // rule detail
     edRuleName.Tag := 1; // bug in WinNT
-    edRuleName.Text := RulesManager.Rules[selected].Name;;
+    edRuleName.Text := RulesManager.Rules[selected].Name;
     edRuleName.Tag := 0;
     chkRuleEnabled.Checked := RulesManager.Rules[selected].Enabled;
     chkRuleNew.Checked := RulesManager.Rules[selected].New;
