@@ -2053,6 +2053,16 @@ begin
         end;
         //-------------------------------------------------------------------------
 
+        // ASIDE: at this point, we have downloaded the message causing it to
+        // get marked as read on the server. Mark message as read in the main
+        // window if we are looking at the message in the main window.
+        if Account.IsImap and (MailItem = lvMail.Selected.Data) then
+        begin
+          ChangeReadStatuses(true); // mark selected message(s) as read
+        end;
+
+
+
         RawMsg.SetText(pRawMsg);
         Account.Prot.FreePChar(pRawMsg);
         frmPreview.FRawMsg := RawMsg.Text;
@@ -2162,7 +2172,8 @@ begin
     end;
   finally
     Screen.Cursor := crDefault;
-    if Account.Prot.Connected then Account.Prot.Disconnect;
+    if Account.Prot.Connected and Account.IsPop then
+      Account.Prot.Disconnect;
   end;
 
 end;
