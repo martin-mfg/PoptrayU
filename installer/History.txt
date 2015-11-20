@@ -5,6 +5,12 @@ PopTrayU Version History
 Version 5.2.6
 December 2015
 =============
+
+Changed Features
+----------------
+* Don't disconnect IMAP accounts after preview
+* After preview change read status immediately in Main Window for IMAP
+
 Bug Fixes
 ---------
 * Crash reporter shown when adding a rule if no existing rule is selected
