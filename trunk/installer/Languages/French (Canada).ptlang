@@ -1,11 +1,11 @@
 ﻿#-------------------------------------------------------------------------------
 # Logiciel - nom                   : PopTrayU
-# Logiciel - version               : 5.2.1
+# Logiciel - version               : 5.2.3b
 # Logiciel - auteur                : Jessica Brown
 # Logiciel - site Internet         : http://poptrayu.sourceforge.net/
 #-------------------------------------------------------------------------------
 # Fichier - description            : Traduction = French (Canada) 
-# Fichier - date et lieu           : 29.09.2015 - Ville de Québec 
+# Fichier - date et lieu           : 08.11.2015, 10 h  - Ville de Québec 
 # Fichier - auteur et mise à jour  : Bruno Giroux
 #-------------------------------------------------------------------------------
 
@@ -308,7 +308,7 @@ Reply using default mail client=Répondre en utilisant le logiciel de courriel.
 Reply=Répondre
 Requires that you enter the specified password to open PopTrayU.=Si cette case est cochée, vous devrez choisir un mot de passe~qui vous permettra par la suite d'ouvrir la fenêtre Courriel de PopTrayU.~Cette option ne peut être utilisée qu'avec l'option Réduire dans la zone de notification.~Bien noter ce mot de passe puiqu'il apparaîtra sous la forme d'astérisques. 
 Reset the Tray Icon message count when you view the PopTrayU~window.  When new mail arrives only the new count since last ~view will be shown.=Si cette case est cochée, le compteur du nombre de courriels~dans la zone de notification sera réinitialisé - remis à zéro -~ lors de l'ouverture de la fenêtre de PopTrayU.~Seul le nombre de courriels arrivés~depuis la dernière ouverture de la fenêtre sera affiché. 
-Reset Mail Count in Tray when Viewing=Réinitaliser le compteur de nouveaux messages après l'affichage de la fenêtre principale
+Reset Mail Count in Tray when Viewing=Réinitaliser le compteur de nouveaux courriels après l'affichage de la fenêtre principale
 Reset...=Réinitialiser...
 Retrieve Body while Checking=Recouvrer le corps du courriel lors de la vérification
 Retrieve Error:=Erreur durant la récupération des courriels :
@@ -434,7 +434,7 @@ WAV files=Fichiers WAV
 What to show on the TrayIcon~while checking for new mail.=Ce qu'il faut afficher sur l'icône de la zone de notification~pendant la vérification des nouveaux courriels.
 When a connect error occurs, PopTrayU will display an error message.~If this option is enabled, the error message will only be displayed in the status bar and Tray Hint.=Si cette case est cochée, lorsqu'une erreur de connexion surviendra,~PopTrayU n'affichera pas de fenêtre d'information avec un message d'erreur.~Le message d'erreur sera affiché au bas de la fenêtre Courriel. 
 When deleting mail they will get marked for deletion~and only physically deleted when the next check runs.=Si cette case est cochée, lorsque vous supprimerez des courriels,~ceux-ci seront d'abord identifiés comme étant à supprimer,~mais ils ne le seront qu'à la prochaine vérification du courriel. 
-When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Lorsque vous prévisualiserez un courriel au format MIME,~PopTrayU décodera le courriel et affichera le début;~le reste du courriel sera présenté~sous la forme de fichier joint.~Si la fonction n'est pas sélectionnée,~le courriel sera affiché en texte brut.
+When previewing a message with MIME parts~PopTrayU will decode the MIME message, show the ~first part in the preview and the rest as attachments.~When unselected, preview will show the RAW message.=Lorsque vous prévésualiserez un courriel au format MIME,~PopTrayU décodera le courriel et affichera le début;~le reste du courriel sera présenté~sous la forme de fichier joint.~Si la fonction n'est pas sélectionnée,~le courriel sera affiché en texte brut.
 When previewing a message, only load the~specified number of lines.=Si cette case est cochée, PopTrayU,~quand il y a prévisualisation d'un courriel,~n'affichera que le nombre de lignes indiqué.~Puisque le courriel sera incomplet, la pièce jointe,~le cas échéant, ne sera pas téléchargée.~Le courriel sera visible au format brut. 
 When you receive mail from the following list of e-mail addresses,~the messages won't be deleted by rules.=Quand vous recevrez des courriels d'un expéditeur dont l'adresse électronique est dans cette liste, ces courriels ne seront pas supprimés par des règles. 
 When starting PopTrayU, first wait a few seconds~before checking for mail.=Au démarrage de PopTrayU, attendre~quelques secondes avant de vérifier le courriel.
@@ -529,7 +529,7 @@ Only check when already online=Vérifier uniquement lorsque déjà en ligne
 
 
 # ---------- Added PopTrayU 5.0 (beta 1) (Nouveaux mots, expression et phrases pour 5.0 beta 1) ---------
-Message Preview Options=Options pour la prévisualisation
+Message Preview Options=Options pour la prévisiabilisation
 Disable HTML Preview=Désactiver le HTML au moment de la prévisualisation
 Main Window=Fenêtre principale
 Default Spam Toolbar Button Action:=Action, par défaut, du bouton Pourriel :
@@ -569,9 +569,10 @@ An error occurred.=Une erreur est survenue.
 
 # ---------- Added PopTrayU 5.0 (beta 10) (Nouveaux mots, expression et phrases pour 5.0 beta 10) --------
 Closes any open message preview windows when 'to tray' is pressed=Si cette case est cochée, les fenêtres de prévisualisation seront fermée en cliquant sur Réduire
-Auto-close Preview Windows=Fermer automatiquement la fenêtre de prévisiualisation
+Auto-close Preview Windows=Fermer automatiquement la fenêtre de prévisualisation
 Message Not Found=Courriel non trouvé
 No such message=Courriel inexistant
+
  
 
 # ---------- Added PopTrayU 5.0 (beta 12) ----------
@@ -596,7 +597,7 @@ Advanced Connection Settings=Paramètres avancés de connexion
 Application Workspace=Espace de travail
 Aqua=Cyan
 Authentication Mode:=Mode d'identification :
-Auto-close Preview Windows=Fermer automatique la fenêtre de prévisiualisation
+Auto-close Preview Windows=Fermer automatique la fenêtre de prévisualisation
 Automatic Mail Check Conditions=Conditions de la vérification automatique du courriel
 Background=Arrière-plan
 Background:=Arrière-plan :
@@ -674,10 +675,10 @@ Only while Minimized=Uniquement lorsque la fenêtre est réduite
 Password=Mot de passe
 Plain Text=Texte uni
 Plain Text Emails=Texte uni des courriels
-Plain Text Preview=Texte uni en prévisualisation
+Plain Text Preview=Texte uni en prévisiabilisation
 PopTrayU Account Preferences=Préférences pour l'utilisation de PopTrayU
 PopTrayU Skin/Theme=Thème de l'apparence de PopTrayU
-Preview Window=Fenêtre de prévisiualisation
+Preview Window=Fenêtre de prévisualisation
 Purple=Pourpre
 Raw=Brut
 Raw=Brut
@@ -786,5 +787,78 @@ Checking... Removing Deleted Items=Vérification... Retrait des éléments suppr
 Checking... Double-Checking for Deleted Items=Vérification... Re-vérification des éléments supprimés
 Checking... Counting New Messages=Vérification... Décompte des nouveaux courriels
 More=Plus
-Download full message on Preview=Télécharger le courriel au complet au moment de la prévisiualisation
+Download full message on Preview=Télécharger le courriel au complet au moment de la prévisualisation
+Error deleting message(s)=Erreur au moment de la suppression d'un (de) courriel(s)
+Error deleting Message(s)=Erreur au moment de la suppression d'un (de) courriel(s)
+Unable to retrieve Message. Message number out of range=Impossible de recouvrer ce courriel. Le numéro de ce courriel est en dehors de la séquence.
+
+# --- Version 5.2.3
+Auto-detect Email Client=Détecter automatiquement le logiciel de courriel
+Run Email Client=Lancer le logiciel de courriel
+Auto-detect My Email Client=Détecter automatiquement mon logiciel de courriel
+PopTrayU will look in the system registry for the preferred email client=PopTrayU va rechercher le logiciel de courriel préféré
+Set Email Client Manually=Indifier manuellement le logiciel de courriel
+You will be taken to the Options screen to set this value.=La fenêtre Options vous permettra de déterminer cette valeur
+Ignore=Ignorer
+Take no action at this time=Ne rien faire présentement
+Auto-detection Complete=La détection automatique est terminée
+Use %s=Utiliser %s
+Default Time Format:=Le format par défaut pour indiquer l'heure
+AM/PM Time (12:00am-11:59pm)=AM/PM format (12:00 am - 11:59 pm
+24-Hour Time (0:00-23:59)=Le format 24 heures (0:00 - 23:59)
+Unable to Launch Email Client=Incapable de lancer le logiciel de courriel
+Your preferred email client has not been set yet.=Votre logiciel de courriel préféré n'a pas encore été sélectionné.
+Error Type: "EIdConnClosedGracefully" (Connection Closed Gracefully)=Type d'errreur: "EIdConnClosedGracefully" (Connection Closed Gracefully)
+EIdConnClosedGracefully is an exception signaling that the connection has been closed by the server intentionally, usally when the username or password is invalid.=EIdConnClosedGracefully est une exception qui indique que la connection a été coupée par le serveur, habituellement parce que le nom de l'utilisateur ou que le mot de passe est invalide.
+Technical Information=Information d'ordre technique
+Connection Error:=Erreur de connection
+Invalid Username or Password=Nom d'usager ou mot de passe invalide
+Edit Account Settings=Éditer les paramètres du compte
+Fix your username and/or password=Corriger votre nom d'usager ou votre mot de passe
+Incoming Mail Server Not Set=Le serveur de courriel entrant n'est pas identifié
+Incoming Mail Server must be set to check mail for this account=Le serveur de courriel entrant doit être identifié afin de vérifier le courriel pour ce compte
+Update Account Settings=Mettre à jour les paramètes du compte
+Disable This Account=Désactiver ce compte
+This will prevent further checking of this account=Il n'y aura dorénavant plus de vérification pour ce compte.
+Set the Incoming Mail Server=Déterminer les paramètres du serveur de courriel entrant
+Delete Account=Supprimer le compte
+Keep Account=Conserver le compte
+Are you sure you want to delete this account?=Êtes-vous certains de vouloir supprimer ce compte?
+Delete "%s"=Supprimer "%s"
+You have unsaved changes to this account.=Vous n'avez pas sauvegardé les changement effectués pour ce compte
+Would you like to save now?=Voulez-vous sauvegarder le tout maintenant?
+Revert=Renverser
+Delete Account=Supprimer le compte
+Backup "%s" Before Deleting?=Sauvegarder "%s" avant la suppression?
+Backup and Delete=Sauvegarder et supprimer
+Backup file can be imported to undo=Le fichier de sauvegarde peut être importé pour annulation
+Delete without Backup=Supprimer sans sauvegarder
+Delete cannot be undone=La suppression ne peut pas être annulée
+Backup Account:=Sauvegarder le compte
+Account Backup Canceled=La sauvegarde du compte est annulée
+%s will not be backed up before deleting=%s ne sera pas sauvegardé avant d'être supprimé
+
+# --- Version 5.2.3b
+Change what happens when you click or double click the tray icon=Changer le résultat du click ou du double click de l'icône dans la zone de notification
+Change Mouse Button Actions=Changer le résultat de l'utilisation des boutons de la souris
+Unable to Delete Message(s)=Incapable de supprimer le(s) courriel(s)
+IMAP Folder %s Does Not Exist=Le dossier IMAP %s n'existe pas
+Move deleted messages to a different IMAP folder=Déplacer les courriels supprimés dans un dossier IMAP différent
+Select A Different Folder=Choisir un dossier différent
+Create %s=Créer %s
+Attempt to Create this folder on the server=Essayer de créer ce dossier sur le serveur
+Delete messages without archiving=Supprimer les courriels sans les archiver
+Do not use IMAP Trash folder=N'utiliser pas le dossier IMAP/Trash
+Error Creating IMAP Folder=Erreur au moment de créer un dossier IMAP
+Select Account=Choisir le compte
+Error Deleting Spam Message(s)=Erreur au moment de supprimer le(s) pourriel(s)
+Do not use IMAP Spam Folder=N'utiliser pas le dossier Pourriel IMAP
+Remember Viewed Messages for POP Accounts=Se souvenir des courriels visualisés des comptes POP
+Move deleted spam to a different IMAP folder=Déplacer le(s) pourriel(s) dans un dossier IMAP différent
+Disable Archive=Désactiver l'archivage
+The archive button will be disabled=Le bouton Archive sera désactivé
+Archive messages to a different IMAP folder=Archiver les courriels dans un dossier IMAP différent
+
  
+
+
