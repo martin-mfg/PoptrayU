@@ -371,6 +371,8 @@ begin
     Options.PreviewBgColor := Ini.ReadInteger('Preview','PreviewBgColor',clWindow);
     Options.ShowXMailer := Ini.ReadBool('Preview','ShowXMailer',false);
 
+    DebugOptions.ProtocolLogging := Ini.ReadBool('DebugOptions','ProtocolLogging',false);
+
     // num accounts
     IniNumAccounts := Ini.ReadInteger('Options','NumAccounts',0);
   finally
@@ -561,6 +563,10 @@ begin
     Ini.WriteInteger('Preview','PreviewBgColor', Options.PreviewBgColor);
     Ini.ReadBool('Preview','ShowXMailer',Options.ShowXMailer);
 
+    // Don't add DebugOptions to ini file unless debugging options are in use somehow.
+    if Ini.ValueExists('DebugOptions','ProtocolLogging') or DebugOptions.ProtocolLogging then
+      Ini.WriteBool('DebugOptions','ProtocolLogging',DebugOptions.ProtocolLogging);
+
   finally
      Ini.Free;
   end;
@@ -582,7 +588,7 @@ begin
     Accounts[num-1].LoadAccountFromINI(Ini, section);
     LoadViewedMessageIDs(num);
     except
-      Assert(false);
+      Assert(false);     //TODO add better error handling here.
       Exit;
     end;
   finally

@@ -137,7 +137,8 @@ var
 ////////////////////////////////////////////////////////////////////////////////
 implementation
 uses uGlobal, IdException, uTranslate, Vcl.Forms, Vcl.Controls, uRCUtils,
-  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4, IdExceptionCore, IdReplyIMAP4;
+  IdStack, StrUtils, Dialogs, uPOP3, uIMAP4, IdExceptionCore, IdReplyIMAP4,
+  uIniSettings;
 
 {$REGION '-- TUniqueQueue --'}
 ////////////////////////////////////////////////////////////////////////////////
@@ -582,8 +583,12 @@ begin
     self.Prot := TProtocolIMAP4.Create;
   end;
 
-end;
+  if DebugOptions.ProtocolLogging then begin
+    self.Prot.EnableLogging(uIniSettings.GetSettingsFolder() + 'logs\',
+      'acc'+IntToStr(Self.AccountNum)+'_'+FormatDateTime('mmm-dd-yyyy_hh-mm', Now)+'.log');
+  end;
 
+end;
 
 
 
