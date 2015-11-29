@@ -3,7 +3,7 @@ unit uProtocol;
 interface
 
 uses
-  System.Generics.Collections, IdMailBox, IdMessage, System.Classes;
+  System.Generics.Collections, IdMailBox, IdMessage, System.Classes, IdLogFile;
 
 type
   TAuthType = (autoAuth = 0, password = 1, apop = 2, sasl = 3);
@@ -48,6 +48,9 @@ type
 
     //TODO: this should be eliminated if we can weed out enough of the no longer needed PChar's
     procedure FreePChar(var p : PChar);
+    procedure EnableLogging(LogFilePath: String; LogFileName : String);
+  protected
+    procedure SetLogger(LogFile : TIdLogFile); virtual; abstract;
   private
     class constructor Create;
   end;
@@ -61,7 +64,7 @@ implementation
 
 
 uses
-  SysUtils, Windows, IdSSLOpenSSL;
+  SysUtils, Windows, IdSSLOpenSSL, uGlobal, Vcl.Dialogs;
 
 class constructor TProtocol.Create;
 begin
@@ -131,6 +134,32 @@ begin
   p := nil;
 end;
 
+// LogFileName should be the filename for this protocol's log, not including the directory.
+procedure TProtocol.EnableLogging(LogFilePath : String; LogFileName : String);
+var
+  DebugLogger : TIdLogFile;
+begin
+  if (DebugOptions.ProtocolLogging) then
+  begin
+    try
+      if not DirectoryExists(LogFilePath) then
+        CreateDir(LogFilePath);
 
+      if DirectoryExists(LogFilePath) then begin
+        DebugLogger := TIdLogFile.Create(Nil);
+        DebugLogger.Filename:= LogFilePath + LogFileName;
+        DebugLogger.Active:= True;
+        self.SetLogger(DebugLogger);
+      end;
+    except
+      on E : Exception do begin
+        ShowMessage('Error creating protocol logging file: ' + #13#10+
+          LogFilePath + LogFileName + #13#10 +
+          'Error Type: '+ E.ClassName + #13#10 +
+          'Error Details: ' + E.Message); //TODO: internationalize.
+      end;
+    end;
+  end;
+end;
 
 end.

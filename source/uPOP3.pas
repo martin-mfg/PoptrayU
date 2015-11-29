@@ -50,8 +50,6 @@ type
 
     mLastErrorMsg : string;
     mHasErrorToReport : boolean;
-
-    DebugLogger : TIdLogFile;
     autoAuthMode : boolean;
 
     procedure POPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64); //indy10
@@ -85,6 +83,8 @@ type
     function SupportsUIDL(): boolean; override;
     function CountMessages(): LongInt; override;
     function MakeRead(const uid : string; isRead : boolean): boolean; override; //not supported. error case if called.
+  protected
+    procedure SetLogger(LogFile : TIdLogFile); override;
   end;
 
 implementation
@@ -93,9 +93,9 @@ implementation
     IdHTTP, IdStackConsts, Windows,
     IdException, IdExceptionCore, IdStack,  IdSASLCollection,
     IdIntercept, IdAttachmentMemory, IdGlobal, IdReplyPOP3,
-    uIniSettings;
-  const
-    debugPop = false;
+    uIniSettings, uGlobal;
+  //const
+  //  debugPop = false;
 
 { TProtocolPOP3 }
 
@@ -108,26 +108,7 @@ begin
   POP := TidPOP3.Create(nil);
   autoAuthMode := true;
 
-  if (debugPop) then
-  begin
-    DebugLogger := TIdLogFile.Create(Nil);
-    DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'pop_debug.log';
-    DebugLogger.Active:= True;
-    POP.Intercept:= TIdConnectionIntercept(DebugLogger);
-  end;
 
-//  DLL1 := LoadLibrary('libeay32.dll');
-//  if DLL1 = 0 then begin
-//    //MessageDlg('OpenSSL library libeay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-//    mSSLDisabled := true;
-//  end
-//  else begin
-//    DLL2 := LoadLibrary('ssleay32.dll');
-//    if DLL2 = 0 then begin
-//      //MessageDlg('OpenSSL library ssleay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-//      mSSLDisabled := true;
-//    end;
-//  end;
   TProtocol.InitOpenSSL;
   mSSLDisabled := not TProtocol.sslLoaded;
 
@@ -184,9 +165,14 @@ begin
   POP.OnWork := POPWork;
 end;
 
+procedure TProtocolPOP3.SetLogger(LogFile : TIdLogFile);
+begin
+  POP.Intercept := TIdConnectionIntercept(LogFile);
+end;
+
 // SSL options will be disabled for this protocol if the SSL plugin dlls
 // did not load correctly in the constructor.
-function TProtocolPOP3.SupportsSSL : boolean;
+function TProtocolPOP3.SupportsSSL() : boolean;
 begin
   Result := not mSSLDisabled;
 end;

@@ -36,6 +36,10 @@ const
   APPTITLE = 'PopTrayU';
 
 var
+  DebugOptions : record
+    ProtocolLogging : boolean;
+  end;
+
   Options : record
     Busy : boolean;
     // interval

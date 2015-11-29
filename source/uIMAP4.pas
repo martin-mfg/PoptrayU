@@ -72,12 +72,10 @@ type
 
     mLastErrorMsg : string;
     mHasErrorToReport : boolean;
-    DebugLogger : TIdLogFile;
     capabilities : TStringList;
     procedure IMAPWork(Sender: TObject; AWorkMode: TWorkMode; AWorkCount: Int64);
     procedure IdMessage1CreateAttachment(const AMsg: TIdMessage; const AHeaders: TStrings; var AAttachment: TIdAttachment);
     function HasCapa(capability: string) : boolean;
-    //function ImapCmdNum() : string;
   public
     // general
     IMAP : TIdIMAP4;
@@ -126,6 +124,8 @@ type
     function GetUnreadUIDs(var UIDLs : TStringList; const maxUIDs : integer = -1) : boolean;
     function ConnectionReady() : boolean;
     function CreateIMAPFolder(folderName : String) : boolean;
+  protected
+    procedure SetLogger(LogFile : TIdLogFile); override;
   end;
 
   function AddQuotesIfNeeded(input: string) : string;
@@ -137,37 +137,12 @@ uses
     {$ENDIF}
     Math,
              Dialogs,
-  IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4, IdExceptionCore;
+  IdLogBase, IdIntercept, uIniSettings, IdReplyIMAP4, IdExceptionCore, uGlobal;
 
-const
-  {$IFDEF DEBUG}
-  debugImap = true;
-  {$ELSE}
-  debugImap = false;
-  {$ENDIF}
 
 type
   TIdIMAP4Access = class(TIdIMAP4);
   TIdIMAPLineStructAccess = class(TIdIMAPLineStruct);
-
-var
-  debugAccountCounter : integer = 0;
-
-
-//------------------------------------------------------------------ helpers ---
-
-//function WordAfterStr(str,substr : string) : string;
-//var
-//  i : integer;
-//begin
-//  Result := '';
-//  if pos(substr,str) = 0 then Exit;
-//  for i := pos(substr,str)+length(substr) to length(str) do
-//  begin
-//    if not(str[i] in [' ',')',#13,#10]) then
-//      Result := Result + str[i];
-//  end;
-//end;
 
 
 //---------------------------------------------------------- general exports ---
@@ -178,7 +153,6 @@ var
   //idLogFile1 : TidLogFile;//DEBUG - logging.
 begin
   Self.Name := 'IMAP';
-  //Self.ProtocolType := protIMAP4;
   IMAP := TIdIMAP4.Create(nil);
   Msg := TIdMessage.Create(nil);
   Msg.OnCreateAttachment := IdMessage1CreateAttachment;
@@ -190,32 +164,6 @@ begin
   IMAP.OnWork := IMAPWork;
   IMAP.MilliSecsToWaitToClearBuffer := 10;
 
-  if (debugImap) then
-  begin
-    if not DirectoryExists(uIniSettings.GetSettingsFolder() + 'logs/') then
-      CreateDir(uIniSettings.GetSettingsFolder() + 'logs/');
-
-    if DirectoryExists(uIniSettings.GetSettingsFolder() + 'logs/') then begin
-      DebugLogger := TIdLogFile.Create(Nil);
-      DebugLogger.Filename:= uIniSettings.GetSettingsFolder() + 'logs/' + 'imap_debug_'+FormatDateTime('mmm-dd-yyyy hh-mm', Now)+'_'+IntToStr(debugAccountCounter)+'.log';//+IntToStr(Random(9999))+'.log';
-      Inc(debugAccountCounter);
-      DebugLogger.Active:= True;
-      IMAP.Intercept:= TIdConnectionIntercept(DebugLogger);
-    end;
-  end;
-
-//  DLL1 := LoadLibrary('libeay32.dll');
-//  if DLL1 = 0 then begin
-//    //MessageDlg('OpenSSL library libeay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-//    mSSLDisabled := true;
-//  end
-//  else begin
-//    DLL2 := LoadLibrary('ssleay32.dll');
-//    if DLL2 = 0 then begin
-//      //MessageDlg('OpenSSL library ssleay32.dll Not Found. SSL/TLS will be unavailable.', mtError, [mbOK], 0);
-//      mSSLDisabled := true;
-//    end;
-//  end;
   TProtocol.InitOpenSSL;
   mSSLDisabled := not TProtocol.sslLoaded;
 
@@ -274,6 +222,12 @@ begin
 
 
 end;
+
+procedure TProtocolIMAP4.SetLogger(LogFile : TIdLogFile);
+begin
+  IMAP.Intercept:= TIdConnectionIntercept(LogFile);
+end;
+
 
 destructor TProtocolIMAP4.Destroy;
 begin
@@ -496,6 +450,7 @@ var
   SearchInfo: array of TIdIMAP4SearchRec;
   I, firstIndex, lastIndex : integer;
 begin
+  Result := false;
   // if the mailbox selection succeed, then...
   if IMAP.SelectMailBox('INBOX') then
   begin
