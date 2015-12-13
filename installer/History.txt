@@ -1,20 +1,29 @@
 PopTrayU Version History
 ------------------------
 
+
 =============
 Version 5.2.6
-December 2015
+November 2015
 =============
 
 Changed Features
 ----------------
 * Don't disconnect IMAP accounts after preview
 * After preview change read status immediately in Main Window for IMAP
+* Translations updated: Italian, Canadian French
 
 Bug Fixes
 ---------
 * Crash reporter shown when adding a rule if no existing rule is selected
 * Deleting last rule left some edit fields editable
+* Unnecessary Logging Files created for IMAP accounts in 5.2.5 under settings folder
+* Changing checking frequency per account was not enabling the save button.
+* Crash reporter shown when trying to save INI file if selected ini folder is read-only.
+
+Codebase Improvements
+---------------------
+* Protocol logging controlled by ini file instead of constants
 
 =============
 Version 5.2.5
