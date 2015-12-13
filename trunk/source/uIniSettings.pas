@@ -432,6 +432,7 @@ var
 begin
   Ini := TIniFile.Create(IniName);
   try
+    try
     // interval
     Ini.WriteFloat('Options','Interval',Options.Interval);
     Ini.WriteBool('Options','TimerAccount',Options.TimerAccount);
@@ -567,6 +568,11 @@ begin
     if Ini.ValueExists('DebugOptions','ProtocolLogging') or DebugOptions.ProtocolLogging then
       Ini.WriteBool('DebugOptions','ProtocolLogging',DebugOptions.ProtocolLogging);
 
+    except
+      on e: EIniFileException do begin
+        ShowTranslatedDlg(e.Message, mtError, [mbOK], 0, 'Error Saving PopTrayU Settings');
+      end;
+    end;
   finally
      Ini.Free;
   end;
