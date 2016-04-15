@@ -616,7 +616,13 @@ begin
     section := 'Account'+IntToStr(num);
     Accounts[num-1].SaveAccountToIniFile(Ini, section);
     Ini.WriteInteger('Options','NumAccounts',Accounts.NumAccounts);
-    Ini.UpdateFile;
+    try
+      Ini.UpdateFile;
+    except
+      on e: Exception do begin //eg: EFCreateError
+        ShowTranslatedDlg(e.Message, mtError, [mbOK], 0, 'Error Saving PopTrayU Settings');
+      end;
+    end;
   finally
      Ini.Free;
   end;
@@ -813,7 +819,6 @@ end;
 procedure SavePosINI;
 var
   Ini : TMemIniFile;
-  i : integer;
 begin
   Ini := TMemIniFile.Create(IniName);
   try
