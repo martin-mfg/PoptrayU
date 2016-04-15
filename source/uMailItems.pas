@@ -106,7 +106,7 @@ end;
 function TMailItem.isRead(const accountIsImap : boolean): boolean;
 begin
   if accountIsImap then // todo: AND use server status
-    result := self.Seen
+    result := self.Seen or self.Viewed;
   else
     result := self.Viewed;
 
